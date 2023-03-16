@@ -1,4 +1,4 @@
-# ClickCrystals [1.19.3-0.0.1]
+# ClickCrystals [1.19.3]
 Allows you to crystal easier, by using left click to both place and detonate crystals.
 
 
