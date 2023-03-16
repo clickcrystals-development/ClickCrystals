@@ -13,8 +13,8 @@ Allows you to crystal easier, by using left click to both place and detonate cry
 - No, it is not.
   - Tested on multiple servers like PvPLegacy, McPvP, and USPvP
   - Saves the time of having to click one more unnessacary click
-  - !*Does not replenish or auto-click, only makes it so that attacking a block with crystals will right click instead, not a cheat*!
-  - !*You can only click the top of the block for it to work, no unfair advantages*!
+  - !*Does not replenish or auto-click, only makes it so that attacking a crystallable block with crystals will right click instead, not a cheat*!
+  - !*You can only click the top of the crystallable block for it to work, no unfair advantages*!
   
 ### Thank you for downloading!
 - Thank you for supporting ClickCrystals, have a good one!
