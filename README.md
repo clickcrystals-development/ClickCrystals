@@ -1,4 +1,4 @@
-# ClickCrystals
+# ClickCrystals [1.19.3-0.0.1]
 Allows you to crystal easier, by using left click to both place and detonate crystals.
 
 
@@ -19,3 +19,9 @@ Allows you to crystal easier, by using left click to both place and detonate cry
 ### Thank you for downloading!
 - Thank you for supporting ClickCrystals, have a good one!
 - Please leave any suggestions you may have!
+
+  
+### Dependencies
+- Minecraft 1.19.3
+- Fabric Loader 1.19.3
+- Fabric API 
