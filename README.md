@@ -7,4 +7,4 @@ Allows you to crystal easier, by using left click to both place and detonate cry
   - Toggles click crystals
   - `/cctoggle [on|off|help]`
   - Aliases: 
-   - cctoggle
+    - cctoggle
