@@ -1,6 +1,6 @@
 # ClickCrystals [1.19.3]
 Allows you to crystal easier, by using left click to both place and detonate crystals.
-#### !!!***This is not a cheat***!!! One click place, one click break
+#### !!!***This is not a cheat***!!! One click place, one click break, just a different click method.
 
 
 ### Commands
