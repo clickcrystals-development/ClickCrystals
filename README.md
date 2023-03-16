@@ -7,7 +7,7 @@ Allows you to crystal easier, by using left click to both place and detonate cry
   - Toggles click crystals
   - `/cctoggle [on|off|help]`
   - Aliases: 
-    - cctoggle
+    - `cctoggle`
 
 ### But, isn't it cheating?
 - No, it is not.
@@ -25,3 +25,20 @@ Allows you to crystal easier, by using left click to both place and detonate cry
 - Minecraft 1.19.3
 - Fabric Loader 1.19.3
 - Fabric API 
+
+```gradle
+# Fabric Properties
+	# check these on https://modmuss50.me/fabric.html
+	minecraft_version=1.19.3
+	yarn_mappings=1.19.3+build.5
+	loader_version=0.14.14
+
+# Mod Properties
+	mod_version = 0.0.1
+	maven_group = io.github.itzispyder
+	archives_base_name = ClickCrystals
+
+# Dependencies
+	# check this on https://modmuss50.me/fabric.html
+	fabric_version=0.76.0+1.19.3
+```
