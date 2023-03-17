@@ -34,7 +34,7 @@ public class ClickCrystalToggleCommand extends Command implements Listener {
             })));
 
             builder.then(literal(module.getId()).then(literal("off").executes(context -> {
-                module.setEnabled(true);
+                module.setEnabled(false);
                 return SINGLE_SUCCESS;
             })));
         }
