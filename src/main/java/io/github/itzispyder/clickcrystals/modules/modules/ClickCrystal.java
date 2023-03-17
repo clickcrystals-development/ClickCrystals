@@ -25,6 +25,7 @@ public class ClickCrystal extends Module implements Listener {
 
     public ClickCrystal() {
         super("ClickCrystal","Allows you to crystal easier, by using left click to both place and break crystals.");
+        super.setEnabled(true);
     }
 
     @Override
