@@ -14,7 +14,7 @@ public abstract class Module implements Toggleable {
 
     protected static final MinecraftClient mc = ClickCrystals.mc;
     protected static final ClickCrystalsSystem system = ClickCrystals.system;
-    private boolean enabled;
+    protected boolean enabled;
     private final String name, description, id;
 
     /**
@@ -77,5 +77,14 @@ public abstract class Module implements Toggleable {
     public void sendUpdateInfo() {
         if (enabled) ChatUtils.sendPrefixMessage("§b" + name + " §3is now toggled §aon");
         else ChatUtils.sendPrefixMessage("§b" + name + " §3is now toggled §coff");
+    }
+
+    /**
+     * Gets the module represented by the module class
+     * @param moduleClass class
+     * @return module
+     */
+    public static Module get(Class<? extends Module> moduleClass) {
+        return system.modules().get(moduleClass);
     }
 }
