@@ -26,6 +26,7 @@ public abstract class Module implements Toggleable {
         this.name = name;
         this.description = description;
         this.id = name.toLowerCase().replaceAll("[^a-z0-9]","_");
+        this.enabled = true;
     }
 
     /**
