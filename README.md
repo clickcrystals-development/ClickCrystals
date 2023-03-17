@@ -1,6 +1,11 @@
 # ClickCrystals [1.19.3]
 Allows you to crystal easier, by using left click to both place and detonate crystals.
 #### !!!***This is not a cheat***!!! One click place, one click break, just a different click method.
+#### *Please take into account that this mod does NOT autoclick/replenish for the player, as that will be counted as an unfair advantage!*
+
+
+
+
 
 ### How do I use it?
 - 1) Attack an obsidian or bedrock with an END CRYSTAL to place the crystal. DOES NOT AUTO CLICK/REPLENISH ANYTHING!
