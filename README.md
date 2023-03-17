@@ -3,7 +3,7 @@ Allows you to crystal easier, by using left click to both place and detonate cry
 #### !!!***This is not a cheat***!!! One click place, one click break, just a different click method.
 
 ### How do I use it?
-- 1) Attack an obsidian or bedrock with a END CRYSTAL to place the crystal. DOES NOT AUTO-REPLENISH!
+- 1) Attack an obsidian or bedrock with an END CRYSTAL to place the crystal. DOES NOT AUTO-REPLENISH!
 - 2) Attack an obsidian or bedrock with an OBSIDIAN to search the hotbar for a crystal. DOES NOT AUTO-REPLENISH!
 
 ### Commands
