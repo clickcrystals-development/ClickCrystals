@@ -13,9 +13,9 @@ Allows you to crystal easier, by using left click to both place and detonate cry
 - THIS MOD DOES NOT AUTO-CLICK/MACRO ANYTHING
 
 ### Commands
-- ClickCrystalsToggle
+- `/clickcrystalstoggle`
   - Toggles click crystals
-  - `/cctoggle` `clickcrystal` [`on`|`off`|`help`]
+  - `/cctoggle` <`module`> [`on`|`off`|`help`]
   - Aliases: 
     - `cctoggle`
 
