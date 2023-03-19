@@ -41,7 +41,7 @@ public class ClickCrystal extends Module implements Listener {
     }
 
     @EventHandler
-    public void onTick(ClientTickEvent.End e) {
+    private void onTick(ClientTickEvent.End e) {
         if (!super.isEnabled()) return;
         if (!mc.interactionManager.isBreakingBlock()) return;
         if (mc.crosshairTarget.getType() != HitResult.Type.BLOCK) return;

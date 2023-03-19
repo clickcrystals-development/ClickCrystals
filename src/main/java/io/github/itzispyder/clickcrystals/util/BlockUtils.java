@@ -18,4 +18,8 @@ public abstract class BlockUtils {
         BlockHitResult result = new BlockHitResult(vec, Direction.UP,pos,false);
         return mc.interactionManager.interactBlock(mc.player,mc.player.getActiveHand(),result);
     }
+
+    public static ActionResult interact(BlockHitResult result) {
+        return mc.interactionManager.interactBlock(mc.player,mc.player.getActiveHand(),result);
+    }
 }

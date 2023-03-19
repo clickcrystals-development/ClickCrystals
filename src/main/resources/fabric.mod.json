@@ -25,5 +25,8 @@
     "fabricloader": ">=0.14.14",
     "fabric": "*",
     "minecraft": ">=1.19.3"
-  }
+  },
+  "mixins": [
+    "clickcrystals.mixins.json"
+  ]
 }

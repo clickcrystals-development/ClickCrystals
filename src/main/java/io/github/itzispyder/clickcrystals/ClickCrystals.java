@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.commands.commands.ClickCrystalToggleCommand;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEvent;
 import io.github.itzispyder.clickcrystals.modules.modules.ClickCrystal;
+import io.github.itzispyder.clickcrystals.modules.modules.GlowStoneSearch;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
@@ -30,6 +31,7 @@ public final class ClickCrystals implements ModInitializer {
 
         // Module
         system.addModule(new ClickCrystal());
+        system.addModule(new GlowStoneSearch());
     }
 
     /**
