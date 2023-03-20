@@ -2,12 +2,16 @@ package io.github.itzispyder.clickcrystals;
 
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.commands.commands.ClickCrystalToggleCommand;
+import io.github.itzispyder.clickcrystals.events.events.BlockLeftClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEvent;
 import io.github.itzispyder.clickcrystals.modules.modules.ClickCrystal;
 import io.github.itzispyder.clickcrystals.modules.modules.GlowStoneSearch;
+import io.github.itzispyder.clickcrystals.modules.modules.TpBlade;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.ActionResult;
 
 public final class ClickCrystals implements ModInitializer {
 
@@ -32,6 +36,7 @@ public final class ClickCrystals implements ModInitializer {
         // Module
         system.addModule(new ClickCrystal());
         system.addModule(new GlowStoneSearch());
+        system.addModule(new TpBlade());
     }
 
     /**
@@ -45,6 +50,11 @@ public final class ClickCrystals implements ModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             ClientTickEvent.End event = new ClientTickEvent.End();
             system.eventBus.pass(event);
+        });
+        AttackBlockCallback.EVENT.register((player, world, hand, pos, direction) -> {
+            BlockLeftClickEvent event = new BlockLeftClickEvent(player, world, hand, pos, direction);
+            system.eventBus.pass(event);
+            return event.isCancelled() ? ActionResult.FAIL : ActionResult.PASS;
         });
     }
 }

@@ -20,6 +20,11 @@ public abstract class BlockUtils {
         return interact(vec,Direction.UP);
     }
 
+    public static ActionResult interact(BlockPos pos, Direction dir) {
+        Vec3d vec = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+        return interact(vec,dir);
+    }
+
     public static ActionResult interact(Vec3d vec, Direction dir) {
         BlockPos pos = new BlockPos(vec);
         BlockHitResult result = new BlockHitResult(vec, dir,pos,false);

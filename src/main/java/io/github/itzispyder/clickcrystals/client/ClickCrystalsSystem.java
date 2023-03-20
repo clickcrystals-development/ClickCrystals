@@ -14,7 +14,6 @@ import java.util.Map;
 public class ClickCrystalsSystem {
 
     public final EventBus eventBus = new EventBus();
-
     private final Map<Class<? extends Command>, Command> commands;
     private final Map<Class<? extends Module>, Module> modules;
 

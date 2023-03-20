@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.util;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -30,5 +31,14 @@ public abstract class HotbarUtils {
 
     public static boolean isHolding(Item item, Hand hand) {
         return mc.player.getStackInHand(hand).isOf(item);
+    }
+
+    public static boolean nameContains(String contains) {
+        return nameContains(contains,Hand.MAIN_HAND);
+    }
+
+    public static boolean nameContains(String contains, Hand hand) {
+        ItemStack item = mc.player.getStackInHand(hand);
+        return item != null && item.getTranslationKey().toLowerCase().contains(contains.toLowerCase());
     }
 }

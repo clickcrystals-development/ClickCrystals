@@ -14,6 +14,7 @@ public class PacketSendEvent extends Event implements Cancellable {
 
     public PacketSendEvent(Packet<?> packet) {
         this.packet = packet;
+        this.cancelled = false;
     }
 
     public Packet<?> getPacket() {
