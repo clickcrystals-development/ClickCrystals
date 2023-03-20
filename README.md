@@ -8,7 +8,7 @@ Allows you to crystal easier, by using left click to both place and detonate cry
 
 ### How do I use it?
 - Attack an obsidian or bedrock with an END CRYSTAL to place the crystal. DOES NOT AUTO CLICK/REPLENISH ANYTHING!
-- Attack an obsidian or bedrock with an OBSIDIAN to scroll to the nearest obsidian in your hotbar.
+- Attack an obsidian or bedrock with an OBSIDIAN to scroll to the nearest crystal in your hotbar.
 - Right clicking a respawn anchor with GLOWSTONE would scroll back to the respawn anchor in your hotbar after charging it.
 - Right clicking a sword or totem would scroll to the nearest ender pearl in your hotbar.
 - THIS MOD DOES NOT AUTO-CLICK/MACRO ANYTHING
