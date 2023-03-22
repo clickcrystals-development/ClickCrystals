@@ -45,7 +45,7 @@ public abstract class Command implements ClientCommandRegistrationCallback {
         return LiteralArgumentBuilder.literal(literal);
     }
 
-    public <T extends ArgumentType<?>> RequiredArgumentBuilder<FabricClientCommandSource,T> argument(String name, ArgumentType<T> argumentType) {
+    public <T> RequiredArgumentBuilder<FabricClientCommandSource,T> argument(String name, ArgumentType<T> argumentType) {
         return RequiredArgumentBuilder.argument(name,argumentType);
     }
 
