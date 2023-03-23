@@ -16,9 +16,6 @@ Allows you to crystal easier, by using left click to both place and detonate cry
 - Right clicking a sword or totem would scroll to the nearest ender pearl in your hotbar.
 - THIS MOD DOES NOT AUTO-CLICK/MACRO ANYTHING
 
-![clickcrystal](/assets/gif/clickcrystal.gif)
-
-
 ### Commands
 - `/clickcrystalstoggle`
   - Toggles click crystals
