@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "clickcrystals",
+  "version": "${version}",
+  "name": "ClickCrystals",
+  "description": "Allows you to crystal easier, by only using left click to place and break crystals. Do '/cctoggle' !",
+  "authors": [
+    "ImproperIssues"
+  ],
+  "contact": {
+    "website": "https://itzispyder.github.io/"
+  },
+  "license": "MIT",
+  "icon": "assets/clickcrystals/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "io.github.itzispyder.clickcrystals.client.ClickCrystalsClient"
+    ],
+    "main": [
+      "io.github.itzispyder.clickcrystals.ClickCrystals"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.14",
+    "fabric": "*",
+    "minecraft": "1.19.x"
+  },
+  "mixins": [
+    "clickcrystals.mixins.json"
+  ]
+}
