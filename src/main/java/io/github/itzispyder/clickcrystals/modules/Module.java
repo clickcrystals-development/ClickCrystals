@@ -5,12 +5,14 @@ import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import net.minecraft.client.MinecraftClient;
 
+import java.io.Serializable;
+
 import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 
 /**
  * A toggleable module
  */
-public abstract class Module implements Toggleable {
+public abstract class Module implements Toggleable, Serializable {
 
     protected static final MinecraftClient mc = ClickCrystals.mc;
     protected static final ClickCrystalsSystem system = ClickCrystals.system;
@@ -57,10 +59,19 @@ public abstract class Module implements Toggleable {
 
     @Override
     public void setEnabled(boolean enabled) {
+        this.setEnabled(enabled,true);
+    }
+
+    /**
+     * Sets the module's enabled state
+     * @param enabled state
+     * @param sendFeedback send feedback
+     */
+    public void setEnabled(boolean enabled, boolean sendFeedback) {
         if (enabled) this.onEnable();
         else this.onDisable();
         this.enabled = enabled;
-        this.sendUpdateInfo();
+        if (sendFeedback) this.sendUpdateInfo();
     }
 
     /**
@@ -75,8 +86,24 @@ public abstract class Module implements Toggleable {
      * Send the module update info to the player
      */
     public void sendUpdateInfo() {
-        if (enabled) ChatUtils.sendPrefixMessage("§b" + name + " §3is now toggled §aon");
-        else ChatUtils.sendPrefixMessage("§b" + name + " §3is now toggled §coff");
+        if (enabled) ChatUtils.sendPrefixMessage("§b" + name + " §3is now toggled " + getToggledStateMessage());
+        else ChatUtils.sendPrefixMessage("§b" + name + " §3is now toggled " + getToggledStateMessage());
+    }
+
+    /**
+     * Current state label of the button
+     * @return label
+     */
+    public String getCurrentStateLabel() {
+        return "§b" + name + "§7: " + getToggledStateMessage();
+    }
+
+    /**
+     * Returns a message corresponding to the module is enabled state
+     * @return message
+     */
+    public String getToggledStateMessage() {
+        return enabled ? "§aon" : "§coff";
     }
 
     /**

@@ -6,8 +6,8 @@ import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.scheduler.ScheduledTask;
 import io.github.itzispyder.clickcrystals.util.BlockUtils;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.Randomizer;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
@@ -29,7 +29,6 @@ public class ClickCrystal extends Module implements Listener {
     @Override
     protected void onEnable() {
         system.addListener(this);
-        ChatUtils.sendPrefixMessage("§7Make sure to click the TOP of a crystallable block!");
     }
 
     @Override
@@ -44,12 +43,16 @@ public class ClickCrystal extends Module implements Listener {
         if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;;
             BlockPos pos = packet.getPos();
-            if (!(BlockUtils.matchBlock(pos, Blocks.OBSIDIAN) || BlockUtils.matchBlock(pos, Blocks.BEDROCK))) return;
+            if (!(BlockUtils.matchBlock(pos,Blocks.OBSIDIAN) || BlockUtils.matchBlock(pos,Blocks.BEDROCK))) return;
 
             new ScheduledTask(() -> {
                 if (HotbarUtils.isHolding(Items.END_CRYSTAL)) {
                     e.setCancelled(true);
                     BlockUtils.interact(pos, Direction.UP);
+                    // DO NOT USE THIS AREA, ONLY ENABLE THIS WHEN HACKING IS ALLOWED!
+                    // ANTICHEATS WILL ALSO GET YOU IF YOU ENABLE THIS LOWER PART
+                    Module module = system.modules().get(CrystalAutoClicker.class);
+                    if (module.isEnabled()) InteractionUtils.doAttack();
                 }
                 else if (HotbarUtils.isHolding(Items.OBSIDIAN)) {
                     e.setCancelled(true);

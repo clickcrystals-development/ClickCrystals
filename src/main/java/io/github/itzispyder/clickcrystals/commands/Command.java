@@ -11,12 +11,14 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandRegistryAccess;
 
+import java.io.Serializable;
+
 import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 
 /**
  * Represents a client command
  */
-public abstract class Command implements ClientCommandRegistrationCallback {
+public abstract class Command implements ClientCommandRegistrationCallback, Serializable {
 
     protected static final int SINGLE_SUCCESS = 1, COMMAND_PASS = 0, COMMAND_FAIL = -1;
     protected static final MinecraftClient mc = ClickCrystals.mc;

@@ -3,7 +3,7 @@
   "id": "clickcrystals",
   "version": "${version}",
   "name": "ClickCrystals",
-  "description": "Allows you to crystal easier, by only using left click to place and break crystals.",
+  "description": "Allows you to crystal easier, by only using left click to place and break crystals. Do '/cctoggle' !",
   "authors": [
     "ImproperIssues"
   ],
@@ -11,7 +11,7 @@
     "website": "https://itzispyder.github.io/"
   },
   "license": "MIT",
-  "icon": "assets/ClickCrystals/icon.png",
+  "icon": "assets/clickcrystals/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [

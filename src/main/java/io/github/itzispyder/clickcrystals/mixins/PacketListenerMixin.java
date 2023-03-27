@@ -18,7 +18,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 @Mixin(ClientConnection.class)
 public abstract class PacketListenerMixin {
 
-    @Inject(method = "send", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "send*", at = @At("HEAD"), cancellable = true)
     public void onPacketSend(Packet<?> packet, CallbackInfo ci) {
         PacketSendEvent event = new PacketSendEvent(packet);
         system.eventBus.pass(event);

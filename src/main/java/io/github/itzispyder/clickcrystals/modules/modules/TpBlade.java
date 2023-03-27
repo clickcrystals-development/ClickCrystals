@@ -36,7 +36,7 @@ public class TpBlade extends Module implements Listener {
     @EventHandler
     private void onRightClick(PacketSendEvent e) {
         if (!super.isEnabled()) return;
-        if (e.getPacket() instanceof PlayerInteractItemC2SPacket packet) {
+        if (e.getPacket() instanceof PlayerInteractItemC2SPacket) {
             if (!mc.options.useKey.isPressed()) return;
             ItemStack item = mc.player.getStackInHand(mc.player.getActiveHand());
             Item type = item.getItem();

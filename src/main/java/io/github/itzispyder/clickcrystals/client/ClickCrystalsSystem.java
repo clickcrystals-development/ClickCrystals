@@ -5,13 +5,14 @@ import io.github.itzispyder.clickcrystals.events.EventBus;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.modules.Module;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * ClickCrystal system
  */
-public class ClickCrystalsSystem {
+public class ClickCrystalsSystem implements Serializable {
 
     public final EventBus eventBus = new EventBus();
     private final Map<Class<? extends Command>, Command> commands;

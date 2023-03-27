@@ -10,7 +10,7 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 public class ClickCrystalToggleCommand extends Command implements Listener {
 
     public ClickCrystalToggleCommand() {
-        super("clickcrystaltoggle","Allows you to crystal easier, by using left click to both place and break crystals.","/cctoggle [on|off|help]","cctoggle");
+        super("clickcrystaltoggle","§7Toggles the modules from this mod. THIS CAN ALSO BE DONE VIA GUI MENU, PRESS YOUR §l§oAPOSTROPHE §7KEY!","/cctoggle [on|off|help]","cctoggle");
         system.addListener(this);
     }
 
@@ -38,5 +38,10 @@ public class ClickCrystalToggleCommand extends Command implements Listener {
                 return SINGLE_SUCCESS;
             })));
         }
+
+        builder.executes(context -> {
+            ChatUtils.sendMessage(super.getHelp());
+            return SINGLE_SUCCESS;
+        });
     }
 }

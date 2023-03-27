@@ -3,7 +3,9 @@ package io.github.itzispyder.clickcrystals;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.commands.commands.ClickCrystalToggleCommand;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEvent;
+import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalMenu;
 import io.github.itzispyder.clickcrystals.modules.modules.ClickCrystal;
+import io.github.itzispyder.clickcrystals.modules.modules.CrystalAutoClicker;
 import io.github.itzispyder.clickcrystals.modules.modules.GlowStoneSearch;
 import io.github.itzispyder.clickcrystals.modules.modules.TpBlade;
 import net.fabricmc.api.ModInitializer;
@@ -14,6 +16,7 @@ public final class ClickCrystals implements ModInitializer {
 
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = new ClickCrystalsSystem();
+    public static final ClickCrystalMenu mainMenu = new ClickCrystalMenu();
 
     @SuppressWarnings("unused")
     public static final String modId = "clickcrystals", prefix = "[ClickCrystals] ", starter = "§7[§bClick§3Crystals§7] §r";
@@ -34,6 +37,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new ClickCrystal());
         system.addModule(new GlowStoneSearch());
         system.addModule(new TpBlade());
+        system.addModule(new CrystalAutoClicker());
     }
 
     /**
