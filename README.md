@@ -55,3 +55,10 @@ To stop: complaining it is a cheat/macro.
 - Thanks for downloading ClickCrystals!
 - Make sure to give it a star on my [Github](https://github.com/itzispyder/clickcrystals)
 - Follow the project on [Modrinth](https://modrinth.com/mod/clickcrystals)
+
+## SPECIAL THANKS AND SHOUTOUT TO
+```yml
+TheTrouper: For all the help and support, and giving me ideas!
+breadandcarrots: For being a wonderful mod tester!
+```
+
