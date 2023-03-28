@@ -1,5 +1,5 @@
 
-[ICON](src/main/resources/clickcrystals/icon.png) # ClickCrystals [1.19.3]
+# ![ICON](src/main/resources/clickcrystals/icon.png) ClickCrystals [1.19.3]
 Your ultimated crystal PvP assistance, ClickCrystals at your service.
 
 ---------------------------------------------------------------
