@@ -41,6 +41,7 @@ No, it is definetely not!
   - `McPvP`.club
   - west.`UsPvP`.org
   - east.`UsPvP`.org
+  - `OgreDupe`.minehut.gg
 
 ## For this Mod You Will Need
 ```
