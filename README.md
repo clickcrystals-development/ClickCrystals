@@ -44,7 +44,7 @@ No, it is definetely not!
   - `OgreDupe`.minehut.gg
 
 ## For this Mod You Will Need
-```
+```yml
 Minecraft Java Edition: 1.19.3
 Fabric Loader: 0.14.14 or higher
 Fabric API: 1.19.3
