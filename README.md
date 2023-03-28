@@ -34,3 +34,23 @@ Modules:
 
 ## But isn't this cheating?
 No, it is definetely not!
+- This mod does not support macroing, cheating, etc.
+- This mod aims to improve your performance in cpvp without ruining its pure experience!
+- This mod has been tested on:
+  - play.`PvPLegacy`.net
+  - `McPvP`.club
+  - west.`UsPvP`.org
+  - east.`UsPvP`.org
+
+## For this Mod You Will Need
+```
+Minecraft Java Edition: 1.19.3
+Fabric Loader: 0.14.14 or higher
+Fabric API: 1.19.3
+To stop: complaining it is a cheat/macro.
+```
+
+## Have A Good One!
+- Thanks for downloading ClickCrystals!
+- Make sure to give it a star on my [Github](https://github.com/itzispyder/clickcrystals)
+- Follow the project on [Modrinth](https://modrinth.com/mod/clickcrystals)
