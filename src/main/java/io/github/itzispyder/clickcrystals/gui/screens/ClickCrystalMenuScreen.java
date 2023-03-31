@@ -19,6 +19,9 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.Comparator;
+import java.util.List;
+
 import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
 
 /**
@@ -74,7 +77,12 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
         adder.add(title,2);
 
         int y = 0, x = 0;
-        for (Module module : system.modules().values()) {
+        List<Module> sortedModules = system.modules().values()
+                .stream()
+                .sorted(Comparator.comparing(Module::getId))
+                .toList();
+
+        for (Module module : sortedModules) {
             if (y ++ >= MAX_ROW_PER_COLUMN) {
                 x ++;
                 y = 1;
