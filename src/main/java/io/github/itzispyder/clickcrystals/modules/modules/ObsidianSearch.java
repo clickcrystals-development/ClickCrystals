@@ -45,7 +45,7 @@ public class ObsidianSearch extends Module implements Listener {
 
             e.setCancelled(true);
             HotbarUtils.search(Items.OBSIDIAN);
-            BlockUtils.interact(pos, Direction.UP);
+            BlockUtils.interact(pos,packet.getDirection());
             HotbarUtils.search(Items.END_CRYSTAL);
         }
     }
