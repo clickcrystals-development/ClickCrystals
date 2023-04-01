@@ -1,0 +1,23 @@
+package io.github.itzispyder.clickcrystals.mixins;
+
+import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.NoHurtCam;
+import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.util.math.MatrixStack;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+/**
+ * Mixin for GameRenderer
+ */
+@Mixin(GameRenderer.class)
+public abstract class GameRenderMixin {
+
+    @Inject(method = "bobViewWhenHurt", at = @At("HEAD"), cancellable = true)
+    public void onHurtViewBob(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+        Module noHurtCam = Module.get(NoHurtCam.class);
+        if (noHurtCam.isEnabled()) ci.cancel();
+    }
+}

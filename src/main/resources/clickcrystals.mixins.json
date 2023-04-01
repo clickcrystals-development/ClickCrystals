@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "package": "io.github.itzispyder.clickcrystals.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "CameraMixin",
+    "ClientPlayerInteractionMixin",
+    "GameHudMixin",
+    "GameOverlayMixin",
+    "GameRenderMixin",
+    "LightmapTextureMixin",
+    "PacketListenerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "EntityClassMixin",
+    "LivingEntityClassMixin",
+    "MinecraftClientMixin",
+    "PlayerEntityClassMixin"
+  ]
+}
