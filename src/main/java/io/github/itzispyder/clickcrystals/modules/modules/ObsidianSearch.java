@@ -10,7 +10,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 
 /**
  * ObsidianSearch module
@@ -36,7 +35,7 @@ public class ObsidianSearch extends Module implements Listener {
     @EventHandler
     private void onPacketSend(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
-            if (!HotbarUtils.isHolding(Items.END_CRYSTAL)) return;
+            if (!(HotbarUtils.nameContains("crystal") || HotbarUtils.nameContains("totem") || HotbarUtils.nameContains("sword"))) return;
             if (cooldown > System.currentTimeMillis()) return;
             cooldown = System.currentTimeMillis() + (50 * 4);
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;

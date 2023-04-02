@@ -4,14 +4,14 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.scheduler.ScheduledTask;
+import io.github.itzispyder.clickcrystals.util.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
-import io.github.itzispyder.clickcrystals.util.Randomizer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * GlowStoneSearch module
@@ -42,25 +42,29 @@ public class GlowStoneSearch extends Module implements Listener {
     @EventHandler
     private void onPacketSend(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerInteractBlockC2SPacket packet) {
-            BlockState state = mc.player.getWorld().getBlockState(packet.getBlockHitResult().getBlockPos());
+            BlockPos pos = packet.getBlockHitResult().getBlockPos();
+            BlockState state = mc.player.getWorld().getBlockState(pos);
             if (state == null) return;
-            if (!mc.options.useKey.isPressed()) return;
 
             try {
-                if (state.isOf(Blocks.RESPAWN_ANCHOR)) {
-                    int charges = state.get(RespawnAnchorBlock.CHARGES); // charges of the clicked block
-                    if (HotbarUtils.isHolding(Items.GLOWSTONE) && charges > 0) { // after charging the anchor
-                        new ScheduledTask(() -> {
-                            HotbarUtils.search(Items.RESPAWN_ANCHOR);
-                        }).runDelayedTask(Randomizer.rand(50));
-                        return;
+                if (HotbarUtils.isHolding(Items.RESPAWN_ANCHOR)) {
+                    if (!state.isOf(Blocks.RESPAWN_ANCHOR)) HotbarUtils.search(Items.GLOWSTONE);
+                    else {
+                        int charges = state.get(RespawnAnchorBlock.CHARGES);
+                        if (charges >= 1) return;
+                        e.setCancelled(true);
+                        HotbarUtils.search(Items.GLOWSTONE);
+                        BlockUtils.interact(pos,packet.getBlockHitResult().getSide());
                     }
                 }
-
-                if (HotbarUtils.isHolding(Items.RESPAWN_ANCHOR) && !state.isOf(Blocks.RESPAWN_ANCHOR)) {
-                    new ScheduledTask(() -> {
+                else if (HotbarUtils.isHolding(Items.GLOWSTONE)) {
+                    if (!state.isOf(Blocks.RESPAWN_ANCHOR)) {
+                        e.setCancelled(true);
+                        HotbarUtils.search(Items.RESPAWN_ANCHOR);
+                        BlockUtils.interact(pos,packet.getBlockHitResult().getSide());
                         HotbarUtils.search(Items.GLOWSTONE);
-                    }).runDelayedTask(Randomizer.rand(50));
+                    }
+                    else HotbarUtils.search(Items.RESPAWN_ANCHOR);
                 }
             } catch (Exception ignore) {}
         }
