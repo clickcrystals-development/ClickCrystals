@@ -6,12 +6,14 @@ Your ultimated crystal PvP assistance, ClickCrystals at your service.
 
 ## Newest Changes
 ```yml
-Minecraft Version: 1.19.3
-Mod Version: 0.5.0
-Updated to: 0.5.0
+Minecraft Version: 1.19.2 
+Mod Version: 0.6.4 
+Updated to: 0.6.4
 
-Added saving settings for your modules.
-Added two new modules; FullBright, NoBreakDelay
+Added new modules:
+- NoResoucePack: blocks server resource packs
+- NoServerParticles: blocks server particles (can prevent particle crashes)
+- TpTotem: TpBlade module but with totems.
 ```
 
 ## How Do I Use ClickCrystals?
@@ -25,11 +27,38 @@ Commands:
 ```
 ```yml
 Modules: 
+
+   AhhGameCrashed: "oops game crashed, rematch?"
+
    ClickCrystal: Punch a block of obsidian while holding an end crystal to place that crystal.
-   GlowstoneSearch: Searches your hotbar for glowstone after right clicking a respawn anchor item.
-   TpBlade: Searches your hotbar for ender pearls after right clicking your sword item.
-   NoBreakDelay: Removes the annoying break delay between breaking two blocks.
+
+   CrystalSearch: The opposite of obsidian search.
+
    FullBright: Gives you infinite night vision, so you don't have to keep placing torches.
+
+   GlowstoneSearch: Searches your hotbar for glowstone after right clicking a respawn anchor item.
+
+   NoBreakDelay: Removes the annoying break delay between breaking two blocks.
+
+   NoGameOverlay: See clearly under lava, etc!
+
+   NoHurtCam: Play without damage tints!
+
+   NoLoadingScreen: No more loading screens!
+
+   NoResourcePack: Blocks server suggested and required resource packs!
+ 
+   NoServerParticles: Never get particle-crashed again!
+
+   ObsidianSearch: Search for obsidian after clicking a crystal.
+
+   SlowHandSwing: Swing your hands slowly and without attack cooldown animation!
+
+   SpectatorSight: Render entities as you do in spectator gamemode.
+
+   TpBlade: Searches your hotbar for ender pearls after right clicking your sword item.
+
+   TpTotem: TpBlade but with a totem.
 ```
 
 ## But isn't this cheating?
