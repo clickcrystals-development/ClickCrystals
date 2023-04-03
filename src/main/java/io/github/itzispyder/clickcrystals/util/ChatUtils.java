@@ -20,24 +20,6 @@ public abstract class ChatUtils {
     }
 
     /**
-     * Sends a command as if the player typed it
-     * @param command command message
-     */
-    public static void sendCommand(String command) {
-        if (command == null) return;
-        mc.player.networkHandler.sendCommand(command);
-    }
-
-    /**
-     * Sends a message to the chat as if a player has typed it
-     * @param message message
-     */
-    public static void sendChatMessage(String message) {
-        if (message == null) return;
-        mc.player.networkHandler.sendChatMessage(message);
-    }
-
-    /**
      * Sends a message to the player client-sided, but with the mod prefix
      * @param message message
      */

@@ -79,4 +79,17 @@ public abstract class InventoryUtils {
         }
         return -1;
     }
+
+    /**
+     * Server for an item based on a string key
+     * @param key key
+     * @return return slot of item found, if none, returns -1
+     */
+    public static int searchMain(String key) {
+        for (int i = 0; i < inv.main.size(); i++) {
+            if (inv.getStack(i).getTranslationKey().toLowerCase().contains(key.toLowerCase()))
+                return i;
+        }
+        return -1;
+    }
 }

@@ -104,7 +104,7 @@ public abstract class Module implements Toggleable, Serializable {
      * @return label
      */
     public String getCurrentStateLabel() {
-        return "§b" + name + "§7: " + getToggledStateMessage();
+            return "§b" + name + "§7: " + getToggledStateMessage();
     }
 
     /**

@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class ClickCrystalAuto extends Module {
 
     public ClickCrystalAuto() {
-        super("ClickCrystalAuto","This is an AUTOCLICKER and a MACRO that works with CLICKRYSTAL MODULE, do NOT use this on servers unless hacking is allowed!");
+        super("ClickCrystalAuto","§7This is an §lAUTOCLICKER§7 and a §lMACRO§7 that works with §lCLICKRYSTAL§7 MODULE, §cdo §lNOT§c use this on servers unless hacking is allowed!");
     }
 
     @Override

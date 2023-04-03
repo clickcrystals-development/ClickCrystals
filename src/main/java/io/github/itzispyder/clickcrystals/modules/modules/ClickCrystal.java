@@ -54,8 +54,8 @@ public class ClickCrystal extends Module implements Listener {
 
                 // DO NOT USE THIS AREA, ONLY ENABLE THIS WHEN HACKING IS ALLOWED!
                 // ANTICHEATS WILL ALSO GET YOU IF YOU ENABLE THIS LOWER PART
-                Module module = Module.get(ClickCrystalAuto.class);
-                if (!module.isEnabled()) return;
+                Module auto = Module.get(ClickCrystalAuto.class);
+                if (!auto.isEnabled()) return;
                 new ScheduledTask(() -> {
                     InteractionUtils.doAttack();
                 }).runDelayedTask(Randomizer.rand(50,150));

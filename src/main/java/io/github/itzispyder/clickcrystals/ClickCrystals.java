@@ -51,6 +51,10 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new NoGameOverlay());
         system.addModule(new ObsidianSearch());
         system.addModule(new CrystalSearch());
+        system.addModule(new NoServerParticles());
+        system.addModule(new TpTotem());
+        system.addModule(new AhhGameCrashed());
+        system.addModule(new NoResourcePack());
         Module.loadConfigModules();
     }
 

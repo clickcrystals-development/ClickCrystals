@@ -19,7 +19,7 @@ public class ObsidianSearch extends Module implements Listener {
     private long cooldown;
 
     public ObsidianSearch() {
-        super("ObsidianSearch","Searches your hotbar for an obsidian when you right click a non-obsidian block with a crystal.");
+        super("ObsidianSearch","Searches your hotbar for an obsidian when you left click a non-obsidian block with a crystal.");
     }
 
     @Override

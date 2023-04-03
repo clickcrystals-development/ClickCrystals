@@ -39,9 +39,13 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
             GLFW.GLFW_KEY_APOSTROPHE,
             KEY_CATEGORY
     ));
-    public static final int MAX_ROW_PER_COLUMN = 6;
-    public static final int MARGIN_TOP = 80;
-    public static final int MARGIN_LEFT = 25;
+    public static final int
+            MAX_ROW_PER_COLUMN = 6,
+            MARGIN_TOP = 80,
+            MARGIN_LEFT = 25,
+            GAP = 3,
+            BUTTON_HEIGHT = 18,
+            BUTTON_WIDTH = 130;
 
     /**
      * Constructs a new menu screen for the module screen
@@ -91,7 +95,9 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
             ButtonWidget widget = ButtonWidget.builder(Text.literal(module.getCurrentStateLabel()), button -> {
                 module.setEnabled(!module.isEnabled(),false);
                 button.setMessage(Text.literal(module.getCurrentStateLabel()));
-            }).position(MARGIN_LEFT + (155 * x),MARGIN_TOP + (25 * y)).build();
+            }).position(MARGIN_LEFT + ((BUTTON_WIDTH + GAP) * x),MARGIN_TOP + ((BUTTON_HEIGHT + GAP) * y))
+                    .size(BUTTON_WIDTH,BUTTON_HEIGHT)
+                    .build();
             widget.setTooltip(Tooltip.of(Text.of(module.getHelp())));
             adder.add(widget);
         }

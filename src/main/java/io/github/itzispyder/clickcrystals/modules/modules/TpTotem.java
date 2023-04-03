@@ -10,18 +10,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 
-/**
- * TpBlade module
- */
-public class TpBlade extends Module implements Listener {
+public class TpTotem extends Module implements Listener {
 
     private long cooldown;
 
     /**
      * Module constructor
      */
-    public TpBlade() {
-        super("TpBlade","Right click your sword to switch to the nearest pearl in your hotbar.");
+    public TpTotem() {
+        super("TpTotem","TpBlade, but with a totem.");
     }
 
     @Override
@@ -44,7 +41,7 @@ public class TpBlade extends Module implements Listener {
             if (!mc.options.useKey.isPressed()) return;
             ItemStack item = mc.player.getStackInHand(mc.player.getActiveHand());
             Item type = item.getItem();
-            if (!HotbarUtils.nameContains("sword")) return;
+            if (!HotbarUtils.nameContains("totem")) return;
             if (cooldown > System.currentTimeMillis()) return;
             cooldown = System.currentTimeMillis() + (50 * 4);
 
