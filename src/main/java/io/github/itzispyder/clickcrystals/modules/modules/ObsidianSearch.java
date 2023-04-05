@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
  */
 public class ObsidianSearch extends Module implements Listener {
 
-    private long cooldown;
+    private static long cooldown;
 
     public ObsidianSearch() {
         super("ObsidianSearch","Searches your hotbar for an obsidian when you left click a non-obsidian block with a crystal.");
@@ -35,17 +35,19 @@ public class ObsidianSearch extends Module implements Listener {
     @EventHandler
     private void onPacketSend(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
-            if (!(HotbarUtils.nameContains("crystal") || HotbarUtils.nameContains("totem") || HotbarUtils.nameContains("sword"))) return;
             if (cooldown > System.currentTimeMillis()) return;
             cooldown = System.currentTimeMillis() + (50 * 4);
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
             BlockPos pos = packet.getPos();
             if (BlockUtils.matchBlock(pos,Blocks.OBSIDIAN) || BlockUtils.matchBlock(pos,Blocks.BEDROCK)) return;
+            if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
 
-            e.setCancelled(true);
-            HotbarUtils.search(Items.OBSIDIAN);
-            BlockUtils.interact(pos,packet.getDirection());
-            HotbarUtils.search(Items.END_CRYSTAL);
+            if (HotbarUtils.nameContains("crystal") || HotbarUtils.nameContains("totem") || HotbarUtils.nameContains("sword")) {
+                e.setCancelled(true);
+                HotbarUtils.search(Items.OBSIDIAN);
+                BlockUtils.interact(pos,packet.getDirection());
+                HotbarUtils.search(Items.END_CRYSTAL);
+            }
         }
     }
 }

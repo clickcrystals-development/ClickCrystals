@@ -15,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 
 public class CrystalSearch extends Module implements Listener {
 
@@ -39,14 +38,15 @@ public class CrystalSearch extends Module implements Listener {
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
             BlockPos pos = packet.getPos();
             if (!(BlockUtils.matchBlock(pos, Blocks.OBSIDIAN) || BlockUtils.matchBlock(pos,Blocks.BEDROCK))) return;
+            if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
 
             if (HotbarUtils.nameContains("obsidian") || HotbarUtils.nameContains("totem") || HotbarUtils.nameContains("sword")) {
-                e.setCancelled(true);
                 ItemStack item = mc.player.getStackInHand(mc.player.getActiveHand());
                 Item type = item.getItem();
 
+                e.setCancelled(true);
                 HotbarUtils.search(Items.END_CRYSTAL);
-                BlockUtils.interact(pos,Direction.UP);
+                BlockUtils.interact(pos,packet.getDirection());
                 HotbarUtils.search(type);
 
                 // DO NOT USE THIS AREA, ONLY ENABLE THIS WHEN HACKING IS ALLOWED!
@@ -55,7 +55,7 @@ public class CrystalSearch extends Module implements Listener {
                 if (!auto.isEnabled()) return;
                 new ScheduledTask(() -> {
                     InteractionUtils.doAttack();
-                }).runDelayedTask(Randomizer.rand(50,150));
+                }).runDelayedTask(Randomizer.rand(50,100));
             }
         }
     }

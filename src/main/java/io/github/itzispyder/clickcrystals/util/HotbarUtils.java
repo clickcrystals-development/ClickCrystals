@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.util;
 
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -17,11 +18,25 @@ public abstract class HotbarUtils {
      * @param item item to search
      */
     public static boolean search(Item item) {
-        for (int i = 0; i < 9; i ++) {
-            mc.player.getInventory().scrollInHotbar(1);
-            if (mc.player.getInventory().getStack(mc.player.getInventory().selectedSlot).isOf(item)) {
+        final PlayerInventory inv = mc.player.getInventory();
+        for (int i = 0; i <= 8; i ++) {
+            if (inv.getStack(i).isOf(item)) {
+                inv.selectedSlot = i;
                 return true;
             }
+        }
+        return false;
+    }
+
+    /**
+     * Checks of the hotbar has an item
+     * @param item item
+     * @return has item
+     */
+    public static boolean has(Item item) {
+        final PlayerInventory inv = mc.player.getInventory();
+        for (int i = 0; i <= 8; i ++) {
+            if (inv.getStack(i).isOf(item)) return true;
         }
         return false;
     }

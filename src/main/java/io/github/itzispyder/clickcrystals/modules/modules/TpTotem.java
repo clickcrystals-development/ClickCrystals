@@ -12,7 +12,7 @@ import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 
 public class TpTotem extends Module implements Listener {
 
-    private long cooldown;
+    private static long cooldown;
 
     /**
      * Module constructor
@@ -38,10 +38,10 @@ public class TpTotem extends Module implements Listener {
     @EventHandler
     private void onRightClick(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerInteractItemC2SPacket) {
-            if (!mc.options.useKey.isPressed()) return;
             ItemStack item = mc.player.getStackInHand(mc.player.getActiveHand());
             Item type = item.getItem();
             if (!HotbarUtils.nameContains("totem")) return;
+            if (!HotbarUtils.has(Items.ENDER_PEARL)) return;
             if (cooldown > System.currentTimeMillis()) return;
             cooldown = System.currentTimeMillis() + (50 * 4);
 

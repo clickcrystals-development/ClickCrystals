@@ -50,7 +50,7 @@ public class ClickCrystal extends Module implements Listener {
 
             if (HotbarUtils.isHolding(Items.END_CRYSTAL)) {
                 e.setCancelled(true);
-                BlockUtils.interact(pos, Direction.UP);
+                BlockUtils.interact(pos,packet.getDirection());
 
                 // DO NOT USE THIS AREA, ONLY ENABLE THIS WHEN HACKING IS ALLOWED!
                 // ANTICHEATS WILL ALSO GET YOU IF YOU ENABLE THIS LOWER PART
@@ -58,7 +58,7 @@ public class ClickCrystal extends Module implements Listener {
                 if (!auto.isEnabled()) return;
                 new ScheduledTask(() -> {
                     InteractionUtils.doAttack();
-                }).runDelayedTask(Randomizer.rand(50,150));
+                }).runDelayedTask(Randomizer.rand(50,100));
             }
         }
     }
