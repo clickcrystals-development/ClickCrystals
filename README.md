@@ -6,14 +6,12 @@ Your ultimated crystal PvP assistance, ClickCrystals at your service.
 
 ## Newest Changes
 ```yml
-Minecraft Version: 1.19.2 
-Mod Version: 0.6.4 
-Updated to: 0.6.4
+Minecraft: 1.19.4
+Mod: 0.6.5
+Updated to: stayed-the-same
 
-Added new modules:
-- NoResoucePack: blocks server resource packs
-- NoServerParticles: blocks server particles (can prevent particle crashes)
-- TpTotem: TpBlade module but with totems.
+- Added support for 1.19.4!
+- 1.19.4 users enjoy!
 ```
 
 ## How Do I Use ClickCrystals?
