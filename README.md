@@ -1,5 +1,5 @@
 
-# ![ICON](https://github.com/ItziSpyder/ClickCrystals/blob/main/src/main/resources/assets/clickcrystals/icon.png) ClickCrystals [1.19.3]
+# ![ICON](https://github.com/ItziSpyder/ClickCrystals/blob/main/src/main/resources/assets/clickcrystals/icon.png) ClickCrystals [1.19.4]
 Your ultimated crystal PvP assistance, ClickCrystals at your service.
 
 ---------------------------------------------------------------
