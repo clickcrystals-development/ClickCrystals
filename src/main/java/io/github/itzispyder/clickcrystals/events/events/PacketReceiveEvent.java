@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.events.events;
 
 import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.events.Event;
-import net.minecraft.network.Packet;
+import net.minecraft.network.packet.Packet;
 
 /**
  * Called when the client receives a packet for the server

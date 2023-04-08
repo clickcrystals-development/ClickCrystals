@@ -15,8 +15,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GameRenderer.class)
 public abstract class GameRenderMixin {
 
-    @Inject(method = "bobViewWhenHurt", at = @At("HEAD"), cancellable = true)
-    public void onHurtViewBob(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+    @Inject(method = "tiltViewWhenHurt", at = @At("HEAD"), cancellable = true)
+    public void onHurtViewTilt(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+        Module noHurtCam = Module.get(NoHurtCam.class);
+        if (noHurtCam.isEnabled()) ci.cancel();
+    }
+
+    @Inject(method = "bobView", at = @At("HEAD"), cancellable = true)
+    public void onViewBob(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         Module noHurtCam = Module.get(NoHurtCam.class);
         if (noHurtCam.isEnabled()) ci.cancel();
     }

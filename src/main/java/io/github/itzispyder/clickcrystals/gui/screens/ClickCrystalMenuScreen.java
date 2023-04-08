@@ -10,7 +10,6 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.GridWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
@@ -61,8 +60,6 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
     @Override
     public void init() {
         super.init();
-        GridWidget grid = new GridWidget();
-        GridWidget.Adder adder = grid.createAdder(2);
 
         TexturedButtonWidget title = new TexturedButtonWidget(
                 25,
@@ -78,7 +75,7 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
                 button -> {
 
                 });
-        adder.add(title,2);
+        super.addDrawableChild(title);
 
         int y = 0, x = 0;
         List<Module> sortedModules = system.modules().values()
@@ -92,17 +89,15 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
                 y = 1;
             }
 
-            ButtonWidget widget = ButtonWidget.builder(Text.literal(module.getCurrentStateLabel()), button -> {
-                module.setEnabled(!module.isEnabled(),false);
-                button.setMessage(Text.literal(module.getCurrentStateLabel()));
-            }).position(MARGIN_LEFT + ((BUTTON_WIDTH + GAP) * x),MARGIN_TOP + ((BUTTON_HEIGHT + GAP) * y))
+            ButtonWidget widget = ButtonWidget.builder(Text.literal(module.getCurrentStateLabel()), (button) -> {
+                        module.setEnabled(!module.isEnabled(),false);
+                        button.setMessage(Text.literal(module.getCurrentStateLabel()));
+                    }).position(MARGIN_LEFT + ((BUTTON_WIDTH + GAP) * x),MARGIN_TOP + ((BUTTON_HEIGHT + GAP) * y))
                     .size(BUTTON_WIDTH,BUTTON_HEIGHT)
+                    .tooltip(Tooltip.of(Text.literal(module.getHelp())))
                     .build();
-            widget.setTooltip(Tooltip.of(Text.of(module.getHelp())));
-            adder.add(widget);
+            super.addDrawableChild(widget);
         }
-
-        super.addDrawableChild(grid);
     }
 
     /**

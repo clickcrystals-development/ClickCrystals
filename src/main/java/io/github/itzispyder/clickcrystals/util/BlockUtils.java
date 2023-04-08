@@ -7,6 +7,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -38,13 +39,14 @@ public abstract class BlockUtils {
 
     /**
      * Interact a block
-     * @param vec 3d vector
+     * @param vec3d 3d vector
      * @param dir block face direction
      * @return action result
      */
-    public static ActionResult interact(Vec3d vec, Direction dir) {
-        BlockPos pos = new BlockPos(vec);
-        BlockHitResult result = new BlockHitResult(vec, dir,pos,false);
+    public static ActionResult interact(Vec3d vec3d, Direction dir) {
+        Vec3i vec3i = new Vec3i((int) vec3d.x, (int) vec3d.y, (int) vec3d.z);
+        BlockPos pos = new BlockPos(vec3i);
+        BlockHitResult result = new BlockHitResult(vec3d, dir,pos,false);
         return mc.interactionManager.interactBlock(mc.player,mc.player.getActiveHand(),result);
     }
 
@@ -63,7 +65,9 @@ public abstract class BlockUtils {
      * @return match
      */
     public static boolean matchTargetBlock(Block block) {
-        BlockPos pos = new BlockPos(mc.crosshairTarget.getPos());
+        Vec3d vec3d = mc.crosshairTarget.getPos();
+        Vec3i vec3i = new Vec3i((int) vec3d.x, (int) vec3d.y, (int) vec3d.z);
+        BlockPos pos = new BlockPos(vec3i);
         return matchBlock(pos,block);
     }
 
