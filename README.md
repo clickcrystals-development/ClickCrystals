@@ -7,11 +7,16 @@ Your ultimated crystal PvP assistance, ClickCrystals at your service.
 ## Newest Changes
 ```yml
 Minecraft: 1.19.4
-Mod: 0.6.5
-Updated to: stayed-the-same
+Mod: 1.19.4-0.7.0
+Updated to: 1.19.4-0.7.0
 
-- Added support for 1.19.4!
-- 1.19.4 users enjoy!
+Added new modules:
+- AnchorSearch: Searches your hotbar for anchors when you right click an end crystal on a non-crystallable block.
+- ToolSwitcher: Auto switches to the efficient tool when you try to break a block.
+
+Changes in menu:
+- Smaller button widgets for easier configuration
+- Easier to read button text
 ```
 
 ## How Do I Use ClickCrystals?
