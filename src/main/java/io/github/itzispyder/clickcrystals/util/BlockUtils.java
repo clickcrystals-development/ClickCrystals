@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -82,5 +83,9 @@ public abstract class BlockUtils {
         World world = mc.player.getWorld();
         BlockState state = world.getBlockState(pos);
         return state != null && state.isOf(block);
+    }
+
+    public static boolean isCrystallabe(BlockPos pos) {
+        return matchBlock(pos,Blocks.OBSIDIAN) || matchBlock(pos,Blocks.BEDROCK);
     }
 }

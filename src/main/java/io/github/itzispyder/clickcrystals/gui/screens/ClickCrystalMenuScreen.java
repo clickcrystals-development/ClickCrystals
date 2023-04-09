@@ -39,12 +39,12 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
             KEY_CATEGORY
     ));
     public static final int
-            MAX_ROW_PER_COLUMN = 6,
+            MAX_ROW_PER_COLUMN = 7,
             MARGIN_TOP = 80,
             MARGIN_LEFT = 25,
             GAP = 3,
-            BUTTON_HEIGHT = 18,
-            BUTTON_WIDTH = 130;
+            BUTTON_HEIGHT = 14,
+            BUTTON_WIDTH = 90;
 
     /**
      * Constructs a new menu screen for the module screen
@@ -75,7 +75,7 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
                 button -> {
 
                 });
-        super.addDrawableChild(title);
+        super.addDrawable(title);
 
         int y = 0, x = 0;
         List<Module> sortedModules = system.modules().values()

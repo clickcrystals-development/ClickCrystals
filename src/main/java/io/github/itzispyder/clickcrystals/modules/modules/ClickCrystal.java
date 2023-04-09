@@ -9,11 +9,9 @@ import io.github.itzispyder.clickcrystals.util.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.Randomizer;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 
 /**
  * ClickCrystal module
@@ -46,7 +44,7 @@ public class ClickCrystal extends Module implements Listener {
         if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
             BlockPos pos = packet.getPos();
-            if (!(BlockUtils.matchBlock(pos,Blocks.OBSIDIAN) || BlockUtils.matchBlock(pos,Blocks.BEDROCK))) return;
+            if (!BlockUtils.isCrystallabe(pos)) return;
 
             if (HotbarUtils.isHolding(Items.END_CRYSTAL)) {
                 e.setCancelled(true);

@@ -50,6 +50,11 @@ public abstract class Module implements Toggleable, Serializable {
         return name;
     }
 
+    public String getNameLimited() {
+        if (name.length() <= 13) return name;
+        return name.substring(0,11) + "...";
+    }
+
     /**
      * Gets the name of the module, but in a format that can be saved as a file and
      * without any special characters.
@@ -104,7 +109,7 @@ public abstract class Module implements Toggleable, Serializable {
      * @return label
      */
     public String getCurrentStateLabel() {
-            return "§b" + name + "§7: " + getToggledStateMessage();
+        return (enabled ? "§b" : "§7") + getNameLimited();
     }
 
     /**

@@ -9,7 +9,6 @@ import io.github.itzispyder.clickcrystals.util.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.Randomizer;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -37,7 +36,7 @@ public class CrystalSearch extends Module implements Listener {
         if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
             BlockPos pos = packet.getPos();
-            if (!(BlockUtils.matchBlock(pos, Blocks.OBSIDIAN) || BlockUtils.matchBlock(pos,Blocks.BEDROCK))) return;
+            if (!BlockUtils.isCrystallabe(pos)) return;
             if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
 
             if (HotbarUtils.nameContains("obsidian") || HotbarUtils.nameContains("totem") || HotbarUtils.nameContains("sword")) {

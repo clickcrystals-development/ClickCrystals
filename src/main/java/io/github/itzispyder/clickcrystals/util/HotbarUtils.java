@@ -5,6 +5,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 /**
@@ -78,5 +81,32 @@ public abstract class HotbarUtils {
     public static boolean nameContains(String contains, Hand hand) {
         ItemStack item = mc.player.getStackInHand(hand);
         return item != null && item.getTranslationKey().toLowerCase().contains(contains.toLowerCase());
+    }
+
+    public static void forEachItem(Consumer<ItemStack> run) {
+        for (int i = 0; i < 9; i ++) {
+            ItemStack item = mc.player.getInventory().getStack(i);
+            if (item == null) continue;
+            if (item.isEmpty()) continue;
+            run.accept(item);
+        }
+    }
+
+    public static void forEachItem(BiConsumer<Integer,ItemStack> run) {
+        for (int i = 0; i < 9; i ++) {
+            ItemStack item = mc.player.getInventory().getStack(i);
+            if (item == null) continue;
+            if (item.isEmpty()) continue;
+            run.accept(i,item);
+        }
+    }
+
+    public static ItemStack[] getContents() {
+        PlayerInventory inv = mc.player.getInventory();
+        ItemStack[] stacks = new ItemStack[]{};
+        for (int i = 0; i < 9; i++) {
+            stacks[i] = inv.getStack(i);
+        }
+        return stacks;
     }
 }

@@ -6,7 +6,6 @@ import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
@@ -39,10 +38,10 @@ public class ObsidianSearch extends Module implements Listener {
             cooldown = System.currentTimeMillis() + (50 * 4);
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
             BlockPos pos = packet.getPos();
-            if (BlockUtils.matchBlock(pos,Blocks.OBSIDIAN) || BlockUtils.matchBlock(pos,Blocks.BEDROCK)) return;
+            if (BlockUtils.isCrystallabe(pos)) return;
             if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
 
-            if (HotbarUtils.nameContains("crystal") || HotbarUtils.nameContains("totem") || HotbarUtils.nameContains("sword")) {
+            if (HotbarUtils.nameContains("crystal") || HotbarUtils.nameContains("totem") || HotbarUtils.nameContains("sword") || HotbarUtils.nameContains("anchor")) {
                 e.setCancelled(true);
                 HotbarUtils.search(Items.OBSIDIAN);
                 BlockUtils.interact(pos,packet.getDirection());
