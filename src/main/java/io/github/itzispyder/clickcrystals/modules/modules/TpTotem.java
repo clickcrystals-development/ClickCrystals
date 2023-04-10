@@ -19,7 +19,7 @@ public class TpTotem extends Module implements Listener {
      * Module constructor
      */
     public TpTotem() {
-        super("TpTotem", Categories.MISC,"TpBlade, but with a totem.");
+        super("TpTotem", Categories.CRYSTALLING,"TpBlade, but with a totem.");
     }
 
     @Override

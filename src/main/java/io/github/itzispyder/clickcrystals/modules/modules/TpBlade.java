@@ -22,7 +22,7 @@ public class TpBlade extends Module implements Listener {
      * Module constructor
      */
     public TpBlade() {
-        super("TpBlade", Categories.MISC,"Right click your sword to switch to the nearest pearl in your hotbar.");
+        super("TpBlade", Categories.CRYSTALLING,"Right click your sword to switch to the nearest pearl in your hotbar.");
     }
 
     @Override

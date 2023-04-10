@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.events.EventBus;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -45,6 +46,14 @@ public class ClickCrystalsSystem implements Serializable {
         if (module == null) return;
         modules.remove(module.getClass());
         modules.put(module.getClass(),module);
+    }
+
+    /**
+     * Registers a hud
+     * @param hudRenderer hud render callback
+     */
+    public void addHud(HudRenderCallback hudRenderer) {
+        HudRenderCallback.EVENT.register(hudRenderer);
     }
 
     /**

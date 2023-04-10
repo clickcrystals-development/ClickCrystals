@@ -5,6 +5,8 @@ import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.Configuration;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
+import io.github.itzispyder.clickcrystals.gui.hud.ClickCrystalIconHud;
+import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalMenuScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.*;
@@ -61,7 +63,13 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new NoResourcePack());
         system.addModule(new ToolSwitcher());
         system.addModule(new AnchorSearch());
+        system.addModule(new ClickCrystalHud());
+        system.addModule(new ModuleListHud());
         Module.loadConfigModules();
+
+        // Hud
+        system.addHud(new ClickCrystalIconHud());
+        system.addHud(new ModuleListTextHud());
     }
 
     /**
