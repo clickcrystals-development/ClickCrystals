@@ -7,16 +7,14 @@ Your ultimated crystal PvP assistance, ClickCrystals at your service.
 ## Newest Changes
 ```yml
 Minecraft: 1.19.4
-Mod: 1.19.4-0.7.0
-Updated to: 1.19.4-0.7.0
+Mod: 1.19.4-0.7.1
+Updated to: 1.19.4-0.7.1
 
-Added new modules:
-- AnchorSearch: Searches your hotbar for anchors when you right click an end crystal on a non-crystallable block.
-- ToolSwitcher: Auto switches to the efficient tool when you try to break a block.
+Revamped GUI
+- overhauled the overall looks of the GUI for module toggling
 
-Changes in menu:
-- Smaller button widgets for easier configuration
-- Easier to read button text
+Added Client-Side command:
+- added (on client side) command aliases for /gamemode (`/gmc`,`/gms`,`gma`,`gmsp`)
 ```
 
 ## How Do I Use ClickCrystals?
@@ -61,9 +59,9 @@ No, it is definetely not!
 
 ## For this Mod You Will Need
 ```yml
-Minecraft Java Edition: 1.19.3
+Minecraft Java Edition: 1.19.4
 Fabric Loader: 0.14.14 or higher
-Fabric API: 1.19.3
+Fabric API: 1.19.4
 To stop: complaining it is a cheat/macro.
 ```
 
