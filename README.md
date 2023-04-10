@@ -16,6 +16,7 @@ Revamped GUI
 Added Client-Side command:
 - added (on client side) command aliases for /gamemode (`/gmc`,`/gms`,`gma`,`gmsp`)
 ```
+![demo-menu](./assets/image/demo-menu.png)
 
 ## How Do I Use ClickCrystals?
 ```yml
