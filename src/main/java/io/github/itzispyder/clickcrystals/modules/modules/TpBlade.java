@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import net.minecraft.item.Item;
@@ -21,7 +22,7 @@ public class TpBlade extends Module implements Listener {
      * Module constructor
      */
     public TpBlade() {
-        super("TpBlade","Right click your sword to switch to the nearest pearl in your hotbar.");
+        super("TpBlade", Categories.MISC,"Right click your sword to switch to the nearest pearl in your hotbar.");
     }
 
     @Override

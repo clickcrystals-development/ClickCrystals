@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PacketReceiveEvent;
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import net.minecraft.network.packet.s2c.play.ParticleS2CPacket;
 
@@ -12,7 +13,7 @@ import net.minecraft.network.packet.s2c.play.ParticleS2CPacket;
 public class NoServerParticles extends Module implements Listener {
 
     public NoServerParticles() {
-        super("NoServerParticles","Blocks server to client particles. (May help prevent particle crashes)");
+        super("NoServerParticles", Categories.OPTIMIZATION,"Blocks server to client particles. (May help prevent particle crashes)");
     }
 
     @Override

@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.scheduler.ScheduledTask;
 import io.github.itzispyder.clickcrystals.util.BlockUtils;
@@ -18,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
 public class CrystalSearch extends Module implements Listener {
 
     public CrystalSearch() {
-        super("CrystalSearch","The opposite of ObsidianSearch.");
+        super("CrystalSearch", Categories.CRYSTALLING,"The opposite of ObsidianSearch.");
     }
 
     @Override

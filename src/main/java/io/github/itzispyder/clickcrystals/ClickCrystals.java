@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals;
 
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
-import io.github.itzispyder.clickcrystals.commands.commands.ClickCrystalToggleCommand;
+import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.Configuration;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
@@ -36,6 +36,10 @@ public final class ClickCrystals implements ModInitializer {
 
         // Commands
         system.addCommand(new ClickCrystalToggleCommand());
+        system.addCommand(new GmcCommand());
+        system.addCommand(new GmsCommand());
+        system.addCommand(new GmaCommand());
+        system.addCommand(new GmspCommand());
 
         // Module
         system.addModule(new ClickCrystal());

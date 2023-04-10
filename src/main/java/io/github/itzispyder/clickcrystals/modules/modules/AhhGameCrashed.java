@@ -1,8 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.modules;
 
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import net.minecraft.util.crash.CrashException;
-import net.minecraft.util.crash.CrashReport;
 
 /**
  * AhhGameCrashed module
@@ -10,14 +9,13 @@ import net.minecraft.util.crash.CrashReport;
 public class AhhGameCrashed extends Module {
 
     public AhhGameCrashed() {
-        super("AhhGameCrashed","\"oops, my game crashed i swear! rematch?\"");
+        super("AhhGameCrashed", Categories.MISC,"\"oops, my game crashed i swear! rematch?\"");
     }
 
     @Override
     protected void onEnable() {
         super.setEnabled(false);
-        CrashReport cr = new CrashReport("eeeEEEEeeeEe how did this happen", new IllegalStateException());
-        throw new CrashException(cr);
+        System.exit(-1);
     }
 
     @Override

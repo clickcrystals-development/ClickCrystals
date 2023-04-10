@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.scheduler.ScheduledTask;
 import io.github.itzispyder.clickcrystals.util.BlockUtils;
@@ -22,7 +23,7 @@ public class ClickCrystal extends Module implements Listener {
      * Module constructor
      */
     public ClickCrystal() {
-        super("ClickCrystal","Punch an obsidian block with an end crystal to place the end crystal.");
+        super("ClickCrystal", Categories.CRYSTALLING,"Punch an obsidian block with an end crystal to place the end crystal.");
     }
 
     @Override

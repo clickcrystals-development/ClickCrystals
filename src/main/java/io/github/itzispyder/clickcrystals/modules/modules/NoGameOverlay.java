@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.modules;
 
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 
 /**
@@ -8,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class NoGameOverlay extends Module {
 
     public NoGameOverlay() {
-        super("NoGameOverlay","See clearly under water and lava, and in blocks! No more overlays!");
+        super("NoGameOverlay", Categories.OPTIMIZATION,"See clearly under water and lava, and in blocks! No more overlays!");
     }
 
     @Override

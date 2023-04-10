@@ -20,14 +20,16 @@ public abstract class Module implements Toggleable, Serializable {
     protected static final ClickCrystalsSystem system = ClickCrystals.system;
     protected boolean enabled;
     private final String name, description, id;
+    private final Category category;
 
     /**
      * Module constructor
      * @param name name
      * @param description description
      */
-    public Module(String name, String description) {
+    public Module(String name, Category category, String description) {
         this.name = name;
+        this.category = category;
         this.description = description;
         this.id = name.toLowerCase().replaceAll("[^a-z0-9]","_");
     }
@@ -44,6 +46,10 @@ public abstract class Module implements Toggleable, Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 
     public String getName() {
@@ -93,7 +99,9 @@ public abstract class Module implements Toggleable, Serializable {
      * @return help message
      */
     public String getHelp() {
-        return " \n" + starter + "§f" + name + "\n" + "§7" + description + "\n ";
+        return " \n" + starter + "§f" + name +
+                "\n" + "§3Category: §b" + category.getName() +
+                "\n" + "§7" + description + "\n ";
     }
 
     /**

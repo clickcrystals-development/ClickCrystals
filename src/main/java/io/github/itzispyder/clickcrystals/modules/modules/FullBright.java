@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.modules;
 
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 
 /**
@@ -8,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class FullBright extends Module {
 
     public FullBright() {
-        super("FullBright","Gives you infinite night vision.");
+        super("FullBright", Categories.OPTIMIZATION,"Gives you infinite night vision.");
     }
 
     @Override

@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.modules;
 
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 
 /**
@@ -11,7 +12,7 @@ public class NoHurtCam extends Module {
      * Module constructor
      */
     public NoHurtCam() {
-        super("NoHurtCam","Stops your screen from bobbling when you take damage. Perfect for aiming well while being set on fire!");
+        super("NoHurtCam", Categories.MISC,"Stops your screen from bobbling when you take damage. Perfect for aiming well while being set on fire!");
     }
 
     @Override

@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PlayerAttackBlockCooldownEvent;
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 
 /**
@@ -14,7 +15,7 @@ public class NoBreakDelay extends Module implements Listener {
      * Module constructor
      */
     public NoBreakDelay() {
-        super("NoBreakDelay","Removes your block breaking cooldown.");
+        super("NoBreakDelay", Categories.DETECTABLE,"Removes your block breaking cooldown.");
     }
 
     @Override

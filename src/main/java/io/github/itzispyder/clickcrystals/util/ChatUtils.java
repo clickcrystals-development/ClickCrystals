@@ -26,4 +26,8 @@ public abstract class ChatUtils {
     public static void sendPrefixMessage(String message) {
         sendMessage(starter + message);
     }
+
+    public static void sendChatCommand(String cmd) {
+        mc.player.networkHandler.sendCommand(cmd);
+    }
 }
