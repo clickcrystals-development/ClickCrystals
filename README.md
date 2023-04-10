@@ -10,7 +10,7 @@ Minecraft: 1.19.4
 Mod: 1.19.4-0.7.1
 Updated to: 1.19.4-0.7.1
 
-Revamped GUI
+Revamped GUI:
 - overhauled the overall looks of the GUI for module toggling
 
 Added Client-Side command:
