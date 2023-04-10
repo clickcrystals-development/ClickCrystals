@@ -12,6 +12,11 @@ Updated to: 1.19.4-0.7.1
 
 Revamped GUI:
 - overhauled the overall looks of the GUI for module toggling
+- Added social links for ClickCrystals!
+
+Added Modules:
+- ModuleListHud: adds a hud that displays all of your enabled modules
+- ClickCrystalHud: displays a little ClickCrystals icon on your in game screen for ClickCrystal fans 🥳 
 
 Added Client-Side command:
 - added (on client side) command aliases for /gamemode (`/gmc`,`/gms`,`gma`,`gmsp`)
@@ -45,6 +50,8 @@ Modules:
    SpectatorSight: Render entities as you do in spectator gamemode.
    TpBlade: Searches your hotbar for ender pearls after right clicking your sword item.
    TpTotem: TpBlade but with a totem.
+   ToolSwitcher: Switches to the most effieient tool for breaking blocks
+   AnchorSearch: Searches your hotbar for anchors when you right click a block if you end crystal.
 ```
 
 ## But isn't this cheating?
