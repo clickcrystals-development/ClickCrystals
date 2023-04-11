@@ -46,9 +46,8 @@ Modules:
 ```
 
 ## But isn't this cheating?
-No, it is definetely not!
-- This mod does not support macroing, cheating, etc.
-- This mod aims to improve your performance in cpvp without ruining its pure experience!
+Yes, it is. (On some servers)
+- This mod is a macro, just built-in to the game (so instead of emulating clicks, it does what the game does when it detects a click)
 - This mod has been tested on:
   - play.`PvPLegacy`.net
   - `McPvP`.club
