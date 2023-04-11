@@ -72,6 +72,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new AnchorSearch());
         system.addModule(new ClickCrystalHud());
         system.addModule(new ModuleListHud());
+        system.addModule(new SilkTouch());
         Module.loadConfigModules();
 
         // Hud
