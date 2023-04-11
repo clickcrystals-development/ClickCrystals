@@ -18,6 +18,10 @@ public abstract class ChatUtils {
          if (message == null) return;
          mc.player.sendMessage(Text.literal(message));
     }
+    public static void sendChat(String message) {
+        if (message == null) return;
+        mc.player.networkHandler.sendChatMessage(message);
+    }
 
     /**
      * Sends a message to the player client-sided, but with the mod prefix
