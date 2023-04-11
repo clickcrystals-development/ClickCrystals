@@ -30,11 +30,11 @@ public class SetScreenEvent extends Event implements Cancellable {
 
     @Override
     public void setCancelled(boolean cancelled) {
-
+        this.cancelled = cancelled;
     }
 
     @Override
     public boolean isCancelled() {
-        return false;
+        return cancelled;
     }
 }

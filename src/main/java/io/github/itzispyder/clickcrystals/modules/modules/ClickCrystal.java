@@ -36,10 +36,6 @@ public class ClickCrystal extends Module implements Listener {
         system.removeListener(this);
     }
 
-    /**
-     * Module function
-     * @param e packet send event
-     */
     @EventHandler
     private void onSendPacket(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerActionC2SPacket packet) {

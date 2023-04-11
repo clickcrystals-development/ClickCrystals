@@ -4,7 +4,9 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "CameraMixin",
+    "ChatHudMixin",
     "ClientPlayerInteractionMixin",
+    "ClientPlayNetworkHandlerMixin",
     "GameHudMixin",
     "GameOverlayMixin",
     "GameRenderMixin",

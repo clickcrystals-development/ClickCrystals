@@ -30,4 +30,8 @@ public abstract class ChatUtils {
     public static void sendChatCommand(String cmd) {
         mc.player.networkHandler.sendCommand(cmd);
     }
+
+    public static void sendChatMessage(String msg) {
+        mc.player.networkHandler.sendChatMessage(msg);
+    }
 }

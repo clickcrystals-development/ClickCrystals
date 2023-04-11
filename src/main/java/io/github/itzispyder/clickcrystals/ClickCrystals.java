@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.Configuration;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
+import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
 import io.github.itzispyder.clickcrystals.gui.hud.ClickCrystalIconHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalMenuScreen;
@@ -16,6 +17,9 @@ import net.minecraft.client.MinecraftClient;
 
 import java.io.File;
 
+/**
+ * ClickCrystals main
+ */
 public final class ClickCrystals implements ModInitializer {
 
     public static final File configFile = new File("ClickCrystalsClient/game_config.dat");
@@ -35,6 +39,9 @@ public final class ClickCrystals implements ModInitializer {
         // Mod initialization
         System.out.println(prefix + "Loading ClickCrystals by ImproperIssues");
         this.startTicking();
+
+        // Listeners
+        system.addListener(new ChatEventListener());
 
         // Commands
         system.addCommand(new ClickCrystalToggleCommand());
