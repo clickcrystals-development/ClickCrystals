@@ -29,7 +29,7 @@ public class NoLoadingScreen extends Module implements Listener {
 
     @EventHandler
     private void onScreenChange(SetScreenEvent e) {
-        if (!(e.getScreen() instanceof ConnectScreen || e.getScreen() instanceof DownloadingTerrainScreen)) return;
+        if (!(e.getScreen() instanceof DownloadingTerrainScreen)) return;
         e.setCancelled(true);
     }
 }
