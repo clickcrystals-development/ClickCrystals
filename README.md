@@ -41,6 +41,8 @@ Modules:
    SpectatorSight: Render entities as you do in spectator gamemode.
    TpBlade: Searches your hotbar for ender pearls after right clicking your sword item.
    TpTotem: TpBlade but with a totem.
+   ToolSwitcher: Switches to the most effieient tool for breaking blocks
+   AnchorSearch: Searches your hotbar for anchors when you right click a block if you end crystal.
 ```
 
 ## But isn't this cheating?
