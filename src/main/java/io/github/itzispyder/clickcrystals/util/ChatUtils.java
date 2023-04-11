@@ -18,10 +18,6 @@ public abstract class ChatUtils {
          if (message == null) return;
          mc.player.sendMessage(Text.literal(message));
     }
-    public static void sendChat(String message) {
-        if (message == null) return;
-        mc.player.networkHandler.sendChatMessage(message);
-    }
 
     /**
      * Sends a message to the player client-sided, but with the mod prefix
@@ -31,10 +27,18 @@ public abstract class ChatUtils {
         sendMessage(starter + message);
     }
 
+    /**
+     * Sends the chat command as if the player has typed it
+     * @param cmd command
+     */
     public static void sendChatCommand(String cmd) {
         mc.player.networkHandler.sendCommand(cmd);
     }
 
+    /**
+     * Sends a chat message as if the player has typed it
+     * @param msg message
+     */
     public static void sendChatMessage(String msg) {
         mc.player.networkHandler.sendChatMessage(msg);
     }
