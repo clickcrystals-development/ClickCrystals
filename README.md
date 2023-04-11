@@ -7,14 +7,10 @@ Your ultimated crystal PvP assistance, ClickCrystals at your service.
 ## Newest Changes
 ```yml
 Minecraft: 1.19.4
-Mod: 1.19.4-0.7.1
-Updated to: 1.19.4-0.7.1
+Mod: 1.19.4-0.7.2
+Updated to: 1.19.4-0.7.2
 
-Revamped GUI:
-- overhauled the overall looks of the GUI for module toggling
-
-Added Client-Side command:
-- added (on client side) command aliases for /gamemode (`/gmc`,`/gms`,`gma`,`gmsp`)
+- Added new event listeners and added a hotfix for GUI menu.
 ```
 ![demo-menu](./assets/image/demo-menu.png)
 
