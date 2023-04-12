@@ -2,6 +2,8 @@
 # ![ICON](https://github.com/ItziSpyder/ClickCrystals/blob/main/src/main/resources/assets/clickcrystals/icon.png) ClickCrystals [1.19.4]
 Your ultimated crystal PvP assistance, ClickCrystals at your service.
 
+Special Thanks to OgreNetworks for their wonder mod showcase!
+https://www.youtube.com/watch?v=M95TDqW2p2k
 ---------------------------------------------------------------
 
 ## Newest Changes
