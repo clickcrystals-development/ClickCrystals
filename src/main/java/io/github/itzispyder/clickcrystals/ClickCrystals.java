@@ -39,7 +39,25 @@ public final class ClickCrystals implements ModInitializer {
         // Mod initialization
         System.out.println(prefix + "Loading ClickCrystals by ImproperIssues");
         this.startTicking();
+        this.init();
 
+    }
+
+    /**
+     * Start click tick events
+     */
+    public void startTicking() {
+        ClientTickEvents.START_CLIENT_TICK.register(client -> {
+            ClientTickStartEvent event = new ClientTickStartEvent();
+            system.eventBus.pass(event);
+        });
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            ClientTickEndEvent event = new ClientTickEndEvent();
+            system.eventBus.pass(event);
+        });
+    }
+
+    public void init() {
         // Listeners
         system.addListener(new ChatEventListener());
 
@@ -73,6 +91,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new ClickCrystalHud());
         system.addModule(new ModuleListHud());
         system.addModule(new SilkTouch());
+        system.addModule(new DiscordPresence());
         Module.loadConfigModules();
 
         // Hud
@@ -80,17 +99,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addHud(new ModuleListTextHud());
     }
 
-    /**
-     * Start click tick events
-     */
-    public void startTicking() {
-        ClientTickEvents.START_CLIENT_TICK.register(client -> {
-            ClientTickStartEvent event = new ClientTickStartEvent();
-            system.eventBus.pass(event);
-        });
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            ClientTickEndEvent event = new ClientTickEndEvent();
-            system.eventBus.pass(event);
-        });
+    public void initRpc() {
+
     }
 }
