@@ -14,12 +14,13 @@ import net.minecraft.network.packet.s2c.play.DisconnectS2CPacket;
 
 public class DiscordPresence extends Module implements Listener {
 
-    private static DiscordRichPresence rpc = new DiscordRichPresence();
+    private final DiscordRichPresence rpc;
     private long start;
     private boolean running;
 
     public DiscordPresence() {
         super("DiscordPresence", Categories.CRYSTALLING,"Show off to your friends that you have this wonderful mod!");
+        this.rpc = new DiscordRichPresence();
     }
 
     @Override
@@ -77,10 +78,7 @@ public class DiscordPresence extends Module implements Listener {
 
     @EventHandler
     public void onJoin(PacketReceiveEvent e) {
-        if (
-                e.getPacket() instanceof LoginSuccessS2CPacket ||
-                e.getPacket() instanceof DisconnectS2CPacket
-        ) {
+        if (e.getPacket() instanceof LoginSuccessS2CPacket || e.getPacket() instanceof DisconnectS2CPacket) {
             this.update();
         }
     }
