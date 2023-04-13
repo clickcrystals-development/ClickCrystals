@@ -91,7 +91,6 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new ClickCrystalHud());
         system.addModule(new ModuleListHud());
         system.addModule(new SilkTouch());
-        system.addModule(new DiscordPresence());
         Module.loadConfigModules();
 
         // Hud
