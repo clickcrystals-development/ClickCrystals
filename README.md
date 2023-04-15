@@ -52,7 +52,6 @@ Yes, it is. (But only on some servers)
 - Most of the time it isn't, this mod aims to improve your performance in cpvp without ruining its pure experience!
 - This mod is a macro, just built-in to the game (so instead of emulating clicks, it does what the game does when it detects a click)
 - This mod has been tested on:
-  - play.`PvPLegacy`.net
   - `McPvP`.club
   - west.`UsPvP`.org
   - east.`UsPvP`.org
