@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "clickcrystals",
-  "version": "1.19.4-0.7.2",
+  "version": "1.19.4-0.7.3",
   "name": "ClickCrystals",
   "description": "Allows you to crystal easier, by only using left click to place and break crystals. Do '/cctoggle' !",
   "authors": [

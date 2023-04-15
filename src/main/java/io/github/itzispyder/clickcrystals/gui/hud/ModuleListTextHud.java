@@ -16,6 +16,9 @@ import java.util.List;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
+/**
+ * Hud for enabled modules
+ */
 @Environment(EnvType.CLIENT)
 public class ModuleListTextHud implements HudRenderCallback {
 
