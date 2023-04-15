@@ -84,13 +84,13 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new CrystalSearch());
         system.addModule(new NoServerParticles());
         system.addModule(new TpTotem());
-        system.addModule(new AhhGameCrashed());
         system.addModule(new NoResourcePack());
         system.addModule(new ToolSwitcher());
         system.addModule(new AnchorSearch());
         system.addModule(new ClickCrystalHud());
         system.addModule(new ModuleListHud());
         system.addModule(new SilkTouch());
+        system.addModule(new ParticleBloom());
         Module.loadConfigModules();
 
         // Hud

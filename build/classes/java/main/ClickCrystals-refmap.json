@@ -6,6 +6,9 @@
     "io/github/itzispyder/clickcrystals/mixins/LivingEntityClassMixin": {
       "getHandSwingDuration": "Lnet/minecraft/class_1309;method_6028()I"
     },
+    "io/github/itzispyder/clickcrystals/mixins/ParticleMixin": {
+      "getBrightness": "Lnet/minecraft/class_703;method_3068(F)I"
+    },
     "io/github/itzispyder/clickcrystals/mixins/PacketListenerMixin": {
       "send*": "Lnet/minecraft/class_2535;method_10743(Lnet/minecraft/class_2596;)V",
       "handlePacket": "Lnet/minecraft/class_2535;method_10759(Lnet/minecraft/class_2596;Lnet/minecraft/class_2547;)V"
@@ -56,6 +59,9 @@
       },
       "io/github/itzispyder/clickcrystals/mixins/LivingEntityClassMixin": {
         "getHandSwingDuration": "Lnet/minecraft/class_1309;method_6028()I"
+      },
+      "io/github/itzispyder/clickcrystals/mixins/ParticleMixin": {
+        "getBrightness": "Lnet/minecraft/class_703;method_3068(F)I"
       },
       "io/github/itzispyder/clickcrystals/mixins/PacketListenerMixin": {
         "send*": "Lnet/minecraft/class_2535;method_10743(Lnet/minecraft/class_2596;)V",

@@ -9,6 +9,10 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
@@ -20,9 +24,13 @@ public class ModuleListTextHud implements HudRenderCallback {
         Module hudModule = Module.get(ModuleListHud.class);
         if (!hudModule.isEnabled()) return;
 
+        List<Module> modules = new ArrayList<>(system.modules().values().stream()
+                .filter(Module::isEnabled)
+                .sorted(Comparator.comparing(module -> ((Module) module).getId().length()).reversed())
+                .toList());
+
         int i = 10;
-        for (Module module : system.modules().values()) {
-            if (!module.isEnabled()) continue;
+        for (Module module : modules) {
             DrawableHelper.drawTextWithShadow(
                     matrixStack,
                     mc.textRenderer,
