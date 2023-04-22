@@ -19,7 +19,7 @@ public class Sword2Obsidian extends Module implements Listener {
     private static long cooldown;
 
     public Sword2Obsidian() {
-        super("Sword2Obsidian", Categories.CRYSTALLING,"Searches your hotbar for an obsidian when you left click a non-obsidian block with a crystal.");
+        super("Sword2Obsidian", Categories.CRYSTALLING,"Punch the ground with a sword to switch to obsidian.");
     }
 
     @Override

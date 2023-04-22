@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 public class Sword2Crystal extends Module implements Listener {
 
     public Sword2Crystal() {
-        super("Sword2Crystal", Categories.CRYSTALLING,"The opposite of ObsidianSearch.");
+        super("Sword2Crystal", Categories.CRYSTALLING,"Whenever you punch obsidian/bedrock with a sword, it will switch to a crystal.");
     }
 
     @Override

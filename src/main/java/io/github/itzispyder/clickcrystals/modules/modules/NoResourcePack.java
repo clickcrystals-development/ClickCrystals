@@ -16,7 +16,7 @@ import net.minecraft.network.packet.s2c.play.ResourcePackSendS2CPacket;
 public class NoResourcePack extends Module implements Listener {
 
     public NoResourcePack() {
-        super("NoResourcePack", Categories.MISC,"Blocks server required and suggested resource packs!");
+        super("NoResourcePack", Categories.MISC,"Prevents servers from forcing you to download their resource pack.");
     }
 
     @Override

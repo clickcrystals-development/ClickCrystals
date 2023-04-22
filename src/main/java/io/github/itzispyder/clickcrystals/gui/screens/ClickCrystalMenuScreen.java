@@ -109,7 +109,7 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
                 Categories.ANCHORING,1,
                 Categories.MISC,2,
                 Categories.OPTIMIZATION,3,
-                Categories.DETECTABLE,4
+                Categories.OTHER,4
         ).getMap();
 
         categoryMap.forEach((category,i) -> {

@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class TrueSight extends Module {
 
     public TrueSight() {
-        super("TrueSight", Categories.MISC,"Renders invisible entities the way you seem them in spectator mode. Never get sneak attacked again!");
+        super("TrueSight", Categories.MISC,"Renders entities as if you were in spectator mode.");
     }
 
     @Override

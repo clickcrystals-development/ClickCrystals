@@ -23,7 +23,7 @@ public class Anchor2Glowstone extends Module implements Listener {
      * Module constructor
      */
     public Anchor2Glowstone() {
-        super("Anchor2Glowstone", Categories.ANCHORING,"Searches your hotbar for glowstone after clicking an anchor.");
+        super("Anchor2Glowstone", Categories.ANCHORING,"Whenever you place an anchor, switch to glowstone then back after you charge it.");
     }
 
     @Override
