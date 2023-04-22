@@ -1,18 +1,17 @@
 
 # ![ICON](https://github.com/ItziSpyder/ClickCrystals/blob/main/src/main/resources/assets/clickcrystals/icon.png) ClickCrystals [1.19.4]
-Your ultimated crystal PvP assistance, ClickCrystals at your service.
+Because who needs right click anyways?
 
-#### Special Thanks to OgreNetworks for their wonderful mod showcase!
-#### https://www.youtube.com/watch?v=M95TDqW2p2k
 ---------------------------------------------------------------
 
 ## Newest Changes
 ```yml
 Minecraft: 1.19.4
-Mod: 1.19.4-0.7.2
+Mod: 1.19.4
 Updated to: 1.19.4-0.7.2
 
-- Added new event listeners and added a hotfix for GUI menu.
+- Nerfed the modules that people saw as macros.
+- Updated descriptions so they are accurate and friendly
 ```
 ![demo-menu](./assets/image/demo-menu.png)
 
@@ -25,37 +24,39 @@ KeyBindings:
 Commands:
    /cctoggle: <module> [on|off|help]
 ```
-```yml
-Modules: 
-   AhhGameCrashed: "oops game crashed, rematch?"
-   ClickCrystal: Punch a block of obsidian while holding an end crystal to place that crystal.
-   CrystalSearch: The opposite of obsidian search.
-   FullBright: Gives you infinite night vision, so you don't have to keep placing torches.
-   GlowstoneSearch: Searches your hotbar for glowstone after right clicking a respawn anchor item.
-   NoBreakDelay: Removes the annoying break delay between breaking two blocks.
-   NoGameOverlay: See clearly under lava, etc!
-   NoHurtCam: Play without damage tints!
-   NoLoadingScreen: No more loading screens!
-   NoResourcePack: Blocks server suggested and required resource packs!
-   NoServerParticles: Never get particle-crashed again!
-   ObsidianSearch: Search for obsidian after clicking a crystal.
-   SlowHandSwing: Swing your hands slowly and without attack cooldown animation!
-   SpectatorSight: Render entities as you do in spectator gamemode.
-   TpBlade: Searches your hotbar for ender pearls after right clicking your sword item.
-   TpTotem: TpBlade but with a totem.
-   ToolSwitcher: Switches to the most effieient tool for breaking blocks
-   AnchorSearch: Searches your hotbar for anchors when you right click a block if you end crystal.
-```
+|  Module  | Description |
+| ------------- |:-------------:|
+| ClickCrystal | Binds crystal place to left click.|
+| Sword2Crystal | Whenever you punch obsidian/bedrock with a sword, it will switch to a crystal.|
+| Sword2Obsidian | Punch the ground with a sword to switch to obsidian.|
+|Sword2Pearl | Right click your sword to switch to pearl slot.|
+|Totem2Pearl | Right click a totem to switch to pearl slot.|
+|Anchor2Glowstone|Whenever you place an anchor, switch to glowstone and back after you charge it.|
+|Crystal2Anchor|Right click the ground with a crystal to switch to a respawn anchor.|
+|IconHud|Renders the ClickCrystals logo on the screen.|
+|NoHurtCam|Removes the annoying screen shake.|
+|NoResourcePack| Prevents servers from forcing you to dowload their resource pack.|
+|SlowHandSwing| Makes your hand swing like mining fatigue.|
+|ToolSwitcher| Switches to the right tool for the job.|
+|TrueSight| Renders entities as if you were in spectator mode.|
+|FullBright| Increases your gamma so you can actually see.|
+|ModuleListHud| Shows your active modules on screen.|
+|NoGameOverlay| Stops annoying overlays from rendering.|
+|NoLoadingScreen| Prevents most loading screens from rendering.|
+|NoServerParticles| Prevents servers from sending you particle packets, stopping all particle crashes.|
+|BlockDelayRemover| Removes the delay between breaking a block and starting to break the next block.|
+|Silk Touch| Gives any tool you hold silk touch (Real)|
+
 
 ## But isn't this cheating?
-Yes, it is. (But only on some servers)
-- Most of the time it isn't, this mod aims to improve your performance in cpvp without ruining its pure experience!
-- This mod is a macro, just built-in to the game (so instead of emulating clicks, it does what the game does when it detects a click)
+It is not a cheat. It does not automate any task, for every action the mod preforms, you have to click.
+- This mod is not a macro, it does not click for you. It functions as a hotkey for slots.
 - This mod has been tested on:
   - `McPvP`.club
   - west.`UsPvP`.org
   - east.`UsPvP`.org
   - `OgreDupe`.minehut.gg
+  - play.`pvplegacy`.net
 
 ## For this Mod You Will Need
 ```yml
@@ -72,7 +73,7 @@ To stop: complaining it is a cheat/macro.
 
 ## SPECIAL THANKS AND SHOUTOUT TO
 ```yml
-TheTrouper: For all the help and support, and giving me ideas!
+OgreNetworks: For their wonderful mod showcase! https://www.youtube.com/watch?v=M95TDqW2p2k
+TheTrouper: For documenting the mod, and giving me ideas!
 breadandcarrots: For being a wonderful mod tester!
 ```
-

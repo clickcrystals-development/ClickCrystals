@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 public class Crystal2Anchor extends Module implements Listener {
 
     public Crystal2Anchor() {
-        super("Crystal2Anchor", Categories.ANCHORING,"Searches your hotbar for anchors when you right click an end crystal on a non-crystallable block.");
+        super("Crystal2Anchor", Categories.ANCHORING,"Right click the ground with a crystal to switch to your respawn anchor.");
     }
 
     @Override

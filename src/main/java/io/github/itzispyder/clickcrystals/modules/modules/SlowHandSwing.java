@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class SlowHandSwing extends Module {
 
     public SlowHandSwing() {
-        super("SlowHandSwing", Categories.MISC,"Swings your hand slowly like you have mining fatigue. Perfect for crystal pvp!");
+        super("SlowHandSwing", Categories.MISC,"Makes your hand swing as if you had mining fatigue.");
     }
 
     @Override

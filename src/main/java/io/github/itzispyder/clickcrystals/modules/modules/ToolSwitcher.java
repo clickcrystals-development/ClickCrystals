@@ -25,7 +25,7 @@ import java.util.Map;
 public class ToolSwitcher extends Module implements Listener {
 
     public ToolSwitcher() {
-        super("ToolSwitcher", Categories.MISC,"Auto switches to the efficient tool when you try to break a block.");
+        super("ToolSwitcher", Categories.MISC,"Switches to the right tool for mining a block.");
     }
 
 

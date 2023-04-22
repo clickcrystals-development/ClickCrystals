@@ -20,7 +20,7 @@ public class ClickCrystal extends Module implements Listener {
      * Module constructor
      */
     public ClickCrystal() {
-        super("ClickCrystal", Categories.CRYSTALLING,"Punch an obsidian block with an end crystal to place the end crystal.");
+        super("ClickCrystal", Categories.CRYSTALLING,"Binds end crystal place to left click.");
     }
 
     @Override
