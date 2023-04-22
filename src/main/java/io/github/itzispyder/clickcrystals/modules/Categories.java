@@ -18,7 +18,6 @@ public abstract class Categories {
 
 
     private static final Map<String,Category> categories = new HashMap<>();
-
     static {
         categories.put("Crystalling",CRYSTALLING);
         categories.put("Anchoring",ANCHORING);

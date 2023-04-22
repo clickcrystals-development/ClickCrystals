@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 public class Crystal2Anchor extends Module implements Listener {
 
     public Crystal2Anchor() {
-        super("Crystal2Anchor", Categories.ANCHORING,"Right click the ground with a crystal to switch to a respawn anchor.");
+        super("Crystal2Anchor", Categories.ANCHORING,"Right click the ground with a crystal to switch to your respawn anchor.");
     }
 
     @Override

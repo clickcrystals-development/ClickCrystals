@@ -20,7 +20,7 @@ public class Sword2Pearl extends Module implements Listener {
      * Module constructor
      */
     public Sword2Pearl() {
-        super("Sword2Pearl", Categories.CRYSTALLING,"Right click your sword to switch to pearl slot.");
+        super("Sword2Pearl", Categories.CRYSTALLING,"Right click your sword to switch to your pearl slot.");
     }
 
     @Override

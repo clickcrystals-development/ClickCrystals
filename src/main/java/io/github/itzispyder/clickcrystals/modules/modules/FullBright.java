@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class FullBright extends Module {
 
     public FullBright() {
-        super("FullBright", Categories.OPTIMIZATION,"Increases your gamma so you can actually see.");
+        super("FullBright", Categories.OPTIMIZATION,"Increases your gamma so you can actually see in caves.");
     }
 
     @Override

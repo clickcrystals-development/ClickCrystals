@@ -25,7 +25,7 @@ import java.util.Map;
 public class ToolSwitcher extends Module implements Listener {
 
     public ToolSwitcher() {
-        super("ToolSwitcher", Categories.MISC,"Switches to the right tool for the job.");
+        super("ToolSwitcher", Categories.MISC,"Switches to the right tool for mining a block.");
     }
 
 

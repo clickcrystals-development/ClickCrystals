@@ -15,7 +15,7 @@ public class BlockDelayRemover extends Module implements Listener {
      * Module constructor
      */
     public BlockDelayRemover() {
-        super("BlockDelayRemover", Categories.OTHER,"Removes the delay between breaking a block and starting to break the next block. (Some AntiCheats do not like this module)");
+        super("BlockDelayRemover", Categories.OTHER,"Removes the delay between breaking a block and starting to break the next block. (Some AntiCheats don't like this module)");
     }
 
     @Override

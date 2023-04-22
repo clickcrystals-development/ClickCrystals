@@ -17,7 +17,7 @@ public class Totem2Pearl extends Module implements Listener {
      * Module constructor
      */
     public Totem2Pearl() {
-        super("Totem2Pearl", Categories.CRYSTALLING,"Right click a totem to switch to pearl slot.");
+        super("Totem2Pearl", Categories.CRYSTALLING,"Right click with your totem to switch to pearl slot.");
     }
 
     @Override

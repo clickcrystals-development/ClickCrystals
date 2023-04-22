@@ -20,7 +20,7 @@ public class ClickCrystal extends Module implements Listener {
      * Module constructor
      */
     public ClickCrystal() {
-        super("ClickCrystal", Categories.CRYSTALLING,"Binds crystal place to left click.");
+        super("ClickCrystal", Categories.CRYSTALLING,"Binds end crystal place to left click.");
     }
 
     @Override

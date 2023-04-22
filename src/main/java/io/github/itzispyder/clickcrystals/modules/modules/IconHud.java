@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class IconHud extends Module {
 
     public IconHud() {
-        super("IconHud", Categories.MISC,"Renders the ClickCrystals logo on the screen.");
+        super("IconHud", Categories.MISC,"Renders the ClickCrystals logo on the screen. :)");
     }
 
     @Override

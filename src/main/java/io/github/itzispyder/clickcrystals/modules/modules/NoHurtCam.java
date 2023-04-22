@@ -12,7 +12,7 @@ public class NoHurtCam extends Module {
      * Module constructor
      */
     public NoHurtCam() {
-        super("NoHurtCam", Categories.MISC,"Removes the annoying screen shake.");
+        super("NoHurtCam", Categories.MISC,"Removes the annoying screen shake when you take damage.");
     }
 
     @Override

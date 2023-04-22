@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class NoGameOverlay extends Module {
 
     public NoGameOverlay() {
-        super("NoGameOverlay", Categories.OPTIMIZATION,"Stops annoying overlays from rendering.");
+        super("NoGameOverlay", Categories.OPTIMIZATION,"Stops various overlays from rendering.");
     }
 
     @Override
