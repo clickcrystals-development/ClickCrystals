@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-main-class: io.github.itzispyder.clickcrystals.ClickCrystals
-
