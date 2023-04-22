@@ -1,6 +1,6 @@
 
-# ![ICON](https://github.com/ItziSpyder/ClickCrystals/blob/main/src/main/resources/assets/clickcrystals/icon.png) ClickCrystals [1.19.4]
-Because who needs right click anyways?
+# ![ICON](./src/main/resources/assets/clickcrystals/icon.png) ClickCrystals [1.19.4]
+Because who needs right click anyway?
 
 ---------------------------------------------------------------
 
@@ -10,6 +10,7 @@ Minecraft: 1.19.4
 Mod: 1.19.4
 Updated to: 1.19.4-0.7.2
 
+Changelog:
 - Nerfed the modules that people saw as macros.
 - Updated descriptions so they are accurate and friendly
 ```
@@ -24,28 +25,28 @@ KeyBindings:
 Commands:
    /cctoggle: <module> [on|off|help]
 ```
-|  Module  | Description |
-| ------------- |:-------------:|
-| ClickCrystal | Binds crystal place to left click.|
-| Sword2Crystal | Whenever you punch obsidian/bedrock with a sword, it will switch to a crystal.|
-| Sword2Obsidian | Punch the ground with a sword to switch to obsidian.|
-|Sword2Pearl | Right click your sword to switch to pearl slot.|
-|Totem2Pearl | Right click a totem to switch to pearl slot.|
-|Anchor2Glowstone|Whenever you place an anchor, switch to glowstone and back after you charge it.|
-|Crystal2Anchor|Right click the ground with a crystal to switch to a respawn anchor.|
-|IconHud|Renders the ClickCrystals logo on the screen.|
-|NoHurtCam|Removes the annoying screen shake.|
-|NoResourcePack| Prevents servers from forcing you to dowload their resource pack.|
-|SlowHandSwing| Makes your hand swing like mining fatigue.|
-|ToolSwitcher| Switches to the right tool for the job.|
-|TrueSight| Renders entities as if you were in spectator mode.|
-|FullBright| Increases your gamma so you can actually see.|
-|ModuleListHud| Shows your active modules on screen.|
-|NoGameOverlay| Stops annoying overlays from rendering.|
-|NoLoadingScreen| Prevents most loading screens from rendering.|
-|NoServerParticles| Prevents servers from sending you particle packets, stopping all particle crashes.|
-|BlockDelayRemover| Removes the delay between breaking a block and starting to break the next block.|
-|Silk Touch| Gives any tool you hold silk touch (Real)|
+| **Module**        |                                  **Description**                                   |
+|-------------------|:----------------------------------------------------------------------------------:|
+| ClickCrystal      |                         Binds crystal place to left click.                         |
+| Sword2Crystal     |   Whenever you punch obsidian/bedrock with a sword, it will switch to a crystal.   |
+| Sword2Obsidian    |                Punch the ground with a sword to switch to obsidian.                |
+| Sword2Pearl       |                  Right click your sword to switch to pearl slot.                   |
+| Totem2Pearl       |                    Right click a totem to switch to pearl slot.                    |
+| Anchor2Glowstone  |  Whenever you place an anchor, switch to glowstone and back after you charge it.   |
+| Crystal2Anchor    |        Right click the ground with a crystal to switch to a respawn anchor.        |
+| IconHud           |                   Renders the ClickCrystals logo on the screen.                    |
+| NoHurtCam         |                         Removes the annoying screen shake.                         |
+| NoResourcePack    |         Prevents servers from forcing you to download their resource pack.         |
+| SlowHandSwing     |                     Makes your hand swing like mining fatigue.                     |
+| ToolSwitcher      |                      Switches to the right tool for the job.                       |
+| TrueSight         |                 Renders entities as if you were in spectator mode.                 |
+| FullBright        |                   Increases your gamma so you can actually see.                    |
+| ModuleListHud     |                        Shows your active modules on screen.                        |
+| NoGameOverlay     |                      Stops annoying overlays from rendering.                       |
+| NoLoadingScreen   |                   Prevents most loading screens from rendering.                    |
+| NoServerParticles | Prevents servers from sending you particle packets, stopping all particle crashes. |
+| BlockDelayRemover |  Removes the delay between breaking a block and starting to break the next block.  |
+| Silk Touch        |                     Gives any tool you hold silk touch (Real)                      |
 
 
 ## But isn't this cheating?
@@ -68,7 +69,7 @@ To stop: complaining it is a cheat/macro.
 
 ## Have A Good One!
 - Thanks for downloading ClickCrystals!
-- Make sure to give it a star on my [Github](https://github.com/itzispyder/clickcrystals)
+- Make sure to give it a star on my [GitHub](https://github.com/itzispyder/clickcrystals)
 - Follow the project on [Modrinth](https://modrinth.com/mod/clickcrystals)
 
 ## SPECIAL THANKS AND SHOUTOUT TO
