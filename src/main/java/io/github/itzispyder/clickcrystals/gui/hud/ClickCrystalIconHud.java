@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.hud;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalMenuScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.ClickCrystalHud;
+import io.github.itzispyder.clickcrystals.modules.modules.IconHud;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
@@ -16,7 +16,7 @@ public class ClickCrystalIconHud implements HudRenderCallback {
 
     @Override
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {
-        Module hudModule = Module.get(ClickCrystalHud.class);
+        Module hudModule = Module.get(IconHud.class);
         if (!hudModule.isEnabled()) return;
 
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);

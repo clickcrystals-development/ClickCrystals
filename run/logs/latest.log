@@ -1,5 +1,5 @@
-[20:20:12] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.19.4 with Fabric Loader 0.14.14
-[20:20:13] [main/INFO] (FabricLoader) Loading 46 mods:
+[20:43:56] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.19.4 with Fabric Loader 0.14.14
+[20:43:57] [main/INFO] (FabricLoader) Loading 46 mods:
 	- clickcrystals 1.19.4-0.7.3
 	- fabric-api 0.77.0+1.19.4
 	- fabric-api-base 0.4.23+9ff28bcef4
@@ -46,13 +46,13 @@
 	- fabricloader 0.14.14
 	- java 17
 	- minecraft 1.19.4
-[20:20:13] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/C:/Users/Little%20Bunny/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.11.4+mixin.0.8.5/c1dc27696aa4006e492c2485c9ccbcb26045a971/sponge-mixin-0.11.4+mixin.0.8.5.jar Service=Knot/Fabric Env=CLIENT
-[20:20:14] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[20:20:14] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_16
-[20:20:14] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
-[20:20:28] [Datafixer Bootstrap/INFO] (Minecraft) 180 Datafixer optimizations took 309 milliseconds
-[20:20:34] [Render thread/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[20:20:34] [Render thread/ERROR] (Minecraft) Failed to verify authentication
+[20:43:57] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/C:/Users/Little%20Bunny/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.11.4+mixin.0.8.5/c1dc27696aa4006e492c2485c9ccbcb26045a971/sponge-mixin-0.11.4+mixin.0.8.5.jar Service=Knot/Fabric Env=CLIENT
+[20:43:58] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[20:43:58] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_16
+[20:43:58] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[20:44:11] [Datafixer Bootstrap/INFO] (Minecraft) 180 Datafixer optimizations took 876 milliseconds
+[20:44:16] [Render thread/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[20:44:17] [Render thread/ERROR] (Minecraft) Failed to verify authentication
 com.mojang.authlib.exceptions.InvalidCredentialsException: Status: 401
 	at com.mojang.authlib.exceptions.MinecraftClientHttpException.toAuthenticationException(MinecraftClientHttpException.java:56) ~[authlib-3.18.38.jar:?]
 	at com.mojang.authlib.yggdrasil.YggdrasilUserApiService.fetchProperties(YggdrasilUserApiService.java:156) ~[authlib-3.18.38.jar:?]
@@ -70,919 +70,166 @@ Caused by: com.mojang.authlib.exceptions.MinecraftClientHttpException: Status: 4
 	at com.mojang.authlib.minecraft.client.MinecraftClient.get(MinecraftClient.java:48) ~[authlib-3.18.38.jar:?]
 	at com.mojang.authlib.yggdrasil.YggdrasilUserApiService.fetchProperties(YggdrasilUserApiService.java:129) ~[authlib-3.18.38.jar:?]
 	... 9 more
-[20:20:34] [Render thread/INFO] (Minecraft) Setting user: Player354
-[20:20:35] [Render thread/INFO] (Minecraft) [STDOUT]: [ClickCrystals] Loading ClickCrystals by ImproperIssues
-[20:20:35] [Render thread/INFO] (Indigo) [Indigo] Registering Indigo renderer!
-[20:20:37] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.3.1 SNAPSHOT
-[20:20:39] [Render thread/INFO] (Minecraft) Narrator library for x64 successfully loaded
-[20:20:39] [Render thread/INFO] (Minecraft) Reloading ResourceManager: vanilla, Fabric Mods (Fabric API Lookup API (v1), Fabric Data Generation API (v1), Fabric Dimensions API (v1), Fabric Recipe API (v1), Fabric Sound API (v1), Fabric Models (v0), Fabric Client Tags, Fabric Events Interaction (v0), Fabric Convention Tags, Fabric API Base, Fabric Networking API (v1), Fabric Resource Loader (v0), Fabric Item Group API (v1), Fabric Loader, Fabric Rendering Fluids (v1), Fabric Particles (v1), Fabric Screen API (v1), Fabric Message API (v1), Fabric Transfer API (v1), Fabric Command API (v2), Fabric Key Binding API (v1), Fabric Crash Report Info (v1), Fabric Lifecycle Events (v1), Fabric Renderer API (v1), Fabric Content Registries (v0), Fabric Resource Conditions API (v1), Fabric BlockRenderLayer Registration (v1), Fabric Loot API (v2), Fabric Transitive Access Wideners (v1), Fabric Mining Level API (v1), Fabric Game Test API (v1), Fabric Rendering (v1), Fabric Biome API (v1), Fabric Game Rule API (v1), Fabric Entity Events (v1), Fabric Item API (v1), Fabric API, Fabric Registry Sync (v0), Fabric Screen Handler API (v1), Fabric Rendering Data Attachment (v1), Fabric Renderer - Indigo, Fabric Block API (v1), ClickCrystals, Fabric Object Builder API (v1))
-[20:20:40] [Realms Notification Availability checker #1/INFO] (Minecraft) Could not authorize you against Realms server: Invalid session id
-[20:20:43] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.brush.brushing
-[20:20:43] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.brush.brush_sand_completed
-[20:20:43] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.goat_horn.play
-[20:20:43] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:entity.goat.screaming.horn_break
-[20:20:43] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:music.overworld.cherry_grove
-[20:20:43] [Render thread/INFO] (Minecraft) OpenAL initialized on device OpenAL Soft on Headphones (Cirrus Logic Superior High Definition Audio)
-[20:20:43] [Render thread/INFO] (Minecraft) Sound engine started
-[20:20:44] [Render thread/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
-[20:20:44] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
-[20:20:44] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
-[20:20:44] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
-[20:20:44] [Render thread/INFO] (Minecraft) Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
-[20:20:44] [Render thread/INFO] (Minecraft) Created: 64x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
-[20:20:44] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
-[20:20:44] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
-[20:20:44] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
-[20:20:44] [Render thread/WARN] (Minecraft) Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
-[20:20:45] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
-[20:20:45] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
-[20:20:45] [Render thread/INFO] (Minecraft) Created: 128x128x0 minecraft:textures/atlas/mob_effects.png-atlas
-[20:20:50] [Render thread/INFO] (Minecraft) Loaded 7 recipes
-[20:20:50] [Render thread/INFO] (Minecraft) Loaded 1179 advancements
-[20:21:05] [Render thread/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 63 new biomes in 3.778 ms
-[20:21:05] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.19.4
-[20:21:05] [Server thread/INFO] (Minecraft) Generating keypair
-[20:21:12] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[20:21:14] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
-[20:21:14] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
-[20:21:14] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
-[20:21:14] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
-[20:21:14] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
-[20:21:15] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
-[20:21:15] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
-[20:21:16] [Render thread/INFO] (Minecraft) Preparing spawn area: 1%
-[20:21:16] [Render thread/INFO] (Minecraft) Preparing spawn area: 1%
-[20:21:17] [Render thread/INFO] (Minecraft) Preparing spawn area: 1%
-[20:21:18] [Render thread/INFO] (Minecraft) Preparing spawn area: 3%
-[20:21:18] [Render thread/INFO] (Minecraft) Preparing spawn area: 3%
-[20:21:18] [Render thread/INFO] (Minecraft) Preparing spawn area: 4%
-[20:21:19] [Render thread/INFO] (Minecraft) Preparing spawn area: 5%
-[20:21:19] [Render thread/INFO] (Minecraft) Preparing spawn area: 6%
-[20:21:20] [Render thread/INFO] (Minecraft) Preparing spawn area: 7%
-[20:21:21] [Render thread/INFO] (Minecraft) Preparing spawn area: 8%
-[20:21:21] [Render thread/INFO] (Minecraft) Preparing spawn area: 9%
-[20:21:22] [Render thread/INFO] (Minecraft) Preparing spawn area: 10%
-[20:21:22] [Render thread/INFO] (Minecraft) Preparing spawn area: 11%
-[20:21:23] [Render thread/INFO] (Minecraft) Preparing spawn area: 13%
-[20:21:23] [Render thread/INFO] (Minecraft) Preparing spawn area: 14%
-[20:21:23] [Render thread/INFO] (Minecraft) Preparing spawn area: 15%
-[20:21:24] [Render thread/INFO] (Minecraft) Preparing spawn area: 16%
-[20:21:25] [Render thread/INFO] (Minecraft) Preparing spawn area: 17%
-[20:21:25] [Render thread/INFO] (Minecraft) Preparing spawn area: 20%
-[20:21:26] [Render thread/INFO] (Minecraft) Preparing spawn area: 21%
-[20:21:26] [Render thread/INFO] (Minecraft) Preparing spawn area: 23%
-[20:21:26] [Render thread/INFO] (Minecraft) Preparing spawn area: 24%
-[20:21:27] [Render thread/INFO] (Minecraft) Preparing spawn area: 25%
-[20:21:27] [Render thread/INFO] (Minecraft) Preparing spawn area: 27%
-[20:21:28] [Render thread/INFO] (Minecraft) Preparing spawn area: 29%
-[20:21:29] [Render thread/INFO] (Minecraft) Preparing spawn area: 31%
-[20:21:29] [Render thread/INFO] (Minecraft) Preparing spawn area: 33%
-[20:21:30] [Render thread/INFO] (Minecraft) Preparing spawn area: 34%
-[20:21:30] [Render thread/INFO] (Minecraft) Preparing spawn area: 35%
-[20:21:31] [Render thread/INFO] (Minecraft) Preparing spawn area: 39%
-[20:21:31] [Render thread/INFO] (Minecraft) Preparing spawn area: 41%
-[20:21:31] [Render thread/INFO] (Minecraft) Preparing spawn area: 43%
-[20:21:32] [Render thread/INFO] (Minecraft) Preparing spawn area: 44%
-[20:21:33] [Render thread/INFO] (Minecraft) Preparing spawn area: 45%
-[20:21:33] [Render thread/INFO] (Minecraft) Preparing spawn area: 47%
-[20:21:33] [Render thread/INFO] (Minecraft) Preparing spawn area: 49%
-[20:21:34] [Render thread/INFO] (Minecraft) Preparing spawn area: 53%
-[20:21:35] [Render thread/INFO] (Minecraft) Preparing spawn area: 55%
-[20:21:35] [Render thread/INFO] (Minecraft) Preparing spawn area: 55%
-[20:21:35] [Render thread/INFO] (Minecraft) Preparing spawn area: 58%
-[20:21:36] [Render thread/INFO] (Minecraft) Preparing spawn area: 58%
-[20:21:36] [Render thread/INFO] (Minecraft) Preparing spawn area: 61%
-[20:21:37] [Render thread/INFO] (Minecraft) Preparing spawn area: 62%
-[20:21:37] [Render thread/INFO] (Minecraft) Preparing spawn area: 67%
-[20:21:38] [Render thread/INFO] (Minecraft) Preparing spawn area: 68%
-[20:21:38] [Render thread/INFO] (Minecraft) Preparing spawn area: 70%
-[20:21:39] [Render thread/INFO] (Minecraft) Preparing spawn area: 71%
-[20:21:39] [Render thread/INFO] (Minecraft) Preparing spawn area: 74%
-[20:21:40] [Render thread/INFO] (Minecraft) Preparing spawn area: 75%
-[20:21:40] [Render thread/INFO] (Minecraft) Preparing spawn area: 78%
-[20:21:41] [Render thread/INFO] (Minecraft) Preparing spawn area: 80%
-[20:21:42] [Render thread/INFO] (Minecraft) Preparing spawn area: 82%
-[20:21:42] [Render thread/INFO] (Minecraft) Preparing spawn area: 83%
-[20:21:42] [Render thread/INFO] (Minecraft) Preparing spawn area: 83%
-[20:21:43] [Render thread/INFO] (Minecraft) Preparing spawn area: 84%
-[20:21:43] [Render thread/INFO] (Minecraft) Preparing spawn area: 85%
-[20:21:44] [Render thread/INFO] (Minecraft) Preparing spawn area: 86%
-[20:21:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 88%
-[20:21:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 89%
-[20:21:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 91%
-[20:21:46] [Render thread/INFO] (Minecraft) Preparing spawn area: 94%
-[20:21:46] [Render thread/INFO] (Minecraft) Preparing spawn area: 95%
-[20:21:47] [Render thread/INFO] (Minecraft) Preparing spawn area: 98%
-[20:21:47] [Render thread/INFO] (Minecraft) Time elapsed: 34712 ms
-[20:21:47] [Server thread/INFO] (Minecraft) Changing view distance to 12, from 10
-[20:21:47] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
-[20:21:50] [Server thread/INFO] (Minecraft) Player354[local:E:5ad2e3de] logged in with entity id 275 at (-1.5, 63.0, -6.5)
-[20:21:50] [Server thread/INFO] (Minecraft) Player354 joined the game
-[20:21:51] [Render thread/INFO] (Minecraft) Loaded 2 advancements
-[20:22:04] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:22:04] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystals]'/minecraft:overworld
-[20:22:04] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystals]'/minecraft:the_end
-[20:22:04] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystals]'/minecraft:the_nether
-[20:22:05] [Server thread/INFO] (Minecraft) Player354 lost connection: Disconnected
-[20:22:05] [Server thread/INFO] (Minecraft) Player354 left the game
-[20:22:05] [Server thread/INFO] (Minecraft) Stopping singleplayer server as player logged out
-[20:22:05] [Server thread/INFO] (Minecraft) Stopping server
-[20:22:05] [Server thread/INFO] (Minecraft) Saving players
-[20:22:05] [Server thread/INFO] (Minecraft) Saving worlds
-[20:22:07] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystals]'/minecraft:overworld
-[20:22:08] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystals]'/minecraft:the_end
-[20:22:08] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystals]'/minecraft:the_nether
-[20:22:08] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (ClickCrystals): All chunks are saved
-[20:22:08] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[20:22:08] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[20:22:08] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
-[20:22:10] [Render thread/INFO] (Minecraft) Deleting level ClickCrystals
-[20:22:10] [Render thread/INFO] (Minecraft) Attempt 1...
-[20:22:10] [Render thread/WARN] (Minecraft) Failed to delete C:\Users\Little Bunny\IdeaProjects\ClickCrystals\run\saves\ClickCrystals
-java.nio.file.FileSystemException: C:\Users\Little Bunny\IdeaProjects\ClickCrystals\run\saves\ClickCrystals\entities\r.-1.-1.mca: The process cannot access the file because it is being used by another process
-	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
-	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
-	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108) ~[?:?]
-	at sun.nio.fs.WindowsFileSystemProvider.implDelete(WindowsFileSystemProvider.java:275) ~[?:?]
-	at sun.nio.fs.AbstractFileSystemProvider.delete(AbstractFileSystemProvider.java:105) ~[?:?]
-	at java.nio.file.Files.delete(Files.java:1152) ~[?:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session$1.visitFile(LevelStorage.java:438) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session$1.visitFile(LevelStorage.java:433) ~[minecraft-project-@-merged-named.jar:?]
-	at java.nio.file.Files.walkFileTree(Files.java:2811) ~[?:?]
-	at java.nio.file.Files.walkFileTree(Files.java:2882) ~[?:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session.deleteSessionLock(LevelStorage.java:433) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.world.WorldListWidget$WorldEntry.delete(WorldListWidget.java:444) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.world.WorldListWidget$WorldEntry.method_20170(WorldListWidget.java:429) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.ConfirmScreen.method_37054(ConfirmScreen.java:55) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.ButtonWidget.onPress(ButtonWidget.java:94) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.PressableWidget.onClick(PressableWidget.java:57) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.ClickableWidget.mouseClicked(ClickableWidget.java:187) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.ParentElement.mouseClicked(ParentElement.java:38) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_1611(Mouse.java:98) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:540) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.onMouseButton(Mouse.java:98) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_22686(Mouse.java:169) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.util.thread.ThreadExecutor.execute(ThreadExecutor.java:102) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_22684(Mouse.java:169) ~[minecraft-project-@-merged-named.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.1.jar:build 7]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.1.jar:build 7]
-	at org.lwjgl.glfw.GLFW.glfwWaitEventsTimeout(GLFW.java:3474) ~[lwjgl-glfw-3.3.1.jar:build 7]
-	at com.mojang.blaze3d.systems.RenderSystem.limitDisplayFPS(RenderSystem.java:234) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.MinecraftClient.render(MinecraftClient.java:1241) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.MinecraftClient.run(MinecraftClient.java:801) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:237) ~[minecraft-project-@-merged-named.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:461) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[20:22:11] [Render thread/INFO] (Minecraft) Attempt 2...
-[20:22:11] [Render thread/WARN] (Minecraft) Failed to delete C:\Users\Little Bunny\IdeaProjects\ClickCrystals\run\saves\ClickCrystals
-java.nio.file.FileSystemException: C:\Users\Little Bunny\IdeaProjects\ClickCrystals\run\saves\ClickCrystals\entities\r.-1.-1.mca: The process cannot access the file because it is being used by another process
-	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
-	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
-	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108) ~[?:?]
-	at sun.nio.fs.WindowsFileSystemProvider.implDelete(WindowsFileSystemProvider.java:275) ~[?:?]
-	at sun.nio.fs.AbstractFileSystemProvider.delete(AbstractFileSystemProvider.java:105) ~[?:?]
-	at java.nio.file.Files.delete(Files.java:1152) ~[?:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session$1.visitFile(LevelStorage.java:438) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session$1.visitFile(LevelStorage.java:433) ~[minecraft-project-@-merged-named.jar:?]
-	at java.nio.file.Files.walkFileTree(Files.java:2811) ~[?:?]
-	at java.nio.file.Files.walkFileTree(Files.java:2882) ~[?:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session.deleteSessionLock(LevelStorage.java:433) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.world.WorldListWidget$WorldEntry.delete(WorldListWidget.java:444) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.world.WorldListWidget$WorldEntry.method_20170(WorldListWidget.java:429) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.ConfirmScreen.method_37054(ConfirmScreen.java:55) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.ButtonWidget.onPress(ButtonWidget.java:94) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.PressableWidget.onClick(PressableWidget.java:57) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.ClickableWidget.mouseClicked(ClickableWidget.java:187) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.ParentElement.mouseClicked(ParentElement.java:38) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_1611(Mouse.java:98) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:540) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.onMouseButton(Mouse.java:98) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_22686(Mouse.java:169) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.util.thread.ThreadExecutor.execute(ThreadExecutor.java:102) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_22684(Mouse.java:169) ~[minecraft-project-@-merged-named.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.1.jar:build 7]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.1.jar:build 7]
-	at org.lwjgl.glfw.GLFW.glfwWaitEventsTimeout(GLFW.java:3474) ~[lwjgl-glfw-3.3.1.jar:build 7]
-	at com.mojang.blaze3d.systems.RenderSystem.limitDisplayFPS(RenderSystem.java:234) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.MinecraftClient.render(MinecraftClient.java:1241) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.MinecraftClient.run(MinecraftClient.java:801) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:237) ~[minecraft-project-@-merged-named.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:461) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[20:22:11] [Render thread/INFO] (Minecraft) Attempt 3...
-[20:22:11] [Render thread/WARN] (Minecraft) Failed to delete C:\Users\Little Bunny\IdeaProjects\ClickCrystals\run\saves\ClickCrystals
-java.nio.file.FileSystemException: C:\Users\Little Bunny\IdeaProjects\ClickCrystals\run\saves\ClickCrystals\entities\r.-1.-1.mca: The process cannot access the file because it is being used by another process
-	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
-	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
-	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108) ~[?:?]
-	at sun.nio.fs.WindowsFileSystemProvider.implDelete(WindowsFileSystemProvider.java:275) ~[?:?]
-	at sun.nio.fs.AbstractFileSystemProvider.delete(AbstractFileSystemProvider.java:105) ~[?:?]
-	at java.nio.file.Files.delete(Files.java:1152) ~[?:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session$1.visitFile(LevelStorage.java:438) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session$1.visitFile(LevelStorage.java:433) ~[minecraft-project-@-merged-named.jar:?]
-	at java.nio.file.Files.walkFileTree(Files.java:2811) ~[?:?]
-	at java.nio.file.Files.walkFileTree(Files.java:2882) ~[?:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session.deleteSessionLock(LevelStorage.java:433) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.world.WorldListWidget$WorldEntry.delete(WorldListWidget.java:444) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.world.WorldListWidget$WorldEntry.method_20170(WorldListWidget.java:429) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.ConfirmScreen.method_37054(ConfirmScreen.java:55) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.ButtonWidget.onPress(ButtonWidget.java:94) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.PressableWidget.onClick(PressableWidget.java:57) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.ClickableWidget.mouseClicked(ClickableWidget.java:187) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.ParentElement.mouseClicked(ParentElement.java:38) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_1611(Mouse.java:98) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:540) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.onMouseButton(Mouse.java:98) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_22686(Mouse.java:169) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.util.thread.ThreadExecutor.execute(ThreadExecutor.java:102) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_22684(Mouse.java:169) ~[minecraft-project-@-merged-named.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.1.jar:build 7]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.1.jar:build 7]
-	at org.lwjgl.glfw.GLFW.glfwWaitEventsTimeout(GLFW.java:3474) ~[lwjgl-glfw-3.3.1.jar:build 7]
-	at com.mojang.blaze3d.systems.RenderSystem.limitDisplayFPS(RenderSystem.java:234) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.MinecraftClient.render(MinecraftClient.java:1241) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.MinecraftClient.run(MinecraftClient.java:801) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:237) ~[minecraft-project-@-merged-named.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:461) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[20:22:12] [Render thread/INFO] (Minecraft) Attempt 4...
-[20:22:12] [Render thread/WARN] (Minecraft) Failed to delete C:\Users\Little Bunny\IdeaProjects\ClickCrystals\run\saves\ClickCrystals
-java.nio.file.FileSystemException: C:\Users\Little Bunny\IdeaProjects\ClickCrystals\run\saves\ClickCrystals\entities\r.-1.-1.mca: The process cannot access the file because it is being used by another process
-	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
-	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
-	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108) ~[?:?]
-	at sun.nio.fs.WindowsFileSystemProvider.implDelete(WindowsFileSystemProvider.java:275) ~[?:?]
-	at sun.nio.fs.AbstractFileSystemProvider.delete(AbstractFileSystemProvider.java:105) ~[?:?]
-	at java.nio.file.Files.delete(Files.java:1152) ~[?:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session$1.visitFile(LevelStorage.java:438) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session$1.visitFile(LevelStorage.java:433) ~[minecraft-project-@-merged-named.jar:?]
-	at java.nio.file.Files.walkFileTree(Files.java:2811) ~[?:?]
-	at java.nio.file.Files.walkFileTree(Files.java:2882) ~[?:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session.deleteSessionLock(LevelStorage.java:433) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.world.WorldListWidget$WorldEntry.delete(WorldListWidget.java:444) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.world.WorldListWidget$WorldEntry.method_20170(WorldListWidget.java:429) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.ConfirmScreen.method_37054(ConfirmScreen.java:55) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.ButtonWidget.onPress(ButtonWidget.java:94) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.PressableWidget.onClick(PressableWidget.java:57) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.ClickableWidget.mouseClicked(ClickableWidget.java:187) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.ParentElement.mouseClicked(ParentElement.java:38) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_1611(Mouse.java:98) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:540) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.onMouseButton(Mouse.java:98) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_22686(Mouse.java:169) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.util.thread.ThreadExecutor.execute(ThreadExecutor.java:102) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_22684(Mouse.java:169) ~[minecraft-project-@-merged-named.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.1.jar:build 7]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.1.jar:build 7]
-	at org.lwjgl.glfw.GLFW.glfwWaitEventsTimeout(GLFW.java:3474) ~[lwjgl-glfw-3.3.1.jar:build 7]
-	at com.mojang.blaze3d.systems.RenderSystem.limitDisplayFPS(RenderSystem.java:234) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.MinecraftClient.render(MinecraftClient.java:1241) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.MinecraftClient.run(MinecraftClient.java:801) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:237) ~[minecraft-project-@-merged-named.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:461) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[20:22:12] [Render thread/INFO] (Minecraft) Attempt 5...
-[20:22:13] [Render thread/ERROR] (Minecraft) Failed to delete world ClickCrystals
-java.nio.file.FileSystemException: C:\Users\Little Bunny\IdeaProjects\ClickCrystals\run\saves\ClickCrystals\entities\r.-1.-1.mca: The process cannot access the file because it is being used by another process
-	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
-	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
-	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108) ~[?:?]
-	at sun.nio.fs.WindowsFileSystemProvider.implDelete(WindowsFileSystemProvider.java:275) ~[?:?]
-	at sun.nio.fs.AbstractFileSystemProvider.delete(AbstractFileSystemProvider.java:105) ~[?:?]
-	at java.nio.file.Files.delete(Files.java:1152) ~[?:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session$1.visitFile(LevelStorage.java:438) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session$1.visitFile(LevelStorage.java:433) ~[minecraft-project-@-merged-named.jar:?]
-	at java.nio.file.Files.walkFileTree(Files.java:2811) ~[?:?]
-	at java.nio.file.Files.walkFileTree(Files.java:2882) ~[?:?]
-	at net.minecraft.world.level.storage.LevelStorage$Session.deleteSessionLock(LevelStorage.java:433) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.world.WorldListWidget$WorldEntry.delete(WorldListWidget.java:444) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.world.WorldListWidget$WorldEntry.method_20170(WorldListWidget.java:429) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.ConfirmScreen.method_37054(ConfirmScreen.java:55) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.ButtonWidget.onPress(ButtonWidget.java:94) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.PressableWidget.onClick(PressableWidget.java:57) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.widget.ClickableWidget.mouseClicked(ClickableWidget.java:187) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.ParentElement.mouseClicked(ParentElement.java:38) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_1611(Mouse.java:98) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.gui.screen.Screen.wrapScreenError(Screen.java:540) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.onMouseButton(Mouse.java:98) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_22686(Mouse.java:169) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.util.thread.ThreadExecutor.execute(ThreadExecutor.java:102) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.Mouse.method_22684(Mouse.java:169) ~[minecraft-project-@-merged-named.jar:?]
-	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:43) ~[lwjgl-glfw-3.3.1.jar:build 7]
-	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.3.1.jar:build 7]
-	at org.lwjgl.glfw.GLFW.glfwWaitEventsTimeout(GLFW.java:3474) ~[lwjgl-glfw-3.3.1.jar:build 7]
-	at com.mojang.blaze3d.systems.RenderSystem.limitDisplayFPS(RenderSystem.java:234) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.MinecraftClient.render(MinecraftClient.java:1241) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.MinecraftClient.run(MinecraftClient.java:801) ~[minecraft-project-@-merged-named.jar:?]
-	at net.minecraft.client.main.Main.main(Main.java:237) ~[minecraft-project-@-merged-named.jar:?]
-	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:461) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.14.14.jar:?]
-	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
-[20:22:16] [Render thread/INFO] (Minecraft) Loaded 7 recipes
-[20:22:16] [Render thread/INFO] (Minecraft) Loaded 1179 advancements
-[20:22:30] [Render thread/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 63 new biomes in 316.2 ?s
-[20:22:30] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.19.4
-[20:22:30] [Server thread/INFO] (Minecraft) Generating keypair
-[20:22:31] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[20:22:31] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
-[20:22:31] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
-[20:22:32] [Render thread/INFO] (Minecraft) Preparing spawn area: 1%
-[20:22:32] [Render thread/INFO] (Minecraft) Preparing spawn area: 1%
-[20:22:33] [Render thread/INFO] (Minecraft) Preparing spawn area: 1%
-[20:22:33] [Render thread/INFO] (Minecraft) Preparing spawn area: 13%
-[20:22:34] [Render thread/INFO] (Minecraft) Preparing spawn area: 13%
-[20:22:34] [Render thread/INFO] (Minecraft) Preparing spawn area: 26%
-[20:22:35] [Render thread/INFO] (Minecraft) Preparing spawn area: 31%
-[20:22:35] [Render thread/INFO] (Minecraft) Preparing spawn area: 37%
-[20:22:36] [Render thread/INFO] (Minecraft) Preparing spawn area: 42%
-[20:22:36] [Render thread/INFO] (Minecraft) Preparing spawn area: 48%
-[20:22:37] [Render thread/INFO] (Minecraft) Preparing spawn area: 53%
-[20:22:37] [Render thread/INFO] (Minecraft) Preparing spawn area: 59%
-[20:22:38] [Render thread/INFO] (Minecraft) Preparing spawn area: 65%
-[20:22:38] [Render thread/INFO] (Minecraft) Preparing spawn area: 70%
-[20:22:39] [Render thread/INFO] (Minecraft) Preparing spawn area: 76%
-[20:22:39] [Render thread/INFO] (Minecraft) Preparing spawn area: 81%
-[20:22:40] [Render thread/INFO] (Minecraft) Preparing spawn area: 86%
-[20:22:40] [Render thread/INFO] (Minecraft) Preparing spawn area: 92%
-[20:22:41] [Render thread/INFO] (Minecraft) Preparing spawn area: 97%
-[20:22:41] [Render thread/INFO] (Minecraft) Time elapsed: 10197 ms
-[20:22:41] [Server thread/INFO] (Minecraft) Changing view distance to 12, from 10
-[20:22:41] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
-[20:22:41] [Server thread/INFO] (Minecraft) Player354[local:E:f6455bcf] logged in with entity id 833 at (1.5, -60.0, -7.5)
-[20:22:41] [Server thread/INFO] (Minecraft) Player354 joined the game
-[20:22:41] [Render thread/INFO] (Minecraft) Loaded 2 advancements
-[20:22:51] [Server thread/INFO] (Minecraft) Player354 has made the advancement [Ice Bucket Challenge]
-[20:22:51] [Render thread/INFO] (Minecraft) [System] [CHAT] Player354 has made the advancement [Ice Bucket Challenge]
-[20:22:51] [Render thread/INFO] (Minecraft) Loaded 13 advancements
-[20:23:04] [Server thread/INFO] (Minecraft) [Player354: Applied effect Resistance to Player354]
-[20:23:04] [Render thread/INFO] (Minecraft) [System] [CHAT] Applied effect Resistance to Player354
-[20:23:09] [Server thread/INFO] (Minecraft) [Player354: Set own game mode to Survival Mode]
-[20:23:09] [Render thread/INFO] (Minecraft) [System] [CHAT] Set own game mode to Survival Mode
-[20:23:13] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:23:13] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:23:13] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:23:13] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:23:16] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:23:16] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:23:16] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:23:16] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:23:42] [Render thread/INFO] (Minecraft) Reloading ResourceManager: vanilla, Fabric Mods (Fabric API Lookup API (v1), Fabric Data Generation API (v1), Fabric Dimensions API (v1), Fabric Recipe API (v1), Fabric Sound API (v1), Fabric Models (v0), Fabric Client Tags, Fabric Events Interaction (v0), Fabric Convention Tags, Fabric API Base, Fabric Networking API (v1), Fabric Resource Loader (v0), Fabric Item Group API (v1), Fabric Loader, Fabric Rendering Fluids (v1), Fabric Particles (v1), Fabric Screen API (v1), Fabric Message API (v1), Fabric Transfer API (v1), Fabric Command API (v2), Fabric Key Binding API (v1), Fabric Crash Report Info (v1), Fabric Lifecycle Events (v1), Fabric Renderer API (v1), Fabric Content Registries (v0), Fabric Resource Conditions API (v1), Fabric BlockRenderLayer Registration (v1), Fabric Loot API (v2), Fabric Transitive Access Wideners (v1), Fabric Mining Level API (v1), Fabric Game Test API (v1), Fabric Rendering (v1), Fabric Biome API (v1), Fabric Game Rule API (v1), Fabric Entity Events (v1), Fabric Item API (v1), Fabric API, Fabric Registry Sync (v0), Fabric Screen Handler API (v1), Fabric Rendering Data Attachment (v1), Fabric Renderer - Indigo, Fabric Block API (v1), ClickCrystals, Fabric Object Builder API (v1))
-[20:23:44] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.brush.brushing
-[20:23:44] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.brush.brush_sand_completed
-[20:23:44] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.goat_horn.play
-[20:23:44] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:entity.goat.screaming.horn_break
-[20:23:44] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:music.overworld.cherry_grove
-[20:23:44] [Render thread/INFO] (Minecraft) OpenAL initialized on device OpenAL Soft on Headphones (Cirrus Logic Superior High Definition Audio)
-[20:23:44] [Render thread/INFO] (Minecraft) Sound engine started
-[20:23:44] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/blocks.png-atlas
-[20:23:44] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/signs.png-atlas
-[20:23:44] [Render thread/INFO] (Minecraft) Created: 512x512x0 minecraft:textures/atlas/shield_patterns.png-atlas
-[20:23:44] [Render thread/INFO] (Minecraft) Created: 512x512x0 minecraft:textures/atlas/banner_patterns.png-atlas
-[20:23:44] [Render thread/INFO] (Minecraft) Created: 1024x1024x0 minecraft:textures/atlas/armor_trims.png-atlas
-[20:23:44] [Render thread/INFO] (Minecraft) Created: 64x64x0 minecraft:textures/atlas/decorated_pot.png-atlas
-[20:23:44] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/chest.png-atlas
-[20:23:44] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/shulker_boxes.png-atlas
-[20:23:44] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/beds.png-atlas
-[20:23:44] [Render thread/WARN] (Minecraft) Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
-[20:23:44] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
-[20:23:44] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
-[20:23:44] [Render thread/INFO] (Minecraft) Created: 128x128x0 minecraft:textures/atlas/mob_effects.png-atlas
-[20:23:51] [Server thread/INFO] (Minecraft) Changing view distance to 2, from 12
-[20:23:51] [Server thread/INFO] (Minecraft) Changing simulation distance to 5, from 12
-[20:23:56] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:23:56] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:23:56] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:23:56] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:24:00] [Server thread/INFO] (Minecraft) Player354 was blown up by Player354
-[20:24:00] [Render thread/INFO] (Minecraft) [System] [CHAT] Player354 was blown up by Player354
-[20:24:07] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:24:07] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:24:07] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:24:07] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:24:10] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:24:10] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:24:10] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:24:10] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:24:12] [Render thread/ERROR] (Minecraft) ########## GL ERROR ##########
-[20:24:12] [Render thread/ERROR] (Minecraft) @ Render
-[20:24:12] [Render thread/ERROR] (Minecraft) 65540: Invalid scancode -1
-[20:24:55] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:24:55] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:24:55] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:24:55] [Server thread/INFO] (Minecraft) Player354 was blown up by Player354
-[20:24:55] [Render thread/INFO] (Minecraft) [System] [CHAT] Player354 was blown up by Player354
-[20:25:14] [Server thread/INFO] (Minecraft) [Player354: Applied effect Resistance to Player354]
-[20:25:14] [Render thread/INFO] (Minecraft) [System] [CHAT] Applied effect Resistance to Player354
-[20:25:19] [Server thread/INFO] (Minecraft) [Player354: Applied effect Resistance to Player354]
-[20:25:19] [Render thread/INFO] (Minecraft) [System] [CHAT] Applied effect Resistance to Player354
-[20:25:21] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:25:21] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:25:21] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:25:21] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:26:08] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:26:08] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:26:08] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:26:08] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:26:29] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:29] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:29] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:30] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:30] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:30] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:31] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:31] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:31] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:32] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:32] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:32] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:32] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:33] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:33] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:34] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:38] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:26:38] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:26:38] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:26:38] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:26:40] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:41] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:43] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:45] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:45] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:45] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:26:48] [Server thread/INFO] (Minecraft) [Player354: Set own game mode to Creative Mode]
-[20:26:48] [Render thread/INFO] (Minecraft) [System] [CHAT] Set own game mode to Creative Mode
-[20:26:53] [Server thread/INFO] (Minecraft) [Player354: Set own game mode to Survival Mode]
-[20:26:53] [Render thread/INFO] (Minecraft) [System] [CHAT] Set own game mode to Survival Mode
-[20:26:54] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:26:54] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:26:54] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:26:54] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:27:01] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:02] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:02] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:02] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:03] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:03] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:03] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:05] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:27:05] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:27:05] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:27:05] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:27:09] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:09] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:10] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:11] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:27:11] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:27:11] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:27:11] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:27:14] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:14] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:14] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:15] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:16] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:16] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:17] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:17] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:18] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:19] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:19] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:19] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:20] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:20] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:20] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:21] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:21] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:21] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:22] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:23] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:23] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:24] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:24] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:24] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:24] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:25] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:25] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:25] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:26] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:26] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:27] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:27:27] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:27:27] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:27:27] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:27:30] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=2, y=-61, z=-15}
-[20:27:30] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=2, y=-60, z=-15}
-[20:27:31] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=2, y=-60, z=-15}
-[20:27:32] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=1, y=-61, z=-17}
-[20:27:32] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=1, y=-60, z=-17}
-[20:27:33] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-2, y=-61, z=-16}
-[20:27:33] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-2, y=-60, z=-16}
-[20:27:35] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:27:35] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:27:35] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:27:35] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:27:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=1, y=-60, z=-17}
-[20:27:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=1, y=-60, z=-17}
-[20:27:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=1, y=-60, z=-17}
-[20:27:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=1, y=-60, z=-17}
-[20:27:50] [Server thread/INFO] (Minecraft) [Player354: Gave 1 [Diamond Sword] to Player354]
-[20:27:50] [Render thread/INFO] (Minecraft) [System] [CHAT] Gave 1 [Diamond Sword] to Player354
-[20:27:50] [Render thread/INFO] (Minecraft) Loaded 14 advancements
-[20:27:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=1, y=-60, z=-17}
-[20:27:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=1, y=-60, z=-17}
-[20:27:52] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=1, y=-60, z=-17}
-[20:27:54] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:54] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=0, y=-60, z=-14}
-[20:27:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-2, y=-60, z=-16}
-[20:27:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-2, y=-60, z=-16}
-[20:27:59] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=1, y=-61, z=-14}
-[20:27:59] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=1, y=-61, z=-14} BlockPos{x=0, y=-60, z=-14}
-[20:27:59] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=1, y=-61, z=-14} BlockPos{x=0, y=-60, z=-14}
-[20:28:01] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=1, y=-61, z=-14} BlockPos{x=2, y=-60, z=-15}
-[20:28:02] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=1, y=-61, z=-14} BlockPos{x=0, y=-60, z=-14}
-[20:28:04] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=1, y=-61, z=-14} BlockPos{x=-2, y=-60, z=-16}
-[20:28:05] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=1, y=-61, z=-14} BlockPos{x=-2, y=-60, z=-16}
-[20:28:06] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=1, y=-61, z=-14} BlockPos{x=-2, y=-61, z=-15}
-[20:28:07] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=1, y=-61, z=-14} BlockPos{x=-2, y=-60, z=-16}
-[20:28:07] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=1, y=-61, z=-14} BlockPos{x=-2, y=-60, z=-16}
-[20:28:08] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=1, y=-61, z=-14} BlockPos{x=-3, y=-61, z=-17}
-[20:28:09] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-2, y=-61, z=-17} BlockPos{x=1, y=-60, z=-17}
-[20:28:10] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-2, y=-61, z=-17} BlockPos{x=1, y=-60, z=-17}
-[20:28:11] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-2, y=-61, z=-17} BlockPos{x=0, y=-61, z=-17}
-[20:28:11] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-2, y=-61, z=-17} BlockPos{x=1, y=-60, z=-17}
-[20:28:12] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-2, y=-61, z=-17} BlockPos{x=-2, y=-61, z=-13}
-[20:28:13] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-2, y=-61, z=-17} BlockPos{x=-2, y=-61, z=-13}
-[20:28:13] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-2, y=-61, z=-14} BlockPos{x=-3, y=-61, z=-14}
-[20:28:15] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-15} BlockPos{x=-3, y=-60, z=-15}
-[20:28:15] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-15} BlockPos{x=-3, y=-60, z=-15}
-[20:28:16] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-15} BlockPos{x=-3, y=-60, z=-15}
-[20:28:16] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-15} BlockPos{x=-5, y=-61, z=-14}
-[20:28:16] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-15} BlockPos{x=-5, y=-60, z=-14}
-[20:28:17] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=-2, y=-61, z=-13}
-[20:28:17] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=-2, y=-60, z=-13}
-[20:28:18] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=0, y=-60, z=-14}
-[20:28:19] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=2, y=-61, z=-13}
-[20:28:19] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=2, y=-60, z=-13}
-[20:28:20] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=4, y=-61, z=-15}
-[20:28:20] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=4, y=-60, z=-15}
-[20:28:20] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=2, y=-60, z=-15}
-[20:28:20] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=1, y=-60, z=-17}
-[20:28:22] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=-3, y=-60, z=-15}
-[20:28:22] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=-2, y=-60, z=-16}
-[20:28:24] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=-3, y=-60, z=-15}
-[20:28:24] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=-3, y=-60, z=-15}
-[20:28:25] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=-2, y=-60, z=-16}
-[20:28:25] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-5, y=-60, z=-14} BlockPos{x=0, y=-61, z=-19}
-[20:28:26] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-20} BlockPos{x=0, y=-60, z=-19}
-[20:28:26] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-20} BlockPos{x=1, y=-61, z=-21}
-[20:28:26] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-20} BlockPos{x=1, y=-60, z=-21}
-[20:28:27] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-20} BlockPos{x=4, y=-61, z=-21}
-[20:28:27] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-20} BlockPos{x=4, y=-60, z=-21}
-[20:28:27] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-20} BlockPos{x=7, y=-61, z=-21}
-[20:28:27] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-20} BlockPos{x=7, y=-60, z=-21}
-[20:28:28] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-20} BlockPos{x=5, y=-61, z=-19}
-[20:28:28] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-20} BlockPos{x=5, y=-60, z=-19}
-[20:28:28] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-20} BlockPos{x=7, y=-61, z=-17}
-[20:28:28] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-20} BlockPos{x=7, y=-60, z=-17}
-[20:28:29] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=6, y=-61, z=-15}
-[20:28:29] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=6, y=-60, z=-15}
-[20:28:31] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-1, y=-61, z=-15}
-[20:28:31] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-1, y=-60, z=-15}
-[20:28:31] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-2, y=-61, z=-18}
-[20:28:32] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-2, y=-60, z=-18}
-[20:28:32] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-3, y=-61, z=-20}
-[20:28:32] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-3, y=-60, z=-20}
-[20:28:33] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-4, y=-61, z=-17}
-[20:28:33] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-4, y=-60, z=-17}
-[20:28:34] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-7, y=-61, z=-16}
-[20:28:34] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-7, y=-60, z=-16}
-[20:28:34] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-7, y=-60, z=-16}
-[20:28:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-5, y=-61, z=-20}
-[20:28:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-5, y=-60, z=-20}
-[20:28:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-3, y=-61, z=-22}
-[20:28:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-3, y=-60, z=-22}
-[20:28:36] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-2, y=-61, z=-24}
-[20:28:36] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-2, y=-60, z=-24}
-[20:28:37] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-1, y=-61, z=-25}
-[20:28:37] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-1, y=-60, z=-25}
-[20:28:37] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=1, y=-61, z=-26}
-[20:28:38] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=1, y=-60, z=-26}
-[20:28:38] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=3, y=-61, z=-27}
-[20:28:38] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=3, y=-60, z=-27}
-[20:28:39] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=4, y=-61, z=-28}
-[20:28:39] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=4, y=-60, z=-28}
-[20:28:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-6, y=-61, z=-18}
-[20:28:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-6, y=-60, z=-18}
-[20:28:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-5, y=-61, z=-19}
-[20:28:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=-5, y=-60, z=-19}
-[20:28:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=8, y=-61, z=-17} BlockPos{x=0, y=-61, z=-23}
-[20:28:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=0, y=-60, z=-23}
-[20:28:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=1, y=-60, z=-26}
-[20:28:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=3, y=-61, z=-23}
-[20:28:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=3, y=-60, z=-23}
-[20:28:50] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=3, y=-61, z=-26}
-[20:28:50] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=3, y=-60, z=-26}
-[20:28:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=6, y=-61, z=-25}
-[20:28:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=6, y=-60, z=-25}
-[20:28:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=8, y=-61, z=-23}
-[20:28:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=8, y=-60, z=-23}
-[20:28:52] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=8, y=-61, z=-25}
-[20:28:52] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=8, y=-60, z=-25}
-[20:28:55] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=-61, z=-22} BlockPos{x=-4, y=-61, z=-28}
-[20:28:55] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=-4, y=-60, z=-28}
-[20:28:56] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=-4, y=-60, z=-28}
-[20:28:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=-2, y=-61, z=-31}
-[20:28:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=-2, y=-60, z=-31}
-[20:28:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=1, y=-61, z=-31}
-[20:28:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=0, y=-61, z=-32}
-[20:28:59] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=0, y=-60, z=-32}
-[20:28:59] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=1, y=-60, z=-31}
-[20:29:01] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:29:01] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:29:01] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:29:01] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:29:15] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=7, y=-61, z=-30}
-[20:29:15] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=7, y=-60, z=-30}
-[20:29:15] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=8, y=-61, z=-33}
-[20:29:15] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=8, y=-60, z=-33}
-[20:29:16] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:29:16] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:29:16] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:29:16] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:29:21] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=11, y=-61, z=-23}
-[20:29:21] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=11, y=-60, z=-23}
-[20:29:22] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=14, y=-61, z=-22}
-[20:29:22] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=14, y=-60, z=-22}
-[20:29:23] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=17, y=-61, z=-22}
-[20:29:23] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=17, y=-60, z=-22}
-[20:29:24] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=14, y=-61, z=-20}
-[20:29:24] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=14, y=-60, z=-20}
-[20:29:24] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=17, y=-61, z=-20}
-[20:29:24] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=17, y=-60, z=-20}
-[20:29:25] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=15, y=-61, z=-19}
-[20:29:25] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=15, y=-60, z=-19}
-[20:29:25] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=18, y=-61, z=-17}
-[20:29:25] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=18, y=-60, z=-17}
-[20:29:26] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=16, y=-61, z=-15}
-[20:29:26] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=16, y=-60, z=-15}
-[20:29:26] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-28} BlockPos{x=14, y=-61, z=-14}
-[20:29:27] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=11, y=-61, z=-15}
-[20:29:27] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=11, y=-60, z=-15}
-[20:29:28] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=13, y=-60, z=-14}
-[20:29:28] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=11, y=-61, z=-13}
-[20:29:28] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=11, y=-60, z=-13}
-[20:29:29] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=13, y=-60, z=-14}
-[20:29:29] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=14, y=-61, z=-10}
-[20:29:29] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=14, y=-60, z=-10}
-[20:29:30] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=11, y=-61, z=-9}
-[20:29:30] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=11, y=-60, z=-9}
-[20:29:30] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=9, y=-61, z=-8}
-[20:29:30] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=9, y=-60, z=-8}
-[20:29:31] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=13, y=-61, z=-14} BlockPos{x=8, y=-61, z=-6}
-[20:29:31] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=7, y=-61, z=-6} BlockPos{x=8, y=-60, z=-6}
-[20:29:31] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=7, y=-61, z=-6} BlockPos{x=5, y=-61, z=-5}
-[20:29:31] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=7, y=-61, z=-6} BlockPos{x=5, y=-60, z=-5}
-[20:29:34] [Server thread/INFO] (Minecraft) [Player354: The difficulty has been set to Peaceful]
-[20:29:34] [Render thread/INFO] (Minecraft) [System] [CHAT] The difficulty has been set to Peaceful
-[20:29:34] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=7, y=-61, z=-6} BlockPos{x=3, y=-61, z=-2}
-[20:29:34] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=7, y=-61, z=-6} BlockPos{x=3, y=-60, z=-2}
-[20:29:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=7, y=-61, z=-6} BlockPos{x=1, y=-61, z=-2}
-[20:29:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=7, y=-61, z=-6} BlockPos{x=1, y=-60, z=-2}
-[20:29:38] [Server thread/INFO] (Minecraft) [Player354: Set own game mode to Creative Mode]
-[20:29:38] [Render thread/INFO] (Minecraft) [System] [CHAT] Set own game mode to Creative Mode
-[20:29:42] [Server thread/INFO] (Minecraft) [Player354: Set own game mode to Survival Mode]
-[20:29:42] [Render thread/INFO] (Minecraft) [System] [CHAT] Set own game mode to Survival Mode
-[20:29:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-2, y=-61, z=-3} BlockPos{x=-3, y=-61, z=-9}
-[20:29:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-9} BlockPos{x=-3, y=-60, z=-9}
-[20:29:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-9} BlockPos{x=-5, y=-61, z=-7}
-[20:29:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-9} BlockPos{x=-5, y=-60, z=-7}
-[20:29:45] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-9} BlockPos{x=-5, y=-61, z=-4}
-[20:29:45] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-9} BlockPos{x=-5, y=-60, z=-4}
-[20:29:45] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-3, y=-61, z=-9} BlockPos{x=-4, y=-61, z=-1}
-[20:29:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-4, y=-61, z=-1} BlockPos{x=-4, y=-60, z=-1}
-[20:29:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-4, y=-61, z=-1} BlockPos{x=-1, y=-61, z=2}
-[20:29:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-4, y=-61, z=-1} BlockPos{x=-1, y=-60, z=2}
-[20:29:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-4, y=-61, z=-1} BlockPos{x=-11, y=-61, z=3}
-[20:29:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-11, y=-61, z=3} BlockPos{x=-11, y=-60, z=3}
-[20:29:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-11, y=-61, z=3} BlockPos{x=-13, y=-61, z=1}
-[20:29:50] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-11, y=-61, z=3} BlockPos{x=-13, y=-60, z=1}
-[20:29:50] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-11, y=-61, z=3} BlockPos{x=-13, y=-60, z=1}
-[20:29:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-11, y=-61, z=3} BlockPos{x=-19, y=-61, z=0}
-[20:29:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-11, y=-61, z=3} BlockPos{x=-19, y=-60, z=0}
-[20:29:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-11, y=-61, z=3} BlockPos{x=-19, y=-60, z=0}
-[20:29:52] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-11, y=-61, z=3} BlockPos{x=-19, y=-60, z=0}
-[20:29:52] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-11, y=-61, z=3} BlockPos{x=-22, y=-61, z=6}
-[20:29:53] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-22, y=-60, z=6}
-[20:29:53] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-22, y=-60, z=6}
-[20:29:53] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-25, y=-61, z=2}
-[20:29:54] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-25, y=-60, z=2}
-[20:29:54] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-28, y=-61, z=-1}
-[20:29:54] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-28, y=-60, z=-1}
-[20:29:55] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-28, y=-60, z=-1}
-[20:29:55] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-28, y=-60, z=-1}
-[20:29:56] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-31, y=-61, z=-1}
-[20:29:56] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-31, y=-60, z=-1}
-[20:29:56] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-31, y=-60, z=-1}
-[20:29:56] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-32, y=-61, z=-4}
-[20:29:56] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-32, y=-60, z=-4}
-[20:29:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-28, y=-61, z=-5}
-[20:29:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-28, y=-60, z=-5}
-[20:29:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-28, y=-60, z=-5}
-[20:29:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-30, y=-61, z=-8}
-[20:29:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-30, y=-60, z=-8}
-[20:29:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-30, y=-60, z=-8}
-[20:29:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-30, y=-60, z=-8}
-[20:29:59] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-26, y=-61, z=-6}
-[20:29:59] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-26, y=-60, z=-6}
-[20:29:59] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-26, y=-60, z=-6}
-[20:30:00] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-23, y=-61, z=-6}
-[20:30:00] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-23, y=-60, z=-6}
-[20:30:00] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-23, y=-60, z=-6}
-[20:30:01] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-22, y=-61, z=6} BlockPos{x=-21, y=-61, z=-3}
-[20:30:01] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-20, y=-61, z=-2} BlockPos{x=-21, y=-60, z=-3}
-[20:30:01] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-20, y=-61, z=-2} BlockPos{x=-21, y=-60, z=-3}
-[20:30:03] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-20, y=-61, z=-2} BlockPos{x=-27, y=-61, z=-2}
-[20:30:03] [Render thread/INFO] (Minecraft) Loaded 37 advancements
-[20:30:08] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-27, y=-61, z=-2} BlockPos{x=-45, y=-61, z=-18}
-[20:30:08] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-45, y=-61, z=-18} BlockPos{x=-45, y=-60, z=-18}
-[20:30:09] [Render thread/INFO] (Minecraft) Loaded 40 advancements
-[20:30:10] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-45, y=-61, z=-18} BlockPos{x=-37, y=-61, z=-9}
-[20:30:10] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-37, y=-61, z=-9} BlockPos{x=-37, y=-60, z=-9}
-[20:30:11] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-37, y=-61, z=-9} BlockPos{x=-34, y=-61, z=-4}
-[20:30:11] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-37, y=-61, z=-9} BlockPos{x=-34, y=-60, z=-4}
-[20:30:11] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-37, y=-61, z=-9} BlockPos{x=-34, y=-60, z=-4}
-[20:30:12] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-37, y=-61, z=-9} BlockPos{x=-32, y=-60, z=-4}
-[20:30:12] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-37, y=-61, z=-9} BlockPos{x=-33, y=-61, z=0}
-[20:30:12] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-37, y=-61, z=-9} BlockPos{x=-33, y=-60, z=0}
-[20:30:13] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-37, y=-61, z=-9} BlockPos{x=-29, y=-61, z=1}
-[20:30:13] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-37, y=-61, z=-9} BlockPos{x=-29, y=-60, z=1}
-[20:30:17] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:30:17] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:30:17] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:30:17] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:30:26] [Render thread/INFO] (Minecraft) Loaded 43 advancements
-[20:30:34] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-37, y=-61, z=-9} BlockPos{x=-39, y=-61, z=20}
-[20:30:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-39, y=-61, z=21} BlockPos{x=-42, y=-61, z=18}
-[20:30:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-39, y=-61, z=21} BlockPos{x=-42, y=-60, z=18}
-[20:30:36] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-39, y=-61, z=21} BlockPos{x=-44, y=-61, z=17}
-[20:30:36] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-44, y=-60, z=17}
-[20:30:37] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-42, y=-61, z=14}
-[20:30:37] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-42, y=-60, z=14}
-[20:30:38] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-39, y=-61, z=13}
-[20:30:38] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-39, y=-60, z=13}
-[20:30:38] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-36, y=-61, z=12}
-[20:30:38] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-36, y=-60, z=12}
-[20:30:39] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-34, y=-61, z=13}
-[20:30:39] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-34, y=-60, z=13}
-[20:30:39] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-32, y=-61, z=14}
-[20:30:39] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-32, y=-60, z=14}
-[20:30:39] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-29, y=-61, z=14}
-[20:30:40] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-29, y=-60, z=14}
-[20:30:40] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-26, y=-61, z=13}
-[20:30:40] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-26, y=-60, z=13}
-[20:30:41] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-25, y=-61, z=12}
-[20:30:41] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-25, y=-60, z=12}
-[20:30:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-23, y=-61, z=11}
-[20:30:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-23, y=-60, z=11}
-[20:30:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-44, y=-61, z=17} BlockPos{x=-22, y=-61, z=9}
-[20:30:43] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-20, y=-61, z=6}
-[20:30:43] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-20, y=-60, z=6}
-[20:30:43] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-19, y=-61, z=4}
-[20:30:43] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-19, y=-60, z=4}
-[20:30:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-18, y=-61, z=1}
-[20:30:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-18, y=-60, z=1}
-[20:30:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-16, y=-61, z=0}
-[20:30:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-16, y=-60, z=0}
-[20:30:45] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-17, y=-61, z=-4}
-[20:30:45] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-17, y=-60, z=-4}
-[20:30:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-19, y=-61, z=-4}
-[20:30:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-19, y=-60, z=-4}
-[20:30:47] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-23, y=-61, z=-1}
-[20:30:47] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-23, y=-60, z=-1}
-[20:30:47] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-23, y=-60, z=-1}
-[20:30:47] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-26, y=-61, z=-2}
-[20:30:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-25, y=-61, z=-3}
-[20:30:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-25, y=-60, z=-3}
-[20:30:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-25, y=-60, z=-3}
-[20:30:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-27, y=-61, z=-5}
-[20:30:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-27, y=-60, z=-5}
-[20:30:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-27, y=-60, z=-5}
-[20:30:50] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-32, y=-61, z=-3}
-[20:30:50] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-32, y=-60, z=-3}
-[20:30:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-32, y=-61, z=-7}
-[20:30:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-32, y=-60, z=-7}
-[20:30:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-30, y=-60, z=-8}
-[20:30:52] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-32, y=-61, z=-9}
-[20:30:52] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-32, y=-60, z=-9}
-[20:30:53] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-34, y=-61, z=-7}
-[20:30:53] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-34, y=-60, z=-7}
-[20:30:54] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-35, y=-61, z=-6}
-[20:30:54] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-35, y=-60, z=-6}
-[20:30:58] [Server thread/INFO] (Minecraft) [Player354: Set own game mode to Creative Mode]
-[20:30:58] [Render thread/INFO] (Minecraft) [System] [CHAT] Set own game mode to Creative Mode
-[20:31:03] [Server thread/INFO] (Minecraft) [Player354: Set own game mode to Survival Mode]
-[20:31:03] [Render thread/INFO] (Minecraft) [System] [CHAT] Set own game mode to Survival Mode
-[20:31:05] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-39, y=-61, z=-5}
-[20:31:06] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-39, y=-60, z=-5}
-[20:31:06] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-39, y=-60, z=-5}
-[20:31:06] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-39, y=-60, z=-5}
-[20:31:07] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-39, y=-60, z=-5}
-[20:31:07] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-39, y=-60, z=-5}
-[20:31:07] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-39, y=-60, z=-5}
-[20:31:08] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:31:08] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:31:08] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:31:08] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:31:16] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:31:16] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:31:16] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:31:16] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:31:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=6, y=-60, z=-25}
-[20:31:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=6, y=-60, z=-25}
-[20:31:35] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=8, y=-60, z=-23}
-[20:31:36] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=8, y=-60, z=-23}
-[20:31:37] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=7, y=-60, z=-21}
-[20:31:38] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=4, y=-60, z=-15}
-[20:31:39] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=2, y=-60, z=-15}
-[20:31:39] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=2, y=-60, z=-13}
-[20:31:40] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=5, y=-61, z=-9}
-[20:31:40] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=5, y=-60, z=-9}
-[20:31:41] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=2, y=-61, z=-7}
-[20:31:41] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=2, y=-60, z=-7}
-[20:31:41] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=0, y=-61, z=-7}
-[20:31:41] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=0, y=-60, z=-7}
-[20:31:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-2, y=-61, z=-8}
-[20:31:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-2, y=-60, z=-8}
-[20:31:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-5, y=-61, z=-10}
-[20:31:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-5, y=-60, z=-10}
-[20:31:43] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-6, y=-61, z=-11}
-[20:31:43] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-6, y=-60, z=-11}
-[20:31:43] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-21, y=-61, z=8} BlockPos{x=-8, y=-61, z=-11}
-[20:31:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-10, y=-61, z=-11}
-[20:31:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-12, y=-61, z=-12}
-[20:31:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-12, y=-60, z=-12}
-[20:31:44] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-13, y=-61, z=-12}
-[20:31:45] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-17, y=-61, z=-11}
-[20:31:45] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-17, y=-60, z=-11}
-[20:31:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-20, y=-61, z=-11}
-[20:31:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-20, y=-60, z=-11}
-[20:31:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-19, y=-61, z=-8}
-[20:31:46] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-19, y=-60, z=-8}
-[20:31:47] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-17, y=-61, z=-7}
-[20:31:47] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-17, y=-60, z=-7}
-[20:31:47] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-15, y=-61, z=-7}
-[20:31:47] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-15, y=-60, z=-7}
-[20:31:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-12, y=-61, z=-8}
-[20:31:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-12, y=-60, z=-8}
-[20:31:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-10, y=-61, z=-9}
-[20:31:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-10, y=-60, z=-9}
-[20:31:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-9, y=-61, z=-6}
-[20:31:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-9, y=-60, z=-6}
-[20:31:50] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-11, y=-61, z=-5}
-[20:31:50] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-11, y=-60, z=-5}
-[20:31:50] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-10, y=-61, z=-12} BlockPos{x=-11, y=-61, z=-3}
-[20:31:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-15, y=-61, z=-2}
-[20:31:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-15, y=-60, z=-2}
-[20:31:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-15, y=-60, z=-2}
-[20:31:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-13, y=-61, z=-1}
-[20:31:51] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-13, y=-60, z=-1}
-[20:31:52] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-13, y=-60, z=-1}
-[20:31:52] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-13, y=-60, z=1}
-[20:31:52] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-13, y=-60, z=-1}
-[20:31:53] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-13, y=-60, z=-1}
-[20:31:53] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-13, y=-60, z=-1}
-[20:31:53] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-13, y=-60, z=-1}
-[20:31:54] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-13, y=-60, z=-1}
-[20:31:54] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-13, y=-61, z=-4} BlockPos{x=-13, y=-60, z=-1}
-[20:31:55] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:31:55] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:31:55] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:31:55] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:32:02] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:32:02] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:32:02] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:32:02] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:33:20] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:33:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:33:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:33:20] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:38:56] [Server thread/INFO] (Minecraft) Saving and pausing game...
-[20:38:56] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
-[20:38:56] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
-[20:38:56] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
-[20:38:57] [Render thread/INFO] (Minecraft) [System] [CHAT] §7[§bClick§3Crystals§7] §r§bSilkTouch §3is now toggled §coff
+[20:44:17] [Render thread/INFO] (Minecraft) Setting user: Player241
+[20:44:17] [Render thread/INFO] (Minecraft) [STDOUT]: [ClickCrystals] Loading ClickCrystals by ImproperIssues
+[20:44:17] [Render thread/INFO] (Indigo) [Indigo] Registering Indigo renderer!
+[20:44:18] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.3.1 SNAPSHOT
+[20:44:21] [Render thread/INFO] (Minecraft) Narrator library for x64 successfully loaded
+[20:44:21] [Render thread/INFO] (Minecraft) Reloading ResourceManager: vanilla, Fabric Mods (Fabric Renderer - Indigo, Fabric API Base, Fabric Recipe API (v1), Fabric Biome API (v1), Fabric Rendering Data Attachment (v1), Fabric Game Test API (v1), Fabric Game Rule API (v1), Fabric API Lookup API (v1), Fabric Object Builder API (v1), Fabric Content Registries (v0), Fabric Convention Tags, Fabric Lifecycle Events (v1), Fabric Client Tags, Fabric Events Interaction (v0), Fabric Transitive Access Wideners (v1), Fabric Particles (v1), Fabric Data Generation API (v1), Fabric Dimensions API (v1), Fabric Key Binding API (v1), Fabric Resource Loader (v0), Fabric Resource Conditions API (v1), Fabric Screen API (v1), Fabric Networking API (v1), Fabric Sound API (v1), Fabric Item API (v1), Fabric Crash Report Info (v1), Fabric Entity Events (v1), ClickCrystals, Fabric Models (v0), Fabric Mining Level API (v1), Fabric Item Group API (v1), Fabric Loot API (v2), Fabric Command API (v2), Fabric Loader, Fabric Block API (v1), Fabric Transfer API (v1), Fabric Registry Sync (v0), Fabric API, Fabric Message API (v1), Fabric BlockRenderLayer Registration (v1), Fabric Screen Handler API (v1), Fabric Rendering (v1), Fabric Rendering Fluids (v1), Fabric Renderer API (v1))
+[20:44:22] [Realms Notification Availability checker #1/INFO] (Minecraft) Could not authorize you against Realms server: Invalid session id
+[20:44:26] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.brush.brushing
+[20:44:26] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.brush.brush_sand_completed
+[20:44:26] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.goat_horn.play
+[20:44:26] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[20:44:26] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:music.overworld.cherry_grove
+[20:44:26] [Render thread/INFO] (Minecraft) OpenAL initialized on device OpenAL Soft on Headphones (Cirrus Logic Superior High Definition Audio)
+[20:44:26] [Render thread/INFO] (Minecraft) Sound engine started
+[20:44:26] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/blocks.png-atlas
+[20:44:26] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/signs.png-atlas
+[20:44:26] [Render thread/INFO] (Minecraft) Created: 512x512x0 minecraft:textures/atlas/banner_patterns.png-atlas
+[20:44:26] [Render thread/INFO] (Minecraft) Created: 512x512x0 minecraft:textures/atlas/shield_patterns.png-atlas
+[20:44:26] [Render thread/INFO] (Minecraft) Created: 1024x1024x0 minecraft:textures/atlas/armor_trims.png-atlas
+[20:44:26] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/chest.png-atlas
+[20:44:26] [Render thread/INFO] (Minecraft) Created: 64x64x0 minecraft:textures/atlas/decorated_pot.png-atlas
+[20:44:26] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/shulker_boxes.png-atlas
+[20:44:26] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/beds.png-atlas
+[20:44:27] [Render thread/WARN] (Minecraft) Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[20:44:27] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
+[20:44:27] [Render thread/INFO] (Minecraft) Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
+[20:44:27] [Render thread/INFO] (Minecraft) Created: 128x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[20:44:36] [Render thread/INFO] (Minecraft) Deleting level ClickCrystals
+[20:44:36] [Render thread/INFO] (Minecraft) Attempt 1...
+[20:44:39] [Render thread/INFO] (Minecraft) Loaded 7 recipes
+[20:44:39] [Render thread/INFO] (Minecraft) Loaded 1179 advancements
+[20:44:40] [Render thread/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 63 new biomes in 4.196 ms
+[20:44:40] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.19.4
+[20:44:40] [Server thread/INFO] (Minecraft) Generating keypair
+[20:44:41] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[20:44:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
+[20:44:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
+[20:44:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
+[20:44:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
+[20:44:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
+[20:44:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
+[20:44:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
+[20:44:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
+[20:44:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
+[20:44:45] [Render thread/INFO] (Minecraft) Preparing spawn area: 28%
+[20:44:46] [Render thread/INFO] (Minecraft) Preparing spawn area: 85%
+[20:44:46] [Render thread/INFO] (Minecraft) Time elapsed: 5392 ms
+[20:44:47] [Server thread/INFO] (Minecraft) Changing view distance to 2, from 10
+[20:44:47] [Server thread/INFO] (Minecraft) Changing simulation distance to 5, from 0
+[20:44:48] [Server thread/INFO] (Minecraft) Player241[local:E:f0692e6d] logged in with entity id 26 at (-27.92330267751921, -59.0, -1.0872492731408527)
+[20:44:49] [Server thread/INFO] (Minecraft) Player241 joined the game
+[20:44:49] [Server thread/INFO] (Minecraft) Player241 has made the advancement [Ice Bucket Challenge]
+[20:44:49] [Render thread/INFO] (Minecraft) [System] [CHAT] Player241 has made the advancement [Ice Bucket Challenge]
+[20:44:49] [Render thread/INFO] (Minecraft) Loaded 17 advancements
+[20:44:51] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[20:44:51] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
+[20:44:51] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
+[20:44:51] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
+[20:44:56] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-37, y=-60, z=-9}
+[20:44:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-37, y=-60, z=-9}
+[20:44:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-32, y=-60, z=-9}
+[20:44:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-32, y=-60, z=-9}
+[20:44:59] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-30, y=-60, z=-8}
+[20:44:59] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-30, y=-60, z=-8}
+[20:45:00] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-30, y=-60, z=-8}
+[20:45:00] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-30, y=-60, z=-8}
+[20:45:00] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-30, y=-60, z=-8}
+[20:45:00] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-30, y=-60, z=-8}
+[20:45:02] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-28, y=-60, z=-5}
+[20:45:03] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-28, y=-60, z=-5}
+[20:45:03] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=0, y=0, z=0} BlockPos{x=-28, y=-60, z=-5}
+[20:45:03] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-29, y=-61, z=-5} BlockPos{x=-28, y=-60, z=-5}
+[20:45:03] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-29, y=-61, z=-5} BlockPos{x=-27, y=-60, z=-5}
+[20:45:04] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-29, y=-61, z=-5} BlockPos{x=-27, y=-60, z=-5}
+[20:45:04] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-29, y=-61, z=-5} BlockPos{x=-26, y=-60, z=-6}
+[20:45:04] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-29, y=-61, z=-5} BlockPos{x=-26, y=-60, z=-6}
+[20:45:04] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-29, y=-61, z=-5} BlockPos{x=-26, y=-60, z=-6}
+[20:45:04] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-29, y=-61, z=-5} BlockPos{x=-26, y=-60, z=-6}
+[20:45:05] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-29, y=-61, z=-5} BlockPos{x=-26, y=-60, z=-6}
+[20:45:05] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[20:45:05] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
+[20:45:06] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
+[20:45:06] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
+[20:45:34] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-29, y=-61, z=-5} BlockPos{x=-19, y=-60, z=0}
+[20:45:56] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-4, y=-61, z=-9} BlockPos{x=-3, y=-60, z=-9}
+[20:45:56] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-4, y=-61, z=-9} BlockPos{x=-3, y=-60, z=-9}
+[20:45:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-4, y=-61, z=-9} BlockPos{x=-5, y=-61, z=-8}
+[20:45:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-4, y=-61, z=-9} BlockPos{x=-5, y=-60, z=-8}
+[20:45:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-4, y=-61, z=-9} BlockPos{x=-5, y=-60, z=-8}
+[20:46:04] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-4, y=-60, z=-1}
+[20:46:19] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[20:46:19] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
+[20:46:19] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
+[20:46:19] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
+[20:46:40] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-61, z=1}
+[20:46:40] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-60, z=1}
+[20:46:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-61, z=2}
+[20:46:42] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-60, z=2}
+[20:46:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-60, z=2}
+[20:46:48] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-60, z=2}
+[20:46:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-60, z=2}
+[20:46:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-60, z=2}
+[20:46:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-60, z=2}
+[20:46:49] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-60, z=2}
+[20:46:50] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-60, z=2}
+[20:46:50] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-60, z=2}
+[20:46:54] [Server thread/INFO] (Minecraft) [Player241: Set own game mode to Creative Mode]
+[20:46:54] [Render thread/INFO] (Minecraft) [System] [CHAT] Set own game mode to Creative Mode
+[20:47:03] [Server thread/INFO] (Minecraft) [Player241: Set own game mode to Survival Mode]
+[20:47:03] [Render thread/INFO] (Minecraft) [System] [CHAT] Set own game mode to Survival Mode
+[20:47:14] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[20:47:14] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
+[20:47:14] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
+[20:47:14] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
+[20:47:17] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[20:47:17] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
+[20:47:17] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
+[20:47:17] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
+[20:47:29] [Server thread/INFO] (Minecraft) [Player241: Set own game mode to Creative Mode]
+[20:47:29] [Render thread/INFO] (Minecraft) [System] [CHAT] Set own game mode to Creative Mode
+[20:47:33] [Server thread/INFO] (Minecraft) [Player241: Set own game mode to Survival Mode]
+[20:47:33] [Render thread/INFO] (Minecraft) [System] [CHAT] Set own game mode to Survival Mode
+[20:47:42] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[20:47:42] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
+[20:47:42] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
+[20:47:42] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
+[20:47:58] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-22, y=-61, z=14}
+[20:48:00] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-24, y=-61, z=7}
+[20:48:01] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-26, y=-61, z=9}
+[20:48:01] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-26, y=-60, z=9}
+[20:48:03] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-19, y=-61, z=7}
+[20:48:03] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-19, y=-60, z=7}
+[20:48:05] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-61, z=9}
+[20:48:05] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-16, y=-60, z=9}
+[20:48:07] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-12, y=-61, z=7}
+[20:48:07] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-12, y=-60, z=7}
+[20:48:09] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[20:48:09] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
+[20:48:09] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
+[20:48:09] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
+[20:48:13] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-10, y=-61, z=5}
+[20:48:13] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-10, y=-60, z=5}
+[20:48:15] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-9, y=-61, z=-2}
+[20:48:15] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-9, y=-60, z=-2}
+[20:48:20] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-15, y=-61, z=-10}
+[20:48:20] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-15, y=-60, z=-10}
+[20:48:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-22, y=-60, z=6}
+[20:48:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-22, y=-61, z=7}
+[20:48:57] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-22, y=-60, z=7}
+[20:48:59] [Server thread/WARN] (Minecraft) Mismatch in destroy block pos: BlockPos{x=-6, y=-61, z=5} BlockPos{x=-22, y=-60, z=7}
+[20:49:02] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[20:49:02] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
+[20:49:02] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
+[20:49:02] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
+[20:49:04] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[20:49:04] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
+[20:49:04] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
+[20:49:04] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
+[20:49:06] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[20:49:06] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:overworld
+[20:49:06] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_end
+[20:49:06] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[ClickCrystalsFlat]'/minecraft:the_nether
+[20:49:07] [Render thread/INFO] (Minecraft) [System] [CHAT] §7[§bClick§3Crystals§7] §r§bSilkTouch §3is now toggled §coff

@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.SpectatorSight;
+import io.github.itzispyder.clickcrystals.modules.modules.TrueSight;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +17,7 @@ public abstract class EntityClassMixin {
 
     @Inject(method = "isInvisibleTo", at = @At("RETURN"), cancellable = true)
     public void isInvisibleTo(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
-        Module spectatorsSight = Module.get(SpectatorSight.class);
+        Module spectatorsSight = Module.get(TrueSight.class);
         if (spectatorsSight.isEnabled()) cir.setReturnValue(false);
     }
 }

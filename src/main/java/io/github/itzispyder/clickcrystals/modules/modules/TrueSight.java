@@ -1,0 +1,24 @@
+package io.github.itzispyder.clickcrystals.modules.modules;
+
+import io.github.itzispyder.clickcrystals.modules.Categories;
+import io.github.itzispyder.clickcrystals.modules.Module;
+
+/**
+ * TrueSight module
+ */
+public class TrueSight extends Module {
+
+    public TrueSight() {
+        super("TrueSight", Categories.MISC,"Renders invisible entities the way you seem them in spectator mode. Never get sneak attacked again!");
+    }
+
+    @Override
+    protected void onEnable() {
+
+    }
+
+    @Override
+    protected void onDisable() {
+
+    }
+}
