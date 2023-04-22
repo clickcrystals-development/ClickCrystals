@@ -1,6 +1,14 @@
 
-# ![ICON](./src/main/resources/assets/clickcrystals/icon.png) ClickCrystals [1.19.4]
-Because who needs right click anyway?
+<div class="main-banner" style="border: 3px aqua solid; border-radius: 30px; border-style: outset; padding-left: 10px;">
+  <h1>
+    <img src="./src/main/resources/assets/clickcrystals/icon.png" style="width: 15%; transform: translateY(20px) rotateZ(-10deg);"/>
+    ClickCrystals [1.19.4]
+  </h1>
+  <h5 style="margin-left: 15px">
+    Because who needs right click anyway?
+  </h5>
+</div>
+
 
 ---------------------------------------------------------------
 
@@ -14,7 +22,10 @@ Changelog:
 - Nerfed the modules that people saw as macros.
 - Updated descriptions so they are accurate and friendly
 ```
-![demo-menu](./assets/image/demo-menu.png)
+
+<div class="demo-menu">
+  <img src="./assets/image/demo-menu.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
+</div>
 
 ## How Do I Use ClickCrystals?
 ```yml
