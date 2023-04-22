@@ -48,17 +48,20 @@ public class Configuration implements Serializable {
      * @param key key
      * @return section value
      */
-    public Object get(String key) {
-        return sections.get(key).get();
+    public ConfigSection<?> get(String key) {
+        return sections.get(key);
+    }
+
+    public Object getObject(String key) {
+        return get(key).get();
     }
 
     public <T extends Serializable> T get(String key, Class<T> klass) {
-        return (T) get(key);
+        return (T) getObject(key);
     }
 
     public <T extends Serializable> T getOrDefault(String key, Class<T> klass, T def) {
-        T t = get(key,klass);
-        return t != null ? t : def;
+        return get(key) != null ? getObject(key) != null ? get(key,klass) : def : def;
     }
 
     public int getInt(String key) {
