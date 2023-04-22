@@ -45,7 +45,6 @@ public class Sword2Pearl extends Module implements Listener {
             if (cooldown > System.currentTimeMillis()) return;
             cooldown = System.currentTimeMillis() + (50 * 4);
 
-            e.setCancelled(true);
             HotbarUtils.search(Items.ENDER_PEARL);
         }
     }
