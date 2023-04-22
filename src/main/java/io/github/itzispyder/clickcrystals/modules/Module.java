@@ -146,7 +146,7 @@ public abstract class Module implements Toggleable, Serializable {
      */
     public static void loadConfigModules() {
         for (Module module : system.modules().values()) {
-            boolean enabled = config.getBoolean("module." + module.getId()).get();
+            boolean enabled = config.getBoolean("module." + module.getId());
             module.setEnabled(enabled,false);
         }
     }

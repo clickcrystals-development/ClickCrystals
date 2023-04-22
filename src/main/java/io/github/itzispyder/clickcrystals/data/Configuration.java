@@ -47,73 +47,50 @@ public class Configuration implements Serializable {
      * Gets a section value
      * @param key key
      * @return section value
-     * @param <T> value type
      */
-    public <T extends Serializable> ConfigSection<T> get(String key) {
-        return (ConfigSection<T>) sections.get(key);
+    public Object get(String key) {
+        return sections.get(key).get();
     }
 
-    /**
-     * Gets a configuration section value
-     * @param key section key
-     * @return section value
-     */
-    public ConfigSection<String> getString(String key) {
-        return get(key) != null ? get(key) : new ConfigSection<>("null");
+    public <T extends Serializable> T get(String key, Class<T> klass) {
+        return (T) get(key);
     }
 
-    /**
-     * Gets a configuration section value
-     * @param key section key
-     * @return section value
-     */
-    public ConfigSection<Integer> getInt(String key) {
-        return get(key) != null ? get(key) : new ConfigSection<>(0);
+    public <T extends Serializable> T getOrDefault(String key, Class<T> klass, T def) {
+        T t = get(key,klass);
+        return t != null ? t : def;
     }
 
-    /**
-     * Gets a configuration section value
-     * @param key section key
-     * @return section value
-     */
-    public ConfigSection<Float> getFloat(String key) {
-        return get(key) != null ? get(key) : new ConfigSection<>(0.0F);
+    public int getInt(String key) {
+        return getOrDefault(key, Integer.class,0);
     }
 
-    /**
-     * Gets a configuration section value
-     * @param key section key
-     * @return section value
-     */
-    public ConfigSection<Boolean> getBoolean(String key) {
-        return get(key) != null ? get(key) : new ConfigSection<>(false);
+    public boolean getBoolean(String key) {
+        return getOrDefault(key, Boolean.class,false);
     }
 
-    /**
-     * Gets a configuration section value
-     * @param key section key
-     * @return section value
-     */
-    public ConfigSection<Double> getDouble(String key) {
-        return get(key) != null ? get(key) : new ConfigSection<>(0.0d);
+    public float getFloat(String key) {
+        return getOrDefault(key, Float.class,0.0F);
     }
 
-    /**
-     * Gets a configuration section value
-     * @param key section key
-     * @return section value
-     */
-    public ConfigSection<Module> getModule(String key) {
-        return get(key);
+    public double getDouble(String key) {
+        return getOrDefault(key, Double.class,0.0d);
     }
 
-    /**
-     * Gets a configuration section value
-     * @param key section key
-     * @return section value
-     */
-    public ConfigSection<Byte> getByte(String key) {
-        return get(key) != null ? get(key) : new ConfigSection<>((byte) 0);
+    public byte getByte(String key) {
+        return getOrDefault(key, Byte.class, (byte) 0);
+    }
+
+    public short getShort(String key) {
+        return getOrDefault(key, Short.class, (short) 0);
+    }
+
+    public long getLong(String key) {
+        return getOrDefault(key, Long.class,0L);
+    }
+
+    public Module getModule(String key) {
+        return get(key, Module.class);
     }
 
     /**

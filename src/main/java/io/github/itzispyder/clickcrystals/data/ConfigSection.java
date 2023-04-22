@@ -25,4 +25,8 @@ public class ConfigSection<T extends Serializable> implements Serializable {
     public T get() {
         return element;
     }
+
+    public T getOrDefault(T def) {
+        return get() != null ? get() : def;
+    }
 }
