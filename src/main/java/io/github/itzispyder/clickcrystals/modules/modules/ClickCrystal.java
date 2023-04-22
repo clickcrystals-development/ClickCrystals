@@ -5,13 +5,15 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.scheduler.ScheduledTask;
 import io.github.itzispyder.clickcrystals.util.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.InteractionUtils;
-import io.github.itzispyder.clickcrystals.util.Randomizer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
+import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
 /**
@@ -40,21 +42,20 @@ public class ClickCrystal extends Module implements Listener {
     private void onSendPacket(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
-            BlockPos pos = packet.getPos();
+            final BlockPos pos = packet.getPos();
             if (!BlockUtils.isCrystallabe(pos)) return;
 
             if (HotbarUtils.isHolding(Items.END_CRYSTAL)) {
                 e.setCancelled(true);
                 BlockUtils.interact(pos,packet.getDirection());
-
-                // DO NOT USE THIS AREA, ONLY ENABLE THIS WHEN HACKING IS ALLOWED!
-                // ANTICHEATS WILL ALSO GET YOU IF YOU ENABLE THIS LOWER PART
-                Module auto = Module.get(ClickCrystalAuto.class);
-                if (!auto.isEnabled()) return;
-                new ScheduledTask(() -> {
-                    InteractionUtils.doAttack();
-                }).runDelayedTask(Randomizer.rand(50,100));
             }
+        }
+        else if (e.getPacket() instanceof PlayerInteractEntityC2SPacket packet) {
+            final Entity ent = packet.getEntity((ServerWorld) mc.player.getWorld());
+            if (ent == null) return;
+            if (ent.getType() != EntityType.END_CRYSTAL) return;
+            e.setCancelled(true);
+            InteractionUtils.doAttack();
         }
     }
 }

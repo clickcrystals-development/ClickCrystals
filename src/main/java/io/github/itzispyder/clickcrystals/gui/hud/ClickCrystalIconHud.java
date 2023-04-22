@@ -21,6 +21,6 @@ public class ClickCrystalIconHud implements HudRenderCallback {
 
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderTexture(0, ClickCrystalMenuScreen.SCREEN_TITLE_BANNER_TEXTURE);
-        DrawableHelper.drawTexture(matrixStack,20,40,0,0,120,30,120,30);
+        DrawableHelper.drawTexture(matrixStack,20,40,0,0,100,25,100,25);
     }
 }

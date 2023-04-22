@@ -66,8 +66,6 @@ public class ToolSwitcher extends Module implements Listener {
         float lvl = 0;
         lvl += item.getMiningSpeedMultiplier(state);
         lvl += NbtUtils.getEnchantLvL(item,Enchantments.EFFICIENCY);
-        lvl += NbtUtils.getEnchantLvL(item,Enchantments.UNBREAKING);
-        lvl += NbtUtils.getEnchantLvL(item,Enchantments.MENDING);
         return lvl;
     }
 }

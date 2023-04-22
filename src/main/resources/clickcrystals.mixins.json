@@ -11,8 +11,7 @@
     "GameOverlayMixin",
     "GameRenderMixin",
     "LightmapTextureMixin",
-    "PacketListenerMixin",
-    "ParticleMixin"
+    "PacketListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

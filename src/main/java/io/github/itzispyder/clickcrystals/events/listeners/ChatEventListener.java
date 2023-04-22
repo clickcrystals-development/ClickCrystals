@@ -14,6 +14,7 @@ public class ChatEventListener implements Listener {
     public void onChatReceive(ChatReceiveEvent e) {
         final String message = e.getMessage();
         final String s = message.toLowerCase();
+
         if (!s.contains("!cc ")) return;
         if (s.contains("-users")) ChatUtils.sendChatMessage("I am using ClickCrystals.");
     }
