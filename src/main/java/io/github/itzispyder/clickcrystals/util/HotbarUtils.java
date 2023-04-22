@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.util;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 
 import java.util.function.BiConsumer;
@@ -108,5 +109,14 @@ public abstract class HotbarUtils {
             stacks[i] = inv.getStack(i);
         }
         return stacks;
+    }
+
+    public static boolean isForClickCrystal() {
+        return nameContains("sword")
+                || isHolding(Items.END_CRYSTAL)
+                || isHolding(Items.OBSIDIAN)
+                || isHolding(Items.TOTEM_OF_UNDYING)
+                || isHolding(Items.GLOWSTONE)
+                || isHolding(Items.RESPAWN_ANCHOR);
     }
 }

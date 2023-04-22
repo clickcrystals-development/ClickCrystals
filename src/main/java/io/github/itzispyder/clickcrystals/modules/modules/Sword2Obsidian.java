@@ -42,7 +42,7 @@ public class Sword2Obsidian extends Module implements Listener {
             if (BlockUtils.isCrystallabe(pos)) return;
             if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
 
-            if (HotbarUtils.nameContains("crystal") || HotbarUtils.nameContains("totem") || HotbarUtils.nameContains("sword") || HotbarUtils.nameContains("anchor") || HotbarUtils.isHolding(Items.GLOWSTONE)) {
+            if (HotbarUtils.isForClickCrystal()) {
                 e.setCancelled(true);
                 HotbarUtils.search(Items.OBSIDIAN);
                 BlockUtils.interact(pos,packet.getDirection());
