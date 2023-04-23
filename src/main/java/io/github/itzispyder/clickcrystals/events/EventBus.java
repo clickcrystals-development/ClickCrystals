@@ -1,8 +1,7 @@
 package io.github.itzispyder.clickcrystals.events;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents an event bus for calling and passing events
@@ -38,37 +37,42 @@ public class EventBus {
     }
 
     /**
-     * Passing an event
+     * Passes an event
      * @param event event
-     * @param <E> ? extends Event
+     * @return true if cancelled, false if not
+     * @param <E> event type
      */
-    public <E extends Event> void pass(E event) {
-        if (event == null) return;
-        for (Listener listener : this.subscribedListeners.values()) {
-            for (Method method : listener.getClass().getDeclaredMethods()) {
-                if (isValid(method, event)) {
-                    try {
+    public <E extends Event> boolean pass(E event) {
+        listeners().values().forEach(listener -> {
+            List<Method> methods = Arrays
+                    .stream(listener.getClass().getDeclaredMethods())
+                    .filter(Objects::nonNull)
+                    .filter(method -> method.isAnnotationPresent(EventHandler.class))
+                    .sorted(Comparator.comparing(method -> method.getAnnotation(EventHandler.class).priority()))
+                    .toList();
+
+            methods = new ArrayList<>(methods);
+            Collections.reverse(methods);
+            methods.forEach(method -> {
+                try {
+                    if (!isValid(method, event)) {
                         method.setAccessible(true);
                         method.invoke(listener, event);
-                    } catch (Exception ignore) {}
+                    }
                 }
-            }
-        }
+                catch (Exception ignore) {}
+            });
+        });
+
+        return event instanceof Cancellable cancellable && cancellable.isCancelled();
     }
 
-    /**
-     * Tests if a method is valid for passing
-     * @param method method
-     * @param event event
-     * @return valid
-     * @param <E> ? extends Event
-     */
     private <E extends Event> boolean isValid(Method method, E event) {
-        if (method == null) return false;
+        if (method == null || event == null) return false;
         if (!method.isAnnotationPresent(EventHandler.class)) return false;
         if (method.getReturnType() != void.class) return false;
         if (method.getParameterCount() != 1) return false;
-        return method.getParameters()[0].getType() == event.getClass();
+        return method.getParameters()[0].getType() != event.getClass();
     }
 
     /**

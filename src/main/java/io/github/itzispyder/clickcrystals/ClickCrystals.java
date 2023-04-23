@@ -70,6 +70,7 @@ public final class ClickCrystals implements ModInitializer {
 
         // Module
         system.addModule(new ClickCrystal());
+        system.addModule(new ClickCrystalReverse());
         system.addModule(new Anchor2Glowstone());
         system.addModule(new Sword2Pearl());
         system.addModule(new BlockDelayRemover());

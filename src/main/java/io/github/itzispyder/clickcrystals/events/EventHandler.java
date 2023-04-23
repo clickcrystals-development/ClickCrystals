@@ -5,13 +5,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target({
-        ElementType.METHOD
-})
 /**
  * Add this to methods that are responsible for handling events
  */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
 public @interface EventHandler {
 
+    int priority() default EventPriority.NORMAL;
 }
