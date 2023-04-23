@@ -8,6 +8,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
+import net.minecraft.util.Hand;
 
 public class Totem2Pearl extends Module implements Listener {
 
@@ -42,7 +43,9 @@ public class Totem2Pearl extends Module implements Listener {
             if (cooldown > System.currentTimeMillis()) return;
             cooldown = System.currentTimeMillis() + (50 * 4);
 
+            e.setCancelled(true);
             HotbarUtils.search(Items.ENDER_PEARL);
+            mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
         }
     }
 }
