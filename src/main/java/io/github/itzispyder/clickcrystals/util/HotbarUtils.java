@@ -4,7 +4,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.Direction;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -52,6 +54,15 @@ public abstract class HotbarUtils {
      */
     public static boolean isHolding(Item item) {
         return isHolding(item,Hand.MAIN_HAND);
+    }
+
+    public static ItemStack getHand() {
+        return getHand(Hand.MAIN_HAND);
+    }
+
+    public static ItemStack getHand(Hand hand) {
+        ItemStack item = mc.player.getStackInHand(hand);
+        return item != null ? item : ItemStack.EMPTY;
     }
 
     /**
@@ -118,5 +129,10 @@ public abstract class HotbarUtils {
                 || isHolding(Items.TOTEM_OF_UNDYING)
                 || isHolding(Items.GLOWSTONE)
                 || isHolding(Items.RESPAWN_ANCHOR);
+    }
+
+    public static void swapWithOffhand() {
+        PlayerActionC2SPacket swap = new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND, mc.player.getBlockPos(), Direction.UP);
+        mc.player.networkHandler.sendPacket(swap);
     }
 }
