@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
 import io.github.itzispyder.clickcrystals.gui.hud.ClickCrystalIconHud;
+import io.github.itzispyder.clickcrystals.gui.hud.ClickPerSecondHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalMenuScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -90,11 +91,13 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new ModuleListHud());
         system.addModule(new SilkTouch());
         system.addModule(new TotemPopMessages());
+        system.addModule(new CrystalPerSecondHud());
         Module.loadConfigModules();
 
         // Hud
         system.addHud(new ClickCrystalIconHud());
         system.addHud(new ModuleListTextHud());
+        system.addHud(new ClickPerSecondHud());
     }
 
     public void initRpc() {

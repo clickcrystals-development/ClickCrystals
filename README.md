@@ -16,11 +16,12 @@
 ```yml
 Minecraft: 1.19.4
 Mod: 1.19.4
-Updated to: 1.19.4-0.7.2
+Updated to: 1.19.4-0.7.5
 
 Changelog:
-- Nerfed the modules that people saw as macros.
-- Updated descriptions so they are accurate and friendly
+- Added Totem Pop Module for totem counter messages
+- Fixed GUI menu being extremely wierd on 1.19.3
+- 1.19.2 is discontinued bru stop asking for it
 ```
 
 <div class="demo-menu">
