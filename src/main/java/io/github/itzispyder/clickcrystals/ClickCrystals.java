@@ -23,7 +23,7 @@ import java.io.File;
 public final class ClickCrystals implements ModInitializer {
 
     public static final File configFile = new File("ClickCrystalsClient/game_config.dat");
-    public static final Configuration config = Configuration.load(configFile) != null ? Configuration.load(configFile) : new Configuration(configFile);
+    public static final Configuration config = Configuration.load(configFile);
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = new ClickCrystalsSystem();
     public static final ClickCrystalMenuScreen mainMenu = new ClickCrystalMenuScreen();

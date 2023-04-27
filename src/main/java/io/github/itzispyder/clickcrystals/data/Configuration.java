@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.data;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 
 import java.io.*;
 import java.util.HashMap;
@@ -109,14 +110,13 @@ public class Configuration implements Serializable {
      * @param file file to save to
      */
     public static void save(Configuration config, File file) {
+        FileValidationUtils.validate(file);
         try {
-            if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
-            if (!file.exists()) file.createNewFile();
-
             FileOutputStream fos = new FileOutputStream(file);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
             GZIPOutputStream gos = new GZIPOutputStream(bos);
             ObjectOutputStream oos = new ObjectOutputStream(gos);
+
             oos.writeObject(config);
             oos.close();
         }
@@ -132,22 +132,19 @@ public class Configuration implements Serializable {
      * @return loaded configuration
      */
     public static Configuration load(File file) {
+        FileValidationUtils.validate(file);
         try {
-            if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
-            if (!file.exists()) file.createNewFile();
-
             FileInputStream fis = new FileInputStream(file);
             BufferedInputStream bis = new BufferedInputStream(fis);
             GZIPInputStream gis = new GZIPInputStream(bis);
             ObjectInput ois = new ObjectInputStream(gis);
+
             Configuration config = (Configuration) ois.readObject();
             ois.close();
             return config;
         }
         catch (Exception ex) {
-            System.out.println("An error occurred while trying to load configuration '" + file.getPath() + "'");
-            ex.printStackTrace();
-            return null;
+            return new Configuration(file);
         }
     }
 }
