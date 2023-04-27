@@ -39,7 +39,7 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
     public static final Identifier SOCIAL_MODRINTH_TEXTURE = new Identifier(modId, "textures/gui/social_modrinth.png");
     public static final Identifier SOCIAL_WEBSITE_TEXTURE = new Identifier(modId, "textures/gui/social_website.png");
     public static final String KEY_CATEGORY = "clickcrystals.category.main";
-    public static final String KEY_TRANSLATION = "clickcrystals.menu.open_key";
+    public static final String KEY_TRANSLATION = "clickcrystals.key.open_menu";
     public static final KeyBinding KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             KEY_TRANSLATION,
             InputUtil.Type.KEYSYM,
@@ -114,7 +114,7 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
 
         categoryMap.forEach((category,i) -> {
             GridWidget catGrid = new GridWidget();
-            catGrid.getMainPositioner().margin(GAP,GAP,GAP,GAP);
+            catGrid.getMainPositioner().margin(GAP,0,GAP,0);
             GridWidget.Adder catAdder = catGrid.createAdder(1);
 
             catAdder.add(category.getTextureWidget());
@@ -136,7 +136,7 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
         });
 
         mainGrid.refreshPositions();
-        SimplePositioningWidget.setPos(mainGrid,0,0,this.width,this.height,0.5F,0.2F);
+        SimplePositioningWidget.setPos(mainGrid,0,0,this.width,this.height,0.5F,0.1F);
         mainGrid.forEachChild(this::addDrawableChild);
     }
 
