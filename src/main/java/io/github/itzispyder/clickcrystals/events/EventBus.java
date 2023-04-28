@@ -55,7 +55,7 @@ public class EventBus {
             Collections.reverse(methods);
             methods.forEach(method -> {
                 try {
-                    if (!isValid(method, event)) {
+                    if (isValid(method, event)) {
                         method.setAccessible(true);
                         method.invoke(listener, event);
                     }
@@ -72,7 +72,7 @@ public class EventBus {
         if (!method.isAnnotationPresent(EventHandler.class)) return false;
         if (method.getReturnType() != void.class) return false;
         if (method.getParameterCount() != 1) return false;
-        return method.getParameters()[0].getType() != event.getClass();
+        return method.getParameters()[0].getType() == event.getClass();
     }
 
     /**
