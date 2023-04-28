@@ -15,7 +15,7 @@ public class ClickPerSecondHud implements HudRenderCallback {
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {
         Module cpsHud = Module.get(CrystalPerSecondHud.class);
         if (!cpsHud.isEnabled()) return;
-        String text = "§f" + CrystalPerSecondHud.getCrystalPerSecond() + " §7c/sec";
+        String text = "§f" + CrystalPerSecondHud.getCrystalPerSecond() + " §7c/s";
 
         final Window win = mc.getWindow();
         final int x = win.getScaledWidth() / 2;
