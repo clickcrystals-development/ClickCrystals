@@ -38,7 +38,7 @@ public class CrystalPerSecondHud extends Module implements Listener {
     private void onAttackEntity(PlayerAttackEntityEvent e) {
         final Entity ent = e.getEntity();
         if (ent == null) return;
-        if (ent.getType() != EntityType.END_CRYSTAL) return;
+        if (!canUpdateCounter(ent)) return;
 
         tempCps ++;
     }
@@ -57,5 +57,10 @@ public class CrystalPerSecondHud extends Module implements Listener {
 
     public static double getCrystalPerSecond() {
         return cps;
+    }
+
+    private boolean canUpdateCounter(Entity ent) {
+        final EntityType<?> type = ent.getType();
+        return type == EntityType.END_CRYSTAL || type == EntityType.MAGMA_CUBE;
     }
 }

@@ -45,7 +45,9 @@ public class ScheduledTask implements Task, Cancellable {
                 try {
                     Thread.sleep(millisDelay);
                 }
-                catch (InterruptedException ignore) {}
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }).start();
     }
@@ -63,7 +65,9 @@ public class ScheduledTask implements Task, Cancellable {
                 try {
                     Thread.sleep(millisDelay);
                 }
-                catch (InterruptedException ignore) {}
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }).start();
     }
@@ -79,7 +83,9 @@ public class ScheduledTask implements Task, Cancellable {
             try {
                 Thread.sleep(millisDelay);
             }
-            catch (InterruptedException ignore) {}
+            catch (Exception ex) {
+                ex.printStackTrace();
+            }
             task.run();
         }).start();
     }
