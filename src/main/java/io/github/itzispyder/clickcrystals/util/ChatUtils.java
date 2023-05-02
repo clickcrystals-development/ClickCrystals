@@ -8,7 +8,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 /**
  * Client chat utils
  */
-public abstract class ChatUtils {
+public final class ChatUtils {
 
     /**
      * Sends a message to the player client-side

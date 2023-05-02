@@ -13,7 +13,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 /**
  * Client interaction utils
  */
-public abstract class InteractionUtils {
+public final class InteractionUtils {
 
     /**
      * Left clicks as if the player has inputted the click

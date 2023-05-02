@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.util;
 
 import java.util.*;
 
-public abstract class MathUtils {
+public final class MathUtils {
 
     public static double avg(Integer... ints) {
         final List<Integer> list = Arrays.stream(ints).filter(Objects::nonNull).toList();

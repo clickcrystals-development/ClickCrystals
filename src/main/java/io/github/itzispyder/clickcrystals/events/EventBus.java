@@ -64,7 +64,7 @@ public class EventBus {
             });
         });
 
-        return event instanceof Cancellable cancellable && cancellable.isCancelled();
+        return event instanceof Cancellable c && c.isCancelled();
     }
 
     private <E extends Event> boolean isValid(Method method, E event) {

@@ -7,7 +7,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
-public abstract class NbtUtils {
+public final class NbtUtils {
 
     public static int getEnchantLvL(ItemStack stack, Enchantment enchant) {
         NbtList list = stack.getEnchantments();

@@ -16,7 +16,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 /**
  * Client hot bar utils
  */
-public abstract class HotbarUtils {
+public final class HotbarUtils {
 
     /**
      * Search of the item in a player's hot bar.

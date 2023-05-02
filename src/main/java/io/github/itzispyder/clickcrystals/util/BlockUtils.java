@@ -16,7 +16,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 /**
  * Client block utils
  */
-public abstract class BlockUtils {
+public final class BlockUtils {
 
     /**
      * Interact a block

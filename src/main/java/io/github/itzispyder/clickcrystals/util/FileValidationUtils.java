@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.util;
 
 import java.io.File;
 
-public abstract class FileValidationUtils {
+public final class FileValidationUtils {
 
     public static boolean validate(File file) {
         try {
