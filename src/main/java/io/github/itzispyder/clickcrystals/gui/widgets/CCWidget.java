@@ -1,8 +1,5 @@
 package io.github.itzispyder.clickcrystals.gui.widgets;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalMenuScreen;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.navigation.GuiNavigationPath;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -10,16 +7,17 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
-public class TestWidget extends ClickableWidget {
+public abstract class CCWidget extends ClickableWidget {
 
-    public TestWidget(int x, int y, int width, int height, Text message) {
+    public CCWidget(int x, int y, int width, int height, Text message) {
         super(x, y, width, height, message);
     }
 
+    public abstract void onRender(MatrixStack matrices, int x, int y, float d);
+
     @Override
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        RenderSystem.setShaderTexture(0, ClickCrystalMenuScreen.SCREEN_TITLE_BANNER_TEXTURE);
-        DrawableHelper.drawTexture(matrices, getX(),getY(),getWidth(),getHeight(),0,0,getWidth(),getHeight(),getWidth(),getHeight());
+        this.onRender(matrices, mouseX, mouseY, delta);
     }
 
     @Override

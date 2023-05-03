@@ -80,7 +80,7 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
                 0,
                 SCREEN_TITLE_BANNER_TEXTURE,
                 256,
-                60,
+                64,
                 (button) -> {}
         );
         mainAdder.add(title,Categories.getCategories().size());

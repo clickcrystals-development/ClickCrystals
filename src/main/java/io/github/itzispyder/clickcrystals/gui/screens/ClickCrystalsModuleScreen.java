@@ -4,13 +4,11 @@ import io.github.itzispyder.clickcrystals.client.CCKeybindings;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
-import io.github.itzispyder.clickcrystals.gui.widgets.BoxWidget;
-import io.github.itzispyder.clickcrystals.gui.widgets.TestWidget;
+import io.github.itzispyder.clickcrystals.gui.widgets.CategoryWidget;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.ColorHelper;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
 
@@ -26,8 +24,7 @@ public class ClickCrystalsModuleScreen extends Screen implements Listener {
         super.init();
         system.addListener(this);
 
-        super.addDrawableChild(new TestWidget(100,100,256,64,Text.literal("banner")));
-        super.addDrawableChild(new BoxWidget(50,50,64,64,Text.literal("testbox")));
+        super.addDrawableChild(new CategoryWidget(10,10,100,100, Text.literal("ClickCrystals")));
     }
 
     @Override
@@ -37,10 +34,7 @@ public class ClickCrystalsModuleScreen extends Screen implements Listener {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        //super.renderBackground(matrices);
-        final int startColor = ColorHelper.Argb.getArgb(1, 0, 57, 94);
-        final int endColor = ColorHelper.Argb.getArgb(1, 51, 91, 132);
-        DrawableHelper.fillGradient(matrices,0,0, this.width, this.height, startColor, endColor);
+        DrawableHelper.fillGradient(matrices, 0, 0, this.width, this.height, 0x90050B0B, 0x903873A9);
         super.render(matrices, mouseX, mouseY, delta);
     }
 

@@ -8,8 +8,12 @@ import org.lwjgl.glfw.GLFW;
 public final class CCKeybindings {
 
     public static void init() {
-        KeyBindingHelper.registerKeyBinding(OPEN_MENU);
-        KeyBindingHelper.registerKeyBinding(OPEN_MODULE);
+        register(OPEN_MENU);
+        register(OPEN_MODULE);
+    }
+
+    private static void register(KeyBinding key) {
+        KeyBindingHelper.registerKeyBinding(key);
     }
 
     public static class Keys {
