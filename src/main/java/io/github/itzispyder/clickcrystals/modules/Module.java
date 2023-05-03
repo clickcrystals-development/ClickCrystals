@@ -19,7 +19,6 @@ public abstract class Module implements Toggleable, Serializable {
     protected static final MinecraftClient mc = ClickCrystals.mc;
     protected static final ClickCrystalsSystem system = ClickCrystals.system;
     public static int totalEnabled;
-    public static int totalCount;
     protected boolean enabled;
     private final String name, description, id;
     private final Category category;
