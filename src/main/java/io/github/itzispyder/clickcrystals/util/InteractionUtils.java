@@ -1,12 +1,10 @@
 package io.github.itzispyder.clickcrystals.util;
 
+import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
@@ -19,15 +17,31 @@ public final class InteractionUtils {
      * Left clicks as if the player has inputted the click
      */
     public static void doAttack() {
-        HitResult hit = mc.crosshairTarget;
+        final HitResult hit = mc.crosshairTarget;
+        final ClientPlayerInteractionManager im = mc.interactionManager;
+
         if (hit == null) return;
-        Vec3d vec3d = hit.getPos();
-        Vec3i vec3i = new Vec3i((int) vec3d.x,(int) vec3d.y,(int) vec3d.z);
-        BlockPos pos = new BlockPos(vec3i);
+
         switch (hit.getType()) {
-            case BLOCK -> mc.interactionManager.attackBlock(pos,Direction.UP);
-            case ENTITY -> mc.interactionManager.attackEntity(mc.player,((EntityHitResult) hit).getEntity());
+            case ENTITY -> im.attackEntity(mc.player, ((EntityHitResult) hit).getEntity());
+            case BLOCK -> im.attackBlock(((BlockHitResult) hit).getBlockPos(), ((BlockHitResult) hit).getSide());
         }
+
+        mc.player.swingHand(Hand.MAIN_HAND);
+    }
+
+    public static void doUse() {
+        final HitResult hit = mc.crosshairTarget;
+        final ClientPlayerInteractionManager im = mc.interactionManager;
+
+        if (hit == null) return;
+
+        switch (hit.getType()) {
+            case ENTITY -> im.interactEntity(mc.player, ((EntityHitResult) hit).getEntity(), Hand.MAIN_HAND);
+            case BLOCK -> im.interactBlock(mc.player, Hand.MAIN_HAND, (BlockHitResult) hit);
+            case MISS -> im.interactItem(mc.player, Hand.MAIN_HAND);
+        }
+
         mc.player.swingHand(Hand.MAIN_HAND);
     }
 }

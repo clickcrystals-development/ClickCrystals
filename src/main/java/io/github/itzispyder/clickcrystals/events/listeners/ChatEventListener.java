@@ -12,6 +12,13 @@ public class ChatEventListener implements Listener {
 
     @EventHandler
     public void onChatReceive(ChatReceiveEvent e) {
+        try {
+            this.handleChatCommands(e);
+        }
+        catch (Exception ignore) {}
+    }
+
+    private void handleChatCommands(ChatReceiveEvent e) {
         final String message = e.getMessage();
         final String s = message.toLowerCase();
 

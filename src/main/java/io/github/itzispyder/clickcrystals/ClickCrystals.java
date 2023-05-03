@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.data.Configuration;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
+import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.gui.hud.ClickCrystalIconHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ClickPerSecondHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
@@ -61,6 +62,7 @@ public final class ClickCrystals implements ModInitializer {
     public void init() {
         // Listeners
         system.addListener(new ChatEventListener());
+        system.addListener(new NetworkEventListener());
 
         // Commands
         system.addCommand(new ClickCrystalToggleCommand());

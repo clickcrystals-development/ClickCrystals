@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -87,5 +88,18 @@ public final class BlockUtils {
 
     public static boolean isCrystallabe(BlockPos pos) {
         return matchBlock(pos,Blocks.OBSIDIAN) || matchBlock(pos,Blocks.BEDROCK);
+    }
+
+    public static BlockState getCrosshair() {
+        final HitResult hit = mc.crosshairTarget;
+
+        if (hit == null) return null;
+        if (hit.getType() != HitResult.Type.BLOCK) return null;
+        if (mc.player == null) return null;
+        if (mc.player.getWorld() == null) return null;
+
+        final BlockPos pos = ((BlockHitResult) hit).getBlockPos();
+
+        return mc.player.getWorld().getBlockState(pos);
     }
 }
