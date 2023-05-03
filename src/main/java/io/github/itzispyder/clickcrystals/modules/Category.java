@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules;
 
-import net.minecraft.client.gui.widget.IconWidget;
+import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.util.Identifier;
 
 import java.io.Serializable;
@@ -9,15 +9,27 @@ public class Category implements Serializable {
 
     private final String name;
     private final Identifier texture;
-    private final IconWidget textureWidget;
+    private final TexturedButtonWidget textureWidget;
 
     public Category(String name, Identifier texture) {
         this.name = name;
         this.texture = texture;
-        this.textureWidget = new IconWidget(0,0,90,25,this.texture);
+        this.textureWidget = new TexturedButtonWidget(
+                0,
+                0,
+                90,
+                25,
+                0,
+                0,
+                0,
+                this.texture,
+                90,
+                25,
+                (button) -> {}
+        );
     }
 
-    public IconWidget getTextureWidget() {
+    public TexturedButtonWidget getTextureWidget() {
         return textureWidget;
     }
 

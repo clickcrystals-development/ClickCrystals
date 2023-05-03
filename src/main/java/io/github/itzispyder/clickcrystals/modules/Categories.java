@@ -16,8 +16,8 @@ public abstract class Categories {
     public static final Category OTHER = new Category("Other",new Identifier(modId,"textures/gui/category_other.png"));
     public static final Category OPTIMIZATION = new Category("Optimization",new Identifier(modId,"textures/gui/category_optimization.png"));
 
-
     private static final Map<String,Category> categories = new HashMap<>();
+
     static {
         categories.put("Crystalling",CRYSTALLING);
         categories.put("Anchoring",ANCHORING);
