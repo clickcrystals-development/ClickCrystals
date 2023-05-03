@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals;
 
+import io.github.itzispyder.clickcrystals.client.CCKeybindings;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.Configuration;
@@ -11,6 +12,8 @@ import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.gui.hud.ClickCrystalIconHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ClickPerSecondHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
+import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalMenuScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.*;
 import net.fabricmc.api.ModInitializer;
@@ -28,9 +31,14 @@ public final class ClickCrystals implements ModInitializer {
     public static final Configuration config = Configuration.load(configFile);
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = new ClickCrystalsSystem();
+    public static final ClickCrystalsModuleScreen CC_MODULE_SCREEN = new ClickCrystalsModuleScreen();
+    public static final ClickCrystalMenuScreen CC_MENU_SCREEN = new ClickCrystalMenuScreen();
 
     @SuppressWarnings("unused")
-    public static final String modId = "clickcrystals", prefix = "[ClickCrystals] ", starter = "§7[§bClick§3Crystals§7] §r";
+    public static final String
+            MOD_ID = "clickcrystals",
+            PREFIX = "[ClickCrystals] ",
+            STARTER = "§7[§bClick§3Crystals§7] §r";
 
     /**
      * Runs the mod initializer.
@@ -38,10 +46,10 @@ public final class ClickCrystals implements ModInitializer {
     @Override
     public void onInitialize() {
         // Mod initialization
-        System.out.println(prefix + "Loading ClickCrystals by ImproperIssues");
-        this.startTicking();
+        System.out.println(PREFIX + "Loading ClickCrystals by ImproperIssues");
         this.init();
-
+        CCKeybindings.init();
+        this.startTicking();
     }
 
     /**

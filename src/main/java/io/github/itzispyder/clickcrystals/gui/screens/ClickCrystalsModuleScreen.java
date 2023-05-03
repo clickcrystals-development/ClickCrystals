@@ -1,33 +1,27 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import io.github.itzispyder.clickcrystals.client.CCKeybindings;
+import io.github.itzispyder.clickcrystals.events.EventHandler;
+import io.github.itzispyder.clickcrystals.events.Listener;
+import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import org.lwjgl.glfw.GLFW;
 
-public class ClickCrystalsModuleScreen extends Screen {
+import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
 
-    public static final String
-            KEY_TRANSLATION = "clickcrystals.key.open_modules",
-            KEY_CATEGORY = "clickcrystals.category.main";
-    public static final KeyBinding KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            KEY_TRANSLATION,
-            InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_LEFT_SHIFT,
-            KEY_CATEGORY
-    ));
+public class ClickCrystalsModuleScreen extends Screen implements Listener {
 
     public ClickCrystalsModuleScreen() {
         super(Text.literal("ClickCrystals Modules"));
+        system.addListener(this);
     }
 
     @Override
     protected void init() {
         super.init();
+        system.addListener(this);
     }
 
     @Override
@@ -41,5 +35,13 @@ public class ClickCrystalsModuleScreen extends Screen {
         super.render(matrices, mouseX, mouseY, delta);
 
         DrawableHelper.drawBorder(matrices, 0,0, 100,100, 16777215);
+    }
+
+    @EventHandler
+    public void onTick(ClientTickEndEvent e) {
+        if (CCKeybindings.OPEN_MODULE.wasPressed()) {
+            mc.setScreenAndRender(CC_MODULE_SCREEN);
+            CCKeybindings.OPEN_MODULE.setPressed(false);
+        }
     }
 }
