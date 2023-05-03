@@ -30,8 +30,9 @@ public class Sword2Crystal extends Module implements Listener {
     @EventHandler
     private void onSendPacket(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
+            final BlockPos pos = packet.getPos();
+
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
-            BlockPos pos = packet.getPos();
             if (!BlockUtils.isCrystallabe(pos)) return;
             if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
 

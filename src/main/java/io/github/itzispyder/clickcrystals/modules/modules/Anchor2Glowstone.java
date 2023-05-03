@@ -43,9 +43,12 @@ public class Anchor2Glowstone extends Module implements Listener {
     @EventHandler
     private void onPacketSend(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerInteractBlockC2SPacket packet) {
-            BlockPos pos = packet.getBlockHitResult().getBlockPos();
-            BlockState state = mc.player.getWorld().getBlockState(pos);
+            final BlockPos pos = packet.getBlockHitResult().getBlockPos();
+            final BlockState state = mc.player.getWorld().getBlockState(pos);
+
             if (state == null) return;
+            if (!HotbarUtils.has(Items.GLOWSTONE)) return;
+            if (!HotbarUtils.has(Items.RESPAWN_ANCHOR)) return;
 
             try {
                 if (HotbarUtils.isHolding(Items.RESPAWN_ANCHOR)) {

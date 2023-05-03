@@ -35,12 +35,14 @@ public class Sword2Obsidian extends Module implements Listener {
     @EventHandler
     private void onPacketSend(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
-            if (cooldown > System.currentTimeMillis()) return;
-            cooldown = System.currentTimeMillis() + (50 * 4);
+            final BlockPos pos = packet.getPos();
+
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
-            BlockPos pos = packet.getPos();
             if (BlockUtils.isCrystallabe(pos)) return;
             if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
+
+            if (cooldown > System.currentTimeMillis()) return;
+            cooldown = System.currentTimeMillis() + (50 * 4);
 
             if (HotbarUtils.isForClickCrystal()) {
                 e.setCancelled(true);

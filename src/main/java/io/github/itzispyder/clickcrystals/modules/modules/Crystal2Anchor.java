@@ -33,10 +33,12 @@ public class Crystal2Anchor extends Module implements Listener {
     @EventHandler
     private void onClickBlock(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerInteractBlockC2SPacket packet) {
-            BlockPos pos = packet.getBlockHitResult().getBlockPos();
+            final BlockPos pos = packet.getBlockHitResult().getBlockPos();
+
             if (BlockUtils.isCrystallabe(pos)) return;
-            if (!HotbarUtils.nameContains("crystal")) return;
+            if (!HotbarUtils.isHolding(Items.END_CRYSTAL)) return;
             if (!HotbarUtils.has(Items.RESPAWN_ANCHOR)) return;
+
             e.setCancelled(true);
             HotbarUtils.search(Items.RESPAWN_ANCHOR);
             BlockUtils.interact(packet.getBlockHitResult());

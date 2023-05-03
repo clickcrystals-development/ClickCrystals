@@ -59,11 +59,6 @@ public final class ClickCrystals implements ModInitializer {
             ClientTickEndEvent event = new ClientTickEndEvent();
             system.eventBus.pass(event);
         });
-        AttackEntityCallback.EVENT.register((player, world, hand, ent, hitResult) -> {
-            PlayerAttackEntityEvent event = new PlayerAttackEntityEvent(player, world, hand, ent, hitResult);
-            system.eventBus.pass(event);
-            return ActionResult.PASS;
-        });
     }
 
     public void init() {

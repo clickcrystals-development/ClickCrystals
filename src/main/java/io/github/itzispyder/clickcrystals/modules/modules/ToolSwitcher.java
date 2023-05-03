@@ -11,7 +11,6 @@ import io.github.itzispyder.clickcrystals.util.NbtUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
 
@@ -43,20 +42,23 @@ public class ToolSwitcher extends Module implements Listener {
     private void onPacketSend(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
             if (packet.getAction() == PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) {
-                BlockPos pos = packet.getPos();
-                BlockState state = mc.player.getWorld().getBlockState(pos);
-                if (BlockUtils.isCrystallabe(pos)) return;
-                if (HotbarUtils.nameContains("sword") || HotbarUtils.nameContains("totem") || HotbarUtils.nameContains("crystal") || HotbarUtils.nameContains("anchor") || HotbarUtils.isHolding(Items.GLOWSTONE)) return;
+                final BlockPos pos = packet.getPos();
+                final BlockState state = mc.player.getWorld().getBlockState(pos);
 
-                Map<Integer,Float> entries = new HashMap<>();
+                if (BlockUtils.isCrystallabe(pos)) return;
+                if (HotbarUtils.isForClickCrystal()) return;
+
+                final Map<Integer,Float> entries = new HashMap<>();
                 HotbarUtils.forEachItem((slot,item) -> {
                     if (item.getItem().getTranslationKey().contains("sword")) return;
                     entries.put(slot,calcWantedLvl(item,state));
                 });
+
                 int slot = entries.keySet()
                         .stream()
                         .max(Comparator.comparing(entries::get))
                         .get();
+
                 if (entries.get(slot) != 1) mc.player.getInventory().selectedSlot = slot;
             }
         }

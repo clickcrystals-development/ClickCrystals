@@ -40,6 +40,7 @@ public class Totem2Pearl extends Module implements Listener {
         if (e.getPacket() instanceof PlayerInteractItemC2SPacket) {
             if (!HotbarUtils.nameContains("totem")) return;
             if (!HotbarUtils.has(Items.ENDER_PEARL)) return;
+
             if (cooldown > System.currentTimeMillis()) return;
             cooldown = System.currentTimeMillis() + (50 * 4);
 

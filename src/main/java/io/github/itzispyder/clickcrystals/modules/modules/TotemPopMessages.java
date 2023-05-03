@@ -35,8 +35,10 @@ public class TotemPopMessages extends Module implements Listener {
     private void onReceiveStatus(PacketReceiveEvent e) {
         if (e.getPacket() instanceof EntityStatusS2CPacket packet) {
             final Entity ent = packet.getEntity(mc.player.getWorld());
+
             if (ent == null) return;
             if (ent.getType() != EntityType.PLAYER) return;
+
             String name = ent.getDisplayName().getString();
             name = name.equals(mc.player.getDisplayName().getString()) ? "§6§oYou" : name;
 
