@@ -7,10 +7,10 @@ import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
+import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.gui.hud.ClickCrystalIconHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ClickPerSecondHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
-import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalMenuScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.*;
 import net.fabricmc.api.ModInitializer;
@@ -28,7 +28,6 @@ public final class ClickCrystals implements ModInitializer {
     public static final Configuration config = Configuration.load(configFile);
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = new ClickCrystalsSystem();
-    public static final ClickCrystalMenuScreen mainMenu = new ClickCrystalMenuScreen();
 
     @SuppressWarnings("unused")
     public static final String modId = "clickcrystals", prefix = "[ClickCrystals] ", starter = "§7[§bClick§3Crystals§7] §r";
@@ -63,6 +62,7 @@ public final class ClickCrystals implements ModInitializer {
         // Listeners
         system.addListener(new ChatEventListener());
         system.addListener(new NetworkEventListener());
+        system.addListener(new TickEventListener());
 
         // Commands
         system.addCommand(new ClickCrystalToggleCommand());

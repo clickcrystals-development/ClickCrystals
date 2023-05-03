@@ -1,8 +1,5 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
-import io.github.itzispyder.clickcrystals.events.EventHandler;
-import io.github.itzispyder.clickcrystals.events.Listener;
-import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -13,7 +10,10 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.gui.screen.ConfirmLinkScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.Tooltip;
-import net.minecraft.client.gui.widget.*;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.GridWidget;
+import net.minecraft.client.gui.widget.SimplePositioningWidget;
+import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
@@ -32,7 +32,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
  * Represents the module toggle screen for ClickCrystals
  */
 @Environment(EnvType.CLIENT)
-public class ClickCrystalMenuScreen extends Screen implements Listener {
+public class ClickCrystalMenuScreen extends Screen {
 
     public static final Identifier
             SCREEN_TITLE_BANNER_TEXTURE = new Identifier(modId, "textures/gui/screen_title_banner.png"),
@@ -66,7 +66,6 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
      */
     public ClickCrystalMenuScreen() {
         super(Text.literal("ClickCrystals - Simple and Based Utility Mod"));
-        system.addListener(this);
     }
 
     /**
@@ -121,18 +120,6 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         super.renderBackground(matrices);
         super.render(matrices, mouseX, mouseY, delta);
-    }
-
-    /**
-     * Checks when the key is pressed, if so, then open the menu
-     * @param e client tick event
-     */
-    @EventHandler
-    private void onClientTick(ClientTickEndEvent e) {
-        if (KEY.wasPressed()) {
-            mc.setScreenAndRender(this);
-            KEY.setPressed(false);
-        }
     }
 
     private void addCategoriesAndModules(GridWidget mainGrid) {
