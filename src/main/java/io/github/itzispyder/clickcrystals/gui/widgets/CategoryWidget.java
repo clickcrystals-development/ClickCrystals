@@ -27,7 +27,7 @@ public class CategoryWidget extends CCWidget {
     }
 
     public CategoryWidget(Category category) {
-        this(0, 0, 90, 100, category);
+        this(0, 0, ModuleWidget.DEFAULT_WIDTH + (2 * MARGIN_LEFT), 100, category);
     }
 
     @Override
@@ -44,9 +44,11 @@ public class CategoryWidget extends CCWidget {
         modules.add(module);
         moduleWidgets.add(moduleWidget);
 
-        final int moduleListHeight = moduleWidgets.size() * moduleWidget.getHeight();
+        final int moduleListHeight = ModuleWidget.DEFAULT_HEIGHT * moduleWidgets.size();
+        final int moduleListWidth = ModuleWidget.DEFAULT_WIDTH;
 
         this.height = moduleListHeight + (int)(3 * MARGIN_TOP);
+        this.width = moduleListWidth + (int)(2 * MARGIN_LEFT);
         moduleWidget.setX(getX() + MARGIN_LEFT);
         moduleWidget.setY(getY() + MARGIN_TOP + moduleListHeight);
     }

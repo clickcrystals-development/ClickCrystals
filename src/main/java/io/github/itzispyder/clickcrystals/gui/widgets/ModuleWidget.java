@@ -9,6 +9,10 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class ModuleWidget extends CCWidget {
 
+    public static final int
+            DEFAULT_WIDTH = 80,
+            DEFAULT_HEIGHT = 14;
+
     private final Module module;
 
     public ModuleWidget(int x, int y, int width, int height, Module module) {
@@ -17,7 +21,7 @@ public class ModuleWidget extends CCWidget {
     }
 
     public ModuleWidget(Module module) {
-        this(0, 0, 80, 14, module);
+        this(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, module);
     }
 
     @Override
