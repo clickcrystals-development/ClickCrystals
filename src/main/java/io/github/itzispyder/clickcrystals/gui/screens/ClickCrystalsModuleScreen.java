@@ -1,48 +1,68 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
-import io.github.itzispyder.clickcrystals.client.CCKeybindings;
-import io.github.itzispyder.clickcrystals.events.EventHandler;
-import io.github.itzispyder.clickcrystals.events.Listener;
-import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.gui.widgets.CategoryWidget;
+import io.github.itzispyder.clickcrystals.gui.widgets.IconWidget;
+import io.github.itzispyder.clickcrystals.modules.Categories;
+import io.github.itzispyder.clickcrystals.modules.Category;
+import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.util.ManualMap;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
+import java.util.*;
 
-public class ClickCrystalsModuleScreen extends Screen implements Listener {
+import static io.github.itzispyder.clickcrystals.ClickCrystals.MOD_ID;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
+
+public class ClickCrystalsModuleScreen extends Screen {
+
+    public static final Map<Category,Integer> categoryMap = new ManualMap<Category,Integer>(
+            Categories.CRYSTALLING,0,
+            Categories.ANCHORING,1,
+            Categories.MISC,2,
+            Categories.OPTIMIZATION,3,
+            Categories.RENDERING,4,
+            Categories.OTHER,5
+    ).getMap();
+
+    private Set<CategoryWidget> categoryWidgets = new HashSet<>();
 
     public ClickCrystalsModuleScreen() {
         super(Text.literal("ClickCrystals Modules"));
-        system.addListener(this);
     }
 
     @Override
-    protected void init() {
-        super.init();
-        system.addListener(this);
+    public void init() {
+        for (Map.Entry<Category, Integer> entry : categoryMap.entrySet()) {
+            final Category category = entry.getKey();
+            final int i = entry.getValue();
+            final CategoryWidget categoryWidget = new CategoryWidget(category);
+            final List<Module> moduleList = system.modules()
+                    .values()
+                    .stream()
+                    .filter(module -> module.getCategory() == category)
+                    .sorted(Comparator.comparing(Module::getId))
+                    .toList();
 
-        super.addDrawableChild(new CategoryWidget(10,10,100,100, Text.literal("ClickCrystals")));
+            categoryWidget.setPosition(20 + ((categoryWidget.getWidth() + 3) * i),20);
+            moduleList.forEach(categoryWidget::addModule);
+            this.categoryWidgets.add(categoryWidget);
+            this.addDrawableChild(categoryWidget);
+            categoryWidget.getModuleWidgets().forEach(this::addDrawableChild);
+        }
     }
 
     @Override
     public void tick() {
-        super.tick();
+
     }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        DrawableHelper.fillGradient(matrices, 0, 0, this.width, this.height, 0x90050B0B, 0x903873A9);
+        DrawableHelper.fillGradient(matrices, 0, 0, this.width, this.height, 0x9E050B0B, 0x9E3873A9);
         super.render(matrices, mouseX, mouseY, delta);
-    }
-
-    @EventHandler
-    public void onTick(ClientTickEndEvent e) {
-        if (CCKeybindings.OPEN_MODULE.wasPressed()) {
-            mc.setScreenAndRender(CC_MODULE_SCREEN);
-            CCKeybindings.OPEN_MODULE.setPressed(false);
-        }
     }
 }

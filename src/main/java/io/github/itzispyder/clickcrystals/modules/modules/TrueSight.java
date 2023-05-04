@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class TrueSight extends Module {
 
     public TrueSight() {
-        super("TrueSight", Categories.MISC,"Renders entities as if you were a spectator.");
+        super("TrueSight", Categories.RENDERING,"Renders entities as if you were a spectator.");
     }
 
     @Override

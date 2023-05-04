@@ -5,13 +5,13 @@
   "client": [
     "CameraMixin",
     "ChatHudMixin",
+    "ClientConnectionMixin",
     "ClientPlayerInteractionManagerMixin",
     "ClientPlayNetworkHandlerMixin",
+    "GameRenderMixin",
     "InGameHudMixin",
     "InGameOverlayRendererMixin",
-    "GameRenderMixin",
-    "LightmapTextureManagerMixin",
-    "ClientConnectionMixin"
+    "LightmapTextureManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

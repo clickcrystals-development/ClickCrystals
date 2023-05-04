@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.widgets;
 import net.minecraft.client.gui.navigation.GuiNavigationPath;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.sound.SoundManager;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,13 +11,6 @@ public abstract class CCWidget extends ClickableWidget {
 
     public CCWidget(int x, int y, int width, int height, Text message) {
         super(x, y, width, height, message);
-    }
-
-    public abstract void onRender(MatrixStack matrices, int x, int y, float d);
-
-    @Override
-    public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        this.onRender(matrices, mouseX, mouseY, delta);
     }
 
     @Override
@@ -59,5 +52,10 @@ public abstract class CCWidget extends ClickableWidget {
     @Override
     public void setPosition(int x, int y) {
         super.setPosition(x, y);
+    }
+
+    @Override
+    public void playDownSound(SoundManager soundManager) {
+
     }
 }

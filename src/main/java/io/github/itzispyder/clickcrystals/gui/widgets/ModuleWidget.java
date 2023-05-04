@@ -17,16 +17,31 @@ public class ModuleWidget extends CCWidget {
     }
 
     public ModuleWidget(Module module) {
-        this(0, 0, 100, 15, module);
+        this(0, 0, 80, 14, module);
     }
 
     @Override
-    public void onRender(MatrixStack matrices, int x, int y, float d) {
-        DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x40000000);
-        DrawableHelper.drawCenteredTextWithShadow(matrices, mc.textRenderer, module.getCurrentStateLabel(), getX() + (getWidth() / 2), getY() + (getHeight() / 2), 0xFFFFFFFF);
+    public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x40101010);
+        DrawableHelper.drawCenteredTextWithShadow(matrices, mc.textRenderer, module.getCurrentStateLabel(), getX() + (getWidth() / 2), getY() + (int)(getHeight() * 0.33), 0xFFFFFFFF);
     }
 
     public Module getModule() {
         return module;
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        final int x = (int)mouseX;
+        final int y = (int)mouseY;
+
+        if (x < getX()) return false;
+        if (x > getX() + getWidth()) return false;
+        if (y < getY()) return false;
+        if (y > getY() + getHeight()) return false;
+
+        this.module.setEnabled(!module.isEnabled(), true);
+        this.setMessage(Text.literal(this.module.getCurrentStateLabel()));
+        return true;
     }
 }

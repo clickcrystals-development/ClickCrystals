@@ -1,9 +1,5 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
-import io.github.itzispyder.clickcrystals.client.CCKeybindings;
-import io.github.itzispyder.clickcrystals.events.EventHandler;
-import io.github.itzispyder.clickcrystals.events.Listener;
-import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -32,7 +28,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
  * Represents the module toggle screen for ClickCrystals
  */
 @Environment(EnvType.CLIENT)
-public class ClickCrystalMenuScreen extends Screen implements Listener {
+public class ClickCrystalMenuScreen extends Screen {
 
     public static final Identifier
             SCREEN_TITLE_BANNER_TEXTURE = new Identifier(MOD_ID, "textures/gui/screen_title_banner.png"),
@@ -49,7 +45,8 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
             Categories.ANCHORING,1,
             Categories.MISC,2,
             Categories.OPTIMIZATION,3,
-            Categories.OTHER,4
+            Categories.RENDERING,4,
+            Categories.OTHER,5
     ).getMap();
 
     /**
@@ -57,7 +54,6 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
      */
     public ClickCrystalMenuScreen() {
         super(Text.literal("ClickCrystals - Simple and Based Utility Mod"));
-        system.addListener(this);
     }
 
     /**
@@ -65,7 +61,6 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
      */
     @Override
     public void init() {
-        super.init();
         final GridWidget mainGrid = new GridWidget();
         mainGrid.getMainPositioner().margin(GAP,GAP,GAP,GAP);
         final GridWidget.Adder mainAdder = mainGrid.createAdder(Categories.getCategories().size());
@@ -112,14 +107,6 @@ public class ClickCrystalMenuScreen extends Screen implements Listener {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         super.renderBackground(matrices);
         super.render(matrices, mouseX, mouseY, delta);
-    }
-
-    @EventHandler
-    public void onTick(ClientTickEndEvent e) {
-        if (CCKeybindings.OPEN_MENU.wasPressed()) {
-            mc.setScreenAndRender(CC_MENU_SCREEN);
-            CCKeybindings.OPEN_MENU.setPressed(false);
-        }
     }
 
     private void addCategoriesAndModules(GridWidget mainGrid) {

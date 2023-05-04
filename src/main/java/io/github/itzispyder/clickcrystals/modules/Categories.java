@@ -15,6 +15,7 @@ public abstract class Categories {
     public static final Category MISC = new Category("Misc",new Identifier(MOD_ID,"textures/gui/category_misc.png"));
     public static final Category OTHER = new Category("Other",new Identifier(MOD_ID,"textures/gui/category_other.png"));
     public static final Category OPTIMIZATION = new Category("Optimization",new Identifier(MOD_ID,"textures/gui/category_optimization.png"));
+    public static final Category RENDERING = new Category("Rendering",new Identifier(MOD_ID,"textures/gui/category_optimization.png"));
 
     private static final Map<String,Category> categories = new HashMap<>();
 
@@ -24,6 +25,7 @@ public abstract class Categories {
         categories.put("Misc",MISC);
         categories.put("Other",OTHER);
         categories.put("Optimization",OPTIMIZATION);
+        categories.put("Rendering",RENDERING);
     }
 
     public static Map<String, Category> getCategories() {
