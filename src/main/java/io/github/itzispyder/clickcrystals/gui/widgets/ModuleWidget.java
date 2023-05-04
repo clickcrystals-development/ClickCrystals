@@ -44,7 +44,7 @@ public class ModuleWidget extends CCWidget {
         if (y < getY()) return false;
         if (y > getY() + getHeight()) return false;
 
-        this.module.setEnabled(!module.isEnabled(), true);
+        this.module.setEnabled(!module.isEnabled(), false);
         this.setMessage(Text.literal(this.module.getCurrentStateLabel()));
         return true;
     }
