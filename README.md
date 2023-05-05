@@ -16,10 +16,19 @@
 ```yml
 Minecraft: 1.19.4
 Mod: 1.19.4
-Updated to: 1.19.4-0.7.51
+Updated to: 1.19.4-0.8.0
 
 Changelog:
-- Added integer queues for more accurate crystals per second calculations
+- Renamed modules
+- Revamped GUI menu
+- Changed default keybinding of module GUI
+- Added command /cchelp for module help and info
+- One step closer to 1.0.0 official release!!!
+
+Patches:
+- Lag spikes when placing down glowstone with "AnchorSwitch" enabled
+- Removed old GUI
+- Module "NoLoading" breaking the loading screens
 ```
 
 <div class="demo-menu">
@@ -27,38 +36,56 @@ Changelog:
 </div>
 
 ## How Do I Use ClickCrystals?
-```yml
-KeyBindings:
-   APOSTROPHE: Open module settings menu. (Settings are now saved!)
-```
-```yml
-Commands:
-   /cctoggle: <module> [on|off|help]
-```
-| **Module**          |                                  **Description**                                   |
-|---------------------|:----------------------------------------------------------------------------------:|
-| ClickCrystal        |                         Binds crystal place to left click.                         |
-| Sword2Crystal       |   Whenever you punch obsidian/bedrock with a sword, it will switch to a crystal.   |
-| Sword2Obsidian      |                Punch the ground with a sword to switch to obsidian.                |
-| Sword2Pearl         |                  Right click your sword to switch to pearl slot.                   |
-| Totem2Pearl         |                    Right click a totem to switch to pearl slot.                    |
-| Anchor2Glowstone    |  Whenever you place an anchor, switch to glowstone and back after you charge it.   |
-| Crystal2Anchor      |        Right click the ground with a crystal to switch to a respawn anchor.        |
-| IconHud             |                   Renders the ClickCrystals logo on the screen.                    |
-| NoHurtCam           |                         Removes the annoying screen shake.                         |
-| NoResourcePack      |         Prevents servers from forcing you to download their resource pack.         |
-| SlowHandSwing       |                     Makes your hand swing like mining fatigue.                     |
-| ToolSwitcher        |                      Switches to the right tool for the job.                       |
-| TrueSight           |                 Renders entities as if you were in spectator mode.                 |
-| FullBright          |                   Increases your gamma so you can actually see.                    |
-| ModuleListHud       |                        Shows your active modules on screen.                        |
-| NoGameOverlay       |                      Stops annoying overlays from rendering.                       |
-| NoLoadingScreen     |                   Prevents most loading screens from rendering.                    |
-| NoServerParticles   | Prevents servers from sending you particle packets, stopping all particle crashes. |
-| BlockDelayRemover   |  Removes the delay between breaking a block and starting to break the next block.  |
-| Silk Touch          |                     Gives any tool you hold silk touch (Real)                      |
-| TotemPopMessages    |             Sends the totem pops of another player. (With pop counter)             |
-| CrystalPerSecondHud |                            Displays your crystal speed.                            |
+
+### Keybindings
+
+-----------------------------------------
+
+| **Keybinding** |       **Description**       |
+|----------------|:---------------------------:|
+| RIGHT_SHIFT    | Open module settings screen |
+
+### Commands
+
+-----------------------------------------
+
+| **Command** | **Usage**                            |             **Description**             |
+|-------------|--------------------------------------|:---------------------------------------:|
+| /cchelp     | /cchelp `<module>`                   |          Module info and help           |
+| /cctoggle   | /cctoggle `<module>` `[on,off,help]` |         Module toggle and help          |
+| /gms        | /gms                                 | Command alias for `/gamemode survival`  |
+| /gmc        | /gmc                                 | Command alias for `/gamemode creative`  |
+| /gma        | /gma                                 | Command alias for `/gamemode adventure` |
+| /gmsp       | /gmsp                                | Command alias for `/gamemode spectator` |
+
+### Modules
+
+-----------------------------------------
+
+| **Module**    |                                  **Description**                                   |
+|---------------|:----------------------------------------------------------------------------------:|
+| ClickCrystal  |                         Binds crystal place to left click.                         |
+| CrystalSwitch |   Whenever you punch obsidian/bedrock with a sword, it will switch to a crystal.   |
+| ObiSwitch     |                Punch the ground with a sword to switch to obsidian.                |
+| PearlSwitchS  |                  Right click your sword to switch to pearl slot.                   |
+| PearlSwitchT  |                    Right click a totem to switch to pearl slot.                    |
+| AnchorSwitch  |  Whenever you place an anchor, switch to glowstone and back after you charge it.   |
+| CrystAnchor   |        Right click the ground with a crystal to switch to a respawn anchor.        |
+| IconHud       |                   Renders the ClickCrystals logo on the screen.                    |
+| NoHurtCam     |                         Removes the annoying screen shake.                         |
+| NoResPack     |         Prevents servers from forcing you to download their resource pack.         |
+| SlowSwing     |                     Makes your hand swing like mining fatigue.                     |
+| ToolSwitcher  |                      Switches to the right tool for the job.                       |
+| TrueSight     |                 Renders entities as if you were in spectator mode.                 |
+| FullBright    |                   Increases your gamma so you can actually see.                    |
+| ModulesList   |                        Shows your active modules on screen.                        |
+| NoOverlay     |                      Stops annoying overlays from rendering.                       |
+| NoLoading     |                   Prevents most loading screens from rendering.                    |
+| AntiCrash     | Prevents servers from sending you particle packets, stopping all particle crashes. |
+| BreakDelay    |  Removes the delay between breaking a block and starting to break the next block.  |
+| SilkTouch     |                     Gives any tool you hold silk touch (Real)                      |
+| TotemPops     |             Sends the totem pops of another player. (With pop counter)             |
+| CrystPerSec   |                            Displays your crystal speed.                            |
 
 
 ## But isn't this cheating?
