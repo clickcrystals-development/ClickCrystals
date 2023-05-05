@@ -6,7 +6,7 @@ import net.minecraft.text.Text;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
-public abstract class DrawableUtils {
+public final class DrawableUtils {
 
     public static void drawText(MatrixStack matrices, String text, int x, int y, boolean shadow) {
         drawText(matrices, Text.literal(text), x, y, shadow);

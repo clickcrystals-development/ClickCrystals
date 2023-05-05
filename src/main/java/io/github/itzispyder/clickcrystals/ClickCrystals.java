@@ -90,7 +90,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new NoLoading());
         system.addModule(new NoOverlay());
         system.addModule(new ObiSwitch());
-        system.addModule(new CrystalSwitch());
+        system.addModule(new CrystSwitch());
         system.addModule(new AntiCrash());
         system.addModule(new PearlSwitchT());
         system.addModule(new NoResPack());
@@ -101,6 +101,9 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new SilkTouch());
         system.addModule(new TotemPops());
         system.addModule(new CrystPerSec());
+        system.addModule(new MsgResend());
+        system.addModule(new AntiCCOptout());
+        system.addModule(new TrashRemoval());
         Module.loadConfigModules();
 
         // Hud

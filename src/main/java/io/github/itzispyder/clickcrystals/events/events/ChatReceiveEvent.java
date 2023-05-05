@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.events.Event;
  */
 public class ChatReceiveEvent extends Event implements Cancellable {
 
-    private final String message;
+    private String message;
     private boolean cancelled;
 
     public ChatReceiveEvent(String message) {
@@ -18,6 +18,10 @@ public class ChatReceiveEvent extends Event implements Cancellable {
 
     public String getMessage() {
         return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override

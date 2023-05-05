@@ -9,6 +9,7 @@ public final class CCKeybindings {
 
     public static void init() {
         register(OPEN_MODULE);
+        register(SEND_LAST_MESSAGE);
     }
 
     private static void register(KeyBinding key) {
@@ -23,6 +24,13 @@ public final class CCKeybindings {
             "clickcrystals.key.open_modules",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_RIGHT_SHIFT,
+            Keys.CATEGORY
+    );
+
+    public static final KeyBinding SEND_LAST_MESSAGE = new KeyBinding(
+            "clickcrystals.key.send_last_message",
+            InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_UP,
             Keys.CATEGORY
     );
 }
