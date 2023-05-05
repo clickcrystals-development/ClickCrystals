@@ -8,7 +8,7 @@ import org.lwjgl.glfw.GLFW;
 public final class CCKeybindings {
 
     public static void init() {
-        register(OPEN_MENU);
+        //register(OPEN_MENU);
         register(OPEN_MODULE);
     }
 

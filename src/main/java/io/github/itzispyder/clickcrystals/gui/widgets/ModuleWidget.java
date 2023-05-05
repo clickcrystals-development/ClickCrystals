@@ -26,7 +26,10 @@ public class ModuleWidget extends CCWidget {
 
     @Override
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        final int fillColor = isMouseOver(mouseX, mouseY) ? 0x40505050 : 0x40101010;
+        int fillColor = 0x40101010;
+        if (this.module.isEnabled()) fillColor = 0x40805050;
+        if (isMouseOver(mouseX, mouseY)) fillColor = 0x40909090;
+
         DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), fillColor);
         DrawableHelper.drawCenteredTextWithShadow(matrices, mc.textRenderer, module.getCurrentStateLabel(), getX() + (getWidth() / 2), getY() + (int)(getHeight() * 0.33), 0xFFFFFFFF);
     }

@@ -34,7 +34,7 @@ public class CategoryWidget extends CCWidget {
 
     @Override
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x10FFFFFF);
+        DrawableHelper.fillGradient(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x100044AC, 0x10FFFFFF);
         DrawableHelper.drawBorder(matrices, getX(), getY(), getWidth(), getHeight(), 0xFF1A9494);
         DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + TITLE_HEIGHT, 0xFF1A9494);
         DrawableHelper.drawCenteredTextWithShadow(matrices, mc.textRenderer, getMessage(), getX() + (getWidth() / 2), getY() + 5, 0xFFFFFFFF);

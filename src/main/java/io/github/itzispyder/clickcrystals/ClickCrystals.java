@@ -32,7 +32,7 @@ public final class ClickCrystals implements ModInitializer {
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = new ClickCrystalsSystem();
     public static final ClickCrystalsModuleScreen CC_MODULE_SCREEN = new ClickCrystalsModuleScreen();
-    public static final ClickCrystalMenuScreen CC_MENU_SCREEN = new ClickCrystalMenuScreen();
+    @Deprecated public static final ClickCrystalMenuScreen CC_MENU_SCREEN = new ClickCrystalMenuScreen();
 
     @SuppressWarnings("unused")
     public static final String

@@ -8,8 +8,8 @@ import java.io.Serializable;
 public class Category implements Serializable {
 
     private final String name;
-    private final Identifier texture;
-    private final TexturedButtonWidget textureWidget;
+    @Deprecated private final Identifier texture;
+    @Deprecated private final TexturedButtonWidget textureWidget;
 
     public Category(String name, Identifier texture) {
         this.name = name;
@@ -29,10 +29,12 @@ public class Category implements Serializable {
         );
     }
 
+    @Deprecated
     public TexturedButtonWidget getTextureWidget() {
         return textureWidget;
     }
 
+    @Deprecated
     public Identifier getTexture() {
         return texture;
     }

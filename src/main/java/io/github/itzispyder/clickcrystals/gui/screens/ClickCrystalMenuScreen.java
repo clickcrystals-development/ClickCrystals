@@ -28,6 +28,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
  * Represents the module toggle screen for ClickCrystals
  */
 @Environment(EnvType.CLIENT)
+@Deprecated
 public class ClickCrystalMenuScreen extends Screen {
 
     public static final Identifier
