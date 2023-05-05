@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalMenuScreen;
+import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.IconHud;
 import net.fabricmc.api.EnvType;
@@ -20,7 +20,7 @@ public class ClickCrystalIconHud implements HudRenderCallback {
         if (!hudModule.isEnabled()) return;
 
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-        RenderSystem.setShaderTexture(0, ClickCrystalMenuScreen.SCREEN_TITLE_BANNER_TEXTURE);
+        RenderSystem.setShaderTexture(0, TexturesIdentifiers.SCREEN_BANNER_TEXTURE);
         DrawableHelper.drawTexture(matrixStack,20,40,0,0,100,25,100,25);
     }
 }

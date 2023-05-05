@@ -6,7 +6,8 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.CC_MODULE_SCREEN;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class TickEventListener implements Listener {
 
@@ -30,10 +31,6 @@ public class TickEventListener implements Listener {
         if (CCKeybindings.OPEN_MODULE.wasPressed()) {
             mc.setScreenAndRender(CC_MODULE_SCREEN);
             CCKeybindings.OPEN_MODULE.setPressed(false);
-        }
-        else if (CCKeybindings.OPEN_MENU.wasPressed()) {
-            mc.setScreenAndRender(CC_MENU_SCREEN);
-            CCKeybindings.OPEN_MENU.setPressed(false);
         }
     }
 }

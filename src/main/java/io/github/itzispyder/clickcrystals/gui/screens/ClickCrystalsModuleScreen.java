@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
 import io.github.itzispyder.clickcrystals.gui.widgets.CategoryWidget;
 import io.github.itzispyder.clickcrystals.gui.widgets.EmptyWidget;
 import io.github.itzispyder.clickcrystals.modules.Categories;
@@ -11,11 +12,9 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 
 import java.util.*;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.MOD_ID;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
 public class ClickCrystalsModuleScreen extends Screen {
@@ -75,7 +74,7 @@ public class ClickCrystalsModuleScreen extends Screen {
         super.render(matrices, mouseX, mouseY, delta);
 
         RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, new Identifier(MOD_ID, "textures/gui/screen_title_banner.png"));
+        RenderSystem.setShaderTexture(0, TexturesIdentifiers.SCREEN_BANNER_TEXTURE);
         DrawableHelper.drawTexture(matrices, CATEGORY_MARGIN_LEFT, 2, 0, 0, 64, 16, 64, 16);
     }
 }

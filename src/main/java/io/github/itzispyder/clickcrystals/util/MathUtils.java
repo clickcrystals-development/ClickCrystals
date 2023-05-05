@@ -1,6 +1,8 @@
 package io.github.itzispyder.clickcrystals.util;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public final class MathUtils {
 

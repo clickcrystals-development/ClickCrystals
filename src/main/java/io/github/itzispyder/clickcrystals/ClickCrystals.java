@@ -12,7 +12,6 @@ import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.gui.hud.ClickCrystalIconHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ClickPerSecondHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
-import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalMenuScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.*;
@@ -32,7 +31,6 @@ public final class ClickCrystals implements ModInitializer {
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = new ClickCrystalsSystem();
     public static final ClickCrystalsModuleScreen CC_MODULE_SCREEN = new ClickCrystalsModuleScreen();
-    @Deprecated public static final ClickCrystalMenuScreen CC_MENU_SCREEN = new ClickCrystalMenuScreen();
 
     @SuppressWarnings("unused")
     public static final String
@@ -73,7 +71,8 @@ public final class ClickCrystals implements ModInitializer {
         system.addListener(new TickEventListener());
 
         // Commands
-        system.addCommand(new ClickCrystalToggleCommand());
+        system.addCommand(new CCToggleCommand());
+        system.addCommand(new CCHelpCommand());
         system.addCommand(new GmcCommand());
         system.addCommand(new GmsCommand());
         system.addCommand(new GmaCommand());

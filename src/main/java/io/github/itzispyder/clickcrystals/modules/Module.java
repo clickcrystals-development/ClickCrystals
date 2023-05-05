@@ -8,8 +8,8 @@ import net.minecraft.client.MinecraftClient;
 
 import java.io.Serializable;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.STARTER;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 
 /**
  * Represents a toggleable module
