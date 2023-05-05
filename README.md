@@ -9,6 +9,22 @@
   </h5>
 </div>
 
+---------------------------------------------------------------
+### A message from the developers:
+It has come to our attention that many people believe this mod is a "CW hack" or an unfair multiplayer advantage.
+After being staff-banned off multiple well-known servers and taken down from Modrinth.com, we've decided to reconsider our decisions and revise our work.
+
+In this update, unfair modules were removed, **all auto-clicking features** (thought of as Trigger Bot) are now gone, and **auto swap-back is also removed** (thought of as Auto Double Hand) With these changes, we hope, to those we have offended, would forgive us for the inconveniences we may have caused.
+
+Now with all unfair modules removed, **this mod is officially a hotkey mod**, which helps you hotkey in certain situations. Note that this is not an unfair advantage, but rather a feature most mods have, ex Tweakeroo, Mouse Wheelie, and Item Scroller.
+
+But then why download ClickCrystals if you can just download the mods mentioned above? ClickCrystals **contains many all-in-one features**, gathering all the smaller mods together and transforming them into module-like settings, allowing players to quickly configure their game to their liking. These mods may include NoHurtCam, NoGameOverlay, NoLoadingScreen, etc...
+
+To those of you that still think this is cheating, this mod __**does NOT have autoclicking features, does NOT support flying and movement, and does NOT support renderering advantages**__. ClickCrystals is now just an all in one crystal pvp assistance mod, while adding a little twist with __hotkeying__.
+
+Happy coding and cpvping!
+
+\- ClickCrystal dev team
 
 ---------------------------------------------------------------
 
