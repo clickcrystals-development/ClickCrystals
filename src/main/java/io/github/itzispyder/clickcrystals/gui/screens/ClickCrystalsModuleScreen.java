@@ -70,7 +70,7 @@ public class ClickCrystalsModuleScreen extends Screen {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        DrawableHelper.fillGradient(matrices, 0, 0, this.width, this.height, 0xD0000000, 0xD03873A9);
+        DrawableHelper.fillGradient(matrices, 0, 0, this.width, this.height, 0xD0000000, 0xD03873A9, 0);
         super.render(matrices, mouseX, mouseY, delta);
 
         RenderSystem.setShaderColor(1, 1, 1, 1);

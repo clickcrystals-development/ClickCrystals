@@ -17,8 +17,6 @@ public class IconWidget extends CCWidget {
 
     @Override
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x40FFFFFF);
-        DrawableHelper.drawBorder(matrices, getX(), getY(), getWidth(), getHeight(), 0xFFFFFFFF);
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, texture);
         DrawableHelper.drawTexture(matrices, getX(), getY(), 0, 0, getWidth(), getHeight(), getWidth(), getHeight());

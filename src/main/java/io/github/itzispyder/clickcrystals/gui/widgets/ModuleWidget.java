@@ -1,11 +1,10 @@
 package io.github.itzispyder.clickcrystals.gui.widgets;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class ModuleWidget extends CCWidget {
 
@@ -31,7 +30,7 @@ public class ModuleWidget extends CCWidget {
         if (isMouseOver(mouseX, mouseY)) fillColor = 0x40909090;
 
         DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), fillColor);
-        DrawableHelper.drawCenteredTextWithShadow(matrices, mc.textRenderer, module.getCurrentStateLabel(), getX() + (getWidth() / 2), getY() + (int)(getHeight() * 0.33), 0xFFFFFFFF);
+        DrawableUtils.drawCenteredText(matrices, module.getCurrentStateLabel(), getX() + (getWidth() / 2), (int)(getY() + (getHeight() * 0.33)), true);
     }
 
     public Module getModule() {
