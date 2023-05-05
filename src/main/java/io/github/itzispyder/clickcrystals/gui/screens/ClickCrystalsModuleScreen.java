@@ -55,7 +55,8 @@ public class ClickCrystalsModuleScreen extends Screen {
                     .sorted(Comparator.comparing(Module::getId))
                     .toList();
 
-            categoryWidget.setPosition(CATEGORY_MARGIN_LEFT + ((categoryWidget.getWidth() + 3) * i),CATEGORY_MARGIN_TOP + BANNER_TITLE_HEIGHT);
+            categoryWidget.setX(CATEGORY_MARGIN_LEFT + ((categoryWidget.getWidth() + 3) * i));
+            categoryWidget.setY(CATEGORY_MARGIN_TOP + BANNER_TITLE_HEIGHT);
             moduleList.forEach(categoryWidget::addModule);
             this.categoryWidgets.add(categoryWidget);
             this.addDrawable(categoryWidget);

@@ -2,8 +2,8 @@ package io.github.itzispyder.clickcrystals.gui.hud;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.CrystPerSec;
+import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -20,6 +20,6 @@ public class ClickPerSecondHud implements HudRenderCallback {
         final Window win = mc.getWindow();
         final int x = win.getScaledWidth() / 2;
         final int y = win.getScaledHeight() / 2;
-        DrawableHelper.drawCenteredTextWithShadow(matrixStack, mc.textRenderer, text, x, y + 5,0);
+        DrawableUtils.drawCenteredText(matrixStack, text, x, y + 5, true);
     }
 }
