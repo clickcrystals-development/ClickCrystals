@@ -11,14 +11,8 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
 
-/**
- * ClickCrystal module
- */
 public class ClickCrystal extends Module implements Listener {
 
-    /**
-     * Module constructor
-     */
     public ClickCrystal() {
         super("ClickCrystal", Categories.CRYSTALLING,"Binds end crystal place to left click.");
     }

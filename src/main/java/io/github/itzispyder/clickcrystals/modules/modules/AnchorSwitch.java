@@ -14,16 +14,10 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.util.math.BlockPos;
 
-/**
- * Anchor2Glowstone module
- */
-public class Anchor2Glowstone extends Module implements Listener {
+public class AnchorSwitch extends Module implements Listener {
 
-    /**
-     * Module constructor
-     */
-    public Anchor2Glowstone() {
-        super("Anchor2Glowstone", Categories.ANCHORING,"Whenever you place an anchor, switch to glowstone then back after it has been charged.");
+    public AnchorSwitch() {
+        super("AnchorSwitch", Categories.ANCHORING,"Whenever you place an anchor, switch to glowstone then back after it has been charged.");
     }
 
     @Override

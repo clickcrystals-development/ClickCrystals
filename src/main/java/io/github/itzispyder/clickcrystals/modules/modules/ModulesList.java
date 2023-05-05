@@ -3,10 +3,10 @@ package io.github.itzispyder.clickcrystals.modules.modules;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 
-public class IconHud extends Module {
+public class ModulesList extends Module {
 
-    public IconHud() {
-        super("IconHud", Categories.MISC,"Renders the ClickCrystals logo on the screen. :)");
+    public ModulesList() {
+        super("ModulesList", Categories.MISC,"Shows the enabled modules on screen.");
     }
 
     @Override

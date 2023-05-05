@@ -17,12 +17,17 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
 public class ClickCrystalsModuleScreen extends Screen {
 
+    public static final int
+            BANNER_TITLE_HEIGHT = 20,
+            CATEGORY_MARGIN_LEFT = 10,
+            CATEGORY_MARGIN_TOP = 10;
+
     public static final Map<Category,Integer> categoryMap = new ManualMap<Category,Integer>(
             Categories.CRYSTALLING,0,
             Categories.ANCHORING,1,
-            Categories.MISC,2,
+            Categories.RENDERING,2,
             Categories.OPTIMIZATION,3,
-            Categories.RENDERING,4,
+            Categories.MISC,4,
             Categories.OTHER,5
     ).getMap();
 
@@ -34,8 +39,8 @@ public class ClickCrystalsModuleScreen extends Screen {
 
     @Override
     public void init() {
-        final EmptyWidget widget = new EmptyWidget(0, 0, this.width, 20, Text.literal("ClickCrystals - by ImproperIssues, TheTrouper"), 0xFF33CCFF);
-        this.addDrawableChild(widget);
+        final EmptyWidget bannerTitleWidget = new EmptyWidget(0, 0, this.width, BANNER_TITLE_HEIGHT, Text.literal("ClickCrystals - by ImproperIssues, TheTrouper"), 0xFF24A2A2);
+        this.addDrawable(bannerTitleWidget);
 
         for (Map.Entry<Category, Integer> entry : categoryMap.entrySet()) {
             final Category category = entry.getKey();
@@ -48,10 +53,10 @@ public class ClickCrystalsModuleScreen extends Screen {
                     .sorted(Comparator.comparing(Module::getId))
                     .toList();
 
-            categoryWidget.setPosition(20 + ((categoryWidget.getWidth() + 3) * i),30);
+            categoryWidget.setPosition(CATEGORY_MARGIN_LEFT + ((categoryWidget.getWidth() + 3) * i),CATEGORY_MARGIN_TOP + BANNER_TITLE_HEIGHT);
             moduleList.forEach(categoryWidget::addModule);
             this.categoryWidgets.add(categoryWidget);
-            this.addDrawableChild(categoryWidget);
+            this.addDrawable(categoryWidget);
             categoryWidget.getModuleWidgets().forEach(this::addDrawableChild);
         }
     }
@@ -63,7 +68,7 @@ public class ClickCrystalsModuleScreen extends Screen {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        DrawableHelper.fillGradient(matrices, 0, 0, this.width, this.height, 0x9E000000, 0x9E3873A9);
+        DrawableHelper.fillGradient(matrices, 0, 0, this.width, this.height, 0xD0000000, 0xD03873A9);
         super.render(matrices, mouseX, mouseY, delta);
     }
 }

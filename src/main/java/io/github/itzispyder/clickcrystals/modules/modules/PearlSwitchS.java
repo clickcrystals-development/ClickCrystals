@@ -10,15 +10,15 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 import net.minecraft.util.Hand;
 
-public class Totem2Pearl extends Module implements Listener {
+public class PearlSwitchS extends Module implements Listener {
 
     private static long cooldown;
 
     /**
      * Module constructor
      */
-    public Totem2Pearl() {
-        super("Totem2Pearl", Categories.CRYSTALLING,"Right click with your totem to switch to pearl slot.");
+    public PearlSwitchS() {
+        super("PearlSwitchS", Categories.CRYSTALLING,"Right click your sword to switch to your pearl slot.");
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Totem2Pearl extends Module implements Listener {
     @EventHandler
     private void onRightClick(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerInteractItemC2SPacket) {
-            if (!HotbarUtils.nameContains("totem")) return;
+            if (!HotbarUtils.nameContains("sword")) return;
             if (!HotbarUtils.has(Items.ENDER_PEARL)) return;
 
             if (cooldown > System.currentTimeMillis()) return;

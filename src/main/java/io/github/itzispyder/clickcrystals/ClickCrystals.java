@@ -81,27 +81,27 @@ public final class ClickCrystals implements ModInitializer {
 
         // Module
         system.addModule(new ClickCrystal());
-        system.addModule(new Anchor2Glowstone());
-        system.addModule(new Sword2Pearl());
-        system.addModule(new BlockDelayRemover());
+        system.addModule(new AnchorSwitch());
+        system.addModule(new PearlSwitchS());
+        system.addModule(new BreakDelay());
         system.addModule(new FullBright());
         system.addModule(new NoHurtCam());
-        system.addModule(new SlowHandSwing());
+        system.addModule(new SlowSwing());
         system.addModule(new TrueSight());
-        system.addModule(new NoLoadingScreen());
-        system.addModule(new NoGameOverlay());
-        system.addModule(new Sword2Obsidian());
-        system.addModule(new Sword2Crystal());
-        system.addModule(new NoServerParticles());
-        system.addModule(new Totem2Pearl());
-        system.addModule(new NoResourcePack());
+        system.addModule(new NoLoading());
+        system.addModule(new NoOverlay());
+        system.addModule(new ObiSwitch());
+        system.addModule(new CrystalSwitch());
+        system.addModule(new AntiCrash());
+        system.addModule(new PearlSwitchT());
+        system.addModule(new NoResPack());
         system.addModule(new ToolSwitcher());
-        system.addModule(new Crystal2Anchor());
+        system.addModule(new CrystAnchor());
         system.addModule(new IconHud());
-        system.addModule(new ModuleListHud());
+        system.addModule(new ModulesList());
         system.addModule(new SilkTouch());
-        system.addModule(new TotemPopMessages());
-        system.addModule(new CrystalPerSecondHud());
+        system.addModule(new TotemPops());
+        system.addModule(new CrystPerSec());
         Module.loadConfigModules();
 
         // Hud

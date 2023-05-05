@@ -11,13 +11,10 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.util.math.BlockPos;
 
-/**
- * Crystal2Anchor module
- */
-public class Crystal2Anchor extends Module implements Listener {
+public class CrystAnchor extends Module implements Listener {
 
-    public Crystal2Anchor() {
-        super("Crystal2Anchor", Categories.ANCHORING,"Right click the ground with a crystal to switch to your respawn anchor.");
+    public CrystAnchor() {
+        super("CrystAnchor", Categories.ANCHORING,"Right click the ground with a crystal to switch to your respawn anchor.");
     }
 
     @Override

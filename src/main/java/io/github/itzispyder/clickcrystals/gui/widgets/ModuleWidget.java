@@ -11,7 +11,7 @@ public class ModuleWidget extends CCWidget {
 
     public static final int
             DEFAULT_WIDTH = 80,
-            DEFAULT_HEIGHT = 14;
+            DEFAULT_HEIGHT = 12;
 
     private final Module module;
 
@@ -26,7 +26,8 @@ public class ModuleWidget extends CCWidget {
 
     @Override
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x40101010);
+        final int fillColor = isMouseOver(mouseX, mouseY) ? 0x40505050 : 0x40101010;
+        DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), fillColor);
         DrawableHelper.drawCenteredTextWithShadow(matrices, mc.textRenderer, module.getCurrentStateLabel(), getX() + (getWidth() / 2), getY() + (int)(getHeight() * 0.33), 0xFFFFFFFF);
     }
 
@@ -36,13 +37,7 @@ public class ModuleWidget extends CCWidget {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        final int x = (int)mouseX;
-        final int y = (int)mouseY;
-
-        if (x < getX()) return false;
-        if (x > getX() + getWidth()) return false;
-        if (y < getY()) return false;
-        if (y > getY() + getHeight()) return false;
+        if (!isMouseOver(mouseX, mouseY)) return false;
 
         this.module.setEnabled(!module.isEnabled(), false);
         this.setMessage(Text.literal(this.module.getCurrentStateLabel()));

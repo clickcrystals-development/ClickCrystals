@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.events.events.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.SlowHandSwing;
+import io.github.itzispyder.clickcrystals.modules.modules.SlowSwing;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,7 +22,7 @@ public abstract class PlayerEntityMixin {
 
     @Inject(method = "getAttackCooldownProgress", at = @At("RETURN"), cancellable = true)
     public void getAttackCooldownProgress(float baseTime, CallbackInfoReturnable<Float> cir) {
-        Module slowHandSwing = Module.get(SlowHandSwing.class);
+        Module slowHandSwing = Module.get(SlowSwing.class);
         if (slowHandSwing.isEnabled()) cir.setReturnValue(1.0F);
     }
 

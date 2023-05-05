@@ -14,8 +14,10 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 public class CategoryWidget extends CCWidget {
 
     public static final int
-            MARGIN_TOP = 10,
-            MARGIN_LEFT = 3;
+            TITLE_HEIGHT = 15,
+            MARGIN_TOP = 0,
+            MARGIN_BOTTOM = 1,
+            MARGIN_LEFT = 1;
 
     private final Set<Module> modules;
     private final Set<ModuleWidget> moduleWidgets;
@@ -32,10 +34,10 @@ public class CategoryWidget extends CCWidget {
 
     @Override
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x40FFFFFF);
-        DrawableHelper.drawBorder(matrices, getX(), getY(), getWidth(), getHeight(), 0xFFFFFFFF);
+        DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x10FFFFFF);
+        DrawableHelper.drawBorder(matrices, getX(), getY(), getWidth(), getHeight(), 0xFF1A9494);
+        DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + TITLE_HEIGHT, 0xFF1A9494);
         DrawableHelper.drawCenteredTextWithShadow(matrices, mc.textRenderer, getMessage(), getX() + (getWidth() / 2), getY() + 5, 0xFFFFFFFF);
-        DrawableHelper.fill(matrices, getX(), getY() + 15, getX() + getWidth() - 1, getY() + 16, 0xFFFFFFFF);
     }
 
     public void addModule(Module module) {
@@ -47,10 +49,10 @@ public class CategoryWidget extends CCWidget {
         final int moduleListHeight = ModuleWidget.DEFAULT_HEIGHT * moduleWidgets.size();
         final int moduleListWidth = ModuleWidget.DEFAULT_WIDTH;
 
-        this.height = moduleListHeight + (int)(3 * MARGIN_TOP);
+        this.height = moduleListHeight + TITLE_HEIGHT + (MARGIN_BOTTOM + MARGIN_TOP);
         this.width = moduleListWidth + (int)(2 * MARGIN_LEFT);
         moduleWidget.setX(getX() + MARGIN_LEFT);
-        moduleWidget.setY(getY() + MARGIN_TOP + moduleListHeight);
+        moduleWidget.setY(getY() + moduleListHeight + (3 * MARGIN_BOTTOM));
     }
 
     public Set<Module> getModules() {

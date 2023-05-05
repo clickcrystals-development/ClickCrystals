@@ -13,12 +13,12 @@ import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TotemPopMessages extends Module implements Listener {
+public class TotemPops extends Module implements Listener {
 
     private static final Map<String,Integer> totemPops = new HashMap<>();
 
-    public TotemPopMessages() {
-        super("TotemPopMessages", Categories.MISC, "Send messages when a player pops their totem.");
+    public TotemPops() {
+        super("TotemPops", Categories.MISC, "Send messages when a player pops their totem.");
     }
 
     @Override

@@ -12,7 +12,7 @@ import io.github.itzispyder.clickcrystals.util.MathUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 
-public class CrystalPerSecondHud extends Module implements Listener {
+public class CrystPerSec extends Module implements Listener {
 
     private static int tempCps = 0;
     private static double cps = 0;
@@ -20,8 +20,8 @@ public class CrystalPerSecondHud extends Module implements Listener {
     private static int timer = 0;
     private static final Queue<Integer> intQueue = new ArrayQueue<>(15);
 
-    public CrystalPerSecondHud() {
-        super("CrystalPerSecondHud", Categories.OTHER, "Crystals per second counter.");
+    public CrystPerSec() {
+        super("CrystPerSec", Categories.OTHER, "Crystals per second counter.");
     }
 
     @Override

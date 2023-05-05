@@ -18,9 +18,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * ToolSwitcher module
- */
 public class ToolSwitcher extends Module implements Listener {
 
     public ToolSwitcher() {

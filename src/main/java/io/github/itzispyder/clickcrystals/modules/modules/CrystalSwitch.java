@@ -11,10 +11,10 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
 
-public class Sword2Crystal extends Module implements Listener {
+public class CrystalSwitch extends Module implements Listener {
 
-    public Sword2Crystal() {
-        super("Sword2Crystal", Categories.CRYSTALLING,"Whenever you punch bedrock/obsidian with a sword, it will switch to a crystal.");
+    public CrystalSwitch() {
+        super("CrystalSwitch", Categories.CRYSTALLING,"Whenever you punch bedrock/obsidian with a sword, it will switch to a crystal.");
     }
 
     @Override

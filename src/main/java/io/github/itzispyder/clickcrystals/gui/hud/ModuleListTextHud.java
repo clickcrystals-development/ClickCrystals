@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.hud;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.ModuleListHud;
+import io.github.itzispyder.clickcrystals.modules.modules.ModulesList;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
@@ -24,7 +24,7 @@ public class ModuleListTextHud implements HudRenderCallback {
 
     @Override
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {
-        Module hudModule = Module.get(ModuleListHud.class);
+        Module hudModule = Module.get(ModulesList.class);
         if (!hudModule.isEnabled()) return;
 
         List<Module> modules = new ArrayList<>(system.modules().values().stream()

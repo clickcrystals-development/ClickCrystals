@@ -6,16 +6,10 @@ import io.github.itzispyder.clickcrystals.events.events.PlayerAttackBlockCooldow
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 
-/**
- * BlockDelayRemover module
- */
-public class BlockDelayRemover extends Module implements Listener {
+public class BreakDelay extends Module implements Listener {
 
-    /**
-     * Module constructor
-     */
-    public BlockDelayRemover() {
-        super("BlockDelayRemover", Categories.OTHER,"Removes the delay between breaking a block and starting to break the next block. (Some AntiCheats don't like this module)");
+    public BreakDelay() {
+        super("BreakDelay", Categories.OTHER,"Removes the delay between breaking a block and starting to break the next block. (Some AntiCheats don't like this module)");
     }
 
     @Override

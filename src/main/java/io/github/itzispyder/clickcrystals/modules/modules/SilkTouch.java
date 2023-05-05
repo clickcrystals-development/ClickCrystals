@@ -4,9 +4,6 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 
-/**
- * Silk Touch module
- */
 public class SilkTouch extends Module {
 
     public SilkTouch() {

@@ -3,9 +3,6 @@ package io.github.itzispyder.clickcrystals.modules.modules;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 
-/**
- * TrueSight module
- */
 public class TrueSight extends Module {
 
     public TrueSight() {

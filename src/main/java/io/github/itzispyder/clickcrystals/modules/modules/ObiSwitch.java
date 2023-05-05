@@ -11,15 +11,12 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
 
-/**
- * Sword2Obsidian module
- */
-public class Sword2Obsidian extends Module implements Listener {
+public class ObiSwitch extends Module implements Listener {
 
     private static long cooldown;
 
-    public Sword2Obsidian() {
-        super("Sword2Obsidian", Categories.CRYSTALLING,"Punch the ground with your sword to switch to obsidian.");
+    public ObiSwitch() {
+        super("ObiSwitch", Categories.CRYSTALLING,"Punch the ground with your sword to switch to obsidian.");
     }
 
     @Override
