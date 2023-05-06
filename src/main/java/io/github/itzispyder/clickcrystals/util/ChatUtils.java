@@ -40,6 +40,6 @@ public final class ChatUtils {
      * @param msg message
      */
     public static void sendChatMessage(String msg) {
-        mc.player.networkHandler.sendCommand(msg);
+        mc.player.networkHandler.sendChatMessage(msg);
     }
 }
