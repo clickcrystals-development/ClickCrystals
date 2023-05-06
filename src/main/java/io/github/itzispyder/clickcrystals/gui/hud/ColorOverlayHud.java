@@ -23,7 +23,7 @@ public class ColorOverlayHud implements HudRenderCallback {
         }
 
         if (brightOrange.isEnabled()) {
-            this.renderColor(matrices, 0x30194D33);
+            this.renderColor(matrices, 0x30BE8100);
         }
     }
 

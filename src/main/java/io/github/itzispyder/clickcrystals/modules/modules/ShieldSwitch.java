@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.modules;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
+import io.github.itzispyder.clickcrystals.events.EventPriority;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
@@ -25,7 +26,7 @@ public class ShieldSwitch extends Module implements Listener {
         system.removeListener(this);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     private void onClick(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerInteractItemC2SPacket packet) {
             if (!holdingWeapon()) return;
