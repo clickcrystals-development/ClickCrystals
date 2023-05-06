@@ -39,7 +39,7 @@ public class MsgResend extends Module implements Listener {
     }
 
     @EventHandler
-    private void onChatSend(ChatCommandEvent e) {
+    private void onCommand(ChatCommandEvent e) {
         final String msg = e.getCommandLine();
 
         this.lastMessage = msg;
