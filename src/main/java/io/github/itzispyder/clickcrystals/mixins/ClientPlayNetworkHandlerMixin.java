@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
@@ -22,12 +23,12 @@ public abstract class ClientPlayNetworkHandlerMixin {
         if (event.isCancelled()) ci.cancel();
     }
 
-    @Inject(method = "sendChatCommand", at = @At("HEAD"), cancellable = true)
-    public void sendCommand(String command, CallbackInfo ci) {
+    @Inject(method = "sendCommand", at = @At("HEAD"), cancellable = true)
+    public void sendCommand(String command, CallbackInfoReturnable<Boolean> cir) {
         final ChatCommandEvent event = new ChatCommandEvent(command);
 
         system.eventBus.pass(event);
         command = event.getCommandLine();
-        if (event.isCancelled()) ci.cancel();
+        if (event.isCancelled()) cir.cancel();
     }
 }
