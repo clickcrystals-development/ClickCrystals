@@ -11,6 +11,7 @@ import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.gui.hud.ClickCrystalIconHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ClickPerSecondHud;
+import io.github.itzispyder.clickcrystals.gui.hud.ColorOverlayHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -103,10 +104,13 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new CrystPerSec());
         system.addModule(new MsgResend());
         system.addModule(new AntiCCOptout());
-        system.addModule(new TrashRemoval());
+        system.addModule(new TotemOverlay());
+        system.addModule(new BrightOrange());
+        system.addModule(new ShieldSwitch());
         Module.loadConfigModules();
 
         // Hud
+        system.addHud(new ColorOverlayHud());
         system.addHud(new ClickCrystalIconHud());
         system.addHud(new ModuleListTextHud());
         system.addHud(new ClickPerSecondHud());

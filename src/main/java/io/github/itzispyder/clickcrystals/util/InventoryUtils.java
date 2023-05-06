@@ -20,13 +20,11 @@ public final class InventoryUtils {
     }
 
     public static void dropStack(int slot) {
-        if (slot == -1) slot = inv().getEmptySlot();
-
         final ItemStack item = inv().getStack(slot);
 
         if (item == null) return;
         if (item.isEmpty()) return;
 
-        mc.player.dropItem(item, true, false);
+        mc.player.dropItem(item, true, true);
     }
 }

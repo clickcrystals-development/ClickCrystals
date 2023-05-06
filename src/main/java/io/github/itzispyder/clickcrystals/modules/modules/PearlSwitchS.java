@@ -38,7 +38,10 @@ public class PearlSwitchS extends Module implements Listener {
     @EventHandler
     private void onRightClick(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerInteractItemC2SPacket) {
+            final Module shieldSwitch = Module.get(ShieldSwitch.class);
+
             if (!HotbarUtils.nameContains("sword")) return;
+            if (shieldSwitch != null && shieldSwitch.isEnabled()) return;
             if (!HotbarUtils.has(Items.ENDER_PEARL)) return;
 
             if (cooldown > System.currentTimeMillis()) return;

@@ -19,19 +19,19 @@ public abstract class InGameOverlayRendererMixin {
 
     @Inject(method = "renderFireOverlay", at = @At("HEAD"), cancellable = true)
     private static void renderFireOverlay(MinecraftClient client, MatrixStack matrices, CallbackInfo ci) {
-        Module noOverlay = Module.get(NoOverlay.class);
+        final Module noOverlay = Module.get(NoOverlay.class);
         if (noOverlay.isEnabled()) ci.cancel();
     }
 
     @Inject(method = "renderUnderwaterOverlay", at = @At("HEAD"), cancellable = true)
     private static void renderUnderwaterOverlay(MinecraftClient client, MatrixStack matrices, CallbackInfo ci) {
-        Module noOverlay = Module.get(NoOverlay.class);
+        final Module noOverlay = Module.get(NoOverlay.class);
         if (noOverlay.isEnabled()) ci.cancel();
     }
 
     @Inject(method = "renderInWallOverlay", at = @At("HEAD"), cancellable = true)
     private static void renderInWallOverlay(Sprite sprite, MatrixStack matrices, CallbackInfo ci) {
-        Module noOverlay = Module.get(NoOverlay.class);
+        final Module noOverlay = Module.get(NoOverlay.class);
         if (noOverlay.isEnabled()) ci.cancel();
     }
 }

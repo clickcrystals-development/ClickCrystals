@@ -13,9 +13,10 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 @Mixin(PlayerInventory.class)
 public abstract class PlayerInventoryMixin {
 
-    @Inject(method = "insertStack(ILnet/minecraft/item/ItemStack;)Z", at = @At("HEAD"))
+    @Inject(method = "addStack(ILnet/minecraft/item/ItemStack;)I", at = @At("HEAD"))
     public void is(int slot, ItemStack stack, CallbackInfoReturnable<Integer> cir) {
         final InventoryAddItemEvent event = new InventoryAddItemEvent(slot, stack);
+
         system.eventBus.pass(event);
     }
 }

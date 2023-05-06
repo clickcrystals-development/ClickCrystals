@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.util;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -134,5 +135,21 @@ public final class HotbarUtils {
     public static void swapWithOffhand() {
         PlayerActionC2SPacket swap = new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND, mc.player.getBlockPos(), Direction.UP);
         mc.player.networkHandler.sendPacket(swap);
+    }
+
+    public static double getFullHealthRatio() {
+        final PlayerEntity p = mc.player;
+        if (p == null) return 0.0;
+        return p.getHealth() / p.getMaxHealth();
+    }
+
+    public static boolean isTotemed() {
+        if (mc.player == null) return false;
+
+        final ItemStack main = mc.player.getStackInHand(Hand.MAIN_HAND);
+        final ItemStack off = mc.player.getStackInHand(Hand.OFF_HAND);
+        final Item totem = Items.TOTEM_OF_UNDYING;
+
+        return (main != null && main.getItem() == totem) || (off != null && off.getItem() == totem);
     }
 }
