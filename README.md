@@ -32,23 +32,20 @@ Happy coding and cpvping!
 ```yml
 Minecraft: 1.19.4
 Mod: 1.19.4
-Updated to: 1.19.4-0.8.0
+Updated to: 1.19.4-0.8.1
 
 Changelog:
-- Renamed modules
-- Revamped GUI menu
-- Changed default keybinding of module GUI
-- Added command /cchelp for module help and info
-- One step closer to 1.0.0 official release!!!
-
-Patches:
-- Lag spikes when placing down glowstone with "AnchorSwitch" enabled
-- Removed old GUI
-- Module "NoLoading" breaking the loading screens
+- Renamed some modules
+- Added module "ShieldSwitch"
+- Added module "TotemOverlay"
+- Added module "BrightOrange"
+- Added module "MsgResend"
+- Added module "AntiCCOptout"
+- fixed some issues on chat event listeners
 ```
 
 <div class="demo-menu">
-  <img src="./assets/image/demo-menu.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
+  <img src="./assets/image/demo-menu-new.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
 </div>
 
 ## How Do I Use ClickCrystals?
@@ -102,6 +99,11 @@ Patches:
 | SilkTouch     |                     Gives any tool you hold silk touch (Real)                      |
 | TotemPops     |             Sends the totem pops of another player. (With pop counter)             |
 | CrystPerSec   |                            Displays your crystal speed.                            |
+| AntiCCOptout  |                     Disable ClickCrystal Optout for yourself.                      |
+| ShieldSwitch  |                   Right click your sword to switch to a shield.                    |
+| BrightOrange  |                Renders a bright golden overlay similar to shaders.                 |
+| TotemOverlay  |                  Displays a red overlay when not holding a totem.                  |
+| MsgResend     |               Click UP_ARROW to resend your previously sent message.               |
 
 
 ## But isn't this cheating?
