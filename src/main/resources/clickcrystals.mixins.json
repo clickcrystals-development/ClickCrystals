@@ -11,7 +11,8 @@
     "GameRenderMixin",
     "InGameHudMixin",
     "InGameOverlayRendererMixin",
-    "LightmapTextureManagerMixin"
+    "LightmapTextureManagerMixin",
+    "EntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

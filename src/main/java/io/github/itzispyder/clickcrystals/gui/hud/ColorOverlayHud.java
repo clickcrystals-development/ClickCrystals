@@ -1,8 +1,8 @@
 package io.github.itzispyder.clickcrystals.gui.hud;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.BrightOrange;
-import io.github.itzispyder.clickcrystals.modules.modules.TotemOverlay;
+import io.github.itzispyder.clickcrystals.modules.modules.rendering.BrightOrange;
+import io.github.itzispyder.clickcrystals.modules.modules.rendering.TotemOverlay;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.InventoryUtils;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;

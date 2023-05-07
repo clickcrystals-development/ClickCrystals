@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.hud;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.ModulesList;
+import io.github.itzispyder.clickcrystals.modules.modules.misc.ModulesList;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;

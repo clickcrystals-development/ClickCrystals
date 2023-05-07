@@ -1,0 +1,11 @@
+{
+  "providers": [
+    {
+      "type": "bitmap",
+      "file": "clickcrystals:icon.png",
+      "ascent": 7,
+      "height": 128,
+      "chars": ["\uE001"]
+    }
+  ]
+}

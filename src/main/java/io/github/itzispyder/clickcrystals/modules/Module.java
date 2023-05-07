@@ -102,7 +102,7 @@ public abstract class Module implements Toggleable, Serializable {
      */
     public String getHelp() {
         return " \n" + STARTER + "§f" + name +
-                "\n" + "§3Category: §b" + category.getName() +
+                "\n" + "§3Category: §b" + category.name() +
                 "\n" + "§7" + description + "\n ";
     }
 

@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.events.events.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.SlowSwing;
+import io.github.itzispyder.clickcrystals.modules.modules.misc.SlowSwing;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;

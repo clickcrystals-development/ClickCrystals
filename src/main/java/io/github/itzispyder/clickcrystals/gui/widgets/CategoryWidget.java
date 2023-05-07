@@ -22,7 +22,7 @@ public class CategoryWidget extends CCWidget {
     private final Set<ModuleWidget> moduleWidgets;
 
     public CategoryWidget(int x, int y, int width, int height, Category category) {
-        super(x, y, width, height, Text.literal(category.getName()));
+        super(x, y, width, height, Text.literal(category.name()));
         this.modules = new HashSet<>();
         this.moduleWidgets = new HashSet<>();
     }

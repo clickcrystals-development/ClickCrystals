@@ -15,7 +15,20 @@ import io.github.itzispyder.clickcrystals.gui.hud.ColorOverlayHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.*;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.AnchorSwitch;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.CrystAnchor;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.ShieldSwitch;
+import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
+import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
+import io.github.itzispyder.clickcrystals.modules.modules.optimization.AntiCrash;
+import io.github.itzispyder.clickcrystals.modules.modules.optimization.AutoRespawn;
+import io.github.itzispyder.clickcrystals.modules.modules.optimization.NoLoading;
+import io.github.itzispyder.clickcrystals.modules.modules.optimization.NoResPack;
+import io.github.itzispyder.clickcrystals.modules.modules.other.BreakDelay;
+import io.github.itzispyder.clickcrystals.modules.modules.other.CrystPerSec;
+import io.github.itzispyder.clickcrystals.modules.modules.other.MsgResend;
+import io.github.itzispyder.clickcrystals.modules.modules.other.SilkTouch;
+import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
@@ -49,6 +62,7 @@ public final class ClickCrystals implements ModInitializer {
         this.init();
         CCKeybindings.init();
         this.startTicking();
+        this.initRpc();
     }
 
     /**
@@ -107,6 +121,8 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new TotemOverlay());
         system.addModule(new BrightOrange());
         system.addModule(new ShieldSwitch());
+        system.addModule(new RenderMyName());
+        system.addModule(new AutoRespawn());
         Module.loadConfigModules();
 
         // Hud
