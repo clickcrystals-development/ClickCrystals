@@ -19,4 +19,23 @@ public abstract class CCWidget extends ClickableWidget {
     public void playDownSound(SoundManager soundManager) {
 
     }
+
+    public void move(int deltaX, int deltaY) {
+        this.setX(getX() + deltaX);
+        this.setY(getY() + deltaY);
+    }
+
+    public void moveTo(int x, int y) {
+        this.setX(x);
+        this.setY(y);
+    }
+
+    public void move(double deltaX, double deltaY) {
+        this.setX((int)(getX() + deltaX));
+        this.setY((int)(getY() + deltaY));
+    }
+
+    public void moveTo(double x, double y) {
+        this.moveTo((int)x, (int)y);
+    }
 }

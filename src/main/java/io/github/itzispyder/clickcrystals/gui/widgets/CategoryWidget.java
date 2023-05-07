@@ -63,10 +63,34 @@ public class CategoryWidget extends CCWidget {
     }
 
     @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-        getModuleWidgets().forEach(moduleWidget -> {
-            moduleWidget.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+    public void move(int delX, int delY) {
+        super.move(delX, delY);
+        this.moduleWidgets.forEach(moduleWidget -> {
+            moduleWidget.move(delX, delY);
         });
-        return true;
+    }
+
+    @Override
+    public void moveTo(int x, int y) {
+        super.moveTo(x, y);
+        this.moduleWidgets.forEach(moduleWidget -> {
+            moduleWidget.moveTo(x, y);
+        });
+    }
+
+    @Override
+    public void move(double delX, double delY) {
+        super.move(delX, delY);
+        this.moduleWidgets.forEach(moduleWidget -> {
+            moduleWidget.move(delX, delY);
+        });
+    }
+
+    @Override
+    public void moveTo(double x, double y) {
+        super.moveTo(x, y);
+        this.moduleWidgets.forEach(moduleWidget -> {
+            moduleWidget.moveTo(x, y);
+        });
     }
 }

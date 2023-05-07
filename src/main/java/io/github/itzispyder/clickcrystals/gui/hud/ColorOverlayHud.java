@@ -4,10 +4,12 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.BrightOrange;
 import io.github.itzispyder.clickcrystals.modules.modules.TotemOverlay;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.InventoryUtils;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.Items;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
@@ -18,7 +20,7 @@ public class ColorOverlayHud implements HudRenderCallback {
         final Module totemOverlay = Module.get(TotemOverlay.class);
         final Module brightOrange = Module.get(BrightOrange.class);
 
-        if (totemOverlay.isEnabled() && !HotbarUtils.isTotemed()) {
+        if (totemOverlay.isEnabled() && !HotbarUtils.isTotemed() && InventoryUtils.has(Items.TOTEM_OF_UNDYING)) {
             this.renderColor(matrices, 0x30FF0000);
         }
 

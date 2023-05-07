@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.ModulesList;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -24,23 +25,29 @@ public class ModuleListTextHud implements HudRenderCallback {
 
     @Override
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {
-        Module hudModule = Module.get(ModulesList.class);
+        final Module hudModule = Module.get(ModulesList.class);
+
         if (!hudModule.isEnabled()) return;
 
-        List<Module> modules = new ArrayList<>(system.modules().values().stream()
+        final TextRenderer tr = mc.textRenderer;
+        final List<Module> modules = new ArrayList<>(system.modules().values().stream()
                 .filter(Module::isEnabled)
-                .sorted(Comparator.comparing(module -> ((Module) module).getId().length()).reversed())
+                .sorted(Comparator.comparing(module -> (mc.textRenderer.getWidth(((Module) module).getId()))).reversed())
                 .toList());
 
         int i = 10;
         for (Module module : modules) {
-            DrawableHelper.drawTextWithShadow(
-                    matrixStack,
-                    mc.textRenderer,
-                    Text.literal("§8§l| §b§o" + module.getName()),
-                    20,
-                    50 + (i += 10),
-                    0);
+            final Text display = Text.literal("  §b" + module.getName() + " ");
+            final int x = 20;
+            final int y = 40 + (i += 10);
+            final int color = 0xFFFFFFFF;
+            final int fillColor = 0x70000000;
+            final int lineColor = 0xFFACE8FB;
+            final int length = tr.getWidth(display);
+
+            DrawableHelper.fill(matrixStack, x, y, x + length, y + 10, fillColor);
+            DrawableHelper.fill(matrixStack, x, y, x + 1, y + 10, lineColor);
+            DrawableHelper.drawTextWithShadow(matrixStack, tr, display, x, y, color);
         }
     }
 }

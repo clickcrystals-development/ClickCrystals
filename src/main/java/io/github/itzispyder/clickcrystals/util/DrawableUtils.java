@@ -30,9 +30,13 @@ public final class DrawableUtils {
     }
 
     public static void drawBorder(MatrixStack matrices, int x, int y, int width, int height, int color) {
-        DrawableHelper.fill(matrices, x, y, x + width, y + 1, color);
-        DrawableHelper.fill(matrices, x, y + height, x + width, y + height - 1, color);
-        DrawableHelper.fill(matrices, x, y, x + 1, y + height, color);
-        DrawableHelper.fill(matrices, x + width, y, x + width - 1, y + height, color);
+        drawBorder(matrices, x, y , width, height, 1, color);
+    }
+
+    public static void drawBorder(MatrixStack matrices, int x, int y, int width, int height, int thickness, int color) {
+        DrawableHelper.fill(matrices, x, y, x + width, y + thickness, color);
+        DrawableHelper.fill(matrices, x, y + height, x + width, y + height - thickness, color);
+        DrawableHelper.fill(matrices, x, y, x + thickness, y + height, color);
+        DrawableHelper.fill(matrices, x + width, y, x + width - thickness, y + height, color);
     }
 }

@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.util;
 
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -26,5 +27,16 @@ public final class InventoryUtils {
         if (item.isEmpty()) return;
 
         mc.player.dropItem(item, true, true);
+    }
+
+    public static boolean has(Item item) {
+        if (item == null) return false;
+
+        for (int i = 0; i < inv().main.size(); i ++) {
+            final ItemStack stack = inv().getStack(i);
+            if (stack.isOf(item)) return true;
+        }
+
+        return false;
     }
 }

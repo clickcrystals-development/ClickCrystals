@@ -48,11 +48,9 @@ public class EventBus {
                     .stream(listener.getClass().getDeclaredMethods())
                     .filter(Objects::nonNull)
                     .filter(method -> method.isAnnotationPresent(EventHandler.class))
-                    .sorted(Comparator.comparing(method -> method.getAnnotation(EventHandler.class).priority()))
+                    .sorted(Comparator.comparing(method -> ((Method) method).getAnnotation(EventHandler.class).priority()).reversed())
                     .toList();
 
-            methods = new ArrayList<>(methods);
-            Collections.reverse(methods);
             methods.forEach(method -> {
                 try {
                     if (isValid(method, event)) {

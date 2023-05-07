@@ -33,10 +33,13 @@ public class ClickCrystalsModuleScreen extends Screen {
             Categories.OTHER,5
     ).getMap();
 
-    private Set<CategoryWidget> categoryWidgets = new HashSet<>();
+    private final Set<CategoryWidget> categoryWidgets;
+    private CategoryWidget selectedCategoryWidget;
 
     public ClickCrystalsModuleScreen() {
         super(Text.literal("ClickCrystals Modules"));
+        this.categoryWidgets = new HashSet<>();
+        this.selectedCategoryWidget = null;
     }
 
     @Override
@@ -77,5 +80,14 @@ public class ClickCrystalsModuleScreen extends Screen {
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, TexturesIdentifiers.SCREEN_BANNER_TEXTURE);
         DrawableHelper.drawTexture(matrices, CATEGORY_MARGIN_LEFT, 2, 0, 0, 64, 16, 64, 16);
+    }
+
+    public CategoryWidget getHoveredCategory(double mouseX, double mouseY) {
+        for (CategoryWidget categoryWidget : categoryWidgets) {
+            if (categoryWidget.isMouseOver(mouseX, mouseY)) {
+                return categoryWidget;
+            }
+        }
+        return null;
     }
 }
