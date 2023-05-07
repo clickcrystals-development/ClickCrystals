@@ -22,13 +22,15 @@ public abstract class PlayerEntityMixin {
 
     @Inject(method = "getAttackCooldownProgress", at = @At("RETURN"), cancellable = true)
     public void getAttackCooldownProgress(float baseTime, CallbackInfoReturnable<Float> cir) {
-        Module slowHandSwing = Module.get(SlowSwing.class);
+        final Module slowHandSwing = Module.get(SlowSwing.class);
+
         if (slowHandSwing.isEnabled()) cir.setReturnValue(1.0F);
     }
 
     @Inject(method = "attack", at = @At("HEAD"), cancellable = true)
     public void attack(Entity target, CallbackInfo ci) {
-        PlayerAttackEntityEvent event = new PlayerAttackEntityEvent(mc.player, target, mc.crosshairTarget);
+        final PlayerAttackEntityEvent event = new PlayerAttackEntityEvent(mc.player, target, mc.crosshairTarget);
+
         if (system.eventBus.pass(event)) ci.cancel();
     }
 }

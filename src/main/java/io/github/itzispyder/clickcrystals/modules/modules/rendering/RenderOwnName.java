@@ -3,9 +3,9 @@ package io.github.itzispyder.clickcrystals.modules.modules.rendering;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 
-public class RenderMyName extends Module {
+public class RenderOwnName extends Module {
 
-    public RenderMyName() {
+    public RenderOwnName() {
         super("RenderMyName", Categories.RENDERING, "Renders your own name.");
     }
 

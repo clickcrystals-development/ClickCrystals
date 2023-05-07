@@ -121,8 +121,9 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new TotemOverlay());
         system.addModule(new BrightOrange());
         system.addModule(new ShieldSwitch());
-        system.addModule(new RenderMyName());
+        system.addModule(new RenderOwnName());
         system.addModule(new AutoRespawn());
+        system.addModule(new NoViewBob());
         Module.loadConfigModules();
 
         // Hud
