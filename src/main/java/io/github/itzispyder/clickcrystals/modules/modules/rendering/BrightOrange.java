@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class BrightOrange extends Module {
 
     public BrightOrange() {
-        super("BrightOrange", Categories.RENDERING, "Renders a bright, orange overlay. Why? I don't look it looks calming.");
+        super("BrightOrange", Categories.RENDERING, "Renders a bright, orange overlay. Why? I don't know it looks calming.");
     }
 
     @Override
