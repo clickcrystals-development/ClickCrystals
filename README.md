@@ -1,7 +1,7 @@
 
 <div class="main-banner" style="border: 3px aqua solid; border-radius: 30px; border-style: outset; padding-left: 10px;">
   <h1>
-    <img src="./src/main/resources/assets/clickcrystals/icon.png" style="width: 15%; transform: translateY(20px) rotateZ(-10deg);"/>
+    <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/a073ea1b025661446c83ba40f1445c8c4d840ab9.png" style="width: 15%; transform: translateY(20px) rotateZ(-10deg);"/>
     ClickCrystals [1.19.4]
   </h1>
   <h5 style="margin-left: 15px">
@@ -32,20 +32,18 @@ Happy coding and cpvping!
 ```yml
 Minecraft: 1.19.4
 Mod: 1.19.4
-Updated to: 1.19.4-0.8.1
+Updated to: 1.19.4-0.8.2
 
 Changelog:
-- Renamed some modules
-- Added module "ShieldSwitch"
-- Added module "TotemOverlay"
-- Added module "BrightOrange"
-- Added module "MsgResend"
-- Added module "AntiCCOptout"
-- fixed some issues on chat event listeners
+- Added module "RenderMyName"
+- Made module "TotemOverlay" only work when you have a totem in inventory.
+- Added module "NoViewBob"
+- Added module "AutoRespawn"
+- Added module descriptions (right click the module)
 ```
 
 <div class="demo-menu">
-  <img src="./assets/image/demo-menu-new.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
+  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/e0af1d068595d5572a6736d21cfe63d863dd9b25.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
 </div>
 
 ## How Do I Use ClickCrystals?

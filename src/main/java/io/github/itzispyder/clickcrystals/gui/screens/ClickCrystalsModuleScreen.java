@@ -15,7 +15,6 @@ import io.github.itzispyder.clickcrystals.gui.widgets.ModuleWidget;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.ManualMap;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
@@ -58,6 +57,7 @@ public class ClickCrystalsModuleScreen extends Screen {
         this.selectedDraggable = null;
         this.isEditingModule = false;
         this.descriptionWindow = new WindowContainerElement(0, 0, 200, 90, "", "", 25);
+        this.descriptionWindow.setFillColor(0x90000000);
 
         final TextLabelElement exitLabel = new TextLabelElement(0, 0, "X");
         final TextLabelElement toggleLabel = new TextLabelElement(0, 0, "▶");
@@ -83,7 +83,8 @@ public class ClickCrystalsModuleScreen extends Screen {
         final int winHeight = win.getScaledHeight();
 
         this.resetLabel = new TextLabelElement(0, 0, "");
-        this.resetLabel.setText("Reset & Clear");
+        this.resetLabel.setFillColor(0x90000000);
+        this.resetLabel.setText("Reset");
         this.resetLabel.setHeight(16);
         this.resetLabel.setX(winWidth - CATEGORY_MARGIN_LEFT - resetLabel.getWidth());
         this.resetLabel.setY(2);
@@ -129,9 +130,14 @@ public class ClickCrystalsModuleScreen extends Screen {
         RenderSystem.setShaderTexture(0, TexturesIdentifiers.SCREEN_BANNER_TEXTURE);
         DrawableHelper.drawTexture(matrices, CATEGORY_MARGIN_LEFT, 2, 0, 0, 64, 16, 64, 16);
 
+        this.handleDraggableDrag(mouseX, mouseY);
         this.resetLabel.render(matrices, mouseX, mouseY);
         this.renderDescription(matrices, mouseX, mouseY, this.selectedModule);
-        this.handleDraggableDrag(mouseX, mouseY);
+    }
+
+    @Override
+    public boolean shouldCloseOnEsc() {
+        return false;
     }
 
     @Override
@@ -166,7 +172,6 @@ public class ClickCrystalsModuleScreen extends Screen {
         super.keyPressed(keyCode, scanCode, modifiers);
 
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
-            if (!this.isEditingModule) return false;
             this.close();
         }
 
@@ -229,8 +234,6 @@ public class ClickCrystalsModuleScreen extends Screen {
     }
 
     private void handleCategoryClick(double mouseX, double mouseY, int button, ClickType click) {
-        ChatUtils.sendPrefixMessage("click: " + click.name());
-
         this.selectedDraggable = null;
         this.saveToConfig();
 
@@ -249,6 +252,7 @@ public class ClickCrystalsModuleScreen extends Screen {
     private void handleDraggableDrag(double mouseX, double mouseY) {
         if (this.selectedDraggable == null) return;
         selectedDraggable.dragWith(mouseX, mouseY);
+        this.saveToConfig();
     }
 
     private void clearAndReset() {
