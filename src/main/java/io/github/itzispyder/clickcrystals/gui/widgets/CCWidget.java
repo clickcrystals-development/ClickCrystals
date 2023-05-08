@@ -1,14 +1,18 @@
 package io.github.itzispyder.clickcrystals.gui.widgets;
 
+import io.github.itzispyder.clickcrystals.gui.Draggable;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.text.Text;
 
-public abstract class CCWidget extends ClickableWidget {
+public abstract class CCWidget extends ClickableWidget implements Draggable {
+
+    private boolean dragging;
 
     public CCWidget(int x, int y, int width, int height, Text message) {
         super(x, y, width, height, message);
+        this.dragging = false;
     }
 
     @Override
@@ -20,22 +24,53 @@ public abstract class CCWidget extends ClickableWidget {
 
     }
 
-    public void move(int deltaX, int deltaY) {
-        this.setX(getX() + deltaX);
-        this.setY(getY() + deltaY);
+    @Override
+    public boolean isDragging() {
+        return dragging;
     }
 
-    public void moveTo(int x, int y) {
-        this.setX(x);
-        this.setY(y);
+    @Override
+    public int getHeight() {
+        return height;
     }
 
-    public void move(double deltaX, double deltaY) {
-        this.setX((int)(getX() + deltaX));
-        this.setY((int)(getY() + deltaY));
+    @Override
+    public int getWidth() {
+        return width;
     }
 
-    public void moveTo(double x, double y) {
-        this.moveTo((int)x, (int)y);
+    @Override
+    public int getX() {
+        return super.getX();
+    }
+
+    @Override
+    public int getY() {
+        return super.getY();
+    }
+
+    @Override
+    public void setDragging(boolean dragging) {
+        this.dragging = dragging;
+    }
+
+    @Override
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    @Override
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    @Override
+    public void setX(int x) {
+        super.setX(x);
+    }
+
+    @Override
+    public void setY(int y) {
+        super.setY(y);
     }
 }

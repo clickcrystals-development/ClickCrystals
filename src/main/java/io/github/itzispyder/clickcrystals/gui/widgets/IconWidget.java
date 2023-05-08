@@ -1,10 +1,13 @@
 package io.github.itzispyder.clickcrystals.gui.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.itzispyder.clickcrystals.gui.Draggable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+
+import java.util.List;
 
 public class IconWidget extends CCWidget {
 
@@ -24,5 +27,15 @@ public class IconWidget extends CCWidget {
 
     public Identifier getTexture() {
         return texture;
+    }
+
+    @Override
+    public <T extends Draggable> List<T> getDraggableChildren() {
+        return null;
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
     }
 }

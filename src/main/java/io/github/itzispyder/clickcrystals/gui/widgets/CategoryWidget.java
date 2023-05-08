@@ -7,7 +7,9 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CategoryWidget extends CCWidget {
@@ -19,12 +21,12 @@ public class CategoryWidget extends CCWidget {
             MARGIN_LEFT = 1;
 
     private final Set<Module> modules;
-    private final Set<ModuleWidget> moduleWidgets;
+    private final List<ModuleWidget> moduleWidgets;
 
     public CategoryWidget(int x, int y, int width, int height, Category category) {
         super(x, y, width, height, Text.literal(category.name()));
         this.modules = new HashSet<>();
-        this.moduleWidgets = new HashSet<>();
+        this.moduleWidgets = new ArrayList<>();
     }
 
     public CategoryWidget(Category category) {
@@ -58,39 +60,8 @@ public class CategoryWidget extends CCWidget {
         return modules;
     }
 
-    public Set<ModuleWidget> getModuleWidgets() {
+    @Override
+    public List<ModuleWidget> getDraggableChildren() {
         return moduleWidgets;
-    }
-
-    @Override
-    public void move(int delX, int delY) {
-        super.move(delX, delY);
-        this.moduleWidgets.forEach(moduleWidget -> {
-            moduleWidget.move(delX, delY);
-        });
-    }
-
-    @Override
-    public void moveTo(int x, int y) {
-        super.moveTo(x, y);
-        this.moduleWidgets.forEach(moduleWidget -> {
-            moduleWidget.moveTo(x, y);
-        });
-    }
-
-    @Override
-    public void move(double delX, double delY) {
-        super.move(delX, delY);
-        this.moduleWidgets.forEach(moduleWidget -> {
-            moduleWidget.move(delX, delY);
-        });
-    }
-
-    @Override
-    public void moveTo(double x, double y) {
-        super.moveTo(x, y);
-        this.moduleWidgets.forEach(moduleWidget -> {
-            moduleWidget.moveTo(x, y);
-        });
     }
 }

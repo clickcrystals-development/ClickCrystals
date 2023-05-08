@@ -1,9 +1,12 @@
 package io.github.itzispyder.clickcrystals.gui.widgets;
 
+import io.github.itzispyder.clickcrystals.gui.Draggable;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+
+import java.util.List;
 
 public class EmptyWidget extends CCWidget {
 
@@ -26,5 +29,15 @@ public class EmptyWidget extends CCWidget {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    @Override
+    public <T extends Draggable> List<T> getDraggableChildren() {
+        return null;
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
     }
 }

@@ -1,12 +1,15 @@
 package io.github.itzispyder.clickcrystals.gui.widgets;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.gui.Draggable;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+
+import java.util.List;
 
 public class ModuleWidget extends CCWidget {
 
@@ -49,15 +52,16 @@ public class ModuleWidget extends CCWidget {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (!isMouseOver(mouseX, mouseY)) return false;
-        if (screen.isEditingModule) {
-            if (!screen.descriptionWindow.isMouseOver(mouseX, mouseY)) {
-                screen.selectedModule = null;
-                screen.isEditingModule = false;
-            }
+        if (screen.isEditingModule && screen.descriptionWindow.isMouseOver(mouseX, mouseY)) {
             return false;
         }
 
         if (button == 0) {
+            if (screen.isEditingModule) {
+                screen.selectedModule = null;
+                screen.isEditingModule = false;
+                return true;
+            }
             this.module.setEnabled(!module.isEnabled(), false);
             this.setMessage(Text.literal(this.module.getCurrentStateLabel()));
         }
@@ -69,5 +73,15 @@ public class ModuleWidget extends CCWidget {
         }
 
         return true;
+    }
+
+    @Override
+    public <T extends Draggable> List<T> getDraggableChildren() {
+        return null;
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
     }
 }

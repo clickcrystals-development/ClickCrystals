@@ -47,6 +47,11 @@ public class CheckBoxElement extends DisplayableElement {
         return checked;
     }
 
+    @Override
+    public boolean isDragging() {
+        return false;
+    }
+
     public void setChecked(boolean checked) {
         this.checked = checked;
     }

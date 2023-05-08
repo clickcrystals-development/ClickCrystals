@@ -31,4 +31,9 @@ public class TextLabelElement extends DisplayableElement {
         this.setWidth(mc.textRenderer.getWidth(text) + 10);
         this.setHeight(mc.textRenderer.fontHeight + 10);
     }
+
+    @Override
+    public boolean isDragging() {
+        return false;
+    }
 }

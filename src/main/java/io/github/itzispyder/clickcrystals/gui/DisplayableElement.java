@@ -7,14 +7,13 @@ import net.minecraft.client.util.math.MatrixStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class DisplayableElement {
+public abstract class DisplayableElement implements Draggable {
 
     private int x, y, width, height;
     private int borderThickness, borderColor, fillColor;
-    private boolean visible;
+    private boolean visible, dragging;
     private final List<DisplayableElement> children;
     private PressAction pressAction;
-
 
     public DisplayableElement() {
         this(0, 0, 0, 0, 1, 0xFF1A9494, 0xD0000000);
@@ -109,22 +108,26 @@ public abstract class DisplayableElement {
         this.children.remove(child);
     }
 
-    public List<DisplayableElement> getChildren() {
+    public List<DisplayableElement> getDraggableChildren() {
         return children;
     }
 
+    @Override
     public int getX() {
         return x;
     }
 
+    @Override
     public int getY() {
         return y;
     }
 
+    @Override
     public int getWidth() {
         return width;
     }
 
+    @Override
     public int getHeight() {
         return height;
     }
@@ -149,18 +152,27 @@ public abstract class DisplayableElement {
         return visible;
     }
 
+    @Override
+    public boolean isDragging() {
+        return dragging;
+    }
+
+    @Override
     public void setX(int x) {
         this.x = x;
     }
 
+    @Override
     public void setY(int y) {
         this.y = y;
     }
 
+    @Override
     public void setWidth(int width) {
         this.width = width;
     }
 
+    @Override
     public void setHeight(int height) {
         this.height = height;
     }
@@ -183,5 +195,10 @@ public abstract class DisplayableElement {
 
     public void setPressAction(PressAction pressAction) {
         this.pressAction = pressAction;
+    }
+
+    @Override
+    public void setDragging(boolean dragging) {
+        this.dragging = dragging;
     }
 }

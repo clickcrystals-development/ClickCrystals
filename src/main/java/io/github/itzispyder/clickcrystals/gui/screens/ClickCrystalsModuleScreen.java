@@ -2,7 +2,9 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.gui.DisplayableElement;
+import io.github.itzispyder.clickcrystals.gui.Draggable;
 import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
 import io.github.itzispyder.clickcrystals.gui.display.TextLabelElement;
 import io.github.itzispyder.clickcrystals.gui.display.WindowContainerElement;
@@ -41,6 +43,7 @@ public class ClickCrystalsModuleScreen extends Screen {
     ).getMap();
 
     private final Set<CategoryWidget> categoryWidgets;
+    private Draggable selectedDraggable;
     public WindowContainerElement descriptionWindow;
     public Module selectedModule;
     public boolean isEditingModule;
@@ -48,6 +51,7 @@ public class ClickCrystalsModuleScreen extends Screen {
     public ClickCrystalsModuleScreen() {
         super(Text.literal("ClickCrystals Modules"));
         this.categoryWidgets = new HashSet<>();
+        this.selectedDraggable = null;
         this.isEditingModule = false;
         this.descriptionWindow = new WindowContainerElement(0, 0, 200, 90, "", "", 25);
 
@@ -87,7 +91,7 @@ public class ClickCrystalsModuleScreen extends Screen {
             moduleList.forEach(categoryWidget::addModule);
             this.categoryWidgets.add(categoryWidget);
             this.addDrawable(categoryWidget);
-            categoryWidget.getModuleWidgets().forEach(this::addDrawableChild);
+            categoryWidget.getDraggableChildren().forEach(this::addDrawableChild);
         }
     }
 
@@ -105,14 +109,8 @@ public class ClickCrystalsModuleScreen extends Screen {
         RenderSystem.setShaderTexture(0, TexturesIdentifiers.SCREEN_BANNER_TEXTURE);
         DrawableHelper.drawTexture(matrices, CATEGORY_MARGIN_LEFT, 2, 0, 0, 64, 16, 64, 16);
 
-        if (this.selectedModule != null) {
-            this.renderDescription(matrices, mouseX, mouseY, this.selectedModule);
-        }
-    }
-
-    @Override
-    public boolean shouldCloseOnEsc() {
-        return !this.isEditingModule;
+        this.renderDescription(matrices, mouseX, mouseY, this.selectedModule);
+        this.handleCategoryDrag(mouseX, mouseY);
     }
 
     @Override
@@ -127,8 +125,15 @@ public class ClickCrystalsModuleScreen extends Screen {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
         this.handleDescriptionClose(mouseX, mouseY, button);
+        this.handleCategoryClick(mouseX, mouseY, button, ClickType.CLICK);
+        return true;
+    }
 
-        return false;
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        super.mouseReleased(mouseX, mouseY, button);
+        this.handleCategoryClick(mouseX, mouseY, button, ClickType.RELEASE);
+        return true;
     }
 
     @Override
@@ -144,6 +149,8 @@ public class ClickCrystalsModuleScreen extends Screen {
     }
 
     private void renderDescription(MatrixStack matrices, double mouseX, double mouseY, Module module) {
+        if (module == null) return;
+
         final Window win = mc.getWindow();
         final int winWidth = win.getScaledWidth();
         final int winHeight = win.getScaledHeight();
@@ -159,14 +166,15 @@ public class ClickCrystalsModuleScreen extends Screen {
             descriptionWindow.setY(descriptionWindow.getY() - descriptionWindow.getHeight());
         }
 
-        final TextLabelElement exitLabel = (TextLabelElement)descriptionWindow.getChildren().get(0);
-        final TextLabelElement toggleLabel = (TextLabelElement)descriptionWindow.getChildren().get(1);
+        final TextLabelElement exitLabel = (TextLabelElement)descriptionWindow.getDraggableChildren().get(0);
+        final TextLabelElement toggleLabel = (TextLabelElement)descriptionWindow.getDraggableChildren().get(1);
 
         exitLabel.setText((exitLabel.isMouseOver(mouseX, mouseY) ? "§b" : "§f") + "§lX");
         toggleLabel.setText((toggleLabel.isMouseOver(mouseX, mouseY) ? "§b" : "§f") + "§l▶");
 
         int i = 0;
-        for (DisplayableElement child : descriptionWindow.getChildren()) {
+        for (DisplayableElement child : descriptionWindow.getDraggableChildren()) {
+            child.setFillColor(child.isMouseOver(mouseX, mouseY) ? 0xD0303030 : 0xD0000000);
             child.setWidth(15);
             child.setHeight(15);
             child.setX(descriptionWindow.getX() + descriptionWindow.getWidth() - 4);
@@ -190,10 +198,32 @@ public class ClickCrystalsModuleScreen extends Screen {
         if (descriptionWindow == null) return;
 
         if (button == 0) {
-            for (DisplayableElement child : descriptionWindow.getChildren()) {
+            for (DisplayableElement child : descriptionWindow.getDraggableChildren()) {
                 if (child == null) return;
                 child.onClick(mouseX, mouseY, button);
             }
         }
+    }
+
+    private void handleCategoryClick(double mouseX, double mouseY, int button, ClickType click) {
+        if (button == 0) {
+            switch (click) {
+                case CLICK -> {
+                    this.selectedDraggable = this.getHoveredCategory(mouseX, mouseY);
+                    if (this.selectedDraggable == null) break;
+                    this.selectedDraggable.setDragging(true);
+                }
+                case RELEASE -> {
+                    if (this.selectedDraggable == null) break;
+                    this.selectedDraggable.setDragging(false);
+                    this.selectedDraggable = null;
+                }
+            }
+        }
+    }
+
+    private void handleCategoryDrag(double mouseX, double mouseY) {
+        if (this.selectedDraggable == null) return;
+        selectedDraggable.dragWith(mouseX, mouseY);
     }
 }
