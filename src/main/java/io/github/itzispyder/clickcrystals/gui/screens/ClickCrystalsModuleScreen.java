@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.gui.DisplayableElement;
 import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
 import io.github.itzispyder.clickcrystals.gui.display.TextLabelElement;
 import io.github.itzispyder.clickcrystals.gui.display.WindowContainerElement;
@@ -40,7 +41,7 @@ public class ClickCrystalsModuleScreen extends Screen {
     ).getMap();
 
     private final Set<CategoryWidget> categoryWidgets;
-    private WindowContainerElement descriptionWindow;
+    public WindowContainerElement descriptionWindow;
     public Module selectedModule;
     public boolean isEditingModule;
 
@@ -48,14 +49,21 @@ public class ClickCrystalsModuleScreen extends Screen {
         super(Text.literal("ClickCrystals Modules"));
         this.categoryWidgets = new HashSet<>();
         this.isEditingModule = false;
-        this.descriptionWindow = new WindowContainerElement(0, 0, 0, 0, "", "", 30);
+        this.descriptionWindow = new WindowContainerElement(0, 0, 200, 90, "", "", 25);
 
-        final TextLabelElement label = new TextLabelElement(0, 0, "X");
-        label.setPressAction(button -> {
+        final TextLabelElement exitLabel = new TextLabelElement(0, 0, "X");
+        final TextLabelElement toggleLabel = new TextLabelElement(0, 0, "▶");
+        exitLabel.setPressAction(button -> {
             ClickCrystals.CC_MODULE_SCREEN.isEditingModule = false;
             ClickCrystals.CC_MODULE_SCREEN.selectedModule = null;
         });
-        this.descriptionWindow.addChild(label);
+        toggleLabel.setPressAction(button -> {
+            Module module = ClickCrystals.CC_MODULE_SCREEN.selectedModule;
+            if (module == null) return;
+            module.setEnabled(!module.isEnabled(), false);
+        });
+        this.descriptionWindow.addChild(exitLabel);
+        this.descriptionWindow.addChild(toggleLabel);
     }
 
     @Override
@@ -141,21 +149,29 @@ public class ClickCrystalsModuleScreen extends Screen {
         final int winHeight = win.getScaledHeight();
         final int left = winWidth / 4;
         final int top = winHeight / 4;
-        final int width = winWidth / 2;
-        final int height = winHeight / 2;
 
-        final TextLabelElement label = (TextLabelElement)descriptionWindow.getChildren().get(0);
-
-        descriptionWindow.setX(left);
-        descriptionWindow.setY(top);
-        descriptionWindow.setWidth(width);
-        descriptionWindow.setHeight(height);
-        descriptionWindow.setTitle(module.getName());
+        descriptionWindow.setTitle(module.getName() + ": " + module.getToggledStateMessage());
         descriptionWindow.setDescription(module.getDescription());
+        if (descriptionWindow.getX() + descriptionWindow.getWidth() > winWidth) {
+            descriptionWindow.setX(descriptionWindow.getX() - descriptionWindow.getWidth());
+        }
+        if (descriptionWindow.getY() + descriptionWindow.getHeight() > winHeight) {
+            descriptionWindow.setY(descriptionWindow.getY() - descriptionWindow.getHeight());
+        }
 
-        label.setX(left + width - mc.textRenderer.getWidth("X"));
-        label.setY(top + 10);
-        label.setText((label.isMouseOver(mouseX, mouseY) ? "§b" : "§f") + "§lX");
+        final TextLabelElement exitLabel = (TextLabelElement)descriptionWindow.getChildren().get(0);
+        final TextLabelElement toggleLabel = (TextLabelElement)descriptionWindow.getChildren().get(1);
+
+        exitLabel.setText((exitLabel.isMouseOver(mouseX, mouseY) ? "§b" : "§f") + "§lX");
+        toggleLabel.setText((toggleLabel.isMouseOver(mouseX, mouseY) ? "§b" : "§f") + "§l▶");
+
+        int i = 0;
+        for (DisplayableElement child : descriptionWindow.getChildren()) {
+            child.setWidth(15);
+            child.setHeight(15);
+            child.setX(descriptionWindow.getX() + descriptionWindow.getWidth() - 4);
+            child.setY(descriptionWindow.getY() + 5 + ((child.getWidth() + 3) * i++));
+        }
 
         descriptionWindow.render(matrices, mouseX, mouseY);
         matrices.translate(0.0F, 0.0F, 69.0F);
@@ -173,11 +189,11 @@ public class ClickCrystalsModuleScreen extends Screen {
     private void handleDescriptionClose(double mouseX, double mouseY, int button) {
         if (descriptionWindow == null) return;
 
-        final TextLabelElement label = (TextLabelElement)descriptionWindow.getChildren().get(0);
-
         if (button == 0) {
-            if (label == null) return;
-            label.onClick(mouseX, mouseY, button);
+            for (DisplayableElement child : descriptionWindow.getChildren()) {
+                if (child == null) return;
+                child.onClick(mouseX, mouseY, button);
+            }
         }
     }
 }

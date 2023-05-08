@@ -19,7 +19,7 @@ public class TextLabelElement extends DisplayableElement {
     public void render(MatrixStack matrices, double mouseX, double mouseY) {
         super.render(matrices, mouseX, mouseY);
 
-        DrawableUtils.drawCenteredText(matrices, text, getX() + (getWidth() / 2), getY() + (int)(getHeight() * 0.33), isMouseOver(mouseX, mouseY));
+        DrawableUtils.drawCenteredText(matrices, text, getX() + (getWidth() / 2), getY() + (int)(getHeight() * 0.33), true);
     }
 
     public String getText() {

@@ -16,4 +16,8 @@ public interface Toggleable {
      * @return on or off
      */
     boolean isEnabled();
+
+    default void toggle() {
+        setEnabled(!isEnabled());
+    }
 }

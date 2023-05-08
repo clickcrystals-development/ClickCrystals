@@ -87,7 +87,14 @@ public abstract class DisplayableElement {
     }
 
     public boolean isMouseOver(double mouseX, double mouseY) {
-        return visible && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+        boolean over = visible && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+        if (over) return true;
+
+        for (DisplayableElement child : this.children) {
+            if (child.isMouseOver(mouseX, mouseY)) return true;
+        }
+
+        return false;
     }
 
     public void moveTo(double x, double y) {

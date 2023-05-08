@@ -34,7 +34,9 @@ public class ModuleWidget extends CCWidget {
     public void renderModule(MatrixStack matrices, int mouseX, int mouseY) {
         int fillColor = 0x40101010;
         if (this.module.isEnabled()) fillColor = 0x40805050;
-        if (isMouseOver(mouseX, mouseY) && !screen.isEditingModule) fillColor = 0x40909090;
+        if (isMouseOver(mouseX, mouseY) && !(screen.isEditingModule && screen.descriptionWindow.isMouseOver(mouseX, mouseY))) {
+            fillColor = 0x40909090;
+        }
 
         DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), fillColor);
         DrawableUtils.drawCenteredText(matrices, module.getCurrentStateLabel(), getX() + (getWidth() / 2), (int)(getY() + (getHeight() * 0.33)), true);
@@ -47,7 +49,13 @@ public class ModuleWidget extends CCWidget {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (!isMouseOver(mouseX, mouseY)) return false;
-        if (screen.isEditingModule) return false;
+        if (screen.isEditingModule) {
+            if (!screen.descriptionWindow.isMouseOver(mouseX, mouseY)) {
+                screen.selectedModule = null;
+                screen.isEditingModule = false;
+            }
+            return false;
+        }
 
         if (button == 0) {
             this.module.setEnabled(!module.isEnabled(), false);
@@ -56,6 +64,8 @@ public class ModuleWidget extends CCWidget {
         else if (button == 1) {
             screen.selectedModule = module;
             screen.isEditingModule = true;
+            screen.descriptionWindow.setX((int)mouseX);
+            screen.descriptionWindow.setY((int)mouseY);
         }
 
         return true;
