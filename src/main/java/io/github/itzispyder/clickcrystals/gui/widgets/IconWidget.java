@@ -33,9 +33,4 @@ public class IconWidget extends CCWidget {
     public <T extends Draggable> List<T> getDraggableChildren() {
         return null;
     }
-
-    @Override
-    public boolean isDragging() {
-        return false;
-    }
 }

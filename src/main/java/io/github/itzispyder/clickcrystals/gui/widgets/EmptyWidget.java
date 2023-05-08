@@ -35,9 +35,4 @@ public class EmptyWidget extends CCWidget {
     public <T extends Draggable> List<T> getDraggableChildren() {
         return null;
     }
-
-    @Override
-    public boolean isDragging() {
-        return false;
-    }
 }

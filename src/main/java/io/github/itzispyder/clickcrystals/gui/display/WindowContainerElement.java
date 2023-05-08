@@ -47,6 +47,11 @@ public class WindowContainerElement extends DisplayableElement {
         this.title = title;
     }
 
+    @Override
+    public boolean canDrag() {
+        return true;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }

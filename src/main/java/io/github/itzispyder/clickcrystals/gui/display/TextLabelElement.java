@@ -33,7 +33,7 @@ public class TextLabelElement extends DisplayableElement {
     }
 
     @Override
-    public boolean isDragging() {
+    public boolean canDrag() {
         return false;
     }
 }

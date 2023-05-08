@@ -48,7 +48,7 @@ public class CheckBoxElement extends DisplayableElement {
     }
 
     @Override
-    public boolean isDragging() {
+    public boolean canDrag() {
         return false;
     }
 

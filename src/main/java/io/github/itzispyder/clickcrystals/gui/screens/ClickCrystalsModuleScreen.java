@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.data.ConfigSection;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.gui.DisplayableElement;
 import io.github.itzispyder.clickcrystals.gui.Draggable;
@@ -10,9 +11,11 @@ import io.github.itzispyder.clickcrystals.gui.display.TextLabelElement;
 import io.github.itzispyder.clickcrystals.gui.display.WindowContainerElement;
 import io.github.itzispyder.clickcrystals.gui.widgets.CategoryWidget;
 import io.github.itzispyder.clickcrystals.gui.widgets.EmptyWidget;
+import io.github.itzispyder.clickcrystals.gui.widgets.ModuleWidget;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.ManualMap;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
@@ -23,8 +26,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
 
 public class ClickCrystalsModuleScreen extends Screen {
 
@@ -43,6 +45,7 @@ public class ClickCrystalsModuleScreen extends Screen {
     ).getMap();
 
     private final Set<CategoryWidget> categoryWidgets;
+    public TextLabelElement resetLabel;
     private Draggable selectedDraggable;
     public WindowContainerElement descriptionWindow;
     public Module selectedModule;
@@ -50,6 +53,7 @@ public class ClickCrystalsModuleScreen extends Screen {
 
     public ClickCrystalsModuleScreen() {
         super(Text.literal("ClickCrystals Modules"));
+
         this.categoryWidgets = new HashSet<>();
         this.selectedDraggable = null;
         this.isEditingModule = false;
@@ -57,6 +61,7 @@ public class ClickCrystalsModuleScreen extends Screen {
 
         final TextLabelElement exitLabel = new TextLabelElement(0, 0, "X");
         final TextLabelElement toggleLabel = new TextLabelElement(0, 0, "▶");
+
         exitLabel.setPressAction(button -> {
             ClickCrystals.CC_MODULE_SCREEN.isEditingModule = false;
             ClickCrystals.CC_MODULE_SCREEN.selectedModule = null;
@@ -66,12 +71,26 @@ public class ClickCrystalsModuleScreen extends Screen {
             if (module == null) return;
             module.setEnabled(!module.isEnabled(), false);
         });
+
         this.descriptionWindow.addChild(exitLabel);
         this.descriptionWindow.addChild(toggleLabel);
     }
 
     @Override
     public void init() {
+        final Window win = mc.getWindow();
+        final int winWidth = win.getScaledWidth();
+        final int winHeight = win.getScaledHeight();
+
+        this.resetLabel = new TextLabelElement(0, 0, "");
+        this.resetLabel.setText("Reset & Clear");
+        this.resetLabel.setHeight(16);
+        this.resetLabel.setX(winWidth - CATEGORY_MARGIN_LEFT - resetLabel.getWidth());
+        this.resetLabel.setY(2);
+        this.resetLabel.setPressAction(button -> {
+            ClickCrystals.CC_MODULE_SCREEN.clearAndReset();
+        });
+
         final EmptyWidget bannerTitleWidget = new EmptyWidget(0, 0, this.width, BANNER_TITLE_HEIGHT, Text.literal("ClickCrystals - by ImproperIssues, TheTrouper"), 0xFF24A2A2);
         this.addDrawable(bannerTitleWidget);
 
@@ -93,6 +112,7 @@ public class ClickCrystalsModuleScreen extends Screen {
             this.addDrawable(categoryWidget);
             categoryWidget.getDraggableChildren().forEach(this::addDrawableChild);
         }
+        this.loadFromConfig();
     }
 
     @Override
@@ -109,16 +129,17 @@ public class ClickCrystalsModuleScreen extends Screen {
         RenderSystem.setShaderTexture(0, TexturesIdentifiers.SCREEN_BANNER_TEXTURE);
         DrawableHelper.drawTexture(matrices, CATEGORY_MARGIN_LEFT, 2, 0, 0, 64, 16, 64, 16);
 
+        this.resetLabel.render(matrices, mouseX, mouseY);
         this.renderDescription(matrices, mouseX, mouseY, this.selectedModule);
-        this.handleCategoryDrag(mouseX, mouseY);
+        this.handleDraggableDrag(mouseX, mouseY);
     }
 
     @Override
     public void close() {
+        super.close();
+        this.saveToConfig();
         this.isEditingModule = false;
         this.selectedModule = null;
-
-        mc.setScreen((Screen)null);
     }
 
     @Override
@@ -126,6 +147,10 @@ public class ClickCrystalsModuleScreen extends Screen {
         super.mouseClicked(mouseX, mouseY, button);
         this.handleDescriptionClose(mouseX, mouseY, button);
         this.handleCategoryClick(mouseX, mouseY, button, ClickType.CLICK);
+
+        if (resetLabel != null && resetLabel.isMouseOver(mouseX, mouseY)) {
+            resetLabel.onClick(mouseX, mouseY, button);
+        }
         return true;
     }
 
@@ -159,12 +184,7 @@ public class ClickCrystalsModuleScreen extends Screen {
 
         descriptionWindow.setTitle(module.getName() + ": " + module.getToggledStateMessage());
         descriptionWindow.setDescription(module.getDescription());
-        if (descriptionWindow.getX() + descriptionWindow.getWidth() > winWidth) {
-            descriptionWindow.setX(descriptionWindow.getX() - descriptionWindow.getWidth());
-        }
-        if (descriptionWindow.getY() + descriptionWindow.getHeight() > winHeight) {
-            descriptionWindow.setY(descriptionWindow.getY() - descriptionWindow.getHeight());
-        }
+        descriptionWindow.checkBounds();
 
         final TextLabelElement exitLabel = (TextLabelElement)descriptionWindow.getDraggableChildren().get(0);
         final TextLabelElement toggleLabel = (TextLabelElement)descriptionWindow.getDraggableChildren().get(1);
@@ -185,7 +205,10 @@ public class ClickCrystalsModuleScreen extends Screen {
         matrices.translate(0.0F, 0.0F, 69.0F);
     }
 
-    public CategoryWidget getHoveredCategory(double mouseX, double mouseY) {
+    public Draggable getHoveredDraggable(double mouseX, double mouseY) {
+        if (isEditingModule && descriptionWindow.isMouseOver(mouseX, mouseY, false)) {
+            return descriptionWindow;
+        }
         for (CategoryWidget categoryWidget : categoryWidgets) {
             if (categoryWidget.isMouseOver(mouseX, mouseY)) {
                 return categoryWidget;
@@ -206,24 +229,83 @@ public class ClickCrystalsModuleScreen extends Screen {
     }
 
     private void handleCategoryClick(double mouseX, double mouseY, int button, ClickType click) {
+        ChatUtils.sendPrefixMessage("click: " + click.name());
+
+        this.selectedDraggable = null;
+        this.saveToConfig();
+
         if (button == 0) {
             switch (click) {
                 case CLICK -> {
-                    this.selectedDraggable = this.getHoveredCategory(mouseX, mouseY);
-                    if (this.selectedDraggable == null) break;
-                    this.selectedDraggable.setDragging(true);
+                    this.selectedDraggable = this.getHoveredDraggable(mouseX, mouseY);
                 }
                 case RELEASE -> {
-                    if (this.selectedDraggable == null) break;
-                    this.selectedDraggable.setDragging(false);
                     this.selectedDraggable = null;
                 }
             }
         }
     }
 
-    private void handleCategoryDrag(double mouseX, double mouseY) {
+    private void handleDraggableDrag(double mouseX, double mouseY) {
         if (this.selectedDraggable == null) return;
         selectedDraggable.dragWith(mouseX, mouseY);
+    }
+
+    private void clearAndReset() {
+        this.close();
+        this.clearFromConfig();
+        this.selectedDraggable = null;
+        this.selectedModule = null;
+        this.isEditingModule = false;
+        this.categoryWidgets.clear();
+        mc.setScreen(CC_MODULE_SCREEN);
+    }
+
+    private void clearFromConfig() {
+        for (CategoryWidget categoryWidget : this.categoryWidgets) {
+            final Category category = categoryWidget.getCategory();
+            config.set("categories." + category.name() + ".x", null);
+            config.set("categories." + category.name() + ".y", null);
+
+            for (ModuleWidget moduleWidget : categoryWidget.getDraggableChildren()) {
+                final Module module = moduleWidget.getModule();
+                config.set("modules." + module.getName() + ".x", null);
+                config.set("modules." + module.getName() + ".y", null);
+            }
+        }
+        config.save();
+    }
+
+    private void loadFromConfig() {
+        for (CategoryWidget categoryWidget : this.categoryWidgets) {
+            final Category category = categoryWidget.getCategory();
+            if (config.get("categories." + category.name() + ".x") == null) continue;
+            if (config.get("categories." + category.name() + ".y") == null) continue;
+            categoryWidget.setX(config.get("categories." + category.name() + ".x", Integer.class));
+            categoryWidget.setY(config.get("categories." + category.name() + ".y", Integer.class));
+
+            for (ModuleWidget moduleWidget : categoryWidget.getDraggableChildren()) {
+                final Module module = moduleWidget.getModule();
+                if (config.get("modules." + module.getName() + ".x") == null) continue;
+                if (config.get("modules." + module.getName() + ".y") == null) continue;
+                moduleWidget.setX(config.get("modules." + module.getName() + ".x", Integer.class));
+                moduleWidget.setY(config.get("modules." + module.getName() + ".y", Integer.class));
+            }
+        }
+    }
+
+    private void saveToConfig() {
+        for (CategoryWidget categoryWidget : this.categoryWidgets) {
+            final Category category = categoryWidget.getCategory();
+            config.set("categories." + category.name() + ".x", new ConfigSection<>(categoryWidget.getX()));
+            config.set("categories." + category.name() + ".y", new ConfigSection<>(categoryWidget.getY()));
+
+            for (ModuleWidget moduleWidget : categoryWidget.getDraggableChildren()) {
+                final Module module = moduleWidget.getModule();
+                config.set("modules." + module.getName() + ".x", new ConfigSection<>(moduleWidget.getX()));
+                config.set("modules." + module.getName() + ".y", new ConfigSection<>(moduleWidget.getY()));
+            }
+        }
+        config.save();
     }
 }

@@ -20,6 +20,7 @@ public class CategoryWidget extends CCWidget {
             MARGIN_BOTTOM = 1,
             MARGIN_LEFT = 1;
 
+    private final Category category;
     private final Set<Module> modules;
     private final List<ModuleWidget> moduleWidgets;
 
@@ -27,6 +28,7 @@ public class CategoryWidget extends CCWidget {
         super(x, y, width, height, Text.literal(category.name()));
         this.modules = new HashSet<>();
         this.moduleWidgets = new ArrayList<>();
+        this.category = category;
     }
 
     public CategoryWidget(Category category) {
@@ -60,8 +62,22 @@ public class CategoryWidget extends CCWidget {
         return modules;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
     @Override
     public List<ModuleWidget> getDraggableChildren() {
         return moduleWidgets;
+    }
+
+    @Override
+    public boolean isMouseOver(double mouseX, double mouseY) {
+        return this.active && this.visible && mouseX >= (double)this.getX() && mouseY >= (double)this.getY() && mouseX < (double)(this.getX() + this.width) && mouseY < (double)(this.getY() + TITLE_HEIGHT);
+    }
+
+    @Override
+    public boolean canDrag() {
+        return true;
     }
 }

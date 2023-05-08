@@ -1,11 +1,15 @@
 package io.github.itzispyder.clickcrystals.gui;
 
+import net.minecraft.client.util.Window;
+
 import java.util.List;
 import java.util.function.Consumer;
 
+import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
+
 public interface Draggable {
 
-    boolean isDragging();
+    boolean canDrag();
 
     <T extends Draggable> List<T> getDraggableChildren();
 
@@ -16,8 +20,6 @@ public interface Draggable {
     int getWidth();
 
     int getHeight();
-
-    void setDragging(boolean dragging);
 
     void setX(int x);
 
@@ -73,15 +75,45 @@ public interface Draggable {
     }
 
     default void dragWith(double mouseX, double mouseY) {
-        if (!isDragging()) return;
+        if (!canDrag()) return;
+
+        final Window win = mc.getWindow();
+        int winWidth = win.getScaledWidth();
+        int winHeight = win.getScaledHeight();
 
         int delX = (int)(mouseX - getX());
         int delY = (int)(mouseY - getY());
 
+        moveTo(mouseX, mouseY);
+
         forEachDraggableChild(child -> {
             child.move(delX, delY);
         });
-        moveTo(mouseX, mouseY);
+    }
+
+    default boolean checkBounds() {
+        final Window win = mc.getWindow();
+        int winWidth = win.getScaledWidth();
+        int winHeight = win.getScaledHeight();
+
+        if (getX() + getWidth() > winWidth) {
+            setX(winWidth - getWidth());
+            return false;
+        }
+        if (getX() < 0) {
+            setX(0);
+            return false;
+        }
+        if (getY() + getHeight() > winHeight) {
+            setY(winHeight - getHeight());
+            return false;
+        }
+        if (getY() < 0) {
+            setY(0);
+            return false;
+        }
+
+        return true;
     }
 
     default void dragWith(int mouseX, int mouseY) {

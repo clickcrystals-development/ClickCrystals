@@ -25,11 +25,6 @@ public abstract class CCWidget extends ClickableWidget implements Draggable {
     }
 
     @Override
-    public boolean isDragging() {
-        return dragging;
-    }
-
-    @Override
     public int getHeight() {
         return height;
     }
@@ -50,8 +45,8 @@ public abstract class CCWidget extends ClickableWidget implements Draggable {
     }
 
     @Override
-    public void setDragging(boolean dragging) {
-        this.dragging = dragging;
+    public boolean canDrag() {
+        return false;
     }
 
     @Override

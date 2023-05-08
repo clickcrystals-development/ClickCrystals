@@ -86,11 +86,17 @@ public abstract class DisplayableElement implements Draggable {
     }
 
     public boolean isMouseOver(double mouseX, double mouseY) {
+        return isMouseOver(mouseX, mouseY, true);
+    }
+
+    public boolean isMouseOver(double mouseX, double mouseY, boolean withChildren) {
         boolean over = visible && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
         if (over) return true;
 
-        for (DisplayableElement child : this.children) {
-            if (child.isMouseOver(mouseX, mouseY)) return true;
+        if (withChildren) {
+            for (DisplayableElement child : this.children) {
+                if (child.isMouseOver(mouseX, mouseY)) return true;
+            }
         }
 
         return false;
@@ -108,6 +114,7 @@ public abstract class DisplayableElement implements Draggable {
         this.children.remove(child);
     }
 
+    @Override
     public List<DisplayableElement> getDraggableChildren() {
         return children;
     }
@@ -153,11 +160,6 @@ public abstract class DisplayableElement implements Draggable {
     }
 
     @Override
-    public boolean isDragging() {
-        return dragging;
-    }
-
-    @Override
     public void setX(int x) {
         this.x = x;
     }
@@ -195,10 +197,5 @@ public abstract class DisplayableElement implements Draggable {
 
     public void setPressAction(PressAction pressAction) {
         this.pressAction = pressAction;
-    }
-
-    @Override
-    public void setDragging(boolean dragging) {
-        this.dragging = dragging;
     }
 }
