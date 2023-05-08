@@ -145,7 +145,9 @@ public abstract class Module implements Toggleable, Serializable {
      */
     public static void loadConfigModules() {
         for (Module module : system.modules().values()) {
-            boolean enabled = config.getBoolean("module." + module.getId());
+            final String path = "modules." + module.getId();
+
+            boolean enabled = config.getBoolean(path + ".toggled");
             module.setEnabled(enabled,false);
         }
     }
@@ -164,9 +166,11 @@ public abstract class Module implements Toggleable, Serializable {
      * @param saveImmediately save config immediately after
      */
     public static void saveModule(Module module, boolean saveImmediately) {
-        boolean enabled = module.isEnabled();
-        ConfigSection<Boolean> section = new ConfigSection<>(enabled);
-        config.set("module." + module.getId(),section);
+        final String path = "modules." + module.getId();
+
+        ConfigSection<Boolean> toggleSection = new ConfigSection<>(module.isEnabled());
+        config.set(path + ".toggled", toggleSection);
+
         if (saveImmediately) config.save();
     }
 }

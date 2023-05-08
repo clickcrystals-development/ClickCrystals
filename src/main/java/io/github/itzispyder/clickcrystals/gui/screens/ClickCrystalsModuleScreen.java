@@ -129,30 +129,14 @@ public class ClickCrystalsModuleScreen extends Screen {
 
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             if (!this.isEditingModule) return false;
-            this.isEditingModule = false;
-            this.selectedModule = null;
+            this.close();
         }
 
         return true;
     }
 
-    private boolean isClosingModuleDescription(double mouseX, double mouseY) {
-        if (!this.isEditingModule) return false;
-
+    private void renderDescription(MatrixStack matrices, double mouseX, double mouseY, Module module) {
         final Window win = mc.getWindow();
-        final int winWidth = win.getScaledWidth();
-        final int winHeight = win.getScaledHeight();
-        final int left = winWidth / 4;
-        final int top = winHeight / 4;
-        final int width = winWidth / 2;
-        final int height = winHeight / 2;
-
-        return mouseX >= left + width - 20 && mouseX <= left + width && mouseY >= top && mouseY <= top + 20;
-    }
-
-    public void renderDescription(MatrixStack matrices, double mouseX, double mouseY, Module module) {
-        final Window win = mc.getWindow();
-        final boolean closing = isClosingModuleDescription(mouseX, mouseY);
         final int winWidth = win.getScaledWidth();
         final int winHeight = win.getScaledHeight();
         final int left = winWidth / 4;
