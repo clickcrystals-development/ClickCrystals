@@ -28,6 +28,10 @@ public class TextLabelElement extends DisplayableElement {
 
     public void setText(String text) {
         this.text = text;
+        this.updateWidth();
+    }
+
+    public void updateWidth() {
         this.setWidth(mc.textRenderer.getWidth(text) + 10);
         this.setHeight(mc.textRenderer.fontHeight + 10);
     }

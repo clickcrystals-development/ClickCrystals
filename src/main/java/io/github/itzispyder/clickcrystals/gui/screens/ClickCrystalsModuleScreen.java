@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.data.ConfigSection;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.gui.DisplayableElement;
@@ -44,7 +43,7 @@ public class ClickCrystalsModuleScreen extends Screen {
     ).getMap();
 
     private final Set<CategoryWidget> categoryWidgets;
-    public TextLabelElement resetLabel;
+    public TextLabelElement resetLabel, discordLabel;
     private Draggable selectedDraggable;
     public WindowContainerElement descriptionWindow;
     public Module selectedModule;
@@ -63,11 +62,11 @@ public class ClickCrystalsModuleScreen extends Screen {
         final TextLabelElement toggleLabel = new TextLabelElement(0, 0, "▶");
 
         exitLabel.setPressAction(button -> {
-            ClickCrystals.CC_MODULE_SCREEN.isEditingModule = false;
-            ClickCrystals.CC_MODULE_SCREEN.selectedModule = null;
+            ClickCrystalsModuleScreen.this.isEditingModule = false;
+            ClickCrystalsModuleScreen.this.selectedModule = null;
         });
         toggleLabel.setPressAction(button -> {
-            Module module = ClickCrystals.CC_MODULE_SCREEN.selectedModule;
+            Module module = ClickCrystalsModuleScreen.this.selectedModule;
             if (module == null) return;
             module.setEnabled(!module.isEnabled(), false);
         });
@@ -78,22 +77,9 @@ public class ClickCrystalsModuleScreen extends Screen {
 
     @Override
     public void init() {
-        final Window win = mc.getWindow();
-        final int winWidth = win.getScaledWidth();
-        final int winHeight = win.getScaledHeight();
-
-        this.resetLabel = new TextLabelElement(0, 0, "");
-        this.resetLabel.setFillColor(0x90000000);
-        this.resetLabel.setText("Reset");
-        this.resetLabel.setHeight(16);
-        this.resetLabel.setX(winWidth - CATEGORY_MARGIN_LEFT - resetLabel.getWidth());
-        this.resetLabel.setY(2);
-        this.resetLabel.setPressAction(button -> {
-            ClickCrystals.CC_MODULE_SCREEN.clearAndReset();
-        });
-
         final EmptyWidget bannerTitleWidget = new EmptyWidget(0, 0, this.width, BANNER_TITLE_HEIGHT, Text.literal("ClickCrystals - by ImproperIssues, TheTrouper"), 0xFF24A2A2);
         this.addDrawable(bannerTitleWidget);
+        this.initLabels();
 
         for (Map.Entry<Category, Integer> entry : categoryMap.entrySet()) {
             final Category category = entry.getKey();
@@ -116,9 +102,31 @@ public class ClickCrystalsModuleScreen extends Screen {
         this.loadFromConfig();
     }
 
-    @Override
-    public void tick() {
+    private void initLabels() {
+        final Window win = mc.getWindow();
+        final int winWidth = win.getScaledWidth();
+        final int winHeight = win.getScaledHeight();
+        int marginRight = winWidth - CATEGORY_MARGIN_LEFT;
 
+        this.resetLabel = new TextLabelElement(0, 2, "Reset");
+        this.resetLabel.updateWidth();
+        this.resetLabel.setFillColor(0x90000000);
+        this.resetLabel.setHeight(16);
+        marginRight -= resetLabel.getWidth();
+        this.resetLabel.setX(marginRight);
+        this.resetLabel.setPressAction(button -> {
+            ClickCrystalsModuleScreen.this.clearAndReset();
+        });
+
+        this.discordLabel = new TextLabelElement(0, 2, "Discord");
+        this.discordLabel.updateWidth();
+        this.discordLabel.setFillColor(0x90000000);
+        this.discordLabel.setHeight(16);
+        marginRight -= discordLabel.getWidth();
+        this.discordLabel.setX(marginRight);
+        this.discordLabel.setPressAction(button -> {
+            system.openUrl("https://discord.gg/tMaShNzNtP", STARTER + "§bJoin Our Discord for the Latest Updates!", new ClickCrystalsModuleScreen());
+        });
     }
 
     @Override
@@ -132,6 +140,7 @@ public class ClickCrystalsModuleScreen extends Screen {
 
         this.handleDraggableDrag(mouseX, mouseY);
         this.resetLabel.render(matrices, mouseX, mouseY);
+        this.discordLabel.render(matrices, mouseX, mouseY);
         this.renderDescription(matrices, mouseX, mouseY, this.selectedModule);
     }
 
@@ -152,18 +161,17 @@ public class ClickCrystalsModuleScreen extends Screen {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
         this.handleDescriptionClose(mouseX, mouseY, button);
-        this.handleCategoryClick(mouseX, mouseY, button, ClickType.CLICK);
+        this.handleDraggableDrag(mouseX, mouseY, button, ClickType.CLICK);
 
-        if (resetLabel != null && resetLabel.isMouseOver(mouseX, mouseY)) {
-            resetLabel.onClick(mouseX, mouseY, button);
-        }
+        if (resetLabel.isMouseOver(mouseX, mouseY)) resetLabel.onClick(mouseX, mouseY, button);
+        if (discordLabel.isMouseOver(mouseX, mouseY)) discordLabel.onClick(mouseX, mouseY, button);
         return true;
     }
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         super.mouseReleased(mouseX, mouseY, button);
-        this.handleCategoryClick(mouseX, mouseY, button, ClickType.RELEASE);
+        this.handleDraggableDrag(mouseX, mouseY, button, ClickType.RELEASE);
         return true;
     }
 
@@ -233,7 +241,7 @@ public class ClickCrystalsModuleScreen extends Screen {
         }
     }
 
-    private void handleCategoryClick(double mouseX, double mouseY, int button, ClickType click) {
+    private void handleDraggableDrag(double mouseX, double mouseY, int button, ClickType click) {
         this.selectedDraggable = null;
         this.saveToConfig();
 
@@ -262,7 +270,7 @@ public class ClickCrystalsModuleScreen extends Screen {
         this.selectedModule = null;
         this.isEditingModule = false;
         this.categoryWidgets.clear();
-        mc.setScreen(CC_MODULE_SCREEN);
+        mc.setScreen(new ClickCrystalsModuleScreen());
     }
 
     private void clearFromConfig() {

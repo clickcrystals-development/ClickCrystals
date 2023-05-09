@@ -52,17 +52,22 @@ public class EventBus {
                     .toList();
 
             methods.forEach(method -> {
-                try {
-                    if (isValid(method, event)) {
-                        method.setAccessible(true);
-                        method.invoke(listener, event);
-                    }
-                }
-                catch (Exception ignore) {}
+                this.tryInvoke(method, listener, event);
             });
         });
 
         return event instanceof Cancellable c && c.isCancelled();
+    }
+
+    private <E extends Event> void tryInvoke(Method method, Listener listener, E event) {
+        try {
+            if (!isValid(method, event)) return;
+            method.setAccessible(true);
+            method.invoke(listener, event);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private <E extends Event> boolean isValid(Method method, E event) {

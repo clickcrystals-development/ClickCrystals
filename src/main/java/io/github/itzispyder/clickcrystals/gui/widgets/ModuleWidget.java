@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.gui.widgets;
 
-import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.Draggable;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -11,9 +10,9 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
-public class ModuleWidget extends CCWidget {
+import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
-    private static final ClickCrystalsModuleScreen screen = ClickCrystals.CC_MODULE_SCREEN;
+public class ModuleWidget extends CCWidget {
 
     public static final int
             DEFAULT_WIDTH = 80,
@@ -37,8 +36,10 @@ public class ModuleWidget extends CCWidget {
     public void renderModule(MatrixStack matrices, int mouseX, int mouseY) {
         int fillColor = 0x40101010;
         if (this.module.isEnabled()) fillColor = 0x40805050;
-        if (isMouseOver(mouseX, mouseY) && !(screen.isEditingModule && screen.descriptionWindow.isMouseOver(mouseX, mouseY))) {
-            fillColor = 0x40909090;
+        if (isMouseOver(mouseX, mouseY)) {
+            if (mc.currentScreen instanceof ClickCrystalsModuleScreen screen && !(screen.isEditingModule && screen.descriptionWindow.isMouseOver(mouseX, mouseY))) {
+                fillColor = 0x40909090;
+            }
         }
 
         DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), fillColor);
@@ -52,26 +53,28 @@ public class ModuleWidget extends CCWidget {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (!isMouseOver(mouseX, mouseY)) return false;
-        if (screen.isEditingModule && screen.descriptionWindow.isMouseOver(mouseX, mouseY)) {
-            return false;
-        }
 
-        if (button == 0) {
-            if (screen.isEditingModule) {
-                screen.selectedModule = null;
-                screen.isEditingModule = false;
-                return true;
+        if (mc.currentScreen instanceof ClickCrystalsModuleScreen screen) {
+            if (screen.isEditingModule && screen.descriptionWindow.isMouseOver(mouseX, mouseY)) {
+                return false;
             }
-            this.module.setEnabled(!module.isEnabled(), false);
-            this.setMessage(Text.literal(this.module.getCurrentStateLabel()));
-        }
-        else if (button == 1) {
-            screen.selectedModule = module;
-            screen.isEditingModule = true;
-            screen.descriptionWindow.setX((int)mouseX);
-            screen.descriptionWindow.setY((int)mouseY);
-        }
 
+            if (button == 0) {
+                if (screen.isEditingModule) {
+                    screen.selectedModule = null;
+                    screen.isEditingModule = false;
+                    return true;
+                }
+                this.module.setEnabled(!module.isEnabled(), false);
+                this.setMessage(Text.literal(this.module.getCurrentStateLabel()));
+            }
+            else if (button == 1) {
+                screen.selectedModule = module;
+                screen.isEditingModule = true;
+                screen.descriptionWindow.setX((int)mouseX);
+                screen.descriptionWindow.setY((int)mouseY);
+            }
+        }
         return true;
     }
 

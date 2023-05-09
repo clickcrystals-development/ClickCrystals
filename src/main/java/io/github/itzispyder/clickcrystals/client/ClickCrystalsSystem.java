@@ -5,10 +5,16 @@ import io.github.itzispyder.clickcrystals.events.EventBus;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.client.gui.screen.ConfirmLinkScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.text.Text;
+import net.minecraft.util.Util;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+
+import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 /**
  * ClickCrystal system
@@ -25,6 +31,23 @@ public class ClickCrystalsSystem implements Serializable {
     public ClickCrystalsSystem() {
         this.commands = new HashMap<>();
         this.modules = new HashMap<>();
+    }
+
+    public void openUrl(String url) {
+        this.openUrl(url, "Are you sure you want to go to the following link?", mc.currentScreen);
+    }
+
+    public void openUrl(String url, String title) {
+        this.openUrl(url, title, mc.currentScreen);
+    }
+
+    public void openUrl(String url, String title, Screen afterScreen) {
+        mc.setScreen(new ConfirmLinkScreen(trusted -> {
+            if (trusted) {
+                Util.getOperatingSystem().open(url);
+            }
+            mc.setScreen(afterScreen);
+        }, Text.literal(title), url, true));
     }
 
     /**
