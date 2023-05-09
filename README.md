@@ -105,6 +105,9 @@ Changelog:
 | BrightOrange  |                Renders a bright golden overlay similar to shaders.                 |
 | TotemOverlay  |                  Displays a red overlay when not holding a totem.                  |
 | MsgResend     |               Click UP_ARROW to resend your previously sent message.               |
+| NoViewBob     |      Removes view bob (Original Minecraft setting but as a toggleable module)      |
+| AutoRespawn   |            Clicks the respawn button when you die. (Immediate respawn)             |
+| RenderMyName  |                       Renders your name tag in third person.                       |
 
 
 ## But isn't this cheating?
