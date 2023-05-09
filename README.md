@@ -32,9 +32,12 @@ Happy coding and cpvping!
 ```yml
 Minecraft: 1.19.4
 Mod: 1.19.4
-Updated to: 1.19.4-0.8.2
+Updated to: 1.19.4-0.8.3
 
 Changelog:
+- DRAGGABLE MODULES AND DESCRIPTION WINDOW (saves to config)
+- + discord button
+- + reset button
 - Added module "RenderMyName"
 - Made module "TotemOverlay" only work when you have a totem in inventory.
 - Added module "NoViewBob"
