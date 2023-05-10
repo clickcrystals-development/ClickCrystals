@@ -44,6 +44,10 @@ public class Configuration implements Serializable {
         sections.put(key,section);
     }
 
+    public boolean has(String key) {
+        return get(key) != null;
+    }
+
     /**
      * Gets a section value
      * @param key key

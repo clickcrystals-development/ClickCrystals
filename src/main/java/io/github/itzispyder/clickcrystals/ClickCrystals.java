@@ -126,6 +126,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new RenderOwnName());
         system.addModule(new AutoRespawn());
         system.addModule(new NoViewBob());
+        system.addModule(new ClientCryst());
         Module.loadConfigModules();
 
         // Hud

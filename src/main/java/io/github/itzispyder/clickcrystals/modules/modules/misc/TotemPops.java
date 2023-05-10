@@ -35,6 +35,9 @@ public class TotemPops extends Module implements Listener {
     @EventHandler
     private void onReceiveStatus(PacketReceiveEvent e) {
         if (e.getPacket() instanceof EntityStatusS2CPacket packet) {
+            if (mc.player == null) return;
+            if (mc.player.getWorld() == null) return;
+
             final Entity ent = packet.getEntity(mc.player.getWorld());
             final int status = packet.getStatus();
 

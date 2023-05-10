@@ -32,17 +32,15 @@ Happy coding and cpvping!
 ```yml
 Minecraft: 1.19.4
 Mod: 1.19.4
-Updated to: 1.19.4-0.8.3
+Updated to: 1.19.4-0.8.4
 
 Changelog:
-- DRAGGABLE MODULES AND DESCRIPTION WINDOW (saves to config)
-- + discord button
-- + reset button
-- Added module "RenderMyName"
-- Made module "TotemOverlay" only work when you have a totem in inventory.
-- Added module "NoViewBob"
-- Added module "AutoRespawn"
-- Added module descriptions (right click the module)
+- FIXED draggable gui elements positioning and anchoring the cursor to top left
+- Added Client-sided crystals
+
+Notice:
+- REMEMBER TO ENABLE "ANTICCOPTOUT" IF SERVERS ARE SUDOING U WITH "!CC -USERS"
+- ^ IF THEY CONTINUE TO FORCE THIS MESSAGE ON YOU REPORT TO ME AND I'LL REMOVE IT NEXT UPDATE!
 ```
 
 <div class="demo-menu">
