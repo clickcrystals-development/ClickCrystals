@@ -10,7 +10,7 @@ public abstract class Categories {
             CRYSTALLING = new Category("Crystalling"),
             ANCHORING = new Category("Anchoring"),
             MISC = new Category("Misc"),
-            OTHER = new Category("Other"),
+            CLICKCRYSTALS = new Category("ClickCrystals"),
             OPTIMIZATION = new Category("Optimization"),
             RENDERING = new Category("Rendering");
 
@@ -20,7 +20,7 @@ public abstract class Categories {
         categories.put("Crystalling",CRYSTALLING);
         categories.put("Anchoring",ANCHORING);
         categories.put("Misc",MISC);
-        categories.put("Other",OTHER);
+        categories.put("Other", CLICKCRYSTALS);
         categories.put("Optimization",OPTIMIZATION);
         categories.put("Rendering",RENDERING);
     }

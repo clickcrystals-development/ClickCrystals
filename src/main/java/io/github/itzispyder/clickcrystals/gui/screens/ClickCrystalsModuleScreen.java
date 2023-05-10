@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.data.ConfigSection;
+import io.github.itzispyder.clickcrystals.data.Delta3d;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.gui.DisplayableElement;
 import io.github.itzispyder.clickcrystals.gui.Draggable;
@@ -39,7 +40,7 @@ public class ClickCrystalsModuleScreen extends Screen {
             Categories.RENDERING,2,
             Categories.OPTIMIZATION,3,
             Categories.MISC,4,
-            Categories.OTHER,5
+            Categories.CLICKCRYSTALS,5
     ).getMap();
 
     private final Set<CategoryWidget> categoryWidgets;
@@ -48,6 +49,7 @@ public class ClickCrystalsModuleScreen extends Screen {
     public WindowContainerElement descriptionWindow;
     public Module selectedModule;
     public boolean isEditingModule;
+    public Delta3d predragDelta;
 
     public ClickCrystalsModuleScreen() {
         super(Text.literal("ClickCrystals Modules"));
@@ -57,6 +59,7 @@ public class ClickCrystalsModuleScreen extends Screen {
         this.isEditingModule = false;
         this.descriptionWindow = new WindowContainerElement(0, 0, 200, 90, "", "", 25);
         this.descriptionWindow.setFillColor(0x90000000);
+        this.predragDelta = new Delta3d(0, 0, 0);
 
         final TextLabelElement exitLabel = new TextLabelElement(0, 0, "X");
         final TextLabelElement toggleLabel = new TextLabelElement(0, 0, "▶");
@@ -249,6 +252,7 @@ public class ClickCrystalsModuleScreen extends Screen {
             switch (click) {
                 case CLICK -> {
                     this.selectedDraggable = this.getHoveredDraggable(mouseX, mouseY);
+                    this.predragDelta = new Delta3d(mouseX, mouseY, 0);
                 }
                 case RELEASE -> {
                     this.selectedDraggable = null;
@@ -259,7 +263,11 @@ public class ClickCrystalsModuleScreen extends Screen {
 
     private void handleDraggableDrag(double mouseX, double mouseY) {
         if (this.selectedDraggable == null) return;
-        selectedDraggable.dragWith(mouseX, mouseY);
+
+        final Delta3d postdrag = new Delta3d(mouseX, mouseY, 0);
+
+        selectedDraggable.dragAlong(this.predragDelta, postdrag);
+        this.predragDelta = postdrag;
         this.saveToConfig();
     }
 

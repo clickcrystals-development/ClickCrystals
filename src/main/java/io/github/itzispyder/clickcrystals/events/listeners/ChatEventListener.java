@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.ChatReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.ChatSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.misc.AntiCCOptout;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.AntiCCOptout;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 
 /**

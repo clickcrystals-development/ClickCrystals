@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.other;
+package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
 import io.github.itzispyder.clickcrystals.client.CCKeybindings;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
@@ -16,7 +16,7 @@ public class MsgResend extends Module implements Listener {
     private boolean wasCommand;
 
     public MsgResend() {
-        super("MsgResend", Categories.OTHER, "Press up arrow key to resend your last message.");
+        super("MsgResend", Categories.MISC, "Press up arrow key to resend your last message.");
         this.lastMessage = null;
     }
 

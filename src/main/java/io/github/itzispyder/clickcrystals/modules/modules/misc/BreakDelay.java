@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.other;
+package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class BreakDelay extends Module implements Listener {
 
     public BreakDelay() {
-        super("BreakDelay", Categories.OTHER,"Removes the delay between breaking a block and starting to break the next block. (Some AntiCheats don't like this module)");
+        super("BreakDelay", Categories.MISC,"Removes the delay between breaking a block and starting to break the next block. (Some AntiCheats don't like this module)");
     }
 
     @Override

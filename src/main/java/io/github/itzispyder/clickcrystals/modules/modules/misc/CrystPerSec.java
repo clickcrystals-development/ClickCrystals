@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.other;
+package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -21,7 +21,7 @@ public class CrystPerSec extends Module implements Listener {
     private static final Queue<Integer> intQueue = new ArrayQueue<>(15);
 
     public CrystPerSec() {
-        super("CrystPerSec", Categories.OTHER, "Crystals per second counter.");
+        super("CrystPerSec", Categories.MISC, "Crystals per second counter.");
     }
 
     @Override

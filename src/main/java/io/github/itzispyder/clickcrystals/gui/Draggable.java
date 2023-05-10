@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui;
 
+import io.github.itzispyder.clickcrystals.data.Delta3d;
 import net.minecraft.client.util.Window;
 
 import java.util.List;
@@ -74,12 +75,16 @@ public interface Draggable {
         setHeight((int)height);
     }
 
-    default void dragWith(double mouseX, double mouseY) {
-        if (!canDrag()) return;
+    default boolean isHovered(double mouseX, double mouseY) {
+        return mouseX >= getX() && mouseX <= getX() + getWidth() && mouseY >= getY() && mouseY <= getY() + getHeight();
+    }
 
-        final Window win = mc.getWindow();
-        int winWidth = win.getScaledWidth();
-        int winHeight = win.getScaledHeight();
+    default void dragWith(double mouseX, double mouseY) {
+        dragWith(mouseX, mouseY, false);
+    }
+
+    default void dragWith(double mouseX, double mouseY, boolean force) {
+        if (!force && !canDrag()) return;
 
         int delX = (int)(mouseX - getX());
         int delY = (int)(mouseY - getY());
@@ -88,6 +93,24 @@ public interface Draggable {
 
         forEachDraggableChild(child -> {
             child.move(delX, delY);
+        });
+    }
+
+    default void dragAlong(Delta3d predrag, Delta3d postdrag) {
+        dragAlong(predrag, postdrag, false);
+    }
+
+    default void dragAlong(Delta3d predrag, Delta3d postdrag, boolean force) {
+        if (!force && !canDrag()) return;
+
+        double delX = predrag.x() - getX();
+        double delY = predrag.y() - getY();
+
+        moveTo(postdrag.x(), postdrag.y());
+        move(-delX, -delY);
+
+        forEachDraggableChild(child -> {
+            child.dragAlong(predrag, postdrag, true);
         });
     }
 

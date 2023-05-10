@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.optimization;
+package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -11,7 +11,7 @@ import net.minecraft.client.gui.screen.Screen;
 public class AutoRespawn extends Module implements Listener {
 
     public AutoRespawn() {
-        super("AutoRespawn", Categories.OPTIMIZATION, "Clicks the respawn button for you.");
+        super("AutoRespawn", Categories.MISC, "Clicks the respawn button for you.");
     }
 
     @Override

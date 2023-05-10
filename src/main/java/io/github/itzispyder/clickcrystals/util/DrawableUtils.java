@@ -21,12 +21,20 @@ public final class DrawableUtils {
         }
     }
 
-    public static void drawCenteredText(MatrixStack matrices, Text text, int x, int y, boolean shadow) {
-        drawText(matrices, text, x - mc.textRenderer.getWidth(text) / 2, y, shadow);
+    public static void drawLeftText(MatrixStack matrices, String text, int leftX, int y, boolean shadow) {
+        drawText(matrices, text, leftX - mc.textRenderer.getWidth(text), y, shadow);
     }
 
-    public static void drawCenteredText(MatrixStack matrices, String text, int x, int y, boolean shadow) {
-        drawText(matrices, text, x - mc.textRenderer.getWidth(text) / 2, y, shadow);
+    public static void drawLeftText(MatrixStack matrices, Text text, int leftX, int y, boolean shadow) {
+        drawText(matrices, text, leftX - mc.textRenderer.getWidth(text), y, shadow);
+    }
+
+    public static void drawCenteredText(MatrixStack matrices, Text text, int centerX, int y, boolean shadow) {
+        drawText(matrices, text, centerX - mc.textRenderer.getWidth(text) / 2, y, shadow);
+    }
+
+    public static void drawCenteredText(MatrixStack matrices, String text, int centerX, int y, boolean shadow) {
+        drawText(matrices, text, centerX - mc.textRenderer.getWidth(text) / 2, y, shadow);
     }
 
     public static void drawBorder(MatrixStack matrices, int x, int y, int width, int height, int color) {

@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.hud;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.misc.IconHud;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.IconHud;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
