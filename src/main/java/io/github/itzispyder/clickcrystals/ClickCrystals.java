@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals;
 
 import io.github.itzispyder.clickcrystals.client.CCKeybindings;
+import io.github.itzispyder.clickcrystals.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.Configuration;
@@ -59,6 +60,7 @@ public final class ClickCrystals implements ModInitializer {
         System.out.println(PREFIX + "Loading ClickCrystals by ImproperIssues");
         this.init();
         CCKeybindings.init();
+        CCSoundEvents.init();
         this.startTicking();
         this.initRpc();
     }

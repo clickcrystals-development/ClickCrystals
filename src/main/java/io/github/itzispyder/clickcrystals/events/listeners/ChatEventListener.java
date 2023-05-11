@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.events.listeners;
 
+import io.github.itzispyder.clickcrystals.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.ChatReceiveEvent;
@@ -7,6 +8,10 @@ import io.github.itzispyder.clickcrystals.events.events.ChatSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.AntiCCOptout;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+
+import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 /**
  * Listeners for chat events
@@ -30,13 +35,16 @@ public class ChatEventListener implements Listener {
     }
 
     private void handleChatCommands(ChatReceiveEvent e) {
+        final ClientPlayerEntity p = mc.player;
         final String message = e.getMessage();
         final String s = message.toLowerCase();
         final Module antiOptout = Module.get(AntiCCOptout.class);
 
         if (antiOptout.isEnabled()) return;
+        if (p == null) return;
 
         if (!s.contains("!cc ")) return;
         if (s.contains("-users")) ChatUtils.sendChatMessage("I am using ClickCrystals.");
+        if (s.contains("-vineboom")) p.playSound(CCSoundEvents.VINEBOOM, SoundCategory.MASTER, 1, 1);
     }
 }

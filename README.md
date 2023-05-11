@@ -36,7 +36,10 @@ Updated to: 1.19.4-0.8.4
 
 Changelog:
 - FIXED draggable gui elements positioning and anchoring the cursor to top left
+- Moved ModuleListHud to TOP RIGHT
 - Added Client-sided crystals
+- Added gradient category list background.
+- Added "!cc -vineboom" (real)
 
 Notice:
 - REMEMBER TO ENABLE "ANTICCOPTOUT" IF SERVERS ARE SUDOING U WITH "!CC -USERS"
@@ -106,7 +109,7 @@ Notice:
 | NoViewBob     |      Removes view bob (Original Minecraft setting but as a toggleable module)      |
 | AutoRespawn   |            Clicks the respawn button when you die. (Immediate respawn)             |
 | RenderMyName  |                       Renders your name tag in third person.                       |
-
+| ClientCryst   |                Kills the crystal client-side when you attack them.                 |
 
 ## But isn't this cheating?
 It is not a cheat. It does not automate any task, for every action the mod preforms, you have to click.
