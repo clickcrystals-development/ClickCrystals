@@ -132,6 +132,15 @@ public final class HotbarUtils {
                 || isHolding(Items.RESPAWN_ANCHOR);
     }
 
+    public static boolean isHoldingTool() {
+        return nameContains("_sword") ||
+                nameContains("_pickaxe") ||
+                nameContains("_axe") ||
+                nameContains("_hoe") ||
+                nameContains("_shovel") ||
+                nameContains("trident");
+    }
+
     public static void swapWithOffhand() {
         PlayerActionC2SPacket swap = new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND, mc.player.getBlockPos(), Direction.UP);
         mc.player.networkHandler.sendPacket(swap);

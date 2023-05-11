@@ -37,7 +37,7 @@ public class CategoryWidget extends CCWidget {
 
     @Override
     public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        DrawableHelper.fillGradient(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x100044AC, 0x10FFFFFF, 0);
+        DrawableHelper.fillGradient(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x500044AC, 0x50000000, 0);
         DrawableUtils.drawBorder(matrices, getX(), getY(), getWidth(), getHeight(), 0xFF1A9494);
         DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + TITLE_HEIGHT, 0xFF1A9494);
         DrawableUtils.drawCenteredText(matrices, getMessage(), getX() + (getWidth() / 2), getY() + 5, true);
@@ -54,8 +54,24 @@ public class CategoryWidget extends CCWidget {
 
         this.height = moduleListHeight + TITLE_HEIGHT + (MARGIN_BOTTOM + MARGIN_TOP);
         this.width = moduleListWidth + (int)(2 * MARGIN_LEFT);
-        moduleWidget.setX(getX() + MARGIN_LEFT);
-        moduleWidget.setY(getY() + moduleListHeight + (3 * MARGIN_BOTTOM));
+        moduleWidget.setX(this.getX() + MARGIN_LEFT);
+        moduleWidget.setY(this.getY() + moduleListHeight + (3 * MARGIN_BOTTOM));
+    }
+
+    public void recalculateDimensions() {
+        final int moduleListHeight = ModuleWidget.DEFAULT_HEIGHT * moduleWidgets.size();
+        final int moduleListWidth = ModuleWidget.DEFAULT_WIDTH;
+
+        this.height = moduleListHeight + TITLE_HEIGHT + (MARGIN_BOTTOM + MARGIN_TOP);
+        this.width = moduleListWidth + (int)(2 * MARGIN_LEFT);
+
+        int i = 0;
+        for (ModuleWidget moduleWidget : this.moduleWidgets) {
+            final int yLvl = (++i) * ModuleWidget.DEFAULT_HEIGHT;
+
+            moduleWidget.setX(this.getX() + MARGIN_LEFT);
+            moduleWidget.setY(this.getY() + yLvl + (3 * MARGIN_BOTTOM));
+        }
     }
 
     public Set<Module> getModules() {

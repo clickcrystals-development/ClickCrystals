@@ -11,7 +11,6 @@ import io.github.itzispyder.clickcrystals.gui.display.TextLabelElement;
 import io.github.itzispyder.clickcrystals.gui.display.WindowContainerElement;
 import io.github.itzispyder.clickcrystals.gui.widgets.CategoryWidget;
 import io.github.itzispyder.clickcrystals.gui.widgets.EmptyWidget;
-import io.github.itzispyder.clickcrystals.gui.widgets.ModuleWidget;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -103,6 +102,7 @@ public class ClickCrystalsModuleScreen extends Screen {
             categoryWidget.getDraggableChildren().forEach(this::addDrawableChild);
         }
         this.loadFromConfig();
+        this.categoryWidgets.forEach(CategoryWidget::recalculateDimensions);
     }
 
     private void initLabels() {
@@ -286,12 +286,6 @@ public class ClickCrystalsModuleScreen extends Screen {
             final Category category = categoryWidget.getCategory();
             config.set("categories." + category.name() + ".x", null);
             config.set("categories." + category.name() + ".y", null);
-
-            for (ModuleWidget moduleWidget : categoryWidget.getDraggableChildren()) {
-                final Module module = moduleWidget.getModule();
-                config.set("modules." + module.getName() + ".x", null);
-                config.set("modules." + module.getName() + ".y", null);
-            }
         }
         config.save();
     }
@@ -303,14 +297,6 @@ public class ClickCrystalsModuleScreen extends Screen {
             if (config.get("categories." + category.name() + ".y") == null) continue;
             categoryWidget.setX(config.get("categories." + category.name() + ".x", Integer.class));
             categoryWidget.setY(config.get("categories." + category.name() + ".y", Integer.class));
-
-            for (ModuleWidget moduleWidget : categoryWidget.getDraggableChildren()) {
-                final Module module = moduleWidget.getModule();
-                if (config.get("modules." + module.getName() + ".x") == null) continue;
-                if (config.get("modules." + module.getName() + ".y") == null) continue;
-                moduleWidget.setX(config.get("modules." + module.getName() + ".x", Integer.class));
-                moduleWidget.setY(config.get("modules." + module.getName() + ".y", Integer.class));
-            }
         }
     }
 
@@ -319,12 +305,6 @@ public class ClickCrystalsModuleScreen extends Screen {
             final Category category = categoryWidget.getCategory();
             config.set("categories." + category.name() + ".x", new ConfigSection<>(categoryWidget.getX()));
             config.set("categories." + category.name() + ".y", new ConfigSection<>(categoryWidget.getY()));
-
-            for (ModuleWidget moduleWidget : categoryWidget.getDraggableChildren()) {
-                final Module module = moduleWidget.getModule();
-                config.set("modules." + module.getName() + ".x", new ConfigSection<>(moduleWidget.getX()));
-                config.set("modules." + module.getName() + ".y", new ConfigSection<>(moduleWidget.getY()));
-            }
         }
         config.save();
     }

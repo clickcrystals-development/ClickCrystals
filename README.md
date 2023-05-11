@@ -44,7 +44,7 @@ Notice:
 ```
 
 <div class="demo-menu">
-  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/e0af1d068595d5572a6736d21cfe63d863dd9b25.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
+  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/8bd3156c5dd4e084de3b046dc8e817d955a8f84c.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
 </div>
 
 ## How Do I Use ClickCrystals?

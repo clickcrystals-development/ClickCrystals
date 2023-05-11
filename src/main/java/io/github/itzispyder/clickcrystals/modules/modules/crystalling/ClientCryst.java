@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.util.InteractionUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 
@@ -31,6 +32,8 @@ public class ClientCryst extends Module implements Listener {
         if (ent == null) return;
         if (mc.player == null) return;
         if (mc.player.getWorld() == null) return;
+        if (mc.isInSingleplayer()) return;
+        if (!InteractionUtils.canBreakCrystals()) return;
 
         if (ent instanceof EndCrystalEntity crystal) {
             crystal.kill();

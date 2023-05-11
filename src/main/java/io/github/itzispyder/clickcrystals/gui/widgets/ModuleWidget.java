@@ -38,7 +38,7 @@ public class ModuleWidget extends CCWidget {
         if (this.module.isEnabled()) fillColor = 0x40805050;
         if (isMouseOver(mouseX, mouseY)) {
             if (mc.currentScreen instanceof ClickCrystalsModuleScreen screen && !(screen.isEditingModule && screen.descriptionWindow.isMouseOver(mouseX, mouseY))) {
-                fillColor = 0x40909090;
+                fillColor = 0x60909090;
             }
         }
 
