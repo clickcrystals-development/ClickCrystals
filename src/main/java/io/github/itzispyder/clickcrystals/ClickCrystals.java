@@ -96,7 +96,7 @@ public final class ClickCrystals implements ModInitializer {
         // Module
         system.addModule(new ClickCrystal());
         system.addModule(new AnchorSwitch());
-        system.addModule(new PearlSwitchS());
+        system.addModule(new PearlSwitch());
         system.addModule(new BreakDelay());
         system.addModule(new FullBright());
         system.addModule(new NoHurtCam());
@@ -107,7 +107,6 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new ObiSwitch());
         system.addModule(new CrystSwitch());
         system.addModule(new AntiCrash());
-        system.addModule(new PearlSwitchT());
         system.addModule(new NoResPack());
         system.addModule(new ToolSwitcher());
         system.addModule(new CrystAnchor());
