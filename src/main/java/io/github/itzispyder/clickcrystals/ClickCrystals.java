@@ -25,6 +25,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouc
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.AntiCrash;
+import io.github.itzispyder.clickcrystals.modules.modules.optimization.NoItemBounce;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.NoLoading;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.NoResPack;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
@@ -125,6 +126,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new AutoRespawn());
         system.addModule(new NoViewBob());
         system.addModule(new ClientCryst());
+        system.addModule(new NoItemBounce());
         Module.loadConfigModules();
 
         // Hud

@@ -19,6 +19,7 @@
   },
   "mixins": [
     "EntityMixin",
+    "ItemStackMixin",
     "LivingEntityMixin",
     "MinecraftClientMixin",
     "PlayerEntityMixin",
