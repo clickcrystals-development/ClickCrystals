@@ -2,7 +2,7 @@
 <div class="main-banner" style="border: 3px aqua solid; border-radius: 30px; border-style: outset; padding-left: 10px;">
   <h1>
     <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/a073ea1b025661446c83ba40f1445c8c4d840ab9.png" style="width: 15%; transform: translateY(20px) rotateZ(-10deg);"/>
-    ClickCrystals [1.19.4]
+    ClickCrystals [1.19.2 - 1.19.4]
   </h1>
   <h5 style="margin-left: 15px">
     Because who needs right click anyway?
@@ -30,9 +30,8 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Minecraft: 1.19.4
-Mod: 1.19.4
-Updated to: 1.19.4-0.8.5
+Minecraft: 1.19.2 - 1.19.4
+Mod: 0.8.5
 
 Changelog:
 - Added module "NoItemBounce"
