@@ -20,7 +20,7 @@ Now with all unfair modules removed, **this mod is officially a hotkey mod**, wh
 
 But then why download ClickCrystals if you can just download the mods mentioned above? ClickCrystals **contains many all-in-one features**, gathering all the smaller mods together and transforming them into module-like settings, allowing players to quickly configure their game to their liking. These mods may include NoHurtCam, NoGameOverlay, NoLoadingScreen, etc...
 
-To those of you that still think this is cheating, this mod __**does NOT have autoclicking features, does NOT support flying and movement, and does NOT support renderering advantages**__. ClickCrystals is now just an all in one crystal pvp assistance mod, while adding a little twist with __hotkeying__.
+To those of you that still think this is cheating, this mod __**does NOT have auto-clicking features, does NOT support flying and movement, and does NOT support rendering advantages**__. ClickCrystals is now just an all-in-one crystal pvp assistance mod, while adding a little twist with __hotkeying__.
 
 Happy coding and cpvping!
 
@@ -32,18 +32,16 @@ Happy coding and cpvping!
 ```yml
 Minecraft: 1.19.4
 Mod: 1.19.4
-Updated to: 1.19.4-0.8.4
+Updated to: 1.19.4-0.8.5
 
 Changelog:
-- FIXED draggable gui elements positioning and anchoring the cursor to top left
-- Moved ModuleListHud to TOP RIGHT
-- Added Client-sided crystals
-- Added gradient category list background.
-- Added "!cc -vineboom" (real)
+- Added module "NoItemBounce"
+- Changed the font size of module text
+- "!cc -users" WILL NOW ONLY WORK ON YOU IF YOU ENABLE "CCExtras" module
+- "!cc -vineboom" will play at max volume for the funny
 
 Notice:
-- REMEMBER TO ENABLE "ANTICCOPTOUT" IF SERVERS ARE SUDOING U WITH "!CC -USERS"
-- ^ IF THEY CONTINUE TO FORCE THIS MESSAGE ON YOU REPORT TO ME AND I'LL REMOVE IT NEXT UPDATE!
+- If you enable "CCExtras" servers can sudo you with "!cc -users", be sure you know what you are doing!
 ```
 
 <div class="demo-menu">
@@ -77,39 +75,40 @@ Notice:
 
 -----------------------------------------
 
-| **Module**    |                                  **Description**                                   |
-|---------------|:----------------------------------------------------------------------------------:|
-| ClickCrystal  |                         Binds crystal place to left click.                         |
-| CrystalSwitch |   Whenever you punch obsidian/bedrock with a sword, it will switch to a crystal.   |
-| ObiSwitch     |                Punch the ground with a sword to switch to obsidian.                |
-| PearlSwitchS  |                  Right click your sword to switch to pearl slot.                   |
-| PearlSwitchT  |                    Right click a totem to switch to pearl slot.                    |
-| AnchorSwitch  |  Whenever you place an anchor, switch to glowstone and back after you charge it.   |
-| CrystAnchor   |        Right click the ground with a crystal to switch to a respawn anchor.        |
-| IconHud       |                   Renders the ClickCrystals logo on the screen.                    |
-| NoHurtCam     |                         Removes the annoying screen shake.                         |
-| NoResPack     |         Prevents servers from forcing you to download their resource pack.         |
-| SlowSwing     |                     Makes your hand swing like mining fatigue.                     |
-| ToolSwitcher  |                      Switches to the right tool for the job.                       |
-| TrueSight     |                 Renders entities as if you were in spectator mode.                 |
-| FullBright    |                   Increases your gamma so you can actually see.                    |
-| ModulesList   |                        Shows your active modules on screen.                        |
-| NoOverlay     |                      Stops annoying overlays from rendering.                       |
-| NoLoading     |                   Prevents most loading screens from rendering.                    |
-| AntiCrash     | Prevents servers from sending you particle packets, stopping all particle crashes. |
-| BreakDelay    |  Removes the delay between breaking a block and starting to break the next block.  |
-| SilkTouch     |                     Gives any tool you hold silk touch (Real)                      |
-| TotemPops     |             Sends the totem pops of another player. (With pop counter)             |
-| CrystPerSec   |                            Displays your crystal speed.                            |
-| AntiCCOptout  |                     Disable ClickCrystal Optout for yourself.                      |
-| ShieldSwitch  |                   Right click your sword to switch to a shield.                    |
-| BrightOrange  |                Renders a bright golden overlay similar to shaders.                 |
-| TotemOverlay  |                  Displays a red overlay when not holding a totem.                  |
-| MsgResend     |               Click UP_ARROW to resend your previously sent message.               |
-| NoViewBob     |      Removes view bob (Original Minecraft setting but as a toggleable module)      |
-| AutoRespawn   |            Clicks the respawn button when you die. (Immediate respawn)             |
-| RenderMyName  |                       Renders your name tag in third person.                       |
-| ClientCryst   |                Kills the crystal client-side when you attack them.                 |
+| **Module**     |                                  **Description**                                   |
+|----------------|:----------------------------------------------------------------------------------:|
+| ClickCrystal   |                         Binds crystal place to left click.                         |
+| CrystalSwitch  |   Whenever you punch obsidian/bedrock with a sword, it will switch to a crystal.   |
+| ObsidianSwitch |                Punch the ground with a sword to switch to obsidian.                |
+| PearlSwitchS   |                  Right click your sword to switch to pearl slot.                   |
+| PearlSwitchT   |                    Right click a totem to switch to pearl slot.                    |
+| AnchorSwitch   |  Whenever you place an anchor, switch to glowstone and back after you charge it.   |
+| CrystalAnchor  |        Right click the ground with a crystal to switch to a respawn anchor.        |
+| IconHud        |                   Renders the ClickCrystals logo on the screen.                    |
+| NoHurtCam      |                         Removes the annoying screen shake.                         |
+| NoServerPacks  |         Prevents servers from forcing you to download their resource pack.         |
+| SlowSwing      |                     Makes your hand swing like mining fatigue.                     |
+| ToolSwitcher   |                      Switches to the right tool for the job.                       |
+| TrueSight      |                 Renders entities as if you were in spectator mode.                 |
+| FullBright     |                   Increases your gamma so you can actually see.                    |
+| ModulesListHud |                        Shows your active modules on screen.                        |
+| NoGameOverlay  |                      Stops annoying overlays from rendering.                       |
+| NoLevelLoading |                   Prevents most loading screens from rendering.                    |
+| AntiCrash      | Prevents servers from sending you particle packets, stopping all particle crashes. |
+| NoBreakDelay   |  Removes the delay between breaking a block and starting to break the next block.  |
+| SilkTouch      |                     Gives any tool you hold silk touch (Real)                      |
+| TotemPops      |             Sends the totem pops of another player. (With pop counter)             |
+| CrystalSpeed   |                            Displays your crystal speed.                            |
+| ShieldSwitch   |                   Right click your sword to switch to a shield.                    |
+| BrightOrange   |                Renders a bright golden overlay similar to shaders.                 |
+| TotemOverlay   |                  Displays a red overlay when not holding a totem.                  |
+| MessageResend  |               Click UP_ARROW to resend your previously sent message.               |
+| NoViewBob      |      Removes view bob (Original Minecraft setting but as a toggleable module)      |
+| AutoRespawn    |            Clicks the respawn button when you die. (Immediate respawn)             |
+| RenderOwnName  |                       Renders your name tag in third person.                       |
+| ClientCrystals |                Kills the crystal client-side when you attack them.                 |
+| NoItemBounce   |              Removes the item bounce animation for inventory updates.              |
+| CCExtras       |             Enabling will allow servers to sudo you with "!cc -users"              |
 
 ## But isn't this cheating?
 It is not a cheat. It does not automate any task, for every action the mod preforms, you have to click.
