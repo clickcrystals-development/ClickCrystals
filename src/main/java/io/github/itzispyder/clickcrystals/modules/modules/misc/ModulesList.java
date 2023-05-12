@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class ModulesList extends Module {
 
     public ModulesList() {
-        super("ModulesList", Categories.MISC,"Shows the enabled modules on screen.");
+        super("ModulesListHud", Categories.MISC,"Shows the enabled modules on screen.");
     }
 
     @Override

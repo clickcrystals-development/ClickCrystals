@@ -58,8 +58,8 @@ public abstract class Module implements Toggleable, Serializable {
     }
 
     public String getNameLimited() {
-        if (name.length() <= 13) return name;
-        return name.substring(0,13) + "...";
+        if (name.length() <= 14) return name;
+        return name.substring(0, 14) + "...";
     }
 
     /**

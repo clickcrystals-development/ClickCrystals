@@ -19,7 +19,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.AnchorSwitch;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.CrystAnchor;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.ShieldSwitch;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.AntiCCOptout;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.CCExtras;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.IconHud;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
@@ -117,7 +117,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new TotemPops());
         system.addModule(new CrystPerSec());
         system.addModule(new MsgResend());
-        system.addModule(new AntiCCOptout());
+        system.addModule(new CCExtras());
         system.addModule(new TotemOverlay());
         system.addModule(new BrightOrange());
         system.addModule(new ShieldSwitch());

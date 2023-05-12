@@ -13,7 +13,7 @@ import net.minecraft.network.packet.s2c.play.ResourcePackSendS2CPacket;
 public class NoResPack extends Module implements Listener {
 
     public NoResPack() {
-        super("NoResPack", Categories.OPTIMIZATION,"Prevents servers from forcing you to download their bad resource pack.");
+        super("NoServerPacks", Categories.OPTIMIZATION,"Prevents servers from forcing you to download their bad resource pack.");
     }
 
     @Override

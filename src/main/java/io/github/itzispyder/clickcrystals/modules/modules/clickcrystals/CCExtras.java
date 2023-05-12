@@ -3,10 +3,10 @@ package io.github.itzispyder.clickcrystals.modules.modules.clickcrystals;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 
-public class AntiCCOptout extends Module {
+public class CCExtras extends Module {
 
-    public AntiCCOptout() {
-        super("AntiCCOptout", Categories.CLICKCRYSTALS, "Immune to all ClickCrystal sudo messages.");
+    public CCExtras() {
+        super("CCExtras", Categories.CLICKCRYSTALS, "Enables features like responding to \"!cc -users\" and other easter eggs. (Don't enable if you don't want servers to know you are using this mod.)");
     }
 
     @Override

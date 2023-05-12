@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class RenderOwnName extends Module {
 
     public RenderOwnName() {
-        super("RenderMyName", Categories.RENDERING, "Renders your own name.");
+        super("RenderOwnName", Categories.RENDERING, "Renders your own name.");
     }
 
     @Override

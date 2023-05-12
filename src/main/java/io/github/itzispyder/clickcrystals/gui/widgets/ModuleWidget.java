@@ -42,8 +42,13 @@ public class ModuleWidget extends CCWidget {
             }
         }
 
+        final float scale = 0.8F;
+        final float rescale = 1 / scale;
+
         DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), fillColor);
-        DrawableUtils.drawCenteredText(matrices, module.getCurrentStateLabel(), getX() + (getWidth() / 2), (int)(getY() + (getHeight() * 0.33)), true);
+        matrices.scale(scale, scale, scale);
+        DrawableUtils.drawCenteredText(matrices, module.getCurrentStateLabel(), (int)(rescale * (getX() + (getWidth() / 2))), (int)(rescale * (getY() + (getHeight() * 0.33))),true);
+        matrices.scale(rescale, rescale, rescale);
     }
 
     public Module getModule() {
