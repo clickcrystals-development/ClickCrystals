@@ -39,7 +39,6 @@ public class CrystSwitch extends Module implements Listener {
             if (HotbarUtils.isForClickCrystal()) {
                 e.setCancelled(true);
                 HotbarUtils.search(Items.END_CRYSTAL);
-                BlockUtils.interact(pos,packet.getDirection());
             }
         }
     }

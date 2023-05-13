@@ -44,7 +44,6 @@ public class ObiSwitch extends Module implements Listener {
             if (HotbarUtils.isForClickCrystal()) {
                 e.setCancelled(true);
                 HotbarUtils.search(Items.OBSIDIAN);
-                BlockUtils.interact(pos,packet.getDirection());
             }
         }
     }

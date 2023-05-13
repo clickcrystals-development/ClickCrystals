@@ -43,7 +43,6 @@ public class PearlSwitchT extends Module implements Listener {
 
             e.setCancelled(true);
             HotbarUtils.search(Items.ENDER_PEARL);
-            mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
         }
     }
 }

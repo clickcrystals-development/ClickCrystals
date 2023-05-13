@@ -38,8 +38,6 @@ public class CrystAnchor extends Module implements Listener {
 
             e.setCancelled(true);
             HotbarUtils.search(Items.RESPAWN_ANCHOR);
-            BlockUtils.interact(packet.getBlockHitResult());
-            HotbarUtils.search(Items.GLOWSTONE);
         }
     }
 }
