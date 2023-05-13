@@ -21,16 +21,19 @@ public final class DrawableUtils {
 
         x *= rescale;
         y *= rescale;
-        matrices.scale(scale, scale, scale);
 
+        matrices.scale(scale, scale, scale);
+        drawText(matrices, text, x, y, shadow);
+        matrices.scale(rescale, rescale, rescale);
+    }
+
+    public static void drawText(MatrixStack matrices, Text text, int x, int y, boolean shadow) {
         if (shadow) {
             mc.textRenderer.drawWithShadow(matrices, text, x, y, 0xFFFFFFFF);
         }
         else {
             mc.textRenderer.draw(matrices, text, x, y, 0xFFFFFFFF);
         }
-
-        matrices.scale(rescale, rescale, rescale);
     }
 
     public static void drawLeftText(MatrixStack matrices, String text, int leftX, int y, float scale, boolean shadow) {
