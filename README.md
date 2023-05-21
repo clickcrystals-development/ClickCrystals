@@ -11,16 +11,14 @@
 
 ---------------------------------------------------------------
 ### A message from the developers:
-It has come to our attention that many people believe this mod is a "CW hack" or an unfair multiplayer advantage.
-After being staff-banned off multiple well-known servers and taken down from Modrinth.com, we've decided to reconsider our decisions and revise our work.
+And so, it has happened again.
 
-In this update, unfair modules were removed, **all auto-clicking features** (thought of as Trigger Bot) are now gone, and **auto swap-back is also removed** (thought of as Auto Double Hand) With these changes, we hope, to those we have offended, would forgive us for the inconveniences we may have caused.
+You've guessed it... Modrinth has taken our mod down once again!
+This time it was because of the module `TrueSight` which lets you render
+invisible entities.
 
-Now with all unfair modules removed, **this mod is officially a hotkey mod**, which helps you hotkey in certain situations. Note that this is not an unfair advantage, but rather a feature most mods have, ex Tweakeroo, Mouse Wheelie, and Item Scroller.
-
-But then why download ClickCrystals if you can just download the mods mentioned above? ClickCrystals **contains many all-in-one features**, gathering all the smaller mods together and transforming them into module-like settings, allowing players to quickly configure their game to their liking. These mods may include NoHurtCam, NoGameOverlay, NoLoadingScreen, etc...
-
-To those of you that still think this is cheating, this mod __**does NOT have auto-clicking features, does NOT support flying and movement, and does NOT support rendering advantages**__. ClickCrystals is now just an all-in-one crystal pvp assistance mod, while adding a little twist with __hotkeying__.
+We've removed this module so our mod can be considered hack-free!
+(Modrinth we really support your community but please stop taking our mod down)
 
 Happy coding and cpvping!
 
@@ -31,21 +29,17 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.19.2 - 1.19.4
-Mod: 0.8.5
+Mod: 0.8.6
 
 Changelog:
-- Added module "NoItemBounce"
-- Changed the font size of module text
-- "!cc -users" WILL NOW ONLY WORK ON YOU IF YOU ENABLE "CCExtras" module
-- "!cc -vineboom" will play at max volume for the funny
-
-Notice:
-- If you enable "CCExtras" servers can sudo you with "!cc -users", be sure you know what you are doing!
+- Removed "TrueSight" because it was seen as a hack (Modrinth I really support your community but please stop taking our mod down)
+- Fixed: Crystal speed hud can now only render if you're holding a crystal.
 ```
 
 <div class="demo-menu">
   <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/9ecab66ad5b737bb3fa3a6f904d716e5e082a3ff.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
 </div>
+- TrueSight no longer exist! I'm just too lazy to change the picture.
 
 ## How Do I Use ClickCrystals?
 
@@ -88,7 +82,6 @@ Notice:
 | NoServerPacks  |         Prevents servers from forcing you to download their resource pack.         |
 | SlowSwing      |                     Makes your hand swing like mining fatigue.                     |
 | ToolSwitcher   |                      Switches to the right tool for the job.                       |
-| TrueSight      |                 Renders entities as if you were in spectator mode.                 |
 | FullBright     |                   Increases your gamma so you can actually see.                    |
 | ModulesListHud |                        Shows your active modules on screen.                        |
 | NoGameOverlay  |                      Stops annoying overlays from rendering.                       |
