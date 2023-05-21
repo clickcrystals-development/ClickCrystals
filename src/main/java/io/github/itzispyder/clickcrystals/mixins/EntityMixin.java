@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Entity.class)
 public abstract class EntityMixin {
 
-    @Inject(method = "isInvisibleTo", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "isInvisibleTo", at = @At("RETURN"))
     public void isInvisibleTo(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
 
     }
