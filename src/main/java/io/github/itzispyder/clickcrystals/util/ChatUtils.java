@@ -15,8 +15,9 @@ public final class ChatUtils {
      * @param message message
      */
     public static void sendMessage(String message) {
-         if (message == null) return;
-         mc.player.sendMessage(Text.literal(message));
+        if (message == null) return;
+        if (mc.player == null) return;
+        mc.player.sendMessage(Text.literal(message));
     }
 
     /**
@@ -32,6 +33,7 @@ public final class ChatUtils {
      * @param cmd command
      */
     public static void sendChatCommand(String cmd) {
+        if (mc.player == null) return;
         mc.player.networkHandler.sendCommand(cmd);
     }
 
@@ -40,6 +42,7 @@ public final class ChatUtils {
      * @param msg message
      */
     public static void sendChatMessage(String msg) {
+        if (mc.player == null) return;
         mc.player.networkHandler.sendChatMessage(msg);
     }
 }

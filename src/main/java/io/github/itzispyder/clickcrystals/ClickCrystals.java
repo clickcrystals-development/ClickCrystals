@@ -102,7 +102,6 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new FullBright());
         system.addModule(new NoHurtCam());
         system.addModule(new SlowSwing());
-        system.addModule(new TrueSight());
         system.addModule(new NoLoading());
         system.addModule(new NoOverlay());
         system.addModule(new ObiSwitch());
