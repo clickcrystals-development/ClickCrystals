@@ -45,7 +45,6 @@ NOTICE:
 <div class="demo-menu">
   <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/5af890908559e20f5ee163176d334113e8d0d472.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
 </div>
-- TrueSight no longer exist! I'm just too lazy to change the picture.
 
 ## How Do I Use ClickCrystals?
 
