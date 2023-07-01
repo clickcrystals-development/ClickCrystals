@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.data.ConfigSection;
 import io.github.itzispyder.clickcrystals.data.Delta3d;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
@@ -14,10 +13,9 @@ import io.github.itzispyder.clickcrystals.gui.widgets.EmptyWidget;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
@@ -127,18 +125,16 @@ public class ClickCrystalsModuleScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        DrawableHelper.fillGradient(matrices, 0, 0, this.width, this.height, 0xD0000000, 0xD03873A9, 0);
-        super.render(matrices, mouseX, mouseY, delta);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        context.fillGradient(0, 0, this.width, this.height, 0, 0xD0000000, 0xD03873A9);
+        super.render(context, mouseX, mouseY, delta);
 
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, TexturesIdentifiers.SCREEN_BANNER_TEXTURE);
-        DrawableHelper.drawTexture(matrices, CATEGORY_MARGIN_LEFT, 2, 0, 0, 64, 16, 64, 16);
+        context.drawTexture(TexturesIdentifiers.SCREEN_BANNER_TEXTURE, CATEGORY_MARGIN_LEFT, 2, 0, 0, 64, 16, 64, 16);
 
         this.handleDraggableDrag(mouseX, mouseY);
-        this.resetLabel.render(matrices, mouseX, mouseY);
-        this.discordLabel.render(matrices, mouseX, mouseY);
-        this.renderDescription(matrices, mouseX, mouseY, this.selectedModule);
+        this.resetLabel.render(context, mouseX, mouseY);
+        this.discordLabel.render(context, mouseX, mouseY);
+        this.renderDescription(context, mouseX, mouseY, this.selectedModule);
     }
 
     @Override
@@ -183,7 +179,7 @@ public class ClickCrystalsModuleScreen extends Screen {
         return true;
     }
 
-    private void renderDescription(MatrixStack matrices, double mouseX, double mouseY, Module module) {
+    private void renderDescription(DrawContext context, double mouseX, double mouseY, Module module) {
         if (module == null) return;
 
         final Window win = mc.getWindow();
@@ -211,8 +207,8 @@ public class ClickCrystalsModuleScreen extends Screen {
             child.setY(descriptionWindow.getY() + 5 + ((child.getWidth() + 3) * i++));
         }
 
-        descriptionWindow.render(matrices, mouseX, mouseY);
-        matrices.translate(0.0F, 0.0F, 69.0F);
+        descriptionWindow.render(context, mouseX, mouseY);
+        context.getMatrices().translate(0.0F, 0.0F, 69.0F);
     }
 
     public Draggable getHoveredDraggable(double mouseX, double mouseY) {

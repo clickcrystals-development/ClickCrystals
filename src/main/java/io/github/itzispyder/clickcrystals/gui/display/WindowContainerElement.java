@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.display;
 import io.github.itzispyder.clickcrystals.gui.DisplayableElement;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 
 public class WindowContainerElement extends DisplayableElement {
 
@@ -18,16 +18,16 @@ public class WindowContainerElement extends DisplayableElement {
     }
 
     @Override
-    public void render(MatrixStack matrices, double mouseX, double mouseY) {
+    public void render(DrawContext context, double mouseX, double mouseY) {
         if (!isVisible()) return;
 
-        super.render(matrices, mouseX, mouseY);
+        super.render(context, mouseX, mouseY);
 
-        DrawableUtils.drawCenteredText(matrices, title,getX() + (getWidth() / 2), getY() + 10, true);
+        DrawableUtils.drawCenteredText(context, title,getX() + (getWidth() / 2), getY() + 10, true);
 
         int i = 20;
         for (String line : StringUtils.wrapLines(description, lineWrapWidth, true)) {
-            DrawableUtils.drawCenteredText(matrices, "§7" + line,getX() + (getWidth() / 2), getY() + (i += 10), true);
+            DrawableUtils.drawCenteredText(context, "§7" + line,getX() + (getWidth() / 2), getY() + (i += 10), true);
         }
     }
 

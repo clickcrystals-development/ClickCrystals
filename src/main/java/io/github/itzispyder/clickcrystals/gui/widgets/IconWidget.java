@@ -1,8 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.widgets;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.gui.Draggable;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -19,10 +18,10 @@ public class IconWidget extends CCWidget {
     }
 
     @Override
-    public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, texture);
-        DrawableHelper.drawTexture(matrices, getX(), getY(), 0, 0, getWidth(), getHeight(), getWidth(), getHeight());
+    public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
+        MatrixStack m = context.getMatrices();
+
+        context.drawTexture(texture, getX(), getY(), 0, 0, getWidth(), getHeight(), getWidth(), getHeight());
     }
 
     public Identifier getTexture() {

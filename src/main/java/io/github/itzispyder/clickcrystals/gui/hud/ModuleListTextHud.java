@@ -7,8 +7,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -25,13 +24,13 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 public class ModuleListTextHud implements HudRenderCallback {
 
     @Override
-    public void onHudRender(MatrixStack matrixStack, float tickDelta) {
-        final Module hudModule = Module.get(ModulesList.class);
+    public void onHudRender(DrawContext context, float tickDelta) {
+        Module hudModule = Module.get(ModulesList.class);
 
         if (!hudModule.isEnabled()) return;
 
-        final TextRenderer tr = mc.textRenderer;
-        final List<Module> modules = new ArrayList<>(system.modules().values().stream()
+        TextRenderer tr = mc.textRenderer;
+        List<Module> modules = new ArrayList<>(system.modules().values().stream()
                 .filter(Module::isEnabled)
                 .sorted(Comparator.comparing(module -> (mc.textRenderer.getWidth(((Module) module).getId()))).reversed())
                 .toList());
@@ -45,9 +44,9 @@ public class ModuleListTextHud implements HudRenderCallback {
             final int lineColor = 0xFFACE8FB;
             final int length = tr.getWidth(display);
 
-            DrawableHelper.fill(matrixStack, x, y, x - length, y + 10, fillColor);
-            DrawableHelper.fill(matrixStack, x, y, x + 1, y + 10, lineColor);
-            DrawableUtils.drawLeftText(matrixStack, display, x, y, true);
+            context.fill(x, y, x - length, y + 10, fillColor);
+            context.fill(x, y, x + 1, y + 10, lineColor);
+            DrawableUtils.drawLeftText(context, display, x, y, true);
         }
     }
 }

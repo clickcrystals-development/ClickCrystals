@@ -5,8 +5,8 @@ import io.github.itzispyder.clickcrystals.modules.modules.misc.CrystPerSec;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Items;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -14,7 +14,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 public class ClickPerSecondHud implements HudRenderCallback {
 
     @Override
-    public void onHudRender(MatrixStack matrixStack, float tickDelta) {
+    public void onHudRender(DrawContext context, float tickDelta) {
         Module cpsHud = Module.get(CrystPerSec.class);
         if (!cpsHud.isEnabled()) return;
         String text = "§f" + CrystPerSec.getCrystalPerSecond() + " §7c/s";
@@ -25,6 +25,6 @@ public class ClickPerSecondHud implements HudRenderCallback {
 
         if (!HotbarUtils.isHolding(Items.END_CRYSTAL)) return;
 
-        DrawableUtils.drawCenteredText(matrixStack, text, x, y + 5, true);
+        DrawableUtils.drawCenteredText(context, text, x, y + 5, true);
     }
 }

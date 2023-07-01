@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.widgets;
 
 import io.github.itzispyder.clickcrystals.gui.Draggable;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
@@ -18,9 +18,11 @@ public class EmptyWidget extends CCWidget {
     }
 
     @Override
-    public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), getColor());
-        DrawableUtils.drawCenteredText(matrices, getMessage(), getX() + (getWidth() / 2), getY() + (int)(getHeight() * 0.33), true);
+    public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
+        MatrixStack m = context.getMatrices();
+
+        context.fill(getX(), getY(), getX() + getWidth(), getY() + getHeight(), getColor());
+        DrawableUtils.drawCenteredText(context, getMessage(), getX() + (getWidth() / 2), getY() + (int)(getHeight() * 0.33), true);
     }
 
     public int getColor() {

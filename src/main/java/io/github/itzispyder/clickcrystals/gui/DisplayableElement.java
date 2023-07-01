@@ -1,8 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui;
 
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +42,14 @@ public abstract class DisplayableElement implements Draggable {
         this.visible = true;
     }
 
-    public void render(MatrixStack matrices, double mouseX, double mouseY) {
+    public void render(DrawContext context, double mouseX, double mouseY) {
         if (!visible) return;
 
-        DrawableHelper.fill(matrices, x, y, x + width, y + height, fillColor);
-        DrawableUtils.drawBorder(matrices, x, y, width, height, borderThickness, borderColor);
+        context.fill(x, y, x + width, y + height, fillColor);
+        DrawableUtils.drawBorder(context, x, y, width, height, borderThickness, borderColor);
 
         this.children.forEach(child -> {
-            child.render(matrices, mouseX, mouseY);
+            child.render(context, mouseX, mouseY);
         });
     }
 

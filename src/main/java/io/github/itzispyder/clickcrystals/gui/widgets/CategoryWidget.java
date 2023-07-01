@@ -3,8 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.widgets;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -36,11 +35,11 @@ public class CategoryWidget extends CCWidget {
     }
 
     @Override
-    public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        DrawableHelper.fillGradient(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x500044AC, 0x50000000, 0);
-        DrawableUtils.drawBorder(matrices, getX(), getY(), getWidth(), getHeight(), 0xFF1A9494);
-        DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + TITLE_HEIGHT, 0xFF1A9494);
-        DrawableUtils.drawCenteredText(matrices, getMessage(), getX() + (getWidth() / 2), getY() + 5, true);
+    public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
+        context.fillGradient(getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x500044AC, 0x50000000, 0);
+        DrawableUtils.drawBorder(context, getX(), getY(), getWidth(), getHeight(), 0xFF1A9494);
+        context.fill(getX(), getY(), getX() + getWidth(), getY() + TITLE_HEIGHT, 0xFF1A9494);
+        DrawableUtils.drawCenteredText(context, getMessage(), getX() + (getWidth() / 2), getY() + 5, 0.8F, true);
     }
 
     public void addModule(Module module) {

@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.display;
 import io.github.itzispyder.clickcrystals.gui.DisplayableElement;
 import io.github.itzispyder.clickcrystals.modules.settings.Setting;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 
 public class CheckBoxElement extends DisplayableElement {
 
@@ -22,13 +22,13 @@ public class CheckBoxElement extends DisplayableElement {
     }
 
     @Override
-    public void render(MatrixStack matrices, double mouseX, double mouseY) {
+    public void render(DrawContext context, double mouseX, double mouseY) {
         if (!isVisible()) return;
 
         this.setFillColor(checked ? 0xD0FFFFFF : 0xD0000000);
-        super.render(matrices, mouseX, mouseY);
+        super.render(context, mouseX, mouseY);
 
-        DrawableUtils.drawText(matrices, label, getX() + getWidth() + 5, getY() + (int)(getHeight() * 0.25), true);
+        DrawableUtils.drawText(context, label, getX() + getWidth() + 5, getY() + (int)(getHeight() * 0.25), true);
     }
 
     public String getLabel() {

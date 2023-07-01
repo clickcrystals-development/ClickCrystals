@@ -24,7 +24,7 @@
   "depends": {
     "fabricloader": ">=0.14.14",
     "fabric": "*",
-    "minecraft": "1.19.x"
+    "minecraft": "1.20.x"
   },
   "mixins": [
     "clickcrystals.mixins.json"

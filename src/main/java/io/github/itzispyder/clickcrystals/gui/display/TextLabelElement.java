@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.display;
 
 import io.github.itzispyder.clickcrystals.gui.DisplayableElement;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
@@ -16,10 +16,10 @@ public class TextLabelElement extends DisplayableElement {
     }
 
     @Override
-    public void render(MatrixStack matrices, double mouseX, double mouseY) {
-        super.render(matrices, mouseX, mouseY);
+    public void render(DrawContext context, double mouseX, double mouseY) {
+        super.render(context, mouseX, mouseY);
 
-        DrawableUtils.drawCenteredText(matrices, text, getX() + (getWidth() / 2), getY() + (int)(getHeight() * 0.33), true);
+        DrawableUtils.drawCenteredText(context, text, getX() + (getWidth() / 2), getY() + (int)(getHeight() * 0.33), true);
     }
 
     public String getText() {

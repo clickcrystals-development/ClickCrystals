@@ -4,8 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.Draggable;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
 import java.util.List;
@@ -29,11 +28,11 @@ public class ModuleWidget extends CCWidget {
     }
 
     @Override
-    public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        this.renderModule(matrices, mouseX, mouseY);
+    public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderModule(context, mouseX, mouseY);
     }
 
-    public void renderModule(MatrixStack matrices, int mouseX, int mouseY) {
+    public void renderModule(DrawContext context, int mouseX, int mouseY) {
         int fillColor = 0x40101010;
         if (this.module.isEnabled()) fillColor = 0x40805050;
         if (isMouseOver(mouseX, mouseY)) {
@@ -42,13 +41,8 @@ public class ModuleWidget extends CCWidget {
             }
         }
 
-        final float scale = 0.8F;
-        final float rescale = 1 / scale;
-
-        DrawableHelper.fill(matrices, getX(), getY(), getX() + getWidth(), getY() + getHeight(), fillColor);
-        matrices.scale(scale, scale, scale);
-        DrawableUtils.drawCenteredText(matrices, module.getCurrentStateLabel(), (int)(rescale * (getX() + (getWidth() / 2))), (int)(rescale * (getY() + (getHeight() * 0.33))),true);
-        matrices.scale(rescale, rescale, rescale);
+        context.fill(getX(), getY(), getX() + getWidth(), getY() + getHeight(), fillColor);
+        DrawableUtils.drawCenteredText(context, module.getCurrentStateLabel(), (int)(getX() + (getWidth() / 2)), (int)(getY() + (getHeight() * 0.33)), 0.6F,true);
     }
 
     public Module getModule() {
