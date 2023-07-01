@@ -28,12 +28,18 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Minecraft: 1.19.2 - 1.19.4
+Minecraft: 1.20
 Mod: 0.8.6
 
 Changelog:
-- Removed "TrueSight" because it was seen as a hack (Modrinth I really support your community but please stop taking our mod down)
-- Fixed: Crystal speed hud can now only render if you're holding a crystal.
+- UPDATED TO 1.20
+- -> DISCONTINUED <- anything in the 1.19's
+- Did a bit of resizing in the GUI
+
+NOTICE:
+- Any versions regarding Minecraft 1.19.x has been discontinued,
+  meaning it will no longer be worked on in the future. 
+  However, they will still be available for download.
 ```
 
 <div class="demo-menu">
