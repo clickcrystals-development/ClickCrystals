@@ -14,7 +14,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 public class ModuleWidget extends CCWidget {
 
     public static final int
-            DEFAULT_WIDTH = 80,
+            DEFAULT_WIDTH = 65,
             DEFAULT_HEIGHT = 12;
     private final Module module;
 

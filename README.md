@@ -37,7 +37,7 @@ Changelog:
 ```
 
 <div class="demo-menu">
-  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/9ecab66ad5b737bb3fa3a6f904d716e5e082a3ff.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
+  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/5af890908559e20f5ee163176d334113e8d0d472.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
 </div>
 - TrueSight no longer exist! I'm just too lazy to change the picture.
 
@@ -105,18 +105,19 @@ Changelog:
 ## But isn't this cheating?
 It is not a cheat. It does not automate any task, for every action the mod preforms, you have to click.
 - This mod is not a macro, it does not click for you. It functions as a hotkey for slots.
-- This mod has been tested on:
+- **This mod has been tested to not flag on (but might be bannable)**:
   - `McPvP`.club
   - west.`UsPvP`.org
   - east.`UsPvP`.org
   - `OgreDupe`.minehut.gg
   - play.`pvplegacy`.net
+  - `donutsmp`.net
 
 ## For this Mod You Will Need
 ```yml
-Minecraft Java Edition: 1.19.4
-Fabric Loader: 0.14.14 or higher
-Fabric API: 1.19.4
+Minecraft Java Edition: 1.20
+Fabric Loader: 0.14.21 or higher
+Fabric API: 1.20
 To stop: complaining it is a cheat/macro.
 ```
 

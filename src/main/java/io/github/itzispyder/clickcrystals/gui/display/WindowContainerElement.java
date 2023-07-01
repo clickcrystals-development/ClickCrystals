@@ -23,11 +23,11 @@ public class WindowContainerElement extends DisplayableElement {
 
         super.render(context, mouseX, mouseY);
 
-        DrawableUtils.drawCenteredText(context, title,getX() + (getWidth() / 2), getY() + 10, true);
+        DrawableUtils.drawCenteredText(context, title,getX() + (getWidth() / 2), getY() + 10, 1.0F, true);
 
         int i = 20;
         for (String line : StringUtils.wrapLines(description, lineWrapWidth, true)) {
-            DrawableUtils.drawCenteredText(context, "§7" + line,getX() + (getWidth() / 2), getY() + (i += 10), true);
+            DrawableUtils.drawCenteredText(context, "§7" + line,getX() + (getWidth() / 2), getY() + (i += 8), 0.8F, true);
         }
     }
 

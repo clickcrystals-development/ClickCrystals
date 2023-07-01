@@ -70,7 +70,7 @@ public class ClickCrystalsModuleScreen extends Screen {
 
     @Override
     public void init() {
-        final EmptyWidget bannerTitleWidget = new EmptyWidget(0, 0, this.width, BANNER_TITLE_HEIGHT, Text.literal("ClickCrystals - by ImproperIssues, TheTrouper"), 0xFF24A2A2);
+        final EmptyWidget bannerTitleWidget = new EmptyWidget(0, 0, this.width, BANNER_TITLE_HEIGHT, Text.literal("§fClickCrystals - by §bImproperIssues§f, §bTheTrouper"), 0xFF24A2A2);
         final List<Category> categories = Categories.getCategories().values().stream()
                 .sorted(Comparator.comparing(Category::name))
                 .toList();
