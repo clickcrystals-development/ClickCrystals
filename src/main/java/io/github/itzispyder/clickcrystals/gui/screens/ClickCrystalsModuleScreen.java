@@ -2,10 +2,10 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.data.ConfigSection;
 import io.github.itzispyder.clickcrystals.data.Delta3d;
-import io.github.itzispyder.clickcrystals.gui.ClickType;
+import io.github.itzispyder.clickcrystals.guibeta.ClickType;
 import io.github.itzispyder.clickcrystals.gui.DisplayableElement;
 import io.github.itzispyder.clickcrystals.gui.Draggable;
-import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
+import io.github.itzispyder.clickcrystals.guibeta.TexturesIdentifiers;
 import io.github.itzispyder.clickcrystals.gui.display.TextLabelElement;
 import io.github.itzispyder.clickcrystals.gui.display.WindowContainerElement;
 import io.github.itzispyder.clickcrystals.gui.widgets.CategoryWidget;

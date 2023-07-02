@@ -119,4 +119,8 @@ public final class DrawableUtils {
     public static void drawVerticalLine(DrawContext context, int x, int y, int length, int thickness, int color) {
         context.fill(x, y, x + thickness, y + length, color);
     }
+
+    public static void fill(DrawContext context, int x, int y, int width, int height, int color) {
+        context.fill(x, y, x + width, y + height, color);
+    }
 }

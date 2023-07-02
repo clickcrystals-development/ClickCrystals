@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.hud;
 
-import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
+import io.github.itzispyder.clickcrystals.guibeta.TexturesIdentifiers;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.IconHud;
 import net.fabricmc.api.EnvType;
