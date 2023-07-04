@@ -36,7 +36,7 @@ public abstract class GuiElement {
 
     public abstract void onRender(DrawContext context, int mouseX, int mouseY);
 
-    public abstract void onClick(double mouseX, double mouseY);
+    public abstract void onClick(double mouseX, double mouseY, int button);
 
     public boolean isMouseOver(int mouseX, int mouseY) {
         return rendering && mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height;

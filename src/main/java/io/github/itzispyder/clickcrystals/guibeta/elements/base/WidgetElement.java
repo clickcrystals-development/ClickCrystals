@@ -26,7 +26,7 @@ public class WidgetElement extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY) {
+    public void onClick(double mouseX, double mouseY, int button) {
 
     }
 

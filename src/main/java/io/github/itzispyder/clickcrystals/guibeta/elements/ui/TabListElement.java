@@ -59,7 +59,7 @@ public class TabListElement<T> extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY) {
+    public void onClick(double mouseX, double mouseY, int button) {
         double mousePosX = mouseX - x;
         double sectionWidth = (double)width / options.size();
         int selection = (int)Math.floor(mousePosX / sectionWidth);

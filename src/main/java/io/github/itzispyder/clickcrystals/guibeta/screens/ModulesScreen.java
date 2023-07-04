@@ -9,6 +9,7 @@ import io.github.itzispyder.clickcrystals.guibeta.elements.base.WidgetElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.cc.ModuleElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.design.TextElement;
+import io.github.itzispyder.clickcrystals.guibeta.elements.ui.NoticeWidget;
 import io.github.itzispyder.clickcrystals.guibeta.elements.ui.TabListElement;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
@@ -26,6 +27,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 public class ModulesScreen extends GuiScreen {
 
     private final List<ModuleElement> displayingModules = new ArrayList<>();
+    public NoticeWidget alertWidget;
 
     public ModulesScreen() {
         super("ClickCrystals Modules Screen");
@@ -48,33 +50,45 @@ public class ModulesScreen extends GuiScreen {
         // navbar
         WidgetElement nav = new WidgetElement(base.x + 10, base.y + 10, 80, base.height - 20, WidgetElement.Orientation.VERTICAL);
         ImageElement ccIcon = new ImageElement(TexturesIdentifiers.ICON_TEXTURE, nav.x + 3, nav.y + 5, 15, 15);
-        TextElement navTitle = new TextElement("ClickCrystals v0.8.7", TextAlignment.LEFT, 0.5F, ccIcon.x + ccIcon.width + 1, nav.y + 12);
+        TextElement navTitle = new TextElement("ClickCrystals v0.8.7", TextAlignment.LEFT, 0.55F, ccIcon.x + ccIcon.width + 1, nav.y + 12);
+        TextElement copyright = new TextElement("§7Copyright (c) 2023 ClickCrystals", TextAlignment.LEFT, 0.4F, nav.x + 3, nav.y + nav.height - 10);
+        TextElement names = new TextElement("§bImproperIssues§7, §bTheTrouper", TextAlignment.LEFT, 0.4F, nav.x + 3, copyright.y - 5);
+        TextElement credits = new TextElement("§7Client Owners:", TextAlignment.LEFT, 0.4F, nav.x + 3, copyright.y - 10);
         nav.addChild(ccIcon);
         nav.addChild(navTitle);
+        nav.addChild(copyright);
+        nav.addChild(names);
+        nav.addChild(credits);
         this.addChild(nav);
 
         // category bar
         TabListElement<Category> catBar = new TabListElement<>(Categories.getCategories().values().stream().toList(),nav.x + nav.width + 10, base.y + 10, (base.x + base.width) - (nav.x + nav.width + 20), 25, tabs -> {
             this.setCategory(tabs.getOptions().get(tabs.getSelection()), nav.x + nav.width + 10, tabs.y + tabs.height + 10);
         }, Category::name);
-        this.setCategory(catBar.getOptions().get(catBar.getSelection()), nav.x + nav.width + 10, catBar.y + catBar.height + 10);
         this.addChild(catBar);
+
+        // modules settings
+        this.setCategory(catBar.getOptions().get(catBar.getSelection()), nav.x + nav.width + 10, catBar.y + catBar.height + 10);
+        this.screenRenderListeners.add((context, mouseX, mouseY, delta) -> displayingModules.forEach(moduleElement -> {
+            moduleElement.render(context, mouseX, mouseY);
+        }));
         this.mouseClickListeners.add(((mouseX, mouseY, button, click) -> displayingModules.forEach(element -> {
             if (click == ClickType.CLICK && element.isHovered((int)mouseX, (int)mouseY)) {
-                element.onClick(mouseX, mouseY);
+                element.onClick(mouseX, mouseY, button);
             }
         })));
 
-        // finish
-    }
-
-    @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        super.render(context, mouseX, mouseY, delta);
-
-        displayingModules.forEach(moduleElement -> {
-            moduleElement.render(context, mouseX, mouseY);
+        // module description
+        this.alertWidget = new NoticeWidget("", "");
+        alertWidget.setRendering(false);
+        this.screenRenderListeners.add((context, mouseX, mouseY, delta) -> {
+            alertWidget.render(context, mouseX, mouseY);
         });
+        this.keyActionListeners.add((key, click, scancode, modifiers) -> {
+            if (alertWidget.rendering) alertWidget.onClick(0, 0, 0);
+        });
+
+        // finish
     }
 
     @Override

@@ -1,18 +1,13 @@
 package io.github.itzispyder.clickcrystals.guibeta;
 
-import io.github.itzispyder.clickcrystals.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.guibeta.callbacks.*;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public abstract class GuiScreen extends Screen {
 
@@ -22,6 +17,7 @@ public abstract class GuiScreen extends Screen {
     public final List<MouseDragCallback> mouseDragListeners;
     public final List<MouseScrollCallback> mouseScrollListeners;
     public final List<ScreenRenderCallback> screenRenderListeners;
+    public final List<KeyPressCallback> keyActionListeners;
     public final List<GuiElement> children;
     public GuiElement selected;
 
@@ -34,6 +30,7 @@ public abstract class GuiScreen extends Screen {
         this.mouseDragListeners = new ArrayList<>();
         this.mouseScrollListeners = new ArrayList<>();
         this.screenRenderListeners = new ArrayList<>();
+        this.keyActionListeners = new ArrayList<>();
         this.children = new ArrayList<>();
         this.selected = null;
     }
@@ -69,7 +66,7 @@ public abstract class GuiScreen extends Screen {
             GuiElement child = children.get(i);
             if (child.isHovered((int)mouseX, (int)mouseY)) {
                 this.selected = child;
-                child.onClick(mouseX, mouseY);
+                child.onClick(mouseX, mouseY, button);
                 break;
             }
         }
@@ -114,6 +111,28 @@ public abstract class GuiScreen extends Screen {
 
         this.mouseScrollListeners.forEach(mouseScrollCallback -> {
             mouseScrollCallback.handleMouse(mouseX, mouseY, amount);
+        });
+
+        return true;
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        super.keyPressed(keyCode, scanCode, modifiers);
+
+        this.keyActionListeners.forEach(keyPressCallback -> {
+            keyPressCallback.handleKey(keyCode, ClickType.CLICK, scanCode, modifiers);
+        });
+
+        return true;
+    }
+
+    @Override
+    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+        super.keyReleased(keyCode, scanCode, modifiers);
+
+        this.keyActionListeners.forEach(keyPressCallback -> {
+            keyPressCallback.handleKey(keyCode, ClickType.RELEASE, scanCode, modifiers);
         });
 
         return true;
