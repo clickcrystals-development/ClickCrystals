@@ -8,17 +8,17 @@ import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.List;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class TabListElement<T> extends GuiElement {
 
     private final List<T> options;
-    private BiConsumer<T, Integer> pressAction;
+    private Consumer<TabListElement<T>> pressAction;
     private Function<T, String> nameFunction;
     private int selection;
 
-    public TabListElement(List<T> options, int x, int y, int width, int height, BiConsumer<T, Integer> pressAction, Function<T, String> nameFunction) {
+    public TabListElement(List<T> options, int x, int y, int width, int height, Consumer<TabListElement<T>> pressAction, Function<T, String> nameFunction) {
         super(x, y, width, height);
         this.options = options;
         this.pressAction = pressAction;
@@ -65,7 +65,7 @@ public class TabListElement<T> extends GuiElement {
         int selection = (int)Math.floor(mousePosX / sectionWidth);
 
         this.selection = selection;
-        this.pressAction.accept(options.get(selection), selection);
+        this.pressAction.accept(this);
     }
 
     public int getSelection() {
@@ -80,11 +80,11 @@ public class TabListElement<T> extends GuiElement {
         return options;
     }
 
-    public BiConsumer<T, Integer> getPressAction() {
+    public Consumer<TabListElement<T>> getPressAction() {
         return pressAction;
     }
 
-    public void setPressAction(BiConsumer<T, Integer> pressAction) {
+    public void setPressAction(Consumer<TabListElement<T>> pressAction) {
         this.pressAction = pressAction;
     }
 

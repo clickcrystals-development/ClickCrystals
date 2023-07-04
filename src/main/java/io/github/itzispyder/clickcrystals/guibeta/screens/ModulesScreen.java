@@ -1,21 +1,31 @@
 package io.github.itzispyder.clickcrystals.guibeta.screens;
 
+import io.github.itzispyder.clickcrystals.guibeta.ClickType;
 import io.github.itzispyder.clickcrystals.guibeta.GuiScreen;
 import io.github.itzispyder.clickcrystals.guibeta.TextAlignment;
 import io.github.itzispyder.clickcrystals.guibeta.TexturesIdentifiers;
 import io.github.itzispyder.clickcrystals.guibeta.elements.base.BackgroundElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.base.WidgetElement;
+import io.github.itzispyder.clickcrystals.guibeta.elements.cc.ModuleElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.ui.TabListElement;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
+import io.github.itzispyder.clickcrystals.modules.Module;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
 public class ModulesScreen extends GuiScreen {
+
+    private final List<ModuleElement> displayingModules = new ArrayList<>();
 
     public ModulesScreen() {
         super("ClickCrystals Modules Screen");
@@ -44,16 +54,56 @@ public class ModulesScreen extends GuiScreen {
         this.addChild(nav);
 
         // category bar
-        TabListElement<Category> catBar = new TabListElement<>(Categories.getCategories().values().stream().toList(),nav.x + nav.width + 10, base.y + 10, (base.x + base.width) - (nav.x + nav.width + 20), 25, (category, integer) -> {
-
+        TabListElement<Category> catBar = new TabListElement<>(Categories.getCategories().values().stream().toList(),nav.x + nav.width + 10, base.y + 10, (base.x + base.width) - (nav.x + nav.width + 20), 25, tabs -> {
+            this.setCategory(tabs.getOptions().get(tabs.getSelection()), nav.x + nav.width + 10, tabs.y + tabs.height + 10);
         }, Category::name);
+        this.setCategory(catBar.getOptions().get(catBar.getSelection()), nav.x + nav.width + 10, catBar.y + catBar.height + 10);
         this.addChild(catBar);
+        this.mouseClickListeners.add(((mouseX, mouseY, button, click) -> displayingModules.forEach(element -> {
+            if (click == ClickType.CLICK && element.isHovered((int)mouseX, (int)mouseY)) {
+                element.onClick(mouseX, mouseY);
+            }
+        })));
 
         // finish
     }
 
     @Override
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
+
+        displayingModules.forEach(moduleElement -> {
+            moduleElement.render(context, mouseX, mouseY);
+        });
+    }
+
+    @Override
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
         context.fillGradient(0, 0, this.width, this.height, 0, 0xD0000000, 0xD03873A9);
+    }
+
+    public void setCategory(Category category, int originX, int originY) {
+        displayingModules.clear();
+
+        List<Module> modules = system.modules().values().stream()
+                .filter(m -> m.getCategory() == category)
+                .sorted(Comparator.comparing(Module::getId))
+                .toList();
+
+        int row, column;
+        row = column = 0;
+
+        for (Module module : modules) {
+            ModuleElement me = new ModuleElement(module, 0, 0, 60);
+            me.setX(originX + (me.width + 5) * column);
+            me.setY(originY + (me.height + 3) * row);
+
+            displayingModules.add(me);
+
+            if (++column >= 4) {
+                column = 0;
+                row ++;
+            }
+        }
     }
 }
