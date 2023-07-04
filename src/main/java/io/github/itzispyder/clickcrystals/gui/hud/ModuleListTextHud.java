@@ -46,7 +46,7 @@ public class ModuleListTextHud implements HudRenderCallback {
 
             context.fill(x, y, x - length, y + 10, fillColor);
             context.fill(x, y, x + 1, y + 10, lineColor);
-            DrawableUtils.drawLeftText(context, display, x, y, true);
+            DrawableUtils.drawRightText(context, display, x, y, true);
         }
     }
 }

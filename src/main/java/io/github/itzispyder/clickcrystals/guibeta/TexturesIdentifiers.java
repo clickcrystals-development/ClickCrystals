@@ -8,7 +8,8 @@ public final  class TexturesIdentifiers {
 
     public static final Identifier SCREEN_BANNER_TEXTURE = new Identifier(MOD_ID, "textures/gui/screen_title_banner.png");
     public static final Identifier ICON_TEXTURE = new Identifier(MOD_ID, "textures/icon.png");
-    public static final Identifier SMOOTH_WIDGET_TEXTURE = new Identifier(MOD_ID, "textures/gui/smooth_widget.png");
+    public static final Identifier SMOOTH_VERTICAL_WIDGET_TEXTURE = new Identifier(MOD_ID, "textures/gui/smooth_widget_vertical.png");
+    public static final Identifier SMOOTH_HORIZONTAL_WIDGET_TEXTURE = new Identifier(MOD_ID, "textures/gui/smooth_widget_horizontal.png");
     public static final Identifier SMOOTH_BACKGROUND_TEXTURE = new Identifier(MOD_ID, "textures/gui/smooth_background.png");
 
 }

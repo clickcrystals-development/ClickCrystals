@@ -1,9 +1,8 @@
-package io.github.itzispyder.clickcrystals.guibeta.elements;
+package io.github.itzispyder.clickcrystals.guibeta.elements.ui;
 
+import io.github.itzispyder.clickcrystals.guibeta.elements.base.BoxElement;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class BannerElement extends BoxElement {
 

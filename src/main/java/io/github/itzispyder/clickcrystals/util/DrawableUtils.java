@@ -35,16 +35,16 @@ public final class DrawableUtils {
         m.scale(rescale, rescale, rescale);
     }
 
-    public static void drawDefaultLeftScaledText(DrawContext context, Text text, int leftX, int y, float scale, boolean shadow) {
+    public static void drawDefaultRightScaledText(DrawContext context, Text text, int rightX, int y, float scale, boolean shadow) {
         MatrixStack m = context.getMatrices();
         m.scale(scale, scale, scale);
 
         float rescale = 1 / scale;
-        leftX *= rescale;
-        leftX = leftX - mc.textRenderer.getWidth(text);
+        rightX *= rescale;
+        rightX = rightX - mc.textRenderer.getWidth(text);
         y *= rescale;
 
-        drawDefaultText(context, text, leftX, y, shadow);
+        drawDefaultText(context, text, rightX, y, shadow);
         m.scale(rescale, rescale, rescale);
     }
 
@@ -65,20 +65,20 @@ public final class DrawableUtils {
 
     // draw left text
 
-    public static void drawLeftText(DrawContext context, String text, int leftX, int y, float scale, boolean shadow) {
-        drawDefaultLeftScaledText(context, Text.literal(text), leftX, y, scale, shadow);
+    public static void drawRightText(DrawContext context, String text, int leftX, int y, float scale, boolean shadow) {
+        drawDefaultRightScaledText(context, Text.literal(text), leftX, y, scale, shadow);
     }
 
-    public static void drawLeftText(DrawContext context, String text, int leftX, int y, boolean shadow) {
-        drawDefaultLeftScaledText(context, Text.literal(text), leftX, y, 1.0F, shadow);
+    public static void drawRightText(DrawContext context, String text, int leftX, int y, boolean shadow) {
+        drawDefaultRightScaledText(context, Text.literal(text), leftX, y, 1.0F, shadow);
     }
 
-    public static void drawLeftText(DrawContext context, Text text, int leftX, int y, float scale, boolean shadow) {
-        drawDefaultLeftScaledText(context, text, leftX, y, scale, shadow);
+    public static void drawRightText(DrawContext context, Text text, int leftX, int y, float scale, boolean shadow) {
+        drawDefaultRightScaledText(context, text, leftX, y, scale, shadow);
     }
 
-    public static void drawLeftText(DrawContext context, Text text, int leftX, int y, boolean shadow) {
-        drawDefaultLeftScaledText(context, text, leftX, y, 1.0F, shadow);
+    public static void drawRightText(DrawContext context, Text text, int leftX, int y, boolean shadow) {
+        drawDefaultRightScaledText(context, text, leftX, y, 1.0F, shadow);
     }
 
     // draw centered text

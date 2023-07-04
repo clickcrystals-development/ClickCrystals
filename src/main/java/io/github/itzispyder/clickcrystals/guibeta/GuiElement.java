@@ -114,4 +114,60 @@ public abstract class GuiElement {
             child.scale(scale);
         });
     }
+
+    public void centerIn(int frameWidth, int frameHeight) {
+        moveTo(frameWidth / 2 - width / 2, frameHeight / 2 - height / 2);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public boolean isRendering() {
+        return rendering;
+    }
+
+    public void setRendering(boolean rendering) {
+        this.rendering = rendering;
+    }
+
+    public boolean isDraggable() {
+        return draggable;
+    }
+
+    public void setDraggable(boolean draggable) {
+        this.draggable = draggable;
+    }
+
+    public void setParent(GuiElement parent) {
+        this.parent = parent;
+    }
 }

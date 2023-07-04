@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.guibeta.elements;
+package io.github.itzispyder.clickcrystals.guibeta.elements.base;
 
 import io.github.itzispyder.clickcrystals.guibeta.GuiElement;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;

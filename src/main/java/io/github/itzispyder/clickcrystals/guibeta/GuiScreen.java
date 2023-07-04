@@ -1,13 +1,18 @@
 package io.github.itzispyder.clickcrystals.guibeta;
 
+import io.github.itzispyder.clickcrystals.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.guibeta.callbacks.*;
+import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+
+import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public abstract class GuiScreen extends Screen {
 
@@ -60,9 +65,8 @@ public abstract class GuiScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        super.mouseClicked(mouseX, mouseY, button);
-
-        for (GuiElement child : children) {
+        for (int i = children.size() - 1; i >= 0; i--) {
+            GuiElement child = children.get(i);
             if (child.isHovered((int)mouseX, (int)mouseY)) {
                 this.selected = child;
                 child.onClick(mouseX, mouseY);
