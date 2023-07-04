@@ -1,5 +1,8 @@
 package io.github.itzispyder.clickcrystals.guibeta;
 
+import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
+import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;
@@ -31,6 +34,11 @@ public abstract class GuiElement {
             this.children.forEach(guiElement -> {
                 guiElement.render(context, mouseX, mouseY);
             });
+        }
+
+        Module guiBorders = Module.get(GuiBorders.class);
+        if (guiBorders.isEnabled()) {
+            DrawableUtils.drawBorder(context, x, y, width, height, 0xFFFFFFFF);
         }
     }
 

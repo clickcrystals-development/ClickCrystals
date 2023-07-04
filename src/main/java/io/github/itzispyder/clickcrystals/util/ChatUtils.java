@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.util;
 
 import net.minecraft.text.Text;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.STARTER;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 /**
@@ -25,7 +25,7 @@ public final class ChatUtils {
      * @param message message
      */
     public static void sendPrefixMessage(String message) {
-        sendMessage(STARTER + message);
+        sendMessage(starter + message);
     }
 
     /**

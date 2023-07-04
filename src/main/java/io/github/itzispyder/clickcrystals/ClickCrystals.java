@@ -16,10 +16,9 @@ import io.github.itzispyder.clickcrystals.gui.hud.ColorOverlayHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.anchoring.AnchorSwitch;
-import io.github.itzispyder.clickcrystals.modules.modules.anchoring.CrystAnchor;
-import io.github.itzispyder.clickcrystals.modules.modules.anchoring.ShieldSwitch;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.CCExtras;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.IconHud;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
@@ -48,9 +47,10 @@ public final class ClickCrystals implements ModInitializer {
 
     @SuppressWarnings("unused")
     public static final String
-            MOD_ID = "clickcrystals",
-            PREFIX = "[ClickCrystals] ",
-            STARTER = "§7[§bClick§3Crystals§7] §r";
+            modId = "clickcrystals",
+            prefix = "[ClickCrystals] ",
+            starter = "§7[§bClick§3Crystals§7] §r",
+            version = "0.8.8";
 
     /**
      * Runs the mod initializer.
@@ -58,7 +58,7 @@ public final class ClickCrystals implements ModInitializer {
     @Override
     public void onInitialize() {
         // Mod initialization
-        System.out.println(PREFIX + "Loading ClickCrystals by ImproperIssues");
+        System.out.println(prefix + "Loading ClickCrystals by ImproperIssues");
         this.init();
         CCKeybindings.init();
         CCSoundEvents.init();
@@ -126,6 +126,9 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new NoViewBob());
         system.addModule(new ClientCryst());
         system.addModule(new NoItemBounce());
+        system.addModule(new GuiBorders());
+        system.addModule(new SwordSwap());
+        system.addModule(new AxeSwap());
         Module.loadConfigModules();
 
         // Hud

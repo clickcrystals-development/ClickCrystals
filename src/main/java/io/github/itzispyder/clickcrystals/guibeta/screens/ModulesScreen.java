@@ -1,11 +1,15 @@
 package io.github.itzispyder.clickcrystals.guibeta.screens;
 
-import io.github.itzispyder.clickcrystals.guibeta.*;
+import io.github.itzispyder.clickcrystals.guibeta.ClickType;
+import io.github.itzispyder.clickcrystals.guibeta.GuiScreen;
+import io.github.itzispyder.clickcrystals.guibeta.TextAlignment;
+import io.github.itzispyder.clickcrystals.guibeta.TexturesIdentifiers;
 import io.github.itzispyder.clickcrystals.guibeta.elements.base.BackgroundElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.base.WidgetElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.cc.ModuleElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.design.TextElement;
+import io.github.itzispyder.clickcrystals.guibeta.elements.ui.HyperLinkElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.ui.TabListElement;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
@@ -46,9 +50,14 @@ public class ModulesScreen extends GuiScreen {
         // navbar
         WidgetElement nav = new WidgetElement(base.x + 10, base.y + 10, 80, base.height - 20, WidgetElement.Orientation.VERTICAL);
         ImageElement ccIcon = new ImageElement(TexturesIdentifiers.ICON_TEXTURE, nav.x + 3, nav.y + 5, 15, 15);
-        TextElement navTitle = new TextElement("ClickCrystals v0.8.7", TextAlignment.LEFT, 0.55F, ccIcon.x + ccIcon.width + 1, nav.y + 12);
+        HyperLinkElement discordLink = new HyperLinkElement(ccIcon.x, ccIcon.y + ccIcon.height + 5, "https://discord.gg/tMaShNzNtP", "Join Discord ⬀", 0.5F, starter + "Join the Discord! >>>");
+        HyperLinkElement githubLink = new HyperLinkElement(ccIcon.x, discordLink.y + discordLink.height + 5, "https://github.com/clickcrystals", "Open Source ⬀", 0.5F,  starter + "Check Our Code!");
+        HyperLinkElement modrinthLink = new HyperLinkElement(ccIcon.x, githubLink.y + githubLink.height + 5, "https://modrinth.com/mod/clickcrystals", "Modrinth Download ⬀", 0.5F, starter + "Follow our Project!");
+        HyperLinkElement itzispyderLink = new HyperLinkElement(ccIcon.x, modrinthLink.y + modrinthLink.height + 5, "https://itzispyder.github.io", "ImproperIssues ⬀", 0.5F, starter + "Read our bios!");
+        HyperLinkElement thetrouperLink = new HyperLinkElement(ccIcon.x, itzispyderLink.y + itzispyderLink.height + 5, "https://thetrouper.github.io", "obvWolf ⬀", 0.5F, starter + "Read our bios!");
+        TextElement navTitle = new TextElement("ClickCrystals v" + version, TextAlignment.LEFT, 0.55F, ccIcon.x + ccIcon.width + 1, nav.y + 12);
         TextElement copyright = new TextElement("§7Copyright (c) 2023 ClickCrystals", TextAlignment.LEFT, 0.4F, nav.x + 3, nav.y + nav.height - 10);
-        TextElement names = new TextElement("§bImproperIssues§7, §bTheTrouper", TextAlignment.LEFT, 0.4F, nav.x + 3, copyright.y - 5);
+        TextElement names = new TextElement("§bImproperIssues§7, §bobvWolf", TextAlignment.LEFT, 0.4F, nav.x + 3, copyright.y - 5);
         TextElement credits = new TextElement("§7Client Owners:", TextAlignment.LEFT, 0.4F, nav.x + 3, copyright.y - 10);
         nav.addChild(ccIcon);
         nav.addChild(navTitle);
@@ -56,6 +65,11 @@ public class ModulesScreen extends GuiScreen {
         nav.addChild(names);
         nav.addChild(credits);
         this.addChild(nav);
+        this.addChild(discordLink);
+        this.addChild(githubLink);
+        this.addChild(modrinthLink);
+        this.addChild(itzispyderLink);
+        this.addChild(thetrouperLink);
 
         // category bar
         TabListElement<Category> catBar = new TabListElement<>(Categories.getCategories().values().stream().toList(),nav.x + nav.width + 10, base.y + 10, (base.x + base.width) - (nav.x + nav.width + 20), 25, tabs -> {
@@ -70,7 +84,7 @@ public class ModulesScreen extends GuiScreen {
             Module m = moduleElement.getModule();
 
             if (moduleElement.isHovered(mouseX, mouseY)) {
-                DrawableUtils.drawText(context, STARTER + m.getName(), nav.x + 3, copyright.y - 55, 0.5F, true);
+                DrawableUtils.drawText(context, starter + m.getName(), nav.x + 3, copyright.y - 55, 0.5F, true);
                 int i = 0;
                 for (String line : StringUtils.wrapLines(m.getDescription(), 20, true)) {
                     DrawableUtils.drawText(context, "§7" + line, nav.x + 3, copyright.y - 50 + (i++ * 5), 0.48F, true);
@@ -111,7 +125,7 @@ public class ModulesScreen extends GuiScreen {
 
             if (++column >= 4) {
                 column = 0;
-                row ++;
+                row++;
             }
         }
     }

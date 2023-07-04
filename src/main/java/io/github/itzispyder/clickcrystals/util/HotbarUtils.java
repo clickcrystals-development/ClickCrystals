@@ -11,6 +11,7 @@ import net.minecraft.util.math.Direction;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
@@ -35,6 +36,17 @@ public final class HotbarUtils {
         return false;
     }
 
+    public static boolean search(Predicate<ItemStack> item) {
+        final PlayerInventory inv = mc.player.getInventory();
+        for (int i = 0; i <= 8; i ++) {
+            if (item.test(inv.getStack(i))) {
+                inv.selectedSlot = i;
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Checks of the hotbar has an item
      * @param item item
@@ -44,6 +56,19 @@ public final class HotbarUtils {
         final PlayerInventory inv = mc.player.getInventory();
         for (int i = 0; i <= 8; i ++) {
             if (inv.getStack(i).isOf(item)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks of the hotbar has an item
+     * @param item item
+     * @return has item
+     */
+    public static boolean has(Predicate<ItemStack> item) {
+        final PlayerInventory inv = mc.player.getInventory();
+        for (int i = 0; i <= 8; i ++) {
+            if (item.test(inv.getStack(i))) return true;
         }
         return false;
     }

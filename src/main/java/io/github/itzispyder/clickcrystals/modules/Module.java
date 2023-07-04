@@ -8,7 +8,7 @@ import net.minecraft.client.MinecraftClient;
 
 import java.io.Serializable;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.STARTER;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 
 /**
@@ -101,7 +101,7 @@ public abstract class Module implements Toggleable, Serializable {
      * @return help message
      */
     public String getHelp() {
-        return " \n" + STARTER + "§f" + name +
+        return " \n" + starter + "§f" + name +
                 "\n" + "§3Category: §b" + category.name() +
                 "\n" + "§7" + description + "\n ";
     }

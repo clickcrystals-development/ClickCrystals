@@ -13,7 +13,7 @@ import net.minecraft.command.CommandRegistryAccess;
 
 import java.io.Serializable;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.STARTER;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 
 /**
  * Represents a client command
@@ -122,7 +122,7 @@ public abstract class Command implements ClientCommandRegistrationCallback, Seri
      */
     public String getHelp() {
         StringBuilder builder = new StringBuilder(
-                " \n" + STARTER + "§f/" + name + "\n"
+                " \n" + starter + "§f/" + name + "\n"
                 + "§7" + description + "\n"
                 + "§fUsage: §7" + usage +"\n"
                 + "§fAliases:"

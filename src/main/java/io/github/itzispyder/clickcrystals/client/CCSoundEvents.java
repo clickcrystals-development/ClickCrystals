@@ -5,7 +5,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.MOD_ID;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.modId;
 
 public final class CCSoundEvents {
 
@@ -18,6 +18,6 @@ public final class CCSoundEvents {
     }
 
     public static final SoundEvent
-            VINEBOOM = SoundEvent.of(new Identifier(MOD_ID, "vineboom"));
+            VINEBOOM = SoundEvent.of(new Identifier(modId, "vineboom"));
 
 }

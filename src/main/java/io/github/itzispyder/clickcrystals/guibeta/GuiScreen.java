@@ -1,6 +1,9 @@
 package io.github.itzispyder.clickcrystals.guibeta;
 
 import io.github.itzispyder.clickcrystals.guibeta.callbacks.*;
+import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
+import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -8,6 +11,8 @@ import net.minecraft.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+
+import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public abstract class GuiScreen extends Screen {
 
@@ -49,6 +54,14 @@ public abstract class GuiScreen extends Screen {
         this.screenRenderListeners.forEach(screenRenderCallback -> {
             screenRenderCallback.handleScreen(context, mouseX, mouseY, delta);
         });
+
+        Module guiBorders = Module.get(GuiBorders.class);
+        if (guiBorders.isEnabled()) {
+            GuiElement element = getHoveredElement(mouseX, mouseY);
+            if (element != null) {
+                tagGuiElement(context, mouseX, mouseY, element);
+            }
+        }
     }
 
     @Override
@@ -158,5 +171,23 @@ public abstract class GuiScreen extends Screen {
 
     public void removeChild(GuiElement child) {
         children.remove(child);
+    }
+
+    public void tagGuiElement(DrawContext context, int mouseX, int mouseY, GuiElement element) {
+        String name = element.getClass().getSimpleName();
+        double textScale = 0.7;
+        int width = mc.textRenderer.getWidth(name) + 2;
+        DrawableUtils.fill(context, mouseX, mouseY, (int)(width * textScale), 9, 0xFF000000);
+        DrawableUtils.drawText(context, name, mouseX + 2, mouseY + (int)(9 * 0.33), 0.7F, true);
+    }
+
+    public GuiElement getHoveredElement(double mouseX, double mouseY) {
+        for (int i = children.size() - 1; i >= 0; i--) {
+            GuiElement child = children.get(i);
+            if (child.isHovered((int)mouseX, (int)mouseY)) {
+                return child;
+            }
+        }
+        return null;
     }
 }

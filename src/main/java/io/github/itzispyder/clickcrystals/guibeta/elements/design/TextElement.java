@@ -9,7 +9,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class TextElement extends GuiElement {
 
-    private static final int MARGIN = 1;
+    public static final int MARGIN = 1;
     private String text;
     private TextAlignment alignment;
     private float scale;
@@ -20,8 +20,8 @@ public class TextElement extends GuiElement {
         this.text = text;
         this.alignment = alignment;
         this.scale = scale;
-        this.width = mc.textRenderer.getWidth(text) + (2 * MARGIN);
-        this.height = 10 * (int)scale;
+        this.width = (int)((mc.textRenderer.getWidth(text) + (2 * MARGIN)) * scale);
+        this.height = (int)(10 * scale);
         this.backgroundColor = backgroundColor;
     }
 
@@ -31,7 +31,7 @@ public class TextElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        this.height = 10 * (int)scale;
+        this.height = (int)(10 * scale);
 
         DrawableUtils.fill(context, x, y, width, height, backgroundColor);
 
@@ -61,6 +61,8 @@ public class TextElement extends GuiElement {
 
     public void setText(String text) {
         this.text = text;
+        this.width = (int)((mc.textRenderer.getWidth(text) + (2 * MARGIN)) * scale);
+        this.height = (int)(10 * scale);
     }
 
     public void setAlignment(TextAlignment alignment) {
@@ -69,5 +71,13 @@ public class TextElement extends GuiElement {
 
     public void setScale(float scale) {
         this.scale = scale;
+    }
+
+    public int getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 }

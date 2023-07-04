@@ -120,7 +120,7 @@ public class ClickCrystalsModuleScreen extends Screen {
         marginRight -= discordLabel.getWidth();
         this.discordLabel.setX(marginRight);
         this.discordLabel.setPressAction(button -> {
-            system.openUrl("https://discord.gg/tMaShNzNtP", STARTER + "§bJoin Our Discord for the Latest Updates!", new ClickCrystalsModuleScreen());
+            system.openUrl("https://discord.gg/tMaShNzNtP", starter + "§bJoin Our Discord for the Latest Updates!", new ClickCrystalsModuleScreen());
         });
     }
 
