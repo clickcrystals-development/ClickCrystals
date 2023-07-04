@@ -1,19 +1,17 @@
 package io.github.itzispyder.clickcrystals.guibeta.screens;
 
-import io.github.itzispyder.clickcrystals.guibeta.ClickType;
-import io.github.itzispyder.clickcrystals.guibeta.GuiScreen;
-import io.github.itzispyder.clickcrystals.guibeta.TextAlignment;
-import io.github.itzispyder.clickcrystals.guibeta.TexturesIdentifiers;
+import io.github.itzispyder.clickcrystals.guibeta.*;
 import io.github.itzispyder.clickcrystals.guibeta.elements.base.BackgroundElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.base.WidgetElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.cc.ModuleElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.guibeta.elements.design.TextElement;
-import io.github.itzispyder.clickcrystals.guibeta.elements.ui.NoticeWidget;
 import io.github.itzispyder.clickcrystals.guibeta.elements.ui.TabListElement;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
 
@@ -21,13 +19,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
 
 public class ModulesScreen extends GuiScreen {
 
     private final List<ModuleElement> displayingModules = new ArrayList<>();
-    public NoticeWidget alertWidget;
 
     public ModulesScreen() {
         super("ClickCrystals Modules Screen");
@@ -65,28 +61,27 @@ public class ModulesScreen extends GuiScreen {
         TabListElement<Category> catBar = new TabListElement<>(Categories.getCategories().values().stream().toList(),nav.x + nav.width + 10, base.y + 10, (base.x + base.width) - (nav.x + nav.width + 20), 25, tabs -> {
             this.setCategory(tabs.getOptions().get(tabs.getSelection()), nav.x + nav.width + 10, tabs.y + tabs.height + 10);
         }, Category::name);
+        this.setCategory(catBar.getOptions().get(catBar.getSelection()), nav.x + nav.width + 10, catBar.y + catBar.height + 10);
         this.addChild(catBar);
 
-        // modules settings
-        this.setCategory(catBar.getOptions().get(catBar.getSelection()), nav.x + nav.width + 10, catBar.y + catBar.height + 10);
+        // callbacks
         this.screenRenderListeners.add((context, mouseX, mouseY, delta) -> displayingModules.forEach(moduleElement -> {
             moduleElement.render(context, mouseX, mouseY);
+            Module m = moduleElement.getModule();
+
+            if (moduleElement.isHovered(mouseX, mouseY)) {
+                DrawableUtils.drawText(context, STARTER + m.getName(), nav.x + 3, copyright.y - 55, 0.5F, true);
+                int i = 0;
+                for (String line : StringUtils.wrapLines(m.getDescription(), 20, true)) {
+                    DrawableUtils.drawText(context, "§7" + line, nav.x + 3, copyright.y - 50 + (i++ * 5), 0.48F, true);
+                }
+            }
         }));
         this.mouseClickListeners.add(((mouseX, mouseY, button, click) -> displayingModules.forEach(element -> {
             if (click == ClickType.CLICK && element.isHovered((int)mouseX, (int)mouseY)) {
                 element.onClick(mouseX, mouseY, button);
             }
         })));
-
-        // module description
-        this.alertWidget = new NoticeWidget("", "");
-        alertWidget.setRendering(false);
-        this.screenRenderListeners.add((context, mouseX, mouseY, delta) -> {
-            alertWidget.render(context, mouseX, mouseY);
-        });
-        this.keyActionListeners.add((key, click, scancode, modifiers) -> {
-            if (alertWidget.rendering) alertWidget.onClick(0, 0, 0);
-        });
 
         // finish
     }

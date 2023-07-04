@@ -2,7 +2,7 @@
 <div class="main-banner" style="border: 3px aqua solid; border-radius: 30px; border-style: outset; padding-left: 10px;">
   <h1>
     <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/a073ea1b025661446c83ba40f1445c8c4d840ab9.png" style="width: 15%; transform: translateY(20px) rotateZ(-10deg);"/>
-    ClickCrystals [1.19.2 - 1.19.4]
+    ClickCrystals [1.20 - 1.20.1]
   </h1>
   <h5 style="margin-left: 15px">
     Because who needs right click anyway?
@@ -28,8 +28,8 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Minecraft: 1.20
-Mod: 0.8.6
+Minecraft: 1.20.1
+Mod: 0.8.7
 
 Changelog:
 - UPDATED TO 1.20
@@ -43,7 +43,7 @@ NOTICE:
 ```
 
 <div class="demo-menu">
-  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/5af890908559e20f5ee163176d334113e8d0d472.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
+  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/d12afa1a9ef5a5e309e9c2aa7d72f7d5065c3784.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
 </div>
 
 ## How Do I Use ClickCrystals?
@@ -120,9 +120,9 @@ It is not a cheat. It does not automate any task, for every action the mod prefo
 
 ## For this Mod You Will Need
 ```yml
-Minecraft Java Edition: 1.20
+Minecraft Java Edition: 1.20.1
 Fabric Loader: 0.14.21 or higher
-Fabric API: 1.20
+Fabric API: 1.20.1
 To stop: complaining it is a cheat/macro.
 ```
 

@@ -2,14 +2,10 @@ package io.github.itzispyder.clickcrystals.guibeta.elements.cc;
 
 import io.github.itzispyder.clickcrystals.guibeta.GuiElement;
 import io.github.itzispyder.clickcrystals.guibeta.TexturesIdentifiers;
-import io.github.itzispyder.clickcrystals.guibeta.screens.ModulesScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.PREFIX;
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class ModuleElement extends GuiElement {
 
@@ -42,14 +38,7 @@ public class ModuleElement extends GuiElement {
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
-        if (button == 0) {
-            module.toggle();
-        }
-        else if (button == 1 && mc.currentScreen instanceof ModulesScreen screen) {
-            screen.alertWidget.setTitle(PREFIX + module.getName());
-            screen.alertWidget.setMessage(module.getDescription());
-            screen.alertWidget.setRendering(true);
-        }
+        module.toggle();
     }
 
     public Module getModule() {
