@@ -32,9 +32,7 @@ Minecraft: 1.20.1
 Mod: 0.8.7
 
 Changelog:
-- UPDATED TO 1.20
-- -> DISCONTINUED <- anything in the 1.19's
-- Did a bit of resizing in the GUI
+- NEW BETA GUI (-> Try now! Trying to get everyone to update their games to 1.20 <-)
 
 NOTICE:
 - Any versions regarding Minecraft 1.19.x has been discontinued,
