@@ -29,10 +29,13 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20.1
-Mod: 0.8.7
+Mod: 0.8.8
 
 Changelog:
 - NEW BETA GUI (-> Try now! Trying to get everyone to update their games to 1.20 <-)
+- Added clickable links in the gui
+- Added sounds to the BETA GUI
+- Added modules `GuiBorders`, `AxeSwap`, `SwordSwap`
 
 NOTICE:
 - Any versions regarding Minecraft 1.19.x has been discontinued,
@@ -41,7 +44,7 @@ NOTICE:
 ```
 
 <div class="demo-menu">
-  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/d12afa1a9ef5a5e309e9c2aa7d72f7d5065c3784.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
+  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/2c87b960fb0eff81aa522c31f80bd0d8116983fc.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
 </div>
 
 ## How Do I Use ClickCrystals?

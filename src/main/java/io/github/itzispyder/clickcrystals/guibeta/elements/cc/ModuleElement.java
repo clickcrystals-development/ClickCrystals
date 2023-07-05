@@ -5,7 +5,11 @@ import io.github.itzispyder.clickcrystals.guibeta.TexturesIdentifiers;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
+
+import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class ModuleElement extends GuiElement {
 
@@ -38,7 +42,9 @@ public class ModuleElement extends GuiElement {
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
-        module.toggle();
+        mc.player.playSound(SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundCategory.MASTER, 0.8F, 2);
+
+        module.setEnabled(!module.isEnabled(), false);
     }
 
     public Module getModule() {

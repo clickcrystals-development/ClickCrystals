@@ -28,10 +28,16 @@ public class SwordSwap extends Module implements Listener {
 
     @EventHandler
     private void onAttack(PlayerAttackEntityEvent e) {
-        if (e.getEntity() instanceof PlayerEntity p && p.getMainHandStack() != null && p.getMainHandStack().getItem() instanceof ShieldItem) {
+        if (e.getEntity() instanceof PlayerEntity p && !p.isBlocking() && isHoldingShield(p)) {
             if (HotbarUtils.nameContains("axe") && HotbarUtils.has(item -> item.getItem() instanceof SwordItem)) {
                 HotbarUtils.search(item -> item.getItem() instanceof SwordItem);
             }
         }
+    }
+
+    private boolean isHoldingShield(PlayerEntity p) {
+        boolean mainhand = p.getMainHandStack() != null && p.getMainHandStack().getItem() instanceof ShieldItem;
+        boolean offhand = p.getOffHandStack() != null && p.getOffHandStack().getItem() instanceof ShieldItem;
+        return mainhand || offhand;
     }
 }
