@@ -107,6 +107,9 @@ NOTICE:
 | ClientCrystals |                Kills the crystal client-side when you attack them.                 |
 | NoItemBounce   |              Removes the item bounce animation for inventory updates.              |
 | CCExtras       |             Enabling will allow servers to sudo you with "!cc -users"              |
+| GuiBorders     |                     Render ClickCrystals GUI element's borders                     |
+| AxeSwap        |               Swap to hotbar axe when attacking a shielding opponent               |
+| SwordSwap      |                                Opposite of AxeSwap                                 |
 
 ## But isn't this cheating?
 It is not a cheat. It does not automate any task, for every action the mod preforms, you have to click.
