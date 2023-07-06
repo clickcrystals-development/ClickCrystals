@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.gui.screens.ModulesScreen;
+import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
@@ -23,6 +24,7 @@ public class TickEventListener implements Listener {
     public void onTickEnd(ClientTickEndEvent e) {
         try {
             this.handleScreenKeys();
+            Scheduler.onTick();
         }
         catch (Exception ex) {}
     }

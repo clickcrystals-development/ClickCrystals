@@ -25,7 +25,8 @@ public class NoLoading extends Module implements Listener {
 
     @EventHandler
     private void onScreenChange(SetScreenEvent e) {
-        if (!(e.getScreen() instanceof DownloadingTerrainScreen)) return;
-        e.setCancelled(true);
+        if (e.getScreen() instanceof DownloadingTerrainScreen) {
+            e.setCancelled(true);
+        }
     }
 }

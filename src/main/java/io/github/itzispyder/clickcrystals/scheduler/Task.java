@@ -1,37 +1,16 @@
 package io.github.itzispyder.clickcrystals.scheduler;
 
-/**
- * Task scheduler
- */
-public interface Task {
+public abstract class Task {
 
-    /**
-     * Run task
-     */
-    void runTask();
+    private final Runnable task;
 
-    /**
-     * Run task repeatedly
-     * @param times times
-     * @param millisDelay delay in milliseconds
-     */
-    void runRepeatingTask(int times, long millisDelay);
+    public Task(Runnable task) {
+        this.task = task;
+    }
 
-    /**
-     * Run task forever
-     * @param millisDelay delay in milliseconds
-     */
-    void runTaskForever(long millisDelay);
+    public Runnable getTask() {
+        return task;
+    }
 
-    /**
-     * Run a delayed task
-     * @param millisDelay delay in milliseconds
-     */
-    void runDelayedTask(long millisDelay);
-
-    /**
-     * Get the running task
-     * @return task
-     */
-    Runnable getTask();
+    public abstract void onTick();
 }
