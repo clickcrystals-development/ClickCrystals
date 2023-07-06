@@ -5,8 +5,7 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
-import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsModuleScreen;
-import io.github.itzispyder.clickcrystals.guibeta.screens.ModulesScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.ModulesScreen;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 

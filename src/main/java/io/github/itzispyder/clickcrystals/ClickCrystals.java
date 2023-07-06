@@ -10,11 +10,11 @@ import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
-import io.github.itzispyder.clickcrystals.gui.hud.ClickCrystalIconHud;
-import io.github.itzispyder.clickcrystals.gui.hud.ClickPerSecondHud;
-import io.github.itzispyder.clickcrystals.gui.hud.ColorOverlayHud;
-import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
-import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsModuleScreen;
+import io.github.itzispyder.clickcrystals.guiold.hud.ClickCrystalIconHud;
+import io.github.itzispyder.clickcrystals.guiold.hud.ClickPerSecondHud;
+import io.github.itzispyder.clickcrystals.guiold.hud.ColorOverlayHud;
+import io.github.itzispyder.clickcrystals.guiold.hud.ModuleListTextHud;
+import io.github.itzispyder.clickcrystals.guiold.screens.ClickCrystalsModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.CCExtras;
@@ -43,14 +43,13 @@ public final class ClickCrystals implements ModInitializer {
     public static final Configuration config = Configuration.load(configFile);
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = new ClickCrystalsSystem();
-    public static final ClickCrystalsModuleScreen CC_MODULE_SCREEN = new ClickCrystalsModuleScreen();
 
     @SuppressWarnings("unused")
     public static final String
             modId = "clickcrystals",
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
-            version = "0.8.8";
+            version = "0.8.9";
 
     /**
      * Runs the mod initializer.
@@ -129,6 +128,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new GuiBorders());
         system.addModule(new SwordSwap());
         system.addModule(new AxeSwap());
+        system.addModule(new GlowingEntities());
         Module.loadConfigModules();
 
         // Hud
