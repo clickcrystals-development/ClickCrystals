@@ -23,7 +23,8 @@ public abstract class ClickCrystalsBase extends DefaultBase {
     public ImageElement homeIcon = new ImageElement(TexturesIdentifiers.HOME, 0, 0, 0, 0);
     public ImageElement modulesIcon = new ImageElement(TexturesIdentifiers.MODULES, 0, 0, 0, 0);
     public ImageElement searchIcon = new ImageElement(TexturesIdentifiers.SEARCH, 0, 0, 0, 0);
-    public ImageTabListElement menuTab = new ImageTabListElement(List.of(homeIcon, modulesIcon, searchIcon), nav.x + 3, navTitle.y + navTitle.height + 10, nav.width - 6, 15, button -> {
+    public ImageElement creditsIcon = new ImageElement(TexturesIdentifiers.PEOPLE, 0, 0, 0, 0);
+    public ImageTabListElement menuTab = new ImageTabListElement(List.of(homeIcon, modulesIcon, searchIcon, creditsIcon), nav.x + 3, navTitle.y + navTitle.height + 10, nav.width - 6, 15, button -> {
         ImageElement selection = button.getOptions().get(button.getSelection());
         prevMenuSelection = button.getSelection();
 
@@ -33,6 +34,8 @@ public abstract class ClickCrystalsBase extends DefaultBase {
             mc.setScreenAndRender(new ModulesScreen());
         else if (selection == searchIcon)
             mc.setScreenAndRender(new SearchScreen());
+        else if (selection == creditsIcon)
+            mc.setScreenAndRender(new CreditsScreen());
     });
     public HyperLinkElement discordLink = new HyperLinkElement(ccIcon.x, menuTab.y + menuTab.height + 5, "https://discord.gg/tMaShNzNtP", "Join Discord ⬀", 0.5F, starter + "Join the Discord! >>>");
     public HyperLinkElement githubLink = new HyperLinkElement(ccIcon.x, discordLink.y + discordLink.height + 5, "https://github.com/itzispyder/clickcrystals", "Open Source ⬀", 0.5F,  starter + "Check Our Code!");

@@ -26,6 +26,7 @@ public final  class TexturesIdentifiers {
     public static final Identifier SEARCH = new Identifier(modId, "textures/gui/icons/search.png");
     public static final Identifier HOME = new Identifier(modId, "textures/gui/icons/home.png");
     public static final Identifier MODULES = new Identifier(modId, "textures/gui/icons/modules.png");
+    public static final Identifier PEOPLE = new Identifier(modId, "textures/gui/icons/people.png");
 
     // modules
     public static final Identifier MODULE_ON = new Identifier(modId, "textures/gui/modules/module_on.png");
