@@ -82,4 +82,10 @@ public class ModulesScreen extends ClickCrystalsBase {
             }
         }
     }
+
+    @Override
+    public void close() {
+        super.close();
+        ClickCrystalsBase.setPrevOpened(this.getClass());
+    }
 }

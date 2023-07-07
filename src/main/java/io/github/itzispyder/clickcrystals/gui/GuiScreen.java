@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui;
 
 import io.github.itzispyder.clickcrystals.gui.callbacks.*;
+import io.github.itzispyder.clickcrystals.gui.elements.cc.SearchBarElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
@@ -96,7 +97,6 @@ public abstract class GuiScreen extends Screen {
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         super.mouseReleased(mouseX, mouseY, button);
 
-        this.selected = null;
         this.mouseClickListeners.forEach(mouseClickCallback -> {
             mouseClickCallback.handleMouse(mouseX, mouseY, button, ClickType.RELEASE);
         });
@@ -137,6 +137,9 @@ public abstract class GuiScreen extends Screen {
         this.keyActionListeners.forEach(keyPressCallback -> {
             keyPressCallback.handleKey(keyCode, ClickType.CLICK, scanCode, modifiers);
         });
+        if (selected instanceof SearchBarElement search) {
+            search.onKey(keyCode, scanCode);
+        }
 
         return true;
     }
