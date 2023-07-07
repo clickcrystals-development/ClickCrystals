@@ -52,19 +52,18 @@ public class SearchScreen extends ClickCrystalsBase {
         row = column = 0;
 
         for (Module module : modules) {
-            if (row * column >= 3 * 4) break;
-
-            DetailedModuleElement me = new DetailedModuleElement(module, 0, 0, 100);
+            DetailedModuleElement me = new DetailedModuleElement(module, 0, 0, 90);
             int x = nav.x + nav.width + 10 + (me.width + 5) * column;
-            int y = base.y + 10 + (me.height + 3) * row;
+            int y = searchbar.y + searchbar.height + 10 + (me.height + 3) * row;
             me.moveTo(x, y);
 
             matches.add(me);
             this.addChild(me);
 
             if (++column >= 3) {
-                column = 0;
                 row++;
+                if (row * column >= 3 * 3) break;
+                column = 0;
             }
         }
     }

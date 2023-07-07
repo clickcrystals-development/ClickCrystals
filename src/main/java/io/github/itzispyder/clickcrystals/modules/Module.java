@@ -8,8 +8,8 @@ import net.minecraft.client.MinecraftClient;
 
 import java.io.Serializable;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 
 /**
  * Represents a toggleable module
@@ -176,6 +176,6 @@ public abstract class Module implements Toggleable, Serializable {
 
     @Override
     public String toString() {
-        return category.name().toLowerCase() + ":" + id + ":" + description.toLowerCase().replaceAll("[^a-z0-9]","_");
+        return id + ":" + description.toLowerCase().replaceAll("[^a-z0-9]","_");
     }
 }
