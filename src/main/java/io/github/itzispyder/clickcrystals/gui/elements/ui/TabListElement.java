@@ -17,10 +17,10 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class TabListElement<T> extends GuiElement {
 
-    private final List<T> options;
+    protected final List<T> options;
     private Consumer<TabListElement<T>> pressAction;
     private Function<T, String> nameFunction;
-    private int selection;
+    protected int selection;
 
     public TabListElement(List<T> options, int x, int y, int width, int height, Consumer<TabListElement<T>> pressAction, Function<T, String> nameFunction) {
         super(x, y, width, height);
@@ -29,18 +29,21 @@ public class TabListElement<T> extends GuiElement {
         this.nameFunction = nameFunction;
         this.selection = 0;
 
-        double sectionWidth = (double)width / options.size();
         WidgetElement bg = new WidgetElement(x, y, width, height);
+        this.initTabList(bg);
+        this.addChild(bg);
+    }
+
+    protected void initTabList(WidgetElement background) {
+        double sectionWidth = (double)background.width / options.size();
 
         for (int i = 0; i < options.size(); i++) {
             TextElement tab = new TextElement(nameFunction.apply(options.get(i)), TextAlignment.CENTER, 0.6F, x, y);
             tab.setWidth((int)sectionWidth);
             tab.setX(x + (int)(sectionWidth * i));
             tab.setY(y + (int)(height * 0.33));
-            bg.addChild(tab);
+            background.addChild(tab);
         }
-
-        this.addChild(bg);
     }
 
     public TabListElement(List<T> options, int x, int y, int width, int height, Consumer<TabListElement<T>> pressAction) {
@@ -50,7 +53,10 @@ public class TabListElement<T> extends GuiElement {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY) {
         super.render(context, mouseX, mouseY);
+        renderExtras(context, mouseX, mouseY);
+    }
 
+    protected void renderExtras(DrawContext context, int mouseX, int mouseY) {
         double sectionWidth = (double)width / options.size();
         int selectionX = x + (int)sectionWidth * selection;
 

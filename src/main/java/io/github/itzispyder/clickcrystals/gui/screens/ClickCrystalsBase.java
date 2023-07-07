@@ -6,21 +6,35 @@ import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.gui.elements.ui.HyperLinkElement;
-import io.github.itzispyder.clickcrystals.gui.elements.ui.IconButtonElement;
+import io.github.itzispyder.clickcrystals.gui.elements.ui.ImageTabListElement;
+
+import java.util.List;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
 
 public abstract class ClickCrystalsBase extends DefaultBase {
 
     private static Class<? extends DefaultBase> prevOpened = HomeScreen.class;
+    private static int prevMenuSelection = 0;
 
     public WidgetElement nav = new WidgetElement(base.x + 10, base.y + 10, 80, base.height - 20, WidgetElement.Orientation.VERTICAL);
     public ImageElement ccIcon = new ImageElement(TexturesIdentifiers.ICON, nav.x + 3, nav.y + 5, 15, 15);
     public TextElement navTitle = new TextElement("ClickCrystals v" + version, TextAlignment.LEFT, 0.55F, ccIcon.x + ccIcon.width + 1, nav.y + 12);
-    public IconButtonElement homeScreen = new IconButtonElement(TexturesIdentifiers.HOME, ccIcon.x, navTitle.y + navTitle.height + 10, 15, 15, button -> {
-        mc.setScreen(new HomeScreen());
+    public ImageElement homeIcon = new ImageElement(TexturesIdentifiers.HOME, 0, 0, 0, 0);
+    public ImageElement modulesIcon = new ImageElement(TexturesIdentifiers.MODULES, 0, 0, 0, 0);
+    public ImageElement searchIcon = new ImageElement(TexturesIdentifiers.SEARCH, 0, 0, 0, 0);
+    public ImageTabListElement menuTab = new ImageTabListElement(List.of(homeIcon, modulesIcon, searchIcon), nav.x + 3, navTitle.y + navTitle.height + 10, nav.width - 6, 15, button -> {
+        ImageElement selection = button.getOptions().get(button.getSelection());
+        prevMenuSelection = button.getSelection();
+
+        if (selection == homeIcon)
+            mc.setScreenAndRender(new HomeScreen());
+        else if (selection == modulesIcon)
+            mc.setScreenAndRender(new ModulesScreen());
+        else if (selection == searchIcon)
+            mc.setScreenAndRender(new SearchScreen());
     });
-    public HyperLinkElement discordLink = new HyperLinkElement(ccIcon.x, homeScreen.y + homeScreen.height + 5, "https://discord.gg/tMaShNzNtP", "Join Discord ⬀", 0.5F, starter + "Join the Discord! >>>");
+    public HyperLinkElement discordLink = new HyperLinkElement(ccIcon.x, menuTab.y + menuTab.height + 5, "https://discord.gg/tMaShNzNtP", "Join Discord ⬀", 0.5F, starter + "Join the Discord! >>>");
     public HyperLinkElement githubLink = new HyperLinkElement(ccIcon.x, discordLink.y + discordLink.height + 5, "https://github.com/itzispyder/clickcrystals", "Open Source ⬀", 0.5F,  starter + "Check Our Code!");
     public HyperLinkElement modrinthLink = new HyperLinkElement(ccIcon.x, githubLink.y + githubLink.height + 5, "https://modrinth.com/mod/clickcrystals", "Modrinth Download ⬀", 0.5F, starter + "Follow our Project!");
     public HyperLinkElement itzispyderLink = new HyperLinkElement(ccIcon.x, modrinthLink.y + modrinthLink.height + 5, "https://itzispyder.github.io", "ImproperIssues ⬀", 0.5F, starter + "Read our bios!");
@@ -53,7 +67,8 @@ public abstract class ClickCrystalsBase extends DefaultBase {
         nav.addChild(names);
         nav.addChild(credits);
         this.addChild(nav);
-        this.addChild(homeScreen);
+        menuTab.setSelection(prevMenuSelection);
+        this.addChild(menuTab);
         this.addChild(discordLink);
         this.addChild(githubLink);
         this.addChild(modrinthLink);
