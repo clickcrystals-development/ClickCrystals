@@ -24,7 +24,7 @@ public abstract class GuiScreen extends Screen {
     public final List<ScreenRenderCallback> screenRenderListeners;
     public final List<KeyPressCallback> keyActionListeners;
     public final List<GuiElement> children;
-    public GuiElement selected;
+    public GuiElement selected, mostRecentlyAdded;
 
     public GuiScreen(String title) {
         super(Text.literal(title));
@@ -38,6 +38,7 @@ public abstract class GuiScreen extends Screen {
         this.keyActionListeners = new ArrayList<>();
         this.children = new ArrayList<>();
         this.selected = null;
+        this.mostRecentlyAdded = null;
     }
 
     public abstract void baseRender(DrawContext context, int mouseX, int mouseY, float delta);
@@ -165,6 +166,7 @@ public abstract class GuiScreen extends Screen {
 
     public void addChild(GuiElement child) {
         if (child != null) {
+            mostRecentlyAdded = child;
             children.add(child);
         }
     }

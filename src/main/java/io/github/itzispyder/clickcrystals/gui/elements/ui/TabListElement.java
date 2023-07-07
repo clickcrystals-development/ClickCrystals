@@ -43,6 +43,10 @@ public class TabListElement<T> extends GuiElement {
         this.addChild(bg);
     }
 
+    public TabListElement(List<T> options, int x, int y, int width, int height, Consumer<TabListElement<T>> pressAction) {
+        this(options, x, y, width, height, pressAction, T::toString);
+    }
+
     @Override
     public void render(DrawContext context, int mouseX, int mouseY) {
         super.render(context, mouseX, mouseY);

@@ -22,14 +22,14 @@ public class ModuleElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        Identifier texture = TexturesIdentifiers.MODULE_EMPTY_TEXTURE;
+        Identifier texture = TexturesIdentifiers.MODULE_EMPTY;
 
         if (module != null) {
             if (module.isEnabled()) {
-                texture = TexturesIdentifiers.MODULE_ON_TEXTURE;
+                texture = TexturesIdentifiers.MODULE_ON;
             }
             else {
-                texture = TexturesIdentifiers.MODULE_OFF_TEXTURE;
+                texture = TexturesIdentifiers.MODULE_OFF;
             }
         }
 

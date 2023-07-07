@@ -20,8 +20,8 @@ public class WidgetElement extends GuiElement {
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         switch (orientation) {
-            case VERTICAL -> context.drawTexture(TexturesIdentifiers.SMOOTH_VERTICAL_WIDGET_TEXTURE, x, y, 0, 0, width, height, width, height);
-            case HORIZONTAL -> context.drawTexture(TexturesIdentifiers.SMOOTH_HORIZONTAL_WIDGET_TEXTURE, x, y, 0, 0, width, height, width, height);
+            case VERTICAL -> context.drawTexture(TexturesIdentifiers.SMOOTH_VERTICAL_WIDGET, x, y, 0, 0, width, height, width, height);
+            case HORIZONTAL -> context.drawTexture(TexturesIdentifiers.SMOOTH_HORIZONTAL_WIDGET, x, y, 0, 0, width, height, width, height);
         }
     }
 

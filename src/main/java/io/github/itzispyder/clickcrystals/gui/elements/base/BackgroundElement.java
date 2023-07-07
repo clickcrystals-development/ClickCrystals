@@ -12,7 +12,7 @@ public class BackgroundElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        context.drawTexture(TexturesIdentifiers.SMOOTH_BACKGROUND_TEXTURE, x, y, 0, 0, width, height, width, height);
+        context.drawTexture(TexturesIdentifiers.SMOOTH_BACKGROUND, x, y, 0, 0, width, height, width, height);
     }
 
     @Override
