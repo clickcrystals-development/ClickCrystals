@@ -173,4 +173,9 @@ public abstract class Module implements Toggleable, Serializable {
 
         if (saveImmediately) config.save();
     }
+
+    @Override
+    public String toString() {
+        return category.name().toLowerCase() + ":" + id + ":" + description.toLowerCase().replaceAll("[^a-z0-9]","_");
+    }
 }
