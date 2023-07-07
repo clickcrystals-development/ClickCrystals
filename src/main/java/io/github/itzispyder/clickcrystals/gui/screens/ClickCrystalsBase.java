@@ -12,13 +12,15 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
 
 public abstract class ClickCrystalsBase extends DefaultBase {
 
+    private static Class<? extends DefaultBase> prevOpened = HomeScreen.class;
+
     public WidgetElement nav = new WidgetElement(base.x + 10, base.y + 10, 80, base.height - 20, WidgetElement.Orientation.VERTICAL);
     public ImageElement ccIcon = new ImageElement(TexturesIdentifiers.ICON, nav.x + 3, nav.y + 5, 15, 15);
     public TextElement navTitle = new TextElement("ClickCrystals v" + version, TextAlignment.LEFT, 0.55F, ccIcon.x + ccIcon.width + 1, nav.y + 12);
-    public IconButtonElement homeScreen = new IconButtonElement(TexturesIdentifiers.HOME, ccIcon.x, navTitle.y + nav.height + 10, 20, 20, button -> {
+    public IconButtonElement homeScreen = new IconButtonElement(TexturesIdentifiers.HOME, ccIcon.x, navTitle.y + navTitle.height + 10, 15, 15, button -> {
         mc.setScreen(new HomeScreen());
     });
-    public HyperLinkElement discordLink = new HyperLinkElement(ccIcon.x, ccIcon.y + ccIcon.height + 5, "https://discord.gg/tMaShNzNtP", "Join Discord ⬀", 0.5F, starter + "Join the Discord! >>>");
+    public HyperLinkElement discordLink = new HyperLinkElement(ccIcon.x, homeScreen.y + homeScreen.height + 5, "https://discord.gg/tMaShNzNtP", "Join Discord ⬀", 0.5F, starter + "Join the Discord! >>>");
     public HyperLinkElement githubLink = new HyperLinkElement(ccIcon.x, discordLink.y + discordLink.height + 5, "https://github.com/itzispyder/clickcrystals", "Open Source ⬀", 0.5F,  starter + "Check Our Code!");
     public HyperLinkElement modrinthLink = new HyperLinkElement(ccIcon.x, githubLink.y + githubLink.height + 5, "https://modrinth.com/mod/clickcrystals", "Modrinth Download ⬀", 0.5F, starter + "Follow our Project!");
     public HyperLinkElement itzispyderLink = new HyperLinkElement(ccIcon.x, modrinthLink.y + modrinthLink.height + 5, "https://itzispyder.github.io", "ImproperIssues ⬀", 0.5F, starter + "Read our bios!");
@@ -30,6 +32,18 @@ public abstract class ClickCrystalsBase extends DefaultBase {
     public ClickCrystalsBase(String title) {
         super(title);
         this.baseInit();
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void openClickCrystalsMenu() {
+        try {
+            mc.setScreenAndRender(prevOpened.newInstance());
+        }
+        catch (Exception ignore) {}
+    }
+
+    public static void setPrevOpened(Class<? extends DefaultBase> prevOpened) {
+        ClickCrystalsBase.prevOpened = prevOpened;
     }
 
     private void baseInit() {
