@@ -10,11 +10,10 @@ import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
-import io.github.itzispyder.clickcrystals.guiold.hud.ClickCrystalIconHud;
-import io.github.itzispyder.clickcrystals.guiold.hud.ClickPerSecondHud;
-import io.github.itzispyder.clickcrystals.guiold.hud.ColorOverlayHud;
-import io.github.itzispyder.clickcrystals.guiold.hud.ModuleListTextHud;
-import io.github.itzispyder.clickcrystals.guiold.screens.ClickCrystalsModuleScreen;
+import io.github.itzispyder.clickcrystals.gui.hud.ClickCrystalsIconHud;
+import io.github.itzispyder.clickcrystals.gui.hud.ClickPerSecondHud;
+import io.github.itzispyder.clickcrystals.gui.hud.ColorOverlayHud;
+import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.CCExtras;
@@ -133,7 +132,7 @@ public final class ClickCrystals implements ModInitializer {
 
         // Hud
         system.addHud(new ColorOverlayHud());
-        system.addHud(new ClickCrystalIconHud());
+        system.addHud(new ClickCrystalsIconHud());
         system.addHud(new ModuleListTextHud());
         system.addHud(new ClickPerSecondHud());
     }

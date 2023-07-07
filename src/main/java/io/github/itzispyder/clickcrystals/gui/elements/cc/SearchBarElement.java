@@ -31,7 +31,7 @@ public class SearchBarElement extends GuiElement {
             text = text.substring(1);
         }
 
-        DrawableUtils.drawText(context, text, x + 2 + textHeight, y + (int)(width * 0.33), textScale, true);
+        DrawableUtils.drawText(context, text, x + 2 + textHeight, y + (int)(height * 0.33), textScale, true);
     }
 
     @Override
