@@ -1,11 +1,18 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-public abstract class Setting<T> {
+import io.github.itzispyder.clickcrystals.util.StringUtils;
 
-    private String name, description;
+import java.io.Serializable;
+
+public abstract class Setting<T> implements Serializable {
+
+    private final String name, id, description;
     private T def, val;
 
     protected Setting(String name, String description, T def, T val) {
+        this.id = name;
+        this.name = StringUtils.capitalizeWords(name);
+        this.description = description;
         this.def = def;
         this.val = val;
     }
@@ -22,16 +29,8 @@ public abstract class Setting<T> {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public T getDef() {
@@ -48,6 +47,10 @@ public abstract class Setting<T> {
 
     public void setVal(T val) {
         this.val = val;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public class Builder extends SettingBuilder<T> {

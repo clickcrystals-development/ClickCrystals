@@ -21,7 +21,7 @@ public class CrystPerSec extends Module implements Listener {
     private static final Queue<Integer> intQueue = new ArrayQueue<>(15);
 
     public CrystPerSec() {
-        super("CrystalSpeed", Categories.MISC, "Crystals per second counter.");
+        super("crystal-speed", Categories.MISC, "Crystals per second counter.");
     }
 
     @Override

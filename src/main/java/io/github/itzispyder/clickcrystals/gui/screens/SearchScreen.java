@@ -44,7 +44,7 @@ public class SearchScreen extends ClickCrystalsBase {
         this.matches.clear();
 
         List<Module> modules = system.modules().values().stream()
-                .filter(module -> module.toString().contains(searchbar.getQuery()))
+                .filter(module -> module.getSearchQuery().contains(searchbar.getQuery()))
                 .sorted(Comparator.comparing(Module::getId))
                 .toList();
 

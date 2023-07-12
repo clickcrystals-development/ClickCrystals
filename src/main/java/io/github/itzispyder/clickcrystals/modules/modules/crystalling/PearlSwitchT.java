@@ -15,7 +15,7 @@ public class PearlSwitchT extends Module implements Listener {
     private static long cooldown;
 
     public PearlSwitchT() {
-        super("PearlSwitchT", Categories.CRYSTALLING,"Right click with your totem to switch to pearl slot.");
+        super("pearl-switch-t", Categories.CRYSTALLING,"Right click with your totem to switch to pearl slot.");
     }
 
     @Override

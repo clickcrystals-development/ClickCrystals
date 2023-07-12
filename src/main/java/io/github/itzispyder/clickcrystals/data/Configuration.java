@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.data;
 
-import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.ModuleData;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 
 import java.io.*;
@@ -97,8 +97,8 @@ public class Configuration implements Serializable {
         return getOrDefault(key, Long.class,0L);
     }
 
-    public Module getModule(String key) {
-        return get(key, Module.class);
+    public ModuleData getModuleData(String key) {
+        return getOrDefault(key, ModuleData.class, new ModuleData());
     }
 
     /**

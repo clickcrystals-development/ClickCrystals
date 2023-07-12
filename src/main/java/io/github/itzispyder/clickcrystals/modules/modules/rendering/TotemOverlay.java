@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class TotemOverlay extends Module {
 
     public TotemOverlay() {
-        super("TotemOverlay", Categories.RENDERING, "Renders red overlay when not holding totem.");
+        super("totem-overlay", Categories.RENDERING, "Renders red overlay when not holding totem.");
     }
 
     @Override

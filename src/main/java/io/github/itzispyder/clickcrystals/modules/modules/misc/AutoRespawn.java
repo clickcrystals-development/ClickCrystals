@@ -11,7 +11,7 @@ import net.minecraft.client.gui.screen.Screen;
 public class AutoRespawn extends Module implements Listener {
 
     public AutoRespawn() {
-        super("AutoRespawn", Categories.MISC, "Clicks the respawn button for you.");
+        super("auto-respawn", Categories.MISC, "Clicks the respawn button for you.");
     }
 
     @Override

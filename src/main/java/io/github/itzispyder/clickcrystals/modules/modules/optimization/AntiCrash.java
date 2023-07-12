@@ -10,7 +10,7 @@ import net.minecraft.network.packet.s2c.play.ParticleS2CPacket;
 public class AntiCrash extends Module implements Listener {
 
     public AntiCrash() {
-        super("AntiCrash", Categories.OPTIMIZATION,"Prevents servers from sending you particle packets, stopping malicious particle crashes.");
+        super("anti-crash", Categories.OPTIMIZATION,"Prevents servers from sending you particle packets, stopping malicious particle crashes.");
     }
 
     @Override

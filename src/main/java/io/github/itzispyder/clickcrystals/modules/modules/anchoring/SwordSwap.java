@@ -13,7 +13,7 @@ import net.minecraft.item.SwordItem;
 public class SwordSwap extends Module implements Listener {
 
     public SwordSwap() {
-        super("SwordSwap", Categories.ANCHORING, "Switch to sword after hitting a shielding opponent with an axe.");
+        super("sword-swap", Categories.ANCHORING, "Switch to sword after hitting a shielding opponent with an axe.");
     }
 
     @Override

@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 public class CrystSwitch extends Module implements Listener {
 
     public CrystSwitch() {
-        super("CrystalSwitch", Categories.CRYSTALLING,"Whenever you punch bedrock or obsidian with a sword, it will switch to a crystal.");
+        super("crystal-switch", Categories.CRYSTALLING,"Whenever you punch bedrock or obsidian with a sword, it will switch to a crystal.");
     }
 
     @Override

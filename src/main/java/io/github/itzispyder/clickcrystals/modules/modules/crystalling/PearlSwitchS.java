@@ -19,7 +19,7 @@ public class PearlSwitchS extends Module implements Listener {
      * Module constructor
      */
     public PearlSwitchS() {
-        super("PearlSwitchS", Categories.CRYSTALLING,"Right click your sword to switch to your pearl slot.");
+        super("pearl-switch-s", Categories.CRYSTALLING,"Right click your sword to switch to your pearl slot.");
     }
 
     @Override

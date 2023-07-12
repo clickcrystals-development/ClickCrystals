@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 public class AnchorSwitch extends Module implements Listener {
 
     public AnchorSwitch() {
-        super("AnchorSwitch", Categories.ANCHORING,"Whenever you place an anchor, switch to glowstone then back after it has been charged.");
+        super("anchor-switch", Categories.ANCHORING,"Whenever you place an anchor, switch to glowstone then back after it has been charged.");
     }
 
     @Override

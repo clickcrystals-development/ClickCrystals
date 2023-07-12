@@ -19,7 +19,7 @@ public class TotemPops extends Module implements Listener {
     private static final Map<String,Integer> totemPops = new HashMap<>();
 
     public TotemPops() {
-        super("TotemPops", Categories.MISC, "Send messages when a player pops their totem.");
+        super("totem-pops", Categories.MISC, "Send messages when a player pops their totem.");
     }
 
     @Override
