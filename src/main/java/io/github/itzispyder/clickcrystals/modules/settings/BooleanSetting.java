@@ -13,7 +13,7 @@ public class BooleanSetting extends Setting<Boolean> {
     public static class Builder extends SettingBuilder<Boolean> {
         @Override
         public Setting<Boolean> build() {
-            return new BooleanSetting(name, description, def, val);
+            return new BooleanSetting(name, description, def, getOrDef(val, def));
         }
     }
 }

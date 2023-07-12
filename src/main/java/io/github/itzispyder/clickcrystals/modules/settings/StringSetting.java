@@ -13,7 +13,7 @@ public class StringSetting extends Setting<String> {
     public static class Builder extends SettingBuilder<String> {
         @Override
         public Setting<String> build() {
-            return new StringSetting(name, description, def, val);
+            return new StringSetting(name, description, def, getOrDef(val, def));
         }
     }
 }

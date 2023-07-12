@@ -73,7 +73,7 @@ public class DoubleSetting extends NumberSetting<Double> {
 
         @Override
         public Setting<Double> build() {
-            return new DoubleSetting(name, description, def, val, min, max, decimalPlaces);
+            return new DoubleSetting(name, description, def, getOrDef(val, def), min, max, decimalPlaces);
         }
     }
 }

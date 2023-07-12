@@ -10,6 +10,10 @@ public abstract class SettingBuilder<T> {
         def = val = null;
     }
 
+    protected <T> T getOrDef(T val, T def) {
+        return val != null ? val : def;
+    }
+
     public SettingBuilder<T> name(String name) {
         this.name = name;
         return this;
