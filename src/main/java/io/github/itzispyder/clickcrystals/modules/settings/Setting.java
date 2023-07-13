@@ -48,8 +48,8 @@ public abstract class Setting<T> implements Serializable {
         return val;
     }
 
-    public void setVal(T val) {
-        this.val = val;
+    public void setVal(Object val) {
+        this.val = (T)val;
     }
 
     public String getId() {

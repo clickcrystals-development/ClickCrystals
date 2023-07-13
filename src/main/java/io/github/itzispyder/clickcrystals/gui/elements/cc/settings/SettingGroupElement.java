@@ -17,6 +17,16 @@ public class SettingGroupElement extends GuiElement {
         super(x, y, width, height);
         this.settingGroup = settingGroup;
         this.textScale = textScale;
+
+        int nameHeight = (int)(10 * textScale);
+        int caret = y + nameHeight + 2;
+
+        for (Setting<?> setting : settingGroup.getSettings()) {
+            GuiElement element = setting.toGuiElement(x, caret, 20, 10);
+            this.addChild(element);
+            caret += element.height + 2;
+        }
+        this.height = caret - y;
     }
 
     @Override
@@ -29,15 +39,16 @@ public class SettingGroupElement extends GuiElement {
         DrawableUtils.drawHorizontalLine(context, x, y + nameHeight / 2, textMargin, 1, 0xFFFFFFFF);
         DrawableUtils.drawText(context, name, x + textMargin + 3, y + nameHeight / 4, textScale, true);
         DrawableUtils.drawHorizontalLine(context, x + textMargin + nameWidth + 6, y + nameHeight / 2, width - (textMargin + nameWidth + 16), 1, 0xFFFFFFFF);
-
-        for (Setting<?> setting : settingGroup.getSettings()) {
-
-        }
     }
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
-        this.forEachChild(child -> child.onClick(mouseX, mouseY, button));
+        for (GuiElement child : this.getChildren()) {
+            if (child.isHovered((int)mouseX, (int)mouseY)) {
+                child.onClick(mouseX, mouseY, button);
+                break;
+            }
+        }
     }
 
     public SettingGroup getSettingGroup() {

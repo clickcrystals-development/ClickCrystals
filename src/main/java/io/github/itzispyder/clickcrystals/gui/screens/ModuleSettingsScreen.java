@@ -33,12 +33,13 @@ public class ModuleSettingsScreen extends ClickCrystalsBase {
         for (SettingGroup group : module.getData().getSettingGroups()) {
             SettingGroupElement ge = new SettingGroupElement(group, title.x, caret, base.width - nav.width - 20, 10, 0.6F);
             this.addChild(ge);
-            caret += ge.getHeight() + 5;
+            caret += ge.getHeight() + 2;
         }
     }
 
     @Override
     public void close() {
+        Module.saveModule(module, true);
         ClickCrystalsBase.openClickCrystalsMenu();
     }
 

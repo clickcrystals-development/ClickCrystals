@@ -115,7 +115,12 @@ public abstract class Module implements Toggleable {
             String path = "modules." + module.getId();
 
             ModuleData data = config.getModuleData(path);
-            module.setData(data);
+
+            data.forEach(setting -> module.data.forEach(current -> {
+                if (setting.getId().equals(current.getId())) {
+                    current.setVal(setting.getVal());
+                }
+            }));
         }
     }
 

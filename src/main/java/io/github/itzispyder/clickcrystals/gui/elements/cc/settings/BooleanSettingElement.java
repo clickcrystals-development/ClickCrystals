@@ -21,8 +21,8 @@ public class BooleanSettingElement extends GuiElement {
         super(x, y, width, height);
         this.setting = setting;
 
-        TextElement title = new TextElement(setting.getName(), TextAlignment.LEFT, 0.55F, x + width + 2, y);
-        TextElement desc = new TextElement("§7" + setting.getDescription(), TextAlignment.LEFT, 0.55F, title.x, title.y + 6);
+        TextElement title = new TextElement(setting.getName(), TextAlignment.LEFT, 0.5F, x + width + 2, y);
+        TextElement desc = new TextElement("§7" + setting.getDescription(), TextAlignment.LEFT, 0.5F, title.x, title.y + 5);
         this.addChild(title);
         this.addChild(desc);
     }

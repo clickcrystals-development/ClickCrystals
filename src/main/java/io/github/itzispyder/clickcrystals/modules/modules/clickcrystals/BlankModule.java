@@ -22,9 +22,15 @@ public class BlankModule extends Module {
             .def(false)
             .build()
     );
+    private final Setting<Boolean> hello2 = sgTest.add(BooleanSetting.create()
+            .name("hello-world-2")
+            .description("Shout out to HELLO WORLD, we love JAVA!")
+            .def(false)
+            .build()
+    );
 
     public BlankModule() {
-        super("blank-module", Categories.CLICKCRYSTALS, "This module does nothing, serves as a testing purpose for development.");
+        super("test-module", Categories.CLICKCRYSTALS, "This module does nothing, serves as a testing purpose for development.");
     }
 
     @Override

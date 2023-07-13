@@ -16,10 +16,7 @@ import io.github.itzispyder.clickcrystals.gui.hud.ColorOverlayHud;
 import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.CCExtras;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.IconHud;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.AntiCrash;
@@ -128,6 +125,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new SwordSwap());
         system.addModule(new AxeSwap());
         system.addModule(new GlowingEntities());
+        system.addModule(new BlankModule());
         Module.loadConfigModules();
 
         // Hud

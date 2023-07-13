@@ -15,7 +15,7 @@ public class ModuleData implements Serializable {
     public final SettingGroup sgDefault = new SettingGroup("module-defaults");
     private final Setting<Boolean> enabled = sgDefault.add(BooleanSetting.create()
             .name("module-enabled")
-            .description("Module enabled")
+            .description("Module enabled or disabled.")
             .def(false)
             .val(false)
             .build()
@@ -38,6 +38,10 @@ public class ModuleData implements Serializable {
 
     public void addSettingGroup(SettingGroup group) {
         this.settingGroups.add(settingGroups.size() - 1, group);
+    }
+
+    public void removeSettingGroup(SettingGroup group) {
+        this.settingGroups.remove(group);
     }
 
     public List<SettingGroup> getSettingGroups() {
