@@ -28,15 +28,14 @@ public class StringSettingElement extends GuiElement {
         this.textScale = textScale;
         this.input = setting.getVal();
 
-        int textHeight = getTextHeight();
         ImageElement bg = new ImageElement(GuiTextures.SETTING_STRING, x, y, width, height);
         TextElement title = new TextElement(setting.getName(), TextAlignment.LEFT, 0.5F, x + 100, y);
-        TextElement desc = new TextElement("§7" + setting.getDescription(), TextAlignment.LEFT, 0.5F, title.x, title.y + 5);
+        TextElement desc = new TextElement("§7" + setting.getDescription(), TextAlignment.LEFT, 0.45F, title.x, title.y + 5);
         this.addChild(title);
         this.addChild(desc);
         this.addChild(bg);
 
-        exButton = new ImageElement(GuiTextures.X, x + width - 2 - textHeight, y + 2, textHeight, textHeight);
+        exButton = new ImageElement(GuiTextures.X, x + width - height, y, height, height);
         this.addChild(exButton);
     }
 
@@ -45,7 +44,7 @@ public class StringSettingElement extends GuiElement {
         if (mc.currentScreen instanceof GuiScreen screen) {
             String text = input;
 
-            while (text.length() > 0 && mc.textRenderer.getWidth(text) * textScale > width - 4 - getTextHeight()) {
+            while (text.length() > 0 && mc.textRenderer.getWidth(text) * textScale > width - height - 2) {
                 text = text.substring(1);
             }
 

@@ -8,20 +8,52 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class ScrollPanelElement extends GuiElement {
 
+    private int minY, maxY;
+
     public ScrollPanelElement(int x, int y, int width, int height) {
         super(x, y, width, height);
+        this.minY = y;
+        this.maxY = y + height;
+    }
+
+    public static boolean canRenderOnPanel(ScrollPanelElement panel, GuiElement element) {
+        return element.y >= panel.y && element.y + element.height <= panel.y + panel.height;
+    }
+
+    public boolean canScrollUp() {
+        return minY < y;
+    }
+
+    public boolean canScrollDown() {
+        return maxY > y + height;
+    }
+
+    public boolean canScroll() {
+        return canScrollUp() || canScrollDown();
+    }
+
+    public boolean canScrollInDirection(double amount) {
+        if (amount >= 0.0) {
+            return canScrollUp();
+        }
+        else {
+            return canScrollDown();
+        }
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY) {
-        if (rendering) {
-            onRender(context, mouseX, mouseY);
+    public void addChild(GuiElement child) {
+        super.addChild(child);
+        updateBounds(child);
+        child.scrollOnPanel(this, 0);
+    }
 
-            for (GuiElement child : getChildren()) {
-                if (child.y >= y && child.y + child.height <= y + height) {
-                    child.render(context, mouseX, mouseY);
-                }
-            }
+    public void updateBounds(GuiElement child) {
+        if (child.y < minY) {
+            minY = child.y;
+        }
+        if (child.y + child.height > maxY) {
+            maxY = child.y + child.height;
         }
     }
 
@@ -45,8 +77,10 @@ public class ScrollPanelElement extends GuiElement {
     }
 
     public void onScroll(double mouseX, double mouseY, double amount) {
+        if (!canScrollInDirection(amount)) return;
+
         for (GuiElement child : getChildren()) {
-            child.move(0, amount * 2);
+            child.scrollOnPanel(this, (int)(amount * 6.9420));
         }
     }
 }

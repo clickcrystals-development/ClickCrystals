@@ -31,10 +31,10 @@ public abstract class GuiElement {
     public void render(DrawContext context, int mouseX, int mouseY) {
         if (rendering) {
             onRender(context, mouseX, mouseY);
+        }
 
-            this.children.forEach(guiElement -> {
-                guiElement.render(context, mouseX, mouseY);
-            });
+        for (GuiElement child : this.children) {
+            child.render(context, mouseX, mouseY);
         }
 
         Module guiBorders = Module.get(GuiBorders.class);
@@ -186,21 +186,13 @@ public abstract class GuiElement {
         this.parent = parent;
     }
 
-    public boolean isOnScrollPanel(GuiElement element) {
-        if (element == null || element.getParent() != null) return false;
-        if (element instanceof ScrollPanelElement) return true;
+    public void scrollOnPanel(ScrollPanelElement panel, int amount) {
+        setY(getY() + amount);
+        setRendering(ScrollPanelElement.canRenderOnPanel(panel, this));
+        panel.updateBounds(this);
 
-        boolean onPanel = false;
-        GuiElement guiElement = element;
-
-        while (guiElement != null) {
-            guiElement = guiElement.getParent();
-            if (guiElement instanceof ScrollPanelElement) {
-                onPanel = true;
-                break;
-            }
+        for (GuiElement child : children) {
+            child.scrollOnPanel(panel, amount);
         }
-
-        return onPanel;
     }
 }

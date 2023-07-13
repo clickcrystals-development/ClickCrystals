@@ -2,11 +2,11 @@ package io.github.itzispyder.clickcrystals.gui.elements.cc.settings;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
+import io.github.itzispyder.clickcrystals.gui.elements.design.DividerElement;
 import io.github.itzispyder.clickcrystals.modules.settings.NumberSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.Setting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -20,6 +20,9 @@ public class SettingSectionElement extends GuiElement {
         super(x, y, width, height);
         this.settingSection = settingSection;
         this.textScale = textScale;
+
+        DividerElement title = new DividerElement(settingSection.getName(), x, y, width, 0, textScale);
+        this.addChild(title);
 
         int nameHeight = (int)(10 * textScale);
         int caret = y + nameHeight + 2;
@@ -38,14 +41,7 @@ public class SettingSectionElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        String name = settingSection.getName();
-        int nameWidth = (int)(mc.textRenderer.getWidth(name) * textScale);
-        int nameHeight = (int)(10 * textScale);
-        int textMargin = (int)(width * 0.05);
 
-        DrawableUtils.drawHorizontalLine(context, x, y + nameHeight / 2, textMargin, 1, 0xFF555555);
-        DrawableUtils.drawText(context, "§7" + name, x + textMargin + 3, y + nameHeight / 4, textScale, true);
-        DrawableUtils.drawHorizontalLine(context, x + textMargin + nameWidth + 6, y + nameHeight / 2, width - (textMargin + nameWidth + 16), 1, 0xFF555555);
     }
 
     @Override

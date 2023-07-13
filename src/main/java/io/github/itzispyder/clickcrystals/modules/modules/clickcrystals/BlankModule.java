@@ -14,6 +14,24 @@ public class BlankModule extends Module {
             .def(false)
             .build()
     );
+    public final Setting<String> anotherString = scGeneral.add(StringSetting.create()
+            .name("lmfao-real")
+            .description("weeeeeeeee")
+            .def("KYS (keep urself safe)")
+            .build()
+    );
+    public final Setting<String> anotherAnotherString = scGeneral.add(StringSetting.create()
+            .name("lmfao-real")
+            .description("weeeeeeeee")
+            .def("KYS (keep urself safe)")
+            .build()
+    );
+    public final Setting<String> anotherStringAnother = scGeneral.add(StringSetting.create()
+            .name("lmfao-real")
+            .description("weeeeeeeee")
+            .def("KYS (keep urself safe)")
+            .build()
+    );
     public final Setting<Integer> anotherInt = scGeneral.add(IntegerSetting.create()
             .max(10)
             .min(0)
