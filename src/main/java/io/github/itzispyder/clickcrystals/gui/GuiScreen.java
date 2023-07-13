@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.gui;
 import io.github.itzispyder.clickcrystals.gui.callbacks.*;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.StringSettingElement;
+import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
@@ -133,6 +134,13 @@ public abstract class GuiScreen extends Screen {
         this.mouseScrollListeners.forEach(mouseScrollCallback -> {
             mouseScrollCallback.handleMouse(mouseX, mouseY, amount);
         });
+
+        for (GuiElement child : children) {
+            if (child instanceof ScrollPanelElement panel && panel.isHovered((int)mouseX, (int)mouseY)) {
+                panel.onScroll(mouseX, mouseY, amount);
+                break;
+            }
+        }
 
         return true;
     }

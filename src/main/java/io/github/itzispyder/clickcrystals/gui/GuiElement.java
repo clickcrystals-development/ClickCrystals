@@ -72,6 +72,12 @@ public abstract class GuiElement {
         }
     }
 
+    public void addChild(GuiElement parent, GuiElement child) {
+        if (child != null && child != this && parent != null) {
+            parent.addChild(child);
+        }
+    }
+
     public void removeChild(GuiElement child) {
         children.remove(child);
     }

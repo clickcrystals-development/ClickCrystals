@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.elements.cc.settings;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
+import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.modules.settings.NumberSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.Setting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
@@ -13,7 +14,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 public class SettingSectionElement extends GuiElement {
 
     private final SettingSection settingSection;
-    private float textScale;
+    private final float textScale;
 
     public SettingSectionElement(SettingSection settingSection, int x, int y, int width, int height, float textScale) {
         super(x, y, width, height);
@@ -49,10 +50,14 @@ public class SettingSectionElement extends GuiElement {
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
-        for (GuiElement child : this.getChildren()) {
-            if (child.isHovered((int)mouseX, (int)mouseY)) {
-                child.onClick(mouseX, mouseY, button);
-                break;
+        if (mc.currentScreen instanceof GuiScreen screen) {
+            for (int i = getChildren().size() - 1; i >= 0; i--) {
+                GuiElement child = getChildren().get(i);
+                if (child.isHovered((int)mouseX, (int)mouseY)) {
+                    screen.selected = child;
+                    child.onClick(mouseX, mouseY, button);
+                    break;
+                }
             }
         }
     }
