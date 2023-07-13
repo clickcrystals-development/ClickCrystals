@@ -6,7 +6,6 @@ import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.network.packet.Packet;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;

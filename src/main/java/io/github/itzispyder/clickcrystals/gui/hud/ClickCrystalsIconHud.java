@@ -1,11 +1,11 @@
 package io.github.itzispyder.clickcrystals.gui.hud;
 
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.IconHud;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.DrawContext;
 
 @Environment(EnvType.CLIENT)

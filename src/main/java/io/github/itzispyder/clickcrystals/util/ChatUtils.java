@@ -2,8 +2,8 @@ package io.github.itzispyder.clickcrystals.util;
 
 import net.minecraft.text.Text;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 
 /**
  * Client chat utils

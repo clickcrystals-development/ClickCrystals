@@ -1,19 +1,11 @@
 package io.github.itzispyder.clickcrystals.util;
 
-import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
-import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
-import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
-import org.lwjgl.glfw.GLFW;
-
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Predicate;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
