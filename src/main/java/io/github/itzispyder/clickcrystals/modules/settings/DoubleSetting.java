@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui.GuiElement;
+import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.DoubleSettingElement;
+import io.github.itzispyder.clickcrystals.util.MathUtils;
 
 public class DoubleSetting extends NumberSetting<Double> {
 
@@ -12,8 +13,8 @@ public class DoubleSetting extends NumberSetting<Double> {
     }
 
     @Override
-    public <E extends GuiElement> E toGuiElement(int x, int y, int width, int height) {
-        return null;
+    public DoubleSettingElement toGuiElement(int x, int y, int width, int height) {
+        return new DoubleSettingElement(this, x, y, width, height);
     }
 
     @Override
@@ -24,6 +25,16 @@ public class DoubleSetting extends NumberSetting<Double> {
     @Override
     public void setMin(Double min) {
         super.setMin(Math.min(min, max - 1));
+    }
+
+    @Override
+    public void setDef(Double def) {
+        super.setDef(round(def));
+    }
+
+    @Override
+    public void setVal(Object val) {
+        super.setVal(round((double)val));
     }
 
     @Override
@@ -45,7 +56,7 @@ public class DoubleSetting extends NumberSetting<Double> {
     }
 
     private double round(double val) {
-        double ex = 10 ^ decimalPlaces;
+        int ex = MathUtils.exp(10, decimalPlaces);
         return Math.floor(val * ex) / ex;
     }
 
@@ -80,7 +91,7 @@ public class DoubleSetting extends NumberSetting<Double> {
 
         @Override
         public Setting<Double> build() {
-            return new DoubleSetting(name, description, def, getOrDef(val, def), min, max, decimalPlaces);
+            return new DoubleSetting(name, description, MathUtils.minMax(def, min, max), getOrDef(val, def), min, max, decimalPlaces);
         }
     }
 }

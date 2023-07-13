@@ -27,7 +27,7 @@ public class BlankModule extends Module {
             .min(5)
             .name("testing-integer-setting-again")
             .description("this knob does nothing haha lol again")
-            .def(2)
+            .def(10)
             .build()
     );
     public final Setting<Boolean> hello = scTest.add(BooleanSetting.create()
@@ -48,7 +48,7 @@ public class BlankModule extends Module {
             .decimalPlaces(2)
             .name("yo-yo-yo-test")
             .description("Wassup")
-            .def(7.34)
+            .def(87.34)
             .build()
     );
     public final Setting<Double> yoYoYo2 = scTest.add(DoubleSetting.create()

@@ -28,4 +28,20 @@ public final class MathUtils {
     public static double minMax(double val, double min, double max) {
         return Math.min(max, Math.max(min, val));
     }
+
+    public static int exp(int val, int power) {
+        int base = val;
+        for (int i = 1; i < power; i++) {
+            val *= base;
+        }
+        return val;
+    }
+
+    public static double exp(double val, double power) {
+        double base = val;
+        for (int i = 1; i < power; i++) {
+            val *= base;
+        }
+        return val;
+    }
 }
