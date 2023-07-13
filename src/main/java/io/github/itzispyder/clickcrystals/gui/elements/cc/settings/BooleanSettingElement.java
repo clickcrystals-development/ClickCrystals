@@ -20,7 +20,7 @@ public class BooleanSettingElement extends GuiElement {
         super(x, y, width, height);
         this.setting = setting;
 
-        TextElement title = new TextElement(setting.getName(), TextAlignment.LEFT, 0.5F, x + width + 2, y);
+        TextElement title = new TextElement(setting.getName(), TextAlignment.LEFT, 0.5F, x + 100, y);
         TextElement desc = new TextElement("§7" + setting.getDescription(), TextAlignment.LEFT, 0.5F, title.x, title.y + 5);
         this.addChild(title);
         this.addChild(desc);
@@ -28,8 +28,6 @@ public class BooleanSettingElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        mc.player.playSound(SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundCategory.MASTER, 0.8F, 2);
-
         Identifier texture;
         if (setting == null) {
             texture = GuiTextures.SETTING_BOOLEAN_NEUTRAL;
@@ -46,6 +44,7 @@ public class BooleanSettingElement extends GuiElement {
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
+        mc.player.playSound(SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundCategory.MASTER, 0.8F, 2);
         setting.setVal(!setting.getVal());
     }
 

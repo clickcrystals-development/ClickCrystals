@@ -1,9 +1,10 @@
 package io.github.itzispyder.clickcrystals.gui.elements.cc.settings;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.NumberSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.Setting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
+import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
 
@@ -23,7 +24,11 @@ public class SettingSectionElement extends GuiElement {
         int caret = y + nameHeight + 2;
 
         for (Setting<?> setting : settingSection.getSettings()) {
-            GuiElement element = setting.toGuiElement(x, caret, setting instanceof BooleanSetting ? 20 : 80, 10);
+            int elementWidth = 20;
+            if (setting instanceof NumberSetting<?>) elementWidth = 80;
+            else if (setting instanceof StringSetting) elementWidth = 90;
+
+            GuiElement element = setting.toGuiElement(x, caret, elementWidth, 10);
             this.addChild(element);
             caret += element.height + 2;
         }

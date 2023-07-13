@@ -33,7 +33,7 @@ public class DoubleSettingElement extends GuiElement {
         double ratioWidth = width * ratio;
         this.knob.setX((int)(x + ratioWidth));
 
-        this.titleText = new TextElement(setting.getName() + ": §3" + setting.getVal(), TextAlignment.LEFT, 0.5F, x + width + 12, y);
+        this.titleText = new TextElement(setting.getName() + ": §3" + setting.getVal(), TextAlignment.LEFT, 0.5F, x + 100, y);
         TextElement desc = new TextElement("§7" + setting.getDescription(), TextAlignment.LEFT, 0.5F, titleText.x, titleText.y + 5);
         this.addChild(titleText);
         this.addChild(desc);

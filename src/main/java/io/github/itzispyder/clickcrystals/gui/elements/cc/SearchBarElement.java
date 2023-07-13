@@ -14,7 +14,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 public class SearchBarElement extends GuiElement {
 
     private String query;
-    private float textScale;
+    private final float textScale;
 
     public SearchBarElement(int x, int y, int width, float textScale) {
         super(x, y, width, (int)(10 * textScale) + 4);
@@ -62,7 +62,7 @@ public class SearchBarElement extends GuiElement {
                 query = query.concat(" ");
             }
             else if (typed != null){
-                query = query.concat(typed);
+                query = query.concat(screen.shiftKeyPressed ? typed.toUpperCase() : typed);
             }
         }
     }

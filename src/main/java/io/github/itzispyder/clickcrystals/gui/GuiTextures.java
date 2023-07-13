@@ -29,6 +29,7 @@ public final  class GuiTextures {
     public static final Identifier PEOPLE = new Identifier(modId, "textures/gui/icons/people.png");
     public static final Identifier CODE = new Identifier(modId, "textures/gui/icons/code.png");
     public static final Identifier DISCORD = new Identifier(modId, "textures/gui/icons/discord.png");
+    public static final Identifier X = new Identifier(modId, "textures/gui/icons/x.png");
 
     // modules
     public static final Identifier MODULE_ON = new Identifier(modId, "textures/gui/modules/module_on.png");
@@ -38,6 +39,7 @@ public final  class GuiTextures {
     public static final Identifier SETTING_BOOLEAN_OFF = new Identifier(modId, "textures/gui/modules/settings/setting_boolean_off.png");
     public static final Identifier SETTING_BOOLEAN_ON = new Identifier(modId, "textures/gui/modules/settings/setting_boolean_on.png");
     public static final Identifier SETTING_NUMBER_KNOB = new Identifier(modId, "textures/gui/modules/settings/setting_number_knob.png");
+    public static final Identifier SETTING_STRING = new Identifier(modId, "textures/gui/modules/settings/setting_string.png");
 
 
 }

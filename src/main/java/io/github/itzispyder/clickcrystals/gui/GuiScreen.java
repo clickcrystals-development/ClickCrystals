@@ -2,12 +2,14 @@ package io.github.itzispyder.clickcrystals.gui;
 
 import io.github.itzispyder.clickcrystals.gui.callbacks.*;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.SearchBarElement;
+import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.StringSettingElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public abstract class GuiScreen extends Screen {
     public final List<KeyPressCallback> keyActionListeners;
     public final List<GuiElement> children;
     public GuiElement selected, mostRecentlyAdded;
+    public boolean shiftKeyPressed;
 
     public GuiScreen(String title) {
         super(Text.literal(title));
@@ -97,7 +100,7 @@ public abstract class GuiScreen extends Screen {
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         super.mouseReleased(mouseX, mouseY, button);
 
-        if (!(selected instanceof SearchBarElement)) {
+        if (!(selected instanceof SearchBarElement || selected instanceof StringSettingElement)) {
             this.selected = null;
         }
 
@@ -136,13 +139,21 @@ public abstract class GuiScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT) {
+            this.shiftKeyPressed = true;
+        }
+
         super.keyPressed(keyCode, scanCode, modifiers);
 
         this.keyActionListeners.forEach(keyPressCallback -> {
             keyPressCallback.handleKey(keyCode, ClickType.CLICK, scanCode, modifiers);
         });
+
         if (selected instanceof SearchBarElement search) {
             search.onKey(keyCode, scanCode);
+        }
+        else if (selected instanceof StringSettingElement input) {
+            input.onKey(keyCode, scanCode);
         }
 
         return true;
@@ -150,6 +161,10 @@ public abstract class GuiScreen extends Screen {
 
     @Override
     public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT) {
+            this.shiftKeyPressed = false;
+        }
+
         super.keyReleased(keyCode, scanCode, modifiers);
 
         this.keyActionListeners.forEach(keyPressCallback -> {

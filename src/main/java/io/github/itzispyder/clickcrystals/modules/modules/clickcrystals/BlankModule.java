@@ -59,6 +59,18 @@ public class BlankModule extends Module {
             .def(5.67)
             .build()
     );
+    public final Setting<String> mailBox = scTest.add(StringSetting.create()
+            .name("your-mail-box")
+            .description("You have mail!")
+            .def("Hello World")
+            .build()
+    );
+    public final Setting<String> eee = scTest.add(StringSetting.create()
+            .name("eee")
+            .description("eeeeeeeeeeeeeeeeeeeeeeeeeee")
+            .def("Hello World with E's")
+            .build()
+    );
 
     public BlankModule() {
         super("test-module", Categories.CLICKCRYSTALS, "This module does nothing, serves as a testing purpose for development.");
