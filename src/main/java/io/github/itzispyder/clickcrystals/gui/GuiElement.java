@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui;
 
+import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
@@ -183,5 +184,23 @@ public abstract class GuiElement {
 
     public void setParent(GuiElement parent) {
         this.parent = parent;
+    }
+
+    public boolean isOnScrollPanel(GuiElement element) {
+        if (element == null || element.getParent() != null) return false;
+        if (element instanceof ScrollPanelElement) return true;
+
+        boolean onPanel = false;
+        GuiElement guiElement = element;
+
+        while (guiElement != null) {
+            guiElement = guiElement.getParent();
+            if (guiElement instanceof ScrollPanelElement) {
+                onPanel = true;
+                break;
+            }
+        }
+
+        return onPanel;
     }
 }
