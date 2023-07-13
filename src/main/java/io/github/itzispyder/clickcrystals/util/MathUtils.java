@@ -20,4 +20,12 @@ public final class MathUtils {
     public static double round(double value, int nthPlace) {
         return Math.floor(value * nthPlace) / nthPlace;
     }
+
+    public static int minMax(int val, int min, int max) {
+        return Math.min(max, Math.max(min, val));
+    }
+
+    public static double minMax(double val, double min, double max) {
+        return Math.min(max, Math.max(min, val));
+    }
 }

@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.modules;
 
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.Setting;
-import io.github.itzispyder.clickcrystals.modules.settings.SettingGroup;
+import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,21 +11,21 @@ import java.util.function.Consumer;
 
 public class ModuleData implements Serializable {
 
-    public final SettingGroup sgGeneral = new SettingGroup("general-settings");
-    public final SettingGroup sgDefault = new SettingGroup("module-defaults");
-    private final Setting<Boolean> enabled = sgDefault.add(BooleanSetting.create()
+    public final SettingSection scGeneral = new SettingSection("general-settings");
+    public final SettingSection scDefault = new SettingSection("module-defaults");
+    private final Setting<Boolean> enabled = scDefault.add(BooleanSetting.create()
             .name("module-enabled")
             .description("Module enabled or disabled.")
             .def(false)
             .val(false)
             .build()
     );
-    private final List<SettingGroup> settingGroups;
+    private final List<SettingSection> settingSections;
 
     public ModuleData() {
-        this.settingGroups = new ArrayList<>();
-        this.settingGroups.add(sgGeneral);
-        this.settingGroups.add(sgDefault);
+        this.settingSections = new ArrayList<>();
+        this.settingSections.add(scGeneral);
+        this.settingSections.add(scDefault);
     }
 
     public boolean isEnabled() {
@@ -36,19 +36,19 @@ public class ModuleData implements Serializable {
         this.enabled.setVal(enabled);
     }
 
-    public void addSettingGroup(SettingGroup group) {
-        this.settingGroups.add(settingGroups.size() - 1, group);
+    public void addSettingSection(SettingSection section) {
+        this.settingSections.add(settingSections.size() - 1, section);
     }
 
-    public void removeSettingGroup(SettingGroup group) {
-        this.settingGroups.remove(group);
+    public void removeSettingSection(SettingSection section) {
+        this.settingSections.remove(section);
     }
 
-    public List<SettingGroup> getSettingGroups() {
-        return settingGroups;
+    public List<SettingSection> getSettingSections() {
+        return settingSections;
     }
 
     public void forEach(Consumer<Setting<?>> action) {
-        this.settingGroups.forEach(group -> group.forEach(action));
+        this.settingSections.forEach(group -> group.forEach(action));
     }
 }

@@ -1,13 +1,11 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
-import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.SettingGroupElement;
+import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.SettingSectionElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.settings.SettingGroup;
+import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 
 public class ModuleSettingsScreen extends ClickCrystalsBase {
 
@@ -30,16 +28,22 @@ public class ModuleSettingsScreen extends ClickCrystalsBase {
         this.addChild(title);
 
         caret += 10;
-        for (SettingGroup group : module.getData().getSettingGroups()) {
-            SettingGroupElement ge = new SettingGroupElement(group, title.x, caret, base.width - nav.width - 20, 10, 0.6F);
+        for (SettingSection group : module.getData().getSettingSections()) {
+            SettingSectionElement ge = new SettingSectionElement(group, title.x, caret, base.width - nav.width - 20, 10, 0.6F);
             this.addChild(ge);
             caret += ge.getHeight() + 2;
         }
     }
 
     @Override
-    public void close() {
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        super.mouseReleased(mouseX, mouseY, button);
         Module.saveModule(module, true);
+        return true;
+    }
+
+    @Override
+    public void close() {
         ClickCrystalsBase.openClickCrystalsMenu();
     }
 

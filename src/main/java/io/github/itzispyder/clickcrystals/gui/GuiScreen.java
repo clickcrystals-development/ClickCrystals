@@ -97,6 +97,10 @@ public abstract class GuiScreen extends Screen {
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         super.mouseReleased(mouseX, mouseY, button);
 
+        if (!(selected instanceof SearchBarElement)) {
+            this.selected = null;
+        }
+
         this.mouseClickListeners.forEach(mouseClickCallback -> {
             mouseClickCallback.handleMouse(mouseX, mouseY, button, ClickType.RELEASE);
         });

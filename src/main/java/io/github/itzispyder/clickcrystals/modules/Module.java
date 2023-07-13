@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.modules;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.data.ConfigSection;
-import io.github.itzispyder.clickcrystals.modules.settings.SettingGroup;
+import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.MinecraftClient;
@@ -33,13 +33,13 @@ public abstract class Module implements Toggleable {
 
     protected abstract void onDisable();
 
-    protected SettingGroup getGeneralGroup() {
-        return data.sgGeneral;
+    protected SettingSection getGeneralSection() {
+        return data.scGeneral;
     }
 
-    protected SettingGroup createSettingGroup(String name) {
-        SettingGroup group = new SettingGroup(name);
-        this.data.addSettingGroup(group);
+    protected SettingSection createSettingSection(String name) {
+        SettingSection group = new SettingSection(name);
+        this.data.addSettingSection(group);
         return group;
     }
 

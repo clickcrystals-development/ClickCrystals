@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class SettingGroup implements Serializable {
+public class SettingSection implements Serializable {
 
     private final String name, id;
     private final List<Setting<?>> settings;
 
-    public SettingGroup(String name) {
+    public SettingSection(String name) {
         this.id = name;
         this.name = StringUtils.capitalizeWords(name);
         this.settings = new ArrayList<>();

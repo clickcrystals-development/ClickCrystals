@@ -37,6 +37,7 @@ public final  class GuiTextures {
     public static final Identifier SETTING_BOOLEAN_NEUTRAL = new Identifier(modId, "textures/gui/modules/settings/setting_boolean_neutral.png");
     public static final Identifier SETTING_BOOLEAN_OFF = new Identifier(modId, "textures/gui/modules/settings/setting_boolean_off.png");
     public static final Identifier SETTING_BOOLEAN_ON = new Identifier(modId, "textures/gui/modules/settings/setting_boolean_on.png");
+    public static final Identifier SETTING_NUMBER_KNOB = new Identifier(modId, "textures/gui/modules/settings/setting_number_knob.png");
 
 
 }
