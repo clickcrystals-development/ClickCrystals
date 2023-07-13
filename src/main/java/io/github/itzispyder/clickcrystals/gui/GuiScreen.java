@@ -85,7 +85,7 @@ public abstract class GuiScreen extends Screen {
             GuiElement child = children.get(i);
             if (child.isHovered((int)mouseX, (int)mouseY)) {
                 this.selected = child;
-                child.onClick(mouseX, mouseY, button);
+                child.mouseClicked(mouseX, mouseY, button);
                 break;
             }
         }

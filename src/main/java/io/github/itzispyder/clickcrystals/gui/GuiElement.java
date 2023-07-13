@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 public abstract class GuiElement {
 
     public int x, y, width, height;
-    public boolean rendering, draggable;
+    public boolean rendering, draggable, renderDependentOnParent;
     private GuiElement parent;
     private final List<GuiElement> children;
 
@@ -24,12 +24,13 @@ public abstract class GuiElement {
         this.height = height;
         this.rendering = true;
         this.draggable = false;
+        this.renderDependentOnParent = false;
         this.parent = null;
         this.children = new ArrayList<>();
     }
 
     public void render(DrawContext context, int mouseX, int mouseY) {
-        if (rendering) {
+        if (canRender()) {
             onRender(context, mouseX, mouseY);
         }
 
@@ -46,6 +47,17 @@ public abstract class GuiElement {
     public abstract void onRender(DrawContext context, int mouseX, int mouseY);
 
     public abstract void onClick(double mouseX, double mouseY, int button);
+
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (isHovered((int)mouseX, (int)mouseY)) {
+            onClick(mouseX, mouseY, button);
+        }
+
+        for (int i = getChildren().size() - 1; i >= 0; i--) {
+            GuiElement child = getChildren().get(i);
+            child.mouseClicked(mouseX, mouseY, button);
+        }
+    }
 
     public boolean isMouseOver(int mouseX, int mouseY) {
         return rendering && mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height;
@@ -184,6 +196,28 @@ public abstract class GuiElement {
 
     public void setParent(GuiElement parent) {
         this.parent = parent;
+    }
+
+    public boolean hasParent() {
+        return parent != null;
+    }
+
+    public boolean isRenderDependentOnParent() {
+        return renderDependentOnParent;
+    }
+
+    public void setRenderDependentOnParent(boolean renderDependentOnParent) {
+        this.renderDependentOnParent = renderDependentOnParent;
+    }
+
+    public boolean canRender() {
+        if (rendering) {
+            if (renderDependentOnParent && hasParent()) {
+                return parent.canRender();
+            }
+            return true;
+        }
+        return false;
     }
 
     public void scrollOnPanel(ScrollPanelElement panel, int amount) {

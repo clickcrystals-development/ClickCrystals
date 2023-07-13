@@ -8,6 +8,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -20,7 +21,7 @@ public class StringSettingElement extends GuiElement {
     private final StringSetting setting;
     private String input;
     private final float textScale;
-    private final ImageElement exButton;
+    private final ImageElement exButton, bg;
 
     public StringSettingElement(StringSetting setting, int x, int y, int width, int height, float textScale) {
         super(x, y, width, height);
@@ -28,23 +29,31 @@ public class StringSettingElement extends GuiElement {
         this.textScale = textScale;
         this.input = setting.getVal();
 
-        ImageElement bg = new ImageElement(GuiTextures.SETTING_STRING, x, y, width, height);
+        int textHeight = getTextHeight();
+        bg = new ImageElement(GuiTextures.SETTING_STRING, x, y, width, height);
+        exButton = new ImageElement(GuiTextures.X, x + width - 2 - textHeight, y + 2, textHeight, textHeight);
+        exButton.setRenderDependentOnParent(true);
         TextElement title = new TextElement(setting.getName(), TextAlignment.LEFT, 0.5F, x + 100, y);
         TextElement desc = new TextElement("§7" + setting.getDescription(), TextAlignment.LEFT, 0.45F, title.x, title.y + 5);
         this.addChild(title);
         this.addChild(desc);
         this.addChild(bg);
-
-        exButton = new ImageElement(GuiTextures.X, x + width - height, y, height, height);
         this.addChild(exButton);
     }
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         if (mc.currentScreen instanceof GuiScreen screen) {
+            if (screen.selected == this) {
+                bg.setTexture(GuiTextures.SETTING_STRING_SELECTED);
+            }
+            else {
+                bg.setTexture(GuiTextures.SETTING_STRING);
+            }
+
             String text = input;
 
-            while (text.length() > 0 && mc.textRenderer.getWidth(text) * textScale > width - height - 2) {
+            while (text.length() > 0 && mc.textRenderer.getWidth(text) * textScale > width - 4 - getTextHeight()) {
                 text = text.substring(1);
             }
 
@@ -86,7 +95,7 @@ public class StringSettingElement extends GuiElement {
                 input = input.concat(" ");
             }
             else if (typed != null){
-                input = input.concat(screen.shiftKeyPressed ? typed.toUpperCase() : typed);
+                input = input.concat(screen.shiftKeyPressed ? StringUtils.keyPressWithShift(typed) : typed);
             }
 
             setting.setVal(input);

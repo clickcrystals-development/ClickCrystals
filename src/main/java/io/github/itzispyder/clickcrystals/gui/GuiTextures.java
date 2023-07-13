@@ -40,6 +40,7 @@ public final  class GuiTextures {
     public static final Identifier SETTING_BOOLEAN_ON = new Identifier(modId, "textures/gui/modules/settings/setting_boolean_on.png");
     public static final Identifier SETTING_NUMBER_KNOB = new Identifier(modId, "textures/gui/modules/settings/setting_number_knob.png");
     public static final Identifier SETTING_STRING = new Identifier(modId, "textures/gui/modules/settings/setting_string.png");
+    public static final Identifier SETTING_STRING_SELECTED = new Identifier(modId, "textures/gui/modules/settings/setting_string_selected.png");
 
 
 }

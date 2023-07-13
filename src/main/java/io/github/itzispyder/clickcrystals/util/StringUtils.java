@@ -57,4 +57,42 @@ public final class StringUtils {
 
         return lines;
     }
+
+    public static String keyPressWithShift(String s) {
+        if (s.length() != 1) return s;
+        return Character.toString(toUpperCase(s.charAt(0)));
+    }
+
+    public static char toUpperCase(char c) {
+        char upper = Character.toUpperCase(c);
+        if (upper != c) {
+            return upper;
+        }
+
+        switch (c) {
+            case '1' -> upper = '!';
+            case '2' -> upper = '@';
+            case '3' -> upper = '#';
+            case '4' -> upper = '$';
+            case '5' -> upper = '%';
+            case '6' -> upper = '^';
+            case '7' -> upper = '&';
+            case '8' -> upper = '*';
+            case '9' -> upper = '(';
+            case '0' -> upper = ')';
+            case '-' -> upper = '_';
+            case '=' -> upper = '+';
+            case '`' -> upper = '~';
+            case '[' -> upper = '{';
+            case ']' -> upper = '}';
+            case '\\' -> upper = '|';
+            case '\'' -> upper = '"';
+            case ';' -> upper = ':';
+            case '/' -> upper = '?';
+            case '.' -> upper = '>';
+            case ',' -> upper = '<';
+        }
+
+        return upper;
+    }
 }
