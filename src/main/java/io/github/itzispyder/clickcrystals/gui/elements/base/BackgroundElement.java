@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.elements.base;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
+import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import net.minecraft.client.gui.DrawContext;
 
 public class BackgroundElement extends GuiElement {
@@ -12,7 +12,7 @@ public class BackgroundElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        context.drawTexture(TexturesIdentifiers.SMOOTH_BACKGROUND, x, y, 0, 0, width, height, width, height);
+        context.drawTexture(GuiTextures.SMOOTH_BACKGROUND, x, y, 0, 0, width, height, width, height);
     }
 
     @Override

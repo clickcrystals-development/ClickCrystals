@@ -1,5 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
+import io.github.itzispyder.clickcrystals.gui.GuiElement;
+
 public class DoubleSetting extends NumberSetting<Double> {
 
     private int decimalPlaces;
@@ -7,6 +9,11 @@ public class DoubleSetting extends NumberSetting<Double> {
     public DoubleSetting(String name, String description, double def, double val, double min, double max, int decimalPlaces) {
         super(name, description, def, val, min, max);
         this.decimalPlaces = Math.max(1, decimalPlaces);
+    }
+
+    @Override
+    public <E extends GuiElement> E toGuiElement(int x, int y, int width, int height) {
+        return null;
     }
 
     @Override

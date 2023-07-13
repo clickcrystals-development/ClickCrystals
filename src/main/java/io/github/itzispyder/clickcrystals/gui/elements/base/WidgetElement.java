@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.elements.base;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
+import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import net.minecraft.client.gui.DrawContext;
 
 public class WidgetElement extends GuiElement {
@@ -20,8 +20,8 @@ public class WidgetElement extends GuiElement {
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         switch (orientation) {
-            case VERTICAL -> context.drawTexture(TexturesIdentifiers.SMOOTH_VERTICAL_WIDGET, x, y, 0, 0, width, height, width, height);
-            case HORIZONTAL -> context.drawTexture(TexturesIdentifiers.SMOOTH_HORIZONTAL_WIDGET, x, y, 0, 0, width, height, width, height);
+            case VERTICAL -> context.drawTexture(GuiTextures.SMOOTH_VERTICAL_WIDGET, x, y, 0, 0, width, height, width, height);
+            case HORIZONTAL -> context.drawTexture(GuiTextures.SMOOTH_HORIZONTAL_WIDGET, x, y, 0, 0, width, height, width, height);
         }
     }
 

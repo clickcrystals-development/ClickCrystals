@@ -1,0 +1,21 @@
+
+***
+The following gives credits for the ideas,
+not the code/design itself. These credits go to my inspirations
+because I find them fascinating and appealing.
+
+The source code itself is still provided by me.
+***
+
+In-game user interface:
+        Design Inspired by Discord Interface
+        https://discord.com/channels/@me
+
+Internal event firing and passing:
+        Design Inspired by Bukkit API 1.17.1
+        https://github.com/Bukkit/Bukkit
+
+Modules setting builder:
+        Design Inspired by Meteor API 1.19.4
+        https://meteorclient.com/
+

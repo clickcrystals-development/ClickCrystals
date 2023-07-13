@@ -1,7 +1,8 @@
 package io.github.itzispyder.clickcrystals.gui.elements.cc;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
+import io.github.itzispyder.clickcrystals.gui.GuiTextures;
+import io.github.itzispyder.clickcrystals.gui.screens.ModuleSettingsScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -22,14 +23,14 @@ public class ModuleElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        Identifier texture = TexturesIdentifiers.MODULE_EMPTY;
+        Identifier texture = GuiTextures.MODULE_EMPTY;
 
         if (module != null) {
             if (module.isEnabled()) {
-                texture = TexturesIdentifiers.MODULE_ON;
+                texture = GuiTextures.MODULE_ON;
             }
             else {
-                texture = TexturesIdentifiers.MODULE_OFF;
+                texture = GuiTextures.MODULE_OFF;
             }
         }
 
@@ -44,7 +45,13 @@ public class ModuleElement extends GuiElement {
     public void onClick(double mouseX, double mouseY, int button) {
         mc.player.playSound(SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundCategory.MASTER, 0.8F, 2);
 
-        module.setEnabled(!module.isEnabled(), false);
+        if (button == 0) {
+            module.setEnabled(!module.isEnabled(), false);
+        }
+        else if (button == 1) {
+            mc.currentScreen.close();
+            mc.setScreenAndRender(new ModuleSettingsScreen(module));
+        }
     }
 
     public Module getModule() {

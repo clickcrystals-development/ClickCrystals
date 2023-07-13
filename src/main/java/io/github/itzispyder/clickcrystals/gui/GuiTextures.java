@@ -4,7 +4,7 @@ import net.minecraft.util.Identifier;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.modId;
 
-public final  class TexturesIdentifiers {
+public final  class GuiTextures {
 
     // default
     public static final Identifier ICON = new Identifier(modId, "textures/icon.png");
@@ -34,5 +34,9 @@ public final  class TexturesIdentifiers {
     public static final Identifier MODULE_ON = new Identifier(modId, "textures/gui/modules/module_on.png");
     public static final Identifier MODULE_OFF = new Identifier(modId, "textures/gui/modules/module_off.png");
     public static final Identifier MODULE_EMPTY = new Identifier(modId, "textures/gui/modules/module_empty.png");
+    public static final Identifier SETTING_BOOLEAN_NEUTRAL = new Identifier(modId, "textures/gui/modules/settings/setting_boolean_neutral.png");
+    public static final Identifier SETTING_BOOLEAN_OFF = new Identifier(modId, "textures/gui/modules/settings/setting_boolean_off.png");
+    public static final Identifier SETTING_BOOLEAN_ON = new Identifier(modId, "textures/gui/modules/settings/setting_boolean_on.png");
+
 
 }

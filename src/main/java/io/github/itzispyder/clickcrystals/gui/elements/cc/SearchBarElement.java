@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.cc;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
+import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
@@ -23,7 +23,7 @@ public class SearchBarElement extends GuiElement {
 
         WidgetElement bg = new WidgetElement(x, y, width, height);
         this.addChild(bg);
-        ImageElement search = new ImageElement(TexturesIdentifiers.SEARCH, x + 2, y + 2, getTextHeight(), getTextHeight());
+        ImageElement search = new ImageElement(GuiTextures.SEARCH, x + 2, y + 2, getTextHeight(), getTextHeight());
         this.addChild(search);
     }
 

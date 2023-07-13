@@ -36,6 +36,10 @@ public class ModuleData implements Serializable {
         this.enabled.setVal(enabled);
     }
 
+    public void addSettingGroup(SettingGroup group) {
+        this.settingGroups.add(settingGroups.size() - 1, group);
+    }
+
     public List<SettingGroup> getSettingGroups() {
         return settingGroups;
     }

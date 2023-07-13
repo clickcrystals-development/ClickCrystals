@@ -1,9 +1,16 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
+import io.github.itzispyder.clickcrystals.gui.GuiElement;
+
 public class IntegerSetting extends NumberSetting<Integer> {
 
     public IntegerSetting(String name, String description, int def, int val, int min, int max) {
         super(name, description, def, val, min, max);
+    }
+
+    @Override
+    public <E extends GuiElement> E toGuiElement(int x, int y, int width, int height) {
+        return null;
     }
 
     @Override

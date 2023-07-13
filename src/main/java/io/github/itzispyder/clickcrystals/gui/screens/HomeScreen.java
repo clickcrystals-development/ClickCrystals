@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
-import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
+import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.ui.DetailedButtonElement;
 import io.github.itzispyder.clickcrystals.gui.elements.ui.ImageBannerElement;
 import net.minecraft.client.util.Window;
@@ -22,17 +22,17 @@ public class HomeScreen extends DefaultBase {
         int pageGap = 15;
 
         // banner
-        ImageBannerElement banner = new ImageBannerElement(TexturesIdentifiers.SMOOTH_BANNER, 0, 0, base.width - 20, 0, "§l§oClickCrystals", "Your Ultimate CPvP Assistance", 2.0F);
+        ImageBannerElement banner = new ImageBannerElement(GuiTextures.SMOOTH_BANNER, 0, 0, base.width - 20, 0, "§l§oClickCrystals", "Your Ultimate CPvP Assistance", 2.0F);
         banner.resize(banner.width, (int)(banner.width * (90.0 / 512.0)));
         banner.centerIn(w, h);
         banner.moveTo(banner.x, base.y + 15);
         this.addChild(banner);
 
-        Identifier bg = TexturesIdentifiers.HOLLOW_HORIZONTAL_WIDGET;
+        Identifier bg = GuiTextures.HOLLOW_HORIZONTAL_WIDGET;
         // pages
         DetailedButtonElement modulesPage = DetailedButtonElement.builder()
                 .texture(bg)
-                .icon(TexturesIdentifiers.MODULES)
+                .icon(GuiTextures.MODULES)
                 .position(banner.x + 25, banner.y + banner.height + pageGap)
                 .dimensions(100, 35)
                 .title("View Modules")
@@ -44,7 +44,7 @@ public class HomeScreen extends DefaultBase {
 
         DetailedButtonElement searchPage = DetailedButtonElement.builder()
                 .texture(bg)
-                .icon(TexturesIdentifiers.SEARCH)
+                .icon(GuiTextures.SEARCH)
                 .position(modulesPage.x + modulesPage.width + pageGap, modulesPage.y)
                 .dimensions(100, 35)
                 .title("Search Modules")
@@ -56,7 +56,7 @@ public class HomeScreen extends DefaultBase {
 
         DetailedButtonElement discordPage = DetailedButtonElement.builder()
                 .texture(bg)
-                .icon(TexturesIdentifiers.DISCORD)
+                .icon(GuiTextures.DISCORD)
                 .position(searchPage.x + searchPage.width + pageGap, modulesPage.y)
                 .dimensions(100, 35)
                 .title("Join the Discord!")
@@ -73,7 +73,7 @@ public class HomeScreen extends DefaultBase {
 
         DetailedButtonElement githubPage = DetailedButtonElement.builder()
                 .texture(bg)
-                .icon(TexturesIdentifiers.CODE)
+                .icon(GuiTextures.CODE)
                 .position(modulesPage.x, modulesPage.y + modulesPage.height + pageGap)
                 .dimensions(100, 35)
                 .title("Source Code")
@@ -90,7 +90,7 @@ public class HomeScreen extends DefaultBase {
 
         DetailedButtonElement modrinthPage = DetailedButtonElement.builder()
                 .texture(bg)
-                .icon(TexturesIdentifiers.ICON)
+                .icon(GuiTextures.ICON)
                 .position(githubPage.x + githubPage.width + pageGap, githubPage.y)
                 .dimensions(100, 35)
                 .title("Check Updates!")
@@ -107,7 +107,7 @@ public class HomeScreen extends DefaultBase {
 
         DetailedButtonElement creditsPage = DetailedButtonElement.builder()
                 .texture(bg)
-                .icon(TexturesIdentifiers.PEOPLE)
+                .icon(GuiTextures.PEOPLE)
                 .position(modrinthPage.x + modrinthPage.width + pageGap, githubPage.y)
                 .dimensions(100, 35)
                 .title("Credits")

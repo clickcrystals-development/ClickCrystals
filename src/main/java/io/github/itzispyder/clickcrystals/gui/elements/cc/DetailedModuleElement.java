@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.cc;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
+import io.github.itzispyder.clickcrystals.gui.screens.ModuleSettingsScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
@@ -37,7 +38,13 @@ public class DetailedModuleElement extends GuiElement {
     public void onClick(double mouseX, double mouseY, int button) {
         mc.player.playSound(SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundCategory.MASTER, 0.8F, 2);
 
-        module.setEnabled(!module.isEnabled(), false);
+        if (button == 0) {
+            module.setEnabled(!module.isEnabled(), false);
+        }
+        else if (button == 1) {
+            mc.currentScreen.close();
+            mc.setScreenAndRender(new ModuleSettingsScreen(module));
+        }
     }
 
     public Module getModule() {

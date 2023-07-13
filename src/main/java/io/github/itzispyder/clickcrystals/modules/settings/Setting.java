@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
+import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 import java.io.Serializable;
@@ -16,6 +17,8 @@ public abstract class Setting<T> implements Serializable {
         this.def = def;
         this.val = val;
     }
+
+    public abstract <E extends GuiElement> E toGuiElement(int x, int y, int width, int height);
 
     protected Setting(String name, String description, T val) {
         this(name, description, val, val);

@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
-import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
+import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
@@ -18,12 +18,12 @@ public abstract class ClickCrystalsBase extends DefaultBase {
     private static int prevMenuSelection = 0;
 
     public WidgetElement nav = new WidgetElement(base.x + 10, base.y + 10, 80, base.height - 20, WidgetElement.Orientation.VERTICAL);
-    public ImageElement ccIcon = new ImageElement(TexturesIdentifiers.ICON, nav.x + 3, nav.y + 5, 15, 15);
+    public ImageElement ccIcon = new ImageElement(GuiTextures.ICON, nav.x + 3, nav.y + 5, 15, 15);
     public TextElement navTitle = new TextElement("ClickCrystals v" + version, TextAlignment.LEFT, 0.55F, ccIcon.x + ccIcon.width + 1, nav.y + 12);
-    public ImageElement homeIcon = new ImageElement(TexturesIdentifiers.HOME, 0, 0, 0, 0);
-    public ImageElement modulesIcon = new ImageElement(TexturesIdentifiers.MODULES, 0, 0, 0, 0);
-    public ImageElement searchIcon = new ImageElement(TexturesIdentifiers.SEARCH, 0, 0, 0, 0);
-    public ImageElement creditsIcon = new ImageElement(TexturesIdentifiers.PEOPLE, 0, 0, 0, 0);
+    public ImageElement homeIcon = new ImageElement(GuiTextures.HOME, 0, 0, 0, 0);
+    public ImageElement modulesIcon = new ImageElement(GuiTextures.MODULES, 0, 0, 0, 0);
+    public ImageElement searchIcon = new ImageElement(GuiTextures.SEARCH, 0, 0, 0, 0);
+    public ImageElement creditsIcon = new ImageElement(GuiTextures.PEOPLE, 0, 0, 0, 0);
     public ImageTabListElement menuTab = new ImageTabListElement(List.of(homeIcon, modulesIcon, searchIcon, creditsIcon), nav.x + 3, navTitle.y + navTitle.height + 10, nav.width - 6, 15, button -> {
         ImageElement selection = button.getOptions().get(button.getSelection());
         prevMenuSelection = button.getSelection();

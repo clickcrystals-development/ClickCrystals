@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.ui;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.PressAction;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
-import io.github.itzispyder.clickcrystals.gui.TexturesIdentifiers;
+import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import net.minecraft.client.gui.DrawContext;
@@ -110,7 +110,7 @@ public class DetailedButtonElement extends GuiElement {
         private PressAction<DetailedButtonElement> pressAction, onBuild;
 
         public Builder() {
-            texture = icon = TexturesIdentifiers.SMOOTH_HORIZONTAL_WIDGET;
+            texture = icon = GuiTextures.SMOOTH_HORIZONTAL_WIDGET;
             title = subtitle = "";
             textScale = 1.0F;
             pressAction = onBuild = button -> {};
