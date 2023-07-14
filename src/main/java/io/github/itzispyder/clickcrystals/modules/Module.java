@@ -114,8 +114,8 @@ public abstract class Module implements Toggleable {
         return isEnabled() ? "§aon" : "§coff";
     }
 
-    public static Module get(Class<? extends Module> moduleClass) {
-        return system.modules().get(moduleClass);
+    public static <T extends Module> T get(Class<T> moduleClass) {
+        return (T)system.modules().get(moduleClass);
     }
 
     public static void loadConfigModules() {

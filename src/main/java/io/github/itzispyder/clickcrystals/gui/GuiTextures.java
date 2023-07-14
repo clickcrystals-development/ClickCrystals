@@ -42,5 +42,12 @@ public final  class GuiTextures {
     public static final Identifier SETTING_STRING = new Identifier(modId, "textures/gui/modules/settings/setting_string.png");
     public static final Identifier SETTING_STRING_SELECTED = new Identifier(modId, "textures/gui/modules/settings/setting_string_selected.png");
 
+    // overlays
+    public static final Identifier HURT_DIRECTION_DEFAULT = new Identifier(modId, "textures/overlays/hurt_direction_default.png");
+    public static final Identifier HURT_DIRECTION_DEFAULT_TRANSPARENT = new Identifier(modId, "textures/overlays/hurt_direction_default_transparent.png");
+    public static final Identifier HURT_DIRECTION_NORTH = new Identifier(modId, "textures/overlays/hurt_direction_north.png");
+    public static final Identifier HURT_DIRECTION_SOUTH = new Identifier(modId, "textures/overlays/hurt_direction_south.png");
+    public static final Identifier HURT_DIRECTION_EAST = new Identifier(modId, "textures/overlays/hurt_direction_east.png");
+    public static final Identifier HURT_DIRECTION_WEST = new Identifier(modId, "textures/overlays/hurt_direction_west.png");
 
 }
