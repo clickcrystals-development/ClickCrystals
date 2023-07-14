@@ -6,7 +6,10 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.settings.*;
+import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
+import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.entity.Entity;
@@ -31,7 +34,7 @@ public class TotemPops extends Module implements Listener {
             .def("&7&n%player% &8&o died after popping &7&o(&e%pops%&7&o) &8totems!")
             .build()
     );
-    public final ModuleSetting<Boolean> showOwn = general.add(BooleanSetting.create()
+    public final ModuleSetting<Boolean> hightlightOwn = general.add(BooleanSetting.create()
             .name("Show Own")
             .description("Toggle showing your own pops in chat")
             .def(true)
@@ -39,7 +42,7 @@ public class TotemPops extends Module implements Listener {
     );
     public final ModuleSetting<String> ownText = general.add(StringSetting.create()
             .name("Own pop name")
-            .description("What to replace your name with in pop messages, %name% for your name")
+            .description("Want to replace your name with in pop messages?")
             .def("&6&nYou")
             .build()
     );
@@ -74,8 +77,8 @@ public class TotemPops extends Module implements Listener {
 
             String name = ent.getDisplayName().getString();
             if (name.equals(mc.player.getDisplayName().getString())) {
-                if (showOwn.getVal()) {
-                    name = StringUtils.color(ownText.getVal().replace("%name%",name));
+                if (hightlightOwn.getVal()) {
+                    name = StringUtils.color(ownText.getVal());
                 } else {
                     return;
                 }
@@ -83,13 +86,19 @@ public class TotemPops extends Module implements Listener {
 
             if (status == EntityStatusType.TOTEM_POP) {
                 setPops(ent,getPops(ent) + 1);
-                ChatUtils.sendPrefixMessage(StringUtils.color(enemyPop.getVal().replace("%player%",name)));
+                ChatUtils.sendPrefixMessage(compilePopMsg(ent, enemyPop.getVal()));
             }
             else if (status == EntityStatusType.DEATH) {
-                ChatUtils.sendPrefixMessage(StringUtils.color(enemyDeath.getVal().replace("%player%",name)));
+                ChatUtils.sendPrefixMessage(compilePopMsg(ent, enemyDeath.getVal()));
                 setPops(ent,0);
             }
         }
+    }
+
+    private String compilePopMsg(Entity ent, String msg) {
+        return StringUtils.color(msg)
+                .replaceAll("%pops%", "" + getPops(ent))
+                .replaceAll("%player%", ent.getDisplayName().getString());
     }
 
     private int getPops(Entity ent) {

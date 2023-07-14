@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class StringUtils {
-    public static String color(String s) {
-        return s.replaceAll("&","§");
-    }
 
     static {
         System.setProperty("java.awt.headless", "false");
