@@ -223,7 +223,6 @@ public abstract class GuiElement {
     public void scrollOnPanel(ScrollPanelElement panel, int amount) {
         setY(getY() + amount);
         setRendering(ScrollPanelElement.canRenderOnPanel(panel, this));
-        panel.updateBounds(this);
 
         for (GuiElement child : children) {
             child.scrollOnPanel(panel, amount);

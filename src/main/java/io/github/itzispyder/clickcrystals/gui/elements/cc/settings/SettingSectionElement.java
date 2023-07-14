@@ -61,4 +61,8 @@ public class SettingSectionElement extends GuiElement {
     public SettingSection getSettingGroup() {
         return settingSection;
     }
+
+    public float getTextScale() {
+        return textScale;
+    }
 }

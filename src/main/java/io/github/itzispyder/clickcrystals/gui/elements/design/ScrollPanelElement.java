@@ -8,32 +8,32 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class ScrollPanelElement extends GuiElement {
 
-    private int minY, maxY;
+    public static final int SCROLL_MULTIPLIER = 6;
+    private int remainingUp, remainingDown;
 
     public ScrollPanelElement(int x, int y, int width, int height) {
         super(x, y, width, height);
-        this.minY = y;
-        this.maxY = y + height;
+        remainingUp = remainingDown = 0;
     }
 
     public static boolean canRenderOnPanel(ScrollPanelElement panel, GuiElement element) {
         return element.y >= panel.y && element.y + element.height <= panel.y + panel.height;
     }
 
-    public boolean canScrollUp() {
-        return minY < y;
+    public boolean canScrollDown() {
+        return remainingDown > 0;
     }
 
-    public boolean canScrollDown() {
-        return maxY > y + height;
+    public boolean canScrollUp() {
+        return remainingUp > 0;
     }
 
     public boolean canScroll() {
         return canScrollUp() || canScrollDown();
     }
 
-    public boolean canScrollInDirection(double amount) {
-        if (amount >= 0.0) {
+    public boolean canScrollInDirection(int amount) {
+        if (amount >= 0) {
             return canScrollUp();
         }
         else {
@@ -49,11 +49,11 @@ public class ScrollPanelElement extends GuiElement {
     }
 
     public void updateBounds(GuiElement child) {
-        if (child.y < minY) {
-            minY = child.y;
+        if (child.y < y) {
+            remainingUp += (y - child.y);
         }
-        if (child.y + child.height > maxY) {
-            maxY = child.y + child.height;
+        if (child.y + child.height > y + height) {
+            remainingDown += ((child.y + child.height) - (y + height));
         }
     }
 
@@ -77,10 +77,15 @@ public class ScrollPanelElement extends GuiElement {
     }
 
     public void onScroll(double mouseX, double mouseY, double amount) {
-        if (!canScrollInDirection(amount)) return;
+        for (int i = 0; i < SCROLL_MULTIPLIER; i++) {
+            if (canScrollInDirection((int)amount)) {
+                for (GuiElement child : getChildren()) {
+                    child.scrollOnPanel(this, (int)amount);
+                }
 
-        for (GuiElement child : getChildren()) {
-            child.scrollOnPanel(this, (int)(amount * 6.9420));
+                remainingDown += amount;
+                remainingUp -= amount;
+            }
         }
     }
 }
