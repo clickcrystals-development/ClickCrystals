@@ -16,6 +16,10 @@ public final class PlayerUtils {
         return mc.player == null;
     }
 
+    public static boolean playerNotNull() {
+        return !playerNull();
+    }
+
     public static boolean playerValid(PlayerEntity player) {
         if (playerNull() || player == null) return false;
 

@@ -12,7 +12,7 @@ public final class StringUtils {
         System.setProperty("java.awt.headless", "false");
     }
 
-    public static String mcColor(String s) {
+    public static String color(String s) {
         return s.replaceAll("&", "§");
     }
 

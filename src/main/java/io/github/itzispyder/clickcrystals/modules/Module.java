@@ -83,10 +83,18 @@ public abstract class Module implements Toggleable {
     }
 
     public void setEnabled(boolean enabled, boolean sendFeedback) {
-        if (enabled) this.onEnable();
-        else this.onDisable();
+        if (enabled) {
+            this.onEnable();
+        }
+        else {
+            this.onDisable();
+        }
+
+        if (sendFeedback) {
+            this.sendUpdateInfo();
+        }
+
         this.data.setEnabled(enabled);
-        if (sendFeedback) this.sendUpdateInfo();
         saveModule(this,true);
         totalEnabled += enabled ? 1 : -1;
     }
@@ -121,6 +129,7 @@ public abstract class Module implements Toggleable {
                     current.setVal(setting.getVal());
                 }
             }));
+            module.setEnabled(module.data.isEnabled(), false);
         }
     }
 
