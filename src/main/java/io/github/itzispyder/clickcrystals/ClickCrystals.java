@@ -93,7 +93,6 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new ClickCrystal());
         system.addModule(new AnchorSwitch());
         system.addModule(new PearlSwitch());
-        system.addModule(new BreakDelay());
         system.addModule(new FullBright());
         system.addModule(new NoHurtCam());
         system.addModule(new SlowSwing());
@@ -125,6 +124,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new AxeSwap());
         system.addModule(new GlowingEntities());
         system.addModule(new BlankModule());
+        system.addModule(new AutoGG());
         Module.loadConfigModules();
 
         // Hud

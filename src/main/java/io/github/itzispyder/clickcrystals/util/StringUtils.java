@@ -27,7 +27,7 @@ public final class StringUtils {
     }
 
     public static String capitalize(String s) {
-        if (s.length() == 1) return s.toUpperCase();
+        if (s.length() <= 1) return s.toUpperCase();
         s = s.toLowerCase();
         return String.valueOf(s.charAt(0)).toUpperCase() + s.substring(1);
     }
