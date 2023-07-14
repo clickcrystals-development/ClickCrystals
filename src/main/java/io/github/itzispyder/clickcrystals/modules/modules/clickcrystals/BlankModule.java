@@ -17,7 +17,7 @@ public class BlankModule extends Module {
     public final ModuleSetting<String> strSetting = scGeneral.add(StringSetting.create()
             .name("string-setting")
             .description("This is a string setting.")
-            .def("KYS (keep urself safe)")
+            .def("This is the default text. :)")
             .build()
     );
     public final ModuleSetting<Integer> intSettingNoMin = scGeneral.add(IntegerSetting.create()
