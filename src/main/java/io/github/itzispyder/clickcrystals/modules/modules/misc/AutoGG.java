@@ -84,8 +84,9 @@ public class AutoGG extends Module implements Listener {
             ClientPlayerEntity p = PlayerUtils.player();
             Entity ent = packet.getEntity(p.getWorld());
             int status = packet.getStatus();
+            boolean playerWithinRange = ent instanceof PlayerEntity player && player.getPos().distanceTo(p.getPos()) < distance.getVal() && player != p;
 
-            if (status == EntityStatusType.DEATH && ent instanceof PlayerEntity player && player.getPos().distanceTo(p.getPos()) < distance.getVal()) {
+            if (status == EntityStatusType.DEATH && playerWithinRange) {
                 ChatUtils.sendChatMessage(getRandomMessage());
             }
         }
