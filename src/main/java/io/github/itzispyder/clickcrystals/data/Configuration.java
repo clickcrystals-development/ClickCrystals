@@ -98,7 +98,7 @@ public class Configuration implements Serializable {
     }
 
     public ModuleData getModuleData(String key) {
-        return getOrDefault(key, ModuleData.class, new ModuleData());
+        return getOrDefault(key, ModuleData.class, new ModuleData(null));
     }
 
     /**

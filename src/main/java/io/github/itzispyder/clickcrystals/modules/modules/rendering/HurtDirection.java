@@ -28,7 +28,7 @@ public class HurtDirection extends Module implements Listener {
             .build()
     );
     public final ModuleSetting<Double> displayScale = scGeneral.add(DoubleSetting.create()
-            .max(2.0)
+            .max(1.0)
             .min(0.5)
             .decimalPlaces(1)
             .name("display-scale")

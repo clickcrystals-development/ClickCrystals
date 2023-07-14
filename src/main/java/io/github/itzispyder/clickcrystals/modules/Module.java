@@ -20,9 +20,8 @@ public abstract class Module implements Toggleable {
     private final String name, description, id;
     private final Category category;
 
-
     public Module(String name, Category category, String description) {
-        this.data = new ModuleData();
+        this.data = new ModuleData(this);
         this.name = StringUtils.capitalizeWords(name);
         this.id = name;
         this.category = category;

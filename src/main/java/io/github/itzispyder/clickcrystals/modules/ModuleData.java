@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 
 public class ModuleData implements Serializable {
 
+    private final Module parent;
     public final SettingSection scGeneral = new SettingSection("general-settings");
     public final SettingSection scDefault = new SettingSection("module-defaults");
     private final ModuleSetting<Boolean> enabled = scDefault.add(BooleanSetting.create()
@@ -22,10 +23,26 @@ public class ModuleData implements Serializable {
     );
     private final List<SettingSection> settingSections;
 
-    public ModuleData() {
+    public ModuleData(Module module) {
+        this.parent = module;
         this.settingSections = new ArrayList<>();
         this.settingSections.add(scGeneral);
         this.settingSections.add(scDefault);
+
+        this.enabled.setChangeAction(setting -> {
+            boolean enabled = setting.getVal();
+            if (parent != null) {
+                if (enabled) {
+                    parent.onEnable();
+                }
+                else {
+                    parent.onDisable();
+                }
+
+                Module.totalEnabled += enabled ? 1 : -1;
+                Module.saveModule(parent, true);
+            }
+        });
     }
 
     public boolean isEnabled() {
