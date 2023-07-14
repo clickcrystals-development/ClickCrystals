@@ -40,7 +40,7 @@ public class TotemPops extends Module implements Listener {
     public final ModuleSetting<String> ownText = general.add(StringSetting.create()
             .name("Own pop name")
             .description("What to replace your name with in pop messages, %name% for your name")
-            .def("&6&oYou")
+            .def("&6&nYou")
             .build()
     );
 
