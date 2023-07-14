@@ -1,12 +1,29 @@
 package io.github.itzispyder.clickcrystals.util;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class StringUtils {
 
+    static {
+        System.setProperty("java.awt.headless", "false");
+    }
+
     public static String mcColor(String s) {
         return s.replaceAll("&", "§");
+    }
+
+    public static String fromClipboard() {
+        try {
+            Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard();
+            return (String)board.getData(DataFlavor.stringFlavor);
+        }
+        catch (Exception ex) {
+            return "";
+        }
     }
 
     public static String capitalize(String s) {

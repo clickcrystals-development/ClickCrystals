@@ -29,7 +29,7 @@ public abstract class GuiScreen extends Screen {
     public final List<KeyPressCallback> keyActionListeners;
     public final List<GuiElement> children;
     public GuiElement selected, mostRecentlyAdded;
-    public boolean shiftKeyPressed;
+    public boolean shiftKeyPressed, altKeyPressed, ctrlKeyPressed;
 
     public GuiScreen(String title) {
         super(Text.literal(title));
@@ -150,6 +150,12 @@ public abstract class GuiScreen extends Screen {
         if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT) {
             this.shiftKeyPressed = true;
         }
+        else if (keyCode == GLFW.GLFW_KEY_LEFT_ALT || keyCode == GLFW.GLFW_KEY_RIGHT_ALT) {
+            this.altKeyPressed = true;
+        }
+        else if (keyCode == GLFW.GLFW_KEY_LEFT_CONTROL || keyCode == GLFW.GLFW_KEY_RIGHT_CONTROL) {
+            this.ctrlKeyPressed = true;
+        }
 
         super.keyPressed(keyCode, scanCode, modifiers);
 
@@ -171,6 +177,12 @@ public abstract class GuiScreen extends Screen {
     public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
         if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT) {
             this.shiftKeyPressed = false;
+        }
+        else if (keyCode == GLFW.GLFW_KEY_LEFT_ALT || keyCode == GLFW.GLFW_KEY_RIGHT_ALT) {
+            this.altKeyPressed = false;
+        }
+        else if (keyCode == GLFW.GLFW_KEY_LEFT_CONTROL || keyCode == GLFW.GLFW_KEY_RIGHT_CONTROL) {
+            this.ctrlKeyPressed = false;
         }
 
         super.keyReleased(keyCode, scanCode, modifiers);

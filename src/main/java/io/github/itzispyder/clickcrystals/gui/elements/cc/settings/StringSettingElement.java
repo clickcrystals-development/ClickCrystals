@@ -86,13 +86,14 @@ public class StringSettingElement extends GuiElement {
             if (key == GLFW.GLFW_KEY_ESCAPE) {
                 screen.selected = null;
             }
-            else if (key == GLFW.GLFW_KEY_BACKSPACE) {
-                if (input.length() > 0) {
-                    input = input.substring(0, input.length() - 1);
-                }
+            else if (key == GLFW.GLFW_KEY_BACKSPACE && !input.isEmpty()) {
+                input = input.substring(0, input.length() - 1);
             }
             else if (key == GLFW.GLFW_KEY_SPACE) {
                 input = input.concat(" ");
+            }
+            else if (key == GLFW.GLFW_KEY_V && screen.ctrlKeyPressed) {
+                input = input.concat(StringUtils.fromClipboard());
             }
             else if (typed != null){
                 input = input.concat(screen.shiftKeyPressed ? StringUtils.keyPressWithShift(typed) : typed);
