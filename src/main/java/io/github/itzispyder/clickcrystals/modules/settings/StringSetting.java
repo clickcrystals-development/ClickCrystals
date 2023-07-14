@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.settings;
 
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.StringSettingElement;
 
-public class StringSetting extends Setting<String> {
+public class StringSetting extends ModuleSetting<String> {
 
     public StringSetting(String name, String description, String def, String val) {
         super(name, description, def, val);
@@ -19,7 +19,7 @@ public class StringSetting extends Setting<String> {
 
     public static class Builder extends SettingBuilder<String> {
         @Override
-        public Setting<String> build() {
+        public ModuleSetting<String> build() {
             return new StringSetting(name, description, def, getOrDef(val, def));
         }
     }

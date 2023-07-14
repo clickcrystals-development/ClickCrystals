@@ -48,7 +48,7 @@ public class IntegerSetting extends NumberSetting<Integer> {
         }
 
         @Override
-        public Setting<Integer> build() {
+        public ModuleSetting<Integer> build() {
             return new IntegerSetting(name, description, MathUtils.minMax(def, min, max), getOrDef(val, def), min, max);
         }
     }

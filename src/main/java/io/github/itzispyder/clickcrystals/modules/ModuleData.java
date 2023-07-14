@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules;
 
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
-import io.github.itzispyder.clickcrystals.modules.settings.Setting;
+import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 
 import java.io.Serializable;
@@ -13,7 +13,7 @@ public class ModuleData implements Serializable {
 
     public final SettingSection scGeneral = new SettingSection("general-settings");
     public final SettingSection scDefault = new SettingSection("module-defaults");
-    private final Setting<Boolean> enabled = scDefault.add(BooleanSetting.create()
+    private final ModuleSetting<Boolean> enabled = scDefault.add(BooleanSetting.create()
             .name("module-enabled")
             .description("Module enabled or disabled.")
             .def(false)
@@ -48,7 +48,7 @@ public class ModuleData implements Serializable {
         return settingSections;
     }
 
-    public void forEach(Consumer<Setting<?>> action) {
+    public void forEach(Consumer<ModuleSetting<?>> action) {
         this.settingSections.forEach(group -> group.forEach(action));
     }
 }

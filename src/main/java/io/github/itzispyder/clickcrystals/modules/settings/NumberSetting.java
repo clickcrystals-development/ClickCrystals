@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-public abstract class NumberSetting<T extends Number> extends Setting<T> {
+public abstract class NumberSetting<T extends Number> extends ModuleSetting<T> {
 
     protected T min, max;
 

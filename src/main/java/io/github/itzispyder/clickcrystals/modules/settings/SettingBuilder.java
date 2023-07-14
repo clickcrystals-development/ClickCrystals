@@ -34,5 +34,5 @@ public abstract class SettingBuilder<T> {
         return this;
     }
 
-    public abstract Setting<T> build();
+    public abstract ModuleSetting<T> build();
 }

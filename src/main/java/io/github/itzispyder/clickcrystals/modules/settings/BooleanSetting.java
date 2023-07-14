@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.settings;
 
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.BooleanSettingElement;
 
-public class BooleanSetting extends Setting<Boolean> {
+public class BooleanSetting extends ModuleSetting<Boolean> {
 
     public BooleanSetting(String name, String description, boolean def, boolean val) {
         super(name, description, def, val);
@@ -19,7 +19,7 @@ public class BooleanSetting extends Setting<Boolean> {
 
     public static class Builder extends SettingBuilder<Boolean> {
         @Override
-        public Setting<Boolean> build() {
+        public ModuleSetting<Boolean> build() {
             return new BooleanSetting(name, description, def, getOrDef(val, def));
         }
     }

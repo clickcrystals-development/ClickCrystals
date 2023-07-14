@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.design.DividerElement;
 import io.github.itzispyder.clickcrystals.modules.settings.NumberSetting;
-import io.github.itzispyder.clickcrystals.modules.settings.Setting;
+import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import net.minecraft.client.gui.DrawContext;
@@ -27,7 +27,7 @@ public class SettingSectionElement extends GuiElement {
         int nameHeight = (int)(10 * textScale);
         int caret = y + nameHeight + 2;
 
-        for (Setting<?> setting : settingSection.getSettings()) {
+        for (ModuleSetting<?> setting : settingSection.getSettings()) {
             int elementWidth = 20;
             if (setting instanceof NumberSetting<?>) elementWidth = 80;
             else if (setting instanceof StringSetting) elementWidth = 90;

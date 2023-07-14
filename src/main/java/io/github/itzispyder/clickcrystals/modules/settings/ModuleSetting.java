@@ -5,12 +5,12 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 import java.io.Serializable;
 
-public abstract class Setting<T> implements Serializable {
+public abstract class ModuleSetting<T> implements Serializable {
 
     private final String name, id, description;
     private T def, val;
 
-    protected Setting(String name, String description, T def, T val) {
+    protected ModuleSetting(String name, String description, T def, T val) {
         this.id = name;
         this.name = StringUtils.capitalizeWords(name);
         this.description = description;
@@ -20,7 +20,7 @@ public abstract class Setting<T> implements Serializable {
 
     public abstract <E extends GuiElement> E toGuiElement(int x, int y, int width, int height);
 
-    protected Setting(String name, String description, T val) {
+    protected ModuleSetting(String name, String description, T val) {
         this(name, description, val, val);
     }
 
@@ -58,7 +58,7 @@ public abstract class Setting<T> implements Serializable {
 
     public class Builder extends SettingBuilder<T> {
         @Override
-        public Setting<T> build() {
+        public ModuleSetting<T> build() {
             return null;
         }
     }

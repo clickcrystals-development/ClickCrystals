@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 public class SettingSection implements Serializable {
 
     private final String name, id;
-    private final List<Setting<?>> settings;
+    private final List<ModuleSetting<?>> settings;
 
     public SettingSection(String name) {
         this.id = name;
@@ -18,16 +18,16 @@ public class SettingSection implements Serializable {
         this.settings = new ArrayList<>();
     }
 
-    public <T> Setting<T> add(Setting<T> setting) {
+    public <T> ModuleSetting<T> add(ModuleSetting<T> setting) {
         this.settings.add(setting);
         return setting;
     }
 
-    public void remove(Setting<?> setting) {
+    public void remove(ModuleSetting<?> setting) {
         this.settings.remove(setting);
     }
 
-    public List<Setting<?>> getSettings() {
+    public List<ModuleSetting<?>> getSettings() {
         return settings;
     }
 
@@ -39,7 +39,7 @@ public class SettingSection implements Serializable {
         return name;
     }
 
-    public void forEach(Consumer<Setting<?>> action) {
+    public void forEach(Consumer<ModuleSetting<?>> action) {
         this.settings.forEach(action);
     }
 }
