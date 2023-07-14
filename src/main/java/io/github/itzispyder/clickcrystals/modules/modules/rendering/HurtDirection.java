@@ -9,7 +9,6 @@ import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
 
 public class HurtDirection extends Module implements Listener {
 
@@ -31,7 +30,6 @@ public class HurtDirection extends Module implements Listener {
     private void onAttacked(PlayerWasAttackedEvent e) {
         Entity attacker = e.getAttacker();
         PlayerEntity player = e.getPlayer();
-        Vec3d vec = attacker.getPos().subtract(player.getPos()).normalize();
         double rot = player.getYaw() - attacker.getYaw();
         Direction dir = Direction.fromRotation(rot);
 

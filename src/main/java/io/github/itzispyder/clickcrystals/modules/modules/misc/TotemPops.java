@@ -86,19 +86,19 @@ public class TotemPops extends Module implements Listener {
 
             if (status == EntityStatusType.TOTEM_POP) {
                 setPops(ent,getPops(ent) + 1);
-                ChatUtils.sendPrefixMessage(compilePopMsg(ent, enemyPop.getVal()));
+                ChatUtils.sendPrefixMessage(compilePopMsg(ent, name, enemyPop.getVal()));
             }
             else if (status == EntityStatusType.DEATH) {
-                ChatUtils.sendPrefixMessage(compilePopMsg(ent, enemyDeath.getVal()));
+                ChatUtils.sendPrefixMessage(compilePopMsg(ent, name, enemyDeath.getVal()));
                 setPops(ent,0);
             }
         }
     }
 
-    private String compilePopMsg(Entity ent, String msg) {
+    private String compilePopMsg(Entity ent, String entName, String msg) {
         return StringUtils.color(msg)
                 .replaceAll("%pops%", "" + getPops(ent))
-                .replaceAll("%player%", ent.getDisplayName().getString());
+                .replaceAll("%player%", entName);
     }
 
     private int getPops(Entity ent) {
