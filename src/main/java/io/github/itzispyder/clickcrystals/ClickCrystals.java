@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals;
 import io.github.itzispyder.clickcrystals.client.CCKeybindings;
 import io.github.itzispyder.clickcrystals.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.client.PacketLogger;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.Configuration;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
@@ -10,7 +11,10 @@ import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
-import io.github.itzispyder.clickcrystals.gui.hud.*;
+import io.github.itzispyder.clickcrystals.gui.hud.ClickCrystalsIconHud;
+import io.github.itzispyder.clickcrystals.gui.hud.ClickPerSecondHud;
+import io.github.itzispyder.clickcrystals.gui.hud.ColorOverlayHud;
+import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
@@ -36,6 +40,7 @@ public final class ClickCrystals implements ModInitializer {
     public static final Configuration config = Configuration.load(configFile);
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
+    public static final PacketLogger packetLogger = new PacketLogger();
 
     @SuppressWarnings("unused")
     public static final String
@@ -110,7 +115,6 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new MsgResend());
         system.addModule(new CCExtras());
         system.addModule(new TotemOverlay());
-        system.addModule(new BrightOrange());
         system.addModule(new ShieldSwitch());
         system.addModule(new RenderOwnName());
         system.addModule(new AutoRespawn());
@@ -123,7 +127,6 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new GlowingEntities());
         system.addModule(new BlankModule());
         system.addModule(new AutoGG());
-        system.addModule(new HurtDirection());
         Module.loadConfigModules();
 
         // Hud
@@ -131,7 +134,6 @@ public final class ClickCrystals implements ModInitializer {
         system.addHud(new ClickCrystalsIconHud());
         system.addHud(new ModuleListTextHud());
         system.addHud(new ClickPerSecondHud());
-        system.addHud(new HurtDirectionHud());
     }
 
     public void initRpc() {

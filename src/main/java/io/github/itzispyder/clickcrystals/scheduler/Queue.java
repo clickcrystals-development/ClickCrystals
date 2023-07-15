@@ -1,8 +1,9 @@
 package io.github.itzispyder.clickcrystals.scheduler;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface Queue<E> {
+public interface Queue<E> extends Serializable {
 
     void enqueue(E element);
 

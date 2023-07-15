@@ -1,7 +1,5 @@
 package io.github.itzispyder.clickcrystals.modules.modules.clickcrystals;
 
-import io.github.itzispyder.clickcrystals.client.PacketMapper;
-import io.github.itzispyder.clickcrystals.commands.commands.CCDebugCommand;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PacketReceiveEvent;
@@ -9,8 +7,8 @@ import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.*;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
-import io.github.itzispyder.clickcrystals.util.StringUtils;
+
+import static io.github.itzispyder.clickcrystals.ClickCrystals.packetLogger;
 
 public class BlankModule extends Module implements Listener {
 
@@ -62,12 +60,14 @@ public class BlankModule extends Module implements Listener {
             .def(5.67)
             .build()
     );
+    /*
     public final ModuleSetting<Boolean> showPackets = scTest.add(BooleanSetting.create() // this is a new setting
             .name("show-packet-interactions")
             .description("Shows packets interactions and debug stuff.")
             .def(false)
             .build()
     );
+     */
 
     public BlankModule() {
         super("test-module", Categories.CLICKCRYSTALS, "This module does nothing, serves as a testing purpose for development.");
@@ -85,17 +85,11 @@ public class BlankModule extends Module implements Listener {
 
     @EventHandler
     private void onPacketReceive(PacketReceiveEvent e) {
-        if (showPackets.getVal()) {
-            ChatUtils.sendPrefixMessage(StringUtils.color("&a-received " + PacketMapper.getNameOf(e.getPacket())));
-        }
-        CCDebugCommand.log(e.getPacket());
+        packetLogger.log(e.getPacket(), false);
     }
 
     @EventHandler
     private void onPacketSend(PacketSendEvent e) {
-        if (showPackets.getVal()) {
-            ChatUtils.sendPrefixMessage(StringUtils.color("&b-sent " + PacketMapper.getNameOf(e.getPacket())));
-        }
-        CCDebugCommand.log(e.getPacket());
+        packetLogger.log(e.getPacket(), false);
     }
 }

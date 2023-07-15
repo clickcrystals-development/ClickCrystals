@@ -1,11 +1,8 @@
 package io.github.itzispyder.clickcrystals.gui.hud;
 
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
-import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.rendering.BrightOrange;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.TotemOverlay;
-import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.InvUtils;
@@ -19,9 +16,9 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 public class ColorOverlayHud implements HudRenderCallback {
     @Override
     public void onHudRender(DrawContext context, float tickDelta) {
-        final TotemOverlay totemOverlay = (TotemOverlay)Module.get(TotemOverlay.class);
-        final Module brightOrange = Module.get(BrightOrange.class);
-        final Window win = mc.getWindow();
+        TotemOverlay totemOverlay = Module.get(TotemOverlay.class);
+        Window win = mc.getWindow();
+
         if (totemOverlay.isEnabled() && !HotbarUtils.isTotemed() && InvUtils.has(Items.TOTEM_OF_UNDYING)) {
             if (totemOverlay.fill.getVal()) {
                 this.renderColor(context, 0x30FF0000);
@@ -35,10 +32,6 @@ public class ColorOverlayHud implements HudRenderCallback {
             if (totemOverlay.meme.getVal()) {
                 context.drawTexture(GuiTextures.NO_TOTEMS_MEME, (mc.getWindow().getScaledWidth()/2)-57, 0, 0,0,115,75,115,75);
             }
-        }
-
-        if (brightOrange.isEnabled()) {
-            this.renderColor(context, 0x30BE8100);
         }
     }
 

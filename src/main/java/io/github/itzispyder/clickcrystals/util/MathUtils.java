@@ -44,4 +44,17 @@ public final class MathUtils {
         }
         return val;
     }
+
+    public static String getSystemLogTime() {
+        Timer.End end = Timer.zero();
+        return end.getStampLogger();
+    }
+
+    public static String twoDigitFormat(int i) {
+        return i < 10 && i >= 0 ? "0" + i : "" + i;
+    }
+
+    public static String twoDigitFormat(long i) {
+        return i < 10L && i >= 0L ? "0" + i : "" + i;
+    }
 }
