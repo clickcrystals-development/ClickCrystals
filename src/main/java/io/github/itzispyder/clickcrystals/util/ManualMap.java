@@ -1,41 +1,41 @@
 package io.github.itzispyder.clickcrystals.util;
 
+import io.github.itzispyder.clickcrystals.data.Pair;
+
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Make a map manually
- * @param <K> key
- * @param <V> value
- */
-public class ManualMap<K,V> {
+public class ManualMap {
 
-    public Map<K,V> map = new HashMap<>();
+    public static <K, V> Map<K, V> fromEntries(Map.Entry<K, V>... entries) {
+        return Map.ofEntries(entries);
+    }
 
-    /**
-     * Manual map
-     * @param objects objects array
-     * @param <O> list of objects
-     */
-    public <O extends Object> ManualMap (O... objects) {
-        if (objects.length % 2 != 0)
-            throw new IllegalArgumentException("objects amount must be even for each key to have a value pair!");
-        for (int i = 0; i < objects.length; i += 2) {
+    public static <K, V> Map<K, V> fromPairs(Pair<K, V>... pairs) {
+        Map<K, V> map = new HashMap<>();
+        for (Pair<K, V> pair : pairs) {
             try {
-                map.put((K) objects[i],(V) objects[i + 1]);
+                map.put(pair.left, pair.right);
+            }
+            catch (Exception ignore) {}
+        }
+        return map;
+    }
+
+    public static <K, V> Map<K, V> fromItems(Object... items) {
+        if (items.length % 2 != 0) {
+            throw new IllegalArgumentException("items amount must be even for each key to have a value!");
+        }
+
+        Map<K, V> map = new HashMap<>();
+        for (int i = 0; i < items.length; i += 2) {
+            try {
+                map.put((K)items[i], (V)items[i + 1]);
             }
             catch (Exception ex) {
-                map.clear();
                 break;
             }
         }
-    }
-
-    /**
-     * Returns the map
-     * @return map
-     */
-    public Map<K, V> getMap() {
         return map;
     }
 }
