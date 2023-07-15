@@ -11,14 +11,18 @@
 
 ---------------------------------------------------------------
 ### A message from the developers:
-And so, it has happened again.
+Recently, there has been numerous reports of ClickCrystals being
+a cheat because of NoBreakDelay. This message is here to ensure 
+you that your complaints have been received. NoBreakDelay will be 
+removed in version (0.9.1). 
 
-You've guessed it... Modrinth has taken our mod down once again!
-This time it was because of the module `TrueSight` which lets you render
-invisible entities.
+Along with the (0.9.1) update, module settings are now provided,
+which is something ClickCrystals has never had before. This will
+motivate the playerbase to update their games and versions one
+step closer to becoming cheat-free!
 
-We've removed this module so our mod can be considered hack-free!
-(Modrinth we really support your community but please stop taking our mod down)
+We'd like to apologize again for these troubles, and 
+thank you for your understanding.
 
 Happy coding and cpvping!
 
@@ -29,18 +33,14 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20.1
-Mod: 0.9.0
+Mod: 0.9.1
 
 Changelog:
-- NEW BETA GUI becomes official GUI (only supports 1.20+)
-- Old gui is deleted
-- Added glow in the dark entities module
-- Added search bar (there are way too many modules now)
-- Added home page 
-- Added ClickCrystals social links
-- Added credits page
+- Added module settings for customization
+- There is now a module settings page for customization!
 
 NOTICE:
+- NoBreakDelay has been removed
 - Any versions regarding Minecraft 1.19.x has been discontinued,
   meaning it will no longer be worked on in the future. 
   However, they will still be available for download.
@@ -96,7 +96,6 @@ NOTICE:
 | NoGameOverlay   |                       Stops annoying overlays from rendering.                        |
 | NoLevelLoading  |                    Prevents most loading screens from rendering.                     |
 | AntiCrash       |  Prevents servers from sending you particle packets, stopping all particle crashes.  |
-| NoBreakDelay    |   Removes the delay between breaking a block and starting to break the next block.   |
 | SilkTouch       |                      Gives any tool you hold silk touch (Real)                       |
 | TotemPops       |              Sends the totem pops of another player. (With pop counter)              |
 | CrystalSpeed    |                             Displays your crystal speed.                             |
@@ -114,6 +113,7 @@ NOTICE:
 | AxeSwap         |                Swap to hotbar axe when attacking a shielding opponent                |
 | SwordSwap       |                                 Opposite of AxeSwap                                  |
 | GlowingEntities | Entities glow in the dark (and not just a dark model, useless if FullBright enabled) |
+| HurtDirection   |              Displays the direction from which you were attacked from.               |
 
 ## But isn't this cheating?
 It is not a cheat. It does not automate any task, for every action the mod preforms, you have to click.
