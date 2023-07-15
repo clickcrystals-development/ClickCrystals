@@ -49,5 +49,7 @@ public final  class GuiTextures {
     public static final Identifier HURT_DIRECTION_SOUTH = new Identifier(modId, "textures/overlays/hurt_direction_south.png");
     public static final Identifier HURT_DIRECTION_EAST = new Identifier(modId, "textures/overlays/hurt_direction_east.png");
     public static final Identifier HURT_DIRECTION_WEST = new Identifier(modId, "textures/overlays/hurt_direction_west.png");
+    public static final Identifier NO_TOTEMS_MEME = new Identifier(modId, "textures/overlays/nototem.png");
+    public static final Identifier NO_TOTEMS_ICON = new Identifier(modId, "textures/overlays/totemlessicon.png");
 
 }
