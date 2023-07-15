@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import io.github.itzispyder.clickcrystals.client.PacketMapper;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.scheduler.DelayedTask;
@@ -10,12 +11,17 @@ import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
+import net.minecraft.network.packet.Packet;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class CCDebug extends Command {
+public class CCDebugCommand extends Command {
 
-    public CCDebug() {
+    private static final Map<String, Integer> packetLog = new HashMap<>();
+
+    public CCDebugCommand() {
         super("ccdebug", "ClickCrystals Debug Info", "/ccdebug <item>", "clickcrystaldebug");
     }
 
@@ -55,6 +61,37 @@ public class CCDebug extends Command {
                             ChatUtils.sendMessage("Repeating Tasks (" + repeatingTasks.size() + "): " + ArrayUtils.list2string(repeatingTasks));
                             ChatUtils.sendBlank(2);
                             return SINGLE_SUCCESS;
-                        }));
+                        }))
+                .then(literal("packets")
+                        .executes(context -> {
+                            List<String> c2s = PacketMapper.getC2SNames();
+                            List<String> s2c = PacketMapper.getS2CNames();
+
+                            ChatUtils.sendBlank(2);
+                            ChatUtils.sendPrefixMessage("Packets Info:");
+                            ChatUtils.sendBlank(1);
+                            ChatUtils.sendMessage("Client to Server (" + c2s.size() + "): " + ArrayUtils.list2string(c2s));
+                            ChatUtils.sendBlank(1);
+                            ChatUtils.sendMessage("Server to Client (" + s2c.size() + "): " + ArrayUtils.list2string(s2c));
+                            ChatUtils.sendBlank(2);
+                            return SINGLE_SUCCESS;
+                        }).then(literal("list")
+                                .executes(context -> {
+                                    ChatUtils.sendBlank(2);
+                                    ChatUtils.sendPrefixMessage("Packets Info:");
+                                    ChatUtils.sendMessage(StringUtils.color("&a&l•&7Received    &b&l•&7Sent    &c&l•&7Unmapped"));
+                                    ChatUtils.sendBlank(1);
+                                    for (Map.Entry<String, Integer> entry : packetLog.entrySet()) {
+                                        ChatUtils.sendMessage(entry.getKey() + "§7: " + entry.getValue());
+                                    }
+                                    ChatUtils.sendBlank(2);
+                                    return SINGLE_SUCCESS;
+                                })));
+    }
+
+    public static void log(Packet<?> packet) {
+        String name = PacketMapper.getNameColored(packet);
+        int count = packetLog.getOrDefault(name, 0);
+        packetLog.put(name, count + 1);
     }
 }

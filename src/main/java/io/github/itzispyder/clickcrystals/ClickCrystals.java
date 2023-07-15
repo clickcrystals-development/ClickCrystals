@@ -85,7 +85,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addCommand(new GmsCommand());
         system.addCommand(new GmaCommand());
         system.addCommand(new GmspCommand());
-        system.addCommand(new CCDebug());
+        system.addCommand(new CCDebugCommand());
 
         // Module
         system.addModule(new ClickCrystal());

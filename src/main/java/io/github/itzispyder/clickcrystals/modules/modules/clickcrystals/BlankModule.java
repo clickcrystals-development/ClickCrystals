@@ -1,13 +1,22 @@
 package io.github.itzispyder.clickcrystals.modules.modules.clickcrystals;
 
+import io.github.itzispyder.clickcrystals.client.PacketMapper;
+import io.github.itzispyder.clickcrystals.commands.commands.CCDebugCommand;
+import io.github.itzispyder.clickcrystals.events.EventHandler;
+import io.github.itzispyder.clickcrystals.events.Listener;
+import io.github.itzispyder.clickcrystals.events.events.PacketReceiveEvent;
+import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.*;
+import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.StringUtils;
 
-public class BlankModule extends Module {
+public class BlankModule extends Module implements Listener {
 
     private final SettingSection scGeneral = getGeneralSection(); // this is the default setting section
-    private final SettingSection scTest = createSettingSection("hello-world"); // this is a new setting section
+    private final SettingSection scExample = createSettingSection("hello-world"); // this is a new setting section
+    private final SettingSection scTest = createSettingSection("test-settings-and-features");
     public final ModuleSetting<Boolean> boolSetting = scGeneral.add(BooleanSetting.create() // this is a new setting
             .name("boolean-setting")
             .description("This is a boolean setting.")
@@ -36,7 +45,7 @@ public class BlankModule extends Module {
             .def(10)
             .build()
     );
-    public final ModuleSetting<Double> doubleSettingTwoDecimal = scTest.add(DoubleSetting.create()
+    public final ModuleSetting<Double> doubleSettingTwoDecimal = scExample.add(DoubleSetting.create()
             .max(101.21)
             .min(75.43)
             .decimalPlaces(2)
@@ -45,12 +54,18 @@ public class BlankModule extends Module {
             .def(87.34)
             .build()
     );
-    public final ModuleSetting<Double> doubleSettingOneDecimal = scTest.add(DoubleSetting.create()
+    public final ModuleSetting<Double> doubleSettingOneDecimal = scExample.add(DoubleSetting.create()
             .max(34.7)
             .decimalPlaces(1)
             .name("double-setting-one-decimals")
             .description("This is a double setting with one decimal places.")
             .def(5.67)
+            .build()
+    );
+    public final ModuleSetting<Boolean> showPackets = scTest.add(BooleanSetting.create() // this is a new setting
+            .name("show-packet-interactions")
+            .description("Shows packets interactions and debug stuff.")
+            .def(false)
             .build()
     );
 
@@ -60,11 +75,27 @@ public class BlankModule extends Module {
 
     @Override
     protected void onEnable() {
-
+        system.addListener(this);
     }
 
     @Override
     protected void onDisable() {
+        system.removeListener(this);
+    }
 
+    @EventHandler
+    private void onPacketReceive(PacketReceiveEvent e) {
+        if (showPackets.getVal()) {
+            ChatUtils.sendPrefixMessage(StringUtils.color("&a-received " + PacketMapper.getNameOf(e.getPacket())));
+        }
+        CCDebugCommand.log(e.getPacket());
+    }
+
+    @EventHandler
+    private void onPacketSend(PacketSendEvent e) {
+        if (showPackets.getVal()) {
+            ChatUtils.sendPrefixMessage(StringUtils.color("&b-sent " + PacketMapper.getNameOf(e.getPacket())));
+        }
+        CCDebugCommand.log(e.getPacket());
     }
 }

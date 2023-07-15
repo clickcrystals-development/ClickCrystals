@@ -2,7 +2,13 @@ package io.github.itzispyder.clickcrystals.client;
 
 import io.github.itzispyder.clickcrystals.util.ManualMap;
 import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.c2s.handshake.HandshakeC2SPacket;
+import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;
+import net.minecraft.network.packet.c2s.login.LoginQueryResponseC2SPacket;
 import net.minecraft.network.packet.c2s.play.*;
+import net.minecraft.network.packet.s2c.login.LoginHelloS2CPacket;
+import net.minecraft.network.packet.s2c.login.LoginQueryRequestS2CPacket;
+import net.minecraft.network.packet.s2c.login.LoginSuccessS2CPacket;
 import net.minecraft.network.packet.s2c.play.*;
 
 import java.util.HashMap;
@@ -24,7 +30,6 @@ public final class PacketMapper {
             CraftRequestC2SPacket.class, "CraftRequestC2SPacket",
             CloseHandledScreenC2SPacket.class, "CloseHandledScreenC2SPacket",
             CreativeInventoryActionC2SPacket.class, "CreativeInventoryActionC2SPacket",
-            PlayerMoveC2SPacket.class, "PlayerMoveC2SPacket",
             PlayerInteractItemC2SPacket.class, "PlayerInteractItemC2SPacket",
             PlayerInteractEntityC2SPacket.class, "PlayerInteractEntityC2SPacket",
             PlayerActionC2SPacket.class, "PlayerActionC2SPacket",
@@ -60,7 +65,15 @@ public final class PacketMapper {
             RequestCommandCompletionsC2SPacket.class, "RequestCommandCompletionsC2SPacket",
             RecipeCategoryOptionsC2SPacket.class, "RecipeCategoryOptionsC2SPacket",
             UpdateCommandBlockC2SPacket.class, "UpdateCommandBlockC2SPacket",
-            UpdateCommandBlockMinecartC2SPacket.class, "UpdateCommandBlockMinecartC2SPacket"
+            UpdateCommandBlockMinecartC2SPacket.class, "UpdateCommandBlockMinecartC2SPacket",
+            LoginHelloC2SPacket.class, "LoginHelloC2SPacket",
+            HandshakeC2SPacket.class, "HandshakeC2SPacket",
+            LoginQueryResponseC2SPacket.class, "LoginQueryResponseC2SPacket",
+            PlayerMoveC2SPacket.PositionAndOnGround.class, "PositionAndOnGround",
+            PlayerMoveC2SPacket.class, "PlayerMoveC2SPacket",
+            PlayerMoveC2SPacket.LookAndOnGround.class, "LookAndOnGround",
+            PlayerMoveC2SPacket.OnGroundOnly.class, "OnGroundOnly",
+            PlayerMoveC2SPacket.Full.class, "Full"
     );
 
     private static final Map<Class<? extends Packet<?>>, String> s2c = ManualMap.fromItems(
@@ -162,7 +175,17 @@ public final class PacketMapper {
             WorldBorderWarningTimeChangedS2CPacket.class, "WorldBorderWarningTimeChangedS2CPacket",
             EntityPassengersSetS2CPacket.class, "EntityPassengersSetS2CPacket",
             PlaySoundS2CPacket.class, "PlaySoundS2CPacket",
-            ResourcePackSendS2CPacket.class, "ResourcePackSendS2CPacket"
+            ResourcePackSendS2CPacket.class, "ResourcePackSendS2CPacket",
+            KeepAliveS2CPacket.class, "KeepAliveS2CPacket",
+            EntityS2CPacket.RotateAndMoveRelative.class, "RotateAndMoveRelative",
+            EntityS2CPacket.Rotate.class, "Rotate",
+            EntityS2CPacket.MoveRelative.class, "MoveRelative",
+            UpdateSelectedSlotS2CPacket.class, "UpdateSelectedSlotS2CPacket",
+            EntityStatusS2CPacket.class, "EntityStatusS2CPacket",
+            LoginSuccessS2CPacket.class, "LoginSuccessS2CPacket",
+            LoginHelloS2CPacket.class, "LoginHelloS2CPacket",
+            LoginQueryRequestS2CPacket.class, "LoginQueryRequestS2CPacket",
+            PlayerAbilitiesS2CPacket.class, "PlayerAbilitiesS2CPacket"
     );
 
     public static Map<Class<? extends Packet<?>>, String> getC2S() {
@@ -187,5 +210,29 @@ public final class PacketMapper {
 
     public static List<String> getS2CNames() {
         return getS2C().values().stream().toList();
+    }
+
+    public static String getNameOf(Packet<?> packet) {
+        if (c2s.containsKey(packet.getClass())) {
+            return c2s.get(packet.getClass());
+        }
+        else if (s2c.containsKey(packet.getClass())) {
+            return s2c.get(packet.getClass());
+        }
+        else {
+            return "MC_OBFUSCATED(" + packet.getClass().getSimpleName() + ")";
+        }
+    }
+
+    public static String getNameColored(Packet<?> packet) {
+        if (c2s.containsKey(packet.getClass())) {
+            return "§b" + c2s.get(packet.getClass());
+        }
+        else if (s2c.containsKey(packet.getClass())) {
+            return "§a" + s2c.get(packet.getClass());
+        }
+        else {
+            return "§cMC_OBFUSCATED(" + packet.getClass().getSimpleName() + ")";
+        }
     }
 }
