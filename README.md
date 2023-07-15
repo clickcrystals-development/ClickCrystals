@@ -138,6 +138,7 @@ To stop: complaining it is a cheat/macro.
 - Thanks for downloading ClickCrystals!
 - Make sure to give it a star on my [GitHub](https://github.com/itzispyder/clickcrystals)
 - Follow the project on [Modrinth](https://modrinth.com/mod/clickcrystals)
+- Feeling generous today? [Help support our project!](https://paypal.com/paypalme/thetrouper)
 
 ## SPECIAL THANKS AND SHOUTOUT TO
 ```yml
