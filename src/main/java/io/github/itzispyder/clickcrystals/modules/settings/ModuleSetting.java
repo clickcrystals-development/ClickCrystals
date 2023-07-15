@@ -4,11 +4,10 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 import java.io.Serializable;
-import java.util.function.Consumer;
 
 public abstract class ModuleSetting<T> implements Serializable {
 
-    private Consumer<ModuleSetting<T>> changeAction;
+    private SettingChangeCallback<ModuleSetting<T>> changeAction;
     private final String name, id, description;
     private T def, val;
 
@@ -53,18 +52,18 @@ public abstract class ModuleSetting<T> implements Serializable {
 
     public void setVal(Object val) {
         this.val = (T)val;
-        this.changeAction.accept(this);
+        this.changeAction.onChange(this);
     }
 
     public String getId() {
         return id;
     }
 
-    public Consumer<ModuleSetting<T>> getChangeAction() {
+    public SettingChangeCallback<ModuleSetting<T>> getChangeAction() {
         return changeAction;
     }
 
-    public void setChangeAction(Consumer<ModuleSetting<T>> changeAction) {
+    public void setChangeAction(SettingChangeCallback<ModuleSetting<T>> changeAction) {
         this.changeAction = changeAction;
     }
 

@@ -35,7 +35,7 @@ public final class ClickCrystals implements ModInitializer {
     public static final File configFile = new File("ClickCrystalsClient/game_config.dat");
     public static final Configuration config = Configuration.load(configFile);
     public static final MinecraftClient mc = MinecraftClient.getInstance();
-    public static final ClickCrystalsSystem system = new ClickCrystalsSystem();
+    public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
 
     @SuppressWarnings("unused")
     public static final String

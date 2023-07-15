@@ -1,10 +1,8 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import java.util.function.Consumer;
-
 public abstract class SettingBuilder<T> {
 
-    protected Consumer<ModuleSetting<T>> changeAction;
+    protected SettingChangeCallback<ModuleSetting<T>> changeAction;
     protected String name, description;
     protected T def, val;
 
@@ -38,7 +36,7 @@ public abstract class SettingBuilder<T> {
         return this;
     }
 
-    public SettingBuilder<T> onSettingChange(Consumer<ModuleSetting<T>> changeAction) {
+    public SettingBuilder<T> onSettingChange(SettingChangeCallback<ModuleSetting<T>> changeAction) {
         this.changeAction = changeAction;
         return this;
     }

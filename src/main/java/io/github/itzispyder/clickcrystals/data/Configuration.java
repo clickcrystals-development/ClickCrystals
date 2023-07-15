@@ -105,7 +105,7 @@ public class Configuration implements Serializable {
      * Saves the configuration to its file
      */
     public void save() {
-        save(this,file);
+        save(this, file);
     }
 
     /**

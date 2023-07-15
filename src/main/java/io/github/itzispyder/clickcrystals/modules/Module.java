@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.modules;
 
-import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.data.ConfigSection;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
@@ -8,13 +7,15 @@ import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.MinecraftClient;
 
+import java.io.Serializable;
+
 import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 
-public abstract class Module implements Toggleable {
+public abstract class Module implements Toggleable, Serializable {
 
-    protected static final MinecraftClient mc = ClickCrystals.mc;
-    protected static final ClickCrystalsSystem system = ClickCrystals.system;
+    protected static final MinecraftClient mc = MinecraftClient.getInstance();
+    protected static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
     public static int totalEnabled;
     private ModuleData data;
     private final String name, description, id;
@@ -52,6 +53,27 @@ public abstract class Module implements Toggleable {
         this.setEnabled(enabled,true);
     }
 
+    public void setEnabled(boolean enabled, boolean sendFeedback) {
+        setEnabled(enabled, sendFeedback, true);
+    }
+
+    public void setEnabled(boolean enabled, boolean sendFeedback, boolean saveImmediately) {
+        if (enabled) {
+            this.onEnable();
+        }
+        else {
+            this.onDisable();
+        }
+
+        if (sendFeedback) {
+            this.sendUpdateInfo();
+        }
+
+        this.data.setEnabled(enabled);
+        totalEnabled += enabled ? 1 : -1;
+        saveModule(this, saveImmediately);
+    }
+
     public String getDescription() {
         return description;
     }
@@ -81,23 +103,6 @@ public abstract class Module implements Toggleable {
         return id;
     }
 
-    public void setEnabled(boolean enabled, boolean sendFeedback) {
-        if (enabled) {
-            this.onEnable();
-        }
-        else {
-            this.onDisable();
-        }
-
-        if (sendFeedback) {
-            this.sendUpdateInfo();
-        }
-
-        this.data.setEnabled(enabled);
-        saveModule(this,true);
-        totalEnabled += enabled ? 1 : -1;
-    }
-
     public String getHelp() {
         return " \n" + starter + "§f" + name +
                 "\n" + "§3Category: §b" + category.name() +
@@ -120,7 +125,6 @@ public abstract class Module implements Toggleable {
     public static void loadConfigModules() {
         for (Module module : system.modules().values()) {
             String path = "modules." + module.getId();
-
             ModuleData data = config.getModuleData(path);
 
             data.forEach(setting -> module.data.forEach(current -> {
@@ -128,7 +132,7 @@ public abstract class Module implements Toggleable {
                     current.setVal(setting.getVal());
                 }
             }));
-            module.setEnabled(module.data.isEnabled(), false);
+            module.setEnabled(module.data.isEnabled(), false, false);
         }
     }
 
@@ -141,7 +145,6 @@ public abstract class Module implements Toggleable {
 
     public static void saveModule(Module module, boolean saveImmediately) {
         String path = "modules." + module.getId();
-
         ConfigSection<ModuleData> dataSection = new ConfigSection<>(module.getData());
         config.set(path, dataSection);
 
