@@ -4,7 +4,6 @@ import io.github.itzispyder.clickcrystals.data.Frequency;
 import io.github.itzispyder.clickcrystals.scheduler.ArrayQueue;
 import io.github.itzispyder.clickcrystals.scheduler.Queue;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
-import io.github.itzispyder.clickcrystals.util.MathUtils;
 import net.minecraft.network.packet.Packet;
 
 public class PacketInfo {
