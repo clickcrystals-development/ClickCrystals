@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.util;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -46,8 +47,8 @@ public final class MathUtils {
     }
 
     public static String getSystemLogTime() {
-        Timer.End end = Timer.zero();
-        return end.getStampLogger();
+        LocalDateTime time = LocalDateTime.now();
+        return twoDigitFormat(time.getHour()) + ":" + twoDigitFormat(time.getMinute()) + ":" + twoDigitFormat(time.getSecond());
     }
 
     public static String twoDigitFormat(int i) {

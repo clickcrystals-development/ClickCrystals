@@ -60,14 +60,12 @@ public class BlankModule extends Module implements Listener {
             .def(5.67)
             .build()
     );
-    /*
     public final ModuleSetting<Boolean> showPackets = scTest.add(BooleanSetting.create() // this is a new setting
             .name("show-packet-interactions")
             .description("Shows packets interactions and debug stuff.")
             .def(false)
             .build()
     );
-     */
 
     public BlankModule() {
         super("test-module", Categories.CLICKCRYSTALS, "This module does nothing, serves as a testing purpose for development.");
@@ -85,11 +83,11 @@ public class BlankModule extends Module implements Listener {
 
     @EventHandler
     private void onPacketReceive(PacketReceiveEvent e) {
-        packetLogger.log(e.getPacket(), false);
+        packetLogger.log(e.getPacket(), showPackets.getVal());
     }
 
     @EventHandler
     private void onPacketSend(PacketSendEvent e) {
-        packetLogger.log(e.getPacket(), false);
+        packetLogger.log(e.getPacket(), showPackets.getVal());
     }
 }

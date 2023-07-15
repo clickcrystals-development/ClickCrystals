@@ -7,13 +7,13 @@ import java.util.List;
 
 public enum Frequency {
 
-    LOWEST(6),
+    LOWEST(0),
     LOWER(5),
-    LOW(4),
-    NORMAL(3),
-    HIGH(2),
-    HIGHER(1),
-    HIGHEST(0);
+    LOW(10),
+    NORMAL(15),
+    HIGH(20),
+    HIGHER(25),
+    HIGHEST(30);
 
     private int value;
 
@@ -34,8 +34,12 @@ public enum Frequency {
     }
 
     public static Frequency fromValue(int value) {
+        int add = value % 5 != 0 ? 1 : 0;
+        int val = (int)Math.floor(value / 5.0) + add;
+        val *= 5;
+
         for (Frequency f : values()) {
-            if (f.value == value) {
+            if (val == f.value) {
                 return f;
             }
         }

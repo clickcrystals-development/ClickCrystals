@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.data.Frequency;
 import io.github.itzispyder.clickcrystals.scheduler.ArrayQueue;
 import io.github.itzispyder.clickcrystals.scheduler.Queue;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.MathUtils;
 import net.minecraft.network.packet.Packet;
 
 public class PacketInfo {
@@ -15,9 +16,9 @@ public class PacketInfo {
 
     public PacketInfo(Packet<?> packet) {
         this.name = PacketMapper.getNameOf(packet);
-        this.lastSeen = 0;
+        this.lastSeen = 64;
         this.count = 0;
-        this.frequencies = new ArrayQueue<>(5);
+        this.frequencies = new ArrayQueue<>(10);
         this.status = Status.fromPacketName(name);
     }
 
@@ -28,23 +29,23 @@ public class PacketInfo {
     }
 
     public String getDetails() {
-        return "[Packet Logger] [Packet-" + status.name() + "] " + name;
+        return "[" + MathUtils.getSystemLogTime() + "] [Packet-" + status.name() + "] " + name;
     }
 
     public void print() {
-        if (attemptedPrints++ >= getFrequency().getValue()) {
+        if (++attemptedPrints >= getFrequency().getValue()) {
             String details = getDetails();
             if (attemptedPrints > 1) {
-                details = details.concat("(x" + attemptedPrints + ")");
+                details = details.concat(" (x" + attemptedPrints + ")");
             }
 
-            ChatUtils.sendPrefixMessage(details);
+            ChatUtils.sendMessage(details);
             attemptedPrints = 0;
         }
     }
 
     private Frequency determineFrequency(int lastSeen) {
-        if (lastSeen <= 2) {
+        if (lastSeen <= 1) {
             return Frequency.HIGHEST;
         }
         else if (lastSeen <= 5) {

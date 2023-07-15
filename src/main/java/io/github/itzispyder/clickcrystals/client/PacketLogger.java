@@ -34,6 +34,7 @@ public class PacketLogger implements Listener {
         if (print) {
             info.print();
         }
+        log.put(name, info);
     }
 
     public Map<String, PacketInfo> getLog() {

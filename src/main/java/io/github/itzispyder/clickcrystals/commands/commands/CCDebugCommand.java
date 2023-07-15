@@ -79,6 +79,7 @@ public class CCDebugCommand extends Command {
                                     ChatUtils.sendBlank(2);
                                     ChatUtils.sendPrefixMessage("Packets Info:");
                                     ChatUtils.sendMessage(StringUtils.color("&a&l•&7Received    &b&l•&7Sent    &c&l•&7Unmapped"));
+                                    ChatUtils.sendMessage(StringUtils.color("&7Logged (" + packetLogger.getLog().size() + ") packets"));
                                     ChatUtils.sendBlank(1);
                                     for (Map.Entry<String, PacketInfo> entry : packetLogger.getLog().entrySet()) {
                                         ChatUtils.sendMessage(entry.getKey() + "§7: " + entry.getValue().getCount());
