@@ -5,6 +5,9 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import net.minecraft.item.Items;
@@ -12,6 +15,44 @@ import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
 
 public class ObiSwitch extends Module implements Listener {
+
+    private final SettingSection scGeneral = getGeneralSection();
+    public final ModuleSetting<Boolean> onCrystal = scGeneral.add(BooleanSetting.create()
+            .name("on-crystal")
+            .description("On use of crystals.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> onObsidian = scGeneral.add(BooleanSetting.create()
+            .name("on-obsidian")
+            .description("On use of obsidian.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> onSword = scGeneral.add(BooleanSetting.create()
+            .name("on-sword")
+            .description("On use of swords.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> onTotem = scGeneral.add(BooleanSetting.create()
+            .name("on-totem")
+            .description("On use of totems.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> onGlowstone = scGeneral.add(BooleanSetting.create()
+            .name("on-glowstone")
+            .description("On use of glowstone.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> onAnchor = scGeneral.add(BooleanSetting.create()
+            .name("on-anchor")
+            .description("On use of anchors.")
+            .def(true)
+            .build()
+    );
 
     private static long cooldown;
 
@@ -41,11 +82,22 @@ public class ObiSwitch extends Module implements Listener {
             if (cooldown > System.currentTimeMillis()) return;
             cooldown = System.currentTimeMillis() + (50 * 4);
 
-            if (HotbarUtils.isForClickCrystal()) {
+            if (canUse()) {
                 e.setCancelled(true);
                 HotbarUtils.search(Items.OBSIDIAN);
                 BlockUtils.interact(pos,packet.getDirection());
             }
         }
+    }
+
+    public boolean canUse() {
+        boolean useSword = HotbarUtils.nameContains("sword") && onSword.getVal();
+        boolean useCrystal = HotbarUtils.isHolding(Items.END_CRYSTAL) && onCrystal.getVal();
+        boolean useTotem = HotbarUtils.nameContains("totem") && onTotem.getVal();
+        boolean useGlowstone = HotbarUtils.isHolding(Items.GLOWSTONE) && onGlowstone.getVal();
+        boolean useAnchor = HotbarUtils.isHolding(Items.RESPAWN_ANCHOR) && onAnchor.getVal();
+        boolean useObsidian = HotbarUtils.isHolding(Items.OBSIDIAN) && onObsidian.getVal();
+
+        return useSword || useCrystal || useTotem || useGlowstone || useAnchor || useObsidian;
     }
 }

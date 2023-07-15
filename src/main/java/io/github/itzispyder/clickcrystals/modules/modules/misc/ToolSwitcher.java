@@ -5,12 +5,16 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.NbtUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
 
@@ -20,10 +24,47 @@ import java.util.Map;
 
 public class ToolSwitcher extends Module implements Listener {
 
+    private final SettingSection scGeneral = getGeneralSection();
+    public final ModuleSetting<Boolean> onCrystal = scGeneral.add(BooleanSetting.create()
+            .name("exclude-crystal")
+            .description("Exclude on use of crystals.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> onObsidian = scGeneral.add(BooleanSetting.create()
+            .name("exclude-obsidian")
+            .description("Exclude on use of obsidian.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> onSword = scGeneral.add(BooleanSetting.create()
+            .name("exclude-sword")
+            .description("Exclude on use of swords.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> onTotem = scGeneral.add(BooleanSetting.create()
+            .name("exclude-totem")
+            .description("Exclude on use of totems.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> onGlowstone = scGeneral.add(BooleanSetting.create()
+            .name("exclude-glowstone")
+            .description("Exclude on use of glowstone.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> onAnchor = scGeneral.add(BooleanSetting.create()
+            .name("exclude-anchor")
+            .description("Exclude on use of anchors.")
+            .def(true)
+            .build()
+    );
+
     public ToolSwitcher() {
         super("tool-switcher", Categories.MISC,"Switches to the right tool for mining a block.");
     }
-
 
     @Override
     protected void onEnable() {
@@ -43,11 +84,10 @@ public class ToolSwitcher extends Module implements Listener {
                 final BlockState state = mc.player.getWorld().getBlockState(pos);
 
                 if (BlockUtils.isCrystallabe(pos)) return;
-                if (HotbarUtils.isForClickCrystal()) return;
+                if (itemExcluded()) return;
 
                 final Map<Integer,Float> entries = new HashMap<>();
                 HotbarUtils.forEachItem((slot,item) -> {
-                    if (item.getItem().getTranslationKey().contains("sword")) return;
                     entries.put(slot,calcWantedLvl(item,state));
                 });
 
@@ -66,5 +106,16 @@ public class ToolSwitcher extends Module implements Listener {
         lvl += item.getMiningSpeedMultiplier(state);
         lvl += NbtUtils.getEnchantLvL(item,Enchantments.EFFICIENCY);
         return lvl;
+    }
+
+    public boolean itemExcluded() {
+        boolean useSword = HotbarUtils.nameContains("sword") && onSword.getVal();
+        boolean useCrystal = HotbarUtils.isHolding(Items.END_CRYSTAL) && onCrystal.getVal();
+        boolean useTotem = HotbarUtils.nameContains("totem") && onTotem.getVal();
+        boolean useGlowstone = HotbarUtils.isHolding(Items.GLOWSTONE) && onGlowstone.getVal();
+        boolean useAnchor = HotbarUtils.isHolding(Items.RESPAWN_ANCHOR) && onAnchor.getVal();
+        boolean useObsidian = HotbarUtils.isHolding(Items.OBSIDIAN) && onObsidian.getVal();
+
+        return useSword || useCrystal || useTotem || useGlowstone || useAnchor || useObsidian;
     }
 }
