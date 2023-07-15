@@ -20,7 +20,7 @@ public class CrystSwitch extends Module implements Listener {
     public final ModuleSetting<Boolean> onCrystal = scGeneral.add(BooleanSetting.create()
             .name("on-crystal")
             .description("On use of crystals.")
-            .def(true)
+            .def(false)
             .build()
     );
     public final ModuleSetting<Boolean> onObsidian = scGeneral.add(BooleanSetting.create()
