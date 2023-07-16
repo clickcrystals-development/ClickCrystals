@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.modules;
 
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.data.ConfigSection;
+import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
@@ -124,7 +125,12 @@ public abstract class Module implements Toggleable, Serializable {
 
             data.forEach(setting -> module.data.forEach(current -> {
                 if (setting.getId().equals(current.getId())) {
-                    current.setVal(setting.getVal());
+                    if (setting instanceof KeybindSetting kS && current instanceof KeybindSetting kC) {
+                        kC.setKey(kS.getKey());
+                    }
+                    else {
+                        current.setVal(setting.getVal());
+                    }
                 }
             }));
             module.setEnabled(module.data.isEnabled(), false);
