@@ -11,8 +11,6 @@ import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import org.lwjgl.glfw.GLFW;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;

@@ -7,11 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class BooleanSettingElement extends GuiElement {
 

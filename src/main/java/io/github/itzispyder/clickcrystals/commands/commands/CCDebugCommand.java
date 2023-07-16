@@ -70,6 +70,17 @@ public class CCDebugCommand extends Command {
                             ChatUtils.sendMessage("Server to Client (" + s2c.size() + "): " + ArrayUtils.list2string(s2c));
                             ChatUtils.sendBlank(2);
                             return SINGLE_SUCCESS;
+                        }))
+                .then(literal("keybinds")
+                        .executes(context -> {
+                            List<String> binds = system.keybinds().stream().map(bind -> bind.getId() + ": " + bind.getKey()).toList();
+
+                            ChatUtils.sendBlank(2);
+                            ChatUtils.sendPrefixMessage("Packets Info:");
+                            ChatUtils.sendBlank(1);
+                            ChatUtils.sendMessage("Keybindings (" + binds.size() + "): " + ArrayUtils.list2string(binds));
+                            ChatUtils.sendBlank(2);
+                            return SINGLE_SUCCESS;
                         }));
     }
 }

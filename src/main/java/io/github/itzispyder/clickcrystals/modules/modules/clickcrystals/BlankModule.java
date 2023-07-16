@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.*;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import org.lwjgl.glfw.GLFW;
 
 public class BlankModule extends Module implements Listener {
@@ -74,7 +73,6 @@ public class BlankModule extends Module implements Listener {
     @Override
     protected void onEnable() {
         system.addListener(this);
-        ChatUtils.sendPrefixMessage("keybindTest.getName()");
     }
 
     @Override

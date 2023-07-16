@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import java.io.Serializable;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
 public class Keybind implements Serializable {
 
@@ -20,6 +21,7 @@ public class Keybind implements Serializable {
         this.defaultKey = defaultKey;
         this.keyAction = keyAction;
         this.bindCondition = bindCondition;
+        system.addKeybind(this);
     }
 
     public void onPress() {
