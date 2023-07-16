@@ -1,9 +1,12 @@
 package io.github.itzispyder.clickcrystals.modules;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
+import org.lwjgl.glfw.GLFW;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +22,14 @@ public class ModuleData implements Serializable {
             .description("Module enabled or disabled.")
             .def(false)
             .val(false)
+            .build()
+    );
+    private final ModuleSetting<Keybind> keybind = scDefault.add(KeybindSetting.create()
+            .name("toggle-toggle-keybind")
+            .description("The keybind for toggling modules quickly")
+            .def(GLFW.GLFW_KEY_LEFT_SHIFT)
+            .onPress(bind -> {})
+            .condition((bind, screen) -> screen == null)
             .build()
     );
     private final List<SettingSection> settingSections;
@@ -40,6 +51,12 @@ public class ModuleData implements Serializable {
 
                 Module.totalEnabled += enabled ? 1 : -1;
                 Module.saveModule(module, !ClickCrystals.isSystemLaunching());
+            }
+        });
+
+        this.keybind.getVal().setKeyAction(bind -> {
+            if (module != null) {
+                module.setEnabled(!module.isEnabled(), true);
             }
         });
     }

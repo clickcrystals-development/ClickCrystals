@@ -6,13 +6,14 @@ import io.github.itzispyder.clickcrystals.gui.ClickType;
 
 public class KeyPressEvent extends Event implements Cancellable {
 
-    private final int keycode;
+    private final int keycode, scancode;
     private final ClickType action;
     private boolean cancelled;
 
-    public KeyPressEvent(int keycode, ClickType action) {
+    public KeyPressEvent(int keycode, int scancode, ClickType action) {
         this.keycode = keycode;
         this.action = action;
+        this.scancode = scancode;
         this.cancelled = false;
     }
 
@@ -22,6 +23,10 @@ public class KeyPressEvent extends Event implements Cancellable {
 
     public int getKeycode() {
         return keycode;
+    }
+
+    public int getScancode() {
+        return scancode;
     }
 
     @Override

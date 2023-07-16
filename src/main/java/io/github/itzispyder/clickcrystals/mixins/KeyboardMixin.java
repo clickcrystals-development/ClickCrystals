@@ -16,12 +16,12 @@ public abstract class KeyboardMixin {
 
     @Inject(method = "onKey", at = @At("HEAD"), cancellable = true)
     public void onKey(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
-        this.handleKeyPress(key, action, ci);
+        this.handleKeyPress(key, scancode, action, ci);
     }
 
-    private void handleKeyPress(int key, int action, CallbackInfo ci) {
+    private void handleKeyPress(int key, int scancode, int action, CallbackInfo ci) {
         ClickType a = ClickType.of(action);
-        KeyPressEvent e = new KeyPressEvent(key, a);
+        KeyPressEvent e = new KeyPressEvent(key, scancode, a);
 
         system.eventBus.pass(e);
         if (e.isCancelled()) ci.cancel();

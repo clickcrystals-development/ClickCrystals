@@ -83,7 +83,7 @@ public class Keybind implements Serializable {
 
         public Builder() {
             id = "unregistered-keybind";
-            key = defaultKey = -1;
+            key = defaultKey = 340;
             keyAction = bind -> {};
             bindCondition = (bind, screen) -> true;
         }
