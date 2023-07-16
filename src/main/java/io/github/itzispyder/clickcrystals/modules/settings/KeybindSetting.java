@@ -4,7 +4,6 @@ import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.KeybindSettin
 import io.github.itzispyder.clickcrystals.modules.keybinds.BindCondition;
 import io.github.itzispyder.clickcrystals.modules.keybinds.KeyAction;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
 
 public class KeybindSetting extends ModuleSetting<Keybind> {
 
@@ -70,7 +69,7 @@ public class KeybindSetting extends ModuleSetting<Keybind> {
 
         @Override
         public Builder name(String id) {
-            this.id = name;
+            this.id = id;
             return this;
         }
 
@@ -92,7 +91,7 @@ public class KeybindSetting extends ModuleSetting<Keybind> {
 
         @Override
         public KeybindSetting build() {
-            KeybindSetting setting = new KeybindSetting(id, description, Keybind.create()
+            return new KeybindSetting(id, description, Keybind.create()
                     .id(id)
                     .key(key == -1 ? defaultKey : key)
                     .defaultKey(defaultKey == -1 ? key : defaultKey)
@@ -100,9 +99,6 @@ public class KeybindSetting extends ModuleSetting<Keybind> {
                     .condition(bindCondition)
                     .build()
             );
-            ChatUtils.sendPrefixMessage(setting.getName());
-            ChatUtils.sendPrefixMessage(setting.getDescription());
-            return setting;
         }
     }
 }

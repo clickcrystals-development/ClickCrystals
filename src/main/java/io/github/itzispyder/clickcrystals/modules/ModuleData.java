@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules;
 
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
@@ -38,7 +39,7 @@ public class ModuleData implements Serializable {
                 }
 
                 Module.totalEnabled += enabled ? 1 : -1;
-                Module.saveModule(module, true);
+                Module.saveModule(module, !ClickCrystals.isSystemLaunching());
             }
         });
     }
