@@ -25,7 +25,7 @@ public class ModuleData implements Serializable {
             .build()
     );
     private final ModuleSetting<Keybind> keybind = scDefault.add(KeybindSetting.create()
-            .name("toggle-toggle-keybind")
+            .name("module-toggle-keybind")
             .description("The keybind for toggling modules quickly")
             .def(GLFW.GLFW_KEY_LEFT_SHIFT)
             .onPress(bind -> {})
@@ -71,6 +71,10 @@ public class ModuleData implements Serializable {
 
     public void addSettingSection(SettingSection section) {
         this.settingSections.add(settingSections.size() - 1, section);
+    }
+
+    public int getBind() {
+        return keybind.getVal().getKey();
     }
 
     public void removeSettingSection(SettingSection section) {

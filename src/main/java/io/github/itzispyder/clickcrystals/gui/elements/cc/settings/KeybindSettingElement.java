@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
+import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -54,6 +55,7 @@ public class KeybindSettingElement extends GuiElement {
             setting.setKey(key);
             currentScanCode = scanCode;
             screen.selected = null;
+            Module.saveConfigModules();
         }
     }
 
