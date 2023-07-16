@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui;
 
 import io.github.itzispyder.clickcrystals.gui.callbacks.*;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.SearchBarElement;
+import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.KeybindSettingElement;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.StringSettingElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -101,7 +102,7 @@ public abstract class GuiScreen extends Screen {
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         super.mouseReleased(mouseX, mouseY, button);
 
-        if (!(selected instanceof SearchBarElement || selected instanceof StringSettingElement)) {
+        if (!(selected instanceof SearchBarElement || selected instanceof StringSettingElement || selected instanceof KeybindSettingElement)) {
             this.selected = null;
         }
 
@@ -168,6 +169,9 @@ public abstract class GuiScreen extends Screen {
         }
         else if (selected instanceof StringSettingElement input) {
             input.onKey(keyCode, scanCode);
+        }
+        else if (selected instanceof KeybindSettingElement bind) {
+            bind.onKey(keyCode, scanCode);
         }
 
         return true;

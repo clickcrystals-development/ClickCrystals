@@ -38,7 +38,7 @@ public class ModuleData implements Serializable {
                 }
 
                 Module.totalEnabled += enabled ? 1 : -1;
-                Module.saveModule(module, false);
+                Module.saveModule(module, true);
             }
         });
     }

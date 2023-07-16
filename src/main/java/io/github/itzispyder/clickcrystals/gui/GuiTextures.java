@@ -42,6 +42,8 @@ public final  class GuiTextures {
     public static final Identifier SETTING_NUMBER_KNOB = new Identifier(modId, "textures/gui/modules/settings/setting_number_knob.png");
     public static final Identifier SETTING_STRING = new Identifier(modId, "textures/gui/modules/settings/setting_string.png");
     public static final Identifier SETTING_STRING_SELECTED = new Identifier(modId, "textures/gui/modules/settings/setting_string_selected.png");
+    public static final Identifier SETTING_KEYBIND = new Identifier(modId, "textures/gui/modules/settings/setting_keybind.png");
+    public static final Identifier SETTING_KEYBIND_SELECTED = new Identifier(modId, "textures/gui/modules/settings/setting_keybind_selected.png");
 
     // overlays
     public static final Identifier NO_TOTEMS_MEME = new Identifier(modId, "textures/overlays/no_totem.png");

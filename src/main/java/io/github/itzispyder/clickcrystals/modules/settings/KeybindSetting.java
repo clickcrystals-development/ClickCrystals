@@ -1,0 +1,108 @@
+package io.github.itzispyder.clickcrystals.modules.settings;
+
+import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.KeybindSettingElement;
+import io.github.itzispyder.clickcrystals.modules.keybinds.BindCondition;
+import io.github.itzispyder.clickcrystals.modules.keybinds.KeyAction;
+import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
+import io.github.itzispyder.clickcrystals.util.ChatUtils;
+
+public class KeybindSetting extends ModuleSetting<Keybind> {
+
+    public final Keybind bind;
+
+    public KeybindSetting(String name, String description, Keybind bind) {
+        super(name, description, bind);
+        this.bind = bind;
+    }
+
+    public int getKey() {
+        return bind.getKey();
+    }
+
+    public void setKey(int val) {
+        bind.setKey(val);
+    }
+
+    public int getDefKey() {
+        return bind.getDefaultKey();
+    }
+
+    public void setDefKey(int def) {
+        bind.setDefaultKey(def);
+    }
+
+    public Keybind getBind() {
+        return bind;
+    }
+
+    @Override
+    public KeybindSettingElement toGuiElement(int x, int y, int width, int height) {
+        return new KeybindSettingElement(this, x, y, width, height);
+    }
+
+    public static Builder create() {
+        return new Builder();
+    }
+
+    public static class Builder extends SettingBuilder<Keybind> {
+
+        private String id;
+        private int key, defaultKey;
+        private KeyAction keyAction;
+        private BindCondition bindCondition;
+
+        public Builder() {
+            id = "unregistered-keybind";
+            key = defaultKey = -1;
+            keyAction = bind -> {};
+            bindCondition = (bind, screen) -> true;
+        }
+
+        public Builder val(int key) {
+            this.key = key;
+            return this;
+        }
+
+        public Builder def(int defaultKey) {
+            this.defaultKey = defaultKey;
+            return this;
+        }
+
+        @Override
+        public Builder name(String id) {
+            this.id = name;
+            return this;
+        }
+
+        @Override
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder onPress(KeyAction keyAction) {
+            this.keyAction = keyAction;
+            return this;
+        }
+
+        public Builder condition(BindCondition bindCondition) {
+            this.bindCondition = bindCondition;
+            return this;
+        }
+
+        @Override
+        public KeybindSetting build() {
+            KeybindSetting setting = new KeybindSetting(id, description, Keybind.create()
+                    .id(id)
+                    .key(key == -1 ? defaultKey : key)
+                    .defaultKey(defaultKey == -1 ? key : defaultKey)
+                    .onPress(keyAction)
+                    .condition(bindCondition)
+                    .build()
+            );
+            ChatUtils.sendPrefixMessage(setting.getName());
+            ChatUtils.sendPrefixMessage(setting.getDescription());
+            return setting;
+        }
+    }
+}

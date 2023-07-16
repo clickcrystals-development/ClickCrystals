@@ -19,12 +19,11 @@ public abstract class ModuleSetting<T> implements Serializable {
         this.val = val;
         this.changeAction = setting -> {};
     }
-
-    public abstract <E extends GuiElement> E toGuiElement(int x, int y, int width, int height);
-
     protected ModuleSetting(String name, String description, T val) {
         this(name, description, val, val);
     }
+
+    public abstract <E extends GuiElement> E toGuiElement(int x, int y, int width, int height);
 
     public Class<T> getType() {
         return (Class<T>)val.getClass();

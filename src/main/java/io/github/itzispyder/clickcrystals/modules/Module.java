@@ -54,24 +54,20 @@ public abstract class Module implements Toggleable, Serializable {
     }
 
     public void setEnabled(boolean enabled, boolean sendFeedback) {
-        setEnabled(enabled, sendFeedback, true);
-    }
-
-    public void setEnabled(boolean enabled, boolean sendFeedback, boolean saveImmediately) {
+        /*
         if (enabled) {
             this.onEnable();
         }
         else {
             this.onDisable();
         }
+         */
+
+        this.data.setEnabled(enabled);
 
         if (sendFeedback) {
             this.sendUpdateInfo();
         }
-
-        this.data.setEnabled(enabled);
-        totalEnabled += enabled ? 1 : -1;
-        saveModule(this, saveImmediately);
     }
 
     public String getDescription() {
@@ -110,8 +106,7 @@ public abstract class Module implements Toggleable, Serializable {
     }
 
     public void sendUpdateInfo() {
-        if (isEnabled()) ChatUtils.sendPrefixMessage("§b" + name + " §3is now toggled " + getOnOrOff());
-        else ChatUtils.sendPrefixMessage("§b" + name + " §3is now toggled " + getOnOrOff());
+        ChatUtils.sendPrefixMessage("§b" + name + " §3is now toggled " + getOnOrOff());
     }
 
     public String getOnOrOff() {
@@ -132,7 +127,7 @@ public abstract class Module implements Toggleable, Serializable {
                     current.setVal(setting.getVal());
                 }
             }));
-            module.setEnabled(module.data.isEnabled(), false, false);
+            module.setEnabled(module.data.isEnabled(), false);
         }
     }
 

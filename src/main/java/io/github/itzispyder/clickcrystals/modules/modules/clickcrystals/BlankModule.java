@@ -3,7 +3,10 @@ package io.github.itzispyder.clickcrystals.modules.modules.clickcrystals;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.*;
+import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import org.lwjgl.glfw.GLFW;
 
 public class BlankModule extends Module implements Listener {
 
@@ -55,6 +58,14 @@ public class BlankModule extends Module implements Listener {
             .def(5.67)
             .build()
     );
+    public final ModuleSetting<Keybind> keybindTest = scTest.add(KeybindSetting.create()
+            .name("keybind-setting")
+            .description("Keybind setting, this creates key-binds!")
+            .def(GLFW.GLFW_KEY_APOSTROPHE)
+            .condition((bind, screen) -> screen == null)
+            .onPress(bind -> this.setEnabled(!this.isEnabled()))
+            .build()
+    );
 
     public BlankModule() {
         super("test-module", Categories.CLICKCRYSTALS, "This module does nothing, serves as a testing purpose for development.");
@@ -63,6 +74,7 @@ public class BlankModule extends Module implements Listener {
     @Override
     protected void onEnable() {
         system.addListener(this);
+        ChatUtils.sendPrefixMessage("keybindTest.getName()");
     }
 
     @Override
