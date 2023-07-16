@@ -1,14 +1,9 @@
 package io.github.itzispyder.clickcrystals.modules.modules.clickcrystals;
 
-import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
-import io.github.itzispyder.clickcrystals.events.events.PacketReceiveEvent;
-import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.*;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.packetLogger;
 
 public class BlankModule extends Module implements Listener {
 
@@ -60,12 +55,6 @@ public class BlankModule extends Module implements Listener {
             .def(5.67)
             .build()
     );
-    public final ModuleSetting<Boolean> showPackets = scTest.add(BooleanSetting.create() // this is a new setting
-            .name("show-packet-interactions")
-            .description("Shows packets interactions and debug stuff.")
-            .def(false)
-            .build()
-    );
 
     public BlankModule() {
         super("test-module", Categories.CLICKCRYSTALS, "This module does nothing, serves as a testing purpose for development.");
@@ -79,15 +68,5 @@ public class BlankModule extends Module implements Listener {
     @Override
     protected void onDisable() {
         system.removeListener(this);
-    }
-
-    @EventHandler
-    private void onPacketReceive(PacketReceiveEvent e) {
-        packetLogger.log(e.getPacket(), showPackets.getVal());
-    }
-
-    @EventHandler
-    private void onPacketSend(PacketSendEvent e) {
-        packetLogger.log(e.getPacket(), showPackets.getVal());
     }
 }

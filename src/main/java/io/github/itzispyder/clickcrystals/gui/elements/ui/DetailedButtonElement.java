@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.ui;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
-import io.github.itzispyder.clickcrystals.gui.PressAction;
+import io.github.itzispyder.clickcrystals.gui.elements.PressAction;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;

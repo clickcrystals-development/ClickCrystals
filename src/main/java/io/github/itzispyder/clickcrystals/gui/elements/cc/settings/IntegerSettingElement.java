@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
+import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.settings.IntegerSetting;
@@ -33,10 +34,21 @@ public class IntegerSettingElement extends GuiElement {
         int ratioWidth = (int)(width * ratio);
         this.knob.setX(x + ratioWidth);
 
-        this.titleText = new TextElement(setting.getName() + ": §3" + setting.getVal(), TextAlignment.LEFT, 0.5F, x + 100, y);
+        this.titleText = new TextElement(setting.getName() + ": §3" + setting.getVal(), TextAlignment.LEFT, 0.5F, x + 105, y);
         TextElement desc = new TextElement("§7" + setting.getDescription(), TextAlignment.LEFT, 0.45F, titleText.x, titleText.y + 5);
         this.addChild(titleText);
         this.addChild(desc);
+
+        AbstractElement reset = new AbstractElement(x + 92, y, height, height, (context, mouseX, mouseY, button) -> {
+            context.drawTexture(GuiTextures.RESET, button.x, button.y, 0, 0, button.width, button.height, button.width, button.height);
+        }, (button) -> {
+            double ran = setting.getMax() - setting.getMin();
+            double val = setting.getDef() - setting.getMin();
+            double rat = val / ran;
+            int ratWid = (int)(width * rat);
+            knob.setX(x + ratWid);
+        });
+        this.addChild(reset);
     }
 
     @Override

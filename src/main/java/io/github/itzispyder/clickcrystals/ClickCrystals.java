@@ -3,7 +3,6 @@ package io.github.itzispyder.clickcrystals;
 import io.github.itzispyder.clickcrystals.client.CCKeybindings;
 import io.github.itzispyder.clickcrystals.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
-import io.github.itzispyder.clickcrystals.client.PacketLogger;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.Configuration;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
@@ -40,7 +39,6 @@ public final class ClickCrystals implements ModInitializer {
     public static final Configuration config = Configuration.load(configFile);
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
-    public static final PacketLogger packetLogger = new PacketLogger();
 
     @SuppressWarnings("unused")
     public static final String

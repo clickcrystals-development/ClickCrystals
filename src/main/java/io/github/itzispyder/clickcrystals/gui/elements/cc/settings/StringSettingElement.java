@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
+import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
@@ -33,12 +34,20 @@ public class StringSettingElement extends GuiElement {
         bg = new ImageElement(GuiTextures.SETTING_STRING, x, y, width, height);
         exButton = new ImageElement(GuiTextures.X, x + width - 2 - textHeight, y + 2, textHeight, textHeight);
         exButton.setRenderDependentOnParent(true);
-        TextElement title = new TextElement(setting.getName(), TextAlignment.LEFT, 0.5F, x + 100, y);
+        TextElement title = new TextElement(setting.getName(), TextAlignment.LEFT, 0.5F, x + 105, y);
         TextElement desc = new TextElement("§7" + setting.getDescription(), TextAlignment.LEFT, 0.45F, title.x, title.y + 5);
         this.addChild(title);
         this.addChild(desc);
         this.addChild(bg);
         this.addChild(exButton);
+
+        AbstractElement reset = new AbstractElement(x + 92, y, height, height, (context, mouseX, mouseY, button) -> {
+            context.drawTexture(GuiTextures.RESET, button.x, button.y, 0, 0, button.width, button.height, button.width, button.height);
+        }, (button) -> {
+            input = setting.getDef();
+            setting.setVal(input);
+        });
+        this.addChild(reset);
     }
 
     @Override
@@ -64,8 +73,6 @@ public class StringSettingElement extends GuiElement {
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
-        mc.player.playSound(SoundEvents.BLOCK_WOODEN_DOOR_OPEN, SoundCategory.MASTER, 0.8F, 2);
-
         if (mc.currentScreen instanceof GuiScreen screen) {
             if (exButton.isHovered((int)mouseX, (int)mouseY)) {
                 this.input = "";

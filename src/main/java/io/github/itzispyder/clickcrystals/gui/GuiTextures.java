@@ -30,6 +30,7 @@ public final  class GuiTextures {
     public static final Identifier CODE = new Identifier(modId, "textures/gui/icons/code.png");
     public static final Identifier DISCORD = new Identifier(modId, "textures/gui/icons/discord.png");
     public static final Identifier X = new Identifier(modId, "textures/gui/icons/x.png");
+    public static final Identifier RESET = new Identifier(modId, "textures/gui/icons/reset.png");
 
     // modules
     public static final Identifier MODULE_ON = new Identifier(modId, "textures/gui/modules/module_on.png");
@@ -43,13 +44,7 @@ public final  class GuiTextures {
     public static final Identifier SETTING_STRING_SELECTED = new Identifier(modId, "textures/gui/modules/settings/setting_string_selected.png");
 
     // overlays
-    public static final Identifier HURT_DIRECTION_DEFAULT = new Identifier(modId, "textures/overlays/hurt_direction_default.png");
-    public static final Identifier HURT_DIRECTION_DEFAULT_TRANSPARENT = new Identifier(modId, "textures/overlays/hurt_direction_default_transparent.png");
-    public static final Identifier HURT_DIRECTION_NORTH = new Identifier(modId, "textures/overlays/hurt_direction_north.png");
-    public static final Identifier HURT_DIRECTION_SOUTH = new Identifier(modId, "textures/overlays/hurt_direction_south.png");
-    public static final Identifier HURT_DIRECTION_EAST = new Identifier(modId, "textures/overlays/hurt_direction_east.png");
-    public static final Identifier HURT_DIRECTION_WEST = new Identifier(modId, "textures/overlays/hurt_direction_west.png");
-    public static final Identifier NO_TOTEMS_MEME = new Identifier(modId, "textures/overlays/nototem.png");
-    public static final Identifier NO_TOTEMS_ICON = new Identifier(modId, "textures/overlays/totemlessicon.png");
+    public static final Identifier NO_TOTEMS_MEME = new Identifier(modId, "textures/overlays/no_totem.png");
+    public static final Identifier NO_TOTEMS_ICON = new Identifier(modId, "textures/overlays/totemless_icon.png");
 
 }

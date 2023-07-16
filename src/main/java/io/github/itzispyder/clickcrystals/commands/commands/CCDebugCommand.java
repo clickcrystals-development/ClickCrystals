@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import io.github.itzispyder.clickcrystals.client.PacketInfo;
 import io.github.itzispyder.clickcrystals.client.PacketMapper;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -14,9 +13,6 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 
 import java.util.List;
-import java.util.Map;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.packetLogger;
 
 public class CCDebugCommand extends Command {
 
@@ -74,18 +70,6 @@ public class CCDebugCommand extends Command {
                             ChatUtils.sendMessage("Server to Client (" + s2c.size() + "): " + ArrayUtils.list2string(s2c));
                             ChatUtils.sendBlank(2);
                             return SINGLE_SUCCESS;
-                        }).then(literal("list")
-                                .executes(context -> {
-                                    ChatUtils.sendBlank(2);
-                                    ChatUtils.sendPrefixMessage("Packets Info:");
-                                    ChatUtils.sendMessage(StringUtils.color("&a&l•&7Received    &b&l•&7Sent    &c&l•&7Unmapped"));
-                                    ChatUtils.sendMessage(StringUtils.color("&7Logged (" + packetLogger.getLog().size() + ") packets"));
-                                    ChatUtils.sendBlank(1);
-                                    for (Map.Entry<String, PacketInfo> entry : packetLogger.getLog().entrySet()) {
-                                        ChatUtils.sendMessage(entry.getKey() + "§7: " + entry.getValue().getCount());
-                                    }
-                                    ChatUtils.sendBlank(2);
-                                    return SINGLE_SUCCESS;
-                                })));
+                        }));
     }
 }
