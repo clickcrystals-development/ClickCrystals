@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.util.Hand;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
@@ -59,6 +60,12 @@ public final class InvUtils {
             if (stack == null || stack.isEmpty()) continue;
             if (stack.isOf(item)) count += stack.getCount();
         }
+
+        ItemStack off = HotbarUtils.getHand(Hand.OFF_HAND);
+        if (off.isOf(item)) {
+            count += off.getCount();
+        }
+
         return count;
     }
 

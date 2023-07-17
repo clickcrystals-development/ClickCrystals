@@ -33,15 +33,14 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 0.9.2
+Mod: 0.9.3
 
 Changelog:
-- Fixed module settings errors
-- Fixed auto gg messages not saving
-- Removed a lot of useless modules
-- Removed buggy modules
-- Added NoScoreboard scoreboard disabler
-- Added custom KEYBINDINGS for more effective module toggling
+- Fixed CONFIG saving issues
+- Revamped config to use .json
+- Each module has its own json config
+- Added ArmorHud -> Shows item count and armor durability
+- Fixed other major config issues.
 
 NOTICE:
 - NoBreakDelay has been removed
@@ -119,6 +118,7 @@ NOTICE:
 | SwordSwap       |                                 Opposite of AxeSwap                                  |
 | GlowingEntities | Entities glow in the dark (and not just a dark model, useless if FullBright enabled) |
 | NoScoreboard    |                     Disables rendering of the scoreboard sidebar                     |
+| ArmorHud        |                       Displays armor durability and item count                       |
 
 ## But isn't this cheating?
 It is not a cheat. It does not automate any task, for every action the mod preforms, you have to click.
