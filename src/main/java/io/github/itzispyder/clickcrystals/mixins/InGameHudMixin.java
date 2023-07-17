@@ -2,9 +2,11 @@ package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoOverlay;
+import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoScoreboard;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.Entity;
+import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -40,5 +42,11 @@ public abstract class InGameHudMixin {
         if (!texture.getPath().contains("pumpkinblur")) return;
         Module noOverlay = Module.get(NoOverlay.class);
         if (noOverlay.isEnabled()) ci.cancel();
+    }
+
+    @Inject(method = "renderScoreboardSidebar", at = @At("HEAD"), cancellable = true)
+    public void renderOverlay(DrawContext context, ScoreboardObjective objective, CallbackInfo ci) {
+        Module noScoreboard = Module.get(NoScoreboard.class);
+        if (noScoreboard.isEnabled()) ci.cancel();
     }
 }
