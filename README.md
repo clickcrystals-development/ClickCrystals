@@ -76,6 +76,7 @@ NOTICE:
 | /gmc        | /gmc                                 | Command alias for `/gamemode creative`  |
 | /gma        | /gma                                 | Command alias for `/gamemode adventure` |
 | /gmsp       | /gmsp                                | Command alias for `/gamemode spectator` |
+| /ccdebug    | /ccdebug `<item>`                    |     Sends ClickCrystals debug info      |
 
 ### Modules
 
