@@ -110,10 +110,7 @@ public class ModuleFile {
                     return moduleFile;
                 }
             }
-            catch (Exception ex) {
-                System.out.println(file.getName() + " has failed to load!");
-                ex.printStackTrace();
-            }
+            catch (Exception ignore) {}
         }
         return new ModuleFile(module);
     }
