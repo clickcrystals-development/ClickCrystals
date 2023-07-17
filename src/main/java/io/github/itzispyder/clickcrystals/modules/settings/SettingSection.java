@@ -2,12 +2,11 @@ package io.github.itzispyder.clickcrystals.modules.settings;
 
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class SettingSection implements Serializable {
+public class SettingSection {
 
     private final String name, id;
     private final List<ModuleSetting<?>> settings;

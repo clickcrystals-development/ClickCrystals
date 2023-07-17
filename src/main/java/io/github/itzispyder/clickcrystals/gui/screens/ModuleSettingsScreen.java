@@ -42,7 +42,7 @@ public class ModuleSettingsScreen extends ClickCrystalsBase {
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         super.mouseReleased(mouseX, mouseY, button);
-        Module.saveModule(module, true);
+        Module.saveModule(module);
         return true;
     }
 

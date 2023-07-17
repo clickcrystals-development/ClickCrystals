@@ -2,12 +2,10 @@ package io.github.itzispyder.clickcrystals.modules.keybinds;
 
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
-import java.io.Serializable;
-
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
-public class Keybind implements Serializable {
+public class Keybind {
 
     private final String name, id;
     private int key, defaultKey;

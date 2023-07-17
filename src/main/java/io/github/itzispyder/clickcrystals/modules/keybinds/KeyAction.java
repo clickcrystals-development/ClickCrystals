@@ -1,9 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.keybinds;
 
-import java.io.Serializable;
-
 @FunctionalInterface
-public interface KeyAction extends Serializable {
+public interface KeyAction {
 
     void onKey(Keybind bind);
 }

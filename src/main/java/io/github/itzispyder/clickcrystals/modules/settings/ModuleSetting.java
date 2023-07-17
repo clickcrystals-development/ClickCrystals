@@ -3,9 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.settings;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
-import java.io.Serializable;
-
-public abstract class ModuleSetting<T> implements Serializable {
+public abstract class ModuleSetting<T> {
 
     private SettingChangeCallback<ModuleSetting<T>> changeAction;
     private final String name, id, description;

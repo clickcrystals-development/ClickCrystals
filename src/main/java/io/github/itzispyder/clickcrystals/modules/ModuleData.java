@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.modules;
 
-import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
@@ -8,12 +7,11 @@ import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import org.lwjgl.glfw.GLFW;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ModuleData implements Serializable {
+public class ModuleData {
 
     public final SettingSection scGeneral = new SettingSection("general-settings");
     public final SettingSection scDefault = new SettingSection("module-defaults");
@@ -50,7 +48,7 @@ public class ModuleData implements Serializable {
                 }
 
                 Module.totalEnabled += enabled ? 1 : -1;
-                Module.saveModule(module, !ClickCrystals.isSystemLaunching());
+                Module.saveModule(module);
             }
         });
 

@@ -4,7 +4,6 @@ import io.github.itzispyder.clickcrystals.client.CCKeybindings;
 import io.github.itzispyder.clickcrystals.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
-import io.github.itzispyder.clickcrystals.data.Configuration;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
@@ -29,18 +28,13 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 
-import java.io.File;
-
 /**
  * ClickCrystals main
  */
 public final class ClickCrystals implements ModInitializer {
 
-    public static final File configFile = new File("ClickCrystalsClient/game_config.dat");
-    public static final Configuration config = Configuration.load(configFile);
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
-    private static boolean systemLaunching = false;
 
     @SuppressWarnings("unused")
     public static final String
@@ -54,7 +48,6 @@ public final class ClickCrystals implements ModInitializer {
      */
     @Override
     public void onInitialize() {
-        systemLaunching = true;
         // Mod initialization
         System.out.println(prefix + "Loading ClickCrystals by ImproperIssues");
         this.init();
@@ -62,7 +55,6 @@ public final class ClickCrystals implements ModInitializer {
         CCSoundEvents.init();
         this.startTicking();
         this.initRpc();
-        systemLaunching = false;
     }
 
     /**
@@ -142,9 +134,5 @@ public final class ClickCrystals implements ModInitializer {
 
     public void initRpc() {
 
-    }
-
-    public static boolean isSystemLaunching() {
-        return systemLaunching;
     }
 }

@@ -1,19 +1,14 @@
 package io.github.itzispyder.clickcrystals.modules;
 
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
-import io.github.itzispyder.clickcrystals.data.ConfigSection;
-import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.MinecraftClient;
 
-import java.io.Serializable;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 
-public abstract class Module implements Toggleable, Serializable {
+public abstract class Module implements Toggleable {
 
     protected static final MinecraftClient mc = MinecraftClient.getInstance();
     protected static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
@@ -55,17 +50,7 @@ public abstract class Module implements Toggleable, Serializable {
     }
 
     public void setEnabled(boolean enabled, boolean sendFeedback) {
-        /*
-        if (enabled) {
-            this.onEnable();
-        }
-        else {
-            this.onDisable();
-        }
-         */
-
         this.data.setEnabled(enabled);
-
         if (sendFeedback) {
             this.sendUpdateInfo();
         }
@@ -120,36 +105,19 @@ public abstract class Module implements Toggleable, Serializable {
 
     public static void loadConfigModules() {
         for (Module module : system.modules().values()) {
-            String path = "modules." + module.getId();
-            ModuleData data = config.getModuleData(path);
-
-            data.forEach(setting -> module.data.forEach(current -> {
-                if (setting.getId().equals(current.getId())) {
-                    if (setting instanceof KeybindSetting kS && current instanceof KeybindSetting kC) {
-                        kC.setKey(kS.getKey());
-                    }
-                    else {
-                        current.setVal(setting.getVal());
-                    }
-                }
-            }));
-            module.setEnabled(module.data.isEnabled(), false);
+            ModuleFile.load(module).save();
         }
     }
 
     public static void saveConfigModules() {
         for (Module module : system.modules().values()) {
-            saveModule(module, false);
+            saveModule(module);
         }
-        config.save();
     }
 
-    public static void saveModule(Module module, boolean saveImmediately) {
-        String path = "modules." + module.getId();
-        ConfigSection<ModuleData> dataSection = new ConfigSection<>(module.getData());
-        config.set(path, dataSection);
-
-        if (saveImmediately) config.save();
+    public static void saveModule(Module module) {
+        ModuleFile file = new ModuleFile(module);
+        file.save();
     }
 
     public String getSearchQuery() {
