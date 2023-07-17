@@ -32,12 +32,16 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Minecraft: 1.20.1
-Mod: 0.9.1
+Minecraft: 1.20-1.20.1
+Mod: 0.9.2
 
 Changelog:
-- Added module settings for customization
-- There is now a module settings page for customization!
+- Fixed module settings errors
+- Fixed auto gg messages not saving
+- Removed a lot of useless modules
+- Removed buggy modules
+- Added NoScoreboard scoreboard disabler
+- Added custom KEYBINDINGS for more effective module toggling
 
 NOTICE:
 - NoBreakDelay has been removed
@@ -47,7 +51,7 @@ NOTICE:
 ```
 
 <div class="demo-menu">
-  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/4b68877256c12c9652cdc3ac225d416282dca7b8.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
+  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/a713955de5520364ebcad3343723be47672c0c20.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
 </div>
 
 ## How Do I Use ClickCrystals?
@@ -113,7 +117,7 @@ NOTICE:
 | AxeSwap         |                Swap to hotbar axe when attacking a shielding opponent                |
 | SwordSwap       |                                 Opposite of AxeSwap                                  |
 | GlowingEntities | Entities glow in the dark (and not just a dark model, useless if FullBright enabled) |
-| HurtDirection   |              Displays the direction from which you were attacked from.               |
+| NoScoreboard    |                     Disables rendering of the scoreboard sidebar                     |
 
 ## But isn't this cheating?
 It is not a cheat. It does not automate any task, for every action the mod preforms, you have to click.

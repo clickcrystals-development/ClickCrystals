@@ -153,6 +153,6 @@ public abstract class Module implements Toggleable, Serializable {
     }
 
     public String getSearchQuery() {
-        return id + ":" + description.toLowerCase().replaceAll("[^a-z0-9]","_");
+        return id + ":" + name + ":" + description.toLowerCase().replaceAll("[^a-z0-9]","_");
     }
 }
