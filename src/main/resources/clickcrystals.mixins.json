@@ -6,6 +6,7 @@
     "CameraMixin",
     "ChatHudMixin",
     "ClientConnectionMixin",
+    "ClientPlayerInteractionManagerMixin",
     "ClientPlayNetworkHandlerMixin",
     "EntityRendererMixin",
     "GameRenderMixin",

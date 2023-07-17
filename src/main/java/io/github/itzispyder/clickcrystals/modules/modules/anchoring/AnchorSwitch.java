@@ -30,10 +30,6 @@ public class AnchorSwitch extends Module implements Listener {
         system.removeListener(this);
     }
 
-    /**
-     * Module function
-     * @param e packet send event
-     */
     @EventHandler
     private void onPacketSend(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerInteractBlockC2SPacket packet) {

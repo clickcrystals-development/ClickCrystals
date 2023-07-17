@@ -19,6 +19,10 @@ public final class InvUtils {
         return inv().selectedSlot;
     }
 
+    public static void select(int slot) {
+        inv().selectedSlot = slot;
+    }
+
     public static ItemStack selectedStack() {
         return inv().getStack(selected());
     }
