@@ -74,7 +74,7 @@ public class ArmorHud extends Module {
         String percentage = colorPercentage(ratio * 100);
 
         renderItem(armorItem, context, x, y, stack -> {
-            DrawableUtils.drawCenteredText(context, percentage, x + 10, y - 8, 0.9F, true);
+            DrawableUtils.drawCenteredText(context, percentage, x + 10, y - 8, 0.8F, true);
         });
     }
 
@@ -84,7 +84,7 @@ public class ArmorHud extends Module {
 
         renderItem(item, context, x, y, stack -> {
             String display = count == 0 ? "" : "§b" + count;
-            DrawableUtils.drawCenteredText(context, display, x + 10, y - 8, 0.9F, true);
+            DrawableUtils.drawCenteredText(context, display, x + 10, y - 8, 0.8F, true);
         });
     }
 
