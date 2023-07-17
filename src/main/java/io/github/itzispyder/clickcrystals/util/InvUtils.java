@@ -47,6 +47,21 @@ public final class InvUtils {
         return -1;
     }
 
+    public static int count(Item item) {
+        int count = 0;
+
+        if (item == null) {
+            return count;
+        }
+
+        for (int i = 0; i < inv().main.size(); i++) {
+            ItemStack stack = inv().getStack(i);
+            if (stack == null || stack.isEmpty()) continue;
+            if (stack.isOf(item)) count += stack.getCount();
+        }
+        return count;
+    }
+
     public static boolean has(Item item) {
         if (item == null) return false;
 

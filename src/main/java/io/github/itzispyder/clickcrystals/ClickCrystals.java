@@ -10,10 +10,7 @@ import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
-import io.github.itzispyder.clickcrystals.gui.hud.ClickCrystalsIconHud;
-import io.github.itzispyder.clickcrystals.gui.hud.ClickPerSecondHud;
-import io.github.itzispyder.clickcrystals.gui.hud.ColorOverlayHud;
-import io.github.itzispyder.clickcrystals.gui.hud.ModuleListTextHud;
+import io.github.itzispyder.clickcrystals.gui.hud.*;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
@@ -123,6 +120,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new BlankModule());
         system.addModule(new AutoGG());
         system.addModule(new NoScoreboard());
+        system.addModule(new ArmorHud());
         Module.loadConfigModules();
 
         // Hud
@@ -130,6 +128,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addHud(new ClickCrystalsIconHud());
         system.addHud(new ModuleListTextHud());
         system.addHud(new ClickPerSecondHud());
+        system.addHud(new ArmorItemHud());
     }
 
     public void initRpc() {

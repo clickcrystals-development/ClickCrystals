@@ -21,6 +21,7 @@ public final  class GuiTextures {
     public static final Identifier HOLLOW_HORIZONTAL_WIDGET = new Identifier(modId, "textures/gui/hollow_widget_horizontal.png");
     public static final Identifier SMOOTH_BACKGROUND = new Identifier(modId, "textures/gui/smooth_background.png");
     public static final Identifier SMOOTH_BANNER = new Identifier(modId, "textures/gui/smooth_banner.png");
+    public static final Identifier ITEM_WIDGET = new Identifier(modId, "textures/gui/item_widget.png");
 
     // icons
     public static final Identifier SEARCH = new Identifier(modId, "textures/gui/icons/search.png");
