@@ -76,7 +76,7 @@ public class CCDebugCommand extends Command {
                             List<String> binds = system.keybinds().stream().map(bind -> bind.getId() + ": " + bind.getKey()).toList();
 
                             ChatUtils.sendBlank(2);
-                            ChatUtils.sendPrefixMessage("Packets Info:");
+                            ChatUtils.sendPrefixMessage("Keybinds Info:");
                             ChatUtils.sendBlank(1);
                             ChatUtils.sendMessage("Keybindings (" + binds.size() + "): " + ArrayUtils.list2string(binds));
                             ChatUtils.sendBlank(2);

@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
+import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -13,11 +14,12 @@ import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 
 import java.util.function.Consumer;
 
-public class ArmorHud extends Module {
+public class ArmorHud extends Module implements Listener {
 
     private final SettingSection scGeneral = getGeneralSection();
     public final ModuleSetting<Boolean> showMainhand = scGeneral.add(BooleanSetting.create()
@@ -32,6 +34,12 @@ public class ArmorHud extends Module {
             .def(true)
             .build()
     );
+    public final ModuleSetting<Boolean> leftSide = scGeneral.add(BooleanSetting.create()
+            .name("left-side")
+            .description("Displays the hud on the left side of the hotbar.")
+            .def(false)
+            .build()
+    );
 
     public ArmorHud() {
         super("armor-hud", Categories.MISC, "Renders armor hud next to hotbar!");
@@ -39,32 +47,42 @@ public class ArmorHud extends Module {
 
     @Override
     protected void onEnable() {
-
+        system.addListener(this);
     }
 
     @Override
     protected void onDisable() {
-
+        system.removeListener(this);
     }
 
     public void onRender(DrawContext context) {
         if (PlayerUtils.playerNull()) return;
 
         ClientPlayerEntity p = PlayerUtils.player();
+        Arm arm = p.getMainArm();
         int w = context.getScaledWindowWidth();
         int h = context.getScaledWindowHeight();
+        boolean right = !leftSide.getVal();
 
-        int x = (w / 2) + 80;
-        int y = h - 21;
+        int slotW = right ? 20 : -20;
+        int x = (w / 2) + (right ? 80 : -100);
+        int y = h - 22;
+        if (arm == Arm.RIGHT && !right) {
+            x -= 30;
+        }
+        else if (arm == Arm.LEFT && right) {
+            x += 30;
+        }
+
         for (ItemStack armorItem : p.getArmorItems()) {
-            renderArmor(armorItem, context, x += 20, y);
+            renderArmor(armorItem, context, x += slotW, y);
         }
 
         if (showMainhand.getVal()) {
-            renderHand(Hand.MAIN_HAND, context, x += 20, y);
+            renderHand(Hand.MAIN_HAND, context, x += slotW, y);
         }
         if (showOffhand.getVal()) {
-            renderHand(Hand.OFF_HAND, context, x += 20, y);
+            renderHand(Hand.OFF_HAND, context, x += slotW, y);
         }
     }
 
@@ -74,7 +92,7 @@ public class ArmorHud extends Module {
         String percentage = colorPercentage(ratio * 100);
 
         renderItem(armorItem, context, x, y, stack -> {
-            DrawableUtils.drawCenteredText(context, percentage, x + 10, y - 8, 0.8F, true);
+            DrawableUtils.drawCenteredText(context, percentage, x + 11, y - 8, 0.8F, true);
         });
     }
 
@@ -84,13 +102,13 @@ public class ArmorHud extends Module {
 
         renderItem(item, context, x, y, stack -> {
             String display = count == 0 ? "" : "§b" + count;
-            DrawableUtils.drawCenteredText(context, display, x + 10, y - 8, 0.8F, true);
+            DrawableUtils.drawCenteredText(context, display, x + 11, y - 8, 0.8F, true);
         });
     }
 
     private void renderItem(ItemStack item, DrawContext context, int x, int y, Consumer<ItemStack> renderCallback) {
-        context.drawTexture(GuiTextures.ITEM_WIDGET, x, y, 0, 0, 20, 20, 20, 20);
-        context.drawItem(item, x + 2, y + 2);
+        context.drawTexture(GuiTextures.ITEM_WIDGET, x, y, 0, 0, 22, 22, 22, 22);
+        context.drawItem(item, x + 3, y + 3);
         renderCallback.accept(item);
     }
 
