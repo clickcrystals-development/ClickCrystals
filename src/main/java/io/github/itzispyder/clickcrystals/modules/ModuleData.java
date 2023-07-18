@@ -71,8 +71,8 @@ public class ModuleData {
         this.settingSections.add(settingSections.size() - 1, section);
     }
 
-    public int getBind() {
-        return keybind.getVal().getKey();
+    public Keybind getBind() {
+        return keybind.getVal();
     }
 
     public void removeSettingSection(SettingSection section) {

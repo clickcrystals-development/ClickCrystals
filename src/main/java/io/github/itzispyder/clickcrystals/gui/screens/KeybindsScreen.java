@@ -1,0 +1,68 @@
+package io.github.itzispyder.clickcrystals.gui.screens;
+
+import io.github.itzispyder.clickcrystals.gui.TextAlignment;
+import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.KeybindSettingElement;
+import io.github.itzispyder.clickcrystals.gui.elements.design.DividerElement;
+import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
+import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
+import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
+import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class KeybindsScreen extends ClickCrystalsBase {
+
+    public KeybindsScreen() {
+        super("ClickCrystals Keybinds");
+    }
+
+    @Override
+    protected void init() {
+        List<Keybind> added = new ArrayList<>();
+        int x = nav.x + nav.width + 10;
+        int y = base.y + 10;
+
+        ScrollPanelElement main = new ScrollPanelElement(x, y, base.width - nav.width - 30, base.height - 20);
+        this.addChild(main);
+
+        // title
+        TextElement title = new TextElement("ClickCrystal Keybinds", TextAlignment.LEFT, 0.8F, x, y += 10);
+        TextElement desc = new TextElement("§7All registered binds: [Module Binds, Client Binds]", TextAlignment.LEFT, 0.6F, title.x, y += 15);
+        main.addChild(title);
+        main.addChild(desc);
+
+        // module binds
+        List<Module> modules = new ArrayList<>(system.modules().values());
+        DividerElement divider = new DividerElement("Module Binds (" + modules.size() + ")", title.x, y += 10, main.width, 0, 0.6F);
+        main.addChild(divider);
+
+        for (Module module : modules) {
+            Keybind bind = module.getData().getBind();
+            KeybindSetting setting = new KeybindSetting(module.getId(), "", bind);
+            KeybindSettingElement element = setting.toGuiElement(title.x, y += 12, 20, 10);
+            main.addChild(element);
+            added.add(bind);
+        }
+
+        // client binds
+        y += 10;
+        List<Keybind> clientBinds = system.keybinds().stream().filter(k -> !added.contains(k)).toList();
+        DividerElement divider2 = new DividerElement("Client Binds (" + clientBinds.size() + ")", title.x, y += 10, main.width, 0, 0.6F);
+        main.addChild(divider2);
+
+        for (Keybind bind : clientBinds) {
+            KeybindSetting setting = new KeybindSetting(bind.getId(), "", bind);
+            KeybindSettingElement element = setting.toGuiElement(title.x, y += 12, 20, 10);
+            main.addChild(element);
+            added.add(bind);
+        }
+    }
+
+    @Override
+    public void close() {
+        super.close();
+        ClickCrystalsBase.setPrevOpened(this.getClass());
+    }
+}

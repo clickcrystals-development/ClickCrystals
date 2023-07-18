@@ -67,7 +67,7 @@ public class KeybindSettingElement extends GuiElement {
         int key = setting.getKey();
         String name = GLFW.glfwGetKeyName(key, currentScanCode);
 
-        name = name != null ? "[" + name.toUpperCase() + "]" : "NONE";
+        name = name != null ? "§7[§f" + name.toUpperCase() + "§7]" : "§7NONE";
         display = name;
     }
 }

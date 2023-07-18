@@ -10,7 +10,8 @@ import io.github.itzispyder.clickcrystals.gui.elements.ui.ImageTabListElement;
 
 import java.util.List;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.version;
 
 public abstract class ClickCrystalsBase extends DefaultBase {
 
@@ -24,7 +25,8 @@ public abstract class ClickCrystalsBase extends DefaultBase {
     public ImageElement modulesIcon = new ImageElement(GuiTextures.MODULES, 0, 0, 0, 0);
     public ImageElement searchIcon = new ImageElement(GuiTextures.SEARCH, 0, 0, 0, 0);
     public ImageElement creditsIcon = new ImageElement(GuiTextures.PEOPLE, 0, 0, 0, 0);
-    public ImageTabListElement menuTab = new ImageTabListElement(List.of(homeIcon, modulesIcon, searchIcon, creditsIcon), nav.x + 3, navTitle.y + navTitle.height + 10, nav.width - 6, 15, button -> {
+    public ImageElement keyboardIcon = new ImageElement(GuiTextures.KEYBOARD, 0, 0, 0, 0);
+    public ImageTabListElement menuTab = new ImageTabListElement(List.of(homeIcon, modulesIcon, searchIcon, creditsIcon, keyboardIcon), nav.x + 3, navTitle.y + navTitle.height + 10, nav.width - 6, 13, button -> {
         ImageElement selection = button.getOptions().get(button.getSelection());
         prevMenuSelection = button.getSelection();
 
@@ -36,6 +38,8 @@ public abstract class ClickCrystalsBase extends DefaultBase {
             mc.setScreenAndRender(new SearchScreen());
         else if (selection == creditsIcon)
             mc.setScreenAndRender(new CreditsScreen());
+        else if (selection == keyboardIcon)
+            mc.setScreenAndRender(new KeybindsScreen());
     });
     public HyperLinkElement discordLink = new HyperLinkElement(ccIcon.x, menuTab.y + menuTab.height + 5, "https://discord.gg/tMaShNzNtP", "Join Discord ⬀", 0.5F, starter + "Join the Discord! >>>");
     public HyperLinkElement githubLink = new HyperLinkElement(ccIcon.x, discordLink.y + discordLink.height + 5, "https://github.com/itzispyder/clickcrystals", "Open Source ⬀", 0.5F,  starter + "Check Our Code!");

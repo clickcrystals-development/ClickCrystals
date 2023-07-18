@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui;
 
+import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.gui.callbacks.*;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.KeybindSettingElement;
@@ -8,6 +9,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -17,10 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 public abstract class GuiScreen extends Screen {
 
+    protected static final MinecraftClient mc = MinecraftClient.getInstance();
+    protected static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
     public final List<MouseMoveCallback> mouseMoveListeners;
     public final List<MouseClickCallback> mouseClickListeners;
     public final List<MouseClickCallback> mouseReleaseListeners;
