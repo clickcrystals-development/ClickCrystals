@@ -33,20 +33,21 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 0.9.3
+Mod: 0.9.4
 
 Changelog:
-- Fixed CONFIG saving issues
-- Revamped config to use .json
-- Each module has its own json config
-- Added ArmorHud -> Shows item count and armor durability
-- Fixed other major config issues.
+  - Added Left Hand armor HUD option.
+  - Revamped the Keybind Manager
+    * Keybinds are now all handled in the GUI
+    * The default GUI keybind is Right-Shift
+    * Click the view modules, and in the icon group with the search, click the keyboard to access the keybind manager
+    * You can set the keybinds for individual modules as well as the whole ClickGUI
 
 NOTICE:
-- NoBreakDelay has been removed
-- Any versions regarding Minecraft 1.19.x has been discontinued,
-  meaning it will no longer be worked on in the future. 
-  However, they will still be available for download.
+  - NoBreakDelay has been removed
+  - Any versions regarding Minecraft 1.19.x has been discontinued,
+    meaning it will no longer be worked on in the future.
+    However, they will still be available for download.
 ```
 
 <div class="demo-menu">

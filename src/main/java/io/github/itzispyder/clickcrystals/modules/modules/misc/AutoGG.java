@@ -19,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class AutoGG extends Module implements Listener {
 
@@ -87,18 +88,23 @@ public class AutoGG extends Module implements Listener {
             boolean playerWithinRange = ent instanceof PlayerEntity player && player.getPos().distanceTo(p.getPos()) < distance.getVal() && player != p;
 
             if (status == EntityStatusType.DEATH && playerWithinRange) {
-                ChatUtils.sendChatMessage(getRandomMessage());
+                this.sendRandomMessage();
             }
         }
     }
 
-    public String getRandomMessage() {
-        return new Randomizer<>(List.of(
+    public void sendRandomMessage() {
+        List<String> messages = Stream.of(
                 message1.getVal(),
                 message2.getVal(),
                 message3.getVal(),
                 message4.getVal(),
                 message5.getVal()
-        )).pickRand();
+        ).filter(s -> !s.isEmpty()).toList();
+
+        if (!messages.isEmpty()) {
+            String msg = new Randomizer<>(messages).pickRand();
+            ChatUtils.sendChatMessage(msg);
+        }
     }
 }

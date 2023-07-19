@@ -55,7 +55,7 @@ public final class ClickCrystals implements ModInitializer {
             modId = "clickcrystals",
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
-            version = "0.9.3";
+            version = "0.9.4";
 
     /**
      * Runs the mod initializer.
