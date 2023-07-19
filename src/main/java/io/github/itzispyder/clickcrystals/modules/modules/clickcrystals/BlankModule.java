@@ -61,7 +61,7 @@ public class BlankModule extends Module implements Listener {
     public final ModuleSetting<Keybind> keybindSetting = scTest.add(KeybindSetting.create()
             .name("test-keybind-setting")
             .description("Keybind setting, this creates key-binds!")
-            .def(GLFW.GLFW_KEY_LEFT_SHIFT)
+            .def(Keybind.NONE)
             .condition((bind, screen) -> screen == null)
             .onPress(bind -> ChatUtils.sendPrefixMessage("Keybind pressed!"))
             .build()

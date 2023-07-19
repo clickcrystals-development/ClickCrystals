@@ -6,15 +6,10 @@ import io.github.itzispyder.clickcrystals.gui.elements.ui.TabListElement;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
-import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
-import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
 public class ModulesScreen extends ClickCrystalsBase {
 
@@ -39,15 +34,6 @@ public class ModulesScreen extends ClickCrystalsBase {
         // callbacks
         this.screenRenderListeners.add((context, mouseX, mouseY, delta) -> displayingModules.forEach(moduleElement -> {
             moduleElement.render(context, mouseX, mouseY);
-            Module m = moduleElement.getModule();
-
-            if (moduleElement.isHovered(mouseX, mouseY)) {
-                DrawableUtils.drawText(context, starter + m.getName(), nav.x + 3, copyright.y - 55, 0.5F, true);
-                int i = 0;
-                for (String line : StringUtils.wrapLines(m.getDescription(), 20, true)) {
-                    DrawableUtils.drawText(context, "§7" + line, nav.x + 3, copyright.y - 50 + (i++ * 5), 0.48F, true);
-                }
-            }
         }));
         this.mouseClickListeners.add(((mouseX, mouseY, button, click) -> displayingModules.forEach(element -> {
             if (click == ClickType.CLICK && element.isHovered((int)mouseX, (int)mouseY)) {

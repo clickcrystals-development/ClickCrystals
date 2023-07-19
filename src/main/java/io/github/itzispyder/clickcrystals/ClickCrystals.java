@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals;
 
-import io.github.itzispyder.clickcrystals.client.CCKeybindings;
 import io.github.itzispyder.clickcrystals.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
@@ -11,7 +10,9 @@ import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.hud.*;
+import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsBase;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
@@ -24,6 +25,10 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
+import net.minecraft.client.gui.screen.world.SelectWorldScreen;
+import org.lwjgl.glfw.GLFW;
 
 /**
  * ClickCrystals main
@@ -32,6 +37,14 @@ public final class ClickCrystals implements ModInitializer {
 
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
+    public static final Keybind openModuleKeybind = Keybind.create()
+            .id("open-clickcrystals-module-screen")
+            .defaultKey(GLFW.GLFW_KEY_RIGHT_SHIFT)
+            .condition((bind, screen) -> {
+                return screen == null || screen instanceof TitleScreen || screen instanceof MultiplayerScreen || screen instanceof SelectWorldScreen;
+            })
+            .onPress(bind -> ClickCrystalsBase.openClickCrystalsMenu())
+            .build();
 
     @SuppressWarnings("unused")
     public static final String
@@ -48,7 +61,6 @@ public final class ClickCrystals implements ModInitializer {
         // Mod initialization
         System.out.println(prefix + "Loading ClickCrystals by ImproperIssues");
         this.init();
-        CCKeybindings.init();
         CCSoundEvents.init();
         this.startTicking();
         this.initRpc();

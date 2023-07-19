@@ -52,7 +52,7 @@ public class KeybindSetting extends ModuleSetting<Keybind> {
 
         public Builder() {
             id = "unregistered-keybind";
-            key = defaultKey = 340;
+            key = defaultKey = Keybind.NONE;
             keyAction = bind -> {};
             bindCondition = (bind, screen) -> true;
         }
@@ -91,6 +91,7 @@ public class KeybindSetting extends ModuleSetting<Keybind> {
 
         @Override
         public KeybindSetting build() {
+            key = key == Keybind.NONE ? defaultKey : key;
             return new KeybindSetting(id, description, Keybind.create()
                     .id(id)
                     .key(key)

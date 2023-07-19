@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class ModuleData {
     private final ModuleSetting<Keybind> keybind = scDefault.add(KeybindSetting.create()
             .name("module-toggle-keybind")
             .description("The keybind for toggling modules quickly")
-            .def(GLFW.GLFW_KEY_LEFT_SHIFT)
+            .def(Keybind.NONE)
             .onPress(bind -> {})
             .condition((bind, screen) -> screen == null)
             .build()

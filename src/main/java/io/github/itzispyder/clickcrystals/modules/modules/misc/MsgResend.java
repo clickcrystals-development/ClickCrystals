@@ -1,17 +1,29 @@
 package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
-import io.github.itzispyder.clickcrystals.client.CCKeybindings;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.ChatCommandEvent;
 import io.github.itzispyder.clickcrystals.events.events.ChatSendEvent;
-import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
+import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import org.lwjgl.glfw.GLFW;
 
 public class MsgResend extends Module implements Listener {
 
+    private final SettingSection scGeneral = getGeneralSection();
+    public final ModuleSetting<Keybind> resendKeybind = scGeneral.add(KeybindSetting.create()
+            .name("message-resend-keybind")
+            .description("Key to resend last message/command.")
+            .def(GLFW.GLFW_KEY_UP)
+            .onPress(bind -> this.resendMessage())
+            .condition((bind, screen) -> screen == null)
+            .build()
+    );
     private String lastMessage;
     private boolean wasCommand;
 
@@ -46,21 +58,14 @@ public class MsgResend extends Module implements Listener {
         this.wasCommand = true;
     }
 
-    @EventHandler
-    private void onTickEnd(ClientTickEndEvent e) {
-        if (this.lastMessage == null) return;
-        if (this.lastMessage.isBlank()) return;
-        if (this.lastMessage.isEmpty()) return;
-
-        if (CCKeybindings.SEND_LAST_MESSAGE.wasPressed()) {
+    public void resendMessage() {
+        if (lastMessage != null && !lastMessage.isEmpty()) {
             if (wasCommand) {
                 ChatUtils.sendChatCommand(lastMessage);
             }
             else {
                 ChatUtils.sendChatMessage(lastMessage);
             }
-
-            CCKeybindings.SEND_LAST_MESSAGE.setPressed(false);
         }
     }
 }

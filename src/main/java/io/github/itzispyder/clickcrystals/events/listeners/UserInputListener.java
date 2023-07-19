@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
-import org.lwjgl.glfw.GLFW;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
@@ -20,8 +19,12 @@ public class UserInputListener implements Listener {
     }
 
     private void handleKeybindings(KeyPressEvent e) {
-        if (e.getAction() == ClickType.CLICK && GLFW.glfwGetKeyName(e.getKeycode(), e.getScancode()) != null) {
-            system.getBindsOf(e.getKeycode()).forEach(Keybind::onPress);
+        if (e.getAction() == ClickType.CLICK) {
+            for (Keybind bind : system.getBindsOf(e.getKeycode())) {
+                if (bind.canPress(e.getKeycode(), e.getScancode())) {
+                    bind.onPress();
+                }
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -39,7 +40,7 @@ public class KeybindSettingElement extends GuiElement {
             context.drawTexture(texture, x, y, 0, 0, width, height, width, height);
 
             updateDisplay();
-            DrawableUtils.drawCenteredText(context, display, x + width / 2, y + (int)(height * 0.28), 0.7F, true);
+            DrawableUtils.drawCenteredText(context, display, x + width / 2, y + (int)(height * 0.28), 0.5F, true);
         }
     }
 
@@ -66,6 +67,10 @@ public class KeybindSettingElement extends GuiElement {
     public void updateDisplay() {
         int key = setting.getKey();
         String name = GLFW.glfwGetKeyName(key, currentScanCode);
+
+        if (name == null || Keybind.EXTRAS.containsKey(key)) {
+            name = Keybind.EXTRAS.get(key);
+        }
 
         name = name != null ? "§7[§f" + name.toUpperCase() + "§7]" : "§7NONE";
         display = name;
