@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals;
 import io.github.itzispyder.clickcrystals.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
+import io.github.itzispyder.clickcrystals.data.ConfigFile;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
@@ -37,13 +38,16 @@ public final class ClickCrystals implements ModInitializer {
 
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
+    public static final ConfigFile config = ConfigFile.load("ClickCrystalsClient/config.json");
     public static final Keybind openModuleKeybind = Keybind.create()
             .id("open-clickcrystals-module-screen")
             .defaultKey(GLFW.GLFW_KEY_RIGHT_SHIFT)
-            .condition((bind, screen) -> {
-                return screen == null || screen instanceof TitleScreen || screen instanceof MultiplayerScreen || screen instanceof SelectWorldScreen;
-            })
+            .condition((bind, screen) -> screen == null || screen instanceof TitleScreen || screen instanceof MultiplayerScreen || screen instanceof SelectWorldScreen)
             .onPress(bind -> ClickCrystalsBase.openClickCrystalsMenu())
+            .onChange(bind -> {
+                config.set(bind.getId(), bind.getKey());
+                config.save();
+            })
             .build();
 
     @SuppressWarnings("unused")
@@ -63,7 +67,7 @@ public final class ClickCrystals implements ModInitializer {
         this.init();
         CCSoundEvents.init();
         this.startTicking();
-        this.initRpc();
+        this.initOther();
     }
 
     /**
@@ -143,7 +147,10 @@ public final class ClickCrystals implements ModInitializer {
         system.addHud(new ArmorItemHud());
     }
 
-    public void initRpc() {
-
+    public void initOther() {
+        // keybind setting
+        double val = config.get(openModuleKeybind.getId(), Double.class, (double)openModuleKeybind.getDefaultKey());
+        int key = (int)val;
+        openModuleKeybind.setKey(key);
     }
 }

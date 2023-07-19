@@ -9,7 +9,6 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -21,7 +20,6 @@ public class KeybindsScreen extends ClickCrystalsBase {
 
     @Override
     protected void init() {
-        List<Keybind> added = new ArrayList<>();
         int x = nav.x + nav.width + 10;
         int y = base.y + 10;
 
@@ -30,12 +28,30 @@ public class KeybindsScreen extends ClickCrystalsBase {
 
         // title
         TextElement title = new TextElement("ClickCrystal Keybinds", TextAlignment.LEFT, 0.8F, x, y += 10);
-        TextElement desc = new TextElement("§7All registered binds: [Module Binds, Client Binds]", TextAlignment.LEFT, 0.6F, title.x, y += 15);
+        TextElement desc = new TextElement("§7All registered binds: [Client Binds, Module Binds]", TextAlignment.LEFT, 0.6F, title.x, y += 15);
         main.addChild(title);
         main.addChild(desc);
 
+        // client binds
+        y += 10;
+        List<Keybind> clientBinds = system.keybinds().stream()
+                .sorted(Comparator.comparing(Keybind::getId))
+                .filter(bind -> !bind.getId().equals("module-toggle-keybind"))
+                .toList();
+        DividerElement divider2 = new DividerElement("Client Binds (" + clientBinds.size() + ")", title.x, y += 10, main.width, 0, 0.6F);
+        main.addChild(divider2);
+
+        for (Keybind bind : clientBinds) {
+            KeybindSetting setting = new KeybindSetting(bind.getId(), "", bind);
+            KeybindSettingElement element = setting.toGuiElement(title.x, y += 12, 20, 10);
+            main.addChild(element);
+        }
+
         // module binds
-        List<Module> modules = system.modules().values().stream().sorted(Comparator.comparing(Module::getId)).toList();
+        y += 10;
+        List<Module> modules = system.modules().values().stream()
+                .sorted(Comparator.comparing(Module::getId))
+                .toList();
         DividerElement divider = new DividerElement("Module Binds (" + modules.size() + ")", title.x, y += 10, main.width, 0, 0.6F);
         main.addChild(divider);
 
@@ -44,20 +60,6 @@ public class KeybindsScreen extends ClickCrystalsBase {
             KeybindSetting setting = new KeybindSetting(module.getId(), "", bind);
             KeybindSettingElement element = setting.toGuiElement(title.x, y += 12, 20, 10);
             main.addChild(element);
-            added.add(bind);
-        }
-
-        // client binds
-        y += 10;
-        List<Keybind> clientBinds = system.keybinds().stream().sorted(Comparator.comparing(Keybind::getId)).filter(k -> !added.contains(k)).toList();
-        DividerElement divider2 = new DividerElement("Client Binds (" + clientBinds.size() + ")", title.x, y += 10, main.width, 0, 0.6F);
-        main.addChild(divider2);
-
-        for (Keybind bind : clientBinds) {
-            KeybindSetting setting = new KeybindSetting(bind.getId(), "", bind);
-            KeybindSettingElement element = setting.toGuiElement(title.x, y += 12, 20, 10);
-            main.addChild(element);
-            added.add(bind);
         }
     }
 

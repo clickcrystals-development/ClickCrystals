@@ -4,7 +4,6 @@ import io.github.itzispyder.clickcrystals.util.ManualMap;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.List;
 import java.util.Map;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -29,15 +28,16 @@ public class Keybind {
     );
     private final String name, id;
     private int key, defaultKey;
-    private KeyAction keyAction;
+    private KeyAction keyAction, changeAction;
     private BindCondition bindCondition;
 
-    public Keybind(String id, int defaultKey, int key, KeyAction keyAction, BindCondition bindCondition) {
+    public Keybind(String id, int defaultKey, int key, KeyAction keyAction, KeyAction changeAction, BindCondition bindCondition) {
         this.id = id;
         this.name = StringUtils.capitalizeWords(id);
         this.key = key;
         this.defaultKey = defaultKey;
         this.keyAction = keyAction;
+        this.changeAction = changeAction;
         this.bindCondition = bindCondition;
         system.addKeybind(this);
     }
@@ -69,6 +69,7 @@ public class Keybind {
 
     public void setKey(int key) {
         this.key = key;
+        this.changeAction.onKey(this);
     }
 
     public int getDefaultKey() {
@@ -95,6 +96,14 @@ public class Keybind {
         this.bindCondition = bindCondition;
     }
 
+    public KeyAction getChangeAction() {
+        return changeAction;
+    }
+
+    public void setChangeAction(KeyAction changeAction) {
+        this.changeAction = changeAction;
+    }
+
     public static Builder create() {
         return new Builder();
     }
@@ -103,13 +112,13 @@ public class Keybind {
 
         private String id;
         private int key, defaultKey;
-        private KeyAction keyAction;
+        private KeyAction keyAction, changeAction;
         private BindCondition bindCondition;
 
         public Builder() {
             id = "unregistered-keybind";
             key = defaultKey = NONE;
-            keyAction = bind -> {};
+            keyAction = changeAction = bind -> {};
             bindCondition = (bind, screen) -> true;
         }
 
@@ -133,6 +142,11 @@ public class Keybind {
             return this;
         }
 
+        public Builder onChange(KeyAction changeAction) {
+            this.changeAction = changeAction;
+            return this;
+        }
+
         public Builder condition(BindCondition bindCondition) {
             this.bindCondition = bindCondition;
             return this;
@@ -140,7 +154,7 @@ public class Keybind {
 
         public Keybind build() {
             key = key == NONE ? defaultKey : key;
-            return new Keybind(id, defaultKey, key, keyAction, bindCondition);
+            return new Keybind(id, defaultKey, key, keyAction, changeAction, bindCondition);
         }
     }
 }
