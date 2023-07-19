@@ -10,6 +10,7 @@ import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class KeybindsScreen extends ClickCrystalsBase {
@@ -34,7 +35,7 @@ public class KeybindsScreen extends ClickCrystalsBase {
         main.addChild(desc);
 
         // module binds
-        List<Module> modules = new ArrayList<>(system.modules().values());
+        List<Module> modules = system.modules().values().stream().sorted(Comparator.comparing(Module::getId)).toList();
         DividerElement divider = new DividerElement("Module Binds (" + modules.size() + ")", title.x, y += 10, main.width, 0, 0.6F);
         main.addChild(divider);
 
@@ -48,7 +49,7 @@ public class KeybindsScreen extends ClickCrystalsBase {
 
         // client binds
         y += 10;
-        List<Keybind> clientBinds = system.keybinds().stream().filter(k -> !added.contains(k)).toList();
+        List<Keybind> clientBinds = system.keybinds().stream().sorted(Comparator.comparing(Keybind::getId)).filter(k -> !added.contains(k)).toList();
         DividerElement divider2 = new DividerElement("Client Binds (" + clientBinds.size() + ")", title.x, y += 10, main.width, 0, 0.6F);
         main.addChild(divider2);
 

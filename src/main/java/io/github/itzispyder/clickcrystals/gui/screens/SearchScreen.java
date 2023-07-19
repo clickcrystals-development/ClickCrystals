@@ -1,15 +1,15 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
+import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.DetailedModuleElement;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.SearchBarElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import net.minecraft.client.gui.DrawContext;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
 public class SearchScreen extends ClickCrystalsBase {
 
@@ -35,6 +35,9 @@ public class SearchScreen extends ClickCrystalsBase {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         super.keyPressed(keyCode, scanCode, modifiers);
+        if (mc.currentScreen instanceof GuiScreen screen && GLFW.glfwGetKeyName(keyCode, scanCode) != null) {
+            screen.selected = searchbar;
+        }
         updateFilteredModules();
         return true;
     }

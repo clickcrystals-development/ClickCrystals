@@ -33,7 +33,7 @@ public class ImageTabListElement extends TabListElement<ImageElement> {
         double sectionWidth = (double)width / options.size();
         int selectionX = x + (int)sectionWidth * selection;
 
-        DrawableUtils.drawHorizontalLine(context, selectionX + 5, y + height - 1, (int)sectionWidth - 10, 2, 0xD03873A9);
+        DrawableUtils.drawHorizontalLine(context, selectionX + 2, y + height - 1, (int)sectionWidth, 2, 0xD03873A9);
 
         for (int i = 1; i < options.size(); i++) {
             DrawableUtils.drawText(context, "§7|", x + (int)(sectionWidth * i), y + (int)(height * 0.5), 0.6F, false);

@@ -8,7 +8,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class ScrollPanelElement extends GuiElement {
 
-    public static final int SCROLL_MULTIPLIER = 10;
+    public static final int SCROLL_MULTIPLIER = 15;
     private int remainingUp, remainingDown;
 
     public ScrollPanelElement(int x, int y, int width, int height) {
