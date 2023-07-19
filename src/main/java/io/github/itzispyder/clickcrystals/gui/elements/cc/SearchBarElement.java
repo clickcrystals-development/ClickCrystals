@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.cc;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
+import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
@@ -11,7 +12,7 @@ import org.lwjgl.glfw.GLFW;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
-public class SearchBarElement extends GuiElement {
+public class SearchBarElement extends GuiElement implements Typeable {
 
     private String query;
     private final float textScale;

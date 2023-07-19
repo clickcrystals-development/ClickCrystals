@@ -14,18 +14,18 @@ public class Keybind {
 
     public static final int NONE = 256;
     public static final Map<Integer, String> EXTRAS = ManualMap.fromItems(
-            GLFW.GLFW_KEY_LEFT_SHIFT, "L-SFT",
-            GLFW.GLFW_KEY_RIGHT_SHIFT, "R-SFT",
-            GLFW.GLFW_KEY_LEFT_ALT, "L-ALT",
-            GLFW.GLFW_KEY_RIGHT_ALT, "R-ALT",
-            GLFW.GLFW_KEY_LEFT_CONTROL, "L-CRL",
-            GLFW.GLFW_KEY_RIGHT_CONTROL, "R-CRL",
-            GLFW.GLFW_KEY_PAGE_DOWN, "PG-UP",
-            GLFW.GLFW_KEY_PAGE_UP, "PG-DN",
-            GLFW.GLFW_KEY_UP, "UP",
-            GLFW.GLFW_KEY_DOWN, "DOWN",
-            GLFW.GLFW_KEY_LEFT, "LEFT",
-            GLFW.GLFW_KEY_RIGHT, "RIGHT"
+            GLFW.GLFW_KEY_LEFT_SHIFT, "LS",
+            GLFW.GLFW_KEY_RIGHT_SHIFT, "RS",
+            GLFW.GLFW_KEY_LEFT_ALT, "LA",
+            GLFW.GLFW_KEY_RIGHT_ALT, "RA",
+            GLFW.GLFW_KEY_LEFT_CONTROL, "LC",
+            GLFW.GLFW_KEY_RIGHT_CONTROL, "RC",
+            GLFW.GLFW_KEY_PAGE_DOWN, "P⇧",
+            GLFW.GLFW_KEY_PAGE_UP, "P⇩",
+            GLFW.GLFW_KEY_UP, "⇧",
+            GLFW.GLFW_KEY_DOWN, "⇩",
+            GLFW.GLFW_KEY_LEFT, "⇦",
+            GLFW.GLFW_KEY_RIGHT, "⇨"
     );
     private final String name, id;
     private int key, defaultKey;

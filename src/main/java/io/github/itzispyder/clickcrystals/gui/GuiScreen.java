@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui;
 
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.gui.callbacks.*;
+import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.KeybindSettingElement;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.StringSettingElement;
@@ -198,6 +199,11 @@ public abstract class GuiScreen extends Screen {
         });
 
         return true;
+    }
+
+    @Override
+    public boolean shouldCloseOnEsc() {
+        return !(selected instanceof Typeable);
     }
 
     public List<GuiElement> getChildren() {

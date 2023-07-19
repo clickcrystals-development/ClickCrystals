@@ -1,9 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.elements.cc.settings;
 
-import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.GuiTextures;
-import io.github.itzispyder.clickcrystals.gui.TextAlignment;
+import io.github.itzispyder.clickcrystals.gui.*;
+import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
@@ -15,7 +13,7 @@ import org.lwjgl.glfw.GLFW;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
-public class KeybindSettingElement extends GuiElement {
+public class KeybindSettingElement extends GuiElement implements Typeable {
 
     private final KeybindSetting setting;
     private String display;
@@ -40,7 +38,7 @@ public class KeybindSettingElement extends GuiElement {
             context.drawTexture(texture, x, y, 0, 0, width, height, width, height);
 
             updateDisplay();
-            DrawableUtils.drawCenteredText(context, display, x + width / 2, y + (int)(height * 0.28), 0.5F, true);
+            DrawableUtils.drawCenteredText(context, display, x + width / 2, y + (int)(height * 0.28), 0.65F, true);
         }
     }
 

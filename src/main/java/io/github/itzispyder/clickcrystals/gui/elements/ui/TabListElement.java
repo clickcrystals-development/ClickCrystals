@@ -6,14 +6,10 @@ import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class TabListElement<T> extends GuiElement {
 
@@ -74,8 +70,6 @@ public class TabListElement<T> extends GuiElement {
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
-        mc.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, SoundCategory.MASTER, 1, 2);
-
         double mousePosX = mouseX - x;
         double sectionWidth = (double)width / options.size();
         int selection = (int)Math.floor(mousePosX / sectionWidth);

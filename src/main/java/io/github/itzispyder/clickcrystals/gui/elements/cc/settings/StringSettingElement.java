@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
+import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
@@ -15,7 +16,7 @@ import org.lwjgl.glfw.GLFW;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
-public class StringSettingElement extends GuiElement {
+public class StringSettingElement extends GuiElement implements Typeable {
 
     private final StringSetting setting;
     private String input;
