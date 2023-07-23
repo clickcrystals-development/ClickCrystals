@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.commands.CustomCommand;
 import io.github.itzispyder.clickcrystals.events.events.ChatCommandEvent;
 import io.github.itzispyder.clickcrystals.events.events.ChatSendEvent;
@@ -19,19 +20,26 @@ public abstract class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String content, CallbackInfo ci) {
-        if (content.startsWith(CustomCommand.PREFIX)) {
+        String prefix = ClickCrystals.commandPrefix.getKeyName();
+        prefix = prefix.equals("NONE") ? "'" : prefix;
+
+        if (content.startsWith(prefix)) {
+            if (content.startsWith(prefix + prefix)) {
+                return;
+            }
+
             try {
-                CustomCommand.dispatch(content.substring(CustomCommand.PREFIX.length()));
+                CustomCommand.dispatch(content.substring(prefix.length()));
             }
             catch (CommandSyntaxException ex) {
                 ChatUtils.sendPrefixMessage(StringUtils.color("&c" + ex.getMessage()));
             }
             ci.cancel();
+            return;
         }
 
         ChatSendEvent event = new ChatSendEvent(content);
         system.eventBus.pass(event);
-        content = event.getMessage();
         if (event.isCancelled()) ci.cancel();
     }
 
@@ -39,7 +47,6 @@ public abstract class ClientPlayNetworkHandlerMixin {
     public void sendCommand(String command, CallbackInfo ci) {
         ChatCommandEvent event = new ChatCommandEvent(command);
         system.eventBus.pass(event);
-        command = event.getCommandLine();
         if (event.isCancelled()) ci.cancel();
     }
 }

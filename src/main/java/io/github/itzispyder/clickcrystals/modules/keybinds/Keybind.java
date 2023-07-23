@@ -67,6 +67,14 @@ public class Keybind {
         return key;
     }
 
+    public String getKeyName() {
+        String name = GLFW.glfwGetKeyName(key, 32);
+        if (name == null) {
+            name = EXTRAS.getOrDefault(key, "NONE");
+        }
+        return name;
+    }
+
     public void setKey(int key) {
         this.key = key;
         this.changeAction.onKey(this);

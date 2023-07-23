@@ -5,20 +5,15 @@ import io.github.itzispyder.clickcrystals.events.Event;
 
 public class ChatCommandEvent extends Event implements Cancellable {
 
-    private String commandLine;
+    private final String commandLine;
     private boolean cancelled;
 
     public ChatCommandEvent(String commandLine) {
         this.commandLine = commandLine;
-        this.cancelled = false;
     }
 
     public String getCommandLine() {
         return commandLine;
-    }
-
-    public void setCommandLine(String commandLine) {
-        this.commandLine = commandLine;
     }
 
     @Override

@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.suggestion.Suggestions;
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.commands.CustomCommand;
 import net.minecraft.client.gui.screen.ChatInputSuggestor;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -29,7 +30,7 @@ public abstract class ChatInputSuggestorMixin {
 
     @Inject(method = "refresh", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
     public void refresh(CallbackInfo ci, String string, StringReader reader) {
-        String prefix = CustomCommand.PREFIX;
+        String prefix = ClickCrystals.commandPrefix.getKeyName();
         int len = prefix.length();
 
         if (reader.canRead(len) && reader.getString().startsWith(prefix)) {

@@ -22,7 +22,6 @@ public abstract class CustomCommand {
     protected static final int SINGLE_SUCCESS = 1;
     protected static final MinecraftClient mc = MinecraftClient.getInstance();
     protected static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
-    public static final String PREFIX = "'";
     public static final RegistryWrapper.WrapperLookup WRAPPER = BuiltinRegistries.createWrapperLookup();
     public static final CommandRegistryAccess REGISTRY = CommandManager.createRegistryAccess(WRAPPER);
     public static final CommandDispatcher<CommandSource> DISPATCHER = new CommandDispatcher<>();

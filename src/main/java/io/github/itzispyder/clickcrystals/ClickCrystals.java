@@ -26,6 +26,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
@@ -44,10 +45,14 @@ public final class ClickCrystals implements ModInitializer {
             .defaultKey(GLFW.GLFW_KEY_RIGHT_SHIFT)
             .condition((bind, screen) -> screen == null || screen instanceof TitleScreen || screen instanceof MultiplayerScreen || screen instanceof SelectWorldScreen)
             .onPress(bind -> ClickCrystalsBase.openClickCrystalsMenu())
-            .onChange(bind -> {
-                config.set(bind.getId(), bind.getKey());
-                config.save();
-            })
+            .onChange(ClickCrystals::saveBind)
+            .build();
+    public static final Keybind commandPrefix = Keybind.create()
+            .id("command-prefix")
+            .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
+            .condition((bind, screen) -> screen == null)
+            .onPress(bind -> mc.setScreen(new ChatScreen("")))
+            .onChange(ClickCrystals::saveBind)
             .build();
 
     @SuppressWarnings("unused")
@@ -151,8 +156,18 @@ public final class ClickCrystals implements ModInitializer {
 
     public void initOther() {
         // keybind setting
-        double val = config.get(openModuleKeybind.getId(), Double.class, (double)openModuleKeybind.getDefaultKey());
+        loadBind(openModuleKeybind);
+        loadBind(commandPrefix);
+    }
+
+    public static void saveBind(Keybind bind) {
+        config.set(bind.getId(), bind.getKey());
+        config.save();
+    }
+
+    public static void loadBind(Keybind bind) {
+        double val = config.get(bind.getId(), Double.class, (double)bind.getDefaultKey());
         int key = (int)val;
-        openModuleKeybind.setKey(key);
+        bind.setKey(key);
     }
 }
