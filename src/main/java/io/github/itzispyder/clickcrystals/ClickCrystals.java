@@ -96,17 +96,6 @@ public final class ClickCrystals implements ModInitializer {
         system.addListener(new TickEventListener());
         system.addListener(new UserInputListener());
 
-        // Commands
-        system.addCommand(new TestCommand());
-
-        system.addCommand(new CCToggleCommand());
-        system.addCommand(new CCHelpCommand());
-        system.addCommand(new GmcCommand());
-        system.addCommand(new GmsCommand());
-        system.addCommand(new GmaCommand());
-        system.addCommand(new GmspCommand());
-        system.addCommand(new CCDebugCommand());
-
         // Module
         system.addModule(new ClickCrystal());
         system.addModule(new AnchorSwitch());
@@ -145,6 +134,15 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new NoScoreboard());
         system.addModule(new ArmorHud());
         Module.loadConfigModules();
+
+        // Commands
+        system.addCommand(new CCToggleCommand());
+        system.addCommand(new CCHelpCommand());
+        system.addCommand(new GmcCommand());
+        system.addCommand(new GmsCommand());
+        system.addCommand(new GmaCommand());
+        system.addCommand(new GmspCommand());
+        system.addCommand(new CCDebugCommand());
 
         // Hud
         system.addHud(new ColorOverlayHud());

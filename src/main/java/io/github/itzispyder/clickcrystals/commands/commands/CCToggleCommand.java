@@ -1,55 +1,42 @@
 package io.github.itzispyder.clickcrystals.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import io.github.itzispyder.clickcrystals.commands.CustomCommand;
+import io.github.itzispyder.clickcrystals.commands.Command;
+import io.github.itzispyder.clickcrystals.commands.arguments.ModuleArgumentType;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import net.minecraft.command.CommandSource;
 
-/**
- * /cctoggle command
- */
-public class CCToggleCommand extends CustomCommand {
+public class CCToggleCommand extends Command {
 
-    /**
-     * Init command
-     */
     public CCToggleCommand() {
-        super("clickcrystaltoggle","§7Toggles the modules from this mod. THIS CAN ALSO BE DONE VIA GUI MENU, PRESS YOUR §l§oAPOSTROPHE §7KEY!","/cctoggle [on|off|help]","cctoggle");
+        super("toggle","§7Toggles the modules from this mod. THIS CAN ALSO BE DONE VIA GUI MENU, PRESS YOUR §l§oLEFT_SHIFT §7KEY!","/toggle <module> [on|off|help]","t");
     }
 
-    /**
-     * Command builder
-     * @param builder builder
-     */
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
-
-        for (Module module : system.modules().values()) {
-            builder.executes(context -> {
-                        ChatUtils.sendMessage(super.getHelp());
-                        return SINGLE_SUCCESS;
-                    })
-                    .then(literal(module.getId())
-                            .executes(context -> {
-                                module.setEnabled(!module.isEnabled());
-                                return SINGLE_SUCCESS;
-                            })
-                            .then(literal("help")
-                                    .executes(context -> {
-                                        ChatUtils.sendMessage(module.getHelp());
-                                        return SINGLE_SUCCESS;
-                                    }))
-                            .then(literal("on")
-                                    .executes(context -> {
-                                        module.setEnabled(true);
-                                        return SINGLE_SUCCESS;
-                                    }))
-                            .then(literal("off")
-                                    .executes(context -> {
-                                        module.setEnabled(false);
-                                        return SINGLE_SUCCESS;
-                                    })));
-        }
+        builder.then(argument("module", ModuleArgumentType.create())
+                .executes(context -> {
+                    Module module = context.getArgument("module", Module.class);
+                    module.setEnabled(!module.isEnabled(), true);
+                    return SINGLE_SUCCESS;
+                })
+                .then(literal("help")
+                        .executes(context -> {
+                            Module module = context.getArgument("module", Module.class);
+                            print(module.getHelp());
+                            return SINGLE_SUCCESS;
+                        }))
+                .then(literal("on")
+                        .executes(context -> {
+                            Module module = context.getArgument("module", Module.class);
+                            module.setEnabled(true, true);
+                            return SINGLE_SUCCESS;
+                        }))
+                .then(literal("off")
+                        .executes(context -> {
+                            Module module = context.getArgument("module", Module.class);
+                            module.setEnabled(false, true);
+                            return SINGLE_SUCCESS;
+                        })));
     }
 }

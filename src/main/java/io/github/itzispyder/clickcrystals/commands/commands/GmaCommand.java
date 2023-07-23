@@ -1,11 +1,11 @@
 package io.github.itzispyder.clickcrystals.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import io.github.itzispyder.clickcrystals.commands.CustomCommand;
+import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import net.minecraft.command.CommandSource;
 
-public class GmaCommand extends CustomCommand {
+public class GmaCommand extends Command {
 
     public GmaCommand() {
         super("gma","Gamemode adventure","/gma");

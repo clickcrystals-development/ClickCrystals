@@ -2,7 +2,9 @@ package io.github.itzispyder.clickcrystals.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public final class ArrayUtils {
@@ -29,5 +31,20 @@ public final class ArrayUtils {
         List<T> list = Arrays.asList(ts);
         tList.forEach(list::add);
         return list;
+    }
+
+    public static <T> List<T> reversed(List<T> input) {
+        Collections.reverse(input);
+        return input;
+    }
+
+    public static <T> List<T> reversed(Iterable<T> input) {
+        List<T> list = new ArrayList<>();
+        input.forEach(list::add);
+        return reversed(list);
+    }
+
+    public static <T> void reverseForEach(Iterable<T> input, Consumer<T> action) {
+        reversed(input).forEach(action);
     }
 }

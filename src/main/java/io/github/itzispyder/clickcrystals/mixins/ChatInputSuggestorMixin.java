@@ -4,7 +4,7 @@ import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.suggestion.Suggestions;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
-import io.github.itzispyder.clickcrystals.commands.CustomCommand;
+import io.github.itzispyder.clickcrystals.commands.Command;
 import net.minecraft.client.gui.screen.ChatInputSuggestor;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.command.CommandSource;
@@ -37,12 +37,12 @@ public abstract class ChatInputSuggestorMixin {
             reader.setCursor(reader.getCursor() + len);
 
             if (parse == null) {
-                parse = CustomCommand.DISPATCHER.parse(reader, CustomCommand.SOURCE);
+                parse = Command.DISPATCHER.parse(reader, Command.SOURCE);
             }
 
             int cursor = textField.getCursor();
             if (!completingSuggestions) {
-                pendingSuggestions = CustomCommand.DISPATCHER.getCompletionSuggestions(parse, cursor);
+                pendingSuggestions = Command.DISPATCHER.getCompletionSuggestions(parse, cursor);
                 pendingSuggestions.thenRun(() -> {
                     if (pendingSuggestions.isDone()) {
                         showCommandSuggestions();
