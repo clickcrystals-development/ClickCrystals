@@ -5,6 +5,7 @@
   "client": [
     "CameraMixin",
     "ChatHudMixin",
+    "ChatInputSuggestorMixin",
     "ClientConnectionMixin",
     "ClientPlayerInteractionManagerMixin",
     "ClientPlayNetworkHandlerMixin",

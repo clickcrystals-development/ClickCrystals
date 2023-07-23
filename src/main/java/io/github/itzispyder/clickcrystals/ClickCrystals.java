@@ -92,6 +92,8 @@ public final class ClickCrystals implements ModInitializer {
         system.addListener(new UserInputListener());
 
         // Commands
+        system.addCommand(new TestCommand());
+
         system.addCommand(new CCToggleCommand());
         system.addCommand(new CCHelpCommand());
         system.addCommand(new GmcCommand());

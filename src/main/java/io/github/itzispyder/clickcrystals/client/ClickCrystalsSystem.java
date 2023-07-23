@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.client;
 
 import io.github.itzispyder.clickcrystals.commands.Command;
+import io.github.itzispyder.clickcrystals.commands.CustomCommand;
 import io.github.itzispyder.clickcrystals.events.EventBus;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -26,11 +27,13 @@ public class ClickCrystalsSystem implements Serializable {
 
     public final EventBus eventBus = new EventBus();
     private final Map<Class<? extends Command>, Command> commands;
+    private final Map<Class<? extends CustomCommand>, CustomCommand> customCommands;
     private final Map<Class<? extends Module>, Module> modules;
     private final Map<Class<? extends HudRenderCallback>, HudRenderCallback> huds;
     private final Set<Keybind> keybinds;
 
     public ClickCrystalsSystem() {
+        this.customCommands = new HashMap<>();
         this.commands = new HashMap<>();
         this.modules = new HashMap<>();
         this.huds = new HashMap<>();
@@ -58,6 +61,12 @@ public class ClickCrystalsSystem implements Serializable {
         if (command == null) return;
         commands.put(command.getClass(),command);
         command.registerThis();
+    }
+
+    public void addCommand(CustomCommand command) {
+        if (command == null) return;
+        customCommands.put(command.getClass(), command);
+        command.register();
     }
 
     public void addModule(Module module) {
