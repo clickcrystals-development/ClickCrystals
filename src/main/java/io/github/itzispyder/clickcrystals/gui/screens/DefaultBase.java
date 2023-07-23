@@ -6,8 +6,6 @@ import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 public abstract class DefaultBase extends GuiScreen {
 
     public BackgroundElement base = new BackgroundElement(0, 0, 400, 200);

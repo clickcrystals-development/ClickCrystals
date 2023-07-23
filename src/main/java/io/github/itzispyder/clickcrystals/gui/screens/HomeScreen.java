@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.ui.ImageBannerElement;
 import net.minecraft.client.util.Window;
 import net.minecraft.util.Identifier;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
 
 public class HomeScreen extends DefaultBase {
 

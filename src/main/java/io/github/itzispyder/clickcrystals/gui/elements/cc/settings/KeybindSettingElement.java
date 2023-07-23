@@ -1,6 +1,9 @@
 package io.github.itzispyder.clickcrystals.gui.elements.cc.settings;
 
-import io.github.itzispyder.clickcrystals.gui.*;
+import io.github.itzispyder.clickcrystals.gui.GuiElement;
+import io.github.itzispyder.clickcrystals.gui.GuiScreen;
+import io.github.itzispyder.clickcrystals.gui.GuiTextures;
+import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.Module;

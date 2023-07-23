@@ -1,15 +1,15 @@
 package io.github.itzispyder.clickcrystals.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import io.github.itzispyder.clickcrystals.commands.Command;
+import io.github.itzispyder.clickcrystals.commands.CustomCommand;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
+import net.minecraft.command.CommandSource;
 
 /**
  * /cctoggle command
  */
-public class CCToggleCommand extends Command {
+public class CCToggleCommand extends CustomCommand {
 
     /**
      * Init command
@@ -23,7 +23,7 @@ public class CCToggleCommand extends Command {
      * @param builder builder
      */
     @Override
-    public void build(LiteralArgumentBuilder<FabricClientCommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
 
         for (Module module : system.modules().values()) {
             builder.executes(context -> {

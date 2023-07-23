@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.client.PacketMapper;
-import io.github.itzispyder.clickcrystals.commands.Command;
+import io.github.itzispyder.clickcrystals.commands.CustomCommand;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.scheduler.DelayedTask;
 import io.github.itzispyder.clickcrystals.scheduler.RepeatingTask;
@@ -10,18 +10,18 @@ import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
+import net.minecraft.command.CommandSource;
 
 import java.util.List;
 
-public class CCDebugCommand extends Command {
+public class CCDebugCommand extends CustomCommand {
 
     public CCDebugCommand() {
         super("ccdebug", "ClickCrystals Debug Info", "/ccdebug <item>", "clickcrystaldebug");
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<FabricClientCommandSource> builder) {
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
                     ChatUtils.sendPrefixMessage(StringUtils.color("&cPlease provide an item!"));
                     return SINGLE_SUCCESS;

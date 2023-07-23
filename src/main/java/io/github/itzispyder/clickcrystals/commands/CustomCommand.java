@@ -15,6 +15,8 @@ import net.minecraft.registry.BuiltinRegistries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.command.CommandManager;
 
+import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
+
 public abstract class CustomCommand {
 
     protected static final int COMMAND_FAIL = -1;
@@ -79,5 +81,16 @@ public abstract class CustomCommand {
     public static void dispatch(String line) throws CommandSyntaxException {
         ParseResults<CommandSource> results = DISPATCHER.parse(line, SOURCE);
         DISPATCHER.execute(results);
+    }
+
+    public String getHelp() {
+        StringBuilder builder = new StringBuilder(
+                " \n" + starter + "§f/" + name + "\n"
+                        + "§7" + description + "\n"
+                        + "§fUsage: §7" + usage +"\n"
+                        + "§fAliases:"
+        );
+        for (String alias : aliases) builder.append("\n§8 -§7 ").append(alias);
+        return builder.append("\n ").toString();
     }
 }
