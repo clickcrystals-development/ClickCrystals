@@ -35,7 +35,7 @@ public class ModuleListTextHud implements HudRenderCallback {
                 .sorted(Comparator.comparing(module -> (mc.textRenderer.getWidth(((Module) module).getId()))).reversed())
                 .toList());
 
-        int i = 10;
+        int i = 5;
         for (Module module : modules) {
             final Text display = Text.literal("  §b" + module.getName() + " ");
             final int x = mc.getWindow().getScaledWidth() - 1;

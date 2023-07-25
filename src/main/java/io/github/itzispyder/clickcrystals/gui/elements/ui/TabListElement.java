@@ -1,8 +1,9 @@
 package io.github.itzispyder.clickcrystals.gui.elements.ui;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
+import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
-import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
+import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -25,12 +26,12 @@ public class TabListElement<T> extends GuiElement {
         this.nameFunction = nameFunction;
         this.selection = 0;
 
-        WidgetElement bg = new WidgetElement(x, y, width, height);
+        ImageElement bg = new ImageElement(GuiTextures.SMOOTH_STRIPE_HORIZONTAL, x, y, width, height);
         this.initTabList(bg);
         this.addChild(bg);
     }
 
-    protected void initTabList(WidgetElement background) {
+    protected void initTabList(ImageElement background) {
         double sectionWidth = (double)background.width / options.size();
 
         for (int i = 0; i < options.size(); i++) {

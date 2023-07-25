@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.gui.elements.ui;
 
-import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -15,7 +14,7 @@ public class ImageTabListElement extends TabListElement<ImageElement> {
     }
 
     @Override
-    protected void initTabList(WidgetElement background) {
+    protected void initTabList(ImageElement background) {
         double sectionWidth = (double)background.width / options.size();
 
         int i = 0;
