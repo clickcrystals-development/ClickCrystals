@@ -85,6 +85,7 @@ public class StringSettingElement extends GuiElement implements Typeable {
         setting.setVal(input);
     }
 
+    @Override
     public void onKey(int key, int scancode) {
         if (mc.currentScreen instanceof GuiScreen screen) {
             String typed = GLFW.glfwGetKeyName(key, scancode);

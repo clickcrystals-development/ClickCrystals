@@ -3,9 +3,6 @@ package io.github.itzispyder.clickcrystals.gui;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.gui.callbacks.*;
 import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
-import io.github.itzispyder.clickcrystals.gui.elements.cc.SearchBarElement;
-import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.KeybindSettingElement;
-import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.StringSettingElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
@@ -105,7 +102,7 @@ public abstract class GuiScreen extends Screen {
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         super.mouseReleased(mouseX, mouseY, button);
 
-        if (!(selected instanceof SearchBarElement || selected instanceof StringSettingElement || selected instanceof KeybindSettingElement)) {
+        if (!(selected instanceof Typeable)) {
             this.selected = null;
         }
 
@@ -167,14 +164,8 @@ public abstract class GuiScreen extends Screen {
             keyPressCallback.handleKey(keyCode, ClickType.CLICK, scanCode, modifiers);
         });
 
-        if (selected instanceof SearchBarElement search) {
-            search.onKey(keyCode, scanCode);
-        }
-        else if (selected instanceof StringSettingElement input) {
-            input.onKey(keyCode, scanCode);
-        }
-        else if (selected instanceof KeybindSettingElement bind) {
-            bind.onKey(keyCode, scanCode);
+        if (selected instanceof Typeable typeable) {
+            typeable.onKey(keyCode, scanCode);
         }
 
         return true;

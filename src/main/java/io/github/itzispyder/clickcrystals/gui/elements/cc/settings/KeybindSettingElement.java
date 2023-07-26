@@ -52,6 +52,7 @@ public class KeybindSettingElement extends GuiElement implements Typeable {
         }
     }
 
+    @Override
     public void onKey(int key, int scanCode) {
         if (mc.currentScreen instanceof GuiScreen screen) {
             setting.setKey(key);

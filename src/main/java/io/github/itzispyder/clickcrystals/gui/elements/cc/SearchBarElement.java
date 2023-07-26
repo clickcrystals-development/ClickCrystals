@@ -47,6 +47,7 @@ public class SearchBarElement extends GuiElement implements Typeable {
 
     }
 
+    @Override
     public void onKey(int key, int scancode) {
         if (mc.currentScreen instanceof GuiScreen screen) {
             String typed = GLFW.glfwGetKeyName(key, scancode);
