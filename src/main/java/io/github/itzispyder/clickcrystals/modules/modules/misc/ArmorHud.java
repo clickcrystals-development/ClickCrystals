@@ -1,10 +1,13 @@
 package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
+import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
+import io.github.itzispyder.clickcrystals.events.events.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
@@ -13,9 +16,11 @@ import io.github.itzispyder.clickcrystals.util.InvUtils;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 
 import java.util.function.Consumer;
 
@@ -40,6 +45,23 @@ public class ArmorHud extends Module implements Listener {
             .def(false)
             .build()
     );
+    public final ModuleSetting<Boolean> showEnemyInfo = scGeneral.add(BooleanSetting.create()
+            .name("show-enemy-info")
+            .description("Displays enemy info as a second hud above this one. §c(mostly bannable!)")
+            .def(false)
+            .build()
+    );
+    public final ModuleSetting<Double> enemyTrackingDist = scGeneral.add(DoubleSetting.create()
+            .max(15)
+            .min(5)
+            .decimalPlaces(1)
+            .name("enemy-tracking-distance")
+            .description("Distance to be within of your enemy to get their information.")
+            .def(10.0)
+            .build()
+    );
+    private PlayerEntity target;
+    private int tickTimer;
 
     public ArmorHud() {
         super("armor-hud", Categories.MISC, "Renders armor hud next to hotbar!");
@@ -53,6 +75,13 @@ public class ArmorHud extends Module implements Listener {
     @Override
     protected void onDisable() {
         system.removeListener(this);
+    }
+
+    @EventHandler
+    private void onAttack(PlayerAttackEntityEvent e) {
+        if (e.getEntity() instanceof PlayerEntity player) {
+            target = player;
+        }
     }
 
     public void onRender(DrawContext context) {
@@ -75,39 +104,60 @@ public class ArmorHud extends Module implements Listener {
         }
 
         for (ItemStack armorItem : p.getArmorItems()) {
-            renderArmor(armorItem, context, x += slotW, y);
+            renderArmor(armorItem, context, x += slotW, y, false);
         }
 
         if (showMainhand.getVal()) {
-            renderHand(Hand.MAIN_HAND, context, x += slotW, y);
+            renderHand(Hand.MAIN_HAND, context, x += slotW, y, false);
         }
         if (showOffhand.getVal()) {
-            renderHand(Hand.OFF_HAND, context, x += slotW, y);
+            renderHand(Hand.OFF_HAND, context, x += slotW, y, false);
+        }
+
+        if (showEnemyInfo.getVal() && target != null && p.getPos().distanceTo(target.getPos()) <= enemyTrackingDist.getVal()) {
+            int x2 = (w / 2) + (right ? 80 : -100);
+            int y2 = h - 60;
+
+            for (ItemStack armorItem : target.getArmorItems()) {
+                renderArmor(armorItem, context, x2 += slotW, y2, true);
+            }
+
+            if (showMainhand.getVal()) {
+                ItemStack item = target.getStackInHand(Hand.MAIN_HAND);
+                renderArmor(item, context, x2 += slotW, y2, true);
+            }
+            if (showOffhand.getVal()) {
+                ItemStack item = target.getStackInHand(Hand.OFF_HAND);
+                renderArmor(item, context, x2 += slotW, y2, true);
+            }
         }
     }
 
-    private void renderArmor(ItemStack armorItem, DrawContext context, int x, int y) {
+    private void renderArmor(ItemStack armorItem, DrawContext context, int x, int y, boolean warning) {
         double durability = armorItem.isDamaged() ? armorItem.getMaxDamage() - armorItem.getDamage() : armorItem.getMaxDamage();
         double ratio = durability / (double)armorItem.getMaxDamage();
         String percentage = colorPercentage(ratio * 100);
 
         renderItem(armorItem, context, x, y, stack -> {
-            DrawableUtils.drawCenteredText(context, percentage, x + 11, y - 8, 0.8F, true);
-        });
+            if (armorItem.isDamageable()) {
+                DrawableUtils.drawCenteredText(context, percentage, x + 11, y - 8, 0.8F, true);
+            }
+        }, warning);
     }
 
-    private void renderHand(Hand hand, DrawContext context, int x, int y) {
+    private void renderHand(Hand hand, DrawContext context, int x, int y, boolean warning) {
         ItemStack item = HotbarUtils.getHand(hand);
         int count = InvUtils.count(item.getItem());
 
         renderItem(item, context, x, y, stack -> {
             String display = count == 0 ? "" : "§b" + count;
             DrawableUtils.drawCenteredText(context, display, x + 11, y - 8, 0.8F, true);
-        });
+        }, warning);
     }
 
-    private void renderItem(ItemStack item, DrawContext context, int x, int y, Consumer<ItemStack> renderCallback) {
-        context.drawTexture(GuiTextures.ITEM_WIDGET, x, y, 0, 0, 22, 22, 22, 22);
+    private void renderItem(ItemStack item, DrawContext context, int x, int y, Consumer<ItemStack> renderCallback, boolean warning) {
+        Identifier texture = warning ? GuiTextures.ITEM_WIDGET_WARNING : GuiTextures.ITEM_WIDGET;
+        context.drawTexture(texture, x, y, 0, 0, 22, 22, 22, 22);
         context.drawItem(item, x + 3, y + 3);
         renderCallback.accept(item);
     }

@@ -69,6 +69,28 @@ public final class InvUtils {
         return count;
     }
 
+    public static int count(Item item, PlayerInventory other) {
+        int count = 0;
+
+        if (item == null || other == null) {
+            return count;
+        }
+
+        for (int i = 0; i < other.main.size(); i++) {
+            ItemStack stack = other.getStack(i);
+            if (stack == null || stack.isEmpty()) continue;
+            if (stack.isOf(item)) count += stack.getCount();
+        }
+
+        for (ItemStack off : other.offHand) {
+            if (off.isOf(item)) {
+                count += off.getCount();
+            }
+        }
+
+        return count;
+    }
+
     public static boolean has(Item item) {
         if (item == null) return false;
 

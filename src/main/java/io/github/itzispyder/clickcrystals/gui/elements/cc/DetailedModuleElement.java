@@ -1,7 +1,9 @@
 package io.github.itzispyder.clickcrystals.gui.elements.cc;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
+import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
+import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.screens.ModuleSettingsScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
@@ -12,6 +14,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class DetailedModuleElement extends GuiElement {
 
+    private final ImageElement highlight;
     private final Module module;
 
     public DetailedModuleElement(Module module, int x, int y, int width) {
@@ -19,7 +22,10 @@ public class DetailedModuleElement extends GuiElement {
         this.module = module;
 
         WidgetElement bg = new WidgetElement(x, y, width, height);
+        ImageElement hl = new ImageElement(GuiTextures.HOLLOW_HORIZONTAL_WIDGET, x, y, width, height);
+        this.highlight = hl;
         this.addChild(bg);
+        this.addChild(hl);
     }
 
     @Override
@@ -30,6 +36,8 @@ public class DetailedModuleElement extends GuiElement {
         for (String line : StringUtils.wrapLines(module.getDescription(), 30, true)) {
             DrawableUtils.drawText(context, "§7" + line, x + 5, y + 13 + (int)(i++ * 4.5), 0.4F, true);
         }
+
+        highlight.rendering = isHovered(mouseX, mouseY);
     }
 
     @Override
