@@ -33,15 +33,13 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 0.9.4
+Mod: 0.9.5
 
 Changelog:
-  - Added Left Hand armor HUD option.
-  - Revamped the Keybind Manager
-    * Keybinds are now all handled in the GUI
-    * The default GUI keybind is Right-Shift
-    * Click the view modules, and in the icon group with the search, click the keyboard to access the keybind manager
-    * You can set the keybinds for individual modules as well as the whole ClickGUI
+  - Added custom ClickCrystals command prefix for custom commands
+  - Added new module HealthAsBars for rendering your health bar as a singular bar.
+  - OPEN CLICKCRYSTALS MENU SCREEN KEYBIND IS NOW BACK TO APOSTROPHE!
+  - Added enemy armor hud to self armor hud (toggleable)
 
 NOTICE:
   - NoBreakDelay has been removed
@@ -51,7 +49,7 @@ NOTICE:
 ```
 
 <div class="demo-menu">
-  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/a713955de5520364ebcad3343723be47672c0c20.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
+  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/962b47bf0b3d8d50441a0c4b2498ea94c84fb365.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
 </div>
 
 ## How Do I Use ClickCrystals?
@@ -62,21 +60,23 @@ NOTICE:
 
 | **Keybinding** |       **Description**       |
 |----------------|:---------------------------:|
-| RIGHT_SHIFT    | Open module settings screen |
+| APOSTROPHE     | Open module settings screen |
+| COMMA          |   Custom commands prefix    |
+| UP_ARROW       |     Message resend bind     |
 
 ### Commands
 
 -----------------------------------------
 
-| **Command** | **Usage**                            |             **Description**             |
-|-------------|--------------------------------------|:---------------------------------------:|
-| /cchelp     | /cchelp `<module>`                   |          Module info and help           |
-| /cctoggle   | /cctoggle `<module>` `[on,off,help]` |         Module toggle and help          |
-| /gms        | /gms                                 | Command alias for `/gamemode survival`  |
-| /gmc        | /gmc                                 | Command alias for `/gamemode creative`  |
-| /gma        | /gma                                 | Command alias for `/gamemode adventure` |
-| /gmsp       | /gmsp                                | Command alias for `/gamemode spectator` |
-| /ccdebug    | /ccdebug `<item>`                    |     Sends ClickCrystals debug info      |
+| **Command** | **Usage**                          |             **Description**             |
+|-------------|------------------------------------|:---------------------------------------:|
+| .help       | .help `<module>`                   |          Module info and help           |
+| .toggle     | .toggle `<module>` `[on,off,help]` |         Module toggle and help          |
+| .gms        | .gms                               | Command alias for `/gamemode survival`  |
+| .gmc        | .gmc                               | Command alias for `/gamemode creative`  |
+| .gma        | .gma                               | Command alias for `/gamemode adventure` |
+| .gmsp       | .gmsp                              | Command alias for `/gamemode spectator` |
+| .debug      | .debug `<item>`                    |     Sends ClickCrystals debug info      |
 
 ### Modules
 
@@ -120,17 +120,32 @@ NOTICE:
 | GlowingEntities | Entities glow in the dark (and not just a dark model, useless if FullBright enabled) |
 | NoScoreboard    |                     Disables rendering of the scoreboard sidebar                     |
 | ArmorHud        |                       Displays armor durability and item count                       |
+| HealthAsBars    |                   Turns your vanilla health bar into a health-bar!                   |
 
 ## But isn't this cheating?
 It is not a cheat. It does not automate any task, for every action the mod preforms, you have to click.
 - This mod is not a macro, it does not click for you. It functions as a hotkey for slots.
-- **This mod has been tested to not flag on (but might be bannable)**:
-  - `McPvP`.club
-  - west.`UsPvP`.org
-  - east.`UsPvP`.org
-  - `OgreDupe`.minehut.gg
-  - play.`pvplegacy`.net
-  - `donutsmp`.net
+
+| Server                 | Flags | Bannable |
+|:-----------------------|:------|:---------|
+| `mcpvp`.club           | no    | yes      |
+| west.`uspvp`.org       | no    | yes      |
+| east.`uspvp`.org       | no    | yes      |
+| `ogredupe`.minehut.gg  | no    | no       |
+| `ipearlpvp`.minehut.gg | no    | no       |
+| play.`pvplegacy`.net   | no    | yes      |
+| `donut`.net            | no    | yes      |
+| `hypixel`.net          | no    | pending  |
+| `cubecraft`.net        | no    | pending  |
+| `firevanilla`.net      | no    | yes      |
+| `shatteredvanilla`.net | no    | no       |
+| `pvphub`.me            | no    | yes      |
+| `europemc`.org         | no    | pending  |
+| play.`jackpot`.org     | no    | pending  |
+| `kingsmp`.net          | no    | pending  |
+| `l1festee1`.net        | no    | no       |
+| `ironcadia`.minehut.gg | no    | no       |
+
 
 ## For this Mod You Will Need
 ```yml
@@ -152,4 +167,6 @@ OgreNetworks: For their wonderful mod showcase! https://www.youtube.com/watch?v=
 TheTrouper: For documenting the mod, and giving me ideas!
 breadandcarrots: For being a wonderful mod tester!
 ClickCrystals (bro really changed his name to this): For creating ClickCrystals' TikTok account
+Tesla Tower: Best NBT Creator frfr
+I No One: Bro is fr my infinite ideas source + \#1 Bug Spotter
 ```
