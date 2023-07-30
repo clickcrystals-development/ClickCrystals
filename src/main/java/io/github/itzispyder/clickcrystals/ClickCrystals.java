@@ -45,14 +45,14 @@ public final class ClickCrystals implements ModInitializer {
     public static final ConfigFile config = ConfigFile.load("ClickCrystalsClient/config.json");
     public static final Keybind openModuleKeybind = Keybind.create()
             .id("open-clickcrystals-module-screen")
-            .defaultKey(GLFW.GLFW_KEY_RIGHT_SHIFT)
+            .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
             .condition((bind, screen) -> screen == null || screen instanceof TitleScreen || screen instanceof MultiplayerScreen || screen instanceof SelectWorldScreen)
             .onPress(bind -> ClickCrystalsBase.openClickCrystalsMenu())
             .onChange(ClickCrystals::saveBind)
             .build();
     public static final Keybind commandPrefix = Keybind.create()
             .id("command-prefix")
-            .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
+            .defaultKey(GLFW.GLFW_KEY_COMMA)
             .condition((bind, screen) -> screen == null)
             .onPress(bind -> mc.setScreen(new ChatScreen("")))
             .onChange(ClickCrystals::saveBind)
@@ -135,6 +135,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new AutoGG());
         system.addModule(new NoScoreboard());
         system.addModule(new ArmorHud());
+        system.addModule(new HealthAsBar());
         Module.loadConfigModules();
 
         // Commands
