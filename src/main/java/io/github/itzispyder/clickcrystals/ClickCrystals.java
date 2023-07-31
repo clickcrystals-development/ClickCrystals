@@ -58,12 +58,16 @@ public final class ClickCrystals implements ModInitializer {
             .onChange(ClickCrystals::saveBind)
             .build();
 
+    /**
+     * TODO: UPDATE THE MOD VERSION HERE!!!!!!
+     * TODO: DON'T FORGET AGAIN!!!!
+     */
     @SuppressWarnings("unused")
     public static final String
             modId = "clickcrystals",
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
-            version = "0.9.4";
+            version = "0.9.5";
 
     /**
      * Runs the mod initializer.
