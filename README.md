@@ -100,7 +100,7 @@ NOTICE:
 | ModulesListHud  |                         Shows your active modules on screen.                         |
 | NoGameOverlay   |                       Stops annoying overlays from rendering.                        |
 | NoLevelLoading  |                    Prevents most loading screens from rendering.                     |
-| AntiCrash       |  Prevents servers from sending you particle packets, stopping all particle crashes.  |
+| AntiCrash       |                 Tries to prevent you from being crashed by servers.                  |
 | SilkTouch       |                      Gives any tool you hold silk touch (Real)                       |
 | TotemPops       |              Sends the totem pops of another player. (With pop counter)              |
 | CrystalSpeed    |                             Displays your crystal speed.                             |
@@ -121,6 +121,7 @@ NOTICE:
 | NoScoreboard    |                     Disables rendering of the scoreboard sidebar                     |
 | ArmorHud        |                       Displays armor durability and item count                       |
 | HealthAsBars    |                   Turns your vanilla health bar into a health-bar!                   |
+| NoExplosions    |                    Stops explosion particles from being rendered                     |
 
 ## But isn't this cheating?
 It is not a cheat. It does not automate any task, for every action the mod preforms, you have to click.

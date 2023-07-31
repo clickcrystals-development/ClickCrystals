@@ -15,17 +15,12 @@ import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsBase;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.CCExtras;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.IconHud;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
-import io.github.itzispyder.clickcrystals.modules.modules.optimization.AntiCrash;
-import io.github.itzispyder.clickcrystals.modules.modules.optimization.NoItemBounce;
-import io.github.itzispyder.clickcrystals.modules.modules.optimization.NoLoading;
-import io.github.itzispyder.clickcrystals.modules.modules.optimization.NoResPack;
+import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
+
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
@@ -140,6 +135,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new NoScoreboard());
         system.addModule(new ArmorHud());
         system.addModule(new HealthAsBar());
+        system.addModule(new NoExplosion());
         Module.loadConfigModules();
 
         // Commands

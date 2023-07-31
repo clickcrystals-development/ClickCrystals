@@ -25,6 +25,7 @@
     "ItemStackMixin",
     "LivingEntityMixin",
     "MinecraftClientMixin",
+    "ParticleManagerMixin",
     "PlayerEntityMixin",
     "PlayerInventoryMixin"
   ]
