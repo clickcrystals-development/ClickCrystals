@@ -33,13 +33,18 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 0.9.5
+Mod: 0.9.6
 
 Changelog:
-  - Added custom ClickCrystals command prefix for custom commands
-  - Added new module HealthAsBars for rendering your health bar as a singular bar.
-  - OPEN CLICKCRYSTALS MENU SCREEN KEYBIND IS NOW BACK TO APOSTROPHE!
-  - Added enemy armor hud to self armor hud (toggleable)
+  - Fixed cursor positioning issues
+  - Fixed screen render resizing messing up click gui
+  - Fixed armor hud still repositioned without HealthAsBar module enabled
+  - Improved ANTI-CRASH to become more configurable and efficient (Thanks to Tax Evasion)
+  - Added module to disable fire smoke, cloud poofs, and explosion particles separately
+  - Fixed some other issues with module settings
+  - Added a notification for ClickCrystals users that don't update their game
+  - ^ This would ping you three items loudly upon joining a world
+  - ^ This is followed by a clickable message for lazy people that can't type in the link into the browser themselves.
 
 NOTICE:
   - NoBreakDelay has been removed

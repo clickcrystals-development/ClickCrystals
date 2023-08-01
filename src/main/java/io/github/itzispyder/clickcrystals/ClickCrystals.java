@@ -41,6 +41,10 @@ import java.util.Objects;
 
 /**
  * ClickCrystals main
+ * TODO: (1) Update mod version down in "this file"
+ * TODO: (1) Update mod "gradle.properties"
+ * TODO: (2) Update mod version in "GitHub Pages"
+ * TODO: (3) Update "README.md"
  */
 public final class ClickCrystals implements ModInitializer {
 
@@ -72,7 +76,7 @@ public final class ClickCrystals implements ModInitializer {
             modId = "clickcrystals",
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
-            version = "0.9.51";
+            version = "0.9.6";
 
     /**
      * Runs the mod initializer.

@@ -2,6 +2,9 @@ package io.github.itzispyder.clickcrystals.gui.elements.cc;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
+import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsBase;
+import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
+import io.github.itzispyder.clickcrystals.gui.screens.HomeScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.ModuleSettingsScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
@@ -45,8 +48,10 @@ public class ModuleElement extends GuiElement {
             module.setEnabled(!module.isEnabled(), false);
         }
         else if (button == 1) {
-            mc.currentScreen.close();
-            mc.setScreenAndRender(new ModuleSettingsScreen(module));
+            if (mc.currentScreen instanceof ClickCrystalsBase || mc.currentScreen instanceof HomeScreen) {
+                ClickCrystalsBase.setPrevOpened(((DefaultBase)mc.currentScreen).getClass());
+                mc.setScreenAndRender(new ModuleSettingsScreen(module));
+            }
         }
     }
 
