@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class CCExtras extends Module {
 
     public CCExtras() {
-        super("cc-extras", Categories.CLICKCRYSTALS, "Enables features like responding to \"!cc -users\" and other easter eggs. (Don't enable if you don't want servers to know you are using this mod.)");
+        super("cc-extras", Categories.CLICKCRYSTALS, "Replies to \"!cc -users\" and other stuff (Warning: Servers could spam this! Don't enable unless necessary.)");
     }
 
     @Override

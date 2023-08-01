@@ -28,7 +28,7 @@ public class DetailedButtonElement extends GuiElement {
         ImageElement bg = new ImageElement(texture, x, y, width, height);
         ImageElement iconImg = new ImageElement(icon, x + 2, y + height / 4, height / 2, height / 2);
         TextElement titleText = new TextElement(title, TextAlignment.LEFT, textScale, iconImg.x + iconImg.width + 2, iconImg.y);
-        TextElement subtitleText = new TextElement(subtitle, TextAlignment.LEFT, textScale / 2, iconImg.x + iconImg.width + 2, titleText.y + titleText.height + 3);
+        TextElement subtitleText = new TextElement(subtitle, TextAlignment.LEFT, (textScale / 4) * 3, iconImg.x + iconImg.width + 2, titleText.y + titleText.height + 3);
         this.addChild(bg);
         this.addChild(iconImg);
         this.addChild(titleText);
@@ -97,7 +97,7 @@ public class DetailedButtonElement extends GuiElement {
         this.pressAction = pressAction;
     }
 
-    public static Builder builder() {
+    public static Builder create() {
         return new Builder();
     }
 

@@ -33,8 +33,8 @@ public class DetailedModuleElement extends GuiElement {
         String prefix = module.isEnabled() ? "§b" : "§c";
         DrawableUtils.drawText(context, prefix + module.getName(), x + 5, y + 5, 0.8F, true);
         int i = 0;
-        for (String line : StringUtils.wrapLines(module.getDescription(), 30, true)) {
-            DrawableUtils.drawText(context, "§7" + line, x + 5, y + 13 + (int)(i++ * 4.5), 0.4F, true);
+        for (String line : StringUtils.wrapLines(module.getDescription(), 20, true)) {
+            DrawableUtils.drawText(context, "§7" + line, x + 5, y + 13 + (int)(i++ * 5.5), 0.55F, true);
         }
 
         highlight.rendering = isHovered(mouseX, mouseY);

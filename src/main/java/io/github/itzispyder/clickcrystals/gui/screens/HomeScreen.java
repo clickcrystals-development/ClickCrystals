@@ -31,37 +31,37 @@ public class HomeScreen extends DefaultBase {
 
         Identifier bg = GuiTextures.HOLLOW_HORIZONTAL_WIDGET;
         // pages
-        DetailedButtonElement modulesPage = DetailedButtonElement.builder()
+        DetailedButtonElement modulesPage = DetailedButtonElement.create()
                 .texture(bg)
                 .icon(GuiTextures.MODULES)
                 .position(banner.x + 25, banner.y + banner.height + pageGap)
                 .dimensions(100, 35)
-                .title("View Modules")
-                .subtitle("Open up the modules toggle menu.")
+                .title("View modules")
+                .subtitle("Module view page")
                 .textScale(0.8F)
                 .onPress(button -> mc.setScreenAndRender(new ModulesScreen()))
                 .onBuild(HomeScreen.this::addChild)
                 .build();
 
-        DetailedButtonElement searchPage = DetailedButtonElement.builder()
+        DetailedButtonElement searchPage = DetailedButtonElement.create()
                 .texture(bg)
                 .icon(GuiTextures.SEARCH)
                 .position(modulesPage.x + modulesPage.width + pageGap, modulesPage.y)
                 .dimensions(100, 35)
-                .title("Search Modules")
-                .subtitle("Search ClickCrystals modules.")
+                .title("Search modules")
+                .subtitle("Search modules...")
                 .textScale(0.8F)
                 .onPress(button -> mc.setScreenAndRender(new SearchScreen()))
                 .onBuild(HomeScreen.this::addChild)
                 .build();
 
-        DetailedButtonElement discordPage = DetailedButtonElement.builder()
+        DetailedButtonElement discordPage = DetailedButtonElement.create()
                 .texture(bg)
                 .icon(GuiTextures.DISCORD)
                 .position(searchPage.x + searchPage.width + pageGap, modulesPage.y)
                 .dimensions(100, 35)
                 .title("Join the Discord!")
-                .subtitle("§b§uJoin in the ClickCrystals community!")
+                .subtitle("§b§uJoin the others!")
                 .textScale(0.8F)
                 .onPress(btn -> {
                     try {
@@ -72,13 +72,13 @@ public class HomeScreen extends DefaultBase {
                 .onBuild(HomeScreen.this::addChild)
                 .build();
 
-        DetailedButtonElement githubPage = DetailedButtonElement.builder()
+        DetailedButtonElement githubPage = DetailedButtonElement.create()
                 .texture(bg)
                 .icon(GuiTextures.CODE)
                 .position(modulesPage.x, modulesPage.y + modulesPage.height + pageGap)
                 .dimensions(100, 35)
                 .title("Source Code")
-                .subtitle("§b§uCheck for new releases on Modrinth!")
+                .subtitle("§b§uRead our source!")
                 .textScale(0.8F)
                 .onPress(btn -> {
                     try {
@@ -89,13 +89,13 @@ public class HomeScreen extends DefaultBase {
                 .onBuild(HomeScreen.this::addChild)
                 .build();
 
-        DetailedButtonElement modrinthPage = DetailedButtonElement.builder()
+        DetailedButtonElement modrinthPage = DetailedButtonElement.create()
                 .texture(bg)
                 .icon(GuiTextures.ICON)
                 .position(githubPage.x + githubPage.width + pageGap, githubPage.y)
                 .dimensions(100, 35)
                 .title("Check Updates!")
-                .subtitle("§b§uCheck for new releases on Modrinth!")
+                .subtitle("§b§uCheck for updates!")
                 .textScale(0.8F)
                 .onPress(btn -> {
                     try {
@@ -106,7 +106,7 @@ public class HomeScreen extends DefaultBase {
                 .onBuild(HomeScreen.this::addChild)
                 .build();
 
-        DetailedButtonElement creditsPage = DetailedButtonElement.builder()
+        DetailedButtonElement creditsPage = DetailedButtonElement.create()
                 .texture(bg)
                 .icon(GuiTextures.PEOPLE)
                 .position(modrinthPage.x + modrinthPage.width + pageGap, githubPage.y)
