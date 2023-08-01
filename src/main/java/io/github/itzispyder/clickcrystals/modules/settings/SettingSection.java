@@ -17,7 +17,7 @@ public class SettingSection {
         this.settings = new ArrayList<>();
     }
 
-    public <T> ModuleSetting<T> add(ModuleSetting<T> setting) {
+    public <T, S extends ModuleSetting<T>> S add(S setting) {
         this.settings.add(setting);
         return setting;
     }

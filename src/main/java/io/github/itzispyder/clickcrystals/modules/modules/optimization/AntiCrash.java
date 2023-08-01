@@ -25,15 +25,15 @@ public class AntiCrash extends Module implements Listener {
             .def(true)
             .build()
     );
-    public final ModuleSetting<Integer> maxParticleAmount = scParticles.add(IntegerSetting.create()
+    public final IntegerSetting maxParticleAmount = scParticles.add(IntegerSetting.createInt()
             .max(10000)
             .min(0)
             .name("max-particle-amount")
             .description("Limits your client to only receive particle packets within this amount.")
-            .def(100)
+            .def(100.0)
             .build()
     );
-    public final ModuleSetting<Integer> maxParticleVelocity = scParticles.add(IntegerSetting.create()
+    public final IntegerSetting maxParticleVelocity = scParticles.add(IntegerSetting.createInt()
             .max(100)
             .min(0)
             .name("max-particle-velocity")
@@ -41,23 +41,23 @@ public class AntiCrash extends Module implements Listener {
             .def(20)
             .build()
     );
-    public final ModuleSetting<Integer> maxExplosionsRadius = scExplosions.add(IntegerSetting.create()
-            .max(100)
+    public final IntegerSetting maxExplosionsRadius = scExplosions.add(IntegerSetting.createInt()
+            .max(64)
             .min(10)
             .name("max-explosion-radius")
             .description("Limits your client to only receive explosion packets within this radius.")
             .def(10)
             .build()
     );
-    public final ModuleSetting<Integer> maxExplosionsAffectedBlocks = scExplosions.add(IntegerSetting.create()
+    public final IntegerSetting maxExplosionsAffectedBlocks = scExplosions.add(IntegerSetting.createInt()
             .max(100000)
             .min(50000)
-            .name("max-explosion-radius")
+            .name("max-explosion-blocks")
             .description("Only receive explosion packets with affected blocks being less than this value.")
             .def(100000)
             .build()
     );
-    public final ModuleSetting<Integer> maxExplosionsPlayerVelocity = scExplosions.add(IntegerSetting.create()
+    public final IntegerSetting maxExplosionsPlayerVelocity = scExplosions.add(IntegerSetting.createInt()
             .max(100000)
             .min(50000)
             .name("max-explosion-velocity")
@@ -85,8 +85,8 @@ public class AntiCrash extends Module implements Listener {
         if (e.getPacket() instanceof ParticleS2CPacket packet) {
             int count = packet.getCount() - 1;
             double speed = packet.getSpeed();
-            int maxCount = maxParticleAmount.getVal();
-            int maxSpeed = maxParticleVelocity.getVal();
+            int maxCount = maxParticleAmount.getValInt();
+            int maxSpeed = maxParticleVelocity.getValInt();
 
             if (count > maxCount) {
                 e.cancel();
@@ -109,9 +109,9 @@ public class AntiCrash extends Module implements Listener {
             float radius = packet.getRadius();
             int size = packet.getAffectedBlocks().size();
             double speed = Math.abs(pX) + Math.abs(pY) + Math.abs(pZ);
-            int maxSpeed = maxExplosionsPlayerVelocity.getVal();
-            int maxSize = maxExplosionsAffectedBlocks.getVal();
-            int maxRadius = maxExplosionsRadius.getVal();
+            int maxSpeed = maxExplosionsPlayerVelocity.getValInt();
+            int maxSize = maxExplosionsAffectedBlocks.getValInt();
+            int maxRadius = maxExplosionsRadius.getValInt();
 
             if (speed > maxSpeed) {
                 e.cancel();

@@ -7,7 +7,7 @@ public abstract class ModuleSetting<T> {
 
     private SettingChangeCallback<ModuleSetting<T>> changeAction;
     private final String name, id, description;
-    private T def, val;
+    protected T def, val;
 
     protected ModuleSetting(String name, String description, T def, T val) {
         this.id = name;
