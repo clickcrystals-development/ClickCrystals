@@ -1,5 +1,7 @@
 package io.github.itzispyder.clickcrystals.util;
 
+import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -17,6 +19,20 @@ public final class ChatUtils {
         sendMessage(starter + message);
     }
 
+    public static void sendWarningMessage(String message) {
+        sendMessage(starter + "§8(§eWarning§8)§r " + message);
+    }
+
+    public static void sendRawText(Text text) {
+        if (mc.player != null && text != null) {
+            mc.player.sendMessage(text);
+        }
+    }
+
+    public static void sendSevereMessage(String message) {
+        sendMessage(starter + "§8(§c§lError§8)§r " + message);
+    }
+
     public static void sendChatCommand(String cmd) {
         if (mc.player == null) return;
         mc.player.networkHandler.sendCommand(cmd);
@@ -31,5 +47,13 @@ public final class ChatUtils {
         for (int i = 0; i < lines; i++) {
             sendMessage("");
         }
+    }
+
+    public static void sendBlank() {
+        sendBlank(1);
+    }
+
+    public static void pingPlayer() {
+        mc.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 0.1F, 10.0F));
     }
 }

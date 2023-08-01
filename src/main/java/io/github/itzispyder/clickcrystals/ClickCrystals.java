@@ -32,6 +32,13 @@ import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import org.lwjgl.glfw.GLFW;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.LinkedHashMap;
+import java.util.Objects;
+
 /**
  * ClickCrystals main
  */
@@ -40,6 +47,7 @@ public final class ClickCrystals implements ModInitializer {
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
     public static final ConfigFile config = ConfigFile.load("ClickCrystalsClient/config.json");
+    public static final LinkedHashMap<String, String> info = new LinkedHashMap<>();
     public static final Keybind openModuleKeybind = Keybind.create()
             .id("open-clickcrystals-module-screen")
             .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
@@ -77,6 +85,12 @@ public final class ClickCrystals implements ModInitializer {
         CCSoundEvents.init();
         this.startTicking();
         this.initOther();
+        this.requestModInfo();
+
+        if (!matchLatestVersion()) {
+            System.out.println(prefix + "WARNING: You are running an outdated version of ClickCrystals, please update!");
+            System.out.println(prefix + "VERSIONS: Current=" + version + ", Newest=" + getLatestVersion());
+        }
     }
 
     /**
@@ -172,5 +186,39 @@ public final class ClickCrystals implements ModInitializer {
         double val = config.get(bind.getId(), Double.class, (double)bind.getDefaultKey());
         int key = (int)val;
         bind.setKey(key);
+    }
+
+    public static boolean matchLatestVersion() {
+        return Objects.equals(getLatestVersion(), ClickCrystals.version);
+    }
+
+    public static String getLatestVersion() {
+        return info.getOrDefault("latest_version", version);
+    }
+
+    private void requestModInfo() {
+        String link = "https://itzispyder.github.io/cc-info.html";
+        try {
+            URL url = new URL(link);
+            InputStream is = url.openStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                try {
+                    String[] entry = line.split("=");
+                    String key = entry[0].trim();
+                    String val = entry[1].trim();
+
+                    info.put(key, val);
+                }
+                catch (ArrayIndexOutOfBoundsException ignore) {}
+            }
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println(prefix + "An error has occurred trying to get mod info!");
+        }
     }
 }

@@ -19,10 +19,10 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 public class ClickCrystalsSystem implements Serializable {
 
     private static final ClickCrystalsSystem system = new ClickCrystalsSystem();
-
     public static ClickCrystalsSystem getInstance() {
         return system;
     }
+
 
     public final EventBus eventBus = new EventBus();
     private final Map<Class<? extends Module>, Module> modules;

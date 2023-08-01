@@ -8,7 +8,7 @@ import net.minecraft.command.CommandSource;
 public class GmspCommand extends Command {
 
     public GmspCommand() {
-        super("gmsp","Gamemode spectator","/gmsp");
+        super("gmsp","Gamemode spectator",",gmsp");
     }
 
     @Override

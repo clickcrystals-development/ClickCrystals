@@ -14,7 +14,7 @@ import net.minecraft.command.CommandSource;
 public class CCHelpCommand extends Command {
 
     public CCHelpCommand() {
-        super("help","ClickCrystals Info and help","/help <item>");
+        super("help","ClickCrystals Info and help",",help <item>");
     }
 
     @Override

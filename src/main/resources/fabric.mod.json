@@ -3,7 +3,7 @@
   "id": "clickcrystals",
   "version": "${version}",
   "name": "ClickCrystals",
-  "description": "Allows you to crystal easier, by only using left click to place and break crystals. Do '/cctoggle' !",
+  "description": "Allows you to crystal easier, by only using left click to place and break crystals. Do ',toggle' ! Keybind is APOSTROPHE.",
   "authors": [
     "ImproperIssues"
   ],

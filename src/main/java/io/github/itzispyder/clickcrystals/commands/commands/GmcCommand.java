@@ -8,7 +8,7 @@ import net.minecraft.command.CommandSource;
 public class GmcCommand extends Command {
 
     public GmcCommand() {
-        super("gmc","Gamemode creative","/gmc");
+        super("gmc","Gamemode creative",",gmc");
     }
 
     @Override

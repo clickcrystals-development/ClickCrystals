@@ -8,7 +8,7 @@ import net.minecraft.command.CommandSource;
 public class GmaCommand extends Command {
 
     public GmaCommand() {
-        super("gma","Gamemode adventure","/gma");
+        super("gma","Gamemode adventure",",gma");
     }
 
     @Override

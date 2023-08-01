@@ -9,7 +9,7 @@ import net.minecraft.command.CommandSource;
 public class CCToggleCommand extends Command {
 
     public CCToggleCommand() {
-        super("toggle","§7Toggles the modules from this mod. THIS CAN ALSO BE DONE VIA GUI MENU, PRESS YOUR §l§oLEFT_SHIFT §7KEY!","/toggle <module> [on|off|help]","t");
+        super("toggle","§7Toggles the modules from this mod. THIS CAN ALSO BE DONE VIA GUI MENU, PRESS YOUR §l§oAPOSTROPHE §7KEY!",",toggle <module> [on|off|help]","t");
     }
 
     @Override

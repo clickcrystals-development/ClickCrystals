@@ -8,7 +8,7 @@ import net.minecraft.command.CommandSource;
 public class GmsCommand extends Command {
 
     public GmsCommand() {
-        super("gms","Gamemode survival","/gms");
+        super("gms","Gamemode survival",",gms");
     }
 
     @Override
