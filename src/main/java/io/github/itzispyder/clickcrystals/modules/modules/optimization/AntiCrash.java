@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceive
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
-import io.github.itzispyder.clickcrystals.modules.settings.IntegerSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
@@ -25,44 +25,49 @@ public class AntiCrash extends Module implements Listener {
             .def(true)
             .build()
     );
-    public final IntegerSetting maxParticleAmount = scParticles.add(IntegerSetting.createInt()
+    public final ModuleSetting<Double> maxParticleAmount = scParticles.add(DoubleSetting.create()
             .max(10000)
             .min(0)
+            .decimalPlaces(1)
             .name("max-particle-amount")
             .description("Limits your client to only receive particle packets within this amount.")
             .def(100.0)
             .build()
     );
-    public final IntegerSetting maxParticleVelocity = scParticles.add(IntegerSetting.createInt()
+    public final ModuleSetting<Double> maxParticleVelocity = scParticles.add(DoubleSetting.create()
             .max(100)
             .min(0)
+            .decimalPlaces(1)
             .name("max-particle-velocity")
             .description("Limits your client to only receive particle packets within this velocity.")
-            .def(20)
+            .def(20.0)
             .build()
     );
-    public final IntegerSetting maxExplosionsRadius = scExplosions.add(IntegerSetting.createInt()
-            .max(64)
+    public final ModuleSetting<Double> maxExplosionsRadius = scExplosions.add(DoubleSetting.create()
+            .max(100)
             .min(10)
+            .decimalPlaces(1)
             .name("max-explosion-radius")
             .description("Limits your client to only receive explosion packets within this radius.")
-            .def(10)
+            .def(64.0)
             .build()
     );
-    public final IntegerSetting maxExplosionsAffectedBlocks = scExplosions.add(IntegerSetting.createInt()
+    public final ModuleSetting<Double> maxExplosionsAffectedBlocks = scExplosions.add(DoubleSetting.create()
             .max(100000)
             .min(50000)
+            .decimalPlaces(1)
             .name("max-explosion-blocks")
             .description("Only receive explosion packets with affected blocks being less than this value.")
-            .def(100000)
+            .def(100000.0)
             .build()
     );
-    public final IntegerSetting maxExplosionsPlayerVelocity = scExplosions.add(IntegerSetting.createInt()
+    public final ModuleSetting<Double> maxExplosionsPlayerVelocity = scExplosions.add(DoubleSetting.create()
             .max(100000)
             .min(50000)
+            .decimalPlaces(1)
             .name("max-explosion-velocity")
             .description("Only receive explosion packets with player velocities being this value.")
-            .def(100000)
+            .def(100000.0)
             .build()
     );
 
@@ -85,8 +90,8 @@ public class AntiCrash extends Module implements Listener {
         if (e.getPacket() instanceof ParticleS2CPacket packet) {
             int count = packet.getCount() - 1;
             double speed = packet.getSpeed();
-            int maxCount = maxParticleAmount.getValInt();
-            int maxSpeed = maxParticleVelocity.getValInt();
+            double maxCount = maxParticleAmount.getVal();
+            double maxSpeed = maxParticleVelocity.getVal();
 
             if (count > maxCount) {
                 e.cancel();
@@ -109,9 +114,9 @@ public class AntiCrash extends Module implements Listener {
             float radius = packet.getRadius();
             int size = packet.getAffectedBlocks().size();
             double speed = Math.abs(pX) + Math.abs(pY) + Math.abs(pZ);
-            int maxSpeed = maxExplosionsPlayerVelocity.getValInt();
-            int maxSize = maxExplosionsAffectedBlocks.getValInt();
-            int maxRadius = maxExplosionsRadius.getValInt();
+            double maxSpeed = maxExplosionsPlayerVelocity.getVal();
+            double maxSize = maxExplosionsAffectedBlocks.getVal();
+            double maxRadius = maxExplosionsRadius.getVal();
 
             if (speed > maxSpeed) {
                 e.cancel();
