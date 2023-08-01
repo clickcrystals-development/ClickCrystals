@@ -28,9 +28,9 @@ public class IntegerSettingElement extends GuiElement {
         this.knob = new ImageElement(GuiTextures.SETTING_NUMBER_KNOB, x, y, 10, 10);
         this.addChild(knob);
 
-        double range = setting.getMax() - setting.getMin();
-        double value = setting.getVal() - setting.getMin();
-        double ratio = value / range;
+        int range = setting.getMax() - setting.getMin();
+        int value = setting.getVal() - setting.getMin();
+        double ratio = (double)value / (double)range;
         int ratioWidth = (int)(width * ratio);
         this.knob.setX(x + ratioWidth);
 
