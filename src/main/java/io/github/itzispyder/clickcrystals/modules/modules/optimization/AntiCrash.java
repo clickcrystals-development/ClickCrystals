@@ -27,29 +27,29 @@ public class AntiCrash extends Module implements Listener {
     );
     public final ModuleSetting<Double> maxParticleAmount = scParticles.add(DoubleSetting.create()
             .max(10000)
-            .min(0)
+            .min(500)
             .decimalPlaces(1)
             .name("max-particle-amount")
             .description("Limits your client to only receive particle packets within this amount.")
-            .def(100.0)
+            .def(500.0)
             .build()
     );
     public final ModuleSetting<Double> maxParticleVelocity = scParticles.add(DoubleSetting.create()
             .max(100)
-            .min(0)
+            .min(50)
             .decimalPlaces(1)
             .name("max-particle-velocity")
             .description("Limits your client to only receive particle packets within this velocity.")
-            .def(20.0)
+            .def(50.0)
             .build()
     );
     public final ModuleSetting<Double> maxExplosionsRadius = scExplosions.add(DoubleSetting.create()
-            .max(100)
-            .min(10)
+            .max(200)
+            .min(100)
             .decimalPlaces(1)
             .name("max-explosion-radius")
             .description("Limits your client to only receive explosion packets within this radius.")
-            .def(64.0)
+            .def(100.0)
             .build()
     );
     public final ModuleSetting<Double> maxExplosionsAffectedBlocks = scExplosions.add(DoubleSetting.create()
@@ -95,11 +95,11 @@ public class AntiCrash extends Module implements Listener {
 
             if (count > maxCount) {
                 e.cancel();
-                flag("§bCRASH DETECTED: Particle spawned with count §7" + count + "§b, max §7" + maxCount + "§b!");
+                flag("§bLAG DETECTED: Particle spawned with count §7" + count + "§b, max §7" + maxCount + "§b!");
             }
             if (speed > maxSpeed) {
                 e.cancel();
-                flag("§bCRASH DETECTED: Particle spawned with speed §7" + speed + "§b, max §7" + maxSpeed + "§b!");
+                flag("§bLAG DETECTED: Particle spawned with speed §7" + speed + "§b, max §7" + maxSpeed + "§b!");
             }
         }
         else if (e.getPacket() instanceof ExplosionS2CPacket packet) {
@@ -120,19 +120,19 @@ public class AntiCrash extends Module implements Listener {
 
             if (speed > maxSpeed) {
                 e.cancel();
-                flag("§bCRASH DETECTED: Explosion spawned with player-speed §7" + speed + "§b, max §7" + maxSpeed + "§b!");
+                flag("§bLAG DETECTED: Explosion spawned with player-speed §7" + speed + "§b, max §7" + maxSpeed + "§b!");
             }
             if (size > maxSize) {
                 e.cancel();
-                flag("§bCRASH DETECTED: Explosion spawned with size §7" + size + "§b, max §7" + maxSize + "§b!");
+                flag("§bLAG DETECTED: Explosion spawned with size §7" + size + "§b, max §7" + maxSize + "§b!");
             }
             if (radius > maxRadius) {
                 e.cancel();
-                flag("§bCRASH DETECTED: Explosion spawned with radius §7" + radius + "§b, max §7" + maxRadius + "§b!");
+                flag("§bLAG DETECTED: Explosion spawned with radius §7" + radius + "§b, max §7" + maxRadius + "§b!");
             }
             if (Math.abs(x) >= oob || Math.abs(y) >= oob || Math.abs(z) >= oob) {
                 e.cancel();
-                flag("§bCRASH DETECTED: Explosion spawned with bounds §7(" + x + ", " + y + ", " + z + ")§b, out of bounds of §7" + oob + "§b!");
+                flag("§bLAG DETECTED: Explosion spawned with bounds §7(" + x + ", " + y + ", " + z + ")§b, out of bounds of §7" + oob + "§b!");
             }
         }
     }
