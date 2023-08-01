@@ -17,8 +17,8 @@ public class AntiCrash extends Module implements Listener {
 
     public static final int OUT_OF_BOUNDS = 30000000;
     private final SettingSection scGeneral = getGeneralSection();
-    private final SettingSection scParticles = getGeneralSection();
-    private final SettingSection scExplosions = getGeneralSection();
+    private final SettingSection scParticles = createSettingSection("particle-crashes");
+    private final SettingSection scExplosions = createSettingSection("explosion-crashes");
     public final ModuleSetting<Boolean> sendFeedback = scGeneral.add(BooleanSetting.create()
             .name("send-feedback")
             .description("Notifies you if ClickCrystals has saved you from a crash!")
@@ -83,7 +83,7 @@ public class AntiCrash extends Module implements Listener {
     @EventHandler
     private void onReceiveParticle(PacketReceiveEvent e) {
         if (e.getPacket() instanceof ParticleS2CPacket packet) {
-            int count = packet.getCount();
+            int count = packet.getCount() - 1;
             double speed = packet.getSpeed();
             int maxCount = maxParticleAmount.getVal();
             int maxSpeed = maxParticleVelocity.getVal();
