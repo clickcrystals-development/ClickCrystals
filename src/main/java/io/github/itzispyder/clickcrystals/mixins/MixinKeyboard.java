@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Keyboard.class)
-public abstract class KeyboardMixin {
+public abstract class MixinKeyboard {
 
     private static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
 

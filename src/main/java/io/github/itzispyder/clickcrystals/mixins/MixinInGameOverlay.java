@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Mixin for rendering in game overlays
  */
 @Mixin(InGameOverlayRenderer.class)
-public abstract class InGameOverlayRendererMixin {
+public abstract class MixinInGameOverlay {
 
     @Inject(method = "renderFireOverlay", at = @At("HEAD"), cancellable = true)
     private static void renderFireOverlay(MinecraftClient client, MatrixStack matrices, CallbackInfo ci) {

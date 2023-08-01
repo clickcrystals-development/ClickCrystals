@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * Mixin for lighting and render for lighting
  */
 @Mixin(LightmapTextureManager.class)
-public abstract class LightmapTextureManagerMixin {
+public abstract class MixinLightmapTextureManager {
 
     /**
      * When the game gets the render brightness

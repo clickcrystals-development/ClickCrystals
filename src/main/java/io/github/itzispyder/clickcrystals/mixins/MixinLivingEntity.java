@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * Mixin for living entities
  */
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin {
+public abstract class MixinLivingEntity {
 
     @Inject(method = "getHandSwingDuration", at = @At("RETURN"), cancellable = true)
     public void getHandSwingDuration(CallbackInfoReturnable<Integer> cir) {

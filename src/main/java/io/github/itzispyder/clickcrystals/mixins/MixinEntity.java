@@ -7,6 +7,6 @@ import org.spongepowered.asm.mixin.Mixin;
  * Mixin for entity class
  */
 @Mixin(Entity.class)
-public abstract class EntityMixin {
+public abstract class MixinEntity {
 
 }

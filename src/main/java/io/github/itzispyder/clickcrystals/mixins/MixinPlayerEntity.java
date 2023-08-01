@@ -18,7 +18,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
  * Mixin for player entity
  */
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin {
+public abstract class MixinPlayerEntity {
 
     @Inject(method = "getAttackCooldownProgress", at = @At("RETURN"), cancellable = true)
     public void getAttackCooldownProgress(float baseTime, CallbackInfoReturnable<Float> cir) {

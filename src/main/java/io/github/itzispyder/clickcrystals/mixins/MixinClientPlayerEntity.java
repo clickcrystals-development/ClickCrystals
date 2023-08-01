@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
 @Mixin(ClientPlayerInteractionManager.class)
-public abstract class ClientPlayerInteractionManagerMixin {
+public abstract class MixinClientPlayerEntity {
 
     @Inject(method = "interactBlock", at = @At("RETURN"), cancellable = true)
     public void interactBlock(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {

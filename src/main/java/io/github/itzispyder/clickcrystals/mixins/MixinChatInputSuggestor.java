@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.concurrent.CompletableFuture;
 
 @Mixin(ChatInputSuggestor.class)
-public abstract class ChatInputSuggestorMixin {
+public abstract class MixinChatInputSuggestor {
 
     @Shadow @Nullable private ParseResults<CommandSource> parse;
     @Shadow @Nullable private CompletableFuture<Suggestions> pendingSuggestions;

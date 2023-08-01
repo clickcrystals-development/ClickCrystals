@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemStack.class)
-public abstract class ItemStackMixin {
+public abstract class MixinItemstack {
 
     @Inject(method = "setBobbingAnimationTime", at = @At("HEAD"), cancellable = true)
     public void setBobbingAnimationTime(int bobbingAnimationTime, CallbackInfo ci) {

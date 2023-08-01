@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
 @Mixin(PlayerInventory.class)
-public abstract class PlayerInventoryMixin {
+public abstract class MixinPlayerInventory {
 
     @Inject(method = "addStack(ILnet/minecraft/item/ItemStack;)I", at = @At("HEAD"))
     public void addStack(int slot, ItemStack stack, CallbackInfoReturnable<Integer> cir) {

@@ -16,7 +16,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
  * Client connection mixin for sending and handling packets
  */
 @Mixin(ClientConnection.class)
-public abstract class ClientConnectionMixin {
+public abstract class MixinClientConnection {
 
     @Inject(method = "send*", at = @At("HEAD"), cancellable = true)
     public void onPacketSend(Packet<?> packet, CallbackInfo ci) {

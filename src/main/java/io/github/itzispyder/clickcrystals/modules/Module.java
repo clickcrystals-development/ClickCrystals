@@ -103,6 +103,11 @@ public abstract class Module implements Toggleable {
         return (T)system.modules().get(moduleClass);
     }
 
+    public static <T extends Module> boolean isEnabled(Class<T> moduleClass) {
+        Module module = get(moduleClass);
+        return module != null && module.isEnabled();
+    }
+
     public static void loadConfigModules() {
         for (Module module : system.modules().values()) {
             ModuleFile.load(module).save();
