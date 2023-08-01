@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
-import io.github.itzispyder.clickcrystals.events.events.PlayerAttackEntityEvent;
+import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.SlowSwing;
 import net.minecraft.entity.Entity;

@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
-import io.github.itzispyder.clickcrystals.events.events.BlockPlaceEvent;
+import io.github.itzispyder.clickcrystals.events.events.world.BlockPlaceEvent;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.util.ActionResult;

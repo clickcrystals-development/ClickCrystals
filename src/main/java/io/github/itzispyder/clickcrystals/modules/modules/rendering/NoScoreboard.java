@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.rendering;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
-import io.github.itzispyder.clickcrystals.events.events.PacketReceiveEvent;
+import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;

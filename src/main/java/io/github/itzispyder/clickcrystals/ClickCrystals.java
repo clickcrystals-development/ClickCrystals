@@ -4,8 +4,8 @@ import io.github.itzispyder.clickcrystals.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.ConfigFile;
-import io.github.itzispyder.clickcrystals.events.events.ClientTickEndEvent;
-import io.github.itzispyder.clickcrystals.events.events.ClientTickStartEvent;
+import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
+import io.github.itzispyder.clickcrystals.events.events.world.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
@@ -21,10 +21,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.IconHud;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
-import io.github.itzispyder.clickcrystals.modules.modules.optimization.AntiCrash;
-import io.github.itzispyder.clickcrystals.modules.modules.optimization.NoItemBounce;
-import io.github.itzispyder.clickcrystals.modules.modules.optimization.NoLoading;
-import io.github.itzispyder.clickcrystals.modules.modules.optimization.NoResPack;
+import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -67,7 +64,7 @@ public final class ClickCrystals implements ModInitializer {
             modId = "clickcrystals",
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
-            version = "0.9.5";
+            version = "0.9.51";
 
     /**
      * Runs the mod initializer.
@@ -140,6 +137,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new NoScoreboard());
         system.addModule(new ArmorHud());
         system.addModule(new HealthAsBar());
+        system.addModule(new ExplodeParticles());
         Module.loadConfigModules();
 
         // Commands

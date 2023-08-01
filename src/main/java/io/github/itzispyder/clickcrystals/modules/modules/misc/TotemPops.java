@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.misc;
 import io.github.itzispyder.clickcrystals.client.EntityStatusType;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
-import io.github.itzispyder.clickcrystals.events.events.PacketReceiveEvent;
+import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
@@ -23,25 +23,25 @@ public class TotemPops extends Module implements Listener {
 
     public final SettingSection general = getGeneralSection();
     public final ModuleSetting<String> enemyPop = general.add(StringSetting.create()
-            .name("Enemy Pop Message")
+            .name("enemy-pop-message")
             .description("Message sent when enemy pops, %pops% for count, %player% for their name")
             .def("&7&n%player% &8&o popped &7&o(&e%pops%&7&o) &8totems!")
             .build()
     );
     public final ModuleSetting<String> enemyDeath = general.add(StringSetting.create()
-            .name("Enemy Death Message")
+            .name("enemy-death-message")
             .description("Message sent when enemy pops, %pops% for count, %player% for their name")
             .def("&7&n%player% &8&o died after popping &7&o(&e%pops%&7&o) &8totems!")
             .build()
     );
     public final ModuleSetting<Boolean> hightlightOwn = general.add(BooleanSetting.create()
-            .name("Show Own")
+            .name("show-own")
             .description("Toggle showing your own pops in chat")
             .def(true)
             .build()
     );
     public final ModuleSetting<String> ownText = general.add(StringSetting.create()
-            .name("Own pop name")
+            .name("own-pop-name")
             .description("Want to replace your name with in pop messages?")
             .def("&6&nYou")
             .build()

@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.events.events;
+package io.github.itzispyder.clickcrystals.events.events.client;
 
 import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.events.Event;

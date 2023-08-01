@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
-import io.github.itzispyder.clickcrystals.events.events.PacketReceiveEvent;
-import io.github.itzispyder.clickcrystals.events.events.PacketSendEvent;
+import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
+import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.listener.PacketListener;
 import net.minecraft.network.packet.Packet;
