@@ -39,8 +39,8 @@ Changelog:
   - Fixed cursor positioning issues
   - Fixed screen render resizing messing up click gui
   - Fixed armor hud still repositioned without HealthAsBar module enabled
-  - Improved ANTI-CRASH to become more configurable and efficient (Thanks to Tax Evasion)
-  - Added module to disable fire smoke, cloud poofs, and explosion particles separately
+  - Improved ANTI-CRASH to become more configurable and efficient (Thanks to TaxEvasion)
+  - Added module to disable fire smoke, cloud poofs, and explosion particles separately (Thanks again to TaxEvasion)
   - Fixed some other issues with module settings
   - Added a notification for ClickCrystals users that don't update their game
   - ^ This would ping you three items loudly upon joining a world
@@ -174,4 +174,5 @@ breadandcarrots: For being a wonderful mod tester!
 ClickCrystals (bro really changed his name to this): For creating ClickCrystals' TikTok account
 Tesla Tower: Best NBT Creator frfr
 I No One: Bro is fr my infinite ideas source + \#1 Bug Spotter
+TaxEvasion: Thank you for your changes to AntiCrash and addition of no explosion particles!
 ```
