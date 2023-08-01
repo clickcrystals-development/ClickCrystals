@@ -88,11 +88,11 @@ public class AntiCrash extends Module implements Listener {
             int maxCount = maxParticleAmount.getVal();
             int maxSpeed = maxParticleVelocity.getVal();
 
-            if (speed > maxSpeed) {
+            if (count > maxCount) {
                 e.cancel();
                 flag("§bCRASH DETECTED: Particle spawned with count §7" + count + "§b, max §7" + maxCount + "§b!");
             }
-            if (count > maxCount) {
+            if (speed > maxSpeed) {
                 e.cancel();
                 flag("§bCRASH DETECTED: Particle spawned with speed §7" + speed + "§b, max §7" + maxSpeed + "§b!");
             }
@@ -125,7 +125,7 @@ public class AntiCrash extends Module implements Listener {
                 e.cancel();
                 flag("§bCRASH DETECTED: Explosion spawned with radius §7" + radius + "§b, max §7" + maxRadius + "§b!");
             }
-            if (Math.abs(x) > oob || Math.abs(y) > oob || Math.abs(z) > oob) {
+            if (Math.abs(x) >= oob || Math.abs(y) >= oob || Math.abs(z) >= oob) {
                 e.cancel();
                 flag("§bCRASH DETECTED: Explosion spawned with bounds §7(" + x + ", " + y + ", " + z + ")§b, out of bounds of §7" + oob + "§b!");
             }
