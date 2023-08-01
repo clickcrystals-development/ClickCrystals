@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
+import net.minecraft.client.MinecraftClient;
 
 public class ModuleSettingsScreen extends ClickCrystalsBase {
 
@@ -48,6 +49,14 @@ public class ModuleSettingsScreen extends ClickCrystalsBase {
 
     @Override
     public void close() {
+        ClickCrystalsBase.openClickCrystalsMenu();
+    }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.close();
         ClickCrystalsBase.openClickCrystalsMenu();
     }
 

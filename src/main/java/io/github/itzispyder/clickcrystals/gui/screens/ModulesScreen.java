@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.ui.TabListElement;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import net.minecraft.client.MinecraftClient;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -73,5 +74,13 @@ public class ModulesScreen extends ClickCrystalsBase {
     public void close() {
         super.close();
         ClickCrystalsBase.setPrevOpened(this.getClass());
+    }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.close();
+        ClickCrystalsBase.openClickCrystalsMenu();
     }
 }

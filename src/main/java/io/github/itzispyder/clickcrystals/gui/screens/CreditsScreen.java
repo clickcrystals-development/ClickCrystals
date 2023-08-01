@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.ui.ImageBannerElement;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 
 public class CreditsScreen extends ClickCrystalsBase {
@@ -32,5 +33,13 @@ public class CreditsScreen extends ClickCrystalsBase {
     public void close() {
         super.close();
         ClickCrystalsBase.setPrevOpened(this.getClass());
+    }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.close();
+        ClickCrystalsBase.openClickCrystalsMenu();
     }
 }

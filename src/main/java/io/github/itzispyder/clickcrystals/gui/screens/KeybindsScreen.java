@@ -8,6 +8,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
+import net.minecraft.client.MinecraftClient;
 
 import java.util.Comparator;
 import java.util.List;
@@ -67,5 +68,13 @@ public class KeybindsScreen extends ClickCrystalsBase {
     public void close() {
         super.close();
         ClickCrystalsBase.setPrevOpened(this.getClass());
+    }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.close();
+        ClickCrystalsBase.openClickCrystalsMenu();
     }
 }

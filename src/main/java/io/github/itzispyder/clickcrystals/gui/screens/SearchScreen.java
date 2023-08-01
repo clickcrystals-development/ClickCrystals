@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.DetailedModuleElement;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.SearchBarElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
 
@@ -75,5 +76,13 @@ public class SearchScreen extends ClickCrystalsBase {
     public void close() {
         super.close();
         ClickCrystalsBase.setPrevOpened(this.getClass());
+    }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.close();
+        ClickCrystalsBase.openClickCrystalsMenu();
     }
 }
