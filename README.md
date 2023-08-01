@@ -36,14 +36,14 @@ Minecraft: 1.20-1.20.1
 Mod: 0.9.6
 
 Changelog:
-  - Fixed cursor positioning issues
+  - Fixed cursor positioning issues when opening up module settings screen
   - Fixed screen render resizing messing up click gui
   - Fixed armor hud still repositioned without HealthAsBar module enabled
   - Improved ANTI-CRASH to become more configurable and efficient (Thanks to TaxEvasion)
   - Added module to disable fire smoke, cloud poofs, and explosion particles separately (Thanks again to TaxEvasion)
   - Fixed some other issues with module settings
   - Added a notification for ClickCrystals users that don't update their game
-  - ^ This would ping you three items loudly upon joining a world
+  - ^ This would ping you three times loudly upon joining a world
   - ^ This is followed by a clickable message for lazy people that can't type in the link into the browser themselves.
 
 NOTICE:
