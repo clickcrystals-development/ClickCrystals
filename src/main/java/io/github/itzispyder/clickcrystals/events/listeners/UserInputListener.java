@@ -44,12 +44,11 @@ public class UserInputListener implements Listener {
     @EventHandler
     public void onScreenChange(SetScreenEvent e) {
         try {
-            //this.handleDiscordPresence(e);
+            this.handleDiscordPresence(e);
         }
         catch (Exception ignore) {}
     }
 
-    /*
     private void handleDiscordPresence(SetScreenEvent e) {
         Screen s = e.getScreen();
 
@@ -65,7 +64,6 @@ public class UserInputListener implements Listener {
 
         DiscordRPC.syncRPC();
     }
-     */
 
     private void handleKeybindings(KeyPressEvent e) {
         if (e.getAction() == ClickType.CLICK) {
