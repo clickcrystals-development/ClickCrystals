@@ -53,7 +53,12 @@ public class UserInputListener implements Listener {
         Screen s = e.getScreen();
 
         if (s == null) {
-            discordPresence.setState(mc.isInSingleplayer() ? "In singleplayer world" : "In multiplayer server");
+            if (mc.player != null) {
+                discordPresence.setState(mc.isInSingleplayer() ? "In singleplayer world" : "In multiplayer server");
+            }
+            else {
+                discordPresence.setState("Looking at the title screen");
+            }
         }
         else if (s instanceof ModuleSettingsScreen mss) {
             discordPresence.setState("Editing module " + mss.getModule().getName() + "...");
