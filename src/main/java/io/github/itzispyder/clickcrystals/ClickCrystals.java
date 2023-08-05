@@ -165,7 +165,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addModule(new ArmorHud());
         system.addModule(new HealthAsBar());
         system.addModule(new ExplodeParticles());
-        system.addModule(new DiscordRPC());
+        //system.addModule(new DiscordRPC());
         Module.loadConfigModules();
 
         // Commands
