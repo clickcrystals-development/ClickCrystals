@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals;
 
 import io.github.itzispyder.clickcrystals.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.client.DiscordPresence;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.ConfigFile;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
@@ -15,15 +16,13 @@ import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsBase;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.CCExtras;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.IconHud;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
@@ -46,12 +45,14 @@ import java.util.Objects;
  * TODO: (2) Update mod version in "GitHub Pages"
  * TODO: (3) Update "README.md"
  */
-public final class ClickCrystals implements ModInitializer {
+public final class ClickCrystals implements ModInitializer, ClientLifecycleEvents.ClientStopping {
 
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
     public static final ConfigFile config = ConfigFile.load("ClickCrystalsClient/config.json");
     public static final LinkedHashMap<String, String> info = new LinkedHashMap<>();
+    public static final DiscordPresence discordPresence = new DiscordPresence();
+    public static Thread discordWorker;
     public static final Keybind openModuleKeybind = Keybind.create()
             .id("open-clickcrystals-module-screen")
             .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
@@ -90,11 +91,19 @@ public final class ClickCrystals implements ModInitializer {
         this.startTicking();
         this.initOther();
         this.requestModInfo();
+        this.initRpc();
 
         if (!matchLatestVersion()) {
             System.out.println(prefix + "WARNING: You are running an outdated version of ClickCrystals, please update!");
             System.out.println(prefix + "VERSIONS: Current=" + version + ", Newest=" + getLatestVersion());
         }
+    }
+
+    @Override
+    public void onClientStopping(MinecraftClient client) {
+        discordPresence.stop();
+        config.save();
+        Module.saveConfigModules();
     }
 
     /**
@@ -156,6 +165,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new ArmorHud());
         system.addModule(new HealthAsBar());
         system.addModule(new ExplodeParticles());
+        system.addModule(new DiscordRPC());
         Module.loadConfigModules();
 
         // Commands
@@ -224,5 +234,18 @@ public final class ClickCrystals implements ModInitializer {
             ex.printStackTrace();
             System.out.println(prefix + "An error has occurred trying to get mod info!");
         }
+    }
+
+    public void initRpc() {
+        discordWorker = new Thread(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                discordPresence.api.Discord_RunCallbacks();
+                try {
+                    Thread.sleep(2000);
+                }
+                catch (InterruptedException ignore) {}
+            }
+        });
+        discordWorker.start();
     }
 }
