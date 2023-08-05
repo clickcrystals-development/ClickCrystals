@@ -27,6 +27,14 @@ public class ExplodeParticles extends Module implements Listener {
             .build()
     );
 
+    public final ModuleSetting<Boolean> disablePotionParticles = scGeneral.add(BooleanSetting.create()
+            .name("disable-potion-particles")
+            .description("Disables potion effect particles from sources such as gaps or exp bottles.")
+            .def(true)
+            .build()
+    );
+
+
 
     public ExplodeParticles() {
         super("explode-particles", Categories.OPTIMIZATION, "Turns off explosion particles for smoother crystal pvp!");
@@ -48,11 +56,11 @@ public class ExplodeParticles extends Module implements Listener {
 
         if (p == ParticleTypes.EXPLOSION || p == ParticleTypes.EXPLOSION_EMITTER) {
             e.cancel();
-        }
-        else if ((p == ParticleTypes.SMOKE || p == ParticleTypes.LARGE_SMOKE) && disableFireSmoke.getVal()) {
+        } else if ((p == ParticleTypes.SMOKE || p == ParticleTypes.LARGE_SMOKE) && disableFireSmoke.getVal()) {
             e.cancel();
-        }
-        else if ((p == ParticleTypes.POOF || p == ParticleTypes.CLOUD) && disablePoofCloud.getVal()) {
+        } else if ((p == ParticleTypes.POOF || p == ParticleTypes.CLOUD) && disablePoofCloud.getVal()) {
+            e.cancel();
+        } else if ((p == ParticleTypes.EFFECT || p == ParticleTypes.ENTITY_EFFECT) && disablePotionParticles.getVal()) {
             e.cancel();
         }
     }

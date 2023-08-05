@@ -3,11 +3,11 @@
   "package": "io.github.itzispyder.clickcrystals.mixins",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "MixinBlockItem",
     "MixinCamera",
     "MixinChatHud",
     "MixinChatInputSuggestor",
     "MixinClientConnection",
-    "MixinClientPlayerEntity",
     "MixinClientPlayNetworkHandler",
     "MixinEntityRenderer",
     "MixinGameRenderer",

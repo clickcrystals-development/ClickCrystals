@@ -1,44 +1,24 @@
 package io.github.itzispyder.clickcrystals.events.events.world;
 
-import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.events.Event;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
 
-public class BlockPlaceEvent extends Event implements Cancellable {
+public class BlockPlaceEvent extends Event {
 
-    private final ClientPlayerEntity player;
-    private final Hand hand;
-    private final BlockHitResult hitResult;
-    private boolean cancelled;
+    private final BlockState state;
+    private final BlockPos pos;
 
-    public BlockPlaceEvent(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult) {
-        this.hand = hand;
-        this.player = player;
-        this.hitResult = hitResult;
-        this.cancelled = false;
+    public BlockPlaceEvent(BlockState state, BlockPos pos) {
+        this.state = state;
+        this.pos = pos;
     }
 
-    public ClientPlayerEntity getPlayer() {
-        return player;
+    public BlockState state() {
+        return state;
     }
 
-    public Hand getHand() {
-        return hand;
-    }
-
-    public BlockHitResult getHitResult() {
-        return hitResult;
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
+    public BlockPos pos() {
+        return pos;
     }
 }
