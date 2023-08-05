@@ -6,7 +6,7 @@ import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.MinecraftClient;

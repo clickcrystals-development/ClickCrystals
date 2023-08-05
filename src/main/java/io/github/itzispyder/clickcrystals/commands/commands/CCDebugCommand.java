@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import io.github.itzispyder.clickcrystals.client.PacketMapper;
+import io.github.itzispyder.clickcrystals.client.networking.PacketMapper;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.PlayerArgumentType;
 import io.github.itzispyder.clickcrystals.modules.Module;

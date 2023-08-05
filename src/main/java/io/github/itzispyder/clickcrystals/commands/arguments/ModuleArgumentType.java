@@ -7,7 +7,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import net.minecraft.command.CommandSource;

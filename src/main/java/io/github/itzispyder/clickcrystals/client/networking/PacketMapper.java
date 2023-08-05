@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.client;
+package io.github.itzispyder.clickcrystals.client.networking;
 
 import io.github.itzispyder.clickcrystals.util.ManualMap;
 import net.minecraft.network.packet.Packet;

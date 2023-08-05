@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui;
 
-import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.gui.callbacks.*;
 import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;

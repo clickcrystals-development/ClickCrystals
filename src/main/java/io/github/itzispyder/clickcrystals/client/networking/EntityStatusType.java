@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.client;
+package io.github.itzispyder.clickcrystals.client.networking;
 
 public final class EntityStatusType {
 

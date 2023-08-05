@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
-import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.events.events.client.ParticleReceiveEvent;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleManager;

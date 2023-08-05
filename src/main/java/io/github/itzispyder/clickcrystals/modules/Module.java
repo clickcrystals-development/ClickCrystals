@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules;
 
-import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;

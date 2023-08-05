@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.client;
+package io.github.itzispyder.clickcrystals.client.system;
 
 import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;

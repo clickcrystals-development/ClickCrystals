@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
-import io.github.itzispyder.clickcrystals.client.EntityStatusType;
+import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;

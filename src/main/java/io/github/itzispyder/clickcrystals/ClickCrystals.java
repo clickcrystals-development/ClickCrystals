@@ -1,8 +1,8 @@
 package io.github.itzispyder.clickcrystals;
 
-import io.github.itzispyder.clickcrystals.client.CCSoundEvents;
-import io.github.itzispyder.clickcrystals.client.ClickCrystalsSystem;
-import io.github.itzispyder.clickcrystals.client.DiscordPresence;
+import io.github.itzispyder.clickcrystals.client.client.CCSoundEvents;
+import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.client.system.DiscordPresence;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.ConfigFile;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;

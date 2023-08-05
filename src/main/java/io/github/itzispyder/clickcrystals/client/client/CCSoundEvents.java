@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.client;
+package io.github.itzispyder.clickcrystals.client.client;
 
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
