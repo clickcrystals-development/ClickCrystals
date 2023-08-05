@@ -12,10 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
 @Mixin(BlockItem.class)
-public class MixinBlockItem {
-    @Inject(method = "place(Lnet/minecraft/item/ItemPlacementContext;Lnet/minecraft/block/BlockState;)Z", at = @At("HEAD"))
-    private void onPlace(ItemPlacementContext context, BlockState state, CallbackInfoReturnable<Boolean> info) {
+public abstract class MixinBlockItem {
+
+    @Inject(method = "place(Lnet/minecraft/item/ItemPlacementContext;Lnet/minecraft/block/BlockState;)Z", at = @At("HEAD"), cancellable = true)
+    private void onPlace(ItemPlacementContext context, BlockState state, CallbackInfoReturnable<Boolean> ci) {
         BlockPlaceEvent event = new BlockPlaceEvent(state, context.getBlockPos());
         system.eventBus.pass(event);
+        if (event.isCancelled()) ci.cancel();
     }
 }

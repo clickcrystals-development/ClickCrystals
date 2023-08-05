@@ -34,8 +34,6 @@ public class ExplodeParticles extends Module implements Listener {
             .build()
     );
 
-
-
     public ExplodeParticles() {
         super("explode-particles", Categories.OPTIMIZATION, "Turns off explosion particles for smoother crystal pvp!");
     }

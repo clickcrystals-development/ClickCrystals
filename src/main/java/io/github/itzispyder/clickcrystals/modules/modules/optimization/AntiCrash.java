@@ -80,7 +80,6 @@ public class AntiCrash extends Module implements Listener {
     private void onReceiveParticle(PacketReceiveEvent e) {
         if (e.getPacket() instanceof ParticleS2CPacket packet) {
             int count = packet.getCount() - 1;
-            double speed = packet.getSpeed();
             double maxCount = maxParticleAmount.getVal();
 
             if (count > maxCount) {
