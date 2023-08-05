@@ -6,7 +6,8 @@ plugins {
 jar {
     manifest {
         attributes(
-                "main-class": "io.github.itzispyder.clickcrystals.ClickCrystals"
+                "main-class": "io.github.itzispyder.clickcrystals.ClickCrystals",
+                "java-discord-rpc": "club.minnced.discord.rpc.DiscordRPC"
         )
     }
 }

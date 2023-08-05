@@ -51,7 +51,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
     public static final ConfigFile config = ConfigFile.load("ClickCrystalsClient/config.json");
     public static final LinkedHashMap<String, String> info = new LinkedHashMap<>();
-    public static final DiscordPresence discordPresence = new DiscordPresence();
+    //public static final DiscordPresence discordPresence = new DiscordPresence();
     public static Thread discordWorker;
     public static final Keybind openModuleKeybind = Keybind.create()
             .id("open-clickcrystals-module-screen")
@@ -91,7 +91,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         this.startTicking();
         this.initOther();
         this.requestModInfo();
-        this.initRpc();
+        //this.initRpc();
 
         if (!matchLatestVersion()) {
             System.out.println(prefix + "WARNING: You are running an outdated version of ClickCrystals, please update!");
@@ -101,7 +101,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
 
     @Override
     public void onClientStopping(MinecraftClient client) {
-        discordPresence.stop();
+        //discordPresence.stop();
         config.save();
         Module.saveConfigModules();
     }
@@ -236,6 +236,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         }
     }
 
+    /*
     public void initRpc() {
         discordWorker = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
@@ -248,4 +249,5 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         });
         discordWorker.start();
     }
+     */
 }
