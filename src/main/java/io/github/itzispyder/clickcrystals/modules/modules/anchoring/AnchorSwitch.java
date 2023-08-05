@@ -3,16 +3,16 @@ package io.github.itzispyder.clickcrystals.modules.modules.anchoring;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
+import io.github.itzispyder.clickcrystals.events.events.networking.PacketSentEvent;
+import io.github.itzispyder.clickcrystals.events.events.world.BlockPlaceEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
-import net.minecraft.util.math.BlockPos;
 
 public class AnchorSwitch extends Module implements Listener {
 
@@ -31,36 +31,35 @@ public class AnchorSwitch extends Module implements Listener {
     }
 
     @EventHandler
-    private void onPacketSend(PacketSendEvent e) {
-        if (e.getPacket() instanceof PlayerInteractBlockC2SPacket packet) {
-            final BlockPos pos = packet.getBlockHitResult().getBlockPos();
-            final BlockState state = mc.player.getWorld().getBlockState(pos);
+    private void onPlaceBlock(BlockPlaceEvent event) {
+        if (event.state().getBlock() != Blocks.RESPAWN_ANCHOR) return;
+        HotbarUtils.search(Items.GLOWSTONE);
+    }
 
-            if (state == null) return;
-            if (!HotbarUtils.has(Items.GLOWSTONE)) return;
-            if (!HotbarUtils.has(Items.RESPAWN_ANCHOR)) return;
+    @EventHandler
+    private void onSendPacket(PacketSendEvent event) {
+        if (!(event.getPacket() instanceof PlayerInteractBlockC2SPacket p)) return;
+        BlockState state = mc.world.getBlockState(p.getBlockHitResult().getBlockPos());
 
-            try {
-                if (HotbarUtils.isHolding(Items.RESPAWN_ANCHOR)) {
-                    if (!state.isOf(Blocks.RESPAWN_ANCHOR)) HotbarUtils.search(Items.GLOWSTONE);
-                    else {
-                        int charges = state.get(RespawnAnchorBlock.CHARGES);
-                        if (charges >= 1) return;
-                        e.setCancelled(true);
-                        HotbarUtils.search(Items.GLOWSTONE);
-                        BlockUtils.interact(pos,packet.getBlockHitResult().getSide());
-                    }
-                }
-                else if (HotbarUtils.isHolding(Items.GLOWSTONE)) {
-                    if (!state.isOf(Blocks.RESPAWN_ANCHOR)) {
-                        e.setCancelled(true);
-                        HotbarUtils.search(Items.RESPAWN_ANCHOR);
-                        BlockUtils.interact(pos,packet.getBlockHitResult().getSide());
-                        HotbarUtils.search(Items.GLOWSTONE);
-                    }
-                    else HotbarUtils.search(Items.RESPAWN_ANCHOR);
-                }
-            } catch (Exception ignore) {}
+        if (state.getBlock() != Blocks.RESPAWN_ANCHOR) return;
+        if (!HotbarUtils.has(Items.GLOWSTONE) || !HotbarUtils.isHolding(Items.GLOWSTONE)) return;
+
+        if (state.get(RespawnAnchorBlock.CHARGES) > 0) {
+            HotbarUtils.search(Items.RESPAWN_ANCHOR);
+        }
+    }
+
+    @EventHandler
+    private void onSentPacket(PacketSentEvent event) {
+        if (!(event.getPacket() instanceof PlayerInteractBlockC2SPacket p)) return;
+
+        BlockState state = mc.world.getBlockState(p.getBlockHitResult().getBlockPos());
+
+        if (state.getBlock() != Blocks.RESPAWN_ANCHOR) return;
+        if (!HotbarUtils.has(Items.GLOWSTONE)) return;
+
+        if (state.get(RespawnAnchorBlock.CHARGES) == 0) {
+            HotbarUtils.search(Items.GLOWSTONE);
         }
     }
 }

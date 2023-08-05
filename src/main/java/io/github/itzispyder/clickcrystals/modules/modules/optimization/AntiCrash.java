@@ -34,15 +34,6 @@ public class AntiCrash extends Module implements Listener {
             .def(500.0)
             .build()
     );
-    public final ModuleSetting<Double> maxParticleVelocity = scParticles.add(DoubleSetting.create()
-            .max(100)
-            .min(50)
-            .decimalPlaces(1)
-            .name("max-particle-velocity")
-            .description("Limits your client to only receive particle packets within this velocity.")
-            .def(50.0)
-            .build()
-    );
     public final ModuleSetting<Double> maxExplosionsRadius = scExplosions.add(DoubleSetting.create()
             .max(200)
             .min(100)
@@ -91,15 +82,10 @@ public class AntiCrash extends Module implements Listener {
             int count = packet.getCount() - 1;
             double speed = packet.getSpeed();
             double maxCount = maxParticleAmount.getVal();
-            double maxSpeed = maxParticleVelocity.getVal();
 
             if (count > maxCount) {
                 e.cancel();
                 flag("§bLAG DETECTED: Particle spawned with count §7" + count + "§b, max §7" + maxCount + "§b!");
-            }
-            if (speed > maxSpeed) {
-                e.cancel();
-                flag("§bLAG DETECTED: Particle spawned with speed §7" + speed + "§b, max §7" + maxSpeed + "§b!");
             }
         }
         else if (e.getPacket() instanceof ExplosionS2CPacket packet) {
