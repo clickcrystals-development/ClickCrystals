@@ -93,16 +93,16 @@ public abstract class Command {
         ChatUtils.sendPrefixMessage(StringUtils.color("&e" + msg));
     }
 
-    public static void print(String msg) {
+    public static void info(String msg) {
         ChatUtils.sendPrefixMessage(StringUtils.color(msg));
     }
 
-    public static void printNormal(String msg) {
+    public static void infoRaw(String msg) {
         ChatUtils.sendMessage(StringUtils.color(msg));
     }
 
     public static void help(Command cmd) {
-        print(cmd.getHelp());
+        info(cmd.getHelp());
     }
 
     public String getHelp() {

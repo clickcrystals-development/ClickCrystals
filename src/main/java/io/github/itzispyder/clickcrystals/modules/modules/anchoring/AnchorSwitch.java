@@ -39,7 +39,7 @@ public class AnchorSwitch extends Module implements Listener {
         if (e.state().getBlock() == Blocks.RESPAWN_ANCHOR) {
             HotbarUtils.search(Items.GLOWSTONE);
         }
-        else if (e.state().getBlock() == Blocks.GLOWSTONE) {
+        else if (e.state().getBlock() == Blocks.GLOWSTONE && HotbarUtils.has(Items.RESPAWN_ANCHOR)) {
             e.cancel();
             HotbarUtils.search(Items.RESPAWN_ANCHOR);
             BlockUtils.interact(e.pos(), Direction.UP);

@@ -117,17 +117,17 @@ public class CCDebugCommand extends Command {
         String hp = "   &3Health: &c" + (int)player.getHealth() + "/" + (int)player.getMaxHealth() +" hp";
         int ab = (int)player.getAbsorptionAmount();
 
-        printNormal("");
-        print("&b" + player.getGameProfile().getName() + "&3 has the following statistics:");
-        printNormal(hp + (ab == 0 ? "" : "   &e+" + (int)player.getAbsorptionAmount() + " ab"));
-        printNormal("   &3Gamemode: &6" + StringUtils.capitalizeWords(entry.getGameMode().name()));
-        printNormal("   &3Latency: &7" + entry.getLatency() + " ms");
-        printNormal("   &3UUID: &7" + entry.getProfile().getId());
-        printNormal("   &3Armor:");
+        infoRaw("");
+        info("&b" + player.getGameProfile().getName() + "&3 has the following statistics:");
+        infoRaw(hp + (ab == 0 ? "" : "   &e+" + (int)player.getAbsorptionAmount() + " ab"));
+        infoRaw("   &3Gamemode: &6" + StringUtils.capitalizeWords(entry.getGameMode().name()));
+        infoRaw("   &3Latency: &7" + entry.getLatency() + " ms");
+        infoRaw("   &3UUID: &7" + entry.getProfile().getId());
+        infoRaw("   &3Armor:");
         ArrayUtils.reverseForEach(player.getArmorItems(), this::printItem);
-        printNormal("   &3Hand:");
+        infoRaw("   &3Hand:");
         ArrayUtils.reverseForEach(player.getHandItems(), this::printItem);
-        printNormal("");
+        infoRaw("");
     }
 
     private void printItem(ItemStack stack) {

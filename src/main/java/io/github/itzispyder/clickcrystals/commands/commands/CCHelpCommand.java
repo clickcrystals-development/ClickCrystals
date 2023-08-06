@@ -27,14 +27,14 @@ public class CCHelpCommand extends Command {
                         .then(argument("module", ModuleArgumentType.create())
                                 .executes(context -> {
                                     Module module = context.getArgument("module", Module.class);
-                                    printNormal(module.getHelp());
+                                    infoRaw(module.getHelp());
                                     return SINGLE_SUCCESS;
                                 })))
                 .then(literal("commands")
                         .then(argument("command", CommandArgumentType.create())
                                 .executes(context -> {
                                     Command command = context.getArgument("command", Command.class);
-                                    printNormal(command.getHelp());
+                                    infoRaw(command.getHelp());
                                     return SINGLE_SUCCESS;
                                 })));
     }

@@ -23,7 +23,7 @@ public class CCToggleCommand extends Command {
                 .then(literal("help")
                         .executes(context -> {
                             Module module = context.getArgument("module", Module.class);
-                            print(module.getHelp());
+                            info(module.getHelp());
                             return SINGLE_SUCCESS;
                         }))
                 .then(literal("on")

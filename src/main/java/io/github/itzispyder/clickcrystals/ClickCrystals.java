@@ -176,6 +176,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addCommand(new GmaCommand());
         system.addCommand(new GmspCommand());
         system.addCommand(new CCDebugCommand());
+        system.addCommand(new PixelArtCommand());
 
         // Hud
         system.addHud(new ColorOverlayHud());
