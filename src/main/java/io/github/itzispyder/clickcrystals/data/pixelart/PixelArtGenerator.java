@@ -201,10 +201,10 @@ public class PixelArtGenerator {
 
         try {
             e = ImageEditor.openFromUrl(new URL(stringUrl));
+            edits.accept(e);
             w = e.getWidth();
             h = e.getHeight();
             a = e.getArea();
-            edits.accept(e);
         }
         catch (Exception ex) {
             Command.error(ex.getMessage());
