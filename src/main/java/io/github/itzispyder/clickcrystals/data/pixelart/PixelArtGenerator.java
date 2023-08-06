@@ -20,31 +20,35 @@ public class PixelArtGenerator {
     public static final int MAX_WIDTH = 128;
     public static final int MAX_HEIGHT = 64;
     private final BufferedImage image;
+    private int genInterval;
     private Pixel[][] pixels;
 
-    public PixelArtGenerator(BufferedImage image) {
-        this.image = scaleToBounds(image);
+    public PixelArtGenerator(BufferedImage image, int genInterval) {
+        this.image = image;
         this.fillPixels(this.image.getWidth(), this.image.getHeight());
+        this.genInterval = genInterval;
     }
 
     public static BufferedImage scaleToBounds(BufferedImage before) {
         if (before.getWidth() > MAX_WIDTH) {
-            int scaledWidth = Math.min(before.getWidth(), MAX_WIDTH);
-            double scaleRatio = scaledWidth / (double)before.getWidth();
-            int scaledHeight = (int)(before.getWidth() * scaleRatio);
+            double r = MAX_WIDTH / (double)before.getWidth();
+            int height = (int)(before.getHeight() * r);
 
-            Image image = before.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_FAST);
+            Image image = before.getScaledInstance(MAX_WIDTH, height, Image.SCALE_FAST);
             return bufferImage(image);
         }
         else if (before.getHeight() > MAX_HEIGHT) {
-            int scaledHeight = Math.min(before.getHeight(), MAX_HEIGHT);
-            double scaleRatio = scaledHeight / (double)before.getHeight();
-            int scaledWidth = (int)(before.getWidth() * scaleRatio);
+            double r = MAX_HEIGHT / (double)before.getHeight();
+            int width = (int)(before.getWidth() * r);
 
-            Image image = before.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_FAST);
+            Image image = before.getScaledInstance(width, MAX_HEIGHT, Image.SCALE_FAST);
             return bufferImage(image);
         }
         else return before;
+    }
+
+    public static BufferedImage scaleToCustom(BufferedImage before, int customWidth, int customHeight) {
+        return bufferImage(before.getScaledInstance(customWidth, customHeight, Image.SCALE_FAST));
     }
 
     public static BufferedImage bufferImage(Image image) {
@@ -81,7 +85,7 @@ public class PixelArtGenerator {
                     if (!PixelArtCommand.isRunning()) break;
                     try {
                         ChatUtils.sendChatCommand(pixels[x][y].placeBlock(world, pos, facing));
-                        Thread.sleep(1);
+                        Thread.sleep(genInterval);
                     }
                     catch (Exception ignore) {}
                 }
@@ -105,6 +109,14 @@ public class PixelArtGenerator {
         return pixels;
     }
 
+    public int getGenInterval() {
+        return genInterval;
+    }
+
+    public void setGenInterval(int genInterval) {
+        this.genInterval = genInterval;
+    }
+
     private record Pixel(int x, int y, int color) {
         public synchronized Block getBlock(BlockView view, BlockPos pos, Facing facing) {
             Block mostSimilar = Blocks.AIR;
@@ -126,9 +138,9 @@ public class PixelArtGenerator {
             return mostSimilar;
         }
 
-        private boolean isValid(Block block, BlockView view, BlockPos pos) {
-            boolean full = block.getDefaultState().isFullCube(view, pos) && !block.isTransparent(block.getDefaultState(), view, pos);
-            boolean type = block != Blocks.ICE && block != Blocks.TNT && !block.getTranslationKey().contains("leaves");
+        private boolean isValid(Block b, BlockView v, BlockPos p) {
+            boolean full = b.getDefaultState().isFullCube(v, p) && !b.isTransparent(b.getDefaultState(), v, p);
+            boolean type = b != Blocks.ICE && b != Blocks.TNT && b != Blocks.REDSTONE_LAMP && !b.getTranslationKey().contains("leaves");
             return full && type;
         }
 
