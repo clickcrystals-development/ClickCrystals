@@ -31,6 +31,12 @@ public class PixelArtCommand extends Command {
         return running.get();
     }
 
+    public static void cancelCurrent() {
+        if (running.get()) {
+            running.set(false);
+        }
+    }
+
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("cancel")
@@ -115,6 +121,11 @@ public class PixelArtCommand extends Command {
     }
 
     public void generateImage(String url, int interval, Function<BufferedImage, BufferedImage> edit) {
+        if (!PlayerUtils.player().isCreative()) {
+            error("Please refrain from using this in any gamemode other than creative!");
+            return;
+        }
+
         URL ur;
         BufferedImage bi;
 

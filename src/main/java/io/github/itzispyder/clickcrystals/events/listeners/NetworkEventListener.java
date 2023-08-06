@@ -1,13 +1,19 @@
 package io.github.itzispyder.clickcrystals.events.listeners;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.commands.commands.PixelArtCommand;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;
+import net.minecraft.network.packet.c2s.login.LoginKeyC2SPacket;
+import net.minecraft.network.packet.s2c.login.LoginHelloS2CPacket;
 import net.minecraft.network.packet.s2c.login.LoginSuccessS2CPacket;
+import net.minecraft.network.packet.s2c.play.DisconnectS2CPacket;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -20,7 +26,7 @@ public class NetworkEventListener implements Listener {
     @EventHandler
     public void onPacketSend(PacketSendEvent e) {
         try {
-
+            this.handlePixelArtStop(e);
         }
         catch (Exception ignore) {}
     }
@@ -29,8 +35,23 @@ public class NetworkEventListener implements Listener {
     public void onPacketReceive(PacketReceiveEvent e) {
         try {
             this.handleCheckUpdates(e);
+            this.handlePixelArtStop(e);
         }
         catch (Exception ignore) {}
+    }
+
+    private void handlePixelArtStop(PacketReceiveEvent e) {
+        Packet<?> p = e.getPacket();
+        if (p instanceof DisconnectS2CPacket || p instanceof LoginHelloS2CPacket) {
+            PixelArtCommand.cancelCurrent();
+        }
+    }
+
+    private void handlePixelArtStop(PacketSendEvent e) {
+        Packet<?> p = e.getPacket();
+        if (p instanceof LoginHelloC2SPacket || p instanceof LoginKeyC2SPacket) {
+            PixelArtCommand.cancelCurrent();
+        }
     }
 
     private void handleCheckUpdates(PacketReceiveEvent e) {
