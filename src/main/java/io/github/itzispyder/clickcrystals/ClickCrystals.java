@@ -77,7 +77,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
             modId = "clickcrystals",
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
-            version = "0.9.6";
+            version = "0.9.7";
 
     /**
      * Runs the mod initializer.

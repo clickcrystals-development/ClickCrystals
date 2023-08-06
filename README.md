@@ -33,20 +33,17 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 0.9.6
+Mod: 0.9.7
 
 Changelog:
-  - Fixed cursor positioning issues when opening up module settings screen
-  - Fixed screen render resizing messing up click gui
-  - Fixed armor hud still repositioned without HealthAsBar module enabled
-  - Improved ANTI-CRASH to become more configurable and efficient (Thanks to TaxEvasion)
-  - Added module to disable fire smoke, cloud poofs, and explosion particles separately (Thanks again to TaxEvasion)
-  - Fixed some other issues with module settings
-  - Added a notification for ClickCrystals users that don't update their game
-  - ^ This would ping you three times loudly upon joining a world
-  - ^ This is followed by a clickable message for lazy people that can't type in the link into the browser themselves.
+  - Added pixel art generator command for Creative and Operators
+  - ^ currently only accepts urls (https://...)
+  - Added discord presence to show off your newly downloaded mod! (default is off)
+  - Added a pepe icon so we can say we hired pepe to remind you for new ClickCrystals updates!
+  - Anchor switch issues fixed by TaxEvasion, round of applause for her!
 
 NOTICE:
+  - Keybind is now APOSTROPHE
   - NoBreakDelay has been removed
   - Any versions regarding Minecraft 1.19.x has been discontinued,
     meaning it will no longer be worked on in the future.
@@ -73,15 +70,16 @@ NOTICE:
 
 -----------------------------------------
 
-| **Command** | **Usage**                          |             **Description**             |
-|-------------|------------------------------------|:---------------------------------------:|
-| .help       | .help `<module>`                   |          Module info and help           |
-| .toggle     | .toggle `<module>` `[on,off,help]` |         Module toggle and help          |
-| .gms        | .gms                               | Command alias for `/gamemode survival`  |
-| .gmc        | .gmc                               | Command alias for `/gamemode creative`  |
-| .gma        | .gma                               | Command alias for `/gamemode adventure` |
-| .gmsp       | .gmsp                              | Command alias for `/gamemode spectator` |
-| .debug      | .debug `<item>`                    |     Sends ClickCrystals debug info      |
+| **Command** | **Usage**                                             |              **Description**               |
+|-------------|-------------------------------------------------------|:------------------------------------------:|
+| .help       | .help `<module>`                                      |            Module info and help            |
+| .toggle     | .toggle `<module>` `[on,off,help]`                    |           Module toggle and help           |
+| .gms        | .gms                                                  |   Command alias for `/gamemode survival`   |
+| .gmc        | .gmc                                                  |   Command alias for `/gamemode creative`   |
+| .gma        | .gma                                                  |  Command alias for `/gamemode adventure`   |
+| .gmsp       | .gmsp                                                 |  Command alias for `/gamemode spectator`   |
+| .debug      | .debug `<item>`                                       |       Sends ClickCrystals debug info       |
+| .pixelart   | .pixelart `<mode>` `values` `image url (https://...)` | Spawns in pixel art! (Requires GMC and OP) |
 
 ### Modules
 
