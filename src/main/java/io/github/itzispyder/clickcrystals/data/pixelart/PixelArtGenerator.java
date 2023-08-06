@@ -1,9 +1,12 @@
 package io.github.itzispyder.clickcrystals.data.pixelart;
 
-import io.github.itzispyder.clickcrystals.commands.commands.PixelArtCommand;
+import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.Timer;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.math.BlockPos;
@@ -11,56 +14,47 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.net.URL;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 
 public class PixelArtGenerator {
 
-    public static final int MAX_WIDTH = 128;
-    public static final int MAX_HEIGHT = 64;
+    private static final AtomicBoolean running = new AtomicBoolean(false);
     private final BufferedImage image;
+    private final ImageEditor editor;
     private int genInterval;
     private Pixel[][] pixels;
 
     public PixelArtGenerator(BufferedImage image, int genInterval) {
         this.image = image;
-        this.fillPixels(this.image.getWidth(), this.image.getHeight());
+        this.editor = new ImageEditor(this.image);
         this.genInterval = genInterval;
+        this.fillPixels(this.image.getWidth(), this.image.getHeight());
     }
 
-    public static BufferedImage scaleToBounds(BufferedImage before) {
-        if (before.getWidth() > MAX_WIDTH) {
-            double r = MAX_WIDTH / (double)before.getWidth();
-            int height = (int)(before.getHeight() * r);
-
-            Image image = before.getScaledInstance(MAX_WIDTH, height, Image.SCALE_FAST);
-            return bufferImage(image);
-        }
-        else if (before.getHeight() > MAX_HEIGHT) {
-            double r = MAX_HEIGHT / (double)before.getHeight();
-            int width = (int)(before.getWidth() * r);
-
-            Image image = before.getScaledInstance(width, MAX_HEIGHT, Image.SCALE_FAST);
-            return bufferImage(image);
-        }
-        else return before;
+    public PixelArtGenerator(ImageEditor editor, int genInterval) {
+        this.image = editor.getImage();
+        this.editor = editor;
+        this.genInterval = genInterval;
+        this.fillPixels(this.image.getWidth(), this.image.getHeight());
     }
 
-    public static BufferedImage scaleToCustom(BufferedImage before, int customWidth, int customHeight) {
-        return bufferImage(before.getScaledInstance(customWidth, customHeight, Image.SCALE_FAST));
+    public static boolean isRunning() {
+        return running.get();
     }
 
-    public static BufferedImage bufferImage(Image image) {
-        if (image instanceof BufferedImage) {
-            return (BufferedImage)image;
-        }
-        BufferedImage bImg = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = (Graphics2D)bImg.getGraphics();
+    public static boolean hasStopped() {
+        return !running.get();
+    }
 
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
-        return bImg;
+    public static void cancel() {
+        if (running.get()) {
+            running.set(false);
+        }
     }
 
     public synchronized void fillPixels(int width, int height) {
@@ -79,10 +73,11 @@ public class PixelArtGenerator {
         Facing facing = Facing.fromDirection(ent.getMovementDirection());
         ChatUtils.sendChatCommand("gamerule sendCommandFeedback false");
 
+        running.set(true);
         return CompletableFuture.runAsync(() -> {
             for (int y = 0; y < image.getHeight(); y++) {
                 for (int x = 0; x < image.getWidth(); x++) {
-                    if (!PixelArtCommand.isRunning()) break;
+                    if (hasStopped()) break;
                     try {
                         ChatUtils.sendChatCommand(pixels[x][y].placeBlock(world, pos, facing));
                         Thread.sleep(genInterval);
@@ -90,11 +85,16 @@ public class PixelArtGenerator {
                     catch (Exception ignore) {}
                 }
             }
+            running.set(false);
         });
     }
 
     public BufferedImage getImage() {
         return image;
+    }
+
+    public ImageEditor getEditor() {
+        return editor;
     }
 
     public int getWidth() {
@@ -103,6 +103,10 @@ public class PixelArtGenerator {
 
     public int getHeight() {
         return image.getHeight();
+    }
+
+    public int getArea() {
+        return getWidth() * getHeight();
     }
 
     public Pixel[][] getPixels() {
@@ -118,6 +122,18 @@ public class PixelArtGenerator {
     }
 
     private record Pixel(int x, int y, int color) {
+        public static final List<Block> BLACKLIST = List.of(
+                Blocks.ICE,
+                Blocks.TNT,
+                Blocks.REDSTONE_LAMP,
+                Blocks.GRASS_BLOCK,
+                Blocks.CRIMSON_NYLIUM,
+                Blocks.WARPED_NYLIUM,
+                Blocks.PODZOL,
+                Blocks.DIRT_PATH,
+                Blocks.MYCELIUM
+        );
+
         public synchronized Block getBlock(BlockView view, BlockPos pos, Facing facing) {
             Block mostSimilar = Blocks.AIR;
             double similarity = 999999999.0;
@@ -140,8 +156,9 @@ public class PixelArtGenerator {
 
         private boolean isValid(Block b, BlockView v, BlockPos p) {
             boolean full = b.getDefaultState().isFullCube(v, p) && !b.isTransparent(b.getDefaultState(), v, p);
-            boolean type = b != Blocks.ICE && b != Blocks.TNT && b != Blocks.REDSTONE_LAMP && !b.getTranslationKey().contains("leaves");
-            return full && type;
+            boolean type = !BLACKLIST.contains(b);
+            boolean keys = !b.getTranslationKey().contains("cherry") && !b.getTranslationKey().contains("leaves");
+            return full && type && keys;
         }
 
         public synchronized String placeBlock(BlockView view, BlockPos pos, Facing facing) {
@@ -166,5 +183,45 @@ public class PixelArtGenerator {
             }
             return f;
         }
+    }
+
+    public static synchronized void generateImage(String stringUrl, int delay, Consumer<ImageEditor> edits) {
+        ClientPlayerEntity p = PlayerUtils.player();
+
+        if (!p.isCreative()) {
+            Command.error("Please refrain from using this in any gamemode other than creative!");
+            return;
+        }
+        if (running.get()) {
+            Command.error("A pixel art is already generating!");
+            return;
+        }
+
+        ImageEditor e;
+        int w, h, a;
+
+        try {
+            e = ImageEditor.openFromUrl(new URL(stringUrl));
+            w = e.getWidth();
+            h = e.getHeight();
+            a = e.getArea();
+            edits.accept(e);
+        }
+        catch (Exception ex) {
+            Command.error(ex.getMessage());
+            return;
+        }
+
+        PixelArtGenerator gen = new PixelArtGenerator(e, delay);
+        Timer timer = Timer.start();
+        Command.info("&bGenerating &7" + a + "&b blocks &7(" + w + " x " + h + ")&b at position &7[" + p.getBlockPos().toShortString() + "]");
+        CompletableFuture<Void> future = gen.generateAt(p);
+
+        future.thenRun(() -> {
+            if (future.isDone()) {
+                Timer.End end = timer.end();
+                Command.info("&bGeneration finished in &7" + end.getStampPrecise());
+            }
+        });
     }
 }

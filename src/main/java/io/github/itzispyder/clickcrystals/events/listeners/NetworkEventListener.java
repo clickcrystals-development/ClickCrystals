@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.events.listeners;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
-import io.github.itzispyder.clickcrystals.commands.commands.PixelArtCommand;
+import io.github.itzispyder.clickcrystals.data.pixelart.PixelArtGenerator;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
@@ -43,14 +43,14 @@ public class NetworkEventListener implements Listener {
     private void handlePixelArtStop(PacketReceiveEvent e) {
         Packet<?> p = e.getPacket();
         if (p instanceof DisconnectS2CPacket || p instanceof LoginHelloS2CPacket) {
-            PixelArtCommand.cancelCurrent();
+            PixelArtGenerator.cancel();
         }
     }
 
     private void handlePixelArtStop(PacketSendEvent e) {
         Packet<?> p = e.getPacket();
         if (p instanceof LoginHelloC2SPacket || p instanceof LoginKeyC2SPacket) {
-            PixelArtCommand.cancelCurrent();
+            PixelArtGenerator.cancel();
         }
     }
 
