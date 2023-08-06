@@ -71,7 +71,6 @@ public class PixelArtGenerator {
         World world = ent.getWorld();
         BlockPos pos = ent.getBlockPos();
         Facing facing = Facing.fromDirection(ent.getMovementDirection());
-        ChatUtils.sendChatCommand("gamerule sendCommandFeedback false");
 
         running.set(true);
         return CompletableFuture.runAsync(() -> {
@@ -80,7 +79,7 @@ public class PixelArtGenerator {
                     if (hasStopped()) break;
                     try {
                         ChatUtils.sendChatCommand(pixels[x][y].placeBlock(world, pos, facing));
-                        Thread.sleep(genInterval);
+                        Thread.sleep(genInterval / 50L);
                     }
                     catch (Exception ignore) {}
                 }
