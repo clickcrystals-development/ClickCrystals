@@ -79,7 +79,7 @@ public class PixelArtGenerator {
                     if (hasStopped()) break;
                     try {
                         ChatUtils.sendChatCommand(pixels[x][y].placeBlock(world, pos, facing));
-                        Thread.sleep(genInterval / 50L);
+                        Thread.sleep(genInterval * 50L);
                     }
                     catch (Exception ignore) {}
                 }
