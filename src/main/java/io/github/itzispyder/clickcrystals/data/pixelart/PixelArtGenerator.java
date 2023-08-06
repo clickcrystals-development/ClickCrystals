@@ -26,17 +26,17 @@ public class PixelArtGenerator {
     private static final AtomicBoolean running = new AtomicBoolean(false);
     private final BufferedImage image;
     private final ImageEditor editor;
-    private int genInterval;
+    private long genInterval;
     private Pixel[][] pixels;
 
-    public PixelArtGenerator(BufferedImage image, int genInterval) {
+    public PixelArtGenerator(BufferedImage image, long genInterval) {
         this.image = image;
         this.editor = new ImageEditor(this.image);
         this.genInterval = genInterval;
         this.fillPixels(this.image.getWidth(), this.image.getHeight());
     }
 
-    public PixelArtGenerator(ImageEditor editor, int genInterval) {
+    public PixelArtGenerator(ImageEditor editor, long genInterval) {
         this.image = editor.getImage();
         this.editor = editor;
         this.genInterval = genInterval;
@@ -112,11 +112,11 @@ public class PixelArtGenerator {
         return pixels;
     }
 
-    public int getGenInterval() {
+    public long getGenInterval() {
         return genInterval;
     }
 
-    public void setGenInterval(int genInterval) {
+    public void setGenInterval(long genInterval) {
         this.genInterval = genInterval;
     }
 
@@ -184,7 +184,7 @@ public class PixelArtGenerator {
         }
     }
 
-    public static synchronized void generateImage(String stringUrl, int delay, Consumer<ImageEditor> edits) {
+    public static synchronized void generateImage(String stringUrl, long delay, Consumer<ImageEditor> edits) {
         ClientPlayerEntity p = PlayerUtils.player();
 
         if (!p.isCreative()) {
