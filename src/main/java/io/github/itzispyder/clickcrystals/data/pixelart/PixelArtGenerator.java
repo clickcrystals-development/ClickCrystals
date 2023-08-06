@@ -128,7 +128,7 @@ public class PixelArtGenerator {
 
             for (Block b : Registries.BLOCK) {
                 if (!isValid(b, view, pos)) continue;
-                double sim = ColorConverter.compare(color, b.getDefaultMapColor().color);
+                double sim = ColorComparator.compare(color, b.getDefaultMapColor().color);
                 if (sim < similarity) {
                     mostSimilar = b;
                     similarity = sim;

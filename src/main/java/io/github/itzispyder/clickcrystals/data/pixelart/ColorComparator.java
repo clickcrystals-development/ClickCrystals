@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.data.pixelart;
 
 import java.awt.*;
 
-public final class ColorConverter {
+public final class ColorComparator {
 
     public static double compare(Color a, Color b) {
         int r1 = a.getRed();
