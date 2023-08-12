@@ -207,6 +207,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addModule(new GlowingEntities());
         system.addModule(new NoScoreboard());
         system.addModule(new HealthAsBar());
+        system.addModule(new Zoom());
     }
 
     public void initOther() {

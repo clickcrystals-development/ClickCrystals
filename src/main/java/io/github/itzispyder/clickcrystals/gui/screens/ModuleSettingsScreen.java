@@ -34,6 +34,7 @@ public class ModuleSettingsScreen extends ClickCrystalsBase {
 
         caret += 10;
         for (SettingSection group : module.getData().getSettingSections()) {
+            if (group.getSettings().isEmpty()) continue;
             SettingSectionElement ge = new SettingSectionElement(group, title.x, caret, base.width - nav.width - 20, 10, 0.6F);
             main.addChild(ge);
             caret += ge.getHeight() + 2;
