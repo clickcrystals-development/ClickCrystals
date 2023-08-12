@@ -73,6 +73,10 @@ public class SearchBarElement extends GuiElement implements Typeable {
         return query;
     }
 
+    public String getLowercaseQuery() {
+        return query.toLowerCase();
+    }
+
     public int getTextHeight() {
         return (int)(10 * textScale);
     }

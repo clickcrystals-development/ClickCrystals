@@ -121,6 +121,7 @@ public abstract class Module implements Toggleable, Global {
     }
 
     public String getSearchQuery() {
-        return id + ":" + name + ":" + description.toLowerCase().replaceAll("[^a-z0-9]","_");
+        String norm = id.toLowerCase() + ";" + name.toLowerCase() + ";" + description.toLowerCase().replaceAll("[^a-z0-9 ]"," ");
+        return norm + ";" + norm.replaceAll(" ", "").trim();
     }
 }

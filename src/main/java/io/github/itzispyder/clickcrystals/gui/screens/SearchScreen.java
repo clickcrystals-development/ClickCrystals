@@ -36,8 +36,9 @@ public class SearchScreen extends ClickCrystalsBase {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         super.keyPressed(keyCode, scanCode, modifiers);
-        if (mc.currentScreen instanceof GuiScreen screen && GLFW.glfwGetKeyName(keyCode, scanCode) != null) {
+        if (mc.currentScreen instanceof GuiScreen screen && screen.selected != searchbar && GLFW.glfwGetKeyName(keyCode, scanCode) != null) {
             screen.selected = searchbar;
+            searchbar.onKey(keyCode, scanCode);
         }
         updateFilteredModules();
         return true;
@@ -48,7 +49,7 @@ public class SearchScreen extends ClickCrystalsBase {
         this.matches.clear();
 
         List<Module> modules = system.modules().values().stream()
-                .filter(module -> module.getSearchQuery().contains(searchbar.getQuery()))
+                .filter(module -> module.getSearchQuery().contains(searchbar.getLowercaseQuery()))
                 .sorted(Comparator.comparing(Module::getId))
                 .toList();
 
