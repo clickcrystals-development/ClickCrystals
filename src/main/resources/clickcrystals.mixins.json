@@ -16,6 +16,7 @@
     "MixinKeyboard",
     "MixinLightmapTextureManager",
     "MixinLivingEntityRenderer",
+    "MixinMouse",
     "MixinParticleManager"
   ],
   "injectors": {

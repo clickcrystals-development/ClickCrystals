@@ -18,6 +18,9 @@ import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
+import io.github.itzispyder.clickcrystals.modules.modules.minecart.BowSwap;
+import io.github.itzispyder.clickcrystals.modules.modules.minecart.RailSwap;
+import io.github.itzispyder.clickcrystals.modules.modules.minecart.TntSwap;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
@@ -170,6 +173,11 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addModule(new CrystSwitch());
         system.addModule(new ObiSwitch());
         system.addModule(new PearlSwitch());
+
+        // minecart
+        system.addModule(new RailSwap());
+        system.addModule(new TntSwap());
+        system.addModule(new BowSwap());
 
         // misc
         system.addModule(new ArmorHud());

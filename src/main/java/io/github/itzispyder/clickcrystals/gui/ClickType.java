@@ -15,4 +15,16 @@ public enum ClickType {
         }
         return r;
     }
+
+    public boolean isRelease() {
+        return this == RELEASE;
+    }
+
+    public boolean isDown() {
+        return this == CLICK;
+    }
+
+    public boolean isUnknown() {
+        return this == UNKNOWN;
+    }
 }
