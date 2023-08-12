@@ -128,44 +128,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addListener(new UserInputListener());
 
         // Module
-        system.addModule(new ClickCrystal());
-        system.addModule(new AnchorSwitch());
-        system.addModule(new PearlSwitch());
-        system.addModule(new FullBright());
-        system.addModule(new NoHurtCam());
-        system.addModule(new SlowSwing());
-        system.addModule(new NoLoading());
-        system.addModule(new NoOverlay());
-        system.addModule(new ObiSwitch());
-        system.addModule(new CrystSwitch());
-        system.addModule(new AntiCrash());
-        system.addModule(new NoResPack());
-        system.addModule(new ToolSwitcher());
-        system.addModule(new CrystAnchor());
-        system.addModule(new IconHud());
-        system.addModule(new ModulesList());
-        system.addModule(new SilkTouch());
-        system.addModule(new TotemPops());
-        system.addModule(new CrystPerSec());
-        system.addModule(new MsgResend());
-        system.addModule(new CCExtras());
-        system.addModule(new TotemOverlay());
-        system.addModule(new ShieldSwitch());
-        system.addModule(new RenderOwnName());
-        system.addModule(new AutoRespawn());
-        system.addModule(new NoViewBob());
-        system.addModule(new ClientCryst());
-        system.addModule(new NoItemBounce());
-        system.addModule(new GuiBorders());
-        system.addModule(new SwordSwap());
-        system.addModule(new AxeSwap());
-        system.addModule(new GlowingEntities());
-        system.addModule(new AutoGG());
-        system.addModule(new NoScoreboard());
-        system.addModule(new ArmorHud());
-        system.addModule(new HealthAsBar());
-        system.addModule(new ExplodeParticles());
-        system.addModule(new DiscordRPC());
+        this.initModules();
         Module.loadConfigModules();
 
         // Commands
@@ -184,6 +147,58 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addHud(new ModuleListTextHud());
         system.addHud(new ClickPerSecondHud());
         system.addHud(new ArmorItemHud());
+    }
+
+    public void initModules() {
+        // anchors
+        system.addModule(new AnchorSwitch());
+        system.addModule(new AxeSwap());
+        system.addModule(new CrystAnchor());
+        system.addModule(new ShieldSwitch());
+        system.addModule(new SwordSwap());
+
+        // client
+        system.addModule(new CCExtras());
+        system.addModule(new DiscordRPC());
+        system.addModule(new GuiBorders());
+        system.addModule(new IconHud());
+        system.addModule(new SilkTouch());
+
+        // crystalling
+        system.addModule(new ClickCrystal());
+        system.addModule(new ClientCryst());
+        system.addModule(new CrystSwitch());
+        system.addModule(new ObiSwitch());
+        system.addModule(new PearlSwitch());
+
+        // misc
+        system.addModule(new ArmorHud());
+        system.addModule(new AutoGG());
+        system.addModule(new AutoRespawn());
+        system.addModule(new CrystPerSec());
+        system.addModule(new ModulesList());
+        system.addModule(new MsgResend());
+        system.addModule(new SlowSwing());
+        system.addModule(new ToolSwitcher());
+        system.addModule(new TotemPops());
+
+        // optimization
+        system.addModule(new AntiCrash());
+        system.addModule(new ExplodeParticles());
+        system.addModule(new NoItemBounce());
+        system.addModule(new NoLoading());
+        system.addModule(new NoResPack());
+
+        // rendering
+        system.addModule(new FullBright());
+        system.addModule(new NoHurtCam());
+        system.addModule(new NoOverlay());
+        system.addModule(new TotemOverlay());
+        system.addModule(new RenderOwnName());
+        system.addModule(new NoViewBob());
+        system.addModule(new GlowingEntities());
+        system.addModule(new NoScoreboard());
+        system.addModule(new HealthAsBar());
     }
 
     public void initOther() {
