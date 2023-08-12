@@ -41,7 +41,7 @@ public abstract class MixinChatInputSuggestor {
             }
 
             int cursor = textField.getCursor();
-            if (!completingSuggestions) {
+            if (!completingSuggestions && cursor >= 1) {
                 pendingSuggestions = Command.DISPATCHER.getCompletionSuggestions(parse, cursor);
                 pendingSuggestions.thenRun(() -> {
                     if (pendingSuggestions.isDone()) {

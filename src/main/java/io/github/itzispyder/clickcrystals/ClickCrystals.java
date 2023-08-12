@@ -36,7 +36,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.LinkedHashMap;
-import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * ClickCrystals main
@@ -101,7 +101,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
 
     @Override
     public void onClientStopping(MinecraftClient client) {
-        //discordPresence.stop();
+        discordPresence.stop();
         config.save();
         Module.saveConfigModules();
     }
@@ -204,7 +204,8 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
     }
 
     public static boolean matchLatestVersion() {
-        return Objects.equals(getLatestVersion(), ClickCrystals.version);
+        Function<String, Long> convert = s -> Long.parseLong(s.replaceAll("[^0-9]", ""));
+        return convert.apply(version) >= convert.apply(getLatestVersion());
     }
 
     public static String getLatestVersion() {
