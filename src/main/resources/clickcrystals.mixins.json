@@ -18,7 +18,8 @@
     "MixinLightmapTextureManager",
     "MixinLivingEntityRenderer",
     "MixinMouse",
-    "MixinParticleManager"
+    "MixinParticleManager",
+    "MixinSplashOverlay"
   ],
   "injectors": {
     "defaultRequire": 1
