@@ -54,7 +54,6 @@ Changelog:
     - New module BowSwap
     - New module Zoom
     - New module ViewModel
-    - New module UpdatePrep
   Commands:
     - ",toggle" now opens module screen
     - ",keybind" for people that do not know how to set keybinds, it will open up the keybinds screen
@@ -153,7 +152,6 @@ Changelog:
 | BowSwap          |                      Hotkeys to bow after placing tnt minecart                       |
 | ViewModel        |                             Changes your hand view model                             |
 | Zoom             |                                 Now you can zoom, yw                                 |
-| UpdatePrep       |  Prepare for CC update by deleting the jar file and the clickcrystals client folder  |
 
 
 ## But isn't this cheating?

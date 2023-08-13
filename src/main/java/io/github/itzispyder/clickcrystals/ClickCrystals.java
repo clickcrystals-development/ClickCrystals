@@ -167,7 +167,6 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addModule(new GuiBorders());
         system.addModule(new IconHud());
         system.addModule(new SilkTouch());
-        system.addModule(new UpdatePrep());
 
         // crystalling
         system.addModule(new ClickCrystal());

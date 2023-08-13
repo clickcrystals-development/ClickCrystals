@@ -24,9 +24,19 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 
+import java.io.*;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Predicate;
 
 public class CCDebugCommand extends Command {
+
+    private static CompletableFuture<Void> logFilterWorker = null;
+
+    public static final Predicate<String> CC_FILTER = line -> {
+        String s = StringUtils.decolor(line.toLowerCase()).replaceAll("[^0-9a-z]", "");
+        return !s.contains("clickcrystal");
+    };
 
     public CCDebugCommand() {
         super("debug", "ClickCrystals Debug Info", "/debug <item>");
@@ -110,7 +120,17 @@ public class CCDebugCommand extends Command {
 
                                     error("Cannot find player.");
                                     return SINGLE_SUCCESS;
-                                })));
+                                })))
+                .then(literal("filterlog").executes(context -> {
+                    if (logFilterWorker != null && !logFilterWorker.isDone()) {
+                        error("Log worker is currently unavailable!");
+                        return SINGLE_SUCCESS;
+                    }
+
+                    this.filterLogs();
+                    ChatUtils.sendChatMessage("e");
+                    return SINGLE_SUCCESS;
+                }));
     }
 
     private void printPlayerStats(PlayerEntity player, PlayerListEntry entry) {
@@ -151,5 +171,35 @@ public class CCDebugCommand extends Command {
             msg.fillStyle(style.withHoverEvent(hover));
             PlayerUtils.player().sendMessage(msg);
         }
+    }
+
+    private void filterLogs() {
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            try {
+                String path = "logs/latest.log";
+                File file = new File(path);
+                FileReader fr = new FileReader(file);
+                BufferedReader br = new BufferedReader(fr);
+                List<String> lines = br.lines().filter(CC_FILTER).toList();
+
+                br.close();
+
+                FileWriter fw = new FileWriter(file);
+                BufferedWriter bw = new BufferedWriter(fw);
+
+                bw.flush();
+                for (String line : lines) {
+                    bw.write(line);
+                    bw.newLine();
+                }
+                bw.close();
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        future.join();
+        logFilterWorker = future;
     }
 }
