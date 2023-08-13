@@ -13,7 +13,16 @@ public final class StringUtils {
     }
 
     public static String color(String s) {
-        return s.replaceAll("&", "§");
+        return s.replace('&', '§');
+    }
+
+    public static String decolor(String msg) {
+        String s = msg;
+        while (s.length() >= 2 && s.contains("§")) {
+            int index = s.indexOf("§");
+            s = s.replaceAll(s.substring(index, index + 2), "");
+        }
+        return s;
     }
 
     public static String fromClipboard() {

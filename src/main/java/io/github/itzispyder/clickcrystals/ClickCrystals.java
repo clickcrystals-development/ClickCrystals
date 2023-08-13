@@ -80,7 +80,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
             modId = "clickcrystals",
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
-            version = "0.9.7";
+            version = "0.9.8";
 
     /**
      * Runs the mod initializer.
@@ -166,6 +166,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addModule(new GuiBorders());
         system.addModule(new IconHud());
         system.addModule(new SilkTouch());
+        system.addModule(new UpdatePrep());
 
         // crystalling
         system.addModule(new ClickCrystal());
