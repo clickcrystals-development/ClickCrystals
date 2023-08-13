@@ -17,7 +17,7 @@ public class ModuleSettingsScreen extends ClickCrystalsBase {
     public ModuleSettingsScreen(Module module) {
         super(module.getName());
         this.module = module;
-        this.main = new ScrollPanelElement(nav.x + nav.width + 10, base.y + 10, base.width - nav.width - 30, base.height - 20);
+        this.main = new ScrollPanelElement(this, nav.x + nav.width + 10, base.y + 10, base.width - nav.width - 30, base.height - 20);
         this.addChild(main);
     }
 

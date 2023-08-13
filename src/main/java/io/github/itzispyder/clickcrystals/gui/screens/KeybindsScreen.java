@@ -24,7 +24,7 @@ public class KeybindsScreen extends ClickCrystalsBase {
         int x = nav.x + nav.width + 10;
         int y = base.y + 10;
 
-        ScrollPanelElement main = new ScrollPanelElement(x, y, base.width - nav.width - 30, base.height - 20);
+        ScrollPanelElement main = new ScrollPanelElement(this, x, y, base.width - nav.width - 30, base.height - 20);
         this.addChild(main);
 
         // title

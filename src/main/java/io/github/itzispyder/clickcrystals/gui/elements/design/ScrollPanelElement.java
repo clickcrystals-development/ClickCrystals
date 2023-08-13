@@ -5,65 +5,56 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import net.minecraft.client.gui.DrawContext;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 public class ScrollPanelElement extends GuiElement {
 
+    private final GuiScreen parentScreen;
     public static final int SCROLL_MULTIPLIER = 15;
     private int remainingUp, remainingDown, limitTop, limitBottom, scrollbarY, scrollbarHeight, prevDrag;
     private boolean scrolling;
 
-    public ScrollPanelElement(int x, int y, int width, int height) {
+    public ScrollPanelElement(GuiScreen parentScreen, int x, int y, int width, int height) {
         super(x, y, width, height);
+        this.parentScreen = parentScreen;
         remainingUp = remainingDown = 0;
         limitTop = y;
         limitBottom = y + height;
         scrolling = false;
 
-        if (mc.currentScreen instanceof GuiScreen screen) {
-            screen.screenRenderListeners.add((context, mouseX, mouseY, delta) -> {
-                if (scrolling) {
-                    int deltaY = mouseY - prevDrag;
-                    scrollWithMultiplier(-deltaY, 3);
-                    prevDrag = mouseY;
-                }
+        // callbacks
+        parentScreen.screenRenderListeners.add((context, mouseX, mouseY, delta) -> {
+            if (!canScroll()) return;
+            if (scrolling) {
+                int deltaY = mouseY - prevDrag;
+                scrollWithMultiplier(-deltaY, 3);
+                prevDrag = mouseY;
+            }
 
-                DrawableUtils.fill(context, x + width - 6, y, 6, height, 0xFF272727);
+            DrawableUtils.fill(context, x + width - 6, y, 6, height, 0xFF272727);
 
-                double fullDoc = remainingUp + remainingDown + this.height;
-                double drawStartRatio = remainingUp / fullDoc;
-                double ratio = this.height / fullDoc;
-                int drawStart = (int)(this.height * drawStartRatio);
-                int drawLength = (int)(this.height * ratio);
+            double fullDoc = remainingUp + remainingDown + this.height;
+            double drawStartRatio = remainingUp / fullDoc;
+            double ratio = this.height / fullDoc;
+            int drawStart = (int)(this.height * drawStartRatio);
+            int drawLength = (int)(this.height * ratio);
 
-                DrawableUtils.fill(context, this.x + this.width - 6, this.y + drawStart, 6, drawLength, 0xFFAAAAAA);
-                DrawableUtils.fill(context, this.x + this.width - 1, this.y + drawStart, 1, drawLength, 0xFF555555);
-                DrawableUtils.fill(context, this.x + this.width - 6, this.y + drawStart + drawLength - 1, 6, 1, 0xFF555555);
+            DrawableUtils.fill(context, this.x + this.width - 6, this.y + drawStart, 6, drawLength, 0xFFAAAAAA);
+            DrawableUtils.fill(context, this.x + this.width - 1, this.y + drawStart, 1, drawLength, 0xFF555555);
+            DrawableUtils.fill(context, this.x + this.width - 6, this.y + drawStart + drawLength - 1, 6, 1, 0xFF555555);
 
-                scrollbarY = this.y + drawStart;
-                scrollbarHeight = drawLength;
-            });
-            screen.mouseClickListeners.add((mouseX, mouseY, button, click) -> {
-                if (isHovered((int)mouseX, (int)mouseY) && click.isDown()) {
-                    scrolling = true;
-                    prevDrag = (int)mouseY;
-                }
-            });
-            screen.mouseReleaseListeners.add((mouseX, mouseY, button, click) -> {
-                if (scrolling && click.isRelease()) {
-                    scrolling = false;
-                }
-            });
-            /*
-            screen.mouseDragListeners.add((mouseX, mouseY, button, deltaX, deltaY) -> {
-                if (button != 0 || scrolling) {
-                    double ratio = deltaY / scrollbarHeight;
-                    int amount = (int)(this.height * ratio) / 2;
-                    onScroll(-amount);
-                }
-            });
-             */
-        }
+            scrollbarY = this.y + drawStart;
+            scrollbarHeight = drawLength;
+        });
+        parentScreen.mouseClickListeners.add((mouseX, mouseY, button, click) -> {
+            if (isHovered((int)mouseX, (int)mouseY) && click.isDown()) {
+                scrolling = true;
+                prevDrag = (int)mouseY;
+            }
+        });
+        parentScreen.mouseReleaseListeners.add((mouseX, mouseY, button, click) -> {
+            if (scrolling && click.isRelease()) {
+                scrolling = false;
+            }
+        });
     }
 
     public static boolean canRenderOnPanel(ScrollPanelElement panel, GuiElement element) {
@@ -80,6 +71,10 @@ public class ScrollPanelElement extends GuiElement {
 
     public boolean canScroll() {
         return canScrollUp() || canScrollDown();
+    }
+
+    public GuiScreen getParentScreen() {
+        return parentScreen;
     }
 
     public boolean canScrollInDirection(int amount) {
@@ -116,14 +111,12 @@ public class ScrollPanelElement extends GuiElement {
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
-        if (mc.currentScreen instanceof GuiScreen screen) {
-            for (int i = getChildren().size() - 1; i >= 0; i--) {
-                GuiElement child = getChildren().get(i);
-                if (child.isHovered((int)mouseX, (int)mouseY)) {
-                    screen.selected = child;
-                    child.onClick(mouseX, mouseY, button);
-                    break;
-                }
+        for (int i = getChildren().size() - 1; i >= 0; i--) {
+            GuiElement child = getChildren().get(i);
+            if (child.isHovered((int)mouseX, (int)mouseY)) {
+                parentScreen.selected = child;
+                child.onClick(mouseX, mouseY, button);
+                break;
             }
         }
     }
