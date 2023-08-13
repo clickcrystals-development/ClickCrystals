@@ -106,7 +106,7 @@ public abstract class GuiScreen extends Screen {
             this.selected = null;
         }
 
-        this.mouseClickListeners.forEach(mouseClickCallback -> {
+        this.mouseReleaseListeners.forEach(mouseClickCallback -> {
             mouseClickCallback.handleMouse(mouseX, mouseY, button, ClickType.RELEASE);
         });
 
@@ -137,8 +137,8 @@ public abstract class GuiScreen extends Screen {
         });
 
         for (GuiElement child : children) {
-            if (child instanceof ScrollPanelElement panel && panel.isHovered((int)mouseX, (int)mouseY)) {
-                panel.onScroll(mouseX, mouseY, amount);
+            if (child instanceof ScrollPanelElement panel && panel.isMouseOver((int)mouseX, (int)mouseY)) {
+                panel.onScroll(amount);
                 break;
             }
         }
