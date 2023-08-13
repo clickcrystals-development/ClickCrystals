@@ -64,7 +64,6 @@ Changelog:
     - Category bar now displays in my own order instead of alphabetically
     - Search page now paginated
     - Search queries are now more accurate
-    - Custom screen loader
   Patches:
     - Pixel art placing one block at a time, now it uses both /setblock and /fill
     - Chat box crashing when holding down back arrow key while typing a custom command
