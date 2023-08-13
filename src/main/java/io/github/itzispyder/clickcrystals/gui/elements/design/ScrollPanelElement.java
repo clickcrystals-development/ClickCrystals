@@ -128,6 +128,18 @@ public class ScrollPanelElement extends GuiElement {
         }
     }
 
+    @Override
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (isMouseOver((int)mouseX, (int)mouseY)) {
+            onClick(mouseX, mouseY, button);
+        }
+
+        for (int i = getChildren().size() - 1; i >= 0; i--) {
+            GuiElement child = getChildren().get(i);
+            child.mouseClicked(mouseX, mouseY, button);
+        }
+    }
+
     /**
      * Redefinition of mouse hover to hovering over the scroll bar, not the entire element.
      * @param mouseX mouse x

@@ -58,9 +58,9 @@ public abstract class GuiScreen extends Screen {
             guiElement.render(context, mouseX, mouseY);
         });
 
-        this.screenRenderListeners.forEach(screenRenderCallback -> {
-            screenRenderCallback.handleScreen(context, mouseX, mouseY, delta);
-        });
+        for (ScreenRenderCallback callback : screenRenderListeners) {
+            callback.handleScreen(context, mouseX, mouseY, delta);
+        }
 
         Module guiBorders = Module.get(GuiBorders.class);
         if (guiBorders.isEnabled()) {
@@ -75,25 +75,25 @@ public abstract class GuiScreen extends Screen {
     public void mouseMoved(double mouseX, double mouseY) {
         super.mouseMoved(mouseX, mouseY);
 
-        this.mouseMoveListeners.forEach(mouseMoveCallback -> {
-            mouseMoveCallback.handleMouse(mouseX, mouseY);
-        });
+        for (MouseMoveCallback callback : mouseMoveListeners) {
+            callback.handleMouse(mouseX, mouseY);
+        }
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         for (int i = children.size() - 1; i >= 0; i--) {
             GuiElement child = children.get(i);
-            if (child.isHovered((int)mouseX, (int)mouseY)) {
+            if (child.isMouseOver((int)mouseX, (int)mouseY)) {
                 this.selected = child;
                 child.mouseClicked(mouseX, mouseY, button);
                 break;
             }
         }
 
-        this.mouseClickListeners.forEach(mouseClickCallback -> {
-            mouseClickCallback.handleMouse(mouseX, mouseY, button, ClickType.CLICK);
-        });
+        for (MouseClickCallback callback : mouseClickListeners) {
+            callback.handleMouse(mouseX, mouseY, button, ClickType.CLICK);
+        }
 
         return true;
     }
@@ -106,9 +106,9 @@ public abstract class GuiScreen extends Screen {
             this.selected = null;
         }
 
-        this.mouseReleaseListeners.forEach(mouseClickCallback -> {
-            mouseClickCallback.handleMouse(mouseX, mouseY, button, ClickType.RELEASE);
-        });
+        for (MouseClickCallback callback : mouseReleaseListeners) {
+            callback.handleMouse(mouseX, mouseY, button, ClickType.RELEASE);
+        }
 
         return true;
     }
@@ -121,9 +121,9 @@ public abstract class GuiScreen extends Screen {
             selected.move(deltaX, deltaY);
         }
 
-        this.mouseDragListeners.forEach(mouseDragCallback -> {
-            mouseDragCallback.handleMouse(mouseX, mouseY, button, deltaX, deltaY);
-        });
+        for (MouseDragCallback callback : mouseDragListeners) {
+            callback.handleMouse(mouseX, mouseY, button, deltaX, deltaY);
+        }
 
         return true;
     }
@@ -132,9 +132,9 @@ public abstract class GuiScreen extends Screen {
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
         super.mouseScrolled(mouseX, mouseY, amount);
 
-        this.mouseScrollListeners.forEach(mouseScrollCallback -> {
-            mouseScrollCallback.handleMouse(mouseX, mouseY, amount);
-        });
+        for (MouseScrollCallback callback : mouseScrollListeners) {
+            callback.handleMouse(mouseX, mouseY, amount);
+        }
 
         for (GuiElement child : children) {
             if (child instanceof ScrollPanelElement panel && panel.isMouseOver((int)mouseX, (int)mouseY)) {
@@ -160,9 +160,9 @@ public abstract class GuiScreen extends Screen {
 
         super.keyPressed(keyCode, scanCode, modifiers);
 
-        this.keyActionListeners.forEach(keyPressCallback -> {
-            keyPressCallback.handleKey(keyCode, ClickType.CLICK, scanCode, modifiers);
-        });
+        for (KeyPressCallback callback : keyActionListeners) {
+            callback.handleKey(keyCode, ClickType.CLICK, scanCode, modifiers);
+        }
 
         if (selected instanceof Typeable typeable) {
             typeable.onKey(keyCode, scanCode);
@@ -185,9 +185,9 @@ public abstract class GuiScreen extends Screen {
 
         super.keyReleased(keyCode, scanCode, modifiers);
 
-        this.keyActionListeners.forEach(keyPressCallback -> {
-            keyPressCallback.handleKey(keyCode, ClickType.RELEASE, scanCode, modifiers);
-        });
+        for (KeyPressCallback callback : keyActionListeners) {
+            callback.handleKey(keyCode, ClickType.RELEASE, scanCode, modifiers);
+        }
 
         return true;
     }
