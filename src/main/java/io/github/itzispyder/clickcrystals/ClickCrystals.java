@@ -18,6 +18,7 @@ import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
+import io.github.itzispyder.clickcrystals.modules.modules.minecart.*;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
@@ -36,7 +37,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.LinkedHashMap;
-import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * ClickCrystals main
@@ -77,7 +78,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
             modId = "clickcrystals",
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
-            version = "0.9.7";
+            version = "0.9.8";
 
     /**
      * Runs the mod initializer.
@@ -101,7 +102,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
 
     @Override
     public void onClientStopping(MinecraftClient client) {
-        //discordPresence.stop();
+        discordPresence.stop();
         config.save();
         Module.saveConfigModules();
     }
@@ -128,49 +129,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addListener(new UserInputListener());
 
         // Module
-        system.addModule(new AnchorSwitch());
-        system.addModule(new AxeSwap());
-        system.addModule(new CrystAnchor());
-        system.addModule(new ShieldSwitch());
-        system.addModule(new SwordSwap());
-
-        system.addModule(new CCExtras());
-        system.addModule(new DiscordRPC());
-        system.addModule(new GuiBorders());
-        system.addModule(new IconHud());
-
-        system.addModule(new ClickCrystal());
-        system.addModule(new ClientCryst());
-        system.addModule(new CrystSwitch());
-        system.addModule(new ObiSwitch());
-        system.addModule(new PearlSwitch());
-
-        system.addModule(new ArmorHud());
-        system.addModule(new AutoGG());
-        system.addModule(new AutoRespawn());
-        system.addModule(new CrystPerSec());
-        system.addModule(new ModulesList());
-        system.addModule(new MsgResend());
-        system.addModule(new SlowSwing());
-        system.addModule(new ToolSwitcher());
-        system.addModule(new TotemPops());
-
-        system.addModule(new AntiCrash());
-        system.addModule(new ExplodeParticles());
-        system.addModule(new NoItemBounce());
-        system.addModule(new NoLoading());
-        system.addModule(new NoResPack());
-
-        system.addModule(new FullBright());
-        system.addModule(new GlowingEntities());
-        system.addModule(new HealthAsBar());
-        system.addModule(new NoHurtCam());
-        system.addModule(new NoOverlay());
-        system.addModule(new NoScoreboard());
-        system.addModule(new NoViewBob());
-        system.addModule(new RenderOwnName());
-        system.addModule(new TotemOverlay());
-
+        this.initModules();
         Module.loadConfigModules();
 
         // Commands
@@ -182,6 +141,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addCommand(new GmspCommand());
         system.addCommand(new CCDebugCommand());
         system.addCommand(new PixelArtCommand());
+        system.addCommand(new KeybindsCommand());
 
         // Hud
         system.addHud(new ColorOverlayHud());
@@ -189,6 +149,65 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addHud(new ModuleListTextHud());
         system.addHud(new ClickPerSecondHud());
         system.addHud(new ArmorItemHud());
+    }
+
+    public void initModules() {
+        // anchors
+        system.addModule(new AnchorSwitch());
+        system.addModule(new AxeSwap());
+        system.addModule(new CrystAnchor());
+        system.addModule(new ShieldSwitch());
+        system.addModule(new SwordSwap());
+
+        // client
+        system.addModule(new CCExtras());
+        system.addModule(new DiscordRPC());
+        system.addModule(new GuiBorders());
+        system.addModule(new IconHud());
+        system.addModule(new SilkTouch());
+
+        // crystalling
+        system.addModule(new ClickCrystal());
+        system.addModule(new ClientCryst());
+        system.addModule(new CrystSwitch());
+        system.addModule(new ObiSwitch());
+        system.addModule(new PearlSwitch());
+
+        // minecart
+        system.addModule(new RailSwap());
+        system.addModule(new TntSwap());
+        system.addModule(new BowSwap());
+
+        // misc
+        system.addModule(new ArmorHud());
+        system.addModule(new AutoGG());
+        system.addModule(new AutoRespawn());
+        system.addModule(new CrystPerSec());
+        system.addModule(new ModulesList());
+        system.addModule(new MsgResend());
+        system.addModule(new SlowSwing());
+        system.addModule(new ToolSwitcher());
+        system.addModule(new TotemPops());
+
+        // optimization
+        system.addModule(new AntiCrash());
+        system.addModule(new ExplodeParticles());
+        system.addModule(new NoItemBounce());
+        system.addModule(new NoLoading());
+        system.addModule(new NoResPack());
+
+        // rendering
+        system.addModule(new FullBright());
+        system.addModule(new NoHurtCam());
+        system.addModule(new NoOverlay());
+        system.addModule(new TotemOverlay());
+        system.addModule(new RenderOwnName());
+        system.addModule(new NoViewBob());
+        system.addModule(new GlowingEntities());
+        system.addModule(new NoScoreboard());
+        system.addModule(new HealthAsBar());
+        system.addModule(new Zoom());
+        system.addModule(new ViewModel());
     }
 
     public void initOther() {
@@ -209,7 +228,8 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
     }
 
     public static boolean matchLatestVersion() {
-        return Objects.equals(getLatestVersion(), ClickCrystals.version);
+        Function<String, Long> convert = s -> Long.parseLong(s.replaceAll("[^0-9]", ""));
+        return convert.apply(version) >= convert.apply(getLatestVersion());
     }
 
     public static String getLatestVersion() {
