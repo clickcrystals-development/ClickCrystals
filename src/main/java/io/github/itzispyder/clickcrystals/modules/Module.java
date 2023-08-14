@@ -1,17 +1,12 @@
 package io.github.itzispyder.clickcrystals.modules;
 
-import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
-import net.minecraft.client.MinecraftClient;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
+public abstract class Module implements Toggleable, Global {
 
-public abstract class Module implements Toggleable {
-
-    protected static final MinecraftClient mc = MinecraftClient.getInstance();
-    protected static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
     public static int totalEnabled;
     private ModuleData data;
     private final String name, description, id;
@@ -126,6 +121,7 @@ public abstract class Module implements Toggleable {
     }
 
     public String getSearchQuery() {
-        return id + ":" + name + ":" + description.toLowerCase().replaceAll("[^a-z0-9]","_");
+        String norm = id.toLowerCase() + ";" + name.toLowerCase() + ";" + description.toLowerCase().replaceAll("[^a-z0-9 ]"," ");
+        return norm + ";" + norm.replaceAll(" ", "").trim();
     }
 }

@@ -17,7 +17,7 @@ public class ModuleSettingsScreen extends ClickCrystalsBase {
     public ModuleSettingsScreen(Module module) {
         super(module.getName());
         this.module = module;
-        this.main = new ScrollPanelElement(nav.x + nav.width + 10, base.y + 10, base.width - nav.width - 30, base.height - 20);
+        this.main = new ScrollPanelElement(this, nav.x + nav.width + 10, base.y + 10, base.width - nav.width - 30, base.height - 20);
         this.addChild(main);
     }
 
@@ -34,6 +34,7 @@ public class ModuleSettingsScreen extends ClickCrystalsBase {
 
         caret += 10;
         for (SettingSection group : module.getData().getSettingSections()) {
+            if (group.getSettings().isEmpty()) continue;
             SettingSectionElement ge = new SettingSectionElement(group, title.x, caret, base.width - nav.width - 20, 10, 0.6F);
             main.addChild(ge);
             caret += ge.getHeight() + 2;

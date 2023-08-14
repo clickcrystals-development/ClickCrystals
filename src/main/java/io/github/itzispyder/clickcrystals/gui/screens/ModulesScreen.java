@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
-import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.ModuleElement;
 import io.github.itzispyder.clickcrystals.gui.elements.ui.TabListElement;
 import io.github.itzispyder.clickcrystals.modules.Categories;
@@ -36,13 +35,21 @@ public class ModulesScreen extends ClickCrystalsBase {
         this.screenRenderListeners.add((context, mouseX, mouseY, delta) -> displayingModules.forEach(moduleElement -> {
             moduleElement.render(context, mouseX, mouseY);
         }));
-        this.mouseClickListeners.add(((mouseX, mouseY, button, click) -> displayingModules.forEach(element -> {
-            if (click == ClickType.CLICK && element.isHovered((int)mouseX, (int)mouseY)) {
-                element.onClick(mouseX, mouseY, button);
-            }
-        })));
 
         // finish
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        super.mouseClicked(mouseX, mouseY, button);
+
+        for (ModuleElement element : displayingModules) {
+            if (element.isHovered((int)mouseX, (int)mouseY)) {
+                element.onClick(mouseX, mouseY, button);
+            }
+        }
+
+        return true;
     }
 
     public void setCategory(Category category, int originX, int originY) {

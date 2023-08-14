@@ -2,7 +2,9 @@ package io.github.itzispyder.clickcrystals.events.events.world;
 
 import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.events.Event;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 
 public class BlockPlaceEvent extends Event implements Cancellable {
@@ -17,12 +19,20 @@ public class BlockPlaceEvent extends Event implements Cancellable {
         this.cancelled = false;
     }
 
-    public BlockState state() {
+    public BlockState getState() {
         return state;
     }
 
-    public BlockPos pos() {
+    public BlockPos getPos() {
         return pos;
+    }
+
+    public Item getItem() {
+        return state.getBlock().asItem();
+    }
+
+    public Block getBlock() {
+        return state.getBlock();
     }
 
     @Override

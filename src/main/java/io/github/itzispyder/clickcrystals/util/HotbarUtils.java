@@ -178,12 +178,24 @@ public final class HotbarUtils {
     }
 
     public static boolean isTotemed() {
+        return isHoldingEitherHand(Items.TOTEM_OF_UNDYING);
+    }
+
+    public static boolean isHoldingEitherHand(Item item) {
         if (mc.player == null) return false;
 
         final ItemStack main = mc.player.getStackInHand(Hand.MAIN_HAND);
         final ItemStack off = mc.player.getStackInHand(Hand.OFF_HAND);
-        final Item totem = Items.TOTEM_OF_UNDYING;
 
-        return (main != null && main.getItem() == totem) || (off != null && off.getItem() == totem);
+        return (main != null && main.getItem() == item) || (off != null && off.getItem() == item);
+    }
+
+    public static boolean isHoldingEitherHand(Predicate<ItemStack> item) {
+        if (mc.player == null) return false;
+
+        final ItemStack main = mc.player.getStackInHand(Hand.MAIN_HAND);
+        final ItemStack off = mc.player.getStackInHand(Hand.OFF_HAND);
+
+        return (main != null && item.test(main)) || (off != null && item.test(off));
     }
 }

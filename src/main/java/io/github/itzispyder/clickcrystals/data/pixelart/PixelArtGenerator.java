@@ -75,17 +75,62 @@ public class PixelArtGenerator {
         running.set(true);
         return CompletableFuture.runAsync(() -> {
             for (int y = 0; y < image.getHeight(); y++) {
-                for (int x = 0; x < image.getWidth(); x++) {
-                    if (hasStopped()) break;
-                    try {
-                        ChatUtils.sendChatCommand(pixels[x][y].placeBlock(world, pos, facing));
-                        Thread.sleep(genInterval * 50L);
-                    }
-                    catch (Exception ignore) {}
-                }
+                genRow(y, world, pos, facing);
             }
             running.set(false);
         });
+    }
+
+    private synchronized void genRow(int y, World world, BlockPos pos, Facing facing) {
+        Block prev = null;
+        BlockPos c1 = pos;
+        BlockPos c2 = c1;
+
+        for (int x = 0; x < image.getWidth(); x++) {
+            if (hasStopped()) break;
+
+            Pixel p = pixels[x][y];
+            Block curr = p.getBlock(world, pos, facing);
+            BlockPos loc = p.getPos(pos, facing);
+
+            if (prev == null) prev = curr;
+
+            if (curr == prev && x < image.getWidth() - 1) {
+                c2 = loc;
+            }
+            else {
+                if (c1.getY() != c2.getY()) {
+                    c1 = c1.withY(c2.getY());
+                }
+
+                String key = keyOf(prev);
+                String pos1 = c1.toShortString().replaceAll(",", "");
+                String pos2 = c2.toShortString().replaceAll(",", "");
+                String cmd;
+
+                if (pos1.equals(pos2)) {
+                    cmd = "setblock " + pos1 + " " + key;
+                }
+                else {
+                    cmd = "fill " + pos1 + " " + pos2 + " " + key;
+                }
+
+                ChatUtils.sendChatCommand(cmd);
+                prev = curr;
+                c1 = loc;
+                c2 = loc;
+
+                try {
+                    Thread.sleep(genInterval * 50L);
+                }
+                catch (Exception ignore) {}
+            }
+        }
+    }
+
+    private String keyOf(Block block) {
+        String[] ks = block.getTranslationKey().split("\\.");
+        return ks[ks.length - 1];
     }
 
     public BufferedImage getImage() {
@@ -160,13 +205,12 @@ public class PixelArtGenerator {
             return full && type && keys;
         }
 
-        public synchronized String placeBlock(BlockView view, BlockPos pos, Facing facing) {
-            String[] keys = getBlock(view, pos, facing).getTranslationKey().split("\\.");
+        public synchronized BlockPos getPos(BlockPos pos, Facing facing) {
             int x = facing == Facing.NORTH_SOUTH ? pos.getX() + this.x : pos.getX();
             int y = pos.getY() + this.y;
             int z = facing == Facing.EAST_WEST ? pos.getZ() + this.x : pos.getZ();
 
-            return "setblock " + x + " " + y + " " + z + " " + keys[keys.length - 1];
+            return new BlockPos(x, y, z);
         }
     }
 

@@ -1,7 +1,10 @@
 package io.github.itzispyder.clickcrystals.events;
 
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Represents an event bus for calling and passing events
@@ -57,6 +60,17 @@ public class EventBus {
         });
 
         return event instanceof Cancellable c && c.isCancelled();
+    }
+
+    public <C extends CallbackInfo, E extends Event> void passWithCallbackInfo(C info, E event, Consumer<CallbackInfo> action) {
+        pass(event);
+        if (event instanceof Cancellable c && c.isCancelled()) {
+            action.accept(info);
+        }
+    }
+
+    public <C extends CallbackInfo, E extends Event> void passWithCallbackInfo(C info, E event) {
+        passWithCallbackInfo(info, event, CallbackInfo::cancel);
     }
 
     private <E extends Event> void tryInvoke(Method method, Listener listener, E event) {

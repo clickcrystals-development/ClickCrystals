@@ -36,13 +36,13 @@ public class AnchorSwitch extends Module implements Listener {
 
     @EventHandler
     private void onPlaceBlock(BlockPlaceEvent e) {
-        if (e.state().getBlock() == Blocks.RESPAWN_ANCHOR) {
+        if (e.getState().getBlock() == Blocks.RESPAWN_ANCHOR) {
             HotbarUtils.search(Items.GLOWSTONE);
         }
-        else if (e.state().getBlock() == Blocks.GLOWSTONE && HotbarUtils.has(Items.RESPAWN_ANCHOR)) {
+        else if (e.getState().getBlock() == Blocks.GLOWSTONE && HotbarUtils.has(Items.RESPAWN_ANCHOR)) {
             e.cancel();
             HotbarUtils.search(Items.RESPAWN_ANCHOR);
-            BlockUtils.interact(e.pos(), Direction.UP);
+            BlockUtils.interact(e.getPos(), Direction.UP);
             PlayerUtils.player().swingHand(Hand.MAIN_HAND);
         }
     }

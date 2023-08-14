@@ -10,19 +10,29 @@
 </div>
 
 ---------------------------------------------------------------
-### A message from the developers:
-Recently, there has been numerous reports of ClickCrystals being
-a cheat because of NoBreakDelay. This message is here to ensure 
-you that your complaints have been received. NoBreakDelay will be 
-removed in version (0.9.1). 
+### A message from the developers to our fellow users:
+We understand your concerns, and have been constantly making changes and thinking of new ways to 
+improve upon this project. 
 
-Along with the (0.9.1) update, module settings are now provided,
-which is something ClickCrystals has never had before. This will
-motivate the playerbase to update their games and versions one
-step closer to becoming cheat-free!
+However, as much as to how you all consider ClickCrystals to be an unfair advantage, this mod's
+sole purpose is to bring ease to hotkeying. There are no built-in macros, and there have 
+been numerous instances of players being able to replicate what this mod does without 
+using it, which relieves the use of the phrase "unfair advantage" on this mod.
 
-We'd like to apologize again for these troubles, and 
-thank you for your understanding.
+Please do not go about assuming what this mod does in your head without getting to use it 
+first, needless to say spreading misinformation about it.
+
+With that said, all hotkey modules will be staying and not to be removed anytime in the 
+future unless it is to be voted out by the ClickCrystals community.
+Thank you for your cooperation.
+
+All unfair advantages that have been previously removed:
+- TrueSight
+- NoBreakDelay
+- PearlSwitch's swapping back feature (accused for auto double hand)
+- CrystalSwitch's swapping back feature (accused for middle click swap)
+- ObsidianSwitch's swapping back feature (accused for scaffold)
+- ClickCrystals' Auto-clicker (accused for macroing and autoclicking)
 
 Happy coding and cpvping!
 
@@ -33,21 +43,30 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 0.9.7
+Mod: 0.9.8
 
 Changelog:
-  - Added pixel art generator command for Creative and Operators
-  - ^ currently only accepts urls (https://...)
-  - Added discord presence to show off your newly downloaded mod! (default is off)
-  - Added a pepe icon so we can say we hired pepe to remind you for new ClickCrystals updates!
-  - Anchor switch issues fixed by TaxEvasion, round of applause for her!
-
-NOTICE:
-  - Keybind is now APOSTROPHE
-  - NoBreakDelay has been removed
-  - Any versions regarding Minecraft 1.19.x has been discontinued,
-    meaning it will no longer be worked on in the future.
-    However, they will still be available for download.
+  Modules:
+    - Added new category for Minecart PvP
+    - Category names are now simplified
+    - New module RailSwap
+    - New module TnTSwap
+    - New module BowSwap
+    - New module Zoom
+    - New module ViewModel
+  Commands:
+    - ",toggle" now opens module screen
+    - ",keybind" for people that do not know how to set keybinds, it will open up the keybinds screen
+  GUI:
+    - Scroll panels now cannot scroll down infinitely
+    - Scroll panels now have scroll bars
+    - Module setting section that are empty no longer render
+    - Category bar now displays in my own order instead of alphabetically
+    - Search page now paginated
+    - Search queries are now more accurate
+  Patches:
+    - Pixel art placing one block at a time, now it uses both /setblock and /fill
+    - Chat box crashing when holding down back arrow key while typing a custom command
 ```
 
 <div class="demo-menu">
@@ -65,6 +84,7 @@ NOTICE:
 | APOSTROPHE     | Open module settings screen |
 | COMMA          |   Custom commands prefix    |
 | UP_ARROW       |     Message resend bind     |
+| B              |        Zoom keybind         |
 
 ### Commands
 
@@ -80,6 +100,7 @@ NOTICE:
 | .gmsp       | .gmsp                                                 |  Command alias for `/gamemode spectator`   |
 | .debug      | .debug `<item>`                                       |       Sends ClickCrystals debug info       |
 | .pixelart   | .pixelart `<mode>` `values` `image url (https://...)` | Spawns in pixel art! (Requires GMC and OP) |
+| .keybinds   | .keybinds                                             |     Opens the keybinds setting screen      |
 
 ### Modules
 
@@ -124,31 +145,38 @@ NOTICE:
 | NoScoreboard     |                     Disables rendering of the scoreboard sidebar                     |
 | ArmorHud         |                       Displays armor durability and item count                       |
 | HealthAsBars     |                   Turns your vanilla health bar into a health-bar!                   |
-| ExplodeParticles |                     Turns off annoying particles in crystal pvp.                     |
+| ExplodeParticles |                     Turns off annoying particles in crystal pvp                      |
+| RailSwap         |                         Hotkeys to rails after shooting bow                          |
+| TnTSwap          |                     Hotkeys to tnt minecart after placing rails                      |
+| BowSwap          |                      Hotkeys to bow after placing tnt minecart                       |
+| ViewModel        |                             Changes your hand view model                             |
+| Zoom             |                                 Now you can zoom, yw                                 |
+
 
 ## But isn't this cheating?
 It is not a cheat. It does not automate any task, for every action the mod preforms, you have to click.
 - This mod is not a macro, it does not click for you. It functions as a hotkey for slots.
 
-| Server                 | Flags | Bannable |
-|:-----------------------|:------|:---------|
-| `mcpvp`.club           | no    | yes      |
-| west.`uspvp`.org       | no    | yes      |
-| east.`uspvp`.org       | no    | yes      |
-| `ogredupe`.minehut.gg  | no    | no       |
-| `ipearlpvp`.minehut.gg | no    | no       |
-| play.`pvplegacy`.net   | no    | yes      |
-| `donut`.net            | no    | yes      |
-| `hypixel`.net          | no    | pending  |
-| `cubecraft`.net        | no    | pending  |
-| `firevanilla`.net      | no    | yes      |
-| `shatteredvanilla`.net | no    | no       |
-| `pvphub`.me            | no    | yes      |
-| `europemc`.org         | no    | pending  |
-| play.`jackpot`.org     | no    | pending  |
-| `kingsmp`.net          | no    | pending  |
-| `l1festee1`.net        | no    | no       |
-| `ironcadia`.minehut.gg | no    | no       |
+| Server                  | Flags | Bannable |
+|:------------------------|:------|:---------|
+| `mcpvp`.club            | no    | yes      |
+| west.`uspvp`.org        | no    | yes      |
+| east.`uspvp`.org        | no    | yes      |
+| `ogredupe`.minehut.gg   | no    | no       |
+| `ipearlpvp`.minehut.gg  | no    | no       |
+| play.`pvplegacy`.net    | no    | yes      |
+| `donut`.net             | no    | yes      |
+| `hypixel`.net           | no    | pending  |
+| `cubecraft`.net         | no    | pending  |
+| `firevanilla`.net       | no    | yes      |
+| `shatteredvanilla`.net  | no    | no       |
+| `pvphub`.me             | no    | yes      |
+| `europemc`.org          | no    | pending  |
+| play.`jackpot`.org      | no    | pending  |
+| `kingsmp`.net           | no    | pending  |
+| `l1festee1`.net         | no    | no       |
+| `ironcadia`.minehut.gg  | no    | no       |
+| `apollocpvp`.minehut.gg | no    | yes      |
 
 
 ## For this Mod You Will Need
