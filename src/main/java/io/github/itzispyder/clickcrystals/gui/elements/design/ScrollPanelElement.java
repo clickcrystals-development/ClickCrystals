@@ -22,7 +22,7 @@ public class ScrollPanelElement extends GuiElement {
 
         // callbacks
         parentScreen.screenRenderListeners.add((context, mouseX, mouseY, delta) -> {
-            if (!canScroll()) return;
+            if (!canScroll() || !canRender()) return;
             if (scrolling) {
                 int deltaY = mouseY - prevDrag;
                 scrollWithMultiplier(-deltaY, 3);
@@ -102,6 +102,16 @@ public class ScrollPanelElement extends GuiElement {
         }
         remainingUp = y - limitTop;
         remainingDown = limitBottom - (y + height);
+    }
+
+    public void recalculatePositions() {
+        remainingUp = remainingDown = 0;
+        limitTop = y;
+        limitBottom = y + height;
+
+        for (GuiElement child : getChildren()) {
+            updateBounds(child);
+        }
     }
 
     @Override
