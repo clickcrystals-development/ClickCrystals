@@ -15,7 +15,7 @@ public class BulletinScreen extends ClickCrystalsBase {
 
     private BulletinBoard bulletin;
     private AnnouncementElement current;
-    private static int viewIndex = 0;
+    private int viewIndex = 0;
 
     public BulletinScreen() {
         super("ClickCrystals Bulletin");

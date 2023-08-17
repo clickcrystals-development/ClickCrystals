@@ -13,7 +13,11 @@ public final class StringUtils {
     }
 
     public static String color(String s) {
-        return s.replace('&', '§');
+        return nullable(s).replace('&', '§');
+    }
+
+    public static String nullable(String s) {
+        return s == null ? "" : s;
     }
 
     public static String decolor(String msg) {

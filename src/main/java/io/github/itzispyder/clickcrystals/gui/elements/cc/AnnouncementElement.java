@@ -30,6 +30,7 @@ public class AnnouncementElement extends GuiElement {
         if (announcement == null) return;
         this.announcement = announcement;
         this.clearChildren();
+        parentScreen.screenRenderListeners.clear();
 
         TextElement title = new TextElement(announcement.getTitle(), TextAlignment.LEFT, 0.8F, x + 7, y + 8);
         this.addChild(background);

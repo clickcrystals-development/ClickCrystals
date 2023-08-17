@@ -59,14 +59,12 @@ public abstract class GuiScreen extends Screen {
             for (GuiElement guiElement : children) {
                 guiElement.render(context, mouseX, mouseY);
             }
+            for (ScreenRenderCallback callback : screenRenderListeners) {
+                callback.handleScreen(context, mouseX, mouseY, delta);
+            }
         }
         catch (ConcurrentModificationException ex) {
             ex.printStackTrace();
-        }
-
-
-        for (ScreenRenderCallback callback : screenRenderListeners) {
-            callback.handleScreen(context, mouseX, mouseY, delta);
         }
 
         Module guiBorders = Module.get(GuiBorders.class);
