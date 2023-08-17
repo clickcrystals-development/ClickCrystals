@@ -29,7 +29,7 @@ public class ScrollPanelElement extends GuiElement {
                 prevDrag = mouseY;
             }
 
-            DrawableUtils.fill(context, x + width - 6, y, 6, height, 0xFF272727);
+            DrawableUtils.fill(context, x + width - 6, y, 6, height, 0xFF1F1F1F);
 
             double fullDoc = remainingUp + remainingDown + this.height;
             double drawStartRatio = remainingUp / fullDoc;

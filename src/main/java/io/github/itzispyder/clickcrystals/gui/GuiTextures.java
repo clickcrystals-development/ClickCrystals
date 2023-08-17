@@ -36,6 +36,10 @@ public final  class GuiTextures {
     public static final Identifier RESET = new Identifier(modId, "textures/gui/icons/reset.png");
     public static final Identifier KEYBOARD = new Identifier(modId, "textures/gui/icons/keyboard.png");
     public static final Identifier PEPE_UPDATE = new Identifier(modId, "textures/gui/icons/pepe_update.png");
+    public static final Identifier ARROW_UP = new Identifier(modId, "textures/gui/icons/arrow_up.png");
+    public static final Identifier ARROW_UP_DARK = new Identifier(modId, "textures/gui/icons/arrow_up_dark.png");
+    public static final Identifier ARROW_DOWN = new Identifier(modId, "textures/gui/icons/arrow_down.png");
+    public static final Identifier ARROW_DOWN_DARK = new Identifier(modId, "textures/gui/icons/arrow_down_dark.png");
 
     // modules
     public static final Identifier MODULE_ON = new Identifier(modId, "textures/gui/modules/module_on.png");

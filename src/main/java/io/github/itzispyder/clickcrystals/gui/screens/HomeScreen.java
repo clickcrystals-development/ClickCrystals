@@ -123,10 +123,10 @@ public class HomeScreen extends DefaultBase {
                 .texture(bg)
                 .icon(GuiTextures.PEOPLE)
                 .dimensions(w, h)
-                .title("Credits")
-                .subtitle("Your Idols Fr")
+                .title("Announcements")
+                .subtitle("Read me!!!")
                 .textScale(0.8F)
-                .onPress(btn -> mc.setScreenAndRender(new CreditsScreen()))
+                .onPress(btn -> mc.setScreenAndRender(new BulletinScreen()))
                 .onBuild(grid::addEntry)
                 .build();
 

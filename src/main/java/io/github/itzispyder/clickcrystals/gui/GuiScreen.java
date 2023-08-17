@@ -14,6 +14,7 @@ import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -54,9 +55,15 @@ public abstract class GuiScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
         this.baseRender(context, mouseX, mouseY, delta);
 
-        this.children.forEach(guiElement -> {
-            guiElement.render(context, mouseX, mouseY);
-        });
+        try {
+            for (GuiElement guiElement : children) {
+                guiElement.render(context, mouseX, mouseY);
+            }
+        }
+        catch (ConcurrentModificationException ex) {
+            ex.printStackTrace();
+        }
+
 
         for (ScreenRenderCallback callback : screenRenderListeners) {
             callback.handleScreen(context, mouseX, mouseY, delta);
@@ -141,9 +148,21 @@ public abstract class GuiScreen extends Screen {
                 panel.onScroll(amount);
                 break;
             }
+            scrollAt(child, (int)mouseX, (int)mouseY, amount);
         }
 
         return true;
+    }
+
+    private void scrollAt(GuiElement element, int mouseX, int mouseY, double amount) {
+        if (element instanceof ScrollPanelElement panel && panel.isMouseOver(mouseX, mouseY)) {
+            panel.onScroll(amount);
+            return;
+        }
+
+        for (GuiElement child : element.getChildren()) {
+            scrollAt(child, mouseX, mouseY, amount);
+        }
     }
 
     @Override
