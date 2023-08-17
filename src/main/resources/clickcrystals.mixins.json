@@ -26,6 +26,7 @@
   },
   "mixins": [
     "MixinEntity",
+    "MixinItem",
     "MixinItemstack",
     "MixinLivingEntity",
     "MixinMinecraftClient",
