@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public final class StringUtils {
@@ -67,7 +69,7 @@ public final class StringUtils {
         final List<String> lines = new ArrayList<>();
 
         if (s.length() <= maxLen) {
-            lines.add(s);
+            splitAdd(lines, s);
             return lines;
         }
 
@@ -77,11 +79,11 @@ public final class StringUtils {
                 while (nextChar(s, wrapAt) != ' ') {
                     wrapAt ++;
                 }
-                lines.add(s.substring(0, wrapAt + 1).trim());
+                splitAdd(lines, s.substring(0, wrapAt + 1).trim());
                 s = s.substring(wrapAt + 1);
             }
             else {
-                lines.add(s.substring(0, maxLen).trim());
+                splitAdd(lines, s.substring(0, maxLen).trim());
                 s = s.substring(maxLen);
             }
         }
@@ -90,6 +92,17 @@ public final class StringUtils {
         }
 
         return lines;
+    }
+
+    public static void splitAdd(Collection<String> c, String s) {
+        if (s == null || c == null) return;
+
+        if (s.contains("<n>")) {
+            c.addAll(Arrays.asList(s.split("<n>")));
+        }
+        else {
+            c.add(s);
+        }
     }
 
     public static String keyPressWithShift(String s) {
