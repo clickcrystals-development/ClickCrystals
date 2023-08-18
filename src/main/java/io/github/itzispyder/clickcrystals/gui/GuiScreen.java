@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -63,9 +63,7 @@ public abstract class GuiScreen extends Screen {
                 callback.handleScreen(context, mouseX, mouseY, delta);
             }
         }
-        catch (ConcurrentModificationException ex) {
-            ex.printStackTrace();
-        }
+        catch (ConcurrentModificationException ignore) {}
 
         Module guiBorders = Module.get(GuiBorders.class);
         if (guiBorders.isEnabled()) {
@@ -241,8 +239,8 @@ public abstract class GuiScreen extends Screen {
         String name = element.getClass().getSimpleName();
         double textScale = 0.7;
         int width = mc.textRenderer.getWidth(name) + 2;
-        DrawableUtils.fill(context, mouseX, mouseY, (int)(width * textScale), 9, 0xFF000000);
-        DrawableUtils.drawText(context, name, mouseX + 2, mouseY + (int)(9 * 0.33), 0.7F, true);
+        RenderUtils.fill(context, mouseX, mouseY, (int)(width * textScale), 9, 0xFF000000);
+        RenderUtils.drawText(context, name, mouseX + 2, mouseY + (int)(9 * 0.33), 0.7F, true);
     }
 
     public GuiElement getHoveredElement(double mouseX, double mouseY) {

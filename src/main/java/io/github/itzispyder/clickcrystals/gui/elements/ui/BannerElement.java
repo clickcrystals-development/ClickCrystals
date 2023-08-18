@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.elements.ui;
 
 import io.github.itzispyder.clickcrystals.gui.elements.base.BoxElement;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class BannerElement extends BoxElement {
@@ -22,7 +22,7 @@ public class BannerElement extends BoxElement {
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         super.onRender(context, mouseX, mouseY);
-        DrawableUtils.drawCenteredText(context, text, x + (width / 2), y + (int)(height * 0.33), false);
+        RenderUtils.drawCenteredText(context, text, x + (width / 2), y + (int)(height * 0.33), false);
     }
 
     public String getText() {

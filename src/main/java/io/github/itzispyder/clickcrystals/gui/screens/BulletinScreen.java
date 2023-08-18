@@ -3,8 +3,9 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 import io.github.itzispyder.clickcrystals.data.announce.BulletinBoard;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.AnnouncementElement;
+import io.github.itzispyder.clickcrystals.gui.elements.cc.LoadingIconElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 
@@ -20,6 +21,14 @@ public class BulletinScreen extends ClickCrystalsBase {
         super("ClickCrystals Bulletin");
 
         CompletableFuture<Void> f = BulletinBoard.request();
+        int x = nav.x + nav.width + 10;
+        int y = base.y + 10;
+        int w = base.width - nav.width - 45;
+        int h = base.height - 20;
+
+        LoadingIconElement load = new LoadingIconElement(GuiTextures.ICON, x, y, w, h, 40);
+        this.addChild(load);
+
         f.thenRun(() -> {
             if (f.isDone() && BulletinBoard.isCurrentValid()) {
                 this.bulletin = BulletinBoard.getCurrent();
@@ -28,11 +37,7 @@ public class BulletinScreen extends ClickCrystalsBase {
                 this.bulletin = BulletinBoard.createNull();
             }
 
-            int x = nav.x + nav.width + 10;
-            int y = base.y + 10;
-            int w = base.width - nav.width - 45;
-            int h = base.height - 20;
-
+            load.setRendering(false);
             current = new AnnouncementElement(this, bulletin.getAnnouncements()[0], x, y, w, h);
             this.addChild(current);
         });
@@ -57,7 +62,7 @@ public class BulletinScreen extends ClickCrystalsBase {
                 .dimensions(12, 12)
                 .onRender((context, mouseX, mouseY, button) -> {
                     String text = (viewIndex + 1) + "/" + (bulletin == null ? 0 : bulletin.size());
-                    DrawableUtils.drawCenteredText(context, text, button.x + button.width / 2, button.y + (int)(button.height * 0.33), 0.8F, true);
+                    RenderUtils.drawCenteredText(context, text, button.x + button.width / 2, button.y + (int)(button.height * 0.33), 0.8F, true);
                 })
                 .build();
 

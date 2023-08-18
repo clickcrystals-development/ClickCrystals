@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
 
@@ -38,7 +38,7 @@ public class SearchBarElement extends GuiElement implements Typeable {
             }
 
             String displayText = screen.selected == this ? text + "︳" : text;
-            DrawableUtils.drawText(context, displayText, x + 4 + getTextHeight(), y + (int)(height * 0.33), textScale, true);
+            RenderUtils.drawText(context, displayText, x + 4 + getTextHeight(), y + (int)(height * 0.33), textScale, true);
         }
     }
 

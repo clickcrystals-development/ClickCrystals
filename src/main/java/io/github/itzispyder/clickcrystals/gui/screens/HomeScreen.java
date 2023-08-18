@@ -110,12 +110,12 @@ public class HomeScreen extends DefaultBase {
 
         DetailedButtonElement.create()
                 .texture(bg)
-                .icon(GuiTextures.PEOPLE)
+                .icon(GuiTextures.ANNOUNCEMENT)
                 .dimensions(w, h)
-                .title("Credits")
-                .subtitle("Your Idols Fr")
+                .title("§eAnnouncements")
+                .subtitle("§eRead me!!!")
                 .textScale(0.8F)
-                .onPress(btn -> mc.setScreenAndRender(new CreditsScreen()))
+                .onPress(btn -> mc.setScreenAndRender(new BulletinScreen()))
                 .onBuild(grid::addEntry)
                 .build();
 
@@ -123,10 +123,10 @@ public class HomeScreen extends DefaultBase {
                 .texture(bg)
                 .icon(GuiTextures.PEOPLE)
                 .dimensions(w, h)
-                .title("Announcements")
-                .subtitle("Read me!!!")
+                .title("Credits")
+                .subtitle("Your Idols Fr")
                 .textScale(0.8F)
-                .onPress(btn -> mc.setScreenAndRender(new BulletinScreen()))
+                .onPress(btn -> mc.setScreenAndRender(new CreditsScreen()))
                 .onBuild(grid::addEntry)
                 .build();
 

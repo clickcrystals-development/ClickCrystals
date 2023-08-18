@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import net.minecraft.client.gui.DrawContext;
 
@@ -57,8 +57,8 @@ public class DoubleSettingElement extends GuiElement {
             knob.setX(MathUtils.minMax(mouseX, x, x + width));
         }
 
-        DrawableUtils.drawHorizontalLine(context, x, y + 4, width + 10, 2, COLOR_EMPTY);
-        DrawableUtils.drawHorizontalLine(context, x, y + 4, knob.x - x, 2, COLOR_FILL);
+        RenderUtils.drawHorizontalLine(context, x, y + 4, width + 10, 2, COLOR_EMPTY);
+        RenderUtils.drawHorizontalLine(context, x, y + 4, knob.x - x, 2, COLOR_FILL);
         this.titleText.setText(setting.getName() + ": §3" + setting.getVal());
 
         double range = setting.getMax() - setting.getMin();

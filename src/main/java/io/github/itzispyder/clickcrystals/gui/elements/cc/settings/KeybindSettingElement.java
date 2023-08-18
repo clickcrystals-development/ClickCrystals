@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
@@ -41,7 +41,7 @@ public class KeybindSettingElement extends GuiElement implements Typeable {
             context.drawTexture(texture, x, y, 0, 0, width, height, width, height);
 
             updateDisplay();
-            DrawableUtils.drawCenteredText(context, display, x + width / 2, y + (int)(height * 0.28), 0.65F, true);
+            RenderUtils.drawCenteredText(context, display, x + width / 2, y + (int)(height * 0.28), 0.65F, true);
         }
     }
 

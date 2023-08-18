@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.design;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class ScrollPanelElement extends GuiElement {
@@ -29,7 +29,7 @@ public class ScrollPanelElement extends GuiElement {
                 prevDrag = mouseY;
             }
 
-            DrawableUtils.fill(context, x + width - 6, y, 6, height, 0xFF1F1F1F);
+            RenderUtils.fill(context, x + width - 6, y, 6, height, 0xFF1F1F1F);
 
             double fullDoc = remainingUp + remainingDown + this.height;
             double drawStartRatio = remainingUp / fullDoc;
@@ -37,9 +37,9 @@ public class ScrollPanelElement extends GuiElement {
             int drawStart = (int)(this.height * drawStartRatio);
             int drawLength = (int)(this.height * ratio);
 
-            DrawableUtils.fill(context, this.x + this.width - 6, this.y + drawStart, 6, drawLength, 0xFFAAAAAA);
-            DrawableUtils.fill(context, this.x + this.width - 1, this.y + drawStart, 1, drawLength, 0xFF555555);
-            DrawableUtils.fill(context, this.x + this.width - 6, this.y + drawStart + drawLength - 1, 6, 1, 0xFF555555);
+            RenderUtils.fill(context, this.x + this.width - 6, this.y + drawStart, 6, drawLength, 0xFFAAAAAA);
+            RenderUtils.fill(context, this.x + this.width - 1, this.y + drawStart, 1, drawLength, 0xFF555555);
+            RenderUtils.fill(context, this.x + this.width - 6, this.y + drawStart + drawLength - 1, 6, 1, 0xFF555555);
 
             scrollbarY = this.y + drawStart;
             scrollbarHeight = drawLength;

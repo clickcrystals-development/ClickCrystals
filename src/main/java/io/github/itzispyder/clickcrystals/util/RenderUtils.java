@@ -1,12 +1,15 @@
 package io.github.itzispyder.clickcrystals.util;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
-public final class DrawableUtils {
+public final class RenderUtils {
 
     // default text
 
@@ -122,5 +125,9 @@ public final class DrawableUtils {
 
     public static void fill(DrawContext context, int x, int y, int width, int height, int color) {
         context.fill(x, y, x + width, y + height, color);
+    }
+
+    public static DrawContext createContext() {
+        return new DrawContext(MinecraftClient.getInstance(), VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer()));
     }
 }

@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.elements.design;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -23,9 +23,9 @@ public class DividerElement extends GuiElement {
         int nameHeight = (int)(10 * textScale);
         int textMargin = (int)(width * 0.05);
 
-        DrawableUtils.drawHorizontalLine(context, x, y + nameHeight / 2, textMargin, 1, 0xFF555555);
-        DrawableUtils.drawText(context, "§7" + text, x + textMargin + 3, y + nameHeight / 4, textScale, true);
-        DrawableUtils.drawHorizontalLine(context, x + textMargin + nameWidth + 6, y + nameHeight / 2, width - (textMargin + nameWidth + 16), 1, 0xFF555555);
+        RenderUtils.drawHorizontalLine(context, x, y + nameHeight / 2, textMargin, 1, 0xFF555555);
+        RenderUtils.drawText(context, "§7" + text, x + textMargin + 3, y + nameHeight / 4, textScale, true);
+        RenderUtils.drawHorizontalLine(context, x + textMargin + nameWidth + 6, y + nameHeight / 2, width - (textMargin + nameWidth + 16), 1, 0xFF555555);
     }
 
     @Override

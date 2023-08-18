@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.gui.screens.HomeScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.ModuleSettingsScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 
@@ -34,10 +34,10 @@ public class DetailedModuleElement extends GuiElement {
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         String prefix = module.isEnabled() ? "§b" : "§c";
-        DrawableUtils.drawText(context, prefix + module.getName(), x + 5, y + 5, 0.8F, true);
+        RenderUtils.drawText(context, prefix + module.getName(), x + 5, y + 5, 0.8F, true);
         int i = 0;
         for (String line : StringUtils.wrapLines(module.getDescription(), 20, true)) {
-            DrawableUtils.drawText(context, "§7" + line, x + 5, y + 13 + (int)(i++ * 5.5), 0.55F, true);
+            RenderUtils.drawText(context, "§7" + line, x + 5, y + 13 + (int)(i++ * 5.5), 0.55F, true);
         }
 
         highlight.rendering = isHovered(mouseX, mouseY);

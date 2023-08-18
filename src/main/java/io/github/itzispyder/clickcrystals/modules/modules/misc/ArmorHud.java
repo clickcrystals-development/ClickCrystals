@@ -10,7 +10,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.InvUtils;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
@@ -140,7 +140,7 @@ public class ArmorHud extends Module implements Listener {
 
         renderItem(armorItem, context, x, y, stack -> {
             if (armorItem.isDamageable()) {
-                DrawableUtils.drawCenteredText(context, percentage, x + 11, y - 8, 0.8F, true);
+                RenderUtils.drawCenteredText(context, percentage, x + 11, y - 8, 0.8F, true);
             }
         }, warning);
     }
@@ -151,7 +151,7 @@ public class ArmorHud extends Module implements Listener {
 
         renderItem(item, context, x, y, stack -> {
             String display = count == 0 ? "" : "§b" + count;
-            DrawableUtils.drawCenteredText(context, display, x + 11, y - 8, 0.8F, true);
+            RenderUtils.drawCenteredText(context, display, x + 11, y - 8, 0.8F, true);
         }, warning);
     }
 

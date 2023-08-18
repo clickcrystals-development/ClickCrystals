@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
@@ -66,7 +66,7 @@ public class StringSettingElement extends GuiElement implements Typeable {
             }
 
             String displayText = screen.selected == this ? text + "︳" : text;
-            DrawableUtils.drawText(context, displayText, x + 2, y + (int)(height * 0.33), textScale, true);
+            RenderUtils.drawText(context, displayText, x + 2, y + (int)(height * 0.33), textScale, true);
         }
     }
 

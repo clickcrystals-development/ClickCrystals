@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.ui;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -37,7 +37,7 @@ public class HyperLinkElement extends GuiElement {
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         int color = isHovered(mouseX, mouseY) ? 0xFF55FFFF : 0xFF00AAAA;
-        DrawableUtils.drawHorizontalLine(context, x, textElement.y + textElement.height + 1, (int)(mc.textRenderer.getWidth(name) * textScale), 1, color);
+        RenderUtils.drawHorizontalLine(context, x, textElement.y + textElement.height + 1, (int)(mc.textRenderer.getWidth(name) * textScale), 1, color);
     }
 
     @Override

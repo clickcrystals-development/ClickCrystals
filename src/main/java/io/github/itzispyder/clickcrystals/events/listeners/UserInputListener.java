@@ -30,7 +30,8 @@ public class UserInputListener implements Listener {
             SelectWorldScreen.class, "Selecting singleplayer",
             MultiplayerScreen.class, "Selecting server",
             GameMenuScreen.class, "Idling...",
-            CreditsScreen.class, "Checking out the goats"
+            CreditsScreen.class, "Checking out the goats",
+            BulletinScreen.class, "Viewing CC Bulletin Board"
     );
 
     @EventHandler

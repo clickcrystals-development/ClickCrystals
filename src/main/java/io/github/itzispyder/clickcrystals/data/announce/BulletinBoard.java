@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class BulletinBoard {
 
     private static AtomicReference<BulletinBoard> current = new AtomicReference<>(null);
-    public static final String URL = "https://raw.githubusercontent.com/ItziSpyder/ClickCrystals/main/bulletin.json";
+    public static final String URL = "https://itzispyder.github.io/cc-bulletin";
     private final Announcement[] announcements;
 
     public BulletinBoard(Announcement... announcements) {

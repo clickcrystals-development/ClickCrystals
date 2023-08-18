@@ -41,6 +41,7 @@ public final  class GuiTextures {
     public static final Identifier ARROW_UP_DARK = new Identifier(modId, "textures/gui/icons/arrow_up_dark.png");
     public static final Identifier ARROW_DOWN = new Identifier(modId, "textures/gui/icons/arrow_down.png");
     public static final Identifier ARROW_DOWN_DARK = new Identifier(modId, "textures/gui/icons/arrow_down_dark.png");
+    public static final Identifier ANNOUNCEMENT = new Identifier(modId, "textures/gui/icons/announcement.png");
 
     // modules
     public static final Identifier MODULE_ON = new Identifier(modId, "textures/gui/modules/module_on.png");

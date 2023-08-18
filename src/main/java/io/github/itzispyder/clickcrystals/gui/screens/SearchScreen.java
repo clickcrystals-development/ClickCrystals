@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.cc.DetailedModuleElement;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
@@ -36,7 +36,7 @@ public class SearchScreen extends ClickCrystalsBase {
                 .onPress(button -> pagePrev())
                 .onRender((context, mouseX, mouseY, button) -> {
                     String display = pageIndex <= minPage ? "§8<" : "§f<";
-                    DrawableUtils.drawCenteredText(context, display, button.x + button.width / 2, button.y + (int)(button.height * 0.33), 0.8F, true);
+                    RenderUtils.drawCenteredText(context, display, button.x + button.width / 2, button.y + (int)(button.height * 0.33), 0.8F, true);
                 })
                 .build();
 
@@ -45,7 +45,7 @@ public class SearchScreen extends ClickCrystalsBase {
                 .dimensions(20, 12)
                 .onRender((context, mouseX, mouseY, button) -> {
                     String display = (pageIndex + 1) + "/" + maxPage;
-                    DrawableUtils.drawCenteredText(context, display, button.x + button.width / 2, button.y + (int)(button.height * 0.33), 0.8F, true);
+                    RenderUtils.drawCenteredText(context, display, button.x + button.width / 2, button.y + (int)(button.height * 0.33), 0.8F, true);
                 })
                 .build();
 
@@ -55,7 +55,7 @@ public class SearchScreen extends ClickCrystalsBase {
                 .onPress(button -> pageNext())
                 .onRender((context, mouseX, mouseY, button) -> {
                     String display = pageIndex + 1 >= maxPage ? "§8>" : "§f>";
-                    DrawableUtils.drawCenteredText(context, display, button.x + button.width / 2, button.y + (int)(button.height * 0.33), 0.8F, true);
+                    RenderUtils.drawCenteredText(context, display, button.x + button.width / 2, button.y + (int)(button.height * 0.33), 0.8F, true);
                 })
                 .build();
 

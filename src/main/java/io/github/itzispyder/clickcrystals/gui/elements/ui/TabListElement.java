@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.List;
@@ -57,10 +57,10 @@ public class TabListElement<T> extends GuiElement {
         double sectionWidth = (double)width / options.size();
         int selectionX = x + (int)sectionWidth * selection;
 
-        DrawableUtils.drawHorizontalLine(context, selectionX + 5, y + height - 10, (int)sectionWidth - 10, 2, 0xD03873A9);
+        RenderUtils.drawHorizontalLine(context, selectionX + 5, y + height - 10, (int)sectionWidth - 10, 2, 0xD03873A9);
 
         for (int i = 1; i < options.size(); i++) {
-            DrawableUtils.drawText(context, "§7|", x + (int)(sectionWidth * i), y + (int)(height * 0.33), 0.6F, false);
+            RenderUtils.drawText(context, "§7|", x + (int)(sectionWidth * i), y + (int)(height * 0.33), 0.6F, false);
         }
     }
 
