@@ -24,6 +24,7 @@ public final  class GuiTextures {
     public static final Identifier ITEM_WIDGET = new Identifier(modId, "textures/gui/item_widget.png");
     public static final Identifier ITEM_WIDGET_WARNING = new Identifier(modId, "textures/gui/item_widget_warning.png");
     public static final Identifier SMOOTH_STRIPE_HORIZONTAL = new Identifier(modId, "textures/gui/smooth_stripe_horizontal.png");
+    public static final Identifier BULLETIN = new Identifier(modId, "textures/gui/bulletin.png");
 
     // icons
     public static final Identifier SEARCH = new Identifier(modId, "textures/gui/icons/search.png");

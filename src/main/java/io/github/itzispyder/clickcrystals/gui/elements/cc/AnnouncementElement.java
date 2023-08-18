@@ -22,7 +22,7 @@ public class AnnouncementElement extends GuiElement {
         super(x, y, width, height);
         this.announcement = announcement;
         this.parentScreen = parentScreen;
-        this.background = new ImageElement(GuiTextures.SMOOTH_HORIZONTAL_WIDGET, x, y, width, height);
+        this.background = new ImageElement(GuiTextures.BULLETIN, x, y, width, height);
         this.setAnnouncement(announcement);
     }
 
