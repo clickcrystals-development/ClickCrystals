@@ -2,8 +2,8 @@ package io.github.itzispyder.clickcrystals.gui.hud;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.CrystPerSec;
-import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;

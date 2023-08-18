@@ -5,8 +5,8 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class HealthAsBar extends Module {

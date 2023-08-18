@@ -8,8 +8,8 @@ import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
-import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
