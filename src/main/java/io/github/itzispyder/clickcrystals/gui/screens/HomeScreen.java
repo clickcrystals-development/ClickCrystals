@@ -64,7 +64,7 @@ public class HomeScreen extends DefaultBase {
                 .texture(bg)
                 .icon(GuiTextures.DISCORD)
                 .dimensions(w, h)
-                .title("Join the Discord!")
+                .title("§eJoin the Discord!")
                 .subtitle("§b§uJoin the others!")
                 .textScale(0.8F)
                 .onPress(btn -> {
