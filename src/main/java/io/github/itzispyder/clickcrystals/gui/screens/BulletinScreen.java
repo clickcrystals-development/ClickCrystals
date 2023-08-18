@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
-import io.github.itzispyder.clickcrystals.data.announce.Announcement;
 import io.github.itzispyder.clickcrystals.data.announce.BulletinBoard;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.AnnouncementElement;
@@ -46,7 +45,10 @@ public class BulletinScreen extends ClickCrystalsBase {
                     context.drawTexture(tex, button.x, button.y, 0, 0, button.width, button.height, button.width, button.height);
                 })
                 .onPress(button -> {
-                    current.setAnnouncement(prev());
+                    if (canPrev()) {
+                        prev();
+                        updateCurrent();
+                    }
                 })
                 .build();
 
@@ -67,7 +69,10 @@ public class BulletinScreen extends ClickCrystalsBase {
                     context.drawTexture(tex, button.x, button.y, 0, 0, button.width, button.height, button.width, button.height);
                 })
                 .onPress(button -> {
-                    current.setAnnouncement(next());
+                    if (canNext()) {
+                        next();
+                        updateCurrent();
+                    }
                 })
                 .build();
 
@@ -76,28 +81,28 @@ public class BulletinScreen extends ClickCrystalsBase {
         this.addChild(down);
     }
 
-    private Announcement next() {
-        if (bulletin != null) {
-            viewIndex++;
-            if (viewIndex >= bulletin.size()) {
-                viewIndex = 0;
-            }
-
-            return bulletin.getAnnouncements()[viewIndex];
-        }
-        return BulletinBoard.createNull().getAnnouncements()[0];
+    private void updateCurrent() {
+        current.setAnnouncement(bulletin.getAnnouncements()[viewIndex]);
     }
 
-    private Announcement prev() {
-        if (bulletin != null) {
-            viewIndex--;
-            if (viewIndex < 0) {
-                viewIndex = bulletin.size() - 1;
-            }
+    private boolean canNext() {
+        return viewIndex + 1 < bulletin.size();
+    }
 
-            return bulletin.getAnnouncements()[viewIndex];
+    private boolean canPrev() {
+        return viewIndex - 1 >= 0;
+    }
+
+    private void next() {
+        if (bulletin != null && canNext()) {
+            viewIndex++;
         }
-        return BulletinBoard.createNull().getAnnouncements()[0];
+    }
+
+    private void prev() {
+        if (bulletin != null && canPrev()) {
+            viewIndex--;
+        }
     }
 
     @Override

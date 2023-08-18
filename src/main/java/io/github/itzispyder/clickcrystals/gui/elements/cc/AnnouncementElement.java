@@ -43,7 +43,11 @@ public class AnnouncementElement extends GuiElement {
             caret += 6;
         }
 
-        caret += 6;
+        caret += 4;
+        TextElement divider = new TextElement("§8§m§l-----------------------------------", TextAlignment.LEFT, 0.8F, x + 7, caret);
+        this.addChild(divider);
+
+        caret += 10;
         ScrollPanelElement panel = new ScrollPanelElement(parentScreen, x, caret, width - 10, y + height - 10 - caret);
         this.addChild(panel);
 

@@ -17,6 +17,12 @@ public class AdaptiveGridOrganizer extends GridOrganizer {
         setCellHeight(getTallest());
     }
 
+    @Override
+    public void organize() {
+        updateBounds();
+        super.organize();
+    }
+
     public int getWidest() {
         List<Integer> i = getEntries().stream().filter(Objects::nonNull).map(GuiElement::getWidth).sorted().toList();
         return i.isEmpty() ? 0 : i.get(i.size() - 1);
