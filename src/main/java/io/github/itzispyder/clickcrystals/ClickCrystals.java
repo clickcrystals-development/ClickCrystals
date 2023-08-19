@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals;
 import io.github.itzispyder.clickcrystals.client.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.client.system.DiscordPresence;
+import io.github.itzispyder.clickcrystals.client.system.Version;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.ConfigFile;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
@@ -39,7 +40,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.LinkedHashMap;
-import java.util.function.Function;
 
 /**
  * ClickCrystals main
@@ -230,8 +230,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
     }
 
     public static boolean matchLatestVersion() {
-        Function<String, Long> convert = s -> Long.parseLong(s.replaceAll("[^0-9]", ""));
-        return convert.apply(version) >= convert.apply(getLatestVersion());
+        return Version.ofString(version).isUpToDate(Version.ofString(getLatestVersion()));
     }
 
     public static String getLatestVersion() {
