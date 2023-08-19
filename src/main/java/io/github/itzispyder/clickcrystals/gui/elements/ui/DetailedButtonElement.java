@@ -110,7 +110,7 @@ public class DetailedButtonElement extends GuiElement {
         private PressAction<DetailedButtonElement> pressAction, onBuild;
 
         public Builder() {
-            texture = icon = GuiTextures.SMOOTH_HORIZONTAL_WIDGET;
+            texture = icon = GuiTextures.AIR;
             title = subtitle = "";
             textScale = 1.0F;
             pressAction = onBuild = button -> {};

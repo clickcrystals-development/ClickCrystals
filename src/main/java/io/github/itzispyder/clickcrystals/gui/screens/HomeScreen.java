@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
+import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.ui.DetailedButtonElement;
 import io.github.itzispyder.clickcrystals.gui.elements.ui.ImageBannerElement;
 import io.github.itzispyder.clickcrystals.gui.organizers.GridOrganizer;
@@ -21,6 +22,7 @@ public class HomeScreen extends DefaultBase {
         Window win = mc.getWindow();
         int w = win.getScaledWidth();
         int h = win.getScaledHeight();
+        int gap = 15;
 
         // banner
         ImageBannerElement banner = new ImageBannerElement(GuiTextures.SMOOTH_BANNER, 0, 0, base.width - 20, 0, "§l§oClickCrystals", "Your Ultimate CPvP Assistance", 2.0F);
@@ -29,14 +31,16 @@ public class HomeScreen extends DefaultBase {
         banner.moveTo(banner.x, base.y + 15);
         this.addChild(banner);
 
-        Identifier bg = GuiTextures.HOLLOW_HORIZONTAL_WIDGET;
+        ImageElement panelBg = new ImageElement(GuiTextures.SMOOTH_HORIZONTAL_WIDGET, base.x + gap, banner.y + banner.height + gap, base.width - (2 * gap), base.height - banner.height - (3 * gap));
+        this.addChild(panelBg);
+
         // pages
-        int gap = 15;
-        w = 100;
-        h = 35;
-        int x = banner.x + 25;
-        int y = banner.y + banner.height + gap;
-        GridOrganizer grid = new GridOrganizer(x, y, w, h, 3, gap);
+        Identifier bg = GuiTextures.AIR;
+        w = 75;
+        h = 30;
+        int x = banner.x + gap;
+        int y = banner.y + banner.height + gap + 5;
+        GridOrganizer grid = new GridOrganizer(x, y, w, h, 4, gap);
 
         DetailedButtonElement.create()
                 .texture(bg)
@@ -62,22 +66,6 @@ public class HomeScreen extends DefaultBase {
 
         DetailedButtonElement.create()
                 .texture(bg)
-                .icon(GuiTextures.DISCORD)
-                .dimensions(w, h)
-                .title("§eJoin the Discord!")
-                .subtitle("§b§uJoin the others!")
-                .textScale(0.8F)
-                .onPress(btn -> {
-                    try {
-                        system.openUrl("https://discord.gg/tMaShNzNtP", starter + "Join the Discord! >>>", mc.currentScreen.getClass().newInstance());
-                    }
-                    catch (Exception ignore) {}
-                })
-                .onBuild(grid::addEntry)
-                .build();
-
-        DetailedButtonElement.create()
-                .texture(bg)
                 .icon(GuiTextures.CODE)
                 .dimensions(w, h)
                 .title("Source Code")
@@ -89,6 +77,17 @@ public class HomeScreen extends DefaultBase {
                     }
                     catch (Exception ignore) {}
                 })
+                .onBuild(grid::addEntry)
+                .build();
+
+        DetailedButtonElement.create()
+                .texture(bg)
+                .icon(GuiTextures.PEOPLE)
+                .dimensions(w, h)
+                .title("Credits")
+                .subtitle("Your Idols Fr")
+                .textScale(0.8F)
+                .onPress(btn -> mc.setScreenAndRender(new CreditsScreen()))
                 .onBuild(grid::addEntry)
                 .build();
 
@@ -110,6 +109,22 @@ public class HomeScreen extends DefaultBase {
 
         DetailedButtonElement.create()
                 .texture(bg)
+                .icon(GuiTextures.DISCORD)
+                .dimensions(w, h)
+                .title("§eJoin Discord!")
+                .subtitle("§b§uJoin the others!")
+                .textScale(0.8F)
+                .onPress(btn -> {
+                    try {
+                        system.openUrl("https://discord.gg/tMaShNzNtP", starter + "Join the Discord! >>>", mc.currentScreen.getClass().newInstance());
+                    }
+                    catch (Exception ignore) {}
+                })
+                .onBuild(grid::addEntry)
+                .build();
+
+        DetailedButtonElement.create()
+                .texture(bg)
                 .icon(GuiTextures.ANNOUNCEMENT)
                 .dimensions(w, h)
                 .title("§eAnnouncements")
@@ -119,24 +134,17 @@ public class HomeScreen extends DefaultBase {
                 .onBuild(grid::addEntry)
                 .build();
 
-        DetailedButtonElement.create()
-                .texture(bg)
-                .icon(GuiTextures.PEOPLE)
-                .dimensions(w, h)
-                .title("Credits")
-                .subtitle("Your Idols Fr")
-                .textScale(0.8F)
-                .onPress(btn -> mc.setScreenAndRender(new CreditsScreen()))
-                .onBuild(grid::addEntry)
-                .build();
-
         grid.organize();
+        grid.getEntries().forEach(this::addChild);
+
+        /*
         grid.createPanel(this, (base.y + base.height) - grid.getStartY() - gap);
         grid.addAllToPanel();
 
         if (grid.hasPanel()) {
             this.addChild(grid.getPanel());
         }
+         */
     }
 
     @Override
