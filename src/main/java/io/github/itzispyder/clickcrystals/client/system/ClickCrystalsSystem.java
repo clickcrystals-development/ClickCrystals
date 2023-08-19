@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.util.*;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.prefix;
 
 public class ClickCrystalsSystem implements Serializable {
 
@@ -109,5 +110,9 @@ public class ClickCrystalsSystem implements Serializable {
 
     public List<Keybind> getBindsOf(int key) {
         return keybinds().stream().filter(bind -> bind.getKey() == key).toList();
+    }
+
+    public void prefixPrint(String msg) {
+        System.out.println(prefix + msg);
     }
 }

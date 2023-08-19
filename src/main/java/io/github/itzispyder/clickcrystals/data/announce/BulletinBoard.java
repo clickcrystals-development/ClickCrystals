@@ -70,6 +70,7 @@ public class BulletinBoard {
                 throw new IllegalStateException("json parse failed!");
             }
 
+            isr.close();
             current.set(bulletin);
         }
         catch (Exception ex) {
