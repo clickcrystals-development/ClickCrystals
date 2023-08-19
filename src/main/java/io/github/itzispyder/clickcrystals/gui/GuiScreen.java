@@ -51,6 +51,13 @@ public abstract class GuiScreen extends Screen {
     public abstract void baseRender(DrawContext context, int mouseX, int mouseY, float delta);
 
     @Override
+    public void tick() {
+        for (GuiElement child : children) {
+            child.onTick();
+        }
+    }
+
+    @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
         this.baseRender(context, mouseX, mouseY, delta);

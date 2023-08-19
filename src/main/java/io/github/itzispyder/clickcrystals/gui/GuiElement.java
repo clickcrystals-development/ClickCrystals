@@ -48,6 +48,12 @@ public abstract class GuiElement {
 
     public abstract void onClick(double mouseX, double mouseY, int button);
 
+    public void onTick() {
+        for (GuiElement child : children) {
+            child.onTick();
+        }
+    }
+
     public void mouseClicked(double mouseX, double mouseY, int button) {
         if (isHovered((int)mouseX, (int)mouseY)) {
             onClick(mouseX, mouseY, button);

@@ -87,6 +87,13 @@ public class TabListElement<T> extends GuiElement {
         this.selection = selection;
     }
 
+    public void setSelection(T selection) {
+        int i = options.indexOf(selection);
+        if (i != -1) {
+            setSelection(i);
+        }
+    }
+
     public List<T> getOptions() {
         return options;
     }

@@ -24,9 +24,14 @@ public class LoadingIconElement extends ImageElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        MatrixStack m = ctx.getMatrices();
-        m.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(deg += 3), x + width / 2.0F, y + height / 2.0F, 0.0F);
-
         super.onRender(ctx, mouseX, mouseY);
     }
+
+    @Override
+    public void onTick() {
+        if (canRender()) {
+            MatrixStack m = ctx.getMatrices();
+            m.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(deg += 3), x + width / 2.0F, y + height / 2.0F, 0.0F);
+        }
+     }
 }

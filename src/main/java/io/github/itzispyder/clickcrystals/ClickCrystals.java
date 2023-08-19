@@ -44,9 +44,9 @@ import java.util.function.Function;
 /**
  * ClickCrystals main
  * TODO: (1) Update mod version down in "this file"
- * TODO: (1) Update mod "gradle.properties"
- * TODO: (2) Update mod version in "GitHub Pages"
- * TODO: (3) Update "README.md"
+ * TODO: (2) Update mod "gradle.properties"
+ * TODO: (3) Update mod version in "GitHub Pages"
+ * TODO: (4) Update "README.md"
  */
 public final class ClickCrystals implements ModInitializer, ClientLifecycleEvents.ClientStopping {
 
@@ -80,7 +80,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
             modId = "clickcrystals",
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
-            version = "0.9.8";
+            version = "0.9.9";
 
     /**
      * Runs the mod initializer.
