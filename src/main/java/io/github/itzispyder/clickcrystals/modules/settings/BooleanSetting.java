@@ -17,9 +17,9 @@ public class BooleanSetting extends ModuleSetting<Boolean> {
         return new Builder();
     }
 
-    public static class Builder extends SettingBuilder<Boolean> {
+    public static class Builder extends SettingBuilder<Boolean, Builder, BooleanSetting> {
         @Override
-        public ModuleSetting<Boolean> build() {
+        public BooleanSetting build() {
             return new BooleanSetting(name, description, def, getOrDef(val, def));
         }
     }

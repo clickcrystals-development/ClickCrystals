@@ -17,9 +17,9 @@ public class StringSetting extends ModuleSetting<String> {
         return new Builder();
     }
 
-    public static class Builder extends SettingBuilder<String> {
+    public static class Builder extends SettingBuilder<String, Builder, StringSetting> {
         @Override
-        public ModuleSetting<String> build() {
+        public StringSetting build() {
             return new StringSetting(name, description, def, getOrDef(val, def));
         }
     }

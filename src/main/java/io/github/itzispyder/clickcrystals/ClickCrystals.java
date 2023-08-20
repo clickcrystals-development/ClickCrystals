@@ -190,6 +190,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addModule(new SlowSwing());
         system.addModule(new ToolSwitcher());
         system.addModule(new TotemPops());
+        system.addModule(new ChatPrefix());
 
         // optimization
         system.addModule(new AntiCrash());

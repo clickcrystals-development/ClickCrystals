@@ -64,7 +64,7 @@ public class DoubleSetting extends NumberSetting<Double> {
         return new Builder();
     }
 
-    public static class Builder extends SettingBuilder<Double> {
+    public static class Builder extends SettingBuilder<Double, Builder, DoubleSetting> {
 
         private double min, max;
         private int decimalPlaces;
@@ -90,7 +90,7 @@ public class DoubleSetting extends NumberSetting<Double> {
         }
 
         @Override
-        public ModuleSetting<Double> build() {
+        public DoubleSetting build() {
             return new DoubleSetting(name, description, MathUtils.minMax(def, min, max), getOrDef(val, def), min, max, decimalPlaces);
         }
     }

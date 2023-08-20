@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.events.events.client.ChatCommandEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.ChatSendEvent;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -15,6 +16,10 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
 @Mixin(ClientPlayNetworkHandler.class)
 public abstract class MixinClientPlayNetworkHandler {
+
+    @Shadow
+    public abstract void sendChatMessage(String content);
+    private static boolean ignoreChatMessage = false;
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String content, CallbackInfo ci) {
@@ -36,9 +41,18 @@ public abstract class MixinClientPlayNetworkHandler {
             return;
         }
 
-        ChatSendEvent event = new ChatSendEvent(content);
-        system.eventBus.pass(event);
-        if (event.isCancelled()) ci.cancel();
+        if (!ignoreChatMessage) {
+            ChatSendEvent event = new ChatSendEvent(content);
+            system.eventBus.pass(event);
+
+            if (!event.isCancelled()) {
+                ignoreChatMessage = true;
+                sendChatMessage(event.getMessage());
+                ignoreChatMessage = false;
+            }
+
+            ci.cancel();
+        }
     }
 
     @Inject(method = "sendChatCommand", at = @At("HEAD"), cancellable = true)
