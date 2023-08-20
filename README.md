@@ -139,6 +139,7 @@ Changelog:
 | BowSwap          |                      Hotkeys to bow after placing tnt minecart                       |
 | ViewModel        |                             Changes your hand view model                             |
 | Zoom             |                                 Now you can zoom, yw                                 |
+| ChatPrefix       |                 Chat prefixes and suffixes, and custom unicode fonts                 |
 
 
 ## But isn't this cheating?
