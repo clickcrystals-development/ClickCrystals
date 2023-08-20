@@ -41,6 +41,17 @@ public final class StringUtils {
         }
     }
 
+    public static String revered(String s) {
+        StringBuilder b = new StringBuilder();
+        char[] a = s.toCharArray();
+
+        for (int i = a.length - 1; i >= 0; i--) {
+            b.append(a[i]);
+        }
+
+        return b.toString();
+    }
+
     public static String capitalize(String s) {
         if (s.length() <= 1) return s.toUpperCase();
         s = s.toLowerCase();

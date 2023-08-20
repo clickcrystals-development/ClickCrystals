@@ -1,9 +1,10 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui.GuiElement;
+import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.EnumSettingElement;
 
 public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {
 
+    private static long cooldown;
     private E[] values;
     private int reading;
 
@@ -23,6 +24,11 @@ public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {
     }
 
     public void next() {
+        if (cooldown > System.currentTimeMillis()) {
+            return;
+        }
+
+        cooldown = System.currentTimeMillis() + 50;
         reading++;
 
         if (reading >= values.length) {
@@ -33,8 +39,8 @@ public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {
     }
 
     @Override
-    public <E extends GuiElement> E toGuiElement(int x, int y, int width, int height) {
-        return null;
+    public EnumSettingElement toGuiElement(int x, int y, int width, int height) {
+        return new EnumSettingElement(this, x, y, width, height);
     }
 
     public static <E extends Enum<?>> Builder<E> create(Class<E> type) {
@@ -44,7 +50,7 @@ public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {
     public static class Builder<E extends Enum<?>> extends SettingBuilder<E, Builder<E>, EnumSetting<E>> {
         @Override
         public EnumSetting<E> build() {
-            return new EnumSetting<>(name, description, def, val);
+            return new EnumSetting<>(name, description, def, getOrDef(val, def));
         }
     }
 }

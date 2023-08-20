@@ -3,10 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.cc.settings;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.design.DividerElement;
-import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
-import io.github.itzispyder.clickcrystals.modules.settings.NumberSetting;
-import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.*;
 import net.minecraft.client.gui.DrawContext;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -30,7 +27,7 @@ public class SettingSectionElement extends GuiElement {
         for (ModuleSetting<?> setting : settingSection.getSettings()) {
             int elementWidth = 20;
             if (setting instanceof NumberSetting<?>) elementWidth = 80;
-            else if (setting instanceof StringSetting) elementWidth = 90;
+            else if (setting instanceof StringSetting || setting instanceof EnumSetting<?>) elementWidth = 90;
 
             GuiElement element = setting.toGuiElement(x, caret, elementWidth, 10);
             this.addChild(element);
