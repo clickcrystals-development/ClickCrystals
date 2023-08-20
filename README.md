@@ -50,7 +50,11 @@ Changelog:
     - Applied changes to the home screen
     - Added new announcements tab
     - ^ read from https://itzispyder.github.io/cc-bulletin
-
+  Modules:
+    - Added ChatPrefix module: 
+        - message prefixes
+        - message suffixes
+        - custom unicode fonts
 ```
 
 <div class="demo-menu">
