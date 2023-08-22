@@ -24,9 +24,9 @@ public abstract class ClickCrystalsBase extends DefaultBase {
     public ImageElement homeIcon = new ImageElement(GuiTextures.HOME, 0, 0, 0, 0);
     public ImageElement modulesIcon = new ImageElement(GuiTextures.MODULES, 0, 0, 0, 0);
     public ImageElement searchIcon = new ImageElement(GuiTextures.SEARCH, 0, 0, 0, 0);
-    public ImageElement creditsIcon = new ImageElement(GuiTextures.PEOPLE, 0, 0, 0, 0);
+    public ImageElement bulletinIcon = new ImageElement(GuiTextures.ANNOUNCEMENT, 0, 0, 0, 0);
     public ImageElement keyboardIcon = new ImageElement(GuiTextures.KEYBOARD, 0, 0, 0, 0);
-    public ImageTabListElement menuTab = new ImageTabListElement(List.of(homeIcon, modulesIcon, searchIcon, creditsIcon, keyboardIcon), nav.x + 3, navTitle.y + navTitle.height + 10, nav.width - 6, 13, button -> {
+    public ImageTabListElement menuTab = new ImageTabListElement(List.of(homeIcon, modulesIcon, searchIcon, bulletinIcon, keyboardIcon), nav.x + 3, navTitle.y + navTitle.height + 10, nav.width - 6, 13, button -> {
         ImageElement selection = button.getOptions().get(button.getSelection());
         prevMenuSelection = button.getSelection();
 
@@ -36,8 +36,8 @@ public abstract class ClickCrystalsBase extends DefaultBase {
             mc.setScreenAndRender(new ModulesScreen());
         else if (selection == searchIcon)
             mc.setScreenAndRender(new SearchScreen());
-        else if (selection == creditsIcon)
-            mc.setScreenAndRender(new CreditsScreen());
+        else if (selection == bulletinIcon)
+            mc.setScreenAndRender(new BulletinScreen());
         else if (selection == keyboardIcon)
             mc.setScreenAndRender(new KeybindsScreen());
     });

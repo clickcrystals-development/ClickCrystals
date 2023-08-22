@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.scheduler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 public final class Scheduler implements Listener {
@@ -10,7 +11,10 @@ public final class Scheduler implements Listener {
     private static final List<Task> tasks = new ArrayList<>();
 
     public static void onTick() {
-        tasks.forEach(Task::onTick);
+        try {
+            tasks.forEach(Task::onTick);
+        }
+        catch (ConcurrentModificationException ignore) {}
     }
 
     public static List<Task> getTasks() {

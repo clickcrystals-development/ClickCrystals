@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-public abstract class SettingBuilder<T> {
+public abstract class SettingBuilder<T, B extends SettingBuilder<T, B, S>, S extends ModuleSetting<T>> {
 
     protected SettingChangeCallback<ModuleSetting<T>> changeAction;
     protected String name, description;
@@ -16,30 +16,30 @@ public abstract class SettingBuilder<T> {
         return val != null ? val : def;
     }
 
-    public SettingBuilder<T> name(String name) {
+    public B name(String name) {
         this.name = name;
-        return this;
+        return (B)this;
     }
 
-    public SettingBuilder<T> description(String description) {
+    public B description(String description) {
         this.description = description;
-        return this;
+        return (B)this;
     }
 
-    public SettingBuilder<T> def(T def) {
+    public B def(T def) {
         this.def = def;
-        return this;
+        return (B)this;
     }
 
-    public SettingBuilder<T> val(T val) {
+    public B val(T val) {
         this.val = val;
-        return this;
+        return (B)this;
     }
 
-    public SettingBuilder<T> onSettingChange(SettingChangeCallback<ModuleSetting<T>> changeAction) {
+    public B onSettingChange(SettingChangeCallback<ModuleSetting<T>> changeAction) {
         this.changeAction = changeAction;
-        return this;
+        return (B)this;
     }
 
-    public abstract ModuleSetting<T> build();
+    public abstract S build();
 }

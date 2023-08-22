@@ -5,6 +5,8 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
+import java.util.function.Consumer;
+
 public abstract class Module implements Toggleable, Global {
 
     public static int totalEnabled;
@@ -96,6 +98,13 @@ public abstract class Module implements Toggleable, Global {
 
     public static <T extends Module> T get(Class<T> moduleClass) {
         return (T)system.modules().get(moduleClass);
+    }
+
+    public static <T extends Module> void acceptFor(Class<T> moduleClass, Consumer<T> action) {
+        T m = get(moduleClass);
+        if (m != null) {
+            action.accept(m);
+        }
     }
 
     public static <T extends Module> boolean isEnabled(Class<T> moduleClass) {

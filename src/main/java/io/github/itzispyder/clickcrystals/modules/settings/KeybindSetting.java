@@ -43,7 +43,7 @@ public class KeybindSetting extends ModuleSetting<Keybind> {
         return new Builder();
     }
 
-    public static class Builder extends SettingBuilder<Keybind> {
+    public static class Builder extends SettingBuilder<Keybind, Builder, KeybindSetting> {
 
         private String id;
         private int key, defaultKey;

@@ -64,7 +64,7 @@ public abstract class ModuleSetting<T> {
         this.changeAction = changeAction;
     }
 
-    public class Builder extends SettingBuilder<T> {
+    public class Builder extends SettingBuilder<T, Builder, ModuleSetting<T>> {
         @Override
         public ModuleSetting<T> build() {
             return null;

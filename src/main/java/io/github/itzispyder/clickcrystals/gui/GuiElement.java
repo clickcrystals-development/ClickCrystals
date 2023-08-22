@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;
@@ -40,13 +40,19 @@ public abstract class GuiElement {
 
         Module guiBorders = Module.get(GuiBorders.class);
         if (guiBorders.isEnabled()) {
-            DrawableUtils.drawBorder(context, x, y, width, height, 0xFFFFFFFF);
+            RenderUtils.drawBorder(context, x, y, width, height, 0xFFFFFFFF);
         }
     }
 
     public abstract void onRender(DrawContext context, int mouseX, int mouseY);
 
     public abstract void onClick(double mouseX, double mouseY, int button);
+
+    public void onTick() {
+        for (GuiElement child : children) {
+            child.onTick();
+        }
+    }
 
     public void mouseClicked(double mouseX, double mouseY, int button) {
         if (isHovered((int)mouseX, (int)mouseY)) {

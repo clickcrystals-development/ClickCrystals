@@ -5,8 +5,8 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class HealthAsBar extends Module {
@@ -45,15 +45,15 @@ public class HealthAsBar extends Module {
         int widthNormal = (int)(ratioCurr * width);
         int widthAbsorp = (int)(ratioAbs * width);
 
-        DrawableUtils.fill(context, x, y, width, height, 0xAA000000); // base
-        DrawableUtils.fill(context, x, y, widthPrev, height, 0x90D93F24); // last hp
+        RenderUtils.fill(context, x, y, width, height, 0xAA000000); // base
+        RenderUtils.fill(context, x, y, widthPrev, height, 0x90D93F24); // last hp
 
-        DrawableUtils.fill(context, x, y, widthNormal, height, 0xFFD93F24); // current hp
-        DrawableUtils.fill(context, x, y, widthNormal, (int)(height * 0.33), 0xAAF18B78); // current hp glint
+        RenderUtils.fill(context, x, y, widthNormal, height, 0xFFD93F24); // current hp
+        RenderUtils.fill(context, x, y, widthNormal, (int)(height * 0.33), 0xAAF18B78); // current hp glint
 
-        DrawableUtils.fill(context, x + widthNormal, y, widthAbsorp, height, 0xFFFEDA00); // current abs
-        DrawableUtils.fill(context, x + widthNormal, y, widthAbsorp, (int)(height * 0.33), 0xAAFEDA00); // current abs glint
-        DrawableUtils.drawBorder(context, x, y, width, height, 0xAA000000); // border
+        RenderUtils.fill(context, x + widthNormal, y, widthAbsorp, height, 0xFFFEDA00); // current abs
+        RenderUtils.fill(context, x + widthNormal, y, widthAbsorp, (int)(height * 0.33), 0xAAFEDA00); // current abs glint
+        RenderUtils.drawBorder(context, x, y, width, height, 0xAA000000); // border
 
         if (showValueText.getVal()) {
             double hearts = MathUtils.round((lastHealth + absorption) / 2.0, 10);
@@ -62,7 +62,7 @@ public class HealthAsBar extends Module {
             int textX = x + widthNormal - textWidth - 2;
 
             textX = Math.max(textX, x + 2);
-            DrawableUtils.drawText(context, text, textX, y + (int)(height * 0.25), 0.6F, true);
+            RenderUtils.drawText(context, text, textX, y + (int)(height * 0.25), 0.6F, true);
         }
     }
 }

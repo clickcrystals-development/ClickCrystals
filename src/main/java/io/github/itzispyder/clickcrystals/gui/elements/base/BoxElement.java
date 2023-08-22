@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.elements.base;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class BoxElement extends GuiElement {
@@ -15,7 +15,7 @@ public class BoxElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        DrawableUtils.fill(context, x, y, width, height, color);
+        RenderUtils.fill(context, x, y, width, height, color);
     }
 
     @Override

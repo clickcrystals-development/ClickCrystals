@@ -43,30 +43,18 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 0.9.8
+Mod: 0.9.9
 
 Changelog:
-  Modules:
-    - Added new category for Minecart PvP
-    - Category names are now simplified
-    - New module RailSwap
-    - New module TnTSwap
-    - New module BowSwap
-    - New module Zoom
-    - New module ViewModel
-  Commands:
-    - ",toggle" now opens module screen
-    - ",keybind" for people that do not know how to set keybinds, it will open up the keybinds screen
   GUI:
-    - Scroll panels now cannot scroll down infinitely
-    - Scroll panels now have scroll bars
-    - Module setting section that are empty no longer render
-    - Category bar now displays in my own order instead of alphabetically
-    - Search page now paginated
-    - Search queries are now more accurate
-  Patches:
-    - Pixel art placing one block at a time, now it uses both /setblock and /fill
-    - Chat box crashing when holding down back arrow key while typing a custom command
+    - Applied changes to the home screen
+    - Added new announcements tab
+    - ^ read from https://itzispyder.github.io/cc-bulletin
+  Modules:
+    - Added ChatPrefix module: 
+        - message prefixes
+        - message suffixes
+        - custom unicode fonts
 ```
 
 <div class="demo-menu">
@@ -151,6 +139,7 @@ Changelog:
 | BowSwap          |                      Hotkeys to bow after placing tnt minecart                       |
 | ViewModel        |                             Changes your hand view model                             |
 | Zoom             |                                 Now you can zoom, yw                                 |
+| ChatPrefix       |                 Chat prefixes and suffixes, and custom unicode fonts                 |
 
 
 ## But isn't this cheating?

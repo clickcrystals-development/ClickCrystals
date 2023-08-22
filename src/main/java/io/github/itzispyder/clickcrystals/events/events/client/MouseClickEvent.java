@@ -16,6 +16,10 @@ public class MouseClickEvent extends Event implements Cancellable {
         this.cancelled = false;
     }
 
+    public boolean isScreenNull() {
+        return mc.currentScreen == null;
+    }
+
     public ClickType getAction() {
         return action;
     }

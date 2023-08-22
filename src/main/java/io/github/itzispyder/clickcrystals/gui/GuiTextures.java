@@ -24,6 +24,8 @@ public final  class GuiTextures {
     public static final Identifier ITEM_WIDGET = new Identifier(modId, "textures/gui/item_widget.png");
     public static final Identifier ITEM_WIDGET_WARNING = new Identifier(modId, "textures/gui/item_widget_warning.png");
     public static final Identifier SMOOTH_STRIPE_HORIZONTAL = new Identifier(modId, "textures/gui/smooth_stripe_horizontal.png");
+    public static final Identifier BULLETIN = new Identifier(modId, "textures/gui/bulletin.png");
+    public static final Identifier AIR = new Identifier(modId, "textures/gui/air.png");
 
     // icons
     public static final Identifier SEARCH = new Identifier(modId, "textures/gui/icons/search.png");
@@ -36,6 +38,11 @@ public final  class GuiTextures {
     public static final Identifier RESET = new Identifier(modId, "textures/gui/icons/reset.png");
     public static final Identifier KEYBOARD = new Identifier(modId, "textures/gui/icons/keyboard.png");
     public static final Identifier PEPE_UPDATE = new Identifier(modId, "textures/gui/icons/pepe_update.png");
+    public static final Identifier ARROW_UP = new Identifier(modId, "textures/gui/icons/arrow_up.png");
+    public static final Identifier ARROW_UP_DARK = new Identifier(modId, "textures/gui/icons/arrow_up_dark.png");
+    public static final Identifier ARROW_DOWN = new Identifier(modId, "textures/gui/icons/arrow_down.png");
+    public static final Identifier ARROW_DOWN_DARK = new Identifier(modId, "textures/gui/icons/arrow_down_dark.png");
+    public static final Identifier ANNOUNCEMENT = new Identifier(modId, "textures/gui/icons/announcement.png");
 
     // modules
     public static final Identifier MODULE_ON = new Identifier(modId, "textures/gui/modules/module_on.png");

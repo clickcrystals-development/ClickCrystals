@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public final class StringUtils {
@@ -13,7 +15,11 @@ public final class StringUtils {
     }
 
     public static String color(String s) {
-        return s.replace('&', '§');
+        return nullable(s).replace('&', '§');
+    }
+
+    public static String nullable(String s) {
+        return s == null ? "" : s;
     }
 
     public static String decolor(String msg) {
@@ -33,6 +39,17 @@ public final class StringUtils {
         catch (Exception ex) {
             return "";
         }
+    }
+
+    public static String revered(String s) {
+        StringBuilder b = new StringBuilder();
+        char[] a = s.toCharArray();
+
+        for (int i = a.length - 1; i >= 0; i--) {
+            b.append(a[i]);
+        }
+
+        return b.toString();
     }
 
     public static String capitalize(String s) {
@@ -63,7 +80,7 @@ public final class StringUtils {
         final List<String> lines = new ArrayList<>();
 
         if (s.length() <= maxLen) {
-            lines.add(s);
+            splitAdd(lines, s);
             return lines;
         }
 
@@ -73,11 +90,11 @@ public final class StringUtils {
                 while (nextChar(s, wrapAt) != ' ') {
                     wrapAt ++;
                 }
-                lines.add(s.substring(0, wrapAt + 1).trim());
+                splitAdd(lines, s.substring(0, wrapAt + 1).trim());
                 s = s.substring(wrapAt + 1);
             }
             else {
-                lines.add(s.substring(0, maxLen).trim());
+                splitAdd(lines, s.substring(0, maxLen).trim());
                 s = s.substring(maxLen);
             }
         }
@@ -86,6 +103,17 @@ public final class StringUtils {
         }
 
         return lines;
+    }
+
+    public static void splitAdd(Collection<String> c, String s) {
+        if (s == null || c == null) return;
+
+        if (s.contains("<n>")) {
+            c.addAll(Arrays.asList(s.split("<n>")));
+        }
+        else {
+            c.add(s);
+        }
     }
 
     public static String keyPressWithShift(String s) {

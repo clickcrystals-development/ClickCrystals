@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules;
 
 import com.google.gson.Gson;
+import io.github.itzispyder.clickcrystals.modules.settings.EnumSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
@@ -35,6 +36,10 @@ public class ModuleFile {
         if (setting instanceof KeybindSetting bindSetting) {
             double key = (Double)entries.getOrDefault(bindSetting.getId(), bindSetting.getDefKey());
             bindSetting.setKey((int)key);
+        }
+        else if (setting instanceof EnumSetting<?> enumSetting) {
+            String key = (String)entries.getOrDefault(enumSetting.getId(), enumSetting.getDef().name());
+            enumSetting.setVal(Enum.valueOf(enumSetting.getDef().getClass(), key));
         }
         else {
             setting.setVal(entries.getOrDefault(setting.getId(), setting.getDef()));

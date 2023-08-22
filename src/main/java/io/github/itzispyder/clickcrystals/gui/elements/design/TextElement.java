@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.design;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
-import io.github.itzispyder.clickcrystals.util.DrawableUtils;
+import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -33,12 +33,12 @@ public class TextElement extends GuiElement {
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         this.height = (int)(10 * scale);
 
-        DrawableUtils.fill(context, x, y, width, height, backgroundColor);
+        RenderUtils.fill(context, x, y, width, height, backgroundColor);
 
         switch (alignment) {
-            case CENTER -> DrawableUtils.drawCenteredText(context, text, x + width / 2, y + (int)(height * 0.33), scale, true);
-            case RIGHT -> DrawableUtils.drawRightText(context, text, x + width - MARGIN, y + (int)(height * 0.33), scale, true);
-            case LEFT -> DrawableUtils.drawText(context, text, x + MARGIN, y + (int)(height * 0.33), scale, true);
+            case CENTER -> RenderUtils.drawCenteredText(context, text, x + width / 2, y + (int)(height * 0.33), scale, true);
+            case RIGHT -> RenderUtils.drawRightText(context, text, x + width - MARGIN, y + (int)(height * 0.33), scale, true);
+            case LEFT -> RenderUtils.drawText(context, text, x + MARGIN, y + (int)(height * 0.33), scale, true);
         }
     }
 
