@@ -94,7 +94,7 @@ public class ScrollPanelElement extends GuiElement {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY) {
-        context.enableScissor(x + 1, y + 1, x + width - 1, y + height - 1);
+        context.enableScissor(x, y, x + width, y + height);
         super.render(context, mouseX, mouseY);
         context.disableScissor();
     }
@@ -126,6 +126,7 @@ public class ScrollPanelElement extends GuiElement {
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
+        /*
         for (int i = getChildren().size() - 1; i >= 0; i--) {
             GuiElement child = getChildren().get(i);
             if (child.isHovered((int)mouseX, (int)mouseY)) {
@@ -134,6 +135,7 @@ public class ScrollPanelElement extends GuiElement {
                 break;
             }
         }
+         */
     }
 
     @Override

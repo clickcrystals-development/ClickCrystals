@@ -60,7 +60,9 @@ public abstract class ClickCrystalsBase extends DefaultBase {
         try {
             mc.setScreenAndRender(prevOpened.newInstance());
         }
-        catch (Exception ignore) {}
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static void setPrevOpened(Class<? extends DefaultBase> prevOpened) {

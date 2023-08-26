@@ -92,7 +92,7 @@ public class GridOrganizer implements Organizer<GuiElement> {
     }
 
     public void createPanel(GuiScreen screen, int height) {
-        panel = new ScrollPanelElement(screen, startX, startY, (cellWidth + gap) * maxPerRow, height);
+        panel = new ScrollPanelElement(screen, startX, startY, (cellWidth + gap) * maxPerRow + gap, height);
     }
 
     public boolean hasPanel() {
@@ -111,6 +111,12 @@ public class GridOrganizer implements Organizer<GuiElement> {
         clearPanel();
         if (hasPanel()) {
             entries.forEach(panel::addChild);
+        }
+    }
+
+    public void setPanelParent(GuiElement parent) {
+        if (hasPanel() && parent != null) {
+            parent.addChild(panel);
         }
     }
 
