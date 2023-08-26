@@ -4,6 +4,8 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.Positionable;
 import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
+import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -60,9 +62,13 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
 
     @Override
     public void onHudRender(DrawContext context, float tickDelta) {
-        if (!GuiScreen.matchCurrent(HudEditScreen.class)) {
+        if (canRender()) {
             render(context);
         }
+    }
+
+    public boolean canRender() {
+        return (Module.isEnabled(InGameHuds.class) || isFixed()) && !GuiScreen.matchCurrent(HudEditScreen.class);
     }
 
     public String getId() {

@@ -11,8 +11,8 @@ import java.util.Map;
 public class ConfigFile {
 
     private final String path;
-    private final Map<String, Object> entries;
-    private final Map<String, Positionable.Dimension> positionableEntries;
+    private Map<String, Object> entries;
+    private Map<String, Positionable.Dimension> positionableEntries;
 
     public ConfigFile(String path) {
         this.path = path;
@@ -20,7 +20,18 @@ public class ConfigFile {
         this.positionableEntries = new HashMap<>();
     }
 
+    public void checkEntries() {
+        if (entries == null) {
+            entries = new HashMap<>();
+        }
+
+        if (positionableEntries == null) {
+            positionableEntries = new HashMap<>();
+        }
+    }
+
     public void set(String key, Object val) {
+        checkEntries();
         if (val == null || val.getClass().isPrimitive()) {
             entries.remove(key);
         }
@@ -29,11 +40,8 @@ public class ConfigFile {
         }
     }
 
-    public void setPositionable(String key, Positionable.Dimension dim) {
-        positionableEntries.put(key, dim);
-    }
-
     public <T> T get(String key, Class<T> type) {
+        checkEntries();
         try {
             return (T)entries.get(key);
         }
@@ -42,11 +50,18 @@ public class ConfigFile {
         }
     }
 
+    public void setPositionable(String key, Positionable.Dimension dim) {
+        checkEntries();
+        positionableEntries.put(key, dim);
+    }
+
     public Positionable.Dimension getPositionable(String key) {
+        checkEntries();
         return positionableEntries.get(key);
     }
 
     public Positionable.Dimension getPositionable(String key, Positionable.Dimension def) {
+        checkEntries();
         return positionableEntries.getOrDefault(key, def);
     }
 

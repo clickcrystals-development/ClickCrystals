@@ -2,6 +2,8 @@ package io.github.itzispyder.clickcrystals.gui.hud.moveables;
 
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
+import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.math.RotationAxis;
@@ -34,5 +36,10 @@ public class IconRelativeHud extends Hud {
 
         setWidth(ogw);
         RenderUtils.drawText(context, "§l§oClickCrystals", getX() + getHeight(), getY() + (int)(getHeight() * 0.33), 1.0F, true);
+    }
+
+    @Override
+    public boolean canRender() {
+        return super.canRender() && Module.getFrom(InGameHuds.class, m -> m.hudIcon.getVal());
     }
 }

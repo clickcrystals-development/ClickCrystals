@@ -1,6 +1,8 @@
 package io.github.itzispyder.clickcrystals.gui.hud.moveables;
 
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
+import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
@@ -40,5 +42,10 @@ public class ClockRelativeHud extends Hud {
     public String formatTime(int i) {
         i = Math.abs(i);
         return i <= 9 ? "0" + i : "" + i;
+    }
+
+    @Override
+    public boolean canRender() {
+        return super.canRender() && Module.getFrom(InGameHuds.class, m -> m.hudClock.getVal());
     }
 }

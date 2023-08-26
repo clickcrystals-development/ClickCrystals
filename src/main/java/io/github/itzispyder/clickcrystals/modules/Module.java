@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public abstract class Module implements Toggleable, Global {
 
@@ -108,8 +109,19 @@ public abstract class Module implements Toggleable, Global {
     }
 
     public static <T extends Module> boolean isEnabled(Class<T> moduleClass) {
-        Module module = get(moduleClass);
+        T module = get(moduleClass);
         return module != null && module.isEnabled();
+    }
+
+    public static <T extends Module, R> R getFrom(Class<T> moduleClass, Function<T, R> action) {
+        T module = get(moduleClass);
+
+        if (module == null) {
+            return null;
+        }
+        else {
+            return action.apply(module);
+        }
     }
 
     public static void loadConfigModules() {

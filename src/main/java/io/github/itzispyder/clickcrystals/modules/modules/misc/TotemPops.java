@@ -51,16 +51,17 @@ public class TotemPops extends Module implements Listener {
 
     public TotemPops() {
         super("totem-pops", Categories.MISC, "Send messages when a player pops their totem.");
-    }
-
-    @Override
-    protected void onEnable() {
         system.addListener(this);
     }
 
     @Override
+    protected void onEnable() {
+
+    }
+
+    @Override
     protected void onDisable() {
-        system.removeListener(this);
+
     }
 
     @EventHandler
@@ -86,10 +87,16 @@ public class TotemPops extends Module implements Listener {
 
             if (status == EntityStatusType.TOTEM_POP) {
                 setPops(ent,getPops(ent) + 1);
-                ChatUtils.sendPrefixMessage(compilePopMsg(ent, name, enemyPop.getVal()));
+
+                if (isEnabled()) {
+                    ChatUtils.sendPrefixMessage(compilePopMsg(ent, name, enemyPop.getVal()));
+                }
             }
             else if (status == EntityStatusType.DEATH) {
-                ChatUtils.sendPrefixMessage(compilePopMsg(ent, name, enemyDeath.getVal()));
+                if (isEnabled()) {
+                    ChatUtils.sendPrefixMessage(compilePopMsg(ent, name, enemyDeath.getVal()));
+                }
+
                 setPops(ent,0);
             }
         }
@@ -101,7 +108,7 @@ public class TotemPops extends Module implements Listener {
                 .replaceAll("%player%", entName);
     }
 
-    private int getPops(Entity ent) {
+    public int getPops(Entity ent) {
         return getOrDefault(totemPops.get(ent.getDisplayName().getString()),0);
     }
 

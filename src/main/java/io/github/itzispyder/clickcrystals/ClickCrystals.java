@@ -16,10 +16,7 @@ import io.github.itzispyder.clickcrystals.gui.hud.fixed.ArmorItemHud;
 import io.github.itzispyder.clickcrystals.gui.hud.fixed.ClickPerSecondHud;
 import io.github.itzispyder.clickcrystals.gui.hud.fixed.ColorOverlayHud;
 import io.github.itzispyder.clickcrystals.gui.hud.fixed.ModuleListTextHud;
-import io.github.itzispyder.clickcrystals.gui.hud.moveables.ClockRelativeHud;
-import io.github.itzispyder.clickcrystals.gui.hud.moveables.FpsRelativeHud;
-import io.github.itzispyder.clickcrystals.gui.hud.moveables.IconRelativeHud;
-import io.github.itzispyder.clickcrystals.gui.hud.moveables.PingRelativeHud;
+import io.github.itzispyder.clickcrystals.gui.hud.moveables.*;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsBase;
 import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -171,6 +168,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addHud(new PingRelativeHud());
         system.addHud(new FpsRelativeHud());
         system.addHud(new ClockRelativeHud());
+        system.addHud(new TargetRelativeHud());
     }
 
     public void initModules() {
@@ -185,7 +183,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addModule(new CCExtras());
         system.addModule(new DiscordRPC());
         system.addModule(new GuiBorders());
-        system.addModule(new IconHud());
+        system.addModule(new InGameHuds());
         system.addModule(new SilkTouch());
 
         // crystalling
