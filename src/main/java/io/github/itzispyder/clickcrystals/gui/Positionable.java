@@ -18,7 +18,65 @@ public interface Positionable {
 
     void setHeight(int height);
 
-    default int[] getDimensions() {
-        return new int[]{getX(), getY(), getWidth(), getHeight()};
+    default Dimension getDimensions() {
+        return new Dimension(getX(), getY(), getWidth(), getHeight());
+    }
+
+    default void setDimensions(Dimension dim) {
+        setX(dim.x);
+        setY(dim.y);
+        setWidth(dim.width);
+        setHeight(dim.height);
+    }
+
+    class Dimension {
+        public int x, y, width, height;
+
+        public Dimension() {
+            this(0, 0, 0, 0);
+        }
+
+        public Dimension(int x, int y, int width, int height) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height= height;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public Dimension setX(int x) {
+            this.x = x;
+            return this;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public Dimension setY(int y) {
+            this.y = y;
+            return this;
+        }
+
+        public int getWidth() {
+            return width;
+        }
+
+        public Dimension setWidth(int width) {
+            this.width = width;
+            return this;
+        }
+
+        public int getHeight() {
+            return height;
+        }
+
+        public Dimension setHeight(int height) {
+            this.height = height;
+            return this;
+        }
     }
 }

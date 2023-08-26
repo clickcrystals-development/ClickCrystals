@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.client.system;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.events.EventBus;
 import io.github.itzispyder.clickcrystals.events.Listener;
+import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
@@ -28,7 +29,7 @@ public class ClickCrystalsSystem implements Serializable {
     public final EventBus eventBus = new EventBus();
     private final Map<Class<? extends Module>, Module> modules;
     private final Map<Class<? extends Command>, Command> commands;
-    private final Map<Class<? extends HudRenderCallback>, HudRenderCallback> huds;
+    private final Map<Class<? extends Hud>, Hud> huds;
     private final Set<Keybind> keybinds;
 
     public ClickCrystalsSystem() {
@@ -66,9 +67,9 @@ public class ClickCrystalsSystem implements Serializable {
         modules.put(module.getClass(),module);
     }
 
-    public void addHud(HudRenderCallback hudRenderer) {
-        HudRenderCallback.EVENT.register(hudRenderer);
-        huds.put(hudRenderer.getClass(), hudRenderer);
+    public void addHud(Hud hud) {
+        HudRenderCallback.EVENT.register(hud);
+        huds.put(hud.getClass(), hud);
     }
 
     public void addKeybind(Keybind bind) {

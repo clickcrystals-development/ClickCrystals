@@ -4,17 +4,18 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.CrystPerSec;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
 import net.minecraft.item.Items;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
+public class ClickPerSecondHud extends Hud {
 
-public class ClickPerSecondHud implements HudRenderCallback {
+    public ClickPerSecondHud() {
+
+    }
 
     @Override
-    public void onHudRender(DrawContext context, float tickDelta) {
+    public void render(DrawContext context) {
         Module cpsHud = Module.get(CrystPerSec.class);
         if (!cpsHud.isEnabled()) return;
         String text = "§f" + CrystPerSec.getCrystalPerSecond() + " §7c/s";

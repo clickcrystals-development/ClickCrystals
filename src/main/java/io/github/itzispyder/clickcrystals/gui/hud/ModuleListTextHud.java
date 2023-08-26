@@ -3,9 +3,6 @@ package io.github.itzispyder.clickcrystals.gui.hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.ModulesList;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
@@ -14,17 +11,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
+public class ModuleListTextHud extends Hud {
 
-/**
- * Hud for enabled modules
- */
-@Environment(EnvType.CLIENT)
-public class ModuleListTextHud implements HudRenderCallback {
+    public ModuleListTextHud() {
+
+    }
 
     @Override
-    public void onHudRender(DrawContext context, float tickDelta) {
+    public void render(DrawContext context) {
         Module hudModule = Module.get(ModulesList.class);
 
         if (!hudModule.isEnabled()) return;

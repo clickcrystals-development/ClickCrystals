@@ -6,16 +6,18 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.TotemOverlay
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.InvUtils;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
 import net.minecraft.item.Items;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
+public class ColorOverlayHud extends Hud {
 
-public class ColorOverlayHud implements HudRenderCallback {
+    public ColorOverlayHud() {
+
+    }
+
     @Override
-    public void onHudRender(DrawContext context, float tickDelta) {
+    public void render(DrawContext context) {
         TotemOverlay totemOverlay = Module.get(TotemOverlay.class);
         Window win = mc.getWindow();
 
