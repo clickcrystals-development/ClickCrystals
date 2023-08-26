@@ -1,12 +1,9 @@
 package io.github.itzispyder.clickcrystals.gui.elements.cc.settings;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.design.DividerElement;
 import io.github.itzispyder.clickcrystals.modules.settings.*;
 import net.minecraft.client.gui.DrawContext;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class SettingSectionElement extends GuiElement {
 
@@ -43,6 +40,7 @@ public class SettingSectionElement extends GuiElement {
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
+        /*
         if (mc.currentScreen instanceof GuiScreen screen) {
             for (int i = getChildren().size() - 1; i >= 0; i--) {
                 GuiElement child = getChildren().get(i);
@@ -53,6 +51,7 @@ public class SettingSectionElement extends GuiElement {
                 }
             }
         }
+         */
     }
 
     public SettingSection getSettingGroup() {
