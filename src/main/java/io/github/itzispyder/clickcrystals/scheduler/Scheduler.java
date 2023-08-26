@@ -2,13 +2,13 @@ package io.github.itzispyder.clickcrystals.scheduler;
 
 import io.github.itzispyder.clickcrystals.events.Listener;
 
-import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class Scheduler implements Listener {
 
-    private static final List<Task> tasks = new ArrayList<>();
+    private static final Set<Task> tasks = new HashSet<>();
 
     public static void onTick() {
         try {
@@ -17,7 +17,7 @@ public final class Scheduler implements Listener {
         catch (ConcurrentModificationException ignore) {}
     }
 
-    public static List<Task> getTasks() {
+    public static Set<Task> getTasks() {
         return tasks;
     }
 

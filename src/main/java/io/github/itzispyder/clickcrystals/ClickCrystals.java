@@ -13,6 +13,9 @@ import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.hud.fixed.*;
+import io.github.itzispyder.clickcrystals.gui.hud.moveables.ClockRelativeHud;
+import io.github.itzispyder.clickcrystals.gui.hud.moveables.FpsRelativeHud;
+import io.github.itzispyder.clickcrystals.gui.hud.moveables.IconRelativeHud;
 import io.github.itzispyder.clickcrystals.gui.hud.moveables.PingRelativeHud;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsBase;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -153,7 +156,10 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addHud(new ClickPerSecondHud());
         system.addHud(new ArmorItemHud());
 
+        system.addHud(new IconRelativeHud());
         system.addHud(new PingRelativeHud());
+        system.addHud(new FpsRelativeHud());
+        system.addHud(new ClockRelativeHud());
     }
 
     public void initModules() {

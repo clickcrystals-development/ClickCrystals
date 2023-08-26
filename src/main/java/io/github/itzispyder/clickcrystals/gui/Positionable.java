@@ -29,6 +29,10 @@ public interface Positionable {
         setHeight(dim.height);
     }
 
+    default Dimension getCenter() {
+        return new Dimension(getX() + getWidth() / 2, getY() + getHeight() / 2, 0, 0);
+    }
+
     class Dimension {
         public int x, y, width, height;
 

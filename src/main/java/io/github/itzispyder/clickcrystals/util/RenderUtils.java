@@ -109,10 +109,10 @@ public final class RenderUtils {
     }
 
     public static void drawBorder(DrawContext context, int x, int y, int width, int height, int thickness, int color) {
-        context.fill(x, y, x + width, y + thickness, color);
-        context.fill(x, y + height, x + width, y + height - thickness, color);
-        context.fill(x, y, x + thickness, y + height, color);
-        context.fill(x + width, y, x + width - thickness, y + height, color);
+        drawHorizontalLine(context, x, y, width, thickness, color);
+        drawVerticalLine(context, x, y + 1, height - 2, thickness, color);
+        drawVerticalLine(context, x + width - 1, y + 1, height - 2, thickness, color);
+        drawHorizontalLine(context, x, y + height - 1, width, thickness, color);
     }
 
     public static void drawHorizontalLine(DrawContext context, int x, int y, int length, int thickness, int color) {
