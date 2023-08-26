@@ -2,7 +2,6 @@ package io.github.itzispyder.clickcrystals.gui.hud.moveables;
 
 import io.github.itzispyder.clickcrystals.gui.hud.RelativeHud;
 import io.github.itzispyder.clickcrystals.scheduler.RepeatingTask;
-import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
@@ -16,7 +15,7 @@ public class ClockRelativeHud extends RelativeHud {
     }, 20);
 
     public ClockRelativeHud() {
-        super(0.033, 0.4, 50, 12);
+        super("clock-hud", 0.033, 0.4, 50, 12);
         //Scheduler.getTasks().add(BLINK_TASK);
     }
 

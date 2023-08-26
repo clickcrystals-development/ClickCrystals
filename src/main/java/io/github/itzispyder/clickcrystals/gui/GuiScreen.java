@@ -1,13 +1,13 @@
 package io.github.itzispyder.clickcrystals.gui;
 
-import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.data.Pair;
 import io.github.itzispyder.clickcrystals.gui.callbacks.*;
 import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -18,13 +18,10 @@ import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.function.Consumer;
 
-public abstract class GuiScreen extends Screen {
+public abstract class GuiScreen extends Screen implements Global {
 
-    protected static final MinecraftClient mc = MinecraftClient.getInstance();
-    protected static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
     public final List<MouseMoveCallback> mouseMoveListeners;
     public final List<MouseClickCallback> mouseClickListeners;
-    public final List<MouseClickCallback> mouseReleaseListeners;
     public final List<MouseDragCallback> mouseDragListeners;
     public final List<MouseScrollCallback> mouseScrollListeners;
     public final List<ScreenRenderCallback> screenRenderListeners;
@@ -32,13 +29,13 @@ public abstract class GuiScreen extends Screen {
     public final List<GuiElement> children;
     public GuiElement selected, mostRecentlyAdded;
     public boolean shiftKeyPressed, altKeyPressed, ctrlKeyPressed;
+    public Pair<Integer, Integer> cursor;
 
     public GuiScreen(String title) {
         super(Text.literal(title));
 
         this.mouseMoveListeners = new ArrayList<>();
         this.mouseClickListeners = new ArrayList<>();
-        this.mouseReleaseListeners = new ArrayList<>();
         this.mouseDragListeners = new ArrayList<>();
         this.mouseScrollListeners = new ArrayList<>();
         this.screenRenderListeners = new ArrayList<>();
@@ -46,6 +43,7 @@ public abstract class GuiScreen extends Screen {
         this.children = new ArrayList<>();
         this.selected = null;
         this.mostRecentlyAdded = null;
+        this.cursor = Pair.of(0, 0);
     }
 
     public static boolean matchCurrent(Class<? extends GuiScreen> type) {
@@ -63,6 +61,13 @@ public abstract class GuiScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        if (selected != null && selected.isDraggable()) {
+            int dx = mouseX - cursor.left;
+            int dy = mouseY - cursor.right;
+            selected.move(dx, dy);
+            this.cursor = Pair.of(mouseX, mouseY);
+        }
+
         super.render(context, mouseX, mouseY, delta);
         this.baseRender(context, mouseX, mouseY, delta);
 
@@ -100,6 +105,7 @@ public abstract class GuiScreen extends Screen {
             GuiElement child = children.get(i);
             if (child.isMouseOver((int)mouseX, (int)mouseY)) {
                 this.selected = child;
+                this.cursor = Pair.of((int)mouseX, (int)mouseY);
                 child.mouseClicked(mouseX, mouseY, button);
                 break;
             }
@@ -120,7 +126,7 @@ public abstract class GuiScreen extends Screen {
             this.selected = null;
         }
 
-        for (MouseClickCallback callback : mouseReleaseListeners) {
+        for (MouseClickCallback callback : mouseClickListeners) {
             callback.handleMouse(mouseX, mouseY, button, ClickType.RELEASE);
         }
 
@@ -131,9 +137,11 @@ public abstract class GuiScreen extends Screen {
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
 
+        /*
         if (selected != null && selected.draggable) {
             selected.move(deltaX, deltaY);
         }
+         */
 
         for (MouseDragCallback callback : mouseDragListeners) {
             callback.handleMouse(mouseX, mouseY, button, deltaX, deltaY);

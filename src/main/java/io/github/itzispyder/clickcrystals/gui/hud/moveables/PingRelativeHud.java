@@ -8,7 +8,7 @@ import net.minecraft.client.gui.DrawContext;
 public class PingRelativeHud extends RelativeHud {
 
     public PingRelativeHud() {
-        super(0.033, 0.30, 50, 12);
+        super("ping-hud", 0.033, 0.30, 50, 12);
     }
 
     @Override

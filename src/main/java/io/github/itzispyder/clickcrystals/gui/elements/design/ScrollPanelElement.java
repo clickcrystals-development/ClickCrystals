@@ -26,9 +26,7 @@ public class ScrollPanelElement extends GuiElement {
                 scrolling = true;
                 prevDrag = (int)mouseY;
             }
-        });
-        parentScreen.mouseReleaseListeners.add((mouseX, mouseY, button, click) -> {
-            if (scrolling && click.isRelease()) {
+            else if (scrolling && click.isRelease()) {
                 scrolling = false;
             }
         });

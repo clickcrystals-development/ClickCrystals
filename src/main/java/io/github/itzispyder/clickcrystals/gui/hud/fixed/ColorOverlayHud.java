@@ -14,7 +14,7 @@ import net.minecraft.item.Items;
 public class ColorOverlayHud extends Hud {
 
     public ColorOverlayHud() {
-
+        super("color-overlay-hud");
     }
 
     @Override

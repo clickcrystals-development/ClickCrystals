@@ -101,7 +101,7 @@ public class ClickCrystalsSystem implements Serializable {
         return eventBus.listeners();
     }
 
-    public Map<Class<? extends HudRenderCallback>, HudRenderCallback> huds() {
+    public Map<Class<? extends Hud>, Hud> huds() {
         return new HashMap<>(huds);
     }
 

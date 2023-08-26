@@ -8,7 +8,7 @@ import net.minecraft.client.gui.DrawContext;
 public class ArmorItemHud extends Hud {
 
     public ArmorItemHud() {
-
+        super("armor-hud");
     }
 
     @Override

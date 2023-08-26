@@ -9,8 +9,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.minecraft.util.Identifier;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
-
 public class HomeScreen extends DefaultBase {
 
     public HomeScreen() {

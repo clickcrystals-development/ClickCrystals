@@ -9,7 +9,7 @@ import net.minecraft.util.math.RotationAxis;
 public class IconRelativeHud extends RelativeHud {
 
     public IconRelativeHud() {
-        super(0.033, 0.20, 120, 30);
+        super("icon-hud", 0.033, 0.20, 120, 30);
     }
 
     @Override

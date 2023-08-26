@@ -15,7 +15,7 @@ import java.util.List;
 public class ModuleListTextHud extends Hud {
 
     public ModuleListTextHud() {
-
+        super("module-list-text-hud");
     }
 
     @Override

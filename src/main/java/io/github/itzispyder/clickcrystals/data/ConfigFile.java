@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.data;
 
 import com.google.gson.Gson;
+import io.github.itzispyder.clickcrystals.gui.Positionable;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 
 import java.io.*;
@@ -11,10 +12,12 @@ public class ConfigFile {
 
     private final String path;
     private final Map<String, Object> entries;
+    private final Map<String, Positionable.Dimension> positionableEntries;
 
     public ConfigFile(String path) {
         this.path = path;
         this.entries = new HashMap<>();
+        this.positionableEntries = new HashMap<>();
     }
 
     public void set(String key, Object val) {
@@ -26,6 +29,10 @@ public class ConfigFile {
         }
     }
 
+    public void setPositionable(String key, Positionable.Dimension dim) {
+        positionableEntries.put(key, dim);
+    }
+
     public <T> T get(String key, Class<T> type) {
         try {
             return (T)entries.get(key);
@@ -33,6 +40,14 @@ public class ConfigFile {
         catch (Exception ex) {
             return null;
         }
+    }
+
+    public Positionable.Dimension getPositionable(String key) {
+        return positionableEntries.get(key);
+    }
+
+    public Positionable.Dimension getPositionable(String key, Positionable.Dimension def) {
+        return positionableEntries.getOrDefault(key, def);
     }
 
     public <T> T get(String key, Class<T> type, T def) {

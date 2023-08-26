@@ -10,9 +10,6 @@ import io.github.itzispyder.clickcrystals.gui.elements.ui.ImageTabListElement;
 
 import java.util.List;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
-import static io.github.itzispyder.clickcrystals.ClickCrystals.version;
-
 public abstract class ClickCrystalsBase extends DefaultBase {
 
     private static Class<? extends DefaultBase> prevOpened = HomeScreen.class;

@@ -8,7 +8,7 @@ import net.minecraft.client.gui.DrawContext;
 public class FpsRelativeHud extends RelativeHud {
 
     public FpsRelativeHud() {
-        super(0.033, 0.35, 50, 12);
+        super("fps-hud", 0.033, 0.35, 50, 12);
     }
 
     @Override

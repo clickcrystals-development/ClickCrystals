@@ -18,8 +18,9 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
     private final Dimension defaultDimension;
     private int x, y, width, height, argb;
     private boolean renderBorder;
+    private final String id;
 
-    public Hud(int x, int y, int width, int height, Dimension defaultDimension, int argb, boolean renderBorder) {
+    public Hud(String id, int x, int y, int width, int height, Dimension defaultDimension, int argb, boolean renderBorder) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -27,22 +28,23 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
         this.defaultDimension = defaultDimension;
         this.argb = argb;
         this.renderBorder = renderBorder;
+        this.id = id;
     }
 
-    public Hud(int x, int y, int width, int height) {
-        this(x, y, width, height, new Dimension(x, y, width, height), DEFAULT_ARGB, true);
+    public Hud(String id, int x, int y, int width, int height) {
+        this(id, x, y, width, height, new Dimension(x, y, width, height), DEFAULT_ARGB, true);
     }
 
-    public Hud(Dimension dim) {
-        this(dim.x, dim.y, dim.width, dim.height);
+    public Hud(String id, Dimension dim) {
+        this(id, dim.x, dim.y, dim.width, dim.height);
     }
 
-    public Hud(Dimension dim, Dimension def) {
-        this(dim.x, dim.y, dim.width, dim.height, def, DEFAULT_ARGB, true);
+    public Hud(String id, Dimension dim, Dimension def) {
+        this(id, dim.x, dim.y, dim.width, dim.height, def, DEFAULT_ARGB, true);
     }
 
-    public Hud() {
-        this(new Dimension());
+    public Hud(String id) {
+        this(id, new Dimension());
     }
 
     public abstract void render(DrawContext context);
@@ -60,6 +62,10 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
         if (!GuiScreen.matchCurrent(HudEditScreen.class)) {
             render(context);
         }
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override
@@ -128,5 +134,31 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
 
     public void revertDimensions() {
         setDimensions(defaultDimension);
+    }
+
+    public void saveToConfig(boolean saveImmediately) {
+        config.setPositionable(getId(), getDimensions());
+
+        if (saveImmediately) {
+            config.save();
+        }
+    }
+
+    public void saveToConfig() {
+        saveToConfig(true);
+    }
+
+    public void loadFromConfig() {
+        Dimension dim = config.getPositionable(getId(), defaultDimension);
+        setDimensions(dim);
+    }
+
+    public static void loadConfigHuds() {
+        system.huds().values().forEach(Hud::loadFromConfig);
+    }
+
+    public static void saveConfigHuds() {
+        system.huds().values().forEach(h -> h.saveToConfig(false));
+        config.save();
     }
 }

@@ -4,16 +4,16 @@ public abstract class RelativeHud extends Hud {
 
     private double rx, ry, drx, dry;
 
-    public RelativeHud(double rx, double ry, double drx, double dry, int width, int height) {
-        super(0, 0, width, height);
+    public RelativeHud(String id, double rx, double ry, double drx, double dry, int width, int height) {
+        super(id, 0, 0, width, height);
         this.rx = rx;
         this.ry = ry;
         this.drx = drx;
         this.dry = dry;
     }
 
-    public RelativeHud(double drx, double dry, int width, int height) {
-        this(drx, dry, drx, dry, width, height);
+    public RelativeHud(String id, double drx, double dry, int width, int height) {
+        this(id, drx, dry, drx, dry, width, height);
     }
 
     public double getRx() {
@@ -56,6 +56,26 @@ public abstract class RelativeHud extends Hud {
     @Override
     public int getY() {
         return (int)(getWindow().getScaledHeight() * ry);
+    }
+
+    @Override
+    public void setX(int x) {
+        rx = x / (double)getWindow().getScaledWidth();
+        super.setX(getX());
+    }
+
+    @Override
+    public void setY(int y) {
+        ry = y / (double)getWindow().getScaledHeight();
+        super.setY(getY());
+    }
+
+    @Override
+    public void setDimensions(Dimension dim) {
+        setX(dim.x);
+        setY(dim.y);
+        setWidth(dim.width);
+        setHeight(dim.height);
     }
 
     @Override

@@ -12,7 +12,7 @@ import net.minecraft.item.Items;
 public class ClickPerSecondHud extends Hud {
 
     public ClickPerSecondHud() {
-
+        super("cps-hud");
     }
 
     @Override

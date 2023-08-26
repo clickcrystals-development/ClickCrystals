@@ -12,12 +12,16 @@ import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
-import io.github.itzispyder.clickcrystals.gui.hud.fixed.*;
+import io.github.itzispyder.clickcrystals.gui.hud.fixed.ArmorItemHud;
+import io.github.itzispyder.clickcrystals.gui.hud.fixed.ClickPerSecondHud;
+import io.github.itzispyder.clickcrystals.gui.hud.fixed.ColorOverlayHud;
+import io.github.itzispyder.clickcrystals.gui.hud.fixed.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.gui.hud.moveables.ClockRelativeHud;
 import io.github.itzispyder.clickcrystals.gui.hud.moveables.FpsRelativeHud;
 import io.github.itzispyder.clickcrystals.gui.hud.moveables.IconRelativeHud;
 import io.github.itzispyder.clickcrystals.gui.hud.moveables.PingRelativeHud;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsBase;
+import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
@@ -65,6 +69,14 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
             .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
             .condition((bind, screen) -> screen == null || screen instanceof TitleScreen || screen instanceof MultiplayerScreen || screen instanceof SelectWorldScreen)
             .onPress(bind -> ClickCrystalsBase.openClickCrystalsMenu())
+            .onChange(ClickCrystals::saveBind)
+            .build();
+
+    public static final Keybind openHudEditorKeybind = Keybind.create()
+            .id("open-hud-editor-screen")
+            .defaultKey(GLFW.GLFW_KEY_SEMICOLON)
+            .condition((bind, screen) -> screen == null)
+            .onPress(bind -> mc.setScreenAndRender(new HudEditScreen()))
             .onChange(ClickCrystals::saveBind)
             .build();
     public static final Keybind commandPrefix = Keybind.create()
@@ -151,7 +163,6 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
 
         // Hud
         system.addHud(new ColorOverlayHud());
-        system.addHud(new ClickCrystalsIconHud());
         system.addHud(new ModuleListTextHud());
         system.addHud(new ClickPerSecondHud());
         system.addHud(new ArmorItemHud());
