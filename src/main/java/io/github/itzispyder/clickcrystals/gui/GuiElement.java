@@ -30,7 +30,8 @@ public abstract class GuiElement {
     }
 
     public void render(DrawContext context, int mouseX, int mouseY) {
-        if (canRender()) {
+        boolean bl = canRender();
+        if (bl) {
             onRender(context, mouseX, mouseY);
         }
 
@@ -42,11 +43,19 @@ public abstract class GuiElement {
         if (guiBorders.isEnabled()) {
             RenderUtils.drawBorder(context, x, y, width, height, 0xFFFFFFFF);
         }
+
+        if (bl) {
+            postRender(context, mouseX, mouseY);
+        }
     }
 
     public abstract void onRender(DrawContext context, int mouseX, int mouseY);
 
     public abstract void onClick(double mouseX, double mouseY, int button);
+
+    public void postRender(DrawContext context, int mouseX, int mouseY) {
+
+    }
 
     public void onTick() {
         for (GuiElement child : children) {
@@ -227,8 +236,9 @@ public abstract class GuiElement {
     }
 
     public void scrollOnPanel(ScrollPanelElement panel, int amount) {
+        if (panel == null) return;
+
         setY(getY() + amount);
-        setRendering(ScrollPanelElement.canRenderOnPanel(panel, this));
 
         for (GuiElement child : children) {
             child.scrollOnPanel(panel, amount);

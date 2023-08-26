@@ -21,29 +21,6 @@ public class ScrollPanelElement extends GuiElement {
         scrolling = false;
 
         // callbacks
-        parentScreen.screenRenderListeners.add((context, mouseX, mouseY, delta) -> {
-            if (!canScroll() || !canRender()) return;
-            if (scrolling) {
-                int deltaY = mouseY - prevDrag;
-                scrollWithMultiplier(-deltaY, 3);
-                prevDrag = mouseY;
-            }
-
-            RenderUtils.fill(context, x + width - 6, y, 6, height, 0xFF1F1F1F);
-
-            double fullDoc = remainingUp + remainingDown + this.height;
-            double drawStartRatio = remainingUp / fullDoc;
-            double ratio = this.height / fullDoc;
-            int drawStart = (int)(this.height * drawStartRatio);
-            int drawLength = (int)(this.height * ratio);
-
-            RenderUtils.fill(context, this.x + this.width - 6, this.y + drawStart, 6, drawLength, 0xFFAAAAAA);
-            RenderUtils.fill(context, this.x + this.width - 1, this.y + drawStart, 1, drawLength, 0xFF555555);
-            RenderUtils.fill(context, this.x + this.width - 6, this.y + drawStart + drawLength - 1, 6, 1, 0xFF555555);
-
-            scrollbarY = this.y + drawStart;
-            scrollbarHeight = drawLength;
-        });
         parentScreen.mouseClickListeners.add((mouseX, mouseY, button, click) -> {
             if (isHovered((int)mouseX, (int)mouseY) && click.isDown()) {
                 scrolling = true;
@@ -55,10 +32,6 @@ public class ScrollPanelElement extends GuiElement {
                 scrolling = false;
             }
         });
-    }
-
-    public static boolean canRenderOnPanel(ScrollPanelElement panel, GuiElement element) {
-        return element.y >= panel.y && element.y + element.height <= panel.y + panel.height;
     }
 
     public boolean canScrollDown() {
@@ -117,6 +90,38 @@ public class ScrollPanelElement extends GuiElement {
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
 
+    }
+
+    @Override
+    public void render(DrawContext context, int mouseX, int mouseY) {
+        context.enableScissor(x + 1, y + 1, x + width - 1, y + height - 1);
+        super.render(context, mouseX, mouseY);
+        context.disableScissor();
+    }
+
+    @Override
+    public void postRender(DrawContext context, int mouseX, int mouseY) {
+        if (!canScroll() || !canRender()) return;
+        if (scrolling) {
+            int deltaY = mouseY - prevDrag;
+            scrollWithMultiplier(-deltaY, 3);
+            prevDrag = mouseY;
+        }
+
+        RenderUtils.fill(context, x + width - 6, y, 6, height, 0xFF1F1F1F);
+
+        double fullDoc = remainingUp + remainingDown + this.height;
+        double drawStartRatio = remainingUp / fullDoc;
+        double ratio = this.height / fullDoc;
+        int drawStart = (int)(this.height * drawStartRatio);
+        int drawLength = (int)(this.height * ratio);
+
+        RenderUtils.fill(context, this.x + this.width - 6, this.y + drawStart, 6, drawLength, 0xFFAAAAAA);
+        RenderUtils.fill(context, this.x + this.width - 1, this.y + drawStart, 1, drawLength, 0xFF555555);
+        RenderUtils.fill(context, this.x + this.width - 6, this.y + drawStart + drawLength - 1, 6, 1, 0xFF555555);
+
+        scrollbarY = this.y + drawStart;
+        scrollbarHeight = drawLength;
     }
 
     @Override
