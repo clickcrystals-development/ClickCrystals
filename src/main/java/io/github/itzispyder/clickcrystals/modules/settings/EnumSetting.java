@@ -2,6 +2,8 @@ package io.github.itzispyder.clickcrystals.modules.settings;
 
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.EnumSettingElement;
 
+import java.lang.reflect.Method;
+
 public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {
 
     private static long cooldown;
@@ -12,7 +14,9 @@ public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {
         super(name, description, def, val);
 
         try {
-            values = (E[])def.getClass().getDeclaredMethod("values").invoke(null);
+            Method method = def.getClass().getDeclaredMethod("values");
+            method.setAccessible(true);
+            values = (E[])method.invoke(null);
         }
         catch (Exception ex) {
             ex.printStackTrace();

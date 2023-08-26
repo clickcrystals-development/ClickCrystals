@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public abstract class GuiElement {
+public abstract class GuiElement implements Positionable {
 
     public int x, y, width, height;
     public boolean rendering, draggable, renderDependentOnParent;
@@ -161,34 +161,42 @@ public abstract class GuiElement {
         moveTo(frameWidth / 2 - width / 2, frameHeight / 2 - height / 2);
     }
 
+    @Override
     public int getX() {
         return x;
     }
 
+    @Override
     public void setX(int x) {
         this.x = x;
     }
 
+    @Override
     public int getY() {
         return y;
     }
 
+    @Override
     public void setY(int y) {
         this.y = y;
     }
 
+    @Override
     public int getWidth() {
         return width;
     }
 
+    @Override
     public void setWidth(int width) {
         this.width = width;
     }
 
+    @Override
     public int getHeight() {
         return height;
     }
 
+    @Override
     public void setHeight(int height) {
         this.height = height;
     }
