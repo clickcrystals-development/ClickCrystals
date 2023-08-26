@@ -1,22 +1,15 @@
 package io.github.itzispyder.clickcrystals.gui.hud.moveables;
 
-import io.github.itzispyder.clickcrystals.gui.hud.RelativeHud;
-import io.github.itzispyder.clickcrystals.scheduler.RepeatingTask;
+import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.time.LocalDateTime;
 
-public class ClockRelativeHud extends RelativeHud {
-
-    public static boolean blink = true;
-    public static final RepeatingTask BLINK_TASK = new RepeatingTask(() -> {
-        blink = !blink;
-    }, 20);
+public class ClockRelativeHud extends Hud {
 
     public ClockRelativeHud() {
-        super("clock-hud", 0.033, 0.4, 50, 12);
-        //Scheduler.getTasks().add(BLINK_TASK);
+        super("clock-hud", 10, 105, 50, 12);
     }
 
     @Override
@@ -31,12 +24,21 @@ public class ClockRelativeHud extends RelativeHud {
 
     public String getTime() {
         LocalDateTime now = LocalDateTime.now();
-        return formatTime(now.getHour()) + (blink ? ":" : " ") + formatTime(now.getMinute());
+        int hr = now.getHour();
+        boolean bl;
+
+        if (hr >= 12) {
+            bl = true;
+        }
+        else {
+            bl = hr != 0;
+        }
+
+        return (hr > 12 ? hr - 12 : (hr == 0 ? 12 : hr)) + ":" + formatTime(now.getMinute()) + (bl ? " pm" : " am");
     }
 
     public String formatTime(int i) {
         i = Math.abs(i);
-        String formatted = i <= 9 ? "0" + i : "" + i;
-        return formatted.equals("00") ? "12" : formatted;
+        return i <= 9 ? "0" + i : "" + i;
     }
 }

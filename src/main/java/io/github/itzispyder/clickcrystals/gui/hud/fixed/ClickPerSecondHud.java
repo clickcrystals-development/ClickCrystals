@@ -13,6 +13,7 @@ public class ClickPerSecondHud extends Hud {
 
     public ClickPerSecondHud() {
         super("cps-hud");
+        this.setFixed(true);
     }
 
     @Override

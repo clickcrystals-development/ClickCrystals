@@ -1,15 +1,15 @@
 package io.github.itzispyder.clickcrystals.gui.hud.moveables;
 
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
-import io.github.itzispyder.clickcrystals.gui.hud.RelativeHud;
+import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.math.RotationAxis;
 
-public class IconRelativeHud extends RelativeHud {
+public class IconRelativeHud extends Hud {
 
     public IconRelativeHud() {
-        super("icon-hud", 0.033, 0.20, 120, 30);
+        super("icon-hud", 10, 30, 120, 30);
     }
 
     @Override

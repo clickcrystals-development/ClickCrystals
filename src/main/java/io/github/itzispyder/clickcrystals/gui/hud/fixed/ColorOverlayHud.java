@@ -15,6 +15,7 @@ public class ColorOverlayHud extends Hud {
 
     public ColorOverlayHud() {
         super("color-overlay-hud");
+        this.setFixed(true);
     }
 
     @Override

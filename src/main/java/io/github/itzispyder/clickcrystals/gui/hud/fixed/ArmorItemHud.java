@@ -9,6 +9,7 @@ public class ArmorItemHud extends Hud {
 
     public ArmorItemHud() {
         super("armor-hud");
+        this.setFixed(true);
     }
 
     @Override

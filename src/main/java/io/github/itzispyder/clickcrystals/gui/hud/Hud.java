@@ -17,7 +17,7 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
     private static final int DEFAULT_ARGB = 0x4007CDDF;
     private final Dimension defaultDimension;
     private int x, y, width, height, argb;
-    private boolean renderBorder;
+    private boolean renderBorder, fixed;
     private final String id;
 
     public Hud(String id, int x, int y, int width, int height, Dimension defaultDimension, int argb, boolean renderBorder) {
@@ -29,6 +29,7 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
         this.argb = argb;
         this.renderBorder = renderBorder;
         this.id = id;
+        this.fixed = false;
     }
 
     public Hud(String id, int x, int y, int width, int height) {
@@ -142,6 +143,14 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
         if (saveImmediately) {
             config.save();
         }
+    }
+
+    public void setFixed(boolean fixed) {
+        this.fixed = fixed;
+    }
+
+    public boolean isFixed() {
+        return fixed;
     }
 
     public void saveToConfig() {

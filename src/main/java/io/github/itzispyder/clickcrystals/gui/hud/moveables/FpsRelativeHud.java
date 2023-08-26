@@ -1,14 +1,14 @@
 package io.github.itzispyder.clickcrystals.gui.hud.moveables;
 
-import io.github.itzispyder.clickcrystals.gui.hud.RelativeHud;
+import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
-public class FpsRelativeHud extends RelativeHud {
+public class FpsRelativeHud extends Hud {
 
     public FpsRelativeHud() {
-        super("fps-hud", 0.033, 0.35, 50, 12);
+        super("fps-hud", 10, 90, 50, 12);
     }
 
     @Override

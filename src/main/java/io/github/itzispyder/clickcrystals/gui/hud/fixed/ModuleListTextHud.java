@@ -16,6 +16,7 @@ public class ModuleListTextHud extends Hud {
 
     public ModuleListTextHud() {
         super("module-list-text-hud");
+        this.setFixed(true);
     }
 
     @Override
