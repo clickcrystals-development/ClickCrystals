@@ -4,6 +4,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.events.events.client.ChatCommandEvent;
+import io.github.itzispyder.clickcrystals.events.events.client.ChatReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.ChatSendEvent;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import org.spongepowered.asm.mixin.Mixin;
@@ -51,6 +52,7 @@ public abstract class MixinClientPlayNetworkHandler {
                 ignoreChatMessage = false;
             }
 
+            ChatReceiveEvent.lock();
             ci.cancel();
         }
     }

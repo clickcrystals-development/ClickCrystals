@@ -8,12 +8,29 @@ import io.github.itzispyder.clickcrystals.events.Event;
  */
 public class ChatReceiveEvent extends Event implements Cancellable {
 
+    private static boolean locked = false;
     private final String message;
     private boolean cancelled;
 
     public ChatReceiveEvent(String message) {
         this.message = message;
         this.cancelled = false;
+    }
+
+    public static void lock() {
+        locked = true;
+    }
+
+    public static void unlock() {
+        locked = false;
+    }
+
+    public static boolean isLocked() {
+        return locked;
+    }
+
+    public boolean locked() {
+        return isLocked();
     }
 
     public String getMessage() {
