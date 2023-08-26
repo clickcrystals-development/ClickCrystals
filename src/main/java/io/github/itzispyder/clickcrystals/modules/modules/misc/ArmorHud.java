@@ -61,7 +61,6 @@ public class ArmorHud extends Module implements Listener {
             .build()
     );
     private PlayerEntity target;
-    private int tickTimer;
 
     public ArmorHud() {
         super("armor-hud", Categories.MISC, "Renders armor hud next to hotbar!");

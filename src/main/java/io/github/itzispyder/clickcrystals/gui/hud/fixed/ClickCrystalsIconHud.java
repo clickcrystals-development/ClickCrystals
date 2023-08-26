@@ -1,6 +1,7 @@
-package io.github.itzispyder.clickcrystals.gui.hud;
+package io.github.itzispyder.clickcrystals.gui.hud.fixed;
 
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
+import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.IconHud;
 import net.fabricmc.api.EnvType;

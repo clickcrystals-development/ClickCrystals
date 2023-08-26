@@ -1,5 +1,6 @@
-package io.github.itzispyder.clickcrystals.gui.hud;
+package io.github.itzispyder.clickcrystals.gui.hud.fixed;
 
+import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.ArmorHud;
 import net.minecraft.client.gui.DrawContext;

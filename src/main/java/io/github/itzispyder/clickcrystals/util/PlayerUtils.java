@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile;
 import io.github.itzispyder.clickcrystals.data.Delta3d;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.client.network.ServerInfo;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.util.math.Vec3d;
@@ -38,6 +39,24 @@ public final class PlayerUtils {
         if (!playerNull()) {
             player().networkHandler.sendPacket(packet);
         }
+    }
+
+    public static long getPing() {
+        if (playerNull()) {
+            return -1;
+        }
+
+        ServerInfo s = player().networkHandler.getServerInfo();
+
+        if (s == null) {
+            return -1;
+        }
+
+        return s.ping;
+    }
+
+    public static int getFps() {
+        return mc.getCurrentFps();
     }
 
     public static Vec3d getRotation() {

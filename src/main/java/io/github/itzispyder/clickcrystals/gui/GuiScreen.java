@@ -48,6 +48,10 @@ public abstract class GuiScreen extends Screen {
         this.mostRecentlyAdded = null;
     }
 
+    public static boolean matchCurrent(Class<? extends GuiScreen> type) {
+        return mc.currentScreen != null && mc.currentScreen.getClass() == type;
+    }
+
     public abstract void baseRender(DrawContext context, int mouseX, int mouseY, float delta);
 
     @Override
