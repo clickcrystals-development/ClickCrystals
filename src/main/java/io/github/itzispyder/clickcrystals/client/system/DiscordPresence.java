@@ -3,7 +3,6 @@ package io.github.itzispyder.clickcrystals.client.system;
 import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
-import io.github.itzispyder.clickcrystals.ClickCrystals;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.prefix;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.version;
@@ -21,7 +20,6 @@ public class DiscordPresence {
         handlers.ready = user -> {
             String username = user.username + "#" + user.discriminator;
             System.out.println(prefix + "Welcome, " + username);
-            ClickCrystals.info.put("discord", username);
         };
     }
 

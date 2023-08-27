@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals;
 
 import io.github.itzispyder.clickcrystals.client.client.CCSoundEvents;
+import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.client.system.DiscordPresence;
 import io.github.itzispyder.clickcrystals.client.system.Version;
@@ -41,12 +42,6 @@ import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import org.lwjgl.glfw.GLFW;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.LinkedHashMap;
-
 /**
  * ClickCrystals main
  * TODO: (1) Update mod version down in "this file"
@@ -59,7 +54,6 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
     public static final ConfigFile config = ConfigFile.load("ClickCrystalsClient/config.json");
-    public static final LinkedHashMap<String, String> info = new LinkedHashMap<>();
     public static final DiscordPresence discordPresence = new DiscordPresence();
     public static Thread discordWorker;
     public static final Keybind openModuleKeybind = Keybind.create()
@@ -102,6 +96,9 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
             version = "1.0.0";
+
+    public static ClickCrystalsInfo info = new ClickCrystalsInfo(version, new ClickCrystalsInfo.ClickCrystalsUser[]{}, new ClickCrystalsInfo.ClickCrystalsUser[]{});
+
 
     /**
      * Runs the mod initializer.
@@ -263,33 +260,11 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
     }
 
     public static String getLatestVersion() {
-        return info.getOrDefault("latest_version", version);
+        return info.getLatest();
     }
 
     private void requestModInfo() {
-        String link = "https://itzispyder.github.io/cc-info.html";
-        try {
-            URL url = new URL(link);
-            InputStream is = url.openStream();
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader br = new BufferedReader(isr);
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                try {
-                    String[] entry = line.split("=");
-                    String key = entry[0].trim();
-                    String val = entry[1].trim();
-
-                    info.put(key, val);
-                }
-                catch (ArrayIndexOutOfBoundsException ignore) {}
-            }
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            System.out.println(prefix + "An error has occurred trying to get mod info!");
-        }
+        ClickCrystalsInfo.request();
     }
 
     public void initRpc() {

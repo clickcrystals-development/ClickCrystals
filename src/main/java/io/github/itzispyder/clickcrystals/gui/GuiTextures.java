@@ -12,6 +12,8 @@ public final  class GuiTextures {
     // models screenshots
     public static final Identifier IMPROPERISSUES = new Identifier(modId, "textures/model_screenshots/improperissues.png");
     public static final Identifier OBVWOLF = new Identifier(modId, "textures/model_screenshots/obvwolf.png");
+    public static final Identifier CLICKCRYSTALS_CAPE = new Identifier(modId, "textures/model_screenshots/clickcrystals_cape.png");
+    public static final Identifier CLICKCRYSTALS_CAPE_DEV = new Identifier(modId, "textures/model_screenshots/clickcrystals_cape_dev.png");
 
     // gui
     public static final Identifier ICON_BANNER = new Identifier(modId, "textures/gui/screen_title_banner.png");
