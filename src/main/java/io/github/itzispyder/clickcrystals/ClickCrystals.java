@@ -30,6 +30,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.minecart.TntSwap;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
+import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -73,7 +74,14 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
             .id("open-hud-editor-screen")
             .defaultKey(GLFW.GLFW_KEY_SEMICOLON)
             .condition((bind, screen) -> screen == null)
-            .onPress(bind -> mc.setScreenAndRender(new HudEditScreen()))
+            .onPress(bind -> {
+                if (Module.isEnabled(InGameHuds.class)) {
+                    mc.setScreenAndRender(new HudEditScreen());
+                }
+                else {
+                    ChatUtils.sendPrefixMessage("§cThe module §7InGameHuds §cis not enabled! Press this keybind again when it is.");
+                }
+            })
             .onChange(ClickCrystals::saveBind)
             .build();
     public static final Keybind commandPrefix = Keybind.create()
@@ -93,7 +101,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
             modId = "clickcrystals",
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
-            version = "0.9.9";
+            version = "1.0.0";
 
     /**
      * Runs the mod initializer.

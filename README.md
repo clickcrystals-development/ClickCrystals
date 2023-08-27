@@ -47,14 +47,14 @@ Mod: 0.9.9
 
 Changelog:
   GUI:
-    - Applied changes to the home screen
-    - Added new announcements tab
-    - ^ read from https://itzispyder.github.io/cc-bulletin
+    - Added various info huds [position, fps, ping, target, clock, cc-icon]
+    - Added hud editor screen (keybind is SEMICOLON)
+    - Search screen now uses a scroll panel
   Modules:
-    - Added ChatPrefix module: 
-        - message prefixes
-        - message suffixes
-        - custom unicode fonts
+    - Added GhostTotem (renders totems in your hand when you die)
+
+Notice:
+  - USE COMMAND ,keybinds IF YOU DON'T KNOW THE KEYBIND FOR SOMETHING
 ```
 
 <div class="demo-menu">
