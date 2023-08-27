@@ -28,11 +28,11 @@ public class IntegerSettingElement extends GuiElement {
         this.knob = new ImageElement(GuiTextures.SETTING_NUMBER_KNOB, x, y, 10, 10);
         this.addChild(knob);
 
-        double range = setting.getMax() - setting.getMin();
-        double value = setting.getVal() - setting.getMin();
-        double ratio = value / range;
-        double ratioWidth = width * ratio;
-        this.knob.setX((int)(x + ratioWidth));
+        int range = setting.getMax() - setting.getMin();
+        int value = setting.getVal() - setting.getMin();
+        double ratio = (double)value / (double)range;
+        int ratioWidth = (int)(width * ratio);
+        this.knob.setX(x + ratioWidth);
 
         this.titleText = new TextElement(setting.getName() + ": §3" + setting.getVal(), TextAlignment.LEFT, 0.5F, x + 105, y);
         TextElement desc = new TextElement("§7" + setting.getDescription(), TextAlignment.LEFT, 0.45F, titleText.x, titleText.y + 5);
@@ -42,11 +42,11 @@ public class IntegerSettingElement extends GuiElement {
         AbstractElement reset = new AbstractElement(x + 92, y, height, height, (context, mouseX, mouseY, button) -> {
             context.drawTexture(GuiTextures.RESET, button.x, button.y, 0, 0, button.width, button.height, button.width, button.height);
         }, (button) -> {
-            double ran = setting.getMax() - setting.getMin();
-            double val = setting.getDef() - setting.getMin();
-            double rat = val / ran;
-            double ratWid = width * rat;
-            knob.setX((int)(x + ratWid));
+            int ran = setting.getMax() - setting.getMin();
+            int val = setting.getDef() - setting.getMin();
+            double rat = (double)val / (double)ran;
+            int ratWid = (int)(width * rat);
+            knob.setX(x + ratWid);
         });
         this.addChild(reset);
     }
@@ -61,10 +61,10 @@ public class IntegerSettingElement extends GuiElement {
         RenderUtils.drawHorizontalLine(context, x, y + 4, knob.x - x, 2, COLOR_FILL);
         this.titleText.setText(setting.getName() + ": §3" + setting.getVal());
 
-        double range = setting.getMax() - setting.getMin();
+        int range = setting.getMax() - setting.getMin();
         double ratio = (knob.x - x) / (double)width;
-        double value = range * ratio;
-        setting.setVal((int)(value + setting.getMin()));
+        int value = (int)(range * ratio);
+        setting.setVal(value + setting.getMin());
     }
 
     @Override
