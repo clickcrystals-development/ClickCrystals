@@ -27,16 +27,22 @@ public class ClockRelativeHud extends Hud {
     public String getTime() {
         LocalDateTime now = LocalDateTime.now();
         int hr = now.getHour();
-        boolean bl;
 
-        if (hr >= 12) {
-            bl = true;
+        if (Module.getFrom(InGameHuds.class, m -> m.hudClockHourDisplay.getVal()) == InGameHuds.ClockDisplay.HOUR_12) {
+            boolean bl;
+
+            if (hr >= 12) {
+                bl = true;
+            }
+            else {
+                bl = hr != 0;
+            }
+
+            return (hr > 12 ? hr - 12 : (hr == 0 ? 12 : hr)) + ":" + formatTime(now.getMinute()) + (bl ? " pm" : " am");
         }
         else {
-            bl = hr != 0;
+            return hr + ":" + formatTime(now.getMinute());
         }
-
-        return (hr > 12 ? hr - 12 : (hr == 0 ? 12 : hr)) + ":" + formatTime(now.getMinute()) + (bl ? " pm" : " am");
     }
 
     public String formatTime(int i) {

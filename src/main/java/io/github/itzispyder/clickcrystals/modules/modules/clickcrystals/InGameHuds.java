@@ -7,10 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.gui.hud.moveables.TargetRelativeHud;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
-import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
-import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
-import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
+import io.github.itzispyder.clickcrystals.modules.settings.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.ColorHelper;
 
@@ -19,6 +16,7 @@ public class InGameHuds extends Module implements Listener {
     private final SettingSection scGeneral = getGeneralSection();
     private final SettingSection scHudVisibility = createSettingSection("hud-visibility");
     private final SettingSection scHudTarget = createSettingSection("target-hud-settings");
+    private final SettingSection scHudClock = createSettingSection("clock-hud-settings");
     public final ModuleSetting<Boolean> renderHudBorders = scGeneral.add(BooleanSetting.create()
             .name("render-hud-borders")
             .description("Renders a border around huds.")
@@ -97,6 +95,12 @@ public class InGameHuds extends Module implements Listener {
             .def(10.0)
             .build()
     );
+    public final ModuleSetting<ClockDisplay> hudClockHourDisplay = scHudClock.add(EnumSetting.create(ClockDisplay.class)
+            .name("clock-hud-hour-display")
+            .description("Clock hour display.")
+            .def(ClockDisplay.HOUR_12)
+            .build()
+    );
 
     public InGameHuds() {
         super("in-game-huds", Categories.CLICKCRYSTALS,"Manager of all custom ClickCrystals in-game huds.");
@@ -125,5 +129,10 @@ public class InGameHuds extends Module implements Listener {
         double g = colorGreen.getVal();
         double b = colorBlue.getVal();
         return ColorHelper.Argb.getArgb(a, (int)r, (int)g, (int)b);
+    }
+
+    public enum ClockDisplay {
+        HOUR_12,
+        HOUR_24
     }
 }
