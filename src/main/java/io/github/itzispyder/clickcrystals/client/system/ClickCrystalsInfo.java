@@ -91,7 +91,7 @@ public class ClickCrystalsInfo {
                 throw new IllegalStateException("json parse failed");
             }
 
-            System.out.println(prefix + " Info requested: " + gson.toJson(ClickCrystals.info));
+            System.out.println(prefix + " Info requested: " + gson.toJson(info));
             ClickCrystals.info = info;
             return info;
         }

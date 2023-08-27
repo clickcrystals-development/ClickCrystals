@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.events.listeners;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.data.pixelart.PixelArtGenerator;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -15,9 +16,12 @@ import net.minecraft.network.packet.c2s.login.LoginKeyC2SPacket;
 import net.minecraft.network.packet.s2c.login.LoginHelloS2CPacket;
 import net.minecraft.network.packet.s2c.login.LoginSuccessS2CPacket;
 import net.minecraft.network.packet.s2c.play.DisconnectS2CPacket;
+import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+
+import java.util.UUID;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.version;
@@ -35,11 +39,38 @@ public class NetworkEventListener implements Listener {
     @EventHandler
     public void onPacketReceive(PacketReceiveEvent e) {
         try {
+            this.handPlayerJoin(e);
             this.handleCheckUpdates(e);
             this.handlePixelArtStop(e);
             this.handleHudConfigLoading(e);
         }
         catch (Exception ignore) {}
+    }
+
+    private void handPlayerJoin(PacketReceiveEvent e) {
+        if (e.getPacket() instanceof PlayerListS2CPacket packet) {
+            if (packet.getActions().stream().anyMatch(a -> a == PlayerListS2CPacket.Action.ADD_PLAYER)) {
+                for (PlayerListS2CPacket.Entry entry : packet.getPlayerAdditionEntries()) {
+                    UUID id = entry.profile().getId();
+                    String name = entry.profile().getName();
+                    ClickCrystalsInfo.ClickCrystalsUser userAsOwner = ClickCrystals.info.getOwner(id);
+
+                    if (userAsOwner != null) {
+                        String s = "§7" + name + "§e, a ClickCrystals§b developer,§e has joined the game!";
+                        ChatUtils.sendPrefixMessage(s);
+                        return;
+                    }
+
+                    ClickCrystalsInfo.ClickCrystalsUser userAsStaff = ClickCrystals.info.getStaff(id);
+
+                    if (userAsStaff != null) {
+                        String s = "§7" + name + "§e, a ClickCrystals§b staff,§e has joined the game!";
+                        ChatUtils.sendPrefixMessage(s);
+                        return;
+                    }
+                }
+            }
+        }
     }
 
     private void handleHudConfigLoading(PacketReceiveEvent e) {

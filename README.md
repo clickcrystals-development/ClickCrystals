@@ -41,6 +41,8 @@ Changelog:
     - Added InGameHud module, settings for all the custom info huds
   Config:
     - Json format now printers in a more readable format, so you can exchange configs easier!
+  Misc:
+    - Added CC Capes for CC Owners and CC Staff! (apply for staff today in our discord!)
 
 Notice:
   - USE COMMAND ,keybinds IF YOU DON'T KNOW THE KEYBIND FOR SOMETHING
