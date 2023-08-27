@@ -43,7 +43,7 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 0.9.9
+Mod: 1.0.0
 
 Changelog:
   GUI:
@@ -52,6 +52,10 @@ Changelog:
     - Search screen now uses a scroll panel
   Modules:
     - Added GhostTotem (renders totems in your hand when you die)
+    - Removed IconHud
+    - Added InGameHud module, settings for all the custom info huds
+  Config:
+    - Json format now printers in a more readable format, so you can exchange configs easier!
 
 Notice:
   - USE COMMAND ,keybinds IF YOU DON'T KNOW THE KEYBIND FOR SOMETHING
@@ -103,7 +107,6 @@ Notice:
 | PearlSwitchT     |                     Right click a totem to switch to pearl slot.                     |
 | AnchorSwitch     |   Whenever you place an anchor, switch to glowstone and back after you charge it.    |
 | CrystalAnchor    |         Right click the ground with a crystal to switch to a respawn anchor.         |
-| IconHud          |                    Renders the ClickCrystals logo on the screen.                     |
 | NoHurtCam        |                          Removes the annoying screen shake.                          |
 | NoServerPacks    |          Prevents servers from forcing you to download their resource pack.          |
 | SlowSwing        |                      Makes your hand swing like mining fatigue.                      |
@@ -140,6 +143,8 @@ Notice:
 | ViewModel        |                             Changes your hand view model                             |
 | Zoom             |                                 Now you can zoom, yw                                 |
 | ChatPrefix       |                 Chat prefixes and suffixes, and custom unicode fonts                 |
+| GhostTotem       |                      Renders a totem in your hand when you die                       |
+| InGameHuds       |                        Custom ClickCrystals info huds manager                        |
 
 
 ## But isn't this cheating?
