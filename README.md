@@ -62,6 +62,7 @@ Notice:
 | COMMA          |   Custom commands prefix    |
 | UP_ARROW       |     Message resend bind     |
 | B              |        Zoom keybind         |
+| SEMICOLON      |   Open hud editor screen    |
 
 ### Commands
 
