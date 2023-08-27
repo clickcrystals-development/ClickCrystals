@@ -95,7 +95,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
             modId = "clickcrystals",
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
-            version = "1.0.0";
+            version = "1.0.1";
 
     public static ClickCrystalsInfo info = new ClickCrystalsInfo(version, new ClickCrystalsInfo.ClickCrystalsUser[]{}, new ClickCrystalsInfo.ClickCrystalsUser[]{});
 

@@ -28,23 +28,14 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 1.0.0
+Mod: 1.0.1
 
 Changelog:
-  GUI:
-    - Added various info huds [position, fps, ping, target, clock, cc-icon]
-    - Added hud editor screen (keybind is SEMICOLON)
-    - Search screen now uses a scroll panel
-  Modules:
-    - Added GhostTotem (renders totems in your hand when you die)
-    - Removed IconHud
-    - Added InGameHud module, settings for all the custom info huds
-  Config:
-    - Json format now printers in a more readable format, so you can exchange configs easier!
-  Misc:
-    - Added CC Capes for CC Owners and CC Staff! (apply for staff today in our discord!)
+  Patches:
+    - Fixed Version 1.0.0 not rendering elytras for people with custom capes.
 
 Notice:
+  - Version 1.0.1 is a hotfix for elytras not rendering for people with custom cc capes!
   - USE COMMAND ,keybinds IF YOU DON'T KNOW THE KEYBIND FOR SOMETHING
 ```
 
