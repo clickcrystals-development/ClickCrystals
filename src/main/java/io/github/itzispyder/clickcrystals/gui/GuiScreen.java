@@ -65,6 +65,7 @@ public abstract class GuiScreen extends Screen implements Global {
             int dx = mouseX - cursor.left;
             int dy = mouseY - cursor.right;
             selected.move(dx, dy);
+            selected.boundIn(context.getScaledWindowWidth(), context.getScaledWindowHeight());
             this.cursor = Pair.of(mouseX, mouseY);
         }
 

@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.gui;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
+import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
@@ -159,6 +160,12 @@ public abstract class GuiElement implements Positionable {
 
     public void centerIn(int frameWidth, int frameHeight) {
         moveTo(frameWidth / 2 - width / 2, frameHeight / 2 - height / 2);
+    }
+
+    public void boundIn(int frameWidth, int frameHeight) {
+        int x = MathUtils.minMax(this.x, 0, frameWidth - width);
+        int y = MathUtils.minMax(this.y, 0, frameHeight - height);
+        moveTo(x, y);
     }
 
     @Override

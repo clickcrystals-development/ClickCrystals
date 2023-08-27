@@ -23,31 +23,36 @@ public class InGameHuds extends Module implements Listener {
             .def(true)
             .build()
     );
-    public final ModuleSetting<Double> colorRed = scGeneral.add(DoubleSetting.create()
-            .max(255.0)
-            .min(0.0)
-            .decimalPlaces(1)
+    public final ModuleSetting<Integer> colorRed = scGeneral.add(IntegerSetting.create()
+            .max(255)
+            .min(0)
             .name("color-red")
             .description("Hud backdrop color value (red)")
-            .def((double)ColorHelper.Argb.getRed(Hud.DEFAULT_ARGB))
+            .def(ColorHelper.Argb.getRed(Hud.DEFAULT_ARGB))
             .build()
     );
-    public final ModuleSetting<Double> colorGreen = scGeneral.add(DoubleSetting.create()
-            .max(255.0)
-            .min(0.0)
-            .decimalPlaces(1)
+    public final ModuleSetting<Integer> colorGreen = scGeneral.add(IntegerSetting.create()
+            .max(255)
+            .min(0)
             .name("color-green")
             .description("Hud backdrop color value (green)")
-            .def((double)ColorHelper.Argb.getGreen(Hud.DEFAULT_ARGB))
+            .def(ColorHelper.Argb.getGreen(Hud.DEFAULT_ARGB))
             .build()
     );
-    public final ModuleSetting<Double> colorBlue = scGeneral.add(DoubleSetting.create()
-            .max(255.0)
-            .min(0.0)
-            .decimalPlaces(1)
+    public final ModuleSetting<Integer> colorBlue = scGeneral.add(IntegerSetting.create()
+            .max(255)
+            .min(0)
             .name("color-blue")
             .description("Hud backdrop color value (blue)")
-            .def((double)ColorHelper.Argb.getBlue(Hud.DEFAULT_ARGB))
+            .def(ColorHelper.Argb.getBlue(Hud.DEFAULT_ARGB))
+            .build()
+    );
+    public final ModuleSetting<Integer> colorAlpha = scGeneral.add(IntegerSetting.create()
+            .max(255)
+            .min(0)
+            .name("color-alpha")
+            .description("Hud backdrop color value (alpha or transparency)")
+            .def(ColorHelper.Argb.getAlpha(Hud.DEFAULT_ARGB))
             .build()
     );
     public final ModuleSetting<Boolean> hudIcon = scHudVisibility.add(BooleanSetting.create()
@@ -83,6 +88,24 @@ public class InGameHuds extends Module implements Listener {
     public final ModuleSetting<Boolean> hudPos = scHudVisibility.add(BooleanSetting.create()
             .name("render-position-hud")
             .description("Renders the position hud.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> hudBiome = scHudVisibility.add(BooleanSetting.create()
+            .name("render-biome-hud")
+            .description("Renders the biome hud.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> hudDirection = scHudVisibility.add(BooleanSetting.create()
+            .name("render-direction-hud")
+            .description("Renders the direction hud.")
+            .def(true)
+            .build()
+    );
+    public final ModuleSetting<Boolean> hudCrosshair = scHudVisibility.add(BooleanSetting.create()
+            .name("render-crosshair-hud")
+            .description("Renders the crosshair target hud.")
             .def(true)
             .build()
     );
@@ -124,11 +147,11 @@ public class InGameHuds extends Module implements Listener {
     }
 
     public int getArgb() {
-        int a = ColorHelper.Argb.getAlpha(Hud.DEFAULT_ARGB);
-        double r = colorRed.getVal();
-        double g = colorGreen.getVal();
-        double b = colorBlue.getVal();
-        return ColorHelper.Argb.getArgb(a, (int)r, (int)g, (int)b);
+        int a = colorAlpha.getVal();
+        int r = colorRed.getVal();
+        int g = colorGreen.getVal();
+        int b = colorBlue.getVal();
+        return ColorHelper.Argb.getArgb(a, r, g, b);
     }
 
     public enum ClockDisplay {

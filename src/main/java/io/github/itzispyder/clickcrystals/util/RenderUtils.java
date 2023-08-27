@@ -110,9 +110,9 @@ public final class RenderUtils {
 
     public static void drawBorder(DrawContext context, int x, int y, int width, int height, int thickness, int color) {
         drawHorizontalLine(context, x, y, width, thickness, color);
-        drawVerticalLine(context, x, y + 1, height - 2, thickness, color);
-        drawVerticalLine(context, x + width - 1, y + 1, height - 2, thickness, color);
-        drawHorizontalLine(context, x, y + height - 1, width, thickness, color);
+        drawVerticalLine(context, x, y + thickness, height - 2, thickness, color);
+        drawVerticalLine(context, x + width - thickness, y + thickness, height - 2, thickness, color);
+        drawHorizontalLine(context, x, y + height - thickness, width, thickness, color);
     }
 
     public static void drawHorizontalLine(DrawContext context, int x, int y, int length, int thickness, int color) {

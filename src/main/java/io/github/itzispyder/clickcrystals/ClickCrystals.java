@@ -175,6 +175,9 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addHud(new ClockRelativeHud());
         system.addHud(new TargetRelativeHud());
         system.addHud(new PosRelativeHud());
+        system.addHud(new BiomeRelativeHud());
+        system.addHud(new DirectionRelativeHud());
+        system.addHud(new CrosshairTargetRelativeHud());
     }
 
     public void initModules() {
