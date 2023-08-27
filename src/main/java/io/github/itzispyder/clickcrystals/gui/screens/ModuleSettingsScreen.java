@@ -13,10 +13,12 @@ public class ModuleSettingsScreen extends ClickCrystalsBase {
 
     private final ScrollPanelElement main;
     private final Module module;
+    private final boolean accessedFromDefaultBase;
 
-    public ModuleSettingsScreen(Module module) {
+    public ModuleSettingsScreen(Module module, boolean accessedFromDefaultBase) {
         super(module.getName());
         this.module = module;
+        this.accessedFromDefaultBase = accessedFromDefaultBase;
         this.main = new ScrollPanelElement(this, nav.x + nav.width + 10, base.y + 10, base.width - nav.width - 30, base.height - 20);
         this.addChild(main);
     }
@@ -50,7 +52,12 @@ public class ModuleSettingsScreen extends ClickCrystalsBase {
 
     @Override
     public void close() {
-        ClickCrystalsBase.openClickCrystalsMenu();
+        if (accessedFromDefaultBase) {
+            ClickCrystalsBase.openClickCrystalsMenu();
+        }
+        else {
+            mc.setScreenAndRender(new HudEditScreen());
+        }
     }
 
     @Override

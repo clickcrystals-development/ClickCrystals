@@ -43,7 +43,7 @@ public class DetailedModuleElement extends GuiElement {
         else if (button == 1) {
             if (mc.currentScreen instanceof ClickCrystalsBase|| mc.currentScreen instanceof HomeScreen) {
                 ClickCrystalsBase.setPrevOpened(((DefaultBase)mc.currentScreen).getClass());
-                mc.setScreenAndRender(new ModuleSettingsScreen(module));
+                mc.setScreenAndRender(new ModuleSettingsScreen(module, true));
             }
         }
     }

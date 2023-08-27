@@ -16,7 +16,7 @@ import net.minecraft.client.util.Window;
 @Environment(EnvType.CLIENT)
 public abstract class Hud implements HudRenderCallback, Positionable, Global {
 
-    private static final int DEFAULT_ARGB = 0x4007CDDF;
+    public static final int DEFAULT_ARGB = 0x4007CDDF;
     private final Dimension defaultDimension;
     private int x, y, width, height, argb;
     private boolean renderBorder, fixed;
@@ -55,7 +55,7 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
     public void renderBackdrop(DrawContext context) {
         RenderUtils.fill(context, getX(), getY(), getWidth(), getHeight(), getArgb());
 
-        if (renderBorder) {
+        if (canRenderBorder()) {
             RenderUtils.drawBorder(context, getX(), getY(), getWidth(), getHeight(), 0x40FFFFFF);
         }
     }

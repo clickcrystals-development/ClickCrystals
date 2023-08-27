@@ -1,8 +1,12 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
+import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.RelativeHudElement;
+import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
+import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -28,6 +32,19 @@ public class HudEditScreen extends GuiScreen {
                 Hud.saveConfigHuds();
             }
         });
+
+        AbstractElement settings = AbstractElement.create()
+                .pos(mc.getWindow().getScaledWidth() - 30, 11)
+                .dimensions(20, 20)
+                .onRender((context, mouseX, mouseY, button) -> {
+                    context.drawTexture(GuiTextures.SETTINGS, button.x, button.y, 0, 0, button.width, button.height, button.width, button.height);
+                })
+                .onPress(button -> {
+                    mc.setScreenAndRender(new ModuleSettingsScreen(Module.get(InGameHuds.class), false));
+                })
+                .build();
+
+        this.addChild(settings);
     }
 
     @Override

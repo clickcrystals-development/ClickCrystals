@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.data;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.github.itzispyder.clickcrystals.gui.Positionable;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 
@@ -87,7 +88,7 @@ public class ConfigFile {
 
         if (FileValidationUtils.validate(file)) {
             try {
-                Gson gson = new Gson();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 String json = gson.toJson(module);
 
                 if (json == null) {

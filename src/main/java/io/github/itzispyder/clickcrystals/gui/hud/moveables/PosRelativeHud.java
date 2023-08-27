@@ -27,4 +27,14 @@ public class PosRelativeHud extends Hud {
     public boolean canRender() {
         return super.canRender() && Module.getFrom(InGameHuds.class, m -> m.hudPos.getVal());
     }
+
+    @Override
+    public int getArgb() {
+        return Module.getFrom(InGameHuds.class, m -> m.getArgb());
+    }
+
+    @Override
+    public boolean canRenderBorder() {
+        return Module.getFrom(InGameHuds.class, m -> m.renderHudBorders.getVal());
+    }
 }

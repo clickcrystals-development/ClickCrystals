@@ -27,4 +27,14 @@ public class FpsRelativeHud extends Hud {
     public boolean canRender() {
         return super.canRender() && Module.getFrom(InGameHuds.class, m -> m.hudFps.getVal());
     }
+
+    @Override
+    public int getArgb() {
+        return Module.getFrom(InGameHuds.class, m -> m.getArgb());
+    }
+
+    @Override
+    public boolean canRenderBorder() {
+        return Module.getFrom(InGameHuds.class, m -> m.renderHudBorders.getVal());
+    }
 }
