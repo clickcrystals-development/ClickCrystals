@@ -74,7 +74,7 @@ public class KeybindSettingElement extends GuiElement implements Typeable {
             name = Keybind.EXTRAS.get(key);
         }
 
-        name = name != null ? "§7[§f" + name.toUpperCase() + "§7]" : "§7NONE";
+        name = name != null ? "§7[§f" + name.toUpperCase() + "§7]" : "§8NONE";
         display = name;
     }
 }

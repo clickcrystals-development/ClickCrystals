@@ -46,6 +46,12 @@ public class InGameHuds extends Module implements Listener {
             .def(true)
             .build()
     );
+    public final ModuleSetting<Boolean> hudPos = scGeneral.add(BooleanSetting.create()
+            .name("render-position-hud")
+            .description("Renders the position hud.")
+            .def(true)
+            .build()
+    );
     public final ModuleSetting<Double> hudTargetStayTime = scHudTarget.add(DoubleSetting.create()
             .min(5.0)
             .max(120.0)
