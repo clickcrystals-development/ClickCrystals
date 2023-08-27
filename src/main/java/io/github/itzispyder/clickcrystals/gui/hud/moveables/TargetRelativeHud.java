@@ -68,8 +68,10 @@ public class TargetRelativeHud extends Hud {
             context.getMatrices().pop();
 
             // totem indicator text
+            context.getMatrices().push();
             String pops = "§c-" + Module.get(TotemPops.class).getPops(target);
             RenderUtils.drawRightText(context, pops, x + g + 80 + 32 + g, y + g + 16, 1.0F, true);
+            context.getMatrices().pop();
 
             caret += g + 8;
             setHeight(caret - y);

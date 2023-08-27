@@ -11,28 +11,12 @@
 
 ---------------------------------------------------------------
 ### A message from the developers to our fellow users:
-We understand your concerns, and have been constantly making changes and thinking of new ways to 
-improve upon this project. 
 
-However, as much as to how you all consider ClickCrystals to be an unfair advantage, this mod's
-sole purpose is to bring ease to hotkeying. There are no built-in macros, and there have 
-been numerous instances of players being able to replicate what this mod does without 
-using it, which relieves the use of the phrase "unfair advantage" on this mod.
+# ClickCrystals Official Release v1.0.0
 
-Please do not go about assuming what this mod does in your head without getting to use it 
-first, needless to say spreading misinformation about it.
-
-With that said, all hotkey modules will be staying and not to be removed anytime in the 
-future unless it is to be voted out by the ClickCrystals community.
-Thank you for your cooperation.
-
-All unfair advantages that have been previously removed:
-- TrueSight
-- NoBreakDelay
-- PearlSwitch's swapping back feature (accused for auto double hand)
-- CrystalSwitch's swapping back feature (accused for middle click swap)
-- ObsidianSwitch's swapping back feature (accused for scaffold)
-- ClickCrystals' Auto-clicker (accused for macroing and autoclicking)
+After all these months, we finally made it through development stage! ClickCrystals Version 1 is NOW OFFICIAL. 
+Thank you every much to those of you that were og and supportive throughout our journey! 
+To those of you that have joined before ClickCrystals Version 1, you will be given an OG-USER rank!
 
 Happy coding and cpvping!
 
@@ -62,7 +46,7 @@ Notice:
 ```
 
 <div class="demo-menu">
-  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/962b47bf0b3d8d50441a0c4b2498ea94c84fb365.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
+  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/8195bc1eb47ce98736eaf93499f8ce577dae8f1b.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
 </div>
 
 ## How Do I Use ClickCrystals?
