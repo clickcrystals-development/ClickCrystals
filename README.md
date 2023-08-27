@@ -16,8 +16,9 @@
 
 After all these months, we finally made it through development stage! ClickCrystals Version 1 is NOW OFFICIAL. 
 Thank you every much to those of you that were og and supportive throughout our journey! 
-To those of you that have joined before ClickCrystals Version 1, you will be given an OG-USER rank!
+To those of you that have joined our discord before ClickCrystals Version 1, you will be given an OG-USER rank!
 
+Thanks again for the support!
 Happy coding and cpvping!
 
 \- ClickCrystal dev team
