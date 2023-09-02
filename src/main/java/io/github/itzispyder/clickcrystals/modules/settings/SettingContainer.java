@@ -22,7 +22,7 @@ public interface SettingContainer {
         return KeybindSetting.create();
     }
 
-    default <T extends Enum<?>> EnumSetting.Builder createEnumSetting(Class<T> type) {
+    default <T extends Enum<?>> EnumSetting.Builder<T> createEnumSetting(Class<T> type) {
         return EnumSetting.create(type);
     }
 }

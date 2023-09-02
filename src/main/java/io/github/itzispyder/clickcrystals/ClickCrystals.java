@@ -203,6 +203,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addModule(new CrystSwitch());
         system.addModule(new ObiSwitch());
         system.addModule(new PearlSwitch());
+        system.addModule(new GuiCursor());
 
         // minecart
         system.addModule(new RailSwap());

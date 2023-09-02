@@ -12,6 +12,7 @@
     "MixinClientPlayNetworkHandler",
     "MixinEntityRenderer",
     "MixinGameRenderer",
+    "MixinHandledScreen",
     "MixinHeldItemRenderer",
     "MixinInGameHud",
     "MixinInGameOverlay",
@@ -20,6 +21,7 @@
     "MixinLivingEntityRenderer",
     "MixinMouse",
     "MixinParticleManager",
+    "MixinScreen",
     "MixinSplashOverlay"
   ],
   "injectors": {
