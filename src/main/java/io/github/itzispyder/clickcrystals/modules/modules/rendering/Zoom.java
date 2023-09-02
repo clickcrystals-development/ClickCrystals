@@ -8,7 +8,10 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
-import io.github.itzispyder.clickcrystals.modules.settings.*;
+import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import org.lwjgl.glfw.GLFW;
 
 public class Zoom extends Module implements Listener {

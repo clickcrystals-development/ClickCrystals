@@ -45,6 +45,11 @@ public abstract class MixinAbstractClientPlayerEntity implements Global {
             return;
         }
 
-        cir.setReturnValue(cir.getReturnValue());
+        ClickCrystalsInfo.ClickCrystalsUser userAsDonator = ClickCrystals.info.getDonator(id);
+
+        if (userAsDonator != null) {
+            cir.setReturnValue(GuiTextures.CLICKCRYSTALS_CAPE_DONO);
+            return;
+        }
     }
 }

@@ -8,12 +8,14 @@ public final  class GuiTextures {
 
     // default
     public static final Identifier ICON = new Identifier(modId, "textures/icon.png");
+    public static final Identifier ICON_PREMIUM = new Identifier(modId, "textures/icon_premium.png");
 
     // models screenshots
     public static final Identifier IMPROPERISSUES = new Identifier(modId, "textures/model_screenshots/improperissues.png");
     public static final Identifier OBVWOLF = new Identifier(modId, "textures/model_screenshots/obvwolf.png");
     public static final Identifier CLICKCRYSTALS_CAPE = new Identifier(modId, "textures/model_screenshots/clickcrystals_cape.png");
     public static final Identifier CLICKCRYSTALS_CAPE_DEV = new Identifier(modId, "textures/model_screenshots/clickcrystals_cape_dev.png");
+    public static final Identifier CLICKCRYSTALS_CAPE_DONO = new Identifier(modId, "textures/model_screenshots/clickcrystals_cape_donator.png");
 
     // gui
     public static final Identifier ICON_BANNER = new Identifier(modId, "textures/gui/screen_title_banner.png");

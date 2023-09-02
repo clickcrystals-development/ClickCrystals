@@ -97,7 +97,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
             starter = "§7[§bClick§3Crystals§7] §r",
             version = "1.0.1";
 
-    public static ClickCrystalsInfo info = new ClickCrystalsInfo(version, new ClickCrystalsInfo.ClickCrystalsUser[]{}, new ClickCrystalsInfo.ClickCrystalsUser[]{});
+    public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
 
 
     /**
@@ -259,10 +259,10 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
     }
 
     public static boolean matchLatestVersion() {
-        return Version.ofString(version).isUpToDate(Version.ofString(getLatestVersion()));
+        return Version.ofString(version).isUpToDate(getLatestVersion());
     }
 
-    public static String getLatestVersion() {
+    public static Version getLatestVersion() {
         return info.getLatest();
     }
 

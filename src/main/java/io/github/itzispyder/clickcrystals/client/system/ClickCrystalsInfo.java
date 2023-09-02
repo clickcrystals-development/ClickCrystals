@@ -20,15 +20,15 @@ public class ClickCrystalsInfo {
     private final String latest;
     private final ClickCrystalsUser[] owners;
     private final ClickCrystalsUser[] staffs;
+    private final ClickCrystalsUser[] donators;
 
-    public ClickCrystalsInfo(String latest, ClickCrystalsUser[] staffs, ClickCrystalsUser[] owners) {
+    public ClickCrystalsInfo(String latest) {
         this.latest = latest;
-        this.owners = owners;
-        this.staffs = staffs;
+        owners = staffs = donators = new ClickCrystalsUser[]{};
     }
 
-    public String getLatest() {
-        return latest;
+    public Version getLatest() {
+        return Version.ofString(latest);
     }
 
     public ClickCrystalsUser[] getOwners() {
@@ -37,6 +37,30 @@ public class ClickCrystalsInfo {
 
     public ClickCrystalsUser[] getStaffs() {
         return staffs;
+    }
+
+    public ClickCrystalsUser[] getDonators() {
+        return donators;
+    }
+
+    public ClickCrystalsUser getOwner(UUID id) {
+        for (ClickCrystalsUser owner : owners) {
+            if (owner.id.toString().equals(id.toString())) {
+                return owner;
+            }
+        }
+
+        return null;
+    }
+
+    public ClickCrystalsUser getOwner(String name) {
+        for (ClickCrystalsUser owner : owners) {
+            if (owner.name.equalsIgnoreCase(name)) {
+                return owner;
+            }
+        }
+
+        return null;
     }
 
     public ClickCrystalsUser getStaff(UUID id) {
@@ -59,20 +83,20 @@ public class ClickCrystalsInfo {
         return null;
     }
 
-    public ClickCrystalsUser getOwner(UUID id) {
-        for (ClickCrystalsUser owner : owners) {
-            if (owner.id.toString().equals(id.toString())) {
-                return owner;
+    public ClickCrystalsUser getDonator(UUID id) {
+        for (ClickCrystalsUser donator : donators) {
+            if (donator.id.toString().equals(id.toString())) {
+                return donator;
             }
         }
 
         return null;
     }
 
-    public ClickCrystalsUser getOwner(String name) {
-        for (ClickCrystalsUser owner : owners) {
-            if (owner.name.equalsIgnoreCase(name)) {
-                return owner;
+    public ClickCrystalsUser getDonator(String name) {
+        for (ClickCrystalsUser donator : donators) {
+            if (donator.name.equalsIgnoreCase(name)) {
+                return donator;
             }
         }
 

@@ -3,7 +3,10 @@ package io.github.itzispyder.clickcrystals.gui.elements.cc.settings;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.DividerElement;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
-import io.github.itzispyder.clickcrystals.modules.settings.*;
+import io.github.itzispyder.clickcrystals.modules.settings.EnumSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.NumberSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
+import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import net.minecraft.client.gui.DrawContext;
 
 public class SettingSectionElement extends GuiElement {
