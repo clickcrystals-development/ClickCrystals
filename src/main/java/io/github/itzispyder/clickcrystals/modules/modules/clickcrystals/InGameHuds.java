@@ -119,6 +119,12 @@ public class InGameHuds extends Module implements Listener {
             .def(10.0)
             .build()
     );
+    public final ModuleSetting<Boolean> hudTargetDisableWhenNoCombat = scHudTarget.add(createBoolSetting()
+            .name("target-hud-no-combat-disable")
+            .description("Disables rendering of the target hud when not in combat.")
+            .def(false)
+            .build()
+    );
     public final ModuleSetting<ClockDisplay> hudClockHourDisplay = scHudClock.add(EnumSetting.create(ClockDisplay.class)
             .name("clock-hud-hour-display")
             .description("Clock hour display.")

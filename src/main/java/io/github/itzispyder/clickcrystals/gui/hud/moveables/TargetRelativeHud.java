@@ -56,13 +56,13 @@ public class TargetRelativeHud extends Hud {
             float maxHp = target.getMaxHealth();
             float hp = target.getHealth();
             float ab = target.getAbsorptionAmount();
-            Module.get(HealthAsBar.class).renderHealthBar(context, x + g, caret, maxHp, (int)hp, (int)hp, (int)ab);
+            Module.get(HealthAsBar.class).renderHealthBar(context, x + g, caret, maxHp, (int) hp, (int) hp, (int) ab);
 
             // totem indicator
             context.getMatrices().push();
             float scale = 2.0F;
-            int tx = (int)((x + g + 80 + g) / scale);
-            int ty = (int)(y / scale);
+            int tx = (int) ((x + g + 80 + g) / scale);
+            int ty = (int) (y / scale);
             context.getMatrices().scale(scale, scale, scale);
             context.drawItem(Items.TOTEM_OF_UNDYING.getDefaultStack(), tx, ty);
             context.getMatrices().pop();
@@ -75,12 +75,11 @@ public class TargetRelativeHud extends Hud {
 
             caret += g + 8;
             setHeight(caret - y);
-        }
-        else {
+        } else {
             setHeight(12);
             String text = "Not in combat";
             int x = getX() + getWidth() / 2;
-            int y = getY() + (int)(getHeight() * 0.33);
+            int y = getY() + (int) (getHeight() * 0.33);
             RenderUtils.drawCenteredText(context, text, x, y, 1.0F, true);
         }
     }
@@ -97,7 +96,10 @@ public class TargetRelativeHud extends Hud {
 
     @Override
     public boolean canRender() {
-        return super.canRender() && Module.getFrom(InGameHuds.class, m -> m.hudTarget.getVal());
+        boolean def = super.canRender() && Module.getFrom(InGameHuds.class, m -> m.hudTarget.getVal());
+        boolean autoDisable = Module.getFrom(InGameHuds.class, m -> m.hudTargetDisableWhenNoCombat.getVal());
+        boolean targetValid = target != null && !target.isDead() && timer > System.currentTimeMillis();
+        return def && !(!targetValid && autoDisable);
     }
 
     @Override
