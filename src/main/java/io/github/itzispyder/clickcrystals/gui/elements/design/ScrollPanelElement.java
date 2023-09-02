@@ -124,16 +124,7 @@ public class ScrollPanelElement extends GuiElement {
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
-        /*
-        for (int i = getChildren().size() - 1; i >= 0; i--) {
-            GuiElement child = getChildren().get(i);
-            if (child.isHovered((int)mouseX, (int)mouseY)) {
-                parentScreen.selected = child;
-                child.onClick(mouseX, mouseY, button);
-                break;
-            }
-        }
-         */
+
     }
 
     @Override
