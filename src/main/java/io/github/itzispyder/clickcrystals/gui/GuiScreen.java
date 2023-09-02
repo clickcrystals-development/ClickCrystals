@@ -138,12 +138,6 @@ public abstract class GuiScreen extends Screen implements Global {
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
 
-        /*
-        if (selected != null && selected.draggable) {
-            selected.move(deltaX, deltaY);
-        }
-         */
-
         for (MouseDragCallback callback : mouseDragListeners) {
             callback.handleMouse(mouseX, mouseY, button, deltaX, deltaY);
         }

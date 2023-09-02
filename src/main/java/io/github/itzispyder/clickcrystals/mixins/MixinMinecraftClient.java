@@ -12,9 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
-/**
- * Mixin for MinecraftClient
- */
 @Mixin(MinecraftClient.class)
 public abstract class MixinMinecraftClient {
 
