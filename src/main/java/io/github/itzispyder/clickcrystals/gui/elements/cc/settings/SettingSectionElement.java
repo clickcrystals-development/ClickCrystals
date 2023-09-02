@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.cc.settings;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.DividerElement;
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.*;
 import net.minecraft.client.gui.DrawContext;
 

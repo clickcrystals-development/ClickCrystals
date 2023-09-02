@@ -1,12 +1,13 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class SettingSection {
+public class SettingSection implements SettingContainer {
 
     private final String name, id;
     private final List<ModuleSetting<?>> settings;

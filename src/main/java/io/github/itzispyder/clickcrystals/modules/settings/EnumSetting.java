@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.EnumSettingElement;
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 
 import java.lang.reflect.Method;
 

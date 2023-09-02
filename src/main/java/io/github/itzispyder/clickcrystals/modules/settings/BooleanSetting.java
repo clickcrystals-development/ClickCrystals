@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.BooleanSettingElement;
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 
 public class BooleanSetting extends ModuleSetting<Boolean> {
 

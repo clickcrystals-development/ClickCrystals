@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.events.events.client.ChatReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.ChatSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.*;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;

@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceive
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
-import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.ScoreboardDisplayS2CPacket;

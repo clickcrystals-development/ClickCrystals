@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.ShieldSwitch;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
-import io.github.itzispyder.clickcrystals.modules.settings.ModuleSetting;
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import net.minecraft.item.Items;

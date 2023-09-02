@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.KeybindSettingElement;
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.keybinds.BindCondition;
 import io.github.itzispyder.clickcrystals.modules.keybinds.KeyAction;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;

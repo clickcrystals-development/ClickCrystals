@@ -1,5 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
+
 public abstract class SettingBuilder<T, B extends SettingBuilder<T, B, S>, S extends ModuleSetting<T>> {
 
     protected SettingChangeCallback<S> changeAction;

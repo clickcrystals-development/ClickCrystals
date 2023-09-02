@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.gui.hud.moveables.TargetRelativeHud;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.ColorHelper;

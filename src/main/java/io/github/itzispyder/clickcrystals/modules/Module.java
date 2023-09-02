@@ -1,14 +1,14 @@
 package io.github.itzispyder.clickcrystals.modules;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
+import io.github.itzispyder.clickcrystals.modules.settings.*;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public abstract class Module implements Toggleable, Global {
+public abstract class Module implements Toggleable, Global, SettingContainer {
 
     public static int totalEnabled;
     private ModuleData data;
@@ -97,6 +97,28 @@ public abstract class Module implements Toggleable, Global {
         return isEnabled() ? "§aon" : "§coff";
     }
 
+    public static void loadConfigModules() {
+        for (Module module : system.modules().values()) {
+            ModuleFile.load(module).save();
+        }
+    }
+
+    public static void saveConfigModules() {
+        for (Module module : system.modules().values()) {
+            saveModule(module);
+        }
+    }
+
+    public static void saveModule(Module module) {
+        ModuleFile file = new ModuleFile(module);
+        file.save();
+    }
+
+    public String getSearchQuery() {
+        String norm = id.toLowerCase() + ";" + name.toLowerCase() + ";" + description.toLowerCase().replaceAll("[^a-z0-9 ]"," ");
+        return norm + ";" + norm.replaceAll(" ", "").trim();
+    }
+
     public static <T extends Module> T get(Class<T> moduleClass) {
         return (T)system.modules().get(moduleClass);
     }
@@ -122,27 +144,5 @@ public abstract class Module implements Toggleable, Global {
         else {
             return action.apply(module);
         }
-    }
-
-    public static void loadConfigModules() {
-        for (Module module : system.modules().values()) {
-            ModuleFile.load(module).save();
-        }
-    }
-
-    public static void saveConfigModules() {
-        for (Module module : system.modules().values()) {
-            saveModule(module);
-        }
-    }
-
-    public static void saveModule(Module module) {
-        ModuleFile file = new ModuleFile(module);
-        file.save();
-    }
-
-    public String getSearchQuery() {
-        String norm = id.toLowerCase() + ";" + name.toLowerCase() + ";" + description.toLowerCase().replaceAll("[^a-z0-9 ]"," ");
-        return norm + ";" + norm.replaceAll(" ", "").trim();
     }
 }
