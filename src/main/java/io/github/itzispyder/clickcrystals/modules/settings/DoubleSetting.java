@@ -19,12 +19,12 @@ public class DoubleSetting extends NumberSetting<Double> {
 
     @Override
     public void setMax(Double max) {
-        super.setMax(Math.max(min + 1, max));
+        super.setMax(Math.max(min, max));
     }
 
     @Override
     public void setMin(Double min) {
-        super.setMin(Math.min(min, max - 1));
+        super.setMin(Math.min(min, max));
     }
 
     @Override
@@ -75,12 +75,12 @@ public class DoubleSetting extends NumberSetting<Double> {
         }
 
         public Builder min(double min) {
-            this.min = Math.min(min, max - 1);
+            this.min = Math.min(min, max);
             return this;
         }
 
         public Builder max(double max) {
-            this.max = Math.max(min + 1, max);
+            this.max = Math.max(min, max);
             return this;
         }
 

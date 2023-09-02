@@ -28,12 +28,12 @@ public class IntegerSetting extends NumberSetting<Integer> {
         }
 
         public Builder min(int min) {
-            this.min = Math.min(min, max - 1);
+            this.min = Math.min(min, max);
             return this;
         }
 
         public Builder max(int max) {
-            this.max = Math.max(min + 1, max);
+            this.max = Math.max(min, max);
             return this;
         }
 
