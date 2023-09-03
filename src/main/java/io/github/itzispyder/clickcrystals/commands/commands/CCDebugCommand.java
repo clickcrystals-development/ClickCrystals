@@ -12,6 +12,7 @@ import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
+import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.command.CommandSource;
@@ -22,11 +23,13 @@ import net.minecraft.text.HoverEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.io.*;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 
 public class CCDebugCommand extends Command {
@@ -106,6 +109,48 @@ public class CCDebugCommand extends Command {
                         }))
                 .then(literal("players")
                         .then(argument("player", PlayerArgumentType.create())
+                                .then(literal("track")
+                                        .executes(context -> {
+                                            PlayerListEntry entry = context.getArgument("player", PlayerListEntry.class);
+                                            String name = entry.getProfile().getName();
+                                            ClientPlayerEntity p = PlayerUtils.player();
+                                            AtomicReference<PlayerEntity> target = new AtomicReference<>(null);
+
+                                            for (PlayerEntity player : p.getWorld().getPlayers()) {
+                                                if (player.getGameProfile().getName().equalsIgnoreCase(name)) {
+                                                    target.set(player);
+                                                    name = player.getGameProfile().getName();
+                                                    break;
+                                                }
+                                            }
+
+                                            if (target.get() == null) {
+                                                error("Player not found.");
+                                                return SINGLE_SUCCESS;
+                                            }
+
+                                            info("Tracking §7" + name + "§f for §75 seconds");
+                                            long end = System.currentTimeMillis() + 5000L;
+                                            Vec3d vec = target.get().getEyePos().subtract(p.getEyePos()).normalize();
+
+                                            CameraRotator rotator = CameraRotator.create()
+                                                    .addGoal(new CameraRotator.Goal(vec))
+                                                    .onFinish((pitch, yaw, cameraRotator) -> {
+                                                        if (end > System.currentTimeMillis()) {
+                                                            Vec3d vec2 = target.get().getEyePos().subtract(p.getEyePos()).normalize();
+                                                            cameraRotator.clearGoals();
+                                                            cameraRotator.addGoal(new CameraRotator.Goal(vec2));
+                                                            cameraRotator.start();
+                                                        }
+                                                        else {
+                                                            info("Finished tracking target!");
+                                                        }
+                                                    })
+                                                    .build();
+
+                                            rotator.start();
+                                            return SINGLE_SUCCESS;
+                                        }))
                                 .executes(context -> {
                                     PlayerListEntry entry = context.getArgument("player", PlayerListEntry.class);
                                     ClientPlayerEntity p = PlayerUtils.player();

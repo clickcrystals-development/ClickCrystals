@@ -4,8 +4,6 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.PlayerArgumentType;
-import io.github.itzispyder.clickcrystals.data.Pair;
-import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -34,7 +32,7 @@ public class RotateCommand extends Command {
                                             rotator = CameraRotator.create()
                                                     .enableDebug()
                                                     .addGoal(new CameraRotator.Goal(pitch, yaw))
-                                                    .onFinish((p, y, wasCancelled) -> rotator = null)
+                                                    .onFinish((p, y, cameraRotator) -> rotator = null)
                                                     .build();
 
                                             rotator.start();
@@ -61,11 +59,10 @@ public class RotateCommand extends Command {
                                     }
 
                                     Vec3d vec = target.getPos().subtract(p.getEyePos()).normalize();
-                                    Pair<Float, Float> rot = MathUtils.toPolar(vec.x, vec.y, vec.z);
                                     rotator = CameraRotator.create()
                                             .enableDebug()
-                                            .addGoal(new CameraRotator.Goal(rot.left, rot.right))
-                                            .onFinish((pitch, yaw, wasCancelled) -> rotator = null)
+                                            .addGoal(new CameraRotator.Goal(vec))
+                                            .onFinish((pitch, yaw, cameraRotator) -> rotator = null)
                                             .build();
 
                                     rotator.start();

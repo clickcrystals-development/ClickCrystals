@@ -33,11 +33,31 @@ public final class MathUtils {
     }
 
     public static Pair<Float, Float> toPolar(double x, double y, double z) {
-        double pitch = -Math.toDegrees(Math.asin(y));
+        double pi2 = 2 * Math.PI;
+        float pitch, yaw;
+
+        if (x == 0 && z == 0) {
+            pitch = y > 0 ? -90 : 90;
+            return Pair.of(pitch, 0.0F);
+        }
+
+        double theta = Math.atan2(-x, z);
+        yaw = (float)Math.toDegrees((theta + pi2) % pi2);
+
+        double xz = Math.sqrt(x * x + z * z);
+        pitch = (float)Math.toDegrees(Math.atan(-y / xz));
+
+        return Pair.of(pitch, yaw);
+    }
+
+    /* // old code, not efficient!!!
+    public static Pair<Float, Float> toPolar(double x, double y, double z) {
+        double pitch = wrapDegrees(-Math.toDegrees(Math.asin(y)));
         double h = -Math.cos(-Math.toRadians(pitch));
-        double yaw = -Math.toDegrees(Math.asin(x / h) + Math.PI);
+        double yaw = wrapDegrees(-Math.toDegrees(Math.asin(x / h) + Math.PI));
         return Pair.of((float)pitch, (float)yaw);
     }
+     */
 
     public static float cosInverse(double a) {
         return (float)Math.toDegrees(Math.acos(a));
@@ -47,24 +67,24 @@ public final class MathUtils {
         return (float)Math.toDegrees(Math.asin(a));
     }
 
-    public static float wrapDegrees(float deg) {
-        float f = deg % 360.0F;
+    public static double wrapDegrees(double deg) {
+        double f = deg % 360.0;
 
-        if (f >= 180.0F) {
-            f -= 360.0F;
+        if (f >= 180.0) {
+            f -= 360.0;
         }
-        if (f < -180.0F) {
-            f += 360.0F;
+        if (f < -180.0) {
+            f += 360.0;
         }
 
         return f;
     }
 
-    public static float subtractDegrees(float deg1, float deg2) {
+    public static double subtractDegrees(double deg1, double deg2) {
         return wrapDegrees(deg2 - deg1);
     }
 
-    public static float angleBetween(float deg1, float deg2) {
+    public static double angleBetween(double deg1, double deg2) {
         return Math.abs(subtractDegrees(deg1, deg2));
     }
 

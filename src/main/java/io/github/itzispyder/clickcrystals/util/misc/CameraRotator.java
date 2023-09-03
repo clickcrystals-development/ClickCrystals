@@ -1,12 +1,15 @@
 package io.github.itzispyder.clickcrystals.util.misc;
 
+import io.github.itzispyder.clickcrystals.data.Pair;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.Randomizer;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -32,13 +35,33 @@ public class CameraRotator {
         return running.get();
     }
 
+    public boolean wasCancelled() {
+        return wasCancelled.get();
+    }
+
     public AtomicReference<Goal> getCurrentGoal() {
         return currentGoal;
+    }
+
+    public EndAction getEndAction() {
+        return onFinish;
     }
 
     public void cancel() {
         running.set(false);
         wasCancelled.set(true);
+    }
+
+    public void clearGoals() {
+        cancel();
+        goals.clear();
+    }
+
+    public void addGoal(Goal goal) {
+        if (isRunning()) {
+            throw new IllegalArgumentException("Tried to squeeze in a goal when camera is already running.");
+        }
+        goals.add(goal);
     }
 
     public void skip() {
@@ -59,20 +82,23 @@ public class CameraRotator {
         running.set(true);
 
         CompletableFuture.runAsync(() -> {
-            for (Goal goal : goals) {
-                if (!isRunning()) break;
+            try {
+                for (Goal goal : goals) {
+                    if (!isRunning()) break;
 
-                setGoalAndTarget(goal);
+                    setGoalAndTarget(goal);
 
-                try {
-                    Thread.sleep(50);
+                    try {
+                        Thread.sleep(50);
+                    }
+                    catch (Exception ignore) {}
                 }
-                catch (Exception ignore) {}
             }
+            catch (ConcurrentModificationException ignore) {}
 
             ClientPlayerEntity p = PlayerUtils.player();
-            onFinish.accept(MathUtils.wrapDegrees(p.getPitch()), MathUtils.wrapDegrees(p.getYaw()), wasCancelled.get());
             running.set(false);
+            onFinish.accept(MathUtils.wrapDegrees(p.getPitch()), MathUtils.wrapDegrees(p.getYaw()), this);
         });
     }
 
@@ -145,7 +171,7 @@ public class CameraRotator {
 
         public Builder() {
             this.goals = new ArrayList<>();
-            this.onFinish = (pitch, yaw, wasCancelled) -> {};
+            this.onFinish = (pitch, yaw, cameraRotator) -> {};
             this.debugMessages = false;
         }
 
@@ -182,6 +208,16 @@ public class CameraRotator {
             this.yaw = (int)MathUtils.wrapDegrees(yaw);
         }
 
+        public Goal(double x, double y, double z) {
+            Pair<Float, Float> polar = MathUtils.toPolar(x, y, z);
+            this.pitch = (int)(float)polar.left;
+            this.yaw = (int)(float)polar.right;
+        }
+
+        public Goal(Vec3d vec) {
+            this(vec.x, vec.y, vec.z);
+        }
+
         public final int getPitch() {
             return pitch;
         }
@@ -193,6 +229,6 @@ public class CameraRotator {
     
     @FunctionalInterface
     public interface EndAction {
-        void accept(float pitch, float yaw, boolean wasCancelled);
+        void accept(double pitch, double yaw, CameraRotator cameraRotator);
     }
 }
