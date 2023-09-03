@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.keybinds;
 
-import io.github.itzispyder.clickcrystals.util.ManualMap;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
+import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Map;

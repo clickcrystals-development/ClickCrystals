@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.util;
+package io.github.itzispyder.clickcrystals.util.misc;
 
 public class Timer {
 

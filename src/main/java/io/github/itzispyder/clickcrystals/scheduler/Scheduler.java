@@ -21,6 +21,10 @@ public final class Scheduler implements Listener {
         return tasks;
     }
 
+    public static <T extends Task> void runTask(T task) {
+        tasks.add(task);
+    }
+
     public static void purgeAll() {
         tasks.clear();
     }

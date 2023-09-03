@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.client.networking;
 
-import io.github.itzispyder.clickcrystals.util.ManualMap;
+import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.handshake.HandshakeC2SPacket;
 import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;

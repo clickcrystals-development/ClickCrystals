@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.gui.screens.*;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.DiscordRPC;
-import io.github.itzispyder.clickcrystals.util.ManualMap;
+import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;

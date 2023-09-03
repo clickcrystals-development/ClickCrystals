@@ -164,6 +164,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addCommand(new CCDebugCommand());
         system.addCommand(new PixelArtCommand());
         system.addCommand(new KeybindsCommand());
+        system.addCommand(new RotateCommand());
 
         // Hud
         system.addHud(new ColorOverlayHud());
@@ -180,6 +181,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addHud(new BiomeRelativeHud());
         system.addHud(new DirectionRelativeHud());
         system.addHud(new CrosshairTargetRelativeHud());
+        system.addHud(new RotationRelativeHud());
     }
 
     public void initModules() {

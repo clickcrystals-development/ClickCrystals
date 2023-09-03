@@ -30,6 +30,27 @@ public final class MathUtils {
         return Math.min(max, Math.max(min, val));
     }
 
+    public static float wrapDegrees(float deg) {
+        float f = deg % 360.0F;
+
+        if (f >= 180.0F) {
+            f -= 360.0F;
+        }
+        if (f < -180.0F) {
+            f += 360.0F;
+        }
+
+        return f;
+    }
+
+    public static float subtractDegrees(float deg1, float deg2) {
+        return wrapDegrees(deg2 - deg1);
+    }
+
+    public static float angleBetween(float deg1, float deg2) {
+        return Math.abs(subtractDegrees(deg1, deg2));
+    }
+
     public static int exp(int val, int power) {
         int base = val;
         for (int i = 1; i < power; i++) {

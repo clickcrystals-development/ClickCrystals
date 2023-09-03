@@ -110,9 +110,15 @@ public class InGameHuds extends Module implements Listener {
             .def(true)
             .build()
     );
+    public final ModuleSetting<Boolean> hudRotation = scHudVisibility.add(BooleanSetting.create()
+            .name("render-rotation-hud")
+            .description("Renders the rotation hud.")
+            .def(true)
+            .build()
+    );
     public final ModuleSetting<Double> hudTargetStayTime = scHudTarget.add(DoubleSetting.create()
             .min(5.0)
-            .max(120.0)
+            .max(600.0) // 10 minutes (600 seconds)
             .decimalPlaces(1)
             .name("target-hud-stay-time")
             .description("Tracking time of current target.")
