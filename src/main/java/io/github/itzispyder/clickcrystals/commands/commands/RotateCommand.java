@@ -3,9 +3,16 @@ package io.github.itzispyder.clickcrystals.commands.commands;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.commands.Command;
+import io.github.itzispyder.clickcrystals.commands.arguments.PlayerArgumentType;
+import io.github.itzispyder.clickcrystals.data.Pair;
+import io.github.itzispyder.clickcrystals.util.MathUtils;
+import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.command.CommandSource;
-import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.Vec3d;
 
 public class RotateCommand extends Command {
 
@@ -17,7 +24,7 @@ public class RotateCommand extends Command {
 
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        builder.then(literal("exact")
+        builder.then(literal("polar")
                         .then(argument("pitch", IntegerArgumentType.integer(-90, 90))
                                 .then(argument("yaw", IntegerArgumentType.integer(0, 360))
                                         .executes(context -> {
@@ -33,8 +40,37 @@ public class RotateCommand extends Command {
                                             rotator.start();
                                             return SINGLE_SUCCESS;
                                         }))))
-                .then(literal("to")
-                        .then(argument("target", EntityArgumentType.entity())))
+                .then(literal("towards")
+                        .then(argument("player", PlayerArgumentType.create())
+                                .executes(context -> {
+                                    PlayerListEntry entry = context.getArgument("player", PlayerListEntry.class);
+                                    String name = entry.getProfile().getName();
+                                    ClientPlayerEntity p = PlayerUtils.player();
+                                    PlayerEntity target = null;
+
+                                    for (PlayerEntity player : p.getWorld().getPlayers()) {
+                                        if (player.getGameProfile().getName().equalsIgnoreCase(name)) {
+                                            target = player;
+                                            break;
+                                        }
+                                    }
+
+                                    if (target == null) {
+                                        error("Player not found.");
+                                        return SINGLE_SUCCESS;
+                                    }
+
+                                    Vec3d vec = target.getPos().subtract(p.getEyePos()).normalize();
+                                    Pair<Float, Float> rot = MathUtils.toPolar(vec.x, vec.y, vec.z);
+                                    rotator = CameraRotator.create()
+                                            .enableDebug()
+                                            .addGoal(new CameraRotator.Goal(rot.left, rot.right))
+                                            .onFinish((pitch, yaw, wasCancelled) -> rotator = null)
+                                            .build();
+
+                                    rotator.start();
+                                    return SINGLE_SUCCESS;
+                                })))
                 .then(literal("skip")
                         .executes(context -> {
                             if (rotator == null) {

@@ -1,5 +1,7 @@
 package io.github.itzispyder.clickcrystals.util;
 
+import io.github.itzispyder.clickcrystals.data.Pair;
+
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +30,21 @@ public final class MathUtils {
 
     public static double minMax(double val, double min, double max) {
         return Math.min(max, Math.max(min, val));
+    }
+
+    public static Pair<Float, Float> toPolar(double x, double y, double z) {
+        double pitch = -Math.toDegrees(Math.asin(y));
+        double h = -Math.cos(-Math.toRadians(pitch));
+        double yaw = -Math.toDegrees(Math.asin(x / h) + Math.PI);
+        return Pair.of((float)pitch, (float)yaw);
+    }
+
+    public static float cosInverse(double a) {
+        return (float)Math.toDegrees(Math.acos(a));
+    }
+
+    public static float sinInverse(double a) {
+        return (float)Math.toDegrees(Math.asin(a));
     }
 
     public static float wrapDegrees(float deg) {

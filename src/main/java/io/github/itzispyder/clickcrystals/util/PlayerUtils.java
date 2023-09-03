@@ -59,13 +59,6 @@ public final class PlayerUtils {
         return mc.getCurrentFps();
     }
 
-    public static Vec3d getRotation() {
-        if (playerNull()) return new Vec3d(0, 0, 0);
-        ClientPlayerEntity p = player();
-
-        return Vec3d.fromPolar(p.getPitch(), p.getYaw());
-    }
-
     public static boolean isMoving() {
         if (playerNull()) return false;
         ClientPlayerEntity p = player();

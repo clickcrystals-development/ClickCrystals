@@ -55,6 +55,7 @@ public class CameraRotator {
             }
             return;
         }
+        wasCancelled.set(false);
         running.set(true);
 
         CompletableFuture.runAsync(() -> {
@@ -112,7 +113,7 @@ public class CameraRotator {
                 }
 
                 try {
-                    Thread.sleep(Randomizer.rand(3, 10));
+                    Thread.sleep(Randomizer.rand(1, 6));
                 }
                 catch (Exception ignore) {}
             }
