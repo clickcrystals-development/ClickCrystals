@@ -123,7 +123,7 @@ public class CameraRotator {
             int progressYaw = 0;
 
             if (debugMessages) {
-                ChatUtils.sendPrefixMessage("Targeting goal §7(" + goal.pitch + ", " + goal.yaw + ")§f from §7(" + rot.pitch + ", " + rot.yaw + ")§f, distance §7(" + deltaPitch + ", " + deltaYaw + ")");
+                ChatUtils.sendPrefixMessage("Targeting goal §7" + goal + "§f from §7" + rot + "§f, difference §7(" + deltaPitch + ", " + deltaYaw + ")");
             }
 
             while (isRunning() && !skipRequestReceived.get() && (progressPitch < deltaPitch || progressYaw < deltaYaw)) {
@@ -224,6 +224,11 @@ public class CameraRotator {
 
         public final int getYaw() {
             return yaw;
+        }
+
+        @Override
+        public String toString() {
+            return "pitchYaw(" + pitch + ", " + yaw + ")";
         }
     }
     
