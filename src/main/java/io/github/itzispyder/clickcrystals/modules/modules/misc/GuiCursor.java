@@ -11,12 +11,14 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
+import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.InvUtils;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.util.Window;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.util.Hand;
 import org.lwjgl.glfw.GLFW;
 
 public class GuiCursor extends Module implements Listener {
@@ -34,11 +36,10 @@ public class GuiCursor extends Module implements Listener {
             .def(false)
             .build()
     );
-    public boolean listeningForNextDraw, shiftKeyDown;
+    private boolean listeningForNextDraw, shiftKeyDown;
 
     public GuiCursor() {
         super("gui-cursor", Categories.MISC, "What to do with your cursor when you open inventory gui.");
-        this.listeningForNextDraw = false;
     }
 
     @Override
@@ -64,7 +65,7 @@ public class GuiCursor extends Module implements Listener {
         GLFW.glfwSetCursorPos(win.getHandle(), x / ratW, y / ratH);
     }
 
-    public static double getCursorX(int x) {
+    public static double getCursorX(double x) {
         Window win = mc.getWindow();
         int w1 = win.getWidth();
         int w2 = win.getScaledWidth();
@@ -72,7 +73,7 @@ public class GuiCursor extends Module implements Listener {
         return x * ratW;
     }
 
-    public static double getCursorY(int y) {
+    public static double getCursorY(double y) {
         Window win = mc.getWindow();
         int h1 = win.getHeight();
         int h2 = win.getScaledHeight();
@@ -83,6 +84,11 @@ public class GuiCursor extends Module implements Listener {
     public void centerFix() {
         Window win = mc.getWindow();
         setCursor(win.getScaledWidth() / 2, win.getScaledHeight() / 2 + 10);
+    }
+
+    public void hoverTotem() {
+        listeningForNextDraw = true;
+        Scheduler.runTaskLater(() -> listeningForNextDraw = false, 1);
     }
 
     @EventHandler
@@ -105,20 +111,37 @@ public class GuiCursor extends Module implements Listener {
         if (e.getScreen() instanceof InventoryScreen) {
             switch (cursorAction.getVal()) {
                 case CENTER_FIX -> this.centerFix();
-                case HOVER_TOTEM -> {
-                    listeningForNextDraw = true;
-                    Scheduler.runTaskLater(() -> listeningForNextDraw = false, 1);
-                }
+                case HOVER_TOTEM -> this.hoverTotem();
             }
         }
     }
 
     @EventHandler
     private void onClick(PacketSendEvent e) {
-        if (e.getPacket() instanceof ClickSlotC2SPacket packet && mc.currentScreen instanceof InventoryScreen && packet.getStack().isOf(Items.TOTEM_OF_UNDYING) && totemShiftHolder.getVal()) {
-            if (!shiftKeyDown && packet.getActionType() == SlotActionType.PICKUP) {
-                e.cancel();
-                InvUtils.sendSlotPacket(packet.getSlot(), 0, SlotActionType.QUICK_MOVE);
+        if (e.getPacket() instanceof ClickSlotC2SPacket packet) {
+            boolean clickedTotem = mc.currentScreen instanceof InventoryScreen && packet.getStack().isOf(Items.TOTEM_OF_UNDYING) && totemShiftHolder.getVal();
+            boolean actionMatches = !shiftKeyDown && packet.getActionType() == SlotActionType.PICKUP;
+
+            if (clickedTotem && actionMatches) {
+                int slot = packet.getSlot();
+                boolean offEmpty = HotbarUtils.getHand(Hand.OFF_HAND).isEmpty();
+                boolean mainEmpty = !HotbarUtils.has(Items.TOTEM_OF_UNDYING);
+                boolean slotValid = !InvUtils.isOffhand(slot) && !InvUtils.isHotbar(slot);
+
+                if (offEmpty && slotValid) {
+                    e.cancel();
+                    InvUtils.swapOffhand(slot);
+                    InvUtils.inv().updateItems();
+
+                    if (mainEmpty) {
+                        Scheduler.runTaskLater(this::hoverTotem, 1);
+                    }
+                }
+                else if (slotValid) {
+                    e.cancel();
+                    InvUtils.quickMove(slot);
+                    InvUtils.inv().updateItems();
+                }
             }
         }
     }

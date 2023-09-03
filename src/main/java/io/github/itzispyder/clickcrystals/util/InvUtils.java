@@ -32,8 +32,20 @@ public final class InvUtils {
         return sendSlotPacket(slot, 40, SlotActionType.SWAP);
     }
 
+    public static boolean quickMove(int slot) {
+        return sendSlotPacket(slot, 0, SlotActionType.QUICK_MOVE);
+    }
+
     public static boolean dropSlot(int slot, boolean full) {
         return sendSlotPacket(slot, full ? 1 : 0, SlotActionType.THROW);
+    }
+
+    public static boolean isHotbar(int slot) {
+        return slot <= 8;
+    }
+
+    public static boolean isOffhand(int slot) {
+        return slot == 45;
     }
 
     public static int search(Item item) {
