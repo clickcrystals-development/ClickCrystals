@@ -85,19 +85,18 @@ public final class MathUtils {
         return f;
     }
 
-    public static double subtractDegrees(double deg1, double deg2) {
-        double diff = deg2 - deg1;
-        if (diff >= 180 || diff < -180) {
-            return wrapDegrees(deg2) - wrapDegrees(deg1);
-        }
-        return wrapDegrees(diff);
-    }
-
     public static double angleBetween(double deg1, double deg2) {
-        if (deg1 < -90 && deg2 > 90) {
-            return (180 - Math.abs(deg1)) + (180 - deg2);
+        double diff = deg2 - deg1;
+        deg1 = wrapDegrees(deg1);
+        deg2 = wrapDegrees(deg2);
+
+        if ((deg1 < -90 && deg2 > 90) || (deg1 > 90 && deg2 < -90)) {
+            return (180 - Math.abs(deg1)) + (180 - Math.abs(deg2));
         }
-        return Math.abs(subtractDegrees(deg1, deg2));
+        if (diff >= 180 || diff < -180) {
+            return Math.abs(deg2 - deg1);
+        }
+        return Math.abs(wrapDegrees(diff));
     }
 
     public static int exp(int val, int power) {

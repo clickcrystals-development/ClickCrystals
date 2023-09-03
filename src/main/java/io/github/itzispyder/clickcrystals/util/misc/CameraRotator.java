@@ -145,7 +145,18 @@ public class CameraRotator {
             int deltaPitch = (int)MathUtils.angleBetween(rot.pitch, goal.pitch); // vertical
             int deltaYaw = (int)MathUtils.angleBetween(rot.yaw, goal.yaw); // plane
             boolean shouldPitchAdd = goal.pitch > rot.pitch;
-            boolean shouldYawAdd = goal.yaw > rot.yaw;
+            boolean shouldYawAdd;
+
+            if ((rot.yaw < -90 && goal.yaw > 90)) { // crossing over the -180 to 179 border (right to left)
+                shouldYawAdd = false;
+            }
+            else if ((rot.yaw > 90 && goal.yaw < -90)) { // crossing over the 179 to -180 border (left to right)
+                shouldYawAdd = true;
+            }
+            else { // normal
+                shouldYawAdd = goal.yaw > rot.yaw;
+            }
+
             int progressPitch = 0;
             int progressYaw = 0;
             double dist = Math.sqrt(deltaPitch * deltaPitch + deltaYaw * deltaYaw);
