@@ -4,7 +4,6 @@ import io.github.itzispyder.clickcrystals.data.Pair;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
-import io.github.itzispyder.clickcrystals.util.Randomizer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 

@@ -11,6 +11,7 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
+import io.github.itzispyder.clickcrystals.util.misc.Raytracer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -27,10 +28,17 @@ import java.util.List;
 public class NextBlock extends Module implements Listener {
 
     private final SettingSection scGeneral = getGeneralSection();
+    private final SettingSection scDetails = createSettingSection("details-and-precision");
     public final ModuleSetting<Boolean> verbose = scGeneral.add(createBoolSetting()
             .name("verbose")
             .description("Verbose for actions.")
             .def(false)
+            .build()
+    );
+    public final ModuleSetting<Boolean> shouldRaytrace = scDetails.add(createBoolSetting()
+            .name("should-raytrace")
+            .description("Should filter out blocks you cannot see.")
+            .def(true)
             .build()
     );
     private Block lastTouched;
@@ -62,7 +70,6 @@ public class NextBlock extends Module implements Listener {
             if (packet.getAction() == PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) {
                 if (wasAborted) {
                     wasAborted = false;
-                    setNextBlock();
                 }
                 else if (lastTouched != null) {
                     targetNextBlock();
@@ -76,27 +83,38 @@ public class NextBlock extends Module implements Listener {
 
     @EventHandler
     private void onMouse(MouseClickEvent e) {
-        if (e.getButton() == 0 && e.getAction().isRelease()) {
-            if (!wasAborted && lastTouched != null) {
-                targetNextBlock();
+        if (e.getButton() == 0 && e.isScreenNull()) {
+            if (e.getAction().isRelease()) {
+                if (!wasAborted && lastTouched != null) {
+                    targetNextBlock();
+                }
+            }
+            if (e.getAction().isDown()) {
+                setNextBlock();
             }
         }
     }
 
     private void setNextBlock() {
+        wasAborted = false;
         ClientPlayerEntity p = PlayerUtils.player();
         World w = p.getWorld();
 
         if (mc.crosshairTarget instanceof BlockHitResult hit) {
-            lastTouched = w.getBlockState(hit.getBlockPos()).getBlock();
+            BlockState b = w.getBlockState(hit.getBlockPos());
 
-            if (verbose.getVal()) {
-                Command.info("Set last touched block to " + lastTouched.getName().getString() + ".");
+            if (!b.isAir()) {
+                lastTouched = b.getBlock();
+
+                if (verbose.getVal()) {
+                    Command.info("Set last touched block to " + lastTouched.getName().getString() + ".");
+                }
             }
         }
     }
 
     private void targetNextBlock() {
+        wasAborted = false;
         ClientPlayerEntity p = PlayerUtils.player();
         World w = p.getWorld();
         Box box = new Box(p.getBlockPos()).expand(5);
@@ -118,9 +136,19 @@ public class NextBlock extends Module implements Listener {
                         continue;
                     }
                     iterated.add(state.getBlock().getName().getString());
-
                     Vec3d posVec = pos.toCenterPos();
                     double dist = posVec.distanceTo(p.getEyePos());
+
+                    if (shouldRaytrace.getVal()) { // filter out blocks you cannot see
+                        Vec3d dir = posVec.subtract(p.getEyePos()).normalize();
+                        var hit = Raytracer.trace(w, p.getEyePos(), dir, dist, (blockPos, point) -> {
+                            return w.getBlockState(blockPos).isFullCube(w, blockPos);
+                        });
+
+                        if (!hit.left.equals(pos)) {
+                            continue;
+                        }
+                    }
 
                     if (state.isOf(lastTouched) && dist < nearest) {
                         target = posVec;
@@ -142,7 +170,7 @@ public class NextBlock extends Module implements Listener {
             Command.info("Found " + lastTouched.getName().getString() + " at " + target);
         }
 
-        Vec3d rot = target.subtract(p.getEyePos()).normalize();
+        Vec3d rot = target.subtract(p.getEyePos()).normalize(); // slowly rotate towards target block smoothly
         CameraRotator.Builder builder = CameraRotator.create();
 
         if (verbose.getVal()) {
