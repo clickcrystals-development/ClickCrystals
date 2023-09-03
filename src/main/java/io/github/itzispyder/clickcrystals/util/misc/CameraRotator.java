@@ -148,6 +148,7 @@ public class CameraRotator {
             boolean shouldYawAdd = goal.yaw > rot.yaw;
             int progressPitch = 0;
             int progressYaw = 0;
+            double dist = Math.sqrt(deltaPitch * deltaPitch + deltaYaw * deltaYaw);
 
             if (debugMessages) {
                 ChatUtils.sendPrefixMessage("Targeting goal §7" + goal + "§f from §7" + rot + "§f, difference §7(" + deltaPitch + ", " + deltaYaw + ")");
@@ -166,7 +167,17 @@ public class CameraRotator {
                 }
 
                 try {
-                    Thread.sleep(Randomizer.rand(1, 6));
+                    long delay;
+                    if (dist < 90.0) {
+                        delay = Randomizer.rand(1, 6);
+                    }
+                    else if (dist < 180.0) {
+                        delay = Randomizer.rand(1, 5);
+                    }
+                    else {
+                        delay = Randomizer.rand(1, 3);
+                    }
+                    Thread.sleep(delay);
                 }
                 catch (Exception ignore) {}
             }
@@ -244,8 +255,10 @@ public class CameraRotator {
 
         public Goal(double x, double y, double z) {
             Pair<Float, Float> polar = MathUtils.toPolar(x, y, z);
-            this.pitch = (int)(float)polar.left;
-            this.yaw = (int)(float)polar.right;
+            float left = polar.left;
+            float right = polar.right;
+            this.pitch = (int)MathUtils.wrapDegrees(left);
+            this.yaw = (int)MathUtils.wrapDegrees(right);
         }
 
         public Goal(Vec3d vec) {
