@@ -18,17 +18,42 @@ import java.util.concurrent.atomic.AtomicReference;
 public class CameraRotator {
 
     private static final AtomicBoolean running = new AtomicBoolean(false);
+    private static boolean cursorLocked = false;
     private final EndAction onFinish;
     private final List<Goal> goals;
     private final AtomicReference<Goal> currentGoal;
     private final AtomicBoolean skipRequestReceived, wasCancelled;
-    protected boolean debugMessages;
+    protected boolean debugMessages, canLockCursor;
 
     private CameraRotator(List<Goal> goals, EndAction onFinish) {
         this.onFinish = onFinish;
         this.goals = goals;
         this.currentGoal = new AtomicReference<>();
         skipRequestReceived = wasCancelled = new AtomicBoolean(false);
+    }
+
+    public static boolean isCameraRunning() {
+        return running.get();
+    }
+
+    public static boolean isCursorLocked() {
+        return cursorLocked;
+    }
+
+    public static synchronized void lockCursor() {
+        cursorLocked = true;
+    }
+
+    public static synchronized void unlockCursor() {
+        cursorLocked = false;
+    }
+
+    public boolean canLockCursor() {
+        return canLockCursor;
+    }
+
+    public boolean cursorLocked() {
+        return cursorLocked;
     }
 
     public boolean isRunning() {
@@ -82,19 +107,21 @@ public class CameraRotator {
         running.set(true);
 
         CompletableFuture.runAsync(() -> {
+            if (canLockCursor()) {
+                lockCursor();
+            }
+
             try {
                 for (Goal goal : goals) {
                     if (!isRunning()) break;
-
                     setGoalAndTarget(goal);
-
-                    try {
-                        Thread.sleep(50);
-                    }
-                    catch (Exception ignore) {}
                 }
             }
             catch (ConcurrentModificationException ignore) {}
+
+            if (cursorLocked) {
+                unlockCursor();
+            }
 
             ClientPlayerEntity p = PlayerUtils.player();
             running.set(false);
@@ -167,16 +194,21 @@ public class CameraRotator {
     public static class Builder {
         private final List<Goal> goals;
         private EndAction onFinish;
-        private boolean debugMessages;
+        private boolean debugMessages, canLockCursor;
 
         public Builder() {
             this.goals = new ArrayList<>();
             this.onFinish = (pitch, yaw, cameraRotator) -> {};
-            this.debugMessages = false;
+            debugMessages = canLockCursor = false;
         }
 
         public Builder enableDebug() {
             debugMessages = true;
+            return this;
+        }
+
+        public Builder enableCursorLock() {
+            canLockCursor = true;
             return this;
         }
 
@@ -193,9 +225,11 @@ public class CameraRotator {
         }
 
         public CameraRotator build() {
-            boolean bl = debugMessages;
+            boolean debug = debugMessages;
+            boolean cursor = canLockCursor;
             return new CameraRotator(goals, onFinish) {{
-                this.debugMessages = bl;
+                this.debugMessages = debug;
+                this.canLockCursor = cursor;
             }};
         }
     }
@@ -203,7 +237,7 @@ public class CameraRotator {
     public static class Goal {
         private int pitch, yaw;
 
-        public Goal(float pitch, float yaw) {
+        public Goal(double pitch, double yaw) {
             this.pitch = (int)MathUtils.wrapDegrees(pitch);
             this.yaw = (int)MathUtils.wrapDegrees(yaw);
         }

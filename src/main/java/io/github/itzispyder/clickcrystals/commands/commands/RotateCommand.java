@@ -24,13 +24,14 @@ public class RotateCommand extends Command {
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("polar")
                         .then(argument("pitch", IntegerArgumentType.integer(-90, 90))
-                                .then(argument("yaw", IntegerArgumentType.integer(0, 360))
+                                .then(argument("yaw", IntegerArgumentType.integer(-360, 360))
                                         .executes(context -> {
                                             int pitch = context.getArgument("pitch", Integer.class);
                                             int yaw = context.getArgument("yaw", Integer.class);
 
                                             rotator = CameraRotator.create()
                                                     .enableDebug()
+                                                    .enableCursorLock()
                                                     .addGoal(new CameraRotator.Goal(pitch, yaw))
                                                     .onFinish((p, y, cameraRotator) -> rotator = null)
                                                     .build();
