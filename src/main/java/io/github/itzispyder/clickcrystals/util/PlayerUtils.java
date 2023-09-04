@@ -2,11 +2,17 @@ package io.github.itzispyder.clickcrystals.util;
 
 import com.mojang.authlib.GameProfile;
 import io.github.itzispyder.clickcrystals.data.Delta3d;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.Packet;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+
+import java.util.function.BiConsumer;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
@@ -32,6 +38,10 @@ public final class PlayerUtils {
 
     public static ClientPlayerEntity player() {
         return mc.player;
+    }
+
+    public static World getWorld() {
+        return player().getWorld();
     }
 
     public static void sendPacket(Packet<?> packet) {
@@ -72,5 +82,21 @@ public final class PlayerUtils {
 
     public static Vec3d fromDelta3d(Delta3d del) {
         return new Vec3d(del.x(), del.y(), del.z());
+    }
+
+    public static void boxIterator(World world, Box box, BiConsumer<BlockPos, BlockState> function) {
+        for (double x = box.minX; x <= box.maxX; x++) {
+            for (double y = box.minY; y <= box.maxY; y++) {
+                for (double z = box.minZ; z <= box.maxZ; z++) {
+                    BlockPos pos = new BlockPos((int)Math.floor(x), (int)Math.floor(y), (int)Math.floor(z));
+                    BlockState state = world.getBlockState(pos);
+
+                    if (state == null || state.isAir()) {
+                        continue;
+                    }
+                    function.accept(pos, state);
+                }
+            }
+        }
     }
 }
