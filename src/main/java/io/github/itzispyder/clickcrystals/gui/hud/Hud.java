@@ -165,7 +165,8 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
 
     public void loadFromConfig() {
         Dimension dim = config.getPositionable(getId(), defaultDimension);
-        setDimensions(dim);
+        setX(dim.x);
+        setY(dim.y);
     }
 
     public static void loadConfigHuds() {

@@ -28,6 +28,7 @@
     "defaultRequire": 1
   },
   "mixins": [
+    "MixinBlock",
     "MixinEntity",
     "MixinItem",
     "MixinItemstack",

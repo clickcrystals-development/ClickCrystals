@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
+import io.github.itzispyder.clickcrystals.events.events.world.BlockBreakEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
@@ -22,8 +23,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class NextBlock extends Module implements Listener {
 
@@ -45,7 +46,7 @@ public class NextBlock extends Module implements Listener {
     private boolean wasAborted;
 
     public NextBlock() {
-        super("next-block", Categories.MISC, "Goes to the next same block that you're mining.");
+        super("next-block", Categories.MISC, "Targets next same block that you're mining. (for farming, not pvp, useless in pvp)");
         lastTouched = null;
         wasAborted = false;
     }
@@ -78,6 +79,13 @@ public class NextBlock extends Module implements Listener {
             else if (packet.getAction() == PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK) {
                 wasAborted = true;
             }
+        }
+    }
+
+    @EventHandler
+    private void onBreak(BlockBreakEvent e) {
+        if (lastTouched != null) {
+            targetNextBlock();
         }
     }
 
@@ -119,7 +127,7 @@ public class NextBlock extends Module implements Listener {
         World w = p.getWorld();
         Box box = new Box(p.getBlockPos()).expand(5);
         double nearest = 10.0;
-        List<String> iterated = new ArrayList<>();
+        Set<String> iterated = new HashSet<>();
         Vec3d target = null;
 
         if (verbose.getVal()) {
