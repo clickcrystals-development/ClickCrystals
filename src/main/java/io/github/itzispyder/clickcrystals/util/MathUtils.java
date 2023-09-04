@@ -67,6 +67,10 @@ public final class MathUtils {
         return (float)Math.toDegrees(Math.asin(a));
     }
 
+    public static float tanInverse(double a) {
+        return (float)Math.toDegrees(Math.atan(a));
+    }
+
     public static boolean isWrapped(double deg) {
         double f = deg % 360.0;
         return f < 180 && f >= -180;
