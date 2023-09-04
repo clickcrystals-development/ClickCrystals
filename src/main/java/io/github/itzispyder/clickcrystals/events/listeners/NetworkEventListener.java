@@ -10,6 +10,7 @@ import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEve
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;
 import net.minecraft.network.packet.c2s.login.LoginKeyC2SPacket;
@@ -50,23 +51,20 @@ public class NetworkEventListener implements Listener {
     private void handPlayerJoin(PacketReceiveEvent e) {
         if (e.getPacket() instanceof PlayerListS2CPacket packet) {
             if (packet.getActions().stream().anyMatch(a -> a == PlayerListS2CPacket.Action.ADD_PLAYER)) {
+                CameraRotator.cancelCurrentRotator(); // stops current rotator
+
+                // broadcasting joins
                 for (PlayerListS2CPacket.Entry entry : packet.getPlayerAdditionEntries()) {
                     UUID id = entry.profile().getId();
                     String name = entry.profile().getName();
-                    ClickCrystalsInfo.ClickCrystalsUser userAsOwner = ClickCrystals.info.getOwner(id);
 
-                    if (userAsOwner != null) {
+                    if (ClickCrystals.info.getOwner(id) != null) {
                         String s = "§7" + name + "§e, a ClickCrystals§b developer,§e has joined the game!";
                         ChatUtils.sendPrefixMessage(s);
-                        return;
                     }
-
-                    ClickCrystalsInfo.ClickCrystalsUser userAsStaff = ClickCrystals.info.getStaff(id);
-
-                    if (userAsStaff != null) {
+                    else if (ClickCrystals.info.getStaff(id) != null) {
                         String s = "§7" + name + "§e, a ClickCrystals§b staff,§e has joined the game!";
                         ChatUtils.sendPrefixMessage(s);
-                        return;
                     }
                 }
             }

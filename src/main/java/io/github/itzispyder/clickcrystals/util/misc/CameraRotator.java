@@ -17,6 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class CameraRotator {
 
     private static final AtomicBoolean running = new AtomicBoolean(false);
+    private static final AtomicReference<CameraRotator> currentRotator = new AtomicReference<>(null);
     private static boolean cursorLocked = false;
     private final EndAction onFinish;
     private final List<Goal> goals;
@@ -29,6 +30,14 @@ public class CameraRotator {
         this.goals = goals;
         this.currentGoal = new AtomicReference<>();
         skipRequestReceived = wasCancelled = new AtomicBoolean(false);
+    }
+
+    public static synchronized void cancelCurrentRotator() {
+        if (currentRotator.get() != null) {
+            currentRotator.get().cancel();
+            currentRotator.set(null);
+        }
+        unlockCursor();
     }
 
     public static boolean isCameraRunning() {
@@ -120,6 +129,7 @@ public class CameraRotator {
         }
         wasCancelled.set(false);
         running.set(true);
+        currentRotator.set(this);
 
         CompletableFuture.runAsync(() -> {
             if (canLockCursor()) {
@@ -139,6 +149,7 @@ public class CameraRotator {
             }
 
             ClientPlayerEntity p = PlayerUtils.player();
+            currentRotator.set(null);
             running.set(false);
             onFinish.accept(MathUtils.wrapDegrees(p.getPitch()), MathUtils.wrapDegrees(p.getYaw()), this);
         });
