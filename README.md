@@ -28,14 +28,17 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 1.0.1
+Mod: 1.0.2
 
 Changelog:
+  Added:
+    - Command to set client rotation, rotates smoothly as if normal input to prevent a possible "unfair advantage"
+    - GuiCursor module, for center cursor fix
   Patches:
-    - Fixed Version 1.0.0 not rendering elytras for people with custom capes.
+    - Huds saving their width and height dimension wrongly
+    - Ping hud not refreshing properly
 
 Notice:
-  - Version 1.0.1 is a hotfix for elytras not rendering for people with custom cc capes!
   - USE COMMAND ,keybinds IF YOU DON'T KNOW THE KEYBIND FOR SOMETHING
 ```
 
@@ -124,6 +127,7 @@ Notice:
 | ChatPrefix       |                 Chat prefixes and suffixes, and custom unicode fonts                 |
 | GhostTotem       |                      Renders a totem in your hand when you die                       |
 | InGameHuds       |                        Custom ClickCrystals info huds manager                        |
+| GuiCursor        |                              Cursor center fix, etc...                               |
 
 
 ## But isn't this cheating?
