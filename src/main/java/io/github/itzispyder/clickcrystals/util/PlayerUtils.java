@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.data.Delta3d;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.util.math.BlockPos;
@@ -12,7 +13,10 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
@@ -98,5 +102,26 @@ public final class PlayerUtils {
                 }
             }
         }
+    }
+
+    public static Entity getNearestEntity(World world, Entity exclude, Vec3d at, double range, Predicate<Entity> filter) {
+        List<Entity> candidates = world.getOtherEntities(exclude, Box.from(at).expand(range), filter).stream()
+                .sorted(Comparator.comparing(entity -> entity.getPos().distanceTo(at)))
+                .toList();
+
+        if (candidates.isEmpty()) {
+            return null;
+        }
+        return candidates.get(0);
+    }
+
+    public static Entity getNearestEntity(double range, Predicate<Entity> filter) {
+        if (playerNull()) return null;
+        return getNearestEntity(getWorld(), player(), player().getPos(), range, filter);
+    }
+
+    public static PlayerEntity getNearestPlayer(double range, Predicate<Entity> filter) {
+        if (playerNull()) return null;
+        return (PlayerEntity)getNearestEntity(getWorld(), player(), player().getPos(), range, entity -> entity instanceof PlayerEntity && filter.test(entity));
     }
 }

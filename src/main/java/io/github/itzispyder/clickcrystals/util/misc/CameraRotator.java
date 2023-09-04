@@ -71,6 +71,22 @@ public class CameraRotator {
         return onFinish;
     }
 
+    public void enableCursorLock() {
+        canLockCursor = true;
+    }
+
+    public void disableCursorLock() {
+        canLockCursor = false;
+    }
+
+    public void enableVerbose() {
+        debugMessages = true;
+    }
+
+    public void disableVerbose() {
+        debugMessages = false;
+    }
+
     public void cancel() {
         running.set(false);
         wasCancelled.set(true);
