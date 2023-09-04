@@ -20,7 +20,7 @@ public class TargetRelativeHud extends Hud {
     private static long timer;
 
     public TargetRelativeHud() {
-        super("target-hud", 150, 30, 120, 120);
+        super("target-hud", 150, 30, 120, 12);
     }
 
     @Override
