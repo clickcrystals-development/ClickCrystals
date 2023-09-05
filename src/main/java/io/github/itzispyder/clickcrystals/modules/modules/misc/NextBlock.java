@@ -6,10 +6,12 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.BlockBreakEvent;
+import io.github.itzispyder.clickcrystals.events.events.world.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
+import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import io.github.itzispyder.clickcrystals.util.misc.Raytracer;
@@ -18,6 +20,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -38,6 +41,13 @@ public class NextBlock extends Module implements Listener {
     private Block lastTouched;
     private BlockPos lastTouchedPosition;
     private boolean wasAborted;
+    private final CameraRotator.EndAction REPOSITION_TARGET = (pitch, yaw, cameraRotator) -> {
+        Scheduler.runTaskLater(() -> {
+            if (mc.crosshairTarget == null || mc.crosshairTarget.getType() == HitResult.Type.MISS) {
+                targetNextBlock();
+            }
+        }, 3);
+    };
 
     public NextBlock() {
         super("next-block", Categories.MISC, "Targets next same block that you're mining. (for farming, not pvp, useless in pvp)");
@@ -101,6 +111,18 @@ public class NextBlock extends Module implements Listener {
         }
     }
 
+    @EventHandler
+    private void onTick(ClientTickStartEvent e) {
+        if (PlayerUtils.playerNotNull() && shouldRaytrace.getVal() && mc.options.attackKey.isPressed()) {
+            if (!CameraRotator.isCameraRunning() && mc.crosshairTarget instanceof BlockHitResult hit) {
+                BlockState state = PlayerUtils.getWorld().getBlockState(hit.getBlockPos());
+                if (!state.isOf(lastTouched)) {
+                    targetNextBlock();
+                }
+            }
+        }
+    }
+
     private void setNextBlock() {
         wasAborted = false;
         ClientPlayerEntity p = PlayerUtils.player();
@@ -134,6 +156,7 @@ public class NextBlock extends Module implements Listener {
         CameraRotator.Builder builder = CameraRotator.create();
         builder.enableCursorLock();
         builder.addGoal(new CameraRotator.Goal(rot));
+        builder.onFinish(REPOSITION_TARGET);
         builder.build().start();
     }
 
@@ -142,12 +165,13 @@ public class NextBlock extends Module implements Listener {
         Box box = new Box(p.getBlockPos()).expand(5);
         AtomicDouble nearest = new AtomicDouble(10.0);
         AtomicReference<Vec3d> target = new AtomicReference<>(null);
+        double max = PlayerUtils.getInteractionManager().getReachDistance();
 
         PlayerUtils.boxIterator(w, box, (pos, state) -> {
             Vec3d posVec = pos.toCenterPos();
             double dist = posVec.distanceTo(p.getEyePos());
 
-            if (dist >= 5.0) {
+            if (dist > max) {
                 return;
             }
 
@@ -177,13 +201,14 @@ public class NextBlock extends Module implements Listener {
         Box box = new Box(pos).expand(5);
         AtomicDouble nearest = new AtomicDouble(10.0);
         AtomicReference<Vec3d> target = new AtomicReference<>(null);
+        double max = PlayerUtils.getInteractionManager().getReachDistance();
 
         PlayerUtils.boxIterator(w, box, (blockPos, state) -> {
             Vec3d posVec = blockPos.toCenterPos();
             double dist = posVec.distanceTo(start);
             double reach = posVec.distanceTo(p.getEyePos());
 
-            if (reach >= 5.0) {
+            if (reach > max) {
                 return;
             }
 

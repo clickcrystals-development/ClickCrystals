@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile;
 import io.github.itzispyder.clickcrystals.data.Delta3d;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -46,6 +47,10 @@ public final class PlayerUtils {
 
     public static World getWorld() {
         return player().getWorld();
+    }
+
+    public static ClientPlayerInteractionManager getInteractionManager() {
+        return mc.interactionManager;
     }
 
     public static void sendPacket(Packet<?> packet) {

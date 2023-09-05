@@ -205,7 +205,10 @@ public class CameraRotator {
 
                 try {
                     long delay;
-                    if (dist < 90.0) {
+                    if (dist < 30.0) {
+                        delay = Randomizer.rand(7, 10);
+                    }
+                    else if (dist < 90.0) {
                         delay = Randomizer.rand(1, 6);
                     }
                     else if (dist < 180.0) {
