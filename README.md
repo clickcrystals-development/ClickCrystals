@@ -31,8 +31,11 @@ Minecraft: 1.20-1.20.1
 Mod: 1.0.2
 
 Changelog:
+  Tweaked:
+    - Cape textures (Owners and Developers -> DEV, Staff -> CCMC, Donators -> Golden CC)
   Added:
     - Command to set client rotation, rotates smoothly as if normal input to prevent a possible "unfair advantage"
+    - Need to rotate to a specific coordinates? ,look to <x> <y> <z>
     - GuiCursor module, for center cursor fix
   Patches:
     - Huds saving their width and height dimension wrongly
