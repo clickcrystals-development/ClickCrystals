@@ -213,8 +213,8 @@ public class NextBlock extends Module implements Listener {
             }
 
             if (shouldRaytrace.getVal()) { // filter out blocks you cannot see
-                Vec3d dir = posVec.subtract(start).normalize();
-                var hit = Raytracer.trace(w, start, dir, dist, (block, point) -> {
+                Vec3d dir = posVec.subtract(p.getEyePos()).normalize();
+                var hit = Raytracer.trace(w, p.getEyePos(), dir, dist, (block, point) -> {
                     return w.getBlockState(blockPos).isFullCube(w, blockPos);
                 });
 
