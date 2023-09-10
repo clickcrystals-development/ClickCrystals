@@ -37,6 +37,6 @@ public abstract class DefaultBase extends GuiScreen {
 
     @Override
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
-        context.fillGradient(0, 0, this.width, this.height, 0, 0xD0000000, 0xD03873A9);
+        context.fillGradient(0, 0, this.width, this.height, 0, 0xD0000000, 0xD0FFFFFF);
     }
 }
