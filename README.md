@@ -157,6 +157,9 @@ It is not a cheat. It does not automate any task, for every action the mod prefo
 | `l1festee1`.net         | no    | no       |
 | `ironcadia`.minehut.gg  | no    | no       |
 | `apollocpvp`.minehut.gg | no    | yes      |
+| `stray`.gg              | no    | yes      |
+| eu.`stray`.gg           | no    | yes      |
+| as.`stray`.gg           | no    | yes      |
 
 
 ## For this Mod You Will Need
