@@ -101,10 +101,6 @@ public class Scheduler {
             return this;
         }
 
-        public TaskChain thenRepeat(Runnable task, long period) {
-            return thenRepeat(task, period, Task.INFINITE_ITERATIONS);
-        }
-
         public TaskChain thenWait(long millis) {
             if (!schedule.isEmpty() && schedule.peek().task == null) {
                 schedule.peek().wait = millis;
@@ -194,6 +190,12 @@ public class Scheduler {
             }
 
             if (millisTimer++ >= period) {
+                if (iterations == INFINITE_ITERATIONS) {
+                    millisTimer = 0;
+                    task.run();
+                    return;
+                }
+
                 if (iterated++ >= iterations) {
                     tasks.remove(this);
                 }
