@@ -91,7 +91,7 @@ public class NetworkEventListener implements Listener {
     private void handleCheckUpdates(PacketReceiveEvent e) {
         if (e.getPacket() instanceof LoginSuccessS2CPacket && !ClickCrystals.matchLatestVersion()) {
             scheduler.runChainTask()
-                    .thenWait(60 * 50)
+                    .thenWait(5 * 1000)
                     .thenRun(() -> mc.execute(() -> {
                         ChatUtils.sendBlank();
                         ChatUtils.sendWarningMessage("§bClickCrystals is §e§nNOT UP TO DATE§b! Get the newest version now!");
@@ -104,11 +104,7 @@ public class NetworkEventListener implements Listener {
                         ChatUtils.sendRawText(text.fillStyle(text.getStyle().withClickEvent(event)));
                         ChatUtils.sendBlank();
                     }))
-                    .thenRun(ChatUtils::pingPlayer)
-                    .thenWait(10 * 50)
-                    .thenRun(ChatUtils::pingPlayer)
-                    .thenWait(10 * 50)
-                    .thenRun(ChatUtils::pingPlayer)
+                    .thenRepeat(ChatUtils::pingPlayer, 10 * 50, 3)
                     .startChain();
         }
     }
