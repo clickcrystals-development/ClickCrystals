@@ -32,6 +32,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.minecart.TntSwap;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
+import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
@@ -54,6 +55,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
 
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
+    public static final Scheduler scheduler = new Scheduler();
     public static final CapeManager capeManager = new CapeManager();
     public static final ConfigFile config = ConfigFile.load("ClickCrystalsClient/config.json");
     public static final DiscordPresence discordPresence = new DiscordPresence();

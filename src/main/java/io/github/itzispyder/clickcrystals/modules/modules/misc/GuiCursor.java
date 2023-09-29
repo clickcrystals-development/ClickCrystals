@@ -10,7 +10,6 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.InvUtils;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
@@ -88,7 +87,7 @@ public class GuiCursor extends Module implements Listener {
 
     public void hoverTotem() {
         listeningForNextDraw = true;
-        Scheduler.runTaskLater(() -> listeningForNextDraw = false, 1);
+        scheduler.runDelayedTask(() -> listeningForNextDraw = false, 50);
     }
 
     @EventHandler
@@ -134,7 +133,7 @@ public class GuiCursor extends Module implements Listener {
                     InvUtils.inv().updateItems();
 
                     if (mainEmpty) {
-                        Scheduler.runTaskLater(this::hoverTotem, 1);
+                        scheduler.runDelayedTask(this::hoverTotem, 50);
                     }
                 }
                 else if (slotValid) {

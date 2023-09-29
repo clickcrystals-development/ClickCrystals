@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -39,9 +38,9 @@ public class RailSwap extends Module implements Listener {
     @EventHandler
     private void onShootBow(MouseClickEvent e) {
         if (e.getAction().isRelease() && e.isScreenNull() && HotbarUtils.isHoldingEitherHand(Items.BOW) && HotbarUtils.has(RailSwap::isRail)) {
-            Scheduler.runTaskLater(() -> {
+            scheduler.runDelayedTask(() -> {
                 HotbarUtils.search(RailSwap::isRail);
-            }, 1);
+            }, 50);
         }
     }
 

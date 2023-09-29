@@ -5,9 +5,6 @@ import io.github.itzispyder.clickcrystals.client.networking.PacketMapper;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.PlayerArgumentType;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.scheduler.DelayedTask;
-import io.github.itzispyder.clickcrystals.scheduler.RepeatingTask;
-import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
@@ -64,18 +61,10 @@ public class CCDebugCommand extends Command {
                         }))
                 .then(literal("schedulers")
                         .executes(context -> {
-                            List<String> activeTasks = Scheduler.getTasks().stream().map(t -> t.getClass().getSimpleName()).toList();
-                            List<String> delayedTasks = Scheduler.getTasks().stream().filter(t -> t instanceof DelayedTask).map(t -> t.getClass().getSimpleName()).toList();
-                            List<String> repeatingTasks = Scheduler.getTasks().stream().filter(t -> t instanceof RepeatingTask).map(t -> t.getClass().getSimpleName()).toList();
-
                             ChatUtils.sendBlank(2);
                             ChatUtils.sendPrefixMessage("Scheduler Info");
                             ChatUtils.sendBlank(1);
-                            ChatUtils.sendMessage("Active Tasks (" + activeTasks.size() + "): " + ArrayUtils.list2string(activeTasks));
-                            ChatUtils.sendBlank(1);
-                            ChatUtils.sendMessage("Delayed Tasks (" + delayedTasks.size() + "): " + ArrayUtils.list2string(delayedTasks));
-                            ChatUtils.sendBlank(1);
-                            ChatUtils.sendMessage("Repeating Tasks (" + repeatingTasks.size() + "): " + ArrayUtils.list2string(repeatingTasks));
+                            ChatUtils.sendMessage("Active Tasks (" + scheduler.count() + ")");
                             ChatUtils.sendBlank(2);
                             return SINGLE_SUCCESS;
                         }))

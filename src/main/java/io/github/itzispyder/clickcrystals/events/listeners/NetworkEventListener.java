@@ -7,7 +7,6 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
-import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.network.packet.Packet;
@@ -23,8 +22,7 @@ import net.minecraft.text.Text;
 
 import java.util.UUID;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-import static io.github.itzispyder.clickcrystals.ClickCrystals.version;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
 
 public class NetworkEventListener implements Listener {
 
@@ -92,23 +90,26 @@ public class NetworkEventListener implements Listener {
 
     private void handleCheckUpdates(PacketReceiveEvent e) {
         if (e.getPacket() instanceof LoginSuccessS2CPacket && !ClickCrystals.matchLatestVersion()) {
-            Scheduler.runTaskLater(() -> mc.execute(() -> {
-                ChatUtils.sendBlank();
-                ChatUtils.sendWarningMessage("§bClickCrystals is §e§nNOT UP TO DATE§b! Get the newest version now!");
-                ChatUtils.sendPrefixMessage("§bYour Version=§7" + version + "§b, §oNewest Version=§7" + ClickCrystals.getLatestVersion());
+            scheduler.runChainTask()
+                    .thenWait(60 * 50)
+                    .thenRun(() -> mc.execute(() -> {
+                        ChatUtils.sendBlank();
+                        ChatUtils.sendWarningMessage("§bClickCrystals is §e§nNOT UP TO DATE§b! Get the newest version now!");
+                        ChatUtils.sendPrefixMessage("§bYour Version=§7" + version + "§b, §oNewest Version=§7" + ClickCrystals.getLatestVersion());
 
-                Text literal = Text.literal(ClickCrystals.starter + "§a§o§n https://modrinth.com/mod/clickcrystals");
-                ClickEvent event = new ClickEvent(ClickEvent.Action.OPEN_URL, "https://modrinth.com/mod/clickcrystals");
-                MutableText text = literal.copy();
+                        Text literal = Text.literal(ClickCrystals.starter + "§a§o§n https://modrinth.com/mod/clickcrystals");
+                        ClickEvent event = new ClickEvent(ClickEvent.Action.OPEN_URL, "https://modrinth.com/mod/clickcrystals");
+                        MutableText text = literal.copy();
 
-                ChatUtils.sendRawText(text.fillStyle(text.getStyle().withClickEvent(event)));
-                ChatUtils.sendBlank();
-            }), 60);
-
-            Runnable task = ChatUtils::pingPlayer;
-            Scheduler.runTaskLater(task, 60);
-            Scheduler.runTaskLater(task, 70);
-            Scheduler.runTaskLater(task, 80);
+                        ChatUtils.sendRawText(text.fillStyle(text.getStyle().withClickEvent(event)));
+                        ChatUtils.sendBlank();
+                    }))
+                    .thenRun(ChatUtils::pingPlayer)
+                    .thenWait(10 * 50)
+                    .thenRun(ChatUtils::pingPlayer)
+                    .thenWait(10 * 50)
+                    .thenRun(ChatUtils::pingPlayer)
+                    .startChain();
         }
     }
 }

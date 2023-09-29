@@ -6,10 +6,9 @@ import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientCommandSource;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;
@@ -17,15 +16,11 @@ import net.minecraft.registry.BuiltinRegistries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.command.CommandManager;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
-
-public abstract class Command {
+public abstract class Command implements Global {
 
     protected static final int COMMAND_FAIL = -1;
     protected static final int COMMAND_PASS = 0;
     protected static final int SINGLE_SUCCESS = 1;
-    protected static final MinecraftClient mc = MinecraftClient.getInstance();
-    protected static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
     public static final RegistryWrapper.WrapperLookup WRAPPER = BuiltinRegistries.createWrapperLookup();
     public static final CommandRegistryAccess REGISTRY = CommandManager.createRegistryAccess(WRAPPER);
     public static final CommandDispatcher<CommandSource> DISPATCHER = new CommandDispatcher<>();

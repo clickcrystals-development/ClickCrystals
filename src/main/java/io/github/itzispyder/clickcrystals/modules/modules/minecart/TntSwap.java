@@ -9,7 +9,6 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
 import net.minecraft.item.Items;
@@ -54,10 +53,10 @@ public class TntSwap extends Module implements Listener, PostActionable {
             HotbarUtils.search(Items.TNT_MINECART);
 
             if (instant.getVal()) {
-                Scheduler.runTaskLater(() -> {
+                scheduler.runDelayedTask(() -> {
                     BlockUtils.interact(e.getPos(), Direction.UP);
                     this.action();
-                }, 1);
+                }, 50);
             }
         }
     }

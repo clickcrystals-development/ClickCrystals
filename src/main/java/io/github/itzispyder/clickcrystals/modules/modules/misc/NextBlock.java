@@ -11,7 +11,6 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import io.github.itzispyder.clickcrystals.util.misc.Raytracer;
@@ -42,11 +41,11 @@ public class NextBlock extends Module implements Listener {
     private BlockPos lastTouchedPosition;
     private boolean wasAborted;
     private final CameraRotator.EndAction REPOSITION_TARGET = (pitch, yaw, cameraRotator) -> {
-        Scheduler.runTaskLater(() -> {
+        scheduler.runDelayedTask(() -> {
             if (mc.crosshairTarget == null || mc.crosshairTarget.getType() == HitResult.Type.MISS) {
                 targetNextBlock();
             }
-        }, 3);
+        }, 3 * 50);
     };
 
     public NextBlock() {

@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.ModuleArgumentType;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsBase;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import net.minecraft.command.CommandSource;
 
 public class CCToggleCommand extends Command {
@@ -17,9 +16,9 @@ public class CCToggleCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
-                    Scheduler.runTaskLater(() -> {
+                    scheduler.runDelayedTask(() -> {
                         mc.execute(ClickCrystalsBase::openClickCrystalsMenu);
-                    }, 5);
+                    }, 5 * 50);
                     return SINGLE_SUCCESS;
                 })
                 .then(argument("module", ModuleArgumentType.create())
