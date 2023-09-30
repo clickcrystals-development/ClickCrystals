@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.scheduler;
 
 import io.github.itzispyder.clickcrystals.events.Cancellable;
+import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -10,6 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Scheduler {
 
+    public static final int INFINITE_ITERATIONS = -1;
     private final ArrayList<Task> tasks;
     private Thread worker;
     private boolean started;
@@ -61,7 +63,7 @@ public class Scheduler {
     }
 
     public synchronized void runRepeatingTask(Runnable runnable, long delay, long period) {
-        this.runRepeatingTask(runnable, delay, period, Task.INFINITE_ITERATIONS);
+        this.runRepeatingTask(runnable, delay, period, INFINITE_ITERATIONS);
     }
 
     public synchronized void runRepeatingTask(Runnable runnable, long delay, long period, int iterations) {
@@ -76,9 +78,11 @@ public class Scheduler {
 
     public class TaskChain {
         private final Stack<TaskPair> schedule;
+        private final Randomizer randomizer;
 
         public TaskChain() {
             this.schedule = new Stack<>();
+            this.randomizer = new Randomizer();
         }
 
         public TaskChain thenRun(Runnable task) {
@@ -111,6 +115,14 @@ public class Scheduler {
             return this;
         }
 
+        public TaskChain thenWaitRandom(int min, int max) {
+            return thenWait(randomizer.getRandomInt(min, max));
+        }
+
+        public TaskChain thenWaitRandom(int max) {
+            return thenWait(randomizer.getRandomInt(max));
+        }
+
         public void startChain() {
             runDelayedTask(() -> {
                 CompletableFuture.runAsync(() -> {
@@ -133,8 +145,7 @@ public class Scheduler {
         }
     }
 
-    public class Task implements Cancellable {
-        public static final int INFINITE_ITERATIONS = -1;
+    private class Task implements Cancellable {
         private final Runnable task;
         private final long period;
         private long delay;

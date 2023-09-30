@@ -23,12 +23,14 @@ public class CameraRotator {
     private final List<Goal> goals;
     private final AtomicReference<Goal> currentGoal;
     private final AtomicBoolean skipRequestReceived, wasCancelled;
+    private final Randomizer randomizer;
     protected boolean debugMessages, canLockCursor;
 
     private CameraRotator(List<Goal> goals, EndAction onFinish) {
         this.onFinish = onFinish;
         this.goals = goals;
         this.currentGoal = new AtomicReference<>();
+        this.randomizer = new Randomizer();
         skipRequestReceived = wasCancelled = new AtomicBoolean(false);
     }
 
@@ -206,16 +208,16 @@ public class CameraRotator {
                 try {
                     long delay;
                     if (dist < 30.0) {
-                        delay = Randomizer.rand(7, 10);
+                        delay = randomizer.getRandomInt(7, 10);
                     }
                     else if (dist < 90.0) {
-                        delay = Randomizer.rand(1, 6);
+                        delay = randomizer.getRandomInt(1, 6);
                     }
                     else if (dist < 180.0) {
-                        delay = Randomizer.rand(1, 5);
+                        delay = randomizer.getRandomInt(1, 5);
                     }
                     else {
-                        delay = Randomizer.rand(1, 3);
+                        delay = randomizer.getRandomInt(1, 3);
                     }
                     Thread.sleep(delay);
                 }

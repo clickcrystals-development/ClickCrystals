@@ -12,7 +12,6 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
-import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -103,7 +102,7 @@ public class AutoGG extends Module implements Listener {
         ).filter(s -> !s.isEmpty()).toList();
 
         if (!messages.isEmpty()) {
-            String msg = new Randomizer<>(messages).pickRand();
+            String msg = system.randomizer.getRandomElement(messages);
             ChatUtils.sendChatMessage(msg);
         }
     }

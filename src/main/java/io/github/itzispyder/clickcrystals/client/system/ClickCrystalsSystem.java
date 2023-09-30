@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
+import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.screen.ConfirmLinkScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -27,6 +28,7 @@ public class ClickCrystalsSystem implements Serializable {
 
 
     public final EventBus eventBus = new EventBus();
+    public final Randomizer randomizer = new Randomizer();
     private final Map<Class<? extends Module>, Module> modules;
     private final Map<Class<? extends Command>, Command> commands;
     private final Map<Class<? extends Hud>, Hud> huds;
