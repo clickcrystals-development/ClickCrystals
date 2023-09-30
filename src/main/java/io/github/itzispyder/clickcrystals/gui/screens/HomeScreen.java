@@ -69,12 +69,7 @@ public class HomeScreen extends DefaultBase {
                 .title("Source Code")
                 .subtitle("§b§uRead our source!")
                 .textScale(0.8F)
-                .onPress(btn -> {
-                    try {
-                        system.openUrl("https://github.com/itzispyder/clickcrystals", starter + "Read our code!", mc.currentScreen.getClass().newInstance());
-                    }
-                    catch (Exception ignore) {}
-                })
+                .onPress(btn -> system.openUrl("https://github.com/itzispyder/clickcrystals"))
                 .onBuild(grid::addEntry)
                 .build();
 
@@ -96,12 +91,7 @@ public class HomeScreen extends DefaultBase {
                 .title("Check Updates!")
                 .subtitle("§b§uCheck for updates!")
                 .textScale(0.8F)
-                .onPress(btn -> {
-                    try {
-                        system.openUrl("https://modrinth.com/mod/clickcrystals", starter + "Go to Modrinth!", mc.currentScreen.getClass().newInstance());
-                    }
-                    catch (Exception ignore) {}
-                })
+                .onPress(btn -> system.openUrl("https://modrinth.com/mod/clickcrystals"))
                 .onBuild(grid::addEntry)
                 .build();
 
@@ -112,12 +102,7 @@ public class HomeScreen extends DefaultBase {
                 .title("§eJoin Discord!")
                 .subtitle("§b§uJoin the others!")
                 .textScale(0.8F)
-                .onPress(btn -> {
-                    try {
-                        system.openUrl("https://discord.gg/tMaShNzNtP", starter + "Join the Discord! >>>", mc.currentScreen.getClass().newInstance());
-                    }
-                    catch (Exception ignore) {}
-                })
+                .onPress(btn -> system.openUrl("https://discord.gg/tMaShNzNtP"))
                 .onBuild(grid::addEntry)
                 .build();
 
@@ -134,15 +119,6 @@ public class HomeScreen extends DefaultBase {
 
         grid.organize();
         grid.getEntries().forEach(this::addChild);
-
-        /*
-        grid.createPanel(this, (base.y + base.height) - grid.getStartY() - gap);
-        grid.addAllToPanel();
-
-        if (grid.hasPanel()) {
-            this.addChild(grid.getPanel());
-        }
-         */
     }
 
     @Override

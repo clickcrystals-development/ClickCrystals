@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 /**
  * Try not to instantiate this class, parse it from json!
- * This will be read off of <a href="https://itzispyder.github.io/cc-bulletin">https://itzispyder.github.io/cc-bulletin</a>
+ * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/bulletin</a>
  */
 public class Announcement {
 

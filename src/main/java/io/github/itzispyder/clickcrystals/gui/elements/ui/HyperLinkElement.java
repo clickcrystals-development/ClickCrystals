@@ -43,10 +43,7 @@ public class HyperLinkElement extends GuiElement {
     @Override
     @SuppressWarnings("deprecation")
     public void onClick(double mouseX, double mouseY, int button) {
-        try {
-            system.openUrl(url, message, mc.currentScreen.getClass().newInstance());
-        }
-        catch (InstantiationException | IllegalAccessException | NullPointerException ignore) {}
+        system.openUrl(url);
     }
 
     public String getUrl() {

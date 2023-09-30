@@ -10,12 +10,12 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Try not to instantiate this class, parse it from json!
- * This will be read off of <a href="https://itzispyder.github.io/cc-bulletin">https://itzispyder.github.io/cc-bulletin</a>
+ * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/bulletin</a>
  */
 public class BulletinBoard {
 
     private static AtomicReference<BulletinBoard> current = new AtomicReference<>(null);
-    public static final String URL = "https://itzispyder.github.io/cc-bulletin";
+    public static final String URL = "https://itzispyder.github.io/clickcrystals/bulletin";
     private final Announcement[] announcements;
 
     public BulletinBoard(Announcement... announcements) {

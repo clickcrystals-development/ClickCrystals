@@ -8,15 +8,16 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.client.gui.screen.ConfirmLinkScreen;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
-import net.minecraft.util.Util;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
 import java.util.*;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.prefix;
 
 public class ClickCrystalsSystem implements Serializable {
@@ -42,20 +43,21 @@ public class ClickCrystalsSystem implements Serializable {
     }
 
     public void openUrl(String url) {
-        this.openUrl(url, "Are you sure you want to go to the following link?", mc.currentScreen);
+        try {
+            Desktop.getDesktop().browse(new URI(url));
+        }
+        catch (URISyntaxException | IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public void openUrl(String url, String title) {
-        this.openUrl(url, title, mc.currentScreen);
-    }
-
-    public void openUrl(String url, String title, Screen afterScreen) {
-        mc.setScreen(new ConfirmLinkScreen(trusted -> {
-            if (trusted) {
-                Util.getOperatingSystem().open(url);
-            }
-            mc.setScreen(afterScreen);
-        }, Text.literal(title), url, true));
+    public void openFile(String path) {
+        try {
+            Desktop.getDesktop().open(new File(path));
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void addCommand(Command command) {

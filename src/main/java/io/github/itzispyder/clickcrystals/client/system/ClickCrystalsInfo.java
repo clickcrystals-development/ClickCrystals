@@ -12,11 +12,11 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.prefix;
 
 /**
  * Try not to instantiate this class, parse it from json!
- * This will be read off of <a href="https://itzispyder.github.io/cc-bulletin">https://itzispyder.github.io/cc-info</a>
+ * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/info</a>
  */
 public class ClickCrystalsInfo {
 
-    public static final String URL = "https://itzispyder.github.io/cc-info";
+    public static final String URL = "https://itzispyder.github.io/clickcrystals/info";
     private final String latest;
     private final ClickCrystalsUser[] owners;
     private final ClickCrystalsUser[] staffs;
@@ -127,7 +127,7 @@ public class ClickCrystalsInfo {
 
     /**
      * Try not to instantiate this class, parse it from json!
-     * This will be read off of <a href="https://itzispyder.github.io/cc-bulletin">https://itzispyder.github.io/cc-info</a>
+     * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/info</a>
      */
     public static class ClickCrystalsUser {
         private final String name;

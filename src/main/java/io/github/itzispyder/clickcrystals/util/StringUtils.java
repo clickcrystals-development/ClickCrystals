@@ -10,10 +10,6 @@ import java.util.List;
 
 public final class StringUtils {
 
-    static {
-        System.setProperty("java.awt.headless", "false");
-    }
-
     public static String color(String s) {
         return nullable(s).replace('&', '§');
     }

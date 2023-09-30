@@ -24,7 +24,10 @@ import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.DiscordRPC;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
 import io.github.itzispyder.clickcrystals.modules.modules.minecart.BowSwap;
 import io.github.itzispyder.clickcrystals.modules.modules.minecart.RailSwap;
@@ -111,6 +114,8 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
     public void onInitialize() {
         // Mod initialization
         System.out.println(prefix + "Loading ClickCrystals by ImproperIssues");
+        System.setProperty("java.awt.headless", "false");
+
         this.init();
         CCSoundEvents.init();
         this.startTicking();
@@ -196,7 +201,6 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addModule(new SwordSwap());
 
         // client
-        system.addModule(new CCExtras());
         system.addModule(new DiscordRPC());
         system.addModule(new GuiBorders());
         system.addModule(new InGameHuds());
