@@ -20,10 +20,7 @@ public class ChatEventListener implements Listener {
 
     @EventHandler
     public void onChatSend(ChatSendEvent e) {
-        try {
 
-        }
-        catch(Exception ignore) {}
     }
 
     @EventHandler

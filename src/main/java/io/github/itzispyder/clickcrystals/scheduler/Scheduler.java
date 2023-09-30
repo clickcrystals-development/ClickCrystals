@@ -80,7 +80,7 @@ public class Scheduler {
         private final Stack<TaskPair> schedule;
         private final Randomizer randomizer;
 
-        public TaskChain() {
+        private TaskChain() {
             this.schedule = new Stack<>();
             this.randomizer = new Randomizer();
         }

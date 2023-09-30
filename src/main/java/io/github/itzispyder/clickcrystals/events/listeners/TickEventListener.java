@@ -9,17 +9,11 @@ public class TickEventListener implements Listener {
 
     @EventHandler
     public void onTickStart(ClientTickStartEvent e) {
-        try {
 
-        }
-        catch (Exception ignore) {}
     }
 
     @EventHandler
     public void onTickEnd(ClientTickEndEvent e) {
-        try {
 
-        }
-        catch (Exception ex) {}
     }
 }
