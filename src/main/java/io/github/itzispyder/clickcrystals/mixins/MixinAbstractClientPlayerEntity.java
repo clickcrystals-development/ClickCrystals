@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
-import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
@@ -25,7 +24,7 @@ public abstract class MixinAbstractClientPlayerEntity implements Global {
             return;
         }
 
-        Identifier tex = ClickCrystals.capeManager.getCapeTexture(entry.getProfile());
+        Identifier tex = system.capeManager.getCapeTexture(entry.getProfile());
 
         if (tex != null) {
             cir.setReturnValue(tex);

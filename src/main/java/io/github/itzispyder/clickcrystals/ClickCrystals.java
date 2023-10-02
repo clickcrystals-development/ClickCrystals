@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals;
 
 import io.github.itzispyder.clickcrystals.client.client.CCSoundEvents;
-import io.github.itzispyder.clickcrystals.client.client.CapeManager;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.client.system.DiscordPresence;
@@ -57,7 +56,6 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
 
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
-    public static final CapeManager capeManager = new CapeManager();
     public static final ConfigFile config = ConfigFile.load("ClickCrystalsClient/config.json");
     public static final DiscordPresence discordPresence = new DiscordPresence();
     public static Thread discordWorker;
@@ -100,7 +98,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
             modId = "clickcrystals",
             prefix = "[ClickCrystals] ",
             starter = "§7[§bClick§3Crystals§7] §r",
-            version = "1.0.2";
+            version = "1.0.3";
 
     public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
 
@@ -279,7 +277,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
 
     private void requestModInfo() {
         ClickCrystalsInfo.request();
-        capeManager.reloadTextures();
+        system.capeManager.reloadTextures();
     }
 
     public void initRpc() {

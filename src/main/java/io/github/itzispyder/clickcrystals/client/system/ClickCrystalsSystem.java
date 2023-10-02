@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.client.system;
 
+import io.github.itzispyder.clickcrystals.client.client.CapeManager;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.events.EventBus;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -30,6 +31,7 @@ public class ClickCrystalsSystem implements Serializable {
 
 
     public final EventBus eventBus = new EventBus();
+    public final CapeManager capeManager = new CapeManager();
     public final Randomizer random = new Randomizer();
     public final Scheduler scheduler = new Scheduler();
     private final Map<Class<? extends Module>, Module> modules;
