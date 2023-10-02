@@ -87,7 +87,7 @@ public class GuiCursor extends Module implements Listener {
 
     public void hoverTotem() {
         listeningForNextDraw = true;
-        scheduler.runDelayedTask(() -> listeningForNextDraw = false, 50);
+        system.scheduler.runDelayedTask(() -> listeningForNextDraw = false, 50);
     }
 
     @EventHandler
@@ -133,7 +133,7 @@ public class GuiCursor extends Module implements Listener {
                     InvUtils.inv().updateItems();
 
                     if (mainEmpty) {
-                        scheduler.runDelayedTask(this::hoverTotem, 50);
+                        system.scheduler.runDelayedTask(this::hoverTotem, 50);
                     }
                 }
                 else if (slotValid) {

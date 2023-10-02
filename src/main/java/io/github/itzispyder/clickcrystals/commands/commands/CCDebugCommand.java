@@ -64,7 +64,7 @@ public class CCDebugCommand extends Command {
                             ChatUtils.sendBlank(2);
                             ChatUtils.sendPrefixMessage("Scheduler Info");
                             ChatUtils.sendBlank(1);
-                            ChatUtils.sendMessage("Active Tasks (" + scheduler.count() + ")");
+                            ChatUtils.sendMessage("Active Tasks (" + system.scheduler.count() + ")");
                             ChatUtils.sendBlank(2);
                             return SINGLE_SUCCESS;
                         }))

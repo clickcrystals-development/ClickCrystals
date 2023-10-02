@@ -102,7 +102,7 @@ public class AutoGG extends Module implements Listener {
         ).filter(s -> !s.isEmpty()).toList();
 
         if (!messages.isEmpty()) {
-            String msg = system.randomizer.getRandomElement(messages);
+            String msg = system.random.getRandomElement(messages);
             ChatUtils.sendChatMessage(msg);
         }
     }

@@ -41,7 +41,7 @@ public class NextBlock extends Module implements Listener {
     private BlockPos lastTouchedPosition;
     private boolean wasAborted;
     private final CameraRotator.EndAction REPOSITION_TARGET = (pitch, yaw, cameraRotator) -> {
-        scheduler.runDelayedTask(() -> {
+        system.scheduler.runDelayedTask(() -> {
             if (mc.crosshairTarget == null || mc.crosshairTarget.getType() == HitResult.Type.MISS) {
                 targetNextBlock();
             }

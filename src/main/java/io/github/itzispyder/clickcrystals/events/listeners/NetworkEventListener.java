@@ -90,7 +90,7 @@ public class NetworkEventListener implements Listener {
 
     private void handleCheckUpdates(PacketReceiveEvent e) {
         if (e.getPacket() instanceof LoginSuccessS2CPacket && !ClickCrystals.matchLatestVersion()) {
-            scheduler.runChainTask()
+            system.scheduler.runChainTask()
                     .thenWait(5 * 1000)
                     .thenRun(() -> mc.execute(() -> {
                         ChatUtils.sendBlank();

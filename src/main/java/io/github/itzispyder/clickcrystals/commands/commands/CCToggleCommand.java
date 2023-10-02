@@ -16,7 +16,7 @@ public class CCToggleCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
-                    scheduler.runDelayedTask(() -> {
+                    system.scheduler.runDelayedTask(() -> {
                         mc.execute(ClickCrystalsBase::openClickCrystalsMenu);
                     }, 5 * 50);
                     return SINGLE_SUCCESS;
