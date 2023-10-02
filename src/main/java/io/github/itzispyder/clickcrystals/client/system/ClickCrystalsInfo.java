@@ -121,6 +121,7 @@ public class ClickCrystalsInfo {
         }
         catch (Exception ex) {
             ex.printStackTrace();
+            System.out.println("Failed to request latest mod info from '" + URL + "'");
             return ClickCrystals.info;
         }
     }
