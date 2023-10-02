@@ -29,9 +29,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorde
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
-import io.github.itzispyder.clickcrystals.modules.modules.minecart.BowSwap;
-import io.github.itzispyder.clickcrystals.modules.modules.minecart.RailSwap;
-import io.github.itzispyder.clickcrystals.modules.modules.minecart.TntSwap;
+import io.github.itzispyder.clickcrystals.modules.modules.minecart.*;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
