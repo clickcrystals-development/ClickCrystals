@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.KeybindSettingElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.DividerElement;
@@ -76,5 +77,13 @@ public class KeybindsScreen extends ClickCrystalsBase {
         this.height = height;
         this.close();
         ClickCrystalsBase.openClickCrystalsMenu();
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        super.mouseReleased(mouseX, mouseY, button);
+        ClickCrystals.config.saveKeybinds();
+        ClickCrystals.config.save();
+        return true;
     }
 }

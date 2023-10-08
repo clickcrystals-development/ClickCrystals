@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -25,5 +26,18 @@ public abstract class MixinMinecraftClient {
             ci.cancel();
             setScreen(null);
         }
+    }
+
+    @Inject(method = "stop", at = @At("HEAD"))
+    public void stop(CallbackInfo ci) {
+        system.prefixPrint("Stopping client!");
+        system.prefixPrint("<- disconnecting from discord...");
+        ClickCrystals.discordPresence.stop();
+        system.prefixPrint("<- saving data...");
+        ClickCrystals.config.saveKeybinds();
+        ClickCrystals.config.saveHuds();
+        ClickCrystals.config.saveModules();
+        system.prefixPrint("<- saving config...");
+        ClickCrystals.config.save();
     }
 }

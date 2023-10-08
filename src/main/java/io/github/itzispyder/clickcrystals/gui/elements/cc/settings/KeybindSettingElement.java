@@ -13,7 +13,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class KeybindSettingElement extends GuiElement implements Typeable {
@@ -58,7 +57,6 @@ public class KeybindSettingElement extends GuiElement implements Typeable {
             setting.setKey(key);
             currentScanCode = scanCode;
             screen.selected = null;
-            config.saveModules();
         }
     }
 

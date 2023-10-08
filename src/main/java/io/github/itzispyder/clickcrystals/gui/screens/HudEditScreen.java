@@ -76,4 +76,12 @@ public class HudEditScreen extends GuiScreen {
         this.close();
         client.setScreenAndRender(new HudEditScreen());
     }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        super.mouseReleased(mouseX, mouseY, button);
+        ClickCrystals.config.saveHuds();
+        ClickCrystals.config.save();
+        return true;
+    }
 }

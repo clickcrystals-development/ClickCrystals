@@ -36,7 +36,6 @@ import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
@@ -52,7 +51,7 @@ import org.lwjgl.glfw.GLFW;
  * TODO: (3) Update mod version in "GitHub Pages"
  * TODO: (4) Update "README.md"
  */
-public final class ClickCrystals implements ModInitializer, ClientLifecycleEvents.ClientStopping {
+public final class ClickCrystals implements ModInitializer {
 
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
@@ -94,11 +93,10 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
      * TODO: DON'T FORGET AGAIN!!!!
      */
     @SuppressWarnings("unused")
-    public static final String
-            modId = "clickcrystals",
-            prefix = "[ClickCrystals] ",
-            starter = "§7[§bClick§3Crystals§7] §r",
-            version = "1.0.3";
+    public static final String modId   = "clickcrystals";
+    public static final String prefix  = "[ClickCrystals] ";
+    public static final String starter = "§7[§bClick§3Crystals§7] §r";
+    public static final String version = "1.0.3";
 
     public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
 
@@ -129,13 +127,6 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         }
         system.prefixPrint("-> clicking crystals!");
         system.prefixPrint("ClickCrystals had loaded successfully!");
-    }
-
-    @Override
-    public void onClientStopping(MinecraftClient client) {
-        system.prefixPrint("Stopping client...");
-        discordPresence.stop();
-        config.save();
     }
 
     /**
@@ -200,6 +191,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addModule(new CrystAnchor());
         system.addModule(new ShieldSwitch());
         system.addModule(new SwordSwap());
+        system.addModule(new GapSwap());
 
         // client
         system.addModule(new DiscordRPC());

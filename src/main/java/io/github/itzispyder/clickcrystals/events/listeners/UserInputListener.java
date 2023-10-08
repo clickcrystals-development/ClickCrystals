@@ -46,8 +46,15 @@ public class UserInputListener implements Listener {
     public void onScreenChange(SetScreenEvent e) {
         try {
             this.handleDiscordPresence(e);
+            this.handleConfigSave(e);
         }
         catch (Exception ignore) {}
+    }
+
+    private void handleConfigSave(SetScreenEvent e) {
+        if (e.getScreen() instanceof GameMenuScreen) {
+            config.save();
+        }
     }
 
     private void handleDiscordPresence(SetScreenEvent e) {
