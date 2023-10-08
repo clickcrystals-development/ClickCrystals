@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.data;
+package io.github.itzispyder.clickcrystals.util.misc;
 
 public record Delta3d(double x, double y, double z) {
 

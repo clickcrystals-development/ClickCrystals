@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.util.misc;
 
-import io.github.itzispyder.clickcrystals.data.Pair;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;

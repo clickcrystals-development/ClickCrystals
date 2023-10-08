@@ -98,23 +98,6 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
         return isEnabled() ? "§aon" : "§coff";
     }
 
-    public static void loadConfigModules() {
-        for (Module module : system.modules().values()) {
-            ModuleFile.load(module).save();
-        }
-    }
-
-    public static void saveConfigModules() {
-        for (Module module : system.modules().values()) {
-            saveModule(module);
-        }
-    }
-
-    public static void saveModule(Module module) {
-        ModuleFile file = new ModuleFile(module);
-        file.save();
-    }
-
     public String getSearchQuery() {
         String norm = id.toLowerCase() + ";" + name.toLowerCase() + ";" + description.toLowerCase().replaceAll("[^a-z0-9 ]"," ");
         return norm + ";" + norm.replaceAll(" ", "").trim();

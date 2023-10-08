@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.SettingSectionElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
@@ -46,7 +47,8 @@ public class ModuleSettingsScreen extends ClickCrystalsBase {
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         super.mouseReleased(mouseX, mouseY, button);
-        Module.saveModule(module);
+        ClickCrystals.config.saveModule(module);
+        ClickCrystals.config.save();
         return true;
     }
 

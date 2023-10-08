@@ -6,7 +6,6 @@ import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
-import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
@@ -14,6 +13,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
+import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public class KeybindSettingElement extends GuiElement implements Typeable {
@@ -58,7 +58,7 @@ public class KeybindSettingElement extends GuiElement implements Typeable {
             setting.setKey(key);
             currentScanCode = scanCode;
             screen.selected = null;
-            Module.saveConfigModules();
+            config.saveModules();
         }
     }
 

@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.data;
+package io.github.itzispyder.clickcrystals.util.misc;
 
 public class Pair<L, R> {
 

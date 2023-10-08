@@ -6,7 +6,6 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
-import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.network.packet.Packet;
@@ -70,7 +69,8 @@ public class NetworkEventListener implements Listener {
 
     private void handleHudConfigLoading(PacketReceiveEvent e) {
         if (e.getPacket() instanceof LoginSuccessS2CPacket) {
-            Hud.loadConfigHuds();
+            config.loadHuds();
+            config.save(); // saving just to be safe
         }
     }
 

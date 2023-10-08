@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.util.misc;
 
-import io.github.itzispyder.clickcrystals.data.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;

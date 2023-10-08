@@ -143,38 +143,11 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
         setDimensions(defaultDimension);
     }
 
-    public void saveToConfig(boolean saveImmediately) {
-        config.setPositionable(getId(), getDimensions());
-
-        if (saveImmediately) {
-            config.save();
-        }
-    }
-
     public void setFixed(boolean fixed) {
         this.fixed = fixed;
     }
 
     public boolean isFixed() {
         return fixed;
-    }
-
-    public void saveToConfig() {
-        saveToConfig(true);
-    }
-
-    public void loadFromConfig() {
-        Dimension dim = config.getPositionable(getId(), defaultDimension);
-        setX(dim.x);
-        setY(dim.y);
-    }
-
-    public static void loadConfigHuds() {
-        system.huds().values().forEach(Hud::loadFromConfig);
-    }
-
-    public static void saveConfigHuds() {
-        system.huds().values().forEach(h -> h.saveToConfig(false));
-        config.save();
     }
 }

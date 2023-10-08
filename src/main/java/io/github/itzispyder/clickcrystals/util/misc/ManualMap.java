@@ -1,7 +1,5 @@
 package io.github.itzispyder.clickcrystals.util.misc;
 
-import io.github.itzispyder.clickcrystals.data.Pair;
-
 import java.util.HashMap;
 import java.util.Map;
 

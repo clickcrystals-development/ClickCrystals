@@ -1,12 +1,12 @@
 package io.github.itzispyder.clickcrystals;
 
-import io.github.itzispyder.clickcrystals.client.client.CCSoundEvents;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.client.system.DiscordPresence;
 import io.github.itzispyder.clickcrystals.client.system.Version;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
-import io.github.itzispyder.clickcrystals.data.ConfigFile;
+import io.github.itzispyder.clickcrystals.data.Config;
+import io.github.itzispyder.clickcrystals.data.JsonSerializable;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
@@ -56,7 +56,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
 
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
-    public static final ConfigFile config = ConfigFile.load("ClickCrystalsClient/config.json");
+    public static final Config config = JsonSerializable.load(Config.PATH, Config.class, new Config());
     public static final DiscordPresence discordPresence = new DiscordPresence();
     public static Thread discordWorker;
     public static final Keybind openModuleKeybind = Keybind.create()
@@ -64,7 +64,7 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
             .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
             .condition((bind, screen) -> screen == null || screen instanceof TitleScreen || screen instanceof MultiplayerScreen || screen instanceof SelectWorldScreen)
             .onPress(bind -> ClickCrystalsBase.openClickCrystalsMenu())
-            .onChange(ClickCrystals::saveBind)
+            .onChange(config::saveKeybind)
             .build();
 
     public static final Keybind openHudEditorKeybind = Keybind.create()
@@ -79,14 +79,14 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
                     ChatUtils.sendPrefixMessage("§cThe module §7InGameHuds §cis not enabled! Press this keybind again when it is.");
                 }
             })
-            .onChange(ClickCrystals::saveBind)
+            .onChange(config::saveKeybind)
             .build();
     public static final Keybind commandPrefix = Keybind.create()
             .id("command-prefix")
             .defaultKey(GLFW.GLFW_KEY_COMMA)
             .condition((bind, screen) -> screen == null)
             .onPress(bind -> mc.setScreen(new ChatScreen("")))
-            .onChange(ClickCrystals::saveBind)
+            .onChange(config::saveKeybind)
             .build();
 
     /**
@@ -109,27 +109,33 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
     @Override
     public void onInitialize() {
         // Mod initialization
-        System.out.println(prefix + "Loading ClickCrystals by ImproperIssues");
+        system.prefixPrint("Loading ClickCrystals by ImproperIssues");
         System.setProperty("java.awt.headless", "false");
 
+        system.prefixPrint("-> initializing...");
         this.init();
-        CCSoundEvents.init();
         this.startTicking();
-        this.initOther();
+        system.prefixPrint("-> requesting mod info...");
         this.requestModInfo();
+        system.prefixPrint("-> connecting to discord...");
         this.initRpc();
+        system.prefixPrint("-> loading config...");
+        config.loadEntireConfig();
 
+        system.prefixPrint("-> checking updates...");
         if (!matchLatestVersion()) {
-            System.out.println(prefix + "WARNING: You are running an outdated version of ClickCrystals, please update!");
-            System.out.println(prefix + "VERSIONS: Current=" + version + ", Newest=" + getLatestVersion());
+            system.prefixPrint("WARNING: You are running an outdated version of ClickCrystals, please update!");
+            system.prefixPrint("VERSIONS: Current=%s, Newest=%s".formatted(version, getLatestVersion()));
         }
+        system.prefixPrint("-> clicking crystals!");
+        system.prefixPrint("ClickCrystals had loaded successfully!");
     }
 
     @Override
     public void onClientStopping(MinecraftClient client) {
+        system.prefixPrint("Stopping client...");
         discordPresence.stop();
         config.save();
-        Module.saveConfigModules();
     }
 
     /**
@@ -155,7 +161,6 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
 
         // Module
         this.initModules();
-        Module.loadConfigModules();
 
         // Commands
         system.addCommand(new CCToggleCommand());
@@ -248,23 +253,6 @@ public final class ClickCrystals implements ModInitializer, ClientLifecycleEvent
         system.addModule(new Zoom());
         system.addModule(new ViewModel());
         system.addModule(new GhostTotem());
-    }
-
-    public void initOther() {
-        // keybind setting
-        loadBind(openModuleKeybind);
-        loadBind(commandPrefix);
-    }
-
-    public static void saveBind(Keybind bind) {
-        config.set(bind.getId(), bind.getKey());
-        config.save();
-    }
-
-    public static void loadBind(Keybind bind) {
-        double val = config.get(bind.getId(), Double.class, (double)bind.getDefaultKey());
-        int key = (int)val;
-        bind.setKey(key);
     }
 
     public static boolean matchLatestVersion() {

@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.util;
 
-import io.github.itzispyder.clickcrystals.data.Pair;
+import io.github.itzispyder.clickcrystals.util.misc.Pair;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

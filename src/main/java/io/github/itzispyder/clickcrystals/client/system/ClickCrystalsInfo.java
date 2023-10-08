@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.UUID;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.prefix;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
 /**
  * Try not to instantiate this class, parse it from json!
@@ -115,13 +115,12 @@ public class ClickCrystalsInfo {
                 throw new IllegalStateException("json parse failed");
             }
 
-            System.out.println(prefix + " Info requested: " + gson.toJson(info));
+            system.prefixPrint("<- Info requested from '%s'".formatted(URL));
             ClickCrystals.info = info;
             return info;
         }
         catch (Exception ex) {
-            ex.printStackTrace();
-            System.out.println("Failed to request latest mod info from '" + URL + "'");
+            system.prefixPrint("X<- request failed");
             return ClickCrystals.info;
         }
     }

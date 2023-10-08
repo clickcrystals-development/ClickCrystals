@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.util;
 
 import com.mojang.authlib.GameProfile;
-import io.github.itzispyder.clickcrystals.data.Delta3d;
+import io.github.itzispyder.clickcrystals.util.misc.Delta3d;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;

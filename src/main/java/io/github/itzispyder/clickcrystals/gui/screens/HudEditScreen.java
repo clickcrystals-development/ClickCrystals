@@ -1,10 +1,10 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.RelativeHudElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
-import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
@@ -29,7 +29,7 @@ public class HudEditScreen extends GuiScreen {
 
         super.mouseClickListeners.add((mouseX, mouseY, button, click) -> {
             if (click.isRelease()) {
-                Hud.saveConfigHuds();
+                ClickCrystals.config.saveHuds();
             }
         });
 
