@@ -10,15 +10,16 @@
 </div>
 
 ---------------------------------------------------------------
-### A message from the developers to our fellow users:
+# *Message(s) from the developers!*
 
-# ClickCrystals Official Release v1.0.0
+## ClickCrystals Is Migrating Off Modrinth!
+Due to an excessive amount of rules we can no longer follow, we are currently setting up our independent host for download tracking and advertising! For now, the official website still links here on Modrinth and is still only hosted on GitHub. But once the database is set up, the migration will resume! Be ready CC users!
+[Check out current build!](https://itzispyder.github.io/clickcrystals)(WIP)
+<p>
+   Should you have any questions or concerns, please check out our discord for more info!
+   <a href="https://discord.gg/tMaShNzNtP">Join Discord</a>
+</p>
 
-After all these months, we finally made it through development stage! ClickCrystals Version 1 is NOW OFFICIAL. 
-Thank you every much to those of you that were og and supportive throughout our journey! 
-To those of you that have joined our discord before ClickCrystals Version 1, you will be given an OG-USER rank!
-
-Thanks again for the support!
 Happy coding and cpvping!
 
 \- ClickCrystal dev team
@@ -28,20 +29,20 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 1.0.2
+Mod: 1.0.3
 
 Changelog:
-  Tweaked:
-    - Cape textures (Owners and Developers -> DEV, Staff -> CCMC, Donators -> Golden CC)
+  Removed: 
+    - unused registries
+    - cc extras and chat responses like `!cc`
   Added:
-    - Command to set client rotation, rotates smoothly as if normal input to prevent a possible "unfair advantage"
-    - Need to rotate to a specific coordinates? ,look to <x> <y> <z>
-    - GuiCursor module, for center cursor fix
-  Patches:
-    - Huds saving their width and height dimension wrongly
-    - Ping hud not refreshing properly
+    - GapSwap
+    - More improved micro-scheduler for advanced timing in modules
+  Tweaked:
+    - config is now all in one file (FOR THIS UPDATE, YOUR SETTINGS WILL BE CLEARED)
 
 Notice:
+  - (FOR THIS UPDATE, YOUR SETTINGS WILL BE CLEARED DUE TO CONFIG CHANGES)
   - USE COMMAND ,keybinds IF YOU DON'T KNOW THE KEYBIND FOR SOMETHING
 ```
 
@@ -61,7 +62,7 @@ Notice:
 | COMMA          |   Custom commands prefix    |
 | UP_ARROW       |     Message resend bind     |
 | B              |        Zoom keybind         |
-| SEMICOLON      |   Open hud editor screen    |
+| COLON          |   Open hud editor screen    |
 
 ### Commands
 
@@ -70,14 +71,16 @@ Notice:
 | **Command** | **Usage**                                             |              **Description**               |
 |-------------|-------------------------------------------------------|:------------------------------------------:|
 | .help       | .help `<module>`                                      |            Module info and help            |
-| .toggle     | .toggle `<module>` `[on,off,help]`                    |           Module toggle and help           |
-| .gms        | .gms                                                  |   Command alias for `/gamemode survival`   |
-| .gmc        | .gmc                                                  |   Command alias for `/gamemode creative`   |
-| .gma        | .gma                                                  |  Command alias for `/gamemode adventure`   |
-| .gmsp       | .gmsp                                                 |  Command alias for `/gamemode spectator`   |
 | .debug      | .debug `<item>`                                       |       Sends ClickCrystals debug info       |
-| .pixelart   | .pixelart `<mode>` `values` `image url (https://...)` | Spawns in pixel art! (Requires GMC and OP) |
+| .toggle     | .toggle `<module>` `[on,off,help]`                    |           Module toggle and help           |
+| .gma        | .gma                                                  |  Command alias for `/gamemode adventure`   |
+| .gmc        | .gmc                                                  |   Command alias for `/gamemode creative`   |
+| .gms        | .gms                                                  |   Command alias for `/gamemode survival`   |
+| .gmsp       | .gmsp                                                 |  Command alias for `/gamemode spectator`   |
 | .keybinds   | .keybinds                                             |     Opens the keybinds setting screen      |
+| .look       | .look `[at, rot, to]`                                 |            Look at a position.             |
+| .pixelart   | .pixelart `<mode>` `values` `image url (https://...)` | Spawns in pixel art! (Requires GMC and OP) |
+| .rotate     | .rotate `<pitch>` `<yaw>`                             |         Rotate to a pitch and yaw.         |
 
 ### Modules
 
@@ -131,6 +134,7 @@ Notice:
 | GhostTotem       |                      Renders a totem in your hand when you die                       |
 | InGameHuds       |                        Custom ClickCrystals info huds manager                        |
 | GuiCursor        |                              Cursor center fix, etc...                               |
+| GapSwap          |          Swaps to golden apple or enchanted golden apples by clicking sword          |
 
 
 ## But isn't this cheating?
