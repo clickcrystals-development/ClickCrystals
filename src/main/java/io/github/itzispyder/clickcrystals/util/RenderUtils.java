@@ -6,6 +6,7 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -117,18 +118,18 @@ public final class RenderUtils {
     }
 
     public static void drawHorizontalLine(DrawContext context, int x, int y, int length, int thickness, int color) {
-        context.fill(x, y, x + length, y + thickness, color);
+        fill(context, x, y, length, thickness, color);
     }
 
     public static void drawVerticalLine(DrawContext context, int x, int y, int length, int thickness, int color) {
-        context.fill(x, y, x + thickness, y + length, color);
+        fill(context, x, y, thickness, length, color);
     }
 
     public static void fill(DrawContext context, int x, int y, int width, int height, int color) {
         context.fill(x, y, x + width, y + height, color);
     }
 
-    public static void crossOut(DrawContext context, int x, int y, int width, int height, int color) {
+    public static void drawCross(DrawContext context, int x, int y, int width, int height, int color) {
         int len = (int)Math.sqrt(width * width + height * height);
         float deg = MathUtils.tanInverse((double)height / (double)width);
 
@@ -140,6 +141,12 @@ public final class RenderUtils {
         drawHorizontalLine(context, x + width, y, len, 1, color);
         context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0F + deg), x + width, y, 0);
         context.getMatrices().pop();
+    }
+
+    // misc
+
+    public static void drawTexture(DrawContext context, Identifier texture, int x, int y, int width, int height) {
+        context.drawTexture(texture, x, y, 0, 0, width, height, width, height);
     }
 
     public static DrawContext createContext() {
