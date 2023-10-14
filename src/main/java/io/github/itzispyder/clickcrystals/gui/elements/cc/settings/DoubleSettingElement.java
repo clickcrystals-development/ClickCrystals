@@ -12,8 +12,6 @@ import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 public class DoubleSettingElement extends GuiElement {
 
     public static final int COLOR_FILL = 0xFF00A8f3;

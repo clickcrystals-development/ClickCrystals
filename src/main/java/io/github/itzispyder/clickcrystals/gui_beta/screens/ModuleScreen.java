@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui_beta.screens;
 
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.client.CategoryElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.client.ModuleElement;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
@@ -18,6 +19,7 @@ public class ModuleScreen extends GuiScreen {
 
     public static Category currentCategory = Categories.CRYSTALLING;
     private final List<CategoryElement> categoryElementList = new ArrayList<>();
+    private final List<ModuleElement> moduleElementList = new ArrayList<>();
 
     public ModuleScreen() {
         super("Test Screen");
@@ -29,6 +31,8 @@ public class ModuleScreen extends GuiScreen {
             categoryElementList.add(e);
             caret += 10;
         }
+
+        this.filterByCategory(currentCategory);
     }
 
     @Override
@@ -74,6 +78,18 @@ public class ModuleScreen extends GuiScreen {
         line(context, caret);
 
         // content
+        caret = 20;
+        RenderUtils.drawTexture(context, currentCategory.texture(), 120, caret - 7, 15, 15);
+        RenderUtils.drawText(context, currentCategory.name(), 140, caret - 4, false);
+        caret += 10;
+        RenderUtils.drawHorizontalLine(context, 110, caret, 300, 1, Gray.DARK_GRAY.argb);
+        caret -= 5;
+
+        for (ModuleElement me : moduleElementList) {
+            caret += 10;
+            me.x = tx + 110;
+            me.y = ty + caret;
+        }
 
         context.getMatrices().pop();
     }
@@ -83,9 +99,14 @@ public class ModuleScreen extends GuiScreen {
     }
 
     public void filterByCategory(Category category) {
+        children.removeIf(moduleElementList::contains);
+        moduleElementList.clear();
+
         List<Module> list = system.modules().values().stream().filter(m -> m.getCategory() == category).toList();
         for (Module module : list) {
-
+            ModuleElement e = new ModuleElement(module, 0, 0);
+            this.addChild(e);
+            moduleElementList.add(e);
         }
     }
 }

@@ -4,8 +4,6 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 public class DividerElement extends GuiElement {
 
     private final String text;

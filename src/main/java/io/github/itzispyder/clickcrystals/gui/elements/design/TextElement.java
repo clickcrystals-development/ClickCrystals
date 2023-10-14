@@ -5,8 +5,6 @@ import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 public class TextElement extends GuiElement {
 
     public static final int MARGIN = 1;

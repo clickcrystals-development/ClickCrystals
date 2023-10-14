@@ -11,8 +11,6 @@ import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 public class DetailedModuleElement extends GuiElement {
 
     private final Module module;

@@ -59,6 +59,11 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
         return description;
     }
 
+    public String getDescriptionLimited() {
+        if (description.length() <= 35) return description;
+        return description.substring(0, 35) + "...";
+    }
+
     public Category getCategory() {
         return category;
     }

@@ -14,8 +14,6 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 public class StringSettingElement extends GuiElement implements Typeable {
 
     private final StringSetting setting;

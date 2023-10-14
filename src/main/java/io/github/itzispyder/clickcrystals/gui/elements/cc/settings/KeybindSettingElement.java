@@ -13,8 +13,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 public class KeybindSettingElement extends GuiElement implements Typeable {
 
     private final KeybindSetting setting;

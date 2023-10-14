@@ -10,8 +10,6 @@ import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 public class SearchBarElement extends GuiElement implements Typeable {
 
     private String query;
