@@ -5,7 +5,8 @@ public enum Gray {
     GRAY(0xFF555555),
     LIGHT_GRAY(0xFF888888),
     LIGHT(0xFFFFFFFF),
-    GENERIC(0xFF73D4FF);
+    GENERIC(0xFF73D4FF),
+    BLACK(0xFF000000);
 
     public final int argb;
 
