@@ -5,6 +5,8 @@ import net.minecraft.util.Identifier;
 
 public final class Tex implements Global {
 
+    public static final Identifier ICON = new Identifier(modId, "icon.png");
+
     public static class Shapes {
         public static final Identifier CIRCLE_DARK_GRAY = new Identifier(modId, "textures/display/shapes/circle/circle_dark_gray.png");
         public static final Identifier CIRCLE_GRAY = new Identifier(modId, "textures/display/shapes/circle/circle_gray.png");

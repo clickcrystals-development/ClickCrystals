@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui;
 
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public abstract class GuiElement implements Positionable {
+public abstract class GuiElement implements Positionable, Global {
 
     public int x, y, width, height;
     public boolean rendering, draggable, renderDependentOnParent;

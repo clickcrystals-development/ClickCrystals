@@ -20,6 +20,7 @@ import io.github.itzispyder.clickcrystals.gui.hud.fixed.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.gui.hud.moveables.*;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsBase;
 import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
+import io.github.itzispyder.clickcrystals.gui_beta.screens.ModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
@@ -62,7 +63,7 @@ public final class ClickCrystals implements ModInitializer {
             .id("open-clickcrystals-module-screen")
             .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
             .condition((bind, screen) -> screen == null || screen instanceof TitleScreen || screen instanceof MultiplayerScreen || screen instanceof SelectWorldScreen)
-            .onPress(bind -> ClickCrystalsBase.openClickCrystalsMenu())
+            .onPress(bind -> mc.setScreen(new ModuleScreen()))
             .onChange(config::saveKeybind)
             .build();
 

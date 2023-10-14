@@ -129,6 +129,10 @@ public final class RenderUtils {
         context.fill(x, y, x + width, y + height, color);
     }
 
+    public static void fillGradient(DrawContext context, int x, int y, int width, int height, int colorTop, int colorBottom) {
+        context.fillGradient(x, y, x + width, y + height, colorTop, colorBottom);
+    }
+
     public static void drawCross(DrawContext context, int x, int y, int width, int height, int color) {
         int len = (int)Math.sqrt(width * width + height * height);
         float deg = MathUtils.tanInverse((double)height / (double)width);

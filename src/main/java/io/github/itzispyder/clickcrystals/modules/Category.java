@@ -1,5 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules;
 
-public record Category(String name) {
+import net.minecraft.util.Identifier;
+
+public record Category(String name, Identifier texture) {
 
 }
