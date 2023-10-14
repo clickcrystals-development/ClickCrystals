@@ -1,9 +1,10 @@
 package io.github.itzispyder.clickcrystals.gui_beta.misc;
 
-import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import net.minecraft.util.Identifier;
 
-public final class Tex implements Global {
+public final class Tex {
+    private static final String modId = ClickCrystals.modId;
 
     public static final Identifier ICON = new Identifier(modId, "icon.png");
 
@@ -41,5 +42,12 @@ public final class Tex implements Global {
                 }
             }
         }
+    }
+
+
+    public static class Icons {
+        public static final Identifier ANNOUNCE = new Identifier(modId, "textures/display/icons/announcement.png");
+        public static final Identifier HOME = new Identifier(modId, "textures/display/icons/home.png");
+        public static final Identifier SETTINGS = new Identifier(modId, "textures/display/icons/settings.png");
     }
 }

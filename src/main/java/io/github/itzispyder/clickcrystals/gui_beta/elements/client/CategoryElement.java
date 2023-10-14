@@ -19,7 +19,7 @@ public class CategoryElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        if (ModuleScreen.currentCategory == category) {
+        if (ModuleScreen.currentCategory == category && mc.currentScreen instanceof ModuleScreen) {
             RoundRectBrush.drawRoundHoriLine(context, x, y, width, height, Gray.GENERIC_LOW);
         }
         else if (isHovered(mouseX, mouseY)) {
@@ -32,9 +32,7 @@ public class CategoryElement extends GuiElement {
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
         ModuleScreen.currentCategory = category;
-        if (mc.currentScreen instanceof ModuleScreen screen) {
-            screen.filterByCategory(category);
-        }
+        mc.setScreen(new ModuleScreen());
     }
 
     public Category getCategory() {
