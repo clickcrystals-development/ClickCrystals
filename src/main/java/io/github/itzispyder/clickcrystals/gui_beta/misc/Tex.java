@@ -10,6 +10,7 @@ public final class Tex implements Global {
         public static final Identifier CIRCLE_GRAY = new Identifier(modId, "textures/display/shapes/circle/circle_gray.png");
         public static final Identifier CIRCLE_LIGHT_GRAY = new Identifier(modId, "textures/display/shapes/circle/circle_light_gray.png");
         public static final Identifier CIRCLE_LIGHT = new Identifier(modId, "textures/display/shapes/circle/circle_light.png");
+        public static final Identifier CIRCLE_BLUE = new Identifier(modId, "textures/display/shapes/circle/circle_blue.png");
 
         public static Identifier getCircle(Gray gray) {
             switch (gray) {
@@ -21,6 +22,9 @@ public final class Tex implements Global {
                 }
                 case LIGHT -> {
                     return CIRCLE_LIGHT;
+                }
+                case GENERIC -> {
+                    return CIRCLE_BLUE;
                 }
                 default -> {
                     return CIRCLE_GRAY;
