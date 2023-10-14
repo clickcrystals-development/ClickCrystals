@@ -30,13 +30,13 @@ public abstract class DefaultBase extends GuiScreen {
     public final int contentX = baseX + 110;
     public final int contentY = baseY + 10;
     public final List<CategoryElement> navlistModules = new ArrayList<>();
-    private final AbstractElement searchButton, homeButton, newsButton, settingButton;
+    protected final AbstractElement buttonSearch, buttonHome, buttonModules, buttonNews, buttonSettings;
 
     public DefaultBase(String title) {
         super(title);
 
-        searchButton = AbstractElement.create().dimensions(navWidth, 12)
-                .onPress(button -> {})
+        buttonSearch = AbstractElement.create().dimensions(navWidth, 12)
+                .onPress(button -> mc.setScreen(new SearchScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, 12, Gray.LIGHT);
                     if (button.isHovered(mouseX, mouseY)) {
@@ -45,7 +45,7 @@ public abstract class DefaultBase extends GuiScreen {
                         RenderUtils.drawText(context, "§7Search module i.e.", button.x + 7, button.y + button.height / 3, 0.7F, false);
                     }
                 }).build();
-        homeButton = AbstractElement.create().dimensions(navWidth, 10)
+        buttonHome = AbstractElement.create().dimensions(navWidth, 10)
                 .onPress(button -> {})
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
@@ -54,7 +54,16 @@ public abstract class DefaultBase extends GuiScreen {
                     RenderUtils.drawTexture(context, Tex.Icons.HOME, button.x + 2, button.y, button.height, button.height);
                     RenderUtils.drawText(context, "Home", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
-        newsButton = AbstractElement.create().dimensions(navWidth, 10)
+        buttonModules = AbstractElement.create().dimensions(navWidth, 10)
+                .onPress(button -> mc.setScreen(new ModuleScreen()))
+                .onRender((context, mouseX, mouseY, button) -> {
+                    if (button.isHovered(mouseX, mouseY)) {
+                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, 10, Gray.LIGHT_GRAY);
+                    }
+                    RenderUtils.drawTexture(context, Tex.Icons.MODULES, button.x + 2, button.y, button.height, button.height);
+                    RenderUtils.drawText(context, "Modules", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
+                }).build();
+        buttonNews = AbstractElement.create().dimensions(navWidth, 10)
                 .onPress(button -> {})
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
@@ -63,7 +72,7 @@ public abstract class DefaultBase extends GuiScreen {
                     RenderUtils.drawTexture(context, Tex.Icons.ANNOUNCE, button.x + 2, button.y, button.height, button.height);
                     RenderUtils.drawText(context, "What's New?", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
-        settingButton = AbstractElement.create().dimensions(navWidth, 10)
+        buttonSettings = AbstractElement.create().dimensions(navWidth, 10)
                 .onPress(button -> {})
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
@@ -72,10 +81,11 @@ public abstract class DefaultBase extends GuiScreen {
                     RenderUtils.drawTexture(context, Tex.Icons.SETTINGS, button.x + 2, button.y, button.height, button.height);
                     RenderUtils.drawText(context, "Settings", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
-        this.addChild(searchButton);
-        this.addChild(homeButton);
-        this.addChild(newsButton);
-        this.addChild(settingButton);
+        this.addChild(buttonSearch);
+        this.addChild(buttonHome);
+        this.addChild(buttonModules);
+        this.addChild(buttonNews);
+        this.addChild(buttonSettings);
     }
 
     public void renderDefaultBase(DrawContext context) {
@@ -109,17 +119,20 @@ public abstract class DefaultBase extends GuiScreen {
         caret += 20;
         RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
         caret += 6;
-        searchButton.x = baseX + 10;
-        searchButton.y = baseY + caret;
+        buttonSearch.x = baseX + 10;
+        buttonSearch.y = baseY + caret;
         caret += 16;
-        homeButton.x = baseX + 10;
-        homeButton.y = baseY + caret;
+        buttonHome.x = baseX + 10;
+        buttonHome.y = baseY + caret;
         caret += 12;
-        newsButton.x = baseX + 10;
-        newsButton.y = baseY + caret;
+        buttonModules.x = baseX + 10;
+        buttonModules.y = baseY + caret;
         caret += 12;
-        settingButton.x = baseX + 10;
-        settingButton.y = baseY + caret;
+        buttonNews.x = baseX + 10;
+        buttonNews.y = baseY + caret;
+        caret += 12;
+        buttonSettings.x = baseX + 10;
+        buttonSettings.y = baseY + caret;
 
         context.getMatrices().pop();
     }

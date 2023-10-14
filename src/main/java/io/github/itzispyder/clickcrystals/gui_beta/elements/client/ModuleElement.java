@@ -40,6 +40,11 @@ public class ModuleElement extends GuiElement {
         }
     }
 
+    @Override
+    public boolean isHovered(int mouseX, int mouseY) {
+        return rendering && mouseX > x && mouseX < x + (width - 6) && mouseY > y && mouseY < y + height;
+    }
+
     public Module getModule() {
         return module;
     }

@@ -19,7 +19,7 @@ public class ModuleScreen extends DefaultBase {
     private final List<ModuleElement> moduleElementList = new ArrayList<>();
 
     public ModuleScreen() {
-        super("Test Screen");
+        super("Module Screen");
 
         int caret = 40;
         for (Category category : Categories.getCategories().values()) {
