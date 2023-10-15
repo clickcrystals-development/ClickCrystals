@@ -144,6 +144,15 @@ public abstract class DefaultBase extends GuiScreen {
         buttonSettings.x = baseX + 10;
         buttonSettings.y = baseY + caret;
 
+        caret += 20;
+        RoundRectBrush.drawTabTop(context, 10, caret, 90, baseHeight - caret, 5, Gray.BLACK);
+        caret += 5;
+        RenderUtils.drawText(context, "Client Owners: ", 15, caret, 0.65F, false);
+        caret += 8;
+        RenderUtils.drawText(context, "§bImproperIssues §8(owner), ", 15, caret, 0.65F, false);
+        caret += 8;
+        RenderUtils.drawText(context, "§bobvWolf §8(owner) ", 15, caret, 0.65F, false);
+
         context.getMatrices().pop();
     }
 }
