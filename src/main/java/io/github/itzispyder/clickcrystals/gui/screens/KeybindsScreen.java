@@ -2,13 +2,10 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
-import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.KeybindSettingElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.DividerElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
-import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
-import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import net.minecraft.client.MinecraftClient;
 
 import java.util.Comparator;
@@ -43,6 +40,7 @@ public class KeybindsScreen extends ClickCrystalsBase {
         DividerElement divider2 = new DividerElement("Client Binds (" + clientBinds.size() + ")", title.x, y += 10, main.width, 0, 0.6F);
         main.addChild(divider2);
 
+        /*
         for (Keybind bind : clientBinds) {
             KeybindSetting setting = new KeybindSetting(bind.getId(), "", bind);
             KeybindSettingElement element = setting.toGuiElement(title.x, y += 12);
@@ -63,6 +61,8 @@ public class KeybindsScreen extends ClickCrystalsBase {
             KeybindSettingElement element = setting.toGuiElement(title.x, y += 12);
             main.addChild(element);
         }
+
+         */
     }
 
     @Override

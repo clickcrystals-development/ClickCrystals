@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.KeybindSettingElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.client.module.KeybindSettingElement;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.keybinds.BindCondition;
 import io.github.itzispyder.clickcrystals.modules.keybinds.KeyAction;
@@ -37,7 +37,7 @@ public class KeybindSetting extends ModuleSetting<Keybind> {
 
     @Override
     public KeybindSettingElement toGuiElement(int x, int y) {
-        return new KeybindSettingElement(this, x, y, 0, 0);
+        return new KeybindSettingElement(this, x, y);
     }
 
     public static Builder create() {

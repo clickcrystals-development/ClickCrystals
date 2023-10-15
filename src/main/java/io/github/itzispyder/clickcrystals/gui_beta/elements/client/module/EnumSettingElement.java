@@ -33,7 +33,7 @@ public class EnumSettingElement extends SettingElement<EnumSetting<?>> {
         int cX = drawX + drawW / 2;
         int cY = drawY + drawH / 3;
         String display = setting.getVal().name();
-        RenderUtils.drawCenteredText(context, display, cX, cY, 0.6F, true);
+        RenderUtils.drawCenteredText(context, display, cX, cY, 0.6F, false);
     }
 
     @Override
