@@ -14,9 +14,13 @@ public class SearchBarElement extends GuiElement implements Typeable {
 
     private String query;
 
-    public SearchBarElement(int x, int y) {
-        super(x, y, 90, 12);
+    public SearchBarElement(int x, int y, int width) {
+        super(x, y, width, 12);
         this.query = "";
+    }
+
+    public SearchBarElement(int x, int y) {
+        this(x, y, 90);
     }
 
     @Override

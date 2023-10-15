@@ -66,4 +66,8 @@ public final class Tex {
         public static final Identifier NO_TOTEMS_MEME = new Identifier(modId, "textures/overlays/no_totem.png");
         public static final Identifier NO_TOTEMS_ICON = new Identifier(modId, "textures/overlays/totemless_icon.png");
     }
+
+    public static class Backdrops {
+        public static final Identifier BACKDROP_0 = new Identifier(modId, "textures/gui/backdrop/backdrop.png");
+    }
 }

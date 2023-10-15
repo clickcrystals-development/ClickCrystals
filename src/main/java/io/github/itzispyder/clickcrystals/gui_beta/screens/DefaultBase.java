@@ -56,7 +56,7 @@ public abstract class DefaultBase extends GuiScreen {
                     }
                 }).build();
         buttonHome = AbstractElement.create().dimensions(navWidth, 10)
-                .onPress(button -> {})
+                .onPress(button -> mc.setScreen(new HomeScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
                         RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, 10, Gray.LIGHT_GRAY);
