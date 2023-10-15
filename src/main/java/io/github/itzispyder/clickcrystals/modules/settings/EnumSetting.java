@@ -44,8 +44,8 @@ public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {
     }
 
     @Override
-    public EnumSettingElement toGuiElement(int x, int y, int width, int height) {
-        return new EnumSettingElement(this, x, y, width, height);
+    public EnumSettingElement toGuiElement(int x, int y) {
+        return new EnumSettingElement(this, x, y, 0, 0);
     }
 
     public static <E extends Enum<?>> Builder<E> create(Class<E> type) {

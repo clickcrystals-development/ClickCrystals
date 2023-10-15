@@ -10,8 +10,8 @@ public class IntegerSetting extends NumberSetting<Integer> {
     }
 
     @Override
-    public IntegerSettingElement toGuiElement(int x, int y, int width, int height) {
-        return new IntegerSettingElement(this, x, y, width, height);
+    public IntegerSettingElement toGuiElement(int x, int y) {
+        return new IntegerSettingElement(this, x, y, 0, 0);
     }
 
     public static Builder create() {

@@ -23,7 +23,7 @@ public abstract class ModuleSetting<T> {
         this(name, description, val, val);
     }
 
-    public abstract <E extends GuiElement> E toGuiElement(int x, int y, int width, int height);
+    public abstract <E extends GuiElement> E toGuiElement(int x, int y);
 
     public Class<T> getType() {
         return (Class<T>)val.getClass();

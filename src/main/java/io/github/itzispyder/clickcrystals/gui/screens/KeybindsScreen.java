@@ -45,7 +45,7 @@ public class KeybindsScreen extends ClickCrystalsBase {
 
         for (Keybind bind : clientBinds) {
             KeybindSetting setting = new KeybindSetting(bind.getId(), "", bind);
-            KeybindSettingElement element = setting.toGuiElement(title.x, y += 12, 20, 10);
+            KeybindSettingElement element = setting.toGuiElement(title.x, y += 12);
             main.addChild(element);
         }
 
@@ -60,7 +60,7 @@ public class KeybindsScreen extends ClickCrystalsBase {
         for (Module module : modules) {
             Keybind bind = module.getData().getBind();
             KeybindSetting setting = new KeybindSetting(module.getId(), "", bind);
-            KeybindSettingElement element = setting.toGuiElement(title.x, y += 12, 20, 10);
+            KeybindSettingElement element = setting.toGuiElement(title.x, y += 12);
             main.addChild(element);
         }
     }

@@ -30,9 +30,12 @@ public class SettingSectionElement extends GuiElement {
             if (setting instanceof NumberSetting<?>) elementWidth = 80;
             else if (setting instanceof StringSetting || setting instanceof EnumSetting<?>) elementWidth = 90;
 
+            /*
             GuiElement element = setting.toGuiElement(x, caret, elementWidth, 10);
             this.addChild(element);
             caret += element.height + 2;
+
+             */
         }
         this.height = caret - y;
     }

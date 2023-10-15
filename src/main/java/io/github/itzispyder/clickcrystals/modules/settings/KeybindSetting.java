@@ -36,8 +36,8 @@ public class KeybindSetting extends ModuleSetting<Keybind> {
     }
 
     @Override
-    public KeybindSettingElement toGuiElement(int x, int y, int width, int height) {
-        return new KeybindSettingElement(this, x, y, width, height);
+    public KeybindSettingElement toGuiElement(int x, int y) {
+        return new KeybindSettingElement(this, x, y, 0, 0);
     }
 
     public static Builder create() {

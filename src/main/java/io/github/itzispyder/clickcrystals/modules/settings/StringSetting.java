@@ -10,8 +10,8 @@ public class StringSetting extends ModuleSetting<String> {
     }
 
     @Override
-    public StringSettingElement toGuiElement(int x, int y, int width, int height) {
-        return new StringSettingElement(this, x, y, width, height, 0.6F);
+    public StringSettingElement toGuiElement(int x, int y) {
+        return new StringSettingElement(this, x, y, 0, 0, 0.6F);
     }
 
     public static Builder create() {

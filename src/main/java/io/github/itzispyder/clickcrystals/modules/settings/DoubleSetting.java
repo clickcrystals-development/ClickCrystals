@@ -13,8 +13,8 @@ public class DoubleSetting extends NumberSetting<Double> {
     }
 
     @Override
-    public DoubleSettingElement toGuiElement(int x, int y, int width, int height) {
-        return new DoubleSettingElement(this, x, y, width, height);
+    public DoubleSettingElement toGuiElement(int x, int y) {
+        return new DoubleSettingElement(this, x, y, 0, 0);
     }
 
     @Override

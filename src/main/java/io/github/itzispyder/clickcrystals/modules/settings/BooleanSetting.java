@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.BooleanSettingElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.client.module.BooleanSettingElement;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 
 public class BooleanSetting extends ModuleSetting<Boolean> {
@@ -10,8 +10,8 @@ public class BooleanSetting extends ModuleSetting<Boolean> {
     }
 
     @Override
-    public BooleanSettingElement toGuiElement(int x, int y, int width, int height) {
-        return new BooleanSettingElement(this, x, y, width, height);
+    public BooleanSettingElement toGuiElement(int x, int y) {
+        return new BooleanSettingElement(this, x, y);
     }
 
     public static Builder create() {

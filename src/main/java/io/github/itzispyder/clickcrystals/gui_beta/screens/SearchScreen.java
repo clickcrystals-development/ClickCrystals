@@ -10,6 +10,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -21,6 +22,7 @@ public class SearchScreen extends DefaultBase {
 
     public SearchScreen() {
         super("Search Screen");
+        this.navlistModules.forEach(this::removeChild);
         this.removeChild(buttonSearch);
         this.addChild(searchbar);
         system.scheduler.runRepeatingTask(buttonTranslation::getAndIncrement, 0, 1, 100);
@@ -87,7 +89,11 @@ public class SearchScreen extends DefaultBase {
 
     public void filterByQuery(SearchBarElement searchbar) {
         grid.clear();
-        List<Module> list = system.modules().values().stream().filter(m -> m.getSearchQuery().contains(searchbar.getLowercaseQuery())).toList();
+        List<Module> list = system.modules().values().stream()
+                .filter(m -> m.getSearchQuery().contains(searchbar.getLowercaseQuery()))
+                .sorted(Comparator.comparing(Module::getId))
+                .toList();
+
         for (Module module : list) {
             ModuleElement e = new ModuleElement(module, 0, 0);
             grid.addEntry(e);

@@ -6,6 +6,8 @@ import io.github.itzispyder.clickcrystals.gui_beta.elements.client.CategoryEleme
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.modules.Categories;
+import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -34,6 +36,14 @@ public abstract class DefaultBase extends GuiScreen {
 
     public DefaultBase(String title) {
         super(title);
+
+        int caret = 40;
+        for (Category category : Categories.getCategories().values()) {
+            CategoryElement e = new CategoryElement(category, 10, caret);
+            this.addChild(e);
+            navlistModules.add(e);
+            caret += 10;
+        }
 
         buttonSearch = AbstractElement.create().dimensions(navWidth, 12)
                 .onPress(button -> mc.setScreen(new SearchScreen()))

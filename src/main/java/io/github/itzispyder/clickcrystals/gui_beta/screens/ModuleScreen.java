@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.gui_beta.screens;
 
-import io.github.itzispyder.clickcrystals.gui_beta.elements.client.CategoryElement;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.client.ModuleElement;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.modules.Categories;
@@ -11,6 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ModuleScreen extends DefaultBase {
@@ -20,15 +20,6 @@ public class ModuleScreen extends DefaultBase {
 
     public ModuleScreen() {
         super("Module Screen");
-
-        int caret = 40;
-        for (Category category : Categories.getCategories().values()) {
-            CategoryElement e = new CategoryElement(category, 10, caret);
-            this.addChild(e);
-            navlistModules.add(e);
-            caret += 10;
-        }
-
         this.filterByCategory(currentCategory);
     }
 
@@ -55,8 +46,11 @@ public class ModuleScreen extends DefaultBase {
     public void filterByCategory(Category category) {
         children.removeIf(moduleElementList::contains);
         moduleElementList.clear();
+        List<Module> list = system.modules().values().stream()
+                .filter(m -> m.getCategory() == category)
+                .sorted(Comparator.comparing(Module::getId))
+                .toList();
 
-        List<Module> list = system.modules().values().stream().filter(m -> m.getCategory() == category).toList();
         for (Module module : list) {
             ModuleElement e = new ModuleElement(module, 0, 0);
             this.addChild(e);

@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui_beta.elements.client;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
+import io.github.itzispyder.clickcrystals.gui_beta.screens.ModuleEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -36,7 +37,7 @@ public class ModuleElement extends GuiElement {
             module.setEnabled(!module.isEnabled(), false);
         }
         else if (button == 1) {
-
+            mc.setScreen(new ModuleEditScreen(module));
         }
     }
 
