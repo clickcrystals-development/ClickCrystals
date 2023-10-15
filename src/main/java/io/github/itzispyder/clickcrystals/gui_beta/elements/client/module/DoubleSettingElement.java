@@ -16,7 +16,7 @@ public class DoubleSettingElement extends SettingElement<DoubleSetting> {
     public DoubleSettingElement(DoubleSetting setting, int x, int y) {
         super(setting, x, y);
         this.settingRenderUpdates = true;
-        this.fillEnd = x;
+        this.fillEnd = x + width - 5;
     }
 
     @Override

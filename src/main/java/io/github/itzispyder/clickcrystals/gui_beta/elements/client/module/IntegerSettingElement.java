@@ -11,13 +11,12 @@ import net.minecraft.client.gui.DrawContext;
 public class IntegerSettingElement extends SettingElement<IntegerSetting> {
 
     private boolean settingRenderUpdates;
-    private int fillEnd, fillStart;
+    private int fillEnd;
 
     public IntegerSettingElement(IntegerSetting setting, int x, int y) {
         super(setting, x, y);
         this.settingRenderUpdates = true;
-        this.fillEnd = x;
-        this.fillStart = x;
+        this.fillEnd = x + width - 5;
     }
 
     @Override

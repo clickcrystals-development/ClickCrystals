@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
@@ -14,19 +13,17 @@ public class SettingSectionElement extends GuiElement {
     private final SettingSection settingSection;
 
     public SettingSectionElement(SettingSection settingSection, int x, int y) {
-        super(x, y, 280, 20);
+        super(x, y, 285, 20);
         this.settingSection = settingSection;
 
         int caret = y + 15;
         for (int i = 0; i < settingSection.getSettings().size(); i++) {
             ModuleSetting<?> setting = settingSection.getSettings().get(i);
-            if (!(setting instanceof StringSetting)) {
-                SettingElement<?> e = setting.toGuiElement(x + 5, caret);
-                this.addChild(e);
-                caret += e.height;
-                if (i < settingSection.getSettings().size() - 1) {
-                    e.setShouldUnderline(true);
-                }
+            SettingElement<?> e = setting.toGuiElement(x + 5, caret);
+            this.addChild(e);
+            caret += e.height;
+            if (i < settingSection.getSettings().size() - 1) {
+                e.setShouldUnderline(true);
             }
         }
 

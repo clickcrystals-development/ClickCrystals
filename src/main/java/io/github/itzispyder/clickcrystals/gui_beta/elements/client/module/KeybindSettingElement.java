@@ -29,7 +29,7 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
         int drawW = 20;
         int drawH = 12;
         int drawX = x + width - drawW - 5;
-        int drawY = y + height / 2;
+        int drawY = y + height / 2 - 2;
 
         if (mc.currentScreen instanceof GuiScreen screen) {
             Gray fill = screen.selected == this ? Gray.LIGHT_GRAY : Gray.GRAY;

@@ -1,83 +1,53 @@
 package io.github.itzispyder.clickcrystals.gui_beta.elements.client.module;
 
-import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.GuiTextures;
-import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
-import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
-import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
-import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
+import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
 
-public class StringSettingElement extends GuiElement implements Typeable {
+public class StringSettingElement extends SettingElement<StringSetting> implements Typeable {
 
     private final StringSetting setting;
     private String input;
-    private final float textScale;
-    private final ImageElement exButton, bg;
 
-    public StringSettingElement(StringSetting setting, int x, int y, int width, int height, float textScale) {
-        super(x, y, width, height);
+    public StringSettingElement(StringSetting setting, int x, int y) {
+        super(setting, x, y);
         this.setting = setting;
-        this.textScale = textScale;
         this.input = setting.getVal();
-
-        int textHeight = getTextHeight();
-        bg = new ImageElement(GuiTextures.SETTING_STRING, x, y, width, height);
-        exButton = new ImageElement(GuiTextures.X, x + width - 2 - textHeight, y + 2, textHeight, textHeight);
-        exButton.setRenderDependentOnParent(true);
-        TextElement title = new TextElement(setting.getName(), TextAlignment.LEFT, 0.5F, x + 105, y);
-        TextElement desc = new TextElement("§7" + setting.getDescription(), TextAlignment.LEFT, 0.45F, title.x, title.y + 5);
-        this.addChild(title);
-        this.addChild(desc);
-        this.addChild(bg);
-        this.addChild(exButton);
-
-        AbstractElement reset = new AbstractElement(x + 92, y, height, height, (context, mouseX, mouseY, button) -> {
-            context.drawTexture(GuiTextures.RESET, button.x, button.y, 0, 0, button.width, button.height, button.width, button.height);
-        }, (button) -> {
-            input = setting.getDef();
-            setting.setVal(input);
-        });
-        this.addChild(reset);
     }
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
+        this.renderSettingDetails(context);
+
         if (mc.currentScreen instanceof GuiScreen screen) {
-            if (screen.selected == this) {
-                bg.setTexture(GuiTextures.SETTING_STRING_SELECTED);
-            }
-            else {
-                bg.setTexture(GuiTextures.SETTING_STRING);
-            }
+            int drawW = width / (screen.selected == this ? 2 : 4);
+            int drawH = 12;
+            int drawY = y + height / 2;
+            int drawX = x + width - drawW;
+
+            Gray fill = screen.selected == this ? Gray.LIGHT_GRAY : Gray.GRAY;
+            RoundRectBrush.drawRoundHoriLine(context, drawX, drawY, drawW, drawH, fill);
 
             String text = input;
-
-            while (text.length() > 0 && mc.textRenderer.getWidth(text) * textScale > width - 4 - getTextHeight()) {
+            while (text.length() > 0 && mc.textRenderer.getWidth(text) * 0.7F > drawW - 10) {
                 text = text.substring(1);
             }
 
-            String displayText = screen.selected == this ? text + "︳" : text;
-            RenderUtils.drawText(context, displayText, x + 2, y + (int)(height * 0.33), textScale, true);
+            String displayText = screen.selected == this ? text + "§8§l︳" : text;
+            RenderUtils.drawText(context, displayText, drawX + 5, drawY + drawH / 3, 0.7F, false);
         }
     }
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
         if (mc.currentScreen instanceof GuiScreen screen) {
-            if (exButton.isHovered((int)mouseX, (int)mouseY)) {
-                this.input = "";
-                screen.selected = exButton;
-            }
-            else {
-                screen.selected = this;
-            }
+            screen.selected = this;
         }
 
         setting.setVal(input);
@@ -114,13 +84,5 @@ public class StringSettingElement extends GuiElement implements Typeable {
 
     public StringSetting getSetting() {
         return setting;
-    }
-
-    public int getTextHeight() {
-        return (int)(10 * textScale);
-    }
-
-    public float getTextScale() {
-        return textScale;
     }
 }

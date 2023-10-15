@@ -21,7 +21,7 @@ public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElem
     public void renderSettingDetails(DrawContext context) {
         int caret = y + 5;
         RenderUtils.drawText(context, setting.getName(), x + 5, caret, 0.6F, false);
-        for (String line : StringUtils.wrapLines(setting.getDescription(), 60, true)) {
+        for (String line : StringUtils.wrapLines(setting.getDescription(), 55, true)) {
             caret += 8;
             RenderUtils.drawText(context, "§7" + line, x + 5, caret, 0.6F, false);
         }
