@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.IntegerSettingElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.client.module.IntegerSettingElement;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 
 public class IntegerSetting extends NumberSetting<Integer> {
@@ -11,7 +11,7 @@ public class IntegerSetting extends NumberSetting<Integer> {
 
     @Override
     public IntegerSettingElement toGuiElement(int x, int y) {
-        return new IntegerSettingElement(this, x, y, 0, 0);
+        return new IntegerSettingElement(this, x, y);
     }
 
     public static Builder create() {

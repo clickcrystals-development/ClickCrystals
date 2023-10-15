@@ -25,11 +25,15 @@ public class SearchScreen extends DefaultBase {
         this.navlistModules.forEach(this::removeChild);
         this.removeChild(buttonSearch);
         this.addChild(searchbar);
-        system.scheduler.runRepeatingTask(buttonTranslation::getAndIncrement, 0, 1, 100);
+        system.scheduler.runRepeatingTask(() -> {
+            buttonTranslation.getAndIncrement();
+            buttonTranslation.getAndIncrement();
+        }, 0, 1, 50);
 
         grid.createPanel(this, contentHeight - 21);
         this.addChild(grid.getPanel());
         this.filterByQuery(searchbar);
+        this.selected = searchbar;
     }
 
     @Override

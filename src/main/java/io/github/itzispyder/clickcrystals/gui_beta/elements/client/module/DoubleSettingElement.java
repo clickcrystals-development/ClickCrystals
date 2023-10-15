@@ -24,12 +24,15 @@ public class DoubleSettingElement extends SettingElement<DoubleSetting> {
         this.renderSettingDetails(context);
         int drawY = y + height / 2;
         int drawX = x + width / 4 * 3;
-        int len;
+
+        int sliderEnd = x + width;
+        int sliderStart = drawX + 10;
+        int sliderLen = sliderEnd - sliderStart;
 
         if (mc.currentScreen instanceof GuiScreen screen && screen.selected == this) {
-            this.fillEnd = MathUtils.minMax(mouseX, drawX + 10, x + width);
+            this.fillEnd = MathUtils.minMax(mouseX, sliderStart, sliderEnd);
             double range = setting.getMax() - setting.getMin();
-            double ratio = (double)(fillEnd - drawX) / (double)(x + width - drawX);
+            double ratio = (double)(fillEnd - sliderStart) / (double)sliderLen;
             double value = range * ratio;
             setting.setVal(value + setting.getMin());
         }
@@ -37,7 +40,7 @@ public class DoubleSettingElement extends SettingElement<DoubleSetting> {
         double range = setting.getMax() - setting.getMin();
         double value = setting.getVal() - setting.getMin();
         double ratio = value / range;
-        len = (int)((x + width - drawX) * ratio);
+        int len = (int)(sliderLen * ratio) + 10;
 
         if (settingRenderUpdates) {
             setting.setVal(range * ratio + setting.getMin());
