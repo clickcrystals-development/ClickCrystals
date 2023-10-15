@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.elements.ui;
 
-import io.github.itzispyder.clickcrystals.gui.elements.PressAction;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.PressAction;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import net.minecraft.util.Identifier;
 

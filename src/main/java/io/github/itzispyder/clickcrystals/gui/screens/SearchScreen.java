@@ -1,9 +1,9 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
-import io.github.itzispyder.clickcrystals.gui.GuiScreen;
+import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.DetailedModuleElement;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.SearchBarElement;
-import io.github.itzispyder.clickcrystals.gui.organizers.GridOrganizer;
+import io.github.itzispyder.clickcrystals.gui_beta.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;

@@ -1,9 +1,9 @@
 package io.github.itzispyder.clickcrystals.gui.elements.cc;
 
-import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.GuiScreen;
+import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
+import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
-import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;

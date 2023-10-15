@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.SettingSectionElement;
-import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;

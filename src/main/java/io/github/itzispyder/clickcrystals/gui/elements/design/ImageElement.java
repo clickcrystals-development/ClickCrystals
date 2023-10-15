@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.elements.design;
 
-import io.github.itzispyder.clickcrystals.gui.GuiElement;
+import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 

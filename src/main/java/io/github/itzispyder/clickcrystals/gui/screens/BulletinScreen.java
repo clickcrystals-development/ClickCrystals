@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.data.announce.BulletinBoard;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.AnnouncementElement;
 import io.github.itzispyder.clickcrystals.gui.elements.cc.LoadingIconElement;
-import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.AbstractElement;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;

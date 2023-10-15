@@ -1,12 +1,12 @@
 package io.github.itzispyder.clickcrystals.gui.elements.cc;
 
 import io.github.itzispyder.clickcrystals.data.announce.Announcement;
-import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.GuiScreen;
+import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
+import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
-import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;

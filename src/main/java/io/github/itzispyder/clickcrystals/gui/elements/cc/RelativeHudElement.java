@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.elements.cc;
 
-import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.hud.Hud;
+import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
+import io.github.itzispyder.clickcrystals.gui_beta.hud.Hud;
 import net.minecraft.client.gui.DrawContext;
 
 public class RelativeHudElement extends GuiElement {

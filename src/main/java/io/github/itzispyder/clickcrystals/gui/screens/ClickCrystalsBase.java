@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.TextAlignment;
 import io.github.itzispyder.clickcrystals.gui.elements.base.WidgetElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
-import io.github.itzispyder.clickcrystals.gui.elements.ui.HyperLinkElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.HyperLinkElement;
 import io.github.itzispyder.clickcrystals.gui.elements.ui.ImageTabListElement;
 
 import java.util.List;

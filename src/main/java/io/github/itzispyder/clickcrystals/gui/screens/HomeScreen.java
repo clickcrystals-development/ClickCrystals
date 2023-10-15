@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui.elements.design.ImageElement;
 import io.github.itzispyder.clickcrystals.gui.elements.ui.DetailedButtonElement;
 import io.github.itzispyder.clickcrystals.gui.elements.ui.ImageBannerElement;
-import io.github.itzispyder.clickcrystals.gui.organizers.GridOrganizer;
+import io.github.itzispyder.clickcrystals.gui_beta.organizers.GridOrganizer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.minecraft.util.Identifier;

@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui_beta.screens;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
-import io.github.itzispyder.clickcrystals.gui.elements.design.ScrollPanelElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.client.module.SettingSectionElement;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.modules.Module;

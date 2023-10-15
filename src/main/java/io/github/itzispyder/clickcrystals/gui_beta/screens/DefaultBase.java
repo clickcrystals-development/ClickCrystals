@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui_beta.screens;
 
-import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.elements.design.AbstractElement;
+import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.client.CategoryElement;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
