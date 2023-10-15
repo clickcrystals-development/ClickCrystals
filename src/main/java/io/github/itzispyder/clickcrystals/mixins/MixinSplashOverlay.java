@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.gui_beta.misc.GuiTextures;
+import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.SplashOverlay;
@@ -57,6 +57,6 @@ public abstract class MixinSplashOverlay implements Global {
 
         m.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360 * progress), x + s, y + s, 1);
         m.scale(opacity, opacity, opacity);
-        c.drawTexture(GuiTextures.ICON, x, y, 0, 0, w, w, w, w);
+        c.drawTexture(Tex.ICON, x, y, 0, 0, w, w, w, w);
     }
 }

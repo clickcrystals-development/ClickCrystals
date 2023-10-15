@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.client.client;
 import com.mojang.authlib.GameProfile;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
-import io.github.itzispyder.clickcrystals.gui_beta.misc.GuiTextures;
+import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -41,13 +41,13 @@ public class CapeManager {
         String id = profile.getId().toString();
 
         if (owners.contains(id)) {
-            return GuiTextures.CLICKCRYSTALS_CAPE_DEV;
+            return Tex.Models.CLICKCRYSTALS_CAPE_DEV;
         }
         else if (staffs.contains(id)) {
-            return GuiTextures.CLICKCRYSTALS_CAPE;
+            return Tex.Models.CLICKCRYSTALS_CAPE;
         }
         else if (donators.contains(id)) {
-            return GuiTextures.CLICKCRYSTALS_CAPE_DONO;
+            return Tex.Models.CLICKCRYSTALS_CAPE_DONO;
         }
 
         return null;

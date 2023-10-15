@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui_beta.hud.moveables;
 
 import io.github.itzispyder.clickcrystals.gui_beta.hud.Hud;
-import io.github.itzispyder.clickcrystals.gui_beta.misc.GuiTextures;
+import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
@@ -30,7 +30,7 @@ public class IconRelativeHud extends Hud {
         context.getMatrices().push();
 
         context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-10.0F), cx, cy, 0);
-        context.drawTexture(GuiTextures.ICON, x, y, 0, 0, w, h, w, h);
+        context.drawTexture(Tex.ICON, x, y, 0, 0, w, h, w, h);
 
         context.getMatrices().pop();
 

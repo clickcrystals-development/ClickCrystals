@@ -7,6 +7,7 @@ public final class Tex {
     private static final String modId = ClickCrystals.modId;
 
     public static final Identifier ICON = new Identifier(modId, "icon.png");
+    public static final Identifier ICON_PREMIUM = new Identifier(modId, "icon_premium.png");
 
     public static class Shapes {
         public static final Identifier CIRCLE_DARK_GRAY = new Identifier(modId, "textures/display/shapes/circle/circle_dark_gray.png");
@@ -51,5 +52,18 @@ public final class Tex {
         public static final Identifier MODULES = new Identifier(modId, "textures/display/icons/modules.png");
         public static final Identifier SETTINGS = new Identifier(modId, "textures/display/icons/settings.png");
         public static final Identifier LOADING = new Identifier(modId, "textures/display/icons/loading.png");
+    }
+
+    public static class Models {
+        public static final Identifier CLICKCRYSTALS_CAPE = new Identifier(modId, "textures/model_screenshots/clickcrystals_cape.png");
+        public static final Identifier CLICKCRYSTALS_CAPE_DEV = new Identifier(modId, "textures/model_screenshots/clickcrystals_cape_dev.png");
+        public static final Identifier CLICKCRYSTALS_CAPE_DONO = new Identifier(modId, "textures/model_screenshots/clickcrystals_cape_donator.png");
+    }
+
+    public static class Defaults {
+        public static final Identifier ITEM_WIDGET = new Identifier(modId, "textures/gui/item_widget.png");
+        public static final Identifier ITEM_WIDGET_WARNING = new Identifier(modId, "textures/gui/item_widget_warning.png");
+        public static final Identifier NO_TOTEMS_MEME = new Identifier(modId, "textures/overlays/no_totem.png");
+        public static final Identifier NO_TOTEMS_ICON = new Identifier(modId, "textures/overlays/totemless_icon.png");
     }
 }

@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.misc;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
-import io.github.itzispyder.clickcrystals.gui_beta.misc.GuiTextures;
+import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
@@ -155,7 +155,7 @@ public class ArmorHud extends Module implements Listener {
     }
 
     private void renderItem(ItemStack item, DrawContext context, int x, int y, Consumer<ItemStack> renderCallback, boolean warning) {
-        Identifier texture = warning ? GuiTextures.ITEM_WIDGET_WARNING : GuiTextures.ITEM_WIDGET;
+        Identifier texture = warning ? Tex.Defaults.ITEM_WIDGET_WARNING : Tex.Defaults.ITEM_WIDGET;
         context.drawTexture(texture, x, y, 0, 0, 22, 22, 22, 22);
         context.drawItem(item, x + 3, y + 3);
         renderCallback.accept(item);
