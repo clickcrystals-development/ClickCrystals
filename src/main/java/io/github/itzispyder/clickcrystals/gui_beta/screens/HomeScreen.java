@@ -19,6 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class HomeScreen extends GuiScreen {
 
+    public static boolean OPENED_BEFORE = false;
     public final int windowWidth = MinecraftClient.getInstance().getWindow().getScaledWidth();
     public final int windowHeight = MinecraftClient.getInstance().getWindow().getScaledHeight();
     public final int baseWidth = 420;
@@ -103,6 +104,18 @@ public class HomeScreen extends GuiScreen {
                 this.filterByQuery(this.searchbar);
             }});
         }
+        return true;
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (!OPENED_BEFORE) {
+            mc.setScreen(new DiscordInviteScreen());
+            OPENED_BEFORE = true;
+            return true;
+        }
+
+        super.mouseClicked(mouseX, mouseY, button);
         return true;
     }
 }

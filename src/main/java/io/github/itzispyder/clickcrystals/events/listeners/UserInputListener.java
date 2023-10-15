@@ -24,7 +24,7 @@ public class UserInputListener implements Listener {
     public static final Map<Class<? extends Screen>, String> SCREEN_STATES = ManualMap.fromItems(
             TitleScreen.class, "Looking at the title screen",
             ModuleScreen.class, "Toggling modules",
-            //HomeScreen.class, "Scanning through ClickCrystals home",
+            HomeScreen.class, "Scanning through ClickCrystals home",
             SearchScreen.class, "Searching modules",
             SettingScreen.class, "Changing ClickCrystals keybinds",
             SelectWorldScreen.class, "Selecting singleplayer",
