@@ -9,13 +9,13 @@ public abstract class Categories {
 
     private static final LinkedHashMap<String,Category> categories = new LinkedHashMap<>();
     public static final Category
-            CRYSTALLING      = register("Crystal", "minecraft:textures/item/end_crystal.png"),
-            ANCHORING        = register("Anchor",  "minecraft:textures/block/glowstone.png"),
-            MINECART         = register("Cart",    "minecraft:textures/item/minecart.png"),
-            MISC             = register("Misc",    "minecraft:textures/item/golden_apple.png"),
-            RENDERING        = register("Render",  "minecraft:textures/block/glass.png"),
-            OPTIMIZATION     = register("Lag",     "minecraft:textures/item/spyglass.png"),
-            CLICKCRYSTALS    = register("Client",  "minecraft:textures/item/redstone.png");
+            CRYSTALLING      = register("Crystal", "clickcrystals:textures/display/categories/crystal.png"),
+            ANCHORING        = register("Anchor",  "clickcrystals:textures/display/categories/anchor.png"),
+            MINECART         = register("Cart",    "clickcrystals:textures/display/categories/cart.png"),
+            MISC             = register("Misc",    "clickcrystals:textures/display/categories/misc.png"),
+            RENDERING        = register("Render",  "clickcrystals:textures/display/categories/render.png"),
+            OPTIMIZATION     = register("Lag",     "clickcrystals:textures/display/categories/lag.png"),
+            CLICKCRYSTALS    = register("Client",  "clickcrystals:textures/display/categories/client.png");
 
     private static Category register(String name, String texPath) {
         Category c = new Category(name, new Identifier(texPath));

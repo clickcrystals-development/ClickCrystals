@@ -88,4 +88,9 @@ public class DiscordInviteScreen extends GuiScreen {
         decline.x = margin - translationDecline.get();
         decline.y = caret;
     }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        client.setScreen(new DiscordInviteScreen());
+    }
 }

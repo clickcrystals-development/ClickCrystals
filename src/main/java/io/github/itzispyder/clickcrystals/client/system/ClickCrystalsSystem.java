@@ -10,6 +10,7 @@ import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.util.Util;
 
 import java.awt.*;
 import java.io.File;
@@ -48,9 +49,9 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void openUrl(String url) {
         try {
-            Desktop.getDesktop().browse(new URI(url));
+            Util.getOperatingSystem().open(new URI(url));
         }
-        catch (URISyntaxException | IOException ex) {
+        catch (URISyntaxException ex) {
             ex.printStackTrace();
         }
     }
