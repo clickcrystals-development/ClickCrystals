@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.gui_beta.ClickType;
-import io.github.itzispyder.clickcrystals.gui.screens.*;
+import io.github.itzispyder.clickcrystals.gui_beta.screens.*;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.DiscordRPC;
 import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
@@ -23,14 +23,14 @@ public class UserInputListener implements Listener {
 
     public static final Map<Class<? extends Screen>, String> SCREEN_STATES = ManualMap.fromItems(
             TitleScreen.class, "Looking at the title screen",
-            ModulesScreen.class, "Toggling modules",
-            HomeScreen.class, "Scanning through ClickCrystals home",
+            ModuleScreen.class, "Toggling modules",
+            //HomeScreen.class, "Scanning through ClickCrystals home",
             SearchScreen.class, "Searching modules",
-            KeybindsScreen.class, "Changing ClickCrystals keybinds",
+            SettingScreen.class, "Changing ClickCrystals keybinds",
             SelectWorldScreen.class, "Selecting singleplayer",
             MultiplayerScreen.class, "Selecting server",
             GameMenuScreen.class, "Idling...",
-            CreditsScreen.class, "Checking out the goats",
+            //CreditsScreen.class, "Checking out the goats",
             BulletinScreen.class, "Viewing CC Bulletin Board"
     );
 
@@ -68,7 +68,7 @@ public class UserInputListener implements Listener {
                 discordPresence.setState("Looking at the title screen");
             }
         }
-        else if (s instanceof ModuleSettingsScreen mss) {
+        else if (s instanceof ModuleEditScreen mss) {
             discordPresence.setState("Editing module " + mss.getModule().getName() + "...");
         }
         else {

@@ -50,5 +50,6 @@ public final class Tex {
         public static final Identifier HOME = new Identifier(modId, "textures/display/icons/home.png");
         public static final Identifier MODULES = new Identifier(modId, "textures/display/icons/modules.png");
         public static final Identifier SETTINGS = new Identifier(modId, "textures/display/icons/settings.png");
+        public static final Identifier LOADING = new Identifier(modId, "textures/display/icons/loading.png");
     }
 }

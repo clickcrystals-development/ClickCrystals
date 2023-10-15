@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui_beta.hud.fixed;
 
-import io.github.itzispyder.clickcrystals.gui.GuiTextures;
 import io.github.itzispyder.clickcrystals.gui_beta.hud.Hud;
+import io.github.itzispyder.clickcrystals.gui_beta.misc.GuiTextures;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.TotemOverlay;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;

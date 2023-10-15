@@ -74,7 +74,7 @@ public abstract class DefaultBase extends GuiScreen {
                     RenderUtils.drawText(context, "Modules", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
         buttonNews = AbstractElement.create().dimensions(navWidth, 10)
-                .onPress(button -> {})
+                .onPress(button -> mc.setScreen(new BulletinScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
                         RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, 10, Gray.LIGHT_GRAY);

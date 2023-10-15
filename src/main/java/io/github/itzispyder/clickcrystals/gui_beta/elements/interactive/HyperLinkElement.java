@@ -1,15 +1,12 @@
 package io.github.itzispyder.clickcrystals.gui_beta.elements.interactive;
 
 import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.TextAlignment;
-import io.github.itzispyder.clickcrystals.gui.elements.design.TextElement;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class HyperLinkElement extends GuiElement {
 
     private final String url, name, message;
-    private final TextElement textElement;
     private final float textScale;
 
     public HyperLinkElement(int x, int y, String url, String name, float textScale, String message) {
@@ -19,12 +16,8 @@ public class HyperLinkElement extends GuiElement {
         this.textScale = textScale;
         this.message = message;
 
-        TextElement hyperlink = new TextElement("§3" + name, TextAlignment.LEFT, textScale, x, y);
-        hyperlink.setBackgroundColor(0x0400AAAA);
-        this.addChild(hyperlink);
-        this.width = hyperlink.width;
-        this.height = hyperlink.height;
-        this.textElement = hyperlink;
+        this.width = (int)(mc.textRenderer.getWidth(name) * textScale);
+        this.height = (int)(textScale * 10);
     }
 
     public HyperLinkElement(int x, int y, String url, float textScale, String message) {
@@ -34,7 +27,8 @@ public class HyperLinkElement extends GuiElement {
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         int color = isHovered(mouseX, mouseY) ? 0xFF55FFFF : 0xFF00AAAA;
-        RenderUtils.drawHorizontalLine(context, x, textElement.y + textElement.height + 1, (int)(mc.textRenderer.getWidth(name) * textScale), 1, color);
+        RenderUtils.drawText(context, "§3" + name, x, y, textScale, false);
+        RenderUtils.drawHorizontalLine(context, x, y + height + 1, width, 1, color);
     }
 
     @Override

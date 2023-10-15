@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui;
+package io.github.itzispyder.clickcrystals.gui_beta.misc;
 
 import net.minecraft.util.Identifier;
 
@@ -18,7 +18,6 @@ public final  class GuiTextures {
     public static final Identifier CLICKCRYSTALS_CAPE_DONO = new Identifier(modId, "textures/model_screenshots/clickcrystals_cape_donator.png");
 
     // gui
-    public static final Identifier ICON_BANNER = new Identifier(modId, "textures/gui/screen_title_banner.png");
     public static final Identifier SMOOTH_VERTICAL_WIDGET = new Identifier(modId, "textures/gui/smooth_widget_vertical.png");
     public static final Identifier SMOOTH_HORIZONTAL_WIDGET = new Identifier(modId, "textures/gui/smooth_widget_horizontal.png");
     public static final Identifier HOLLOW_VERTICAL_WIDGET = new Identifier(modId, "textures/gui/hollow_widget_vertical.png");

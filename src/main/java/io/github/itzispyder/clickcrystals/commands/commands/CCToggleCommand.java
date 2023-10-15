@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.commands.commands;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.ModuleArgumentType;
-import io.github.itzispyder.clickcrystals.gui.screens.ClickCrystalsBase;
+import io.github.itzispyder.clickcrystals.gui_beta.screens.ModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import net.minecraft.command.CommandSource;
 
@@ -17,7 +17,7 @@ public class CCToggleCommand extends Command {
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
                     system.scheduler.runDelayedTask(() -> {
-                        mc.execute(ClickCrystalsBase::openClickCrystalsMenu);
+                        mc.execute(() -> mc.setScreen(new ModuleScreen()));
                     }, 5 * 50);
                     return SINGLE_SUCCESS;
                 })

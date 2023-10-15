@@ -25,7 +25,7 @@ public class ModuleElement extends GuiElement {
 
         text = "  %s".formatted(module.getOnOrOff());
         RenderUtils.drawText(context, text, x, y + height / 3, 0.7F, false);
-        text = " %s".formatted(module.getNameLimited());
+        text = " §8|   §f%s".formatted(module.getNameLimited());
         RenderUtils.drawText(context, text, x + 20, y + height / 3, 0.7F, false);
         text = "§7- %s".formatted(module.getDescriptionLimited());
         RenderUtils.drawText(context, text, x + width / 3, y + height / 3, 0.7F, false);

@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.client.client;
 import com.mojang.authlib.GameProfile;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
-import io.github.itzispyder.clickcrystals.gui.GuiTextures;
+import io.github.itzispyder.clickcrystals.gui_beta.misc.GuiTextures;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui_beta.screens;
 
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.client.module.SettingSectionElement;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
@@ -8,6 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.Comparator;
@@ -64,5 +66,20 @@ public class SettingScreen extends DefaultBase {
         RenderUtils.drawText(context, "Client Settings", contentX + 10, caret - 4, false);
         caret += 10;
         RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.DARK_GRAY.argb);
+    }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        client.setScreen(new SettingScreen());
+        ClickCrystals.config.saveKeybinds();
+        ClickCrystals.config.save();
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        super.mouseReleased(mouseX, mouseY, button);
+        ClickCrystals.config.saveKeybinds();
+        ClickCrystals.config.save();
+        return true;
     }
 }

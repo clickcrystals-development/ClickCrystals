@@ -18,7 +18,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.hud.fixed.ClickPerSecondHud;
 import io.github.itzispyder.clickcrystals.gui_beta.hud.fixed.ColorOverlayHud;
 import io.github.itzispyder.clickcrystals.gui_beta.hud.fixed.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.gui_beta.hud.moveables.*;
-import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
+import io.github.itzispyder.clickcrystals.gui_beta.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.gui_beta.screens.ModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;

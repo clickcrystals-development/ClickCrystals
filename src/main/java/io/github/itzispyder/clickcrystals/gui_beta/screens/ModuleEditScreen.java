@@ -1,12 +1,13 @@
 package io.github.itzispyder.clickcrystals.gui_beta.screens;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
-import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.client.module.SettingSectionElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
 public class ModuleEditScreen extends DefaultBase {
@@ -75,5 +76,14 @@ public class ModuleEditScreen extends DefaultBase {
         int mX = (int)mouseX;
         int mY = (int)mouseY;
         return mX > dirX && mX < dirX + dirW && mY > dirY && mY < dirY + dirH;
+    }
+
+    public Module getModule() {
+        return module;
+    }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        client.setScreen(new ModuleEditScreen(module));
     }
 }

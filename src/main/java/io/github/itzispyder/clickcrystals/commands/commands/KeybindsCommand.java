@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.commands.Command;
-import io.github.itzispyder.clickcrystals.gui.screens.KeybindsScreen;
+import io.github.itzispyder.clickcrystals.gui_beta.screens.SettingScreen;
 import net.minecraft.command.CommandSource;
 
 public class KeybindsCommand extends Command {
@@ -15,7 +15,7 @@ public class KeybindsCommand extends Command {
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             system.scheduler.runDelayedTask(() -> {
-                mc.execute(() -> mc.setScreen(new KeybindsScreen()));
+                mc.execute(() -> mc.setScreen(new SettingScreen()));
             }, 5 * 50);
             return SINGLE_SUCCESS;
         });

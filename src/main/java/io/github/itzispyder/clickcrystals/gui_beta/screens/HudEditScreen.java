@@ -1,10 +1,10 @@
-package io.github.itzispyder.clickcrystals.gui.screens;
+package io.github.itzispyder.clickcrystals.gui_beta.screens;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.GuiTextures;
-import io.github.itzispyder.clickcrystals.gui.elements.cc.RelativeHudElement;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.AbstractElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.client.RelativeHudElement;
+import io.github.itzispyder.clickcrystals.gui_beta.misc.GuiTextures;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
@@ -40,7 +40,7 @@ public class HudEditScreen extends GuiScreen {
                     context.drawTexture(GuiTextures.SETTINGS, button.x, button.y, 0, 0, button.width, button.height, button.width, button.height);
                 })
                 .onPress(button -> {
-                    mc.setScreenAndRender(new ModuleSettingsScreen(Module.get(InGameHuds.class), false));
+                    mc.setScreenAndRender(new ModuleEditScreen(Module.get(InGameHuds.class)));
                 })
                 .build();
 
@@ -71,10 +71,7 @@ public class HudEditScreen extends GuiScreen {
 
     @Override
     public void resize(MinecraftClient client, int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.close();
-        client.setScreenAndRender(new HudEditScreen());
+        client.setScreen(new HudEditScreen());
     }
 
     @Override

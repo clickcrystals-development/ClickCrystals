@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui_beta.hud;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui_beta.Positionable;
-import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
+import io.github.itzispyder.clickcrystals.gui_beta.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
