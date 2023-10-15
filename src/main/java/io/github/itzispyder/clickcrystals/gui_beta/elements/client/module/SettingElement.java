@@ -12,8 +12,8 @@ public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElem
     protected final T setting;
     protected boolean shouldUnderline;
 
-    public SettingElement(T setting, int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public SettingElement(T setting, int x, int y) {
+        super(x, y, 270, 40);
         this.shouldUnderline = false;
         this.setting = setting;
     }
@@ -21,9 +21,9 @@ public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElem
     public void renderSettingDetails(DrawContext context) {
         int caret = y + 5;
         RenderUtils.drawText(context, setting.getName(), x + 5, caret, 0.6F, false);
-        for (String line : StringUtils.wrapLines(setting.getDescription(), 50, true)) {
+        for (String line : StringUtils.wrapLines(setting.getDescription(), 60, true)) {
             caret += 8;
-            RenderUtils.drawText(context, "§7" + line, x + 5, caret, 0.5F, false);
+            RenderUtils.drawText(context, "§7" + line, x + 5, caret, 0.6F, false);
         }
         caret += 5;
 
@@ -37,5 +37,10 @@ public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElem
 
     public void setShouldUnderline(boolean shouldUnderline) {
         this.shouldUnderline = shouldUnderline;
+    }
+
+    @Override
+    public boolean isHovered(int mouseX, int mouseY) {
+        return rendering && mouseX > x + width / 4 * 3 && mouseX < x + width && mouseY > y && mouseY < y + height;
     }
 }

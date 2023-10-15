@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.DoubleSettingElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.client.module.DoubleSettingElement;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 
 public class DoubleSetting extends NumberSetting<Double> {
@@ -14,7 +14,7 @@ public class DoubleSetting extends NumberSetting<Double> {
 
     @Override
     public DoubleSettingElement toGuiElement(int x, int y) {
-        return new DoubleSettingElement(this, x, y, 0, 0);
+        return new DoubleSettingElement(this, x, y);
     }
 
     @Override
