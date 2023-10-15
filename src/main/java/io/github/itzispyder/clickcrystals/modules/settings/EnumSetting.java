@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui.elements.cc.settings.EnumSettingElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.client.module.EnumSettingElement;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 
 import java.lang.reflect.Method;
@@ -45,7 +45,7 @@ public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {
 
     @Override
     public EnumSettingElement toGuiElement(int x, int y) {
-        return new EnumSettingElement(this, x, y, 0, 0);
+        return new EnumSettingElement(this, x, y);
     }
 
     public static <E extends Enum<?>> Builder<E> create(Class<E> type) {
