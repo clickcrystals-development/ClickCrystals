@@ -7,8 +7,11 @@ import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+
+import java.util.List;
 
 public class ModuleEditScreen extends DefaultBase {
 
@@ -42,10 +45,15 @@ public class ModuleEditScreen extends DefaultBase {
         int caret = contentY + 10;
 
         RenderUtils.drawTexture(context, module.getCategory().texture(), contentX + 10, caret - 7, 15, 15);
-        text = "%s%s \\ §f%s".formatted(isCategoryHovered(mouseX, mouseY) ? "§f" : "§7", module.getCategory().name(), module.getName());
+        text = "%s%s \\ §f%s   §7§o(hover details)".formatted(isCategoryHovered(mouseX, mouseY) ? "§f" : "§7", module.getCategory().name(), module.getName());
         RenderUtils.drawText(context, text, contentX + 30, caret - 4, false);
         caret += 10;
         RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.DARK_GRAY.argb);
+
+        // description
+        if (isModuleTitleHovered(mouseX, mouseY)) {
+            this.renderDescription(context, mouseX, mouseY);
+        }
     }
 
     @Override
@@ -68,10 +76,34 @@ public class ModuleEditScreen extends DefaultBase {
         return true;
     }
 
+    private void renderDescription(DrawContext context, int mouseX, int mouseY) {
+        List<String> lines = StringUtils.wrapLines(module.getDescription(), 60, true);
+        int height = lines.size() * 8;
+        int caret = mouseY - height + 1;
+        int margin = mouseX + 2;
+
+        RenderUtils.fill(context, mouseX, mouseY - height, 250, height, 0xD0000000);
+
+        for (String line : lines) {
+            RenderUtils.drawText(context, "§7" + line, margin, caret, 0.7F, false);
+            caret += 8;
+        }
+    }
+
     private boolean isCategoryHovered(double mouseX, double mouseY) {
         int dirX = contentX;
         int dirY = contentY;
         int dirW = 80;
+        int dirH = 20;
+        int mX = (int)mouseX;
+        int mY = (int)mouseY;
+        return mX > dirX && mX < dirX + dirW && mY > dirY && mY < dirY + dirH;
+    }
+
+    private boolean isModuleTitleHovered(double mouseX, double mouseY) {
+        int dirX = contentX + 80;
+        int dirY = contentY;
+        int dirW = contentX + contentWidth - dirX;
         int dirH = 20;
         int mX = (int)mouseX;
         int mY = (int)mouseY;
