@@ -91,4 +91,8 @@ public class SearchBarElement extends GuiElement implements Typeable {
     public String getLowercaseQuery() {
         return query.toLowerCase();
     }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
 }

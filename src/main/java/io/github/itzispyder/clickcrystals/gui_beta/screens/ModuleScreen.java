@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ModuleScreen extends DefaultBase {
 
-    public static Category currentCategory = Categories.CRYSTALLING;
+    public static Category currentCategory = Categories.MISC;
     private final List<ModuleElement> moduleElementList = new ArrayList<>();
 
     public ModuleScreen() {

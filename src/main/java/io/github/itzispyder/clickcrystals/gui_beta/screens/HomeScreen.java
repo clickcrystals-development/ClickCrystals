@@ -3,13 +3,18 @@ package io.github.itzispyder.clickcrystals.gui_beta.screens;
 import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.SearchResultListElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.SuggestionElement;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui_beta.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import org.lwjgl.glfw.GLFW;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class HomeScreen extends GuiScreen {
@@ -22,14 +27,40 @@ public class HomeScreen extends GuiScreen {
     public final int baseY = (int)(windowHeight / 2.0 - baseHeight / 2.0);
     public final SearchBarElement searchBar = new SearchBarElement(0, 0, 300);
     public final SearchResultListElement searchResults = new SearchResultListElement(searchBar);
-    protected final AtomicInteger titleTranslation = new AtomicInteger(-30);
+    protected final AtomicInteger titleTranslation = new AtomicInteger(-50);
+    public final List<SuggestionElement> suggestions = new ArrayList<>();
 
     public HomeScreen() {
         super("ClickCrystals Home Screen");
+
+        GridOrganizer grid = new GridOrganizer(baseX + 27, baseY + baseHeight - 65, 35, 35, 10, 31);
+        suggestions.add(new SuggestionElement(Tex.Socials.DISCORD, "Discord", 0, 0, 35, button -> system.openUrl("https://discord.gg/tMaShNzNtP")));
+        suggestions.add(new SuggestionElement(Tex.Socials.MODRINTH, "Modrinth", 0, 0, 35, button -> system.openUrl("https://modrinth.com/mod/clickcrystals")));
+        suggestions.add(new SuggestionElement(Tex.Socials.YOUTUBE, "Youtube", 0, 0, 35, button -> system.openUrl("https://youtube.com/@itzispyder")));
+        suggestions.add(new SuggestionElement(Tex.Socials.PLANETMC, "Planet MC", 0, 0, 35, button -> system.openUrl("https://planetminecraft.com/mod/clickcrystal")));
+        suggestions.add(new SuggestionElement(Tex.ICON, "Official Site", 0, 0, 35, button -> system.openUrl("https://itzispyder.github.io/clickcrystals")));
+        suggestions.add(new SuggestionElement(Tex.Icons.MODULES, "Browse Modules", 0, 0, 35, button -> mc.setScreen(new ModuleScreen())));
+
+        suggestions.forEach(grid::addEntry);
+        grid.organize();
+        grid.createPanel(this, baseHeight / 4);
+        grid.addAllToPanel();
+        this.addChild(grid.getPanel());
+
+        for (SuggestionElement suggestion : suggestions) {
+            suggestion.y -= 50;
+        }
+
+        system.scheduler.runRepeatingTask(() -> {
+            titleTranslation.getAndIncrement();
+            for (SuggestionElement suggestion : suggestions) {
+                suggestion.y++;
+            }
+        }, 0, 1, 50);
+
+        // added last so it renders last and registers first
         this.addChild(searchResults);
         this.addChild(searchBar);
-
-        system.scheduler.runRepeatingTask(titleTranslation::getAndIncrement, 0, 1, 30);
     }
 
     @Override
@@ -56,5 +87,22 @@ public class HomeScreen extends GuiScreen {
         caret += 30;
         searchBar.x = baseX + baseWidth / 2 - searchBar.width / 2;
         searchBar.y = caret - titleTrans;
+    }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        client.setScreen(new HomeScreen());
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        super.keyPressed(keyCode, scanCode, modifiers);
+        if (keyCode == GLFW.GLFW_KEY_ENTER && this.selected == searchBar && !searchBar.getQuery().isEmpty()) {
+            mc.setScreen(new SearchScreen() {{
+                this.searchbar.setQuery(HomeScreen.this.searchBar.getQuery());
+                this.filterByQuery(this.searchbar);
+            }});
+        }
+        return true;
     }
 }

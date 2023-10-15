@@ -67,6 +67,13 @@ public final class Tex {
         public static final Identifier NO_TOTEMS_ICON = new Identifier(modId, "textures/overlays/totemless_icon.png");
     }
 
+    public static class Socials {
+        public static final Identifier DISCORD = new Identifier(modId, "textures/display/socials/discord.png");
+        public static final Identifier MODRINTH = new Identifier(modId, "textures/display/socials/modrinth.png");
+        public static final Identifier YOUTUBE = new Identifier(modId, "textures/display/socials/youtube.png");
+        public static final Identifier PLANETMC = new Identifier(modId, "textures/display/socials/planetmc.png");
+    }
+
     public static class Backdrops {
         public static final Identifier BACKDROP_0 = new Identifier(modId, "textures/gui/backdrop/backdrop.png");
     }
