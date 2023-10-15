@@ -29,20 +29,15 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 1.0.3
+Mod: 1.0.4
 
 Changelog:
-  Removed: 
-    - unused registries
-    - cc extras and chat responses like `!cc`
-  Added:
-    - GapSwap
-    - More improved micro-scheduler for advanced timing in modules
-  Tweaked:
-    - config is now all in one file (FOR THIS UPDATE, YOUR SETTINGS WILL BE CLEARED)
+  HUGE-UPDATE:
+    - In-game user interface REVAMP, smoother GUI and easier access and configuration
+  Optimization:
+    - Reduced the number of widgets each custom GUI screen has, increases frames when browsing modules
 
 Notice:
-  - (FOR THIS UPDATE, YOUR SETTINGS WILL BE CLEARED DUE TO CONFIG CHANGES)
   - USE COMMAND ,keybinds IF YOU DON'T KNOW THE KEYBIND FOR SOMETHING
 ```
 

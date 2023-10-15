@@ -18,7 +18,6 @@ import io.github.itzispyder.clickcrystals.gui_beta.hud.fixed.ClickPerSecondHud;
 import io.github.itzispyder.clickcrystals.gui_beta.hud.fixed.ColorOverlayHud;
 import io.github.itzispyder.clickcrystals.gui_beta.hud.fixed.ModuleListTextHud;
 import io.github.itzispyder.clickcrystals.gui_beta.hud.moveables.*;
-import io.github.itzispyder.clickcrystals.gui_beta.screens.HomeScreen;
 import io.github.itzispyder.clickcrystals.gui_beta.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
@@ -62,7 +61,7 @@ public final class ClickCrystals implements ModInitializer {
             .id("open-clickcrystals-module-screen")
             .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
             .condition((bind, screen) -> screen == null || screen instanceof TitleScreen || screen instanceof MultiplayerScreen || screen instanceof SelectWorldScreen)
-            .onPress(bind -> mc.setScreen(new HomeScreen()))
+            .onPress(bind -> UserInputListener.openPreviousScreen())
             .onChange(config::saveKeybind)
             .build();
 
@@ -96,7 +95,7 @@ public final class ClickCrystals implements ModInitializer {
     public static final String modId   = "clickcrystals";
     public static final String prefix  = "[ClickCrystals] ";
     public static final String starter = "§7[§bClick§3Crystals§7] §r";
-    public static final String version = "1.0.3";
+    public static final String version = "1.0.4";
 
     public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
 

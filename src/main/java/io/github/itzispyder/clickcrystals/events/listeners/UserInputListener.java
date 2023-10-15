@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.gui_beta.ClickType;
+import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui_beta.screens.*;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.DiscordRPC;
@@ -20,6 +21,26 @@ import java.util.Map;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
 
 public class UserInputListener implements Listener {
+
+    private static Class<? extends GuiScreen> previousScreen = null;
+    public static void openPreviousScreen() {
+        Class<? extends GuiScreen> p = previousScreen;
+        if (p == ModuleScreen.class || p == ModuleEditScreen.class) {
+            mc.setScreen(new ModuleScreen());
+        }
+        else if (p == SearchScreen.class) {
+            mc.setScreen(new SearchScreen());
+        }
+        else if (p == SettingScreen.class) {
+            mc.setScreen(new SettingScreen());
+        }
+        else if (p == BulletinScreen.class) {
+            mc.setScreen(new BulletinScreen());
+        }
+        else {
+            mc.setScreen(new HomeScreen());
+        }
+    }
 
     public static final Map<Class<? extends Screen>, String> SCREEN_STATES = ManualMap.fromItems(
             TitleScreen.class, "Looking at the title screen",
@@ -47,8 +68,24 @@ public class UserInputListener implements Listener {
         try {
             this.handleDiscordPresence(e);
             this.handleConfigSave(e);
+            this.handleScreenManagement(e);
         }
         catch (Exception ignore) {}
+    }
+
+    private void handleScreenManagement(SetScreenEvent e) {
+        if (e.getScreen() == null && e.getPreviousScreen() instanceof GuiScreen screen) {
+            Class<? extends GuiScreen> p = screen.getClass();
+
+            if (p == BulletinScreen.class ||
+                    p == ModuleEditScreen.class ||
+                    p == SearchScreen.class ||
+                    p == SettingScreen.class ||
+                    p == HomeScreen.class ||
+                    p == ModuleScreen.class) {
+                previousScreen = p;
+            }
+        }
     }
 
     private void handleConfigSave(SetScreenEvent e) {
