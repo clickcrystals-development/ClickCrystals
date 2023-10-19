@@ -1,7 +1,9 @@
 package io.github.itzispyder.clickcrystals.gui_beta.elements.client.module;
 
 import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
@@ -35,12 +37,35 @@ public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElem
         }
     }
 
+    public void createResetButton() {
+        int drawY = y + 5;
+        int drawX = x + width - 5;
+
+        this.addChild(AbstractElement.create()
+                .pos(drawX, drawY)
+                .dimensions(10, 10)
+                .onPress(button -> this.revertSettingValue())
+                .onRender((context, mouseX, mouseY, button) -> {
+                    RenderUtils.drawTexture(context, Tex.Icons.RESET, button.x, button.y, button.width, button.height);
+                })
+                .build()
+        );
+    }
+
+    public void revertSettingValue() {
+        setting.setVal(setting.getDef());
+    }
+
     public void setShouldUnderline(boolean shouldUnderline) {
         this.shouldUnderline = shouldUnderline;
     }
 
     @Override
     public boolean isHovered(int mouseX, int mouseY) {
-        return rendering && mouseX > x + width / 4 * 3 && mouseX < x + width && mouseY > y && mouseY < y + height;
+        int bx = x + width / 4 * 3 - 5;
+        int bxw = x + width - 5;
+        int by = y + height / 2;
+        int byh = y + height / 2 + 12;
+        return rendering && mouseX > bx && mouseX < bxw && mouseY > by && mouseY < byh;
     }
 }

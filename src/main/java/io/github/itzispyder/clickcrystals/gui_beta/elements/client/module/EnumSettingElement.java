@@ -13,6 +13,7 @@ public class EnumSettingElement extends SettingElement<EnumSetting<?>> {
     public EnumSettingElement(EnumSetting<?> setting, int x, int y) {
         super(setting, x, y);
         this.setting = setting;
+        createResetButton();
     }
 
     public EnumSetting<?> getSetting() {
@@ -23,7 +24,7 @@ public class EnumSettingElement extends SettingElement<EnumSetting<?>> {
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         this.renderSettingDetails(context);
         int drawY = y + height / 2;
-        int drawX = x + width / 4 * 3;
+        int drawX = x + width / 4 * 3 - 5;
         int drawW = width / 4;
         int drawH = 12;
 

@@ -19,6 +19,7 @@ public class StringSettingElement extends SettingElement<StringSetting> implemen
         super(setting, x, y);
         this.setting = setting;
         this.input = setting.getVal();
+        createResetButton();
     }
 
     @Override
@@ -29,7 +30,7 @@ public class StringSettingElement extends SettingElement<StringSetting> implemen
             int drawW = width / (screen.selected == this ? 2 : 4);
             int drawH = 12;
             int drawY = y + height / 2;
-            int drawX = x + width - drawW;
+            int drawX = x + width - drawW - 5;
 
             Gray fill = screen.selected == this ? Gray.LIGHT_GRAY : Gray.GRAY;
             RoundRectBrush.drawRoundHoriLine(context, drawX, drawY, drawW, drawH, fill);
@@ -42,6 +43,12 @@ public class StringSettingElement extends SettingElement<StringSetting> implemen
             String displayText = screen.selected == this ? text + "§8§l︳" : text;
             RenderUtils.drawText(context, displayText, drawX + 5, drawY + drawH / 3, 0.7F, false);
         }
+    }
+
+    @Override
+    public void revertSettingValue() {
+        this.input = setting.getDef();
+        this.setting.setVal(input);
     }
 
     @Override

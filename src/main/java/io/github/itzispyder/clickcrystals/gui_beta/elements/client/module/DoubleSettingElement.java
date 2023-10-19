@@ -17,15 +17,16 @@ public class DoubleSettingElement extends SettingElement<DoubleSetting> {
         super(setting, x, y);
         this.settingRenderUpdates = true;
         this.fillEnd = x + width - 5;
+        createResetButton();
     }
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         this.renderSettingDetails(context);
         int drawY = y + height / 2;
-        int drawX = x + width / 4 * 3;
+        int drawX = x + width / 4 * 3 - 5;
 
-        int sliderEnd = x + width;
+        int sliderEnd = x + width - 5;
         int sliderStart = drawX + 10;
         int sliderLen = sliderEnd - sliderStart;
 
