@@ -64,7 +64,7 @@ public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElem
     public boolean isHovered(int mouseX, int mouseY) {
         int bx = x + width / 4 * 3 - 5;
         int bxw = x + width - 5;
-        int by = y + height / 2;
+        int by = y + height / 2 - 4;
         int byh = y + height / 2 + 12;
         return rendering && mouseX > bx && mouseX < bxw && mouseY > by && mouseY < byh;
     }
