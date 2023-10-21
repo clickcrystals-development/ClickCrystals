@@ -22,10 +22,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.DiscordRPC;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
 import io.github.itzispyder.clickcrystals.modules.modules.minecart.BowSwap;
 import io.github.itzispyder.clickcrystals.modules.modules.minecart.RailSwap;
@@ -198,6 +195,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new GuiBorders());
         system.addModule(new InGameHuds());
         system.addModule(new SilkTouch());
+        system.addModule(new EntityStatuses());
 
         // crystalling
         system.addModule(new ClickCrystal());

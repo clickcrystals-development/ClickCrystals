@@ -21,7 +21,7 @@ public class InGameHuds extends Module implements Listener {
     public final ModuleSetting<Boolean> renderHudBorders = scGeneral.add(BooleanSetting.create()
             .name("render-hud-borders")
             .description("Renders a border around huds.")
-            .def(false)
+            .def(true)
             .build()
     );
     public final ModuleSetting<Integer> colorRed = scGeneral.add(IntegerSetting.create()
@@ -53,7 +53,7 @@ public class InGameHuds extends Module implements Listener {
             .min(0)
             .name("color-alpha")
             .description("Hud backdrop color value (alpha or transparency)")
-            .def(0)
+            .def(ColorHelper.Argb.getAlpha(Hud.DEFAULT_ARGB))
             .build()
     );
     public final ModuleSetting<Boolean> hudIcon = scHudVisibility.add(BooleanSetting.create()
