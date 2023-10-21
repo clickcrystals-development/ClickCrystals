@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.TotemPops;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.HealthAsBar;
+import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -41,33 +42,56 @@ public class TargetRelativeHud extends Hud {
             int x = getX();
             int y = getY();
             int caret = y;
+            int margin = x + g;
 
             // player head
             caret += g;
-            PlayerSkinDrawer.draw(context, targetEntry.getSkinTexture(), x + g, caret, 15, true, false);
+            PlayerSkinDrawer.draw(context, targetEntry.getSkinTexture(), margin, caret, 15, true, false);
 
             // player name (next to player head)
+            // and player ping and distance
             caret += 5;
-            String text = targetEntry.getProfile().getName();
-            RenderUtils.drawText(context, text, x + g + 15 + g, caret, 0.8F, true);
+            String name = targetEntry.getProfile().getName();
+            String info = "§f" + targetEntry.getLatency() + " §7ms,  §f" + MathUtils.round(target.distanceTo(p), 10) + " §7dist";
+            RenderUtils.drawText(context, name, margin + 15 + g, caret, 0.8F, true);
+            caret += 15;
+            RenderUtils.drawText(context, info, margin, caret, 0.8F, true);
+
+            // target armor
+            if (!isTargetNaked()) {
+                caret += 10;
+                for (ItemStack item : target.getInventory().armor) {
+                    RenderUtils.drawItem(context, item, margin, caret - 1, 13);
+                    margin += 13;
+                }
+                RenderUtils.drawItem(context, target.getMainHandStack(), margin, caret - 1, 13);
+                margin += 13;
+                RenderUtils.drawItem(context, target.getOffHandStack(), margin, caret - 1, 13);
+                margin = x + g;
+                caret += 3;
+            }
 
             // health indicator
             // yes I was lazy, so I just used my HealthAsBar module's code
-            caret += 15;
+            caret += 10;
             float maxHp = target.getMaxHealth();
             float hp = target.getHealth();
             float ab = target.getAbsorptionAmount();
-            Module.get(HealthAsBar.class).renderHealthBar(context, x + g, caret, maxHp, (int) hp, (int) hp, (int) ab);
+            Module.get(HealthAsBar.class).renderHealthBar(context, margin, caret, maxHp, (int) hp, (int) hp, (int) ab);
 
             // totem indicator
             ItemStack totem = Items.TOTEM_OF_UNDYING.getDefaultStack();
             String pops = "§c-" + Module.get(TotemPops.class).getPops(target);
             float scale = 2.0F;
-            int tx = (int) ((x + g + 80 + g) / scale);
+            float rescale = 1 / scale;
+            int tx = (int) ((margin + 80 + g) / scale);
             int ty = (int) (y / scale);
             context.getMatrices().push();
             context.getMatrices().scale(scale, scale, scale);
             context.drawItem(totem, tx, ty);
+            context.getMatrices().scale(rescale, rescale, rescale);
+            tx = margin + 90 + g;
+            ty = y + 15;
             context.drawItemInSlot(mc.textRenderer, totem, tx, ty, pops);
             context.getMatrices().pop();
 
@@ -108,5 +132,20 @@ public class TargetRelativeHud extends Hud {
     @Override
     public boolean canRenderBorder() {
         return Module.getFrom(InGameHuds.class, m -> m.renderHudBorders.getVal());
+    }
+
+    public boolean isTargetNaked() {
+        if (target == null) {
+            return true;
+        }
+        if (!target.getMainHandStack().isEmpty() || !target.getOffHandStack().isEmpty()) {
+            return false;
+        }
+        for (ItemStack item : target.getArmorItems()) {
+            if (!item.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

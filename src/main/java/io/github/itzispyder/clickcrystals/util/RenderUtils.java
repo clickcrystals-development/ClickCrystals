@@ -5,6 +5,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
@@ -151,6 +152,24 @@ public final class RenderUtils {
 
     public static void drawTexture(DrawContext context, Identifier texture, int x, int y, int width, int height) {
         context.drawTexture(texture, x, y, 0, 0, width, height, width, height);
+    }
+
+    public static void drawItem(DrawContext context, ItemStack item, int x, int y, float scale) {
+        x /= scale;
+        y /= scale;
+        context.getMatrices().push();
+        context.getMatrices().scale(scale, scale, scale);
+        context.drawItem(item, x, y);
+        context.drawItemInSlot(mc.textRenderer, item, x, y);
+        context.getMatrices().pop();
+    }
+
+    public static void drawItem(DrawContext context, ItemStack item, int x, int y, int size) {
+        drawItem(context, item, x, y, size / 16.0F);
+    }
+
+    public static void drawItem(DrawContext context, ItemStack item, int x, int y) {
+        drawItem(context, item, x, y, 1.0F);
     }
 
     public static DrawContext createContext() {
