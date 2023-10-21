@@ -26,7 +26,9 @@ public class HomeScreen extends GuiScreen {
     public final int baseHeight = 240;
     public final int baseX = (int)(windowWidth / 2.0 - baseWidth / 2.0);
     public final int baseY = (int)(windowHeight / 2.0 - baseHeight / 2.0);
-    public final SearchBarElement searchBar = new SearchBarElement(0, 0, 300);
+    public final SearchBarElement searchBar = new SearchBarElement(0, 0, 300) {{
+        this.height = 15;
+    }};
     public final SearchResultListElement searchResults = new SearchResultListElement(searchBar);
     protected final AtomicInteger titleTranslation = new AtomicInteger(-50);
     public final List<SuggestionElement> suggestions = new ArrayList<>();

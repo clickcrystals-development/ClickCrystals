@@ -8,6 +8,8 @@ import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Hand;
 
+import java.util.function.Predicate;
+
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 public final class InvUtils {
@@ -61,6 +63,10 @@ public final class InvUtils {
     }
 
     public static int count(Item item) {
+        return count(stack -> stack.isOf(item));
+    }
+
+    public static int count(Predicate<ItemStack> item) {
         int count = 0;
 
         if (item == null) {
@@ -70,11 +76,11 @@ public final class InvUtils {
         for (int i = 0; i < inv().main.size(); i++) {
             ItemStack stack = inv().getStack(i);
             if (stack == null || stack.isEmpty()) continue;
-            if (stack.isOf(item)) count += stack.getCount();
+            if (item.test(stack)) count += stack.getCount();
         }
 
         ItemStack off = HotbarUtils.getHand(Hand.OFF_HAND);
-        if (off.isOf(item)) {
+        if (item.test(off)) {
             count += off.getCount();
         }
 

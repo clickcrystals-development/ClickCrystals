@@ -181,6 +181,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addHud(new DirectionRelativeHud());
         system.addHud(new CrosshairTargetRelativeHud());
         system.addHud(new RotationRelativeHud());
+        system.addHud(new ResourceRelativeHud());
     }
 
     public void initModules() {

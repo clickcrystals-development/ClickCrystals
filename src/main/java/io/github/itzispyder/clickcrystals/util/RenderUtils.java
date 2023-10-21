@@ -164,6 +164,16 @@ public final class RenderUtils {
         context.getMatrices().pop();
     }
 
+    public static void drawItem(DrawContext context, ItemStack item, int x, int y, float scale, String text) {
+        x /= scale;
+        y /= scale;
+        context.getMatrices().push();
+        context.getMatrices().scale(scale, scale, scale);
+        context.drawItem(item, x, y);
+        context.drawItemInSlot(mc.textRenderer, item, x, y, text);
+        context.getMatrices().pop();
+    }
+
     public static void drawItem(DrawContext context, ItemStack item, int x, int y, int size) {
         drawItem(context, item, x, y, size / 16.0F);
     }
