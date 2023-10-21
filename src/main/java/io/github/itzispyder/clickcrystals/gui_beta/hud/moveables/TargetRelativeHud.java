@@ -12,6 +12,7 @@ import net.minecraft.client.gui.PlayerSkinDrawer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
 public class TargetRelativeHud extends Hud {
@@ -59,18 +60,15 @@ public class TargetRelativeHud extends Hud {
             Module.get(HealthAsBar.class).renderHealthBar(context, x + g, caret, maxHp, (int) hp, (int) hp, (int) ab);
 
             // totem indicator
-            context.getMatrices().push();
+            ItemStack totem = Items.TOTEM_OF_UNDYING.getDefaultStack();
+            String pops = "§c-" + Module.get(TotemPops.class).getPops(target);
             float scale = 2.0F;
             int tx = (int) ((x + g + 80 + g) / scale);
             int ty = (int) (y / scale);
-            context.getMatrices().scale(scale, scale, scale);
-            context.drawItem(Items.TOTEM_OF_UNDYING.getDefaultStack(), tx, ty);
-            context.getMatrices().pop();
-
-            // totem indicator text
             context.getMatrices().push();
-            String pops = "§c-" + Module.get(TotemPops.class).getPops(target);
-            RenderUtils.drawRightText(context, pops, x + g + 80 + 32 + g, y + g + 16, 1.0F, true);
+            context.getMatrices().scale(scale, scale, scale);
+            context.drawItem(totem, tx, ty);
+            context.drawItemInSlot(mc.textRenderer, totem, tx, ty, pops);
             context.getMatrices().pop();
 
             caret += g + 8;

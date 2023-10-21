@@ -63,7 +63,6 @@ public final class Tex {
 
     public static class Defaults {
         public static final Identifier ITEM_WIDGET = new Identifier(modId, "textures/gui/item_widget.png");
-        public static final Identifier ITEM_WIDGET_WARNING = new Identifier(modId, "textures/gui/item_widget_warning.png");
         public static final Identifier NO_TOTEMS_MEME = new Identifier(modId, "textures/overlays/no_totem.png");
         public static final Identifier NO_TOTEMS_ICON = new Identifier(modId, "textures/overlays/totemless_icon.png");
     }
