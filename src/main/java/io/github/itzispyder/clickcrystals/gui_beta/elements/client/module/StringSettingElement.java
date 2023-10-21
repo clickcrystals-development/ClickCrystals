@@ -30,7 +30,7 @@ public class StringSettingElement extends SettingElement<StringSetting> implemen
             int drawW = width / (screen.selected == this ? 2 : 4);
             int drawH = 12;
             int drawY = y + height / 2;
-            int drawX = x + width - drawW - 5;
+            int drawX = x + width - drawW - 7;
 
             Gray fill = screen.selected == this ? Gray.LIGHT_GRAY : Gray.GRAY;
             RoundRectBrush.drawRoundHoriLine(context, drawX, drawY, drawW, drawH, fill);

@@ -27,13 +27,15 @@ public abstract class GuiScreen extends Screen implements Global {
     public final List<ScreenRenderCallback> screenRenderListeners;
     public final List<KeyPressCallback> keyActionListeners;
     public final List<GuiElement> children;
-    public GuiElement selected, mostRecentlyAdded;
+    public GuiElement selected, hovered, mostRecentlyAdded;
+    public long lastHover;
     public boolean shiftKeyPressed, altKeyPressed, ctrlKeyPressed;
     public Pair<Integer, Integer> cursor;
 
     public GuiScreen(String title) {
         super(Text.literal(title));
 
+        this.lastHover = System.currentTimeMillis();
         this.mouseMoveListeners = new ArrayList<>();
         this.mouseClickListeners = new ArrayList<>();
         this.mouseDragListeners = new ArrayList<>();
@@ -83,10 +85,20 @@ public abstract class GuiScreen extends Screen implements Global {
         catch (ConcurrentModificationException ignore) {}
 
         Module guiBorders = Module.get(GuiBorders.class);
+        GuiElement element = getHoveredElement(mouseX, mouseY);
+
         if (guiBorders.isEnabled()) {
-            GuiElement element = getHoveredElement(mouseX, mouseY);
             if (element != null) {
                 tagGuiElement(context, mouseX, mouseY, element);
+            }
+        }
+        if (hovered != element) {
+            hovered = element;
+            lastHover = System.currentTimeMillis();
+        }
+        else if (hovered != null && hovered.hasTooltip()) {
+            if (System.currentTimeMillis() > lastHover + hovered.getTooltipDelay()) {
+                hovered.renderTooltip(context, mouseX, mouseY);
             }
         }
     }
