@@ -29,13 +29,19 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 1.0.4
+Mod: 1.0.5
 
 Changelog:
-  HUGE-UPDATE:
-    - In-game user interface REVAMP, smoother GUI and easier access and configuration
-  Optimization:
-    - Reduced the number of widgets each custom GUI screen has, increases frames when browsing modules
+  Tweaks:
+    - enemy armor hud moved from armor hud to target hud
+    - target hud shows enemy ping
+    - target hud shows enemy distance
+    - fit rotation hud into one line
+  Added:
+    - pvp resource hud (shows totem count, crystal count, etc...)
+    - tooltip system
+    - added reset buttons to settings
+    - debug module: entity statuses
 
 Notice:
   - USE COMMAND ,keybinds IF YOU DON'T KNOW THE KEYBIND FOR SOMETHING
@@ -130,6 +136,7 @@ Notice:
 | InGameHuds       |                        Custom ClickCrystals info huds manager                        |
 | GuiCursor        |                              Cursor center fix, etc...                               |
 | GapSwap          |          Swaps to golden apple or enchanted golden apples by clicking sword          |
+| EntityStatuses   |            Displays received entity status packets in chat for debugging             |
 
 
 ## But isn't this cheating?
