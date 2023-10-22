@@ -100,7 +100,7 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
     }
 
     public String getOnOrOff() {
-        return isEnabled() ? "§aon" : "§coff";
+        return isEnabled() ? "§bon" : "§7off";
     }
 
     public String getSearchQuery() {
