@@ -103,26 +103,26 @@ public final class ClickCrystals implements ModInitializer {
     @Override
     public void onInitialize() {
         // Mod initialization
-        system.prefixPrint("Loading ClickCrystals by ImproperIssues");
+        system.println("Loading ClickCrystals by ImproperIssues");
         System.setProperty("java.awt.headless", "false");
 
-        system.prefixPrint("-> initializing...");
+        system.println("-> initializing...");
         this.init();
         this.startTicking();
-        system.prefixPrint("-> requesting mod info...");
+        system.println("-> requesting mod info...");
         this.requestModInfo();
-        system.prefixPrint("-> connecting to discord...");
+        system.println("-> connecting to discord...");
         this.initRpc();
-        system.prefixPrint("-> loading config...");
+        system.println("-> loading config...");
         config.loadEntireConfig();
 
-        system.prefixPrint("-> checking updates...");
+        system.println("-> checking updates...");
         if (!matchLatestVersion()) {
-            system.prefixPrint("WARNING: You are running an outdated version of ClickCrystals, please update!");
-            system.prefixPrint("VERSIONS: Current=%s, Newest=%s".formatted(version, getLatestVersion()));
+            system.println("WARNING: You are running an outdated version of ClickCrystals, please update!");
+            system.println("VERSIONS: Current=%s, Newest=%s".formatted(version, getLatestVersion()));
         }
-        system.prefixPrint("-> clicking crystals!");
-        system.prefixPrint("ClickCrystals had loaded successfully!");
+        system.println("-> clicking crystals!");
+        system.println("ClickCrystals had loaded successfully!");
     }
 
     /**

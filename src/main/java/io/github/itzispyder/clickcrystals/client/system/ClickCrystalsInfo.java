@@ -115,12 +115,12 @@ public class ClickCrystalsInfo {
                 throw new IllegalStateException("json parse failed");
             }
 
-            system.prefixPrint("<- Info requested from '%s'".formatted(URL));
+            system.println("<- Info requested from '%s'".formatted(URL));
             ClickCrystals.info = info;
             return info;
         }
         catch (Exception ex) {
-            system.prefixPrint("X<- request failed");
+            system.println("X<- request failed");
             return ClickCrystals.info;
         }
     }

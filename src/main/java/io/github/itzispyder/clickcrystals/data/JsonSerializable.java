@@ -84,7 +84,7 @@ public interface JsonSerializable<T> extends Global {
                 ex.printStackTrace();
             }
         }
-        system.prefixPrint("'%s' has failed to save, returning fallback! (If this is your first launch, you can ignore this message)".formatted(file.getPath()));
+        system.println("'%s' has failed to save, returning fallback! (If this is your first launch, you can ignore this message)".formatted(file.getPath()));
         return fallback;
     }
 

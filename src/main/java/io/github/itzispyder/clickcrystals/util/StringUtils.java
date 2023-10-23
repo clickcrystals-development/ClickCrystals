@@ -27,6 +27,16 @@ public final class StringUtils {
         return s;
     }
 
+    public static String format(String s, Object... args) {
+        for (int i = 0; i < args.length; i++) {
+            Object obj = args[i];
+            String arg = obj == null ? "null" : obj.toString();
+            s = s.replaceAll("\\{" + i + "}", arg);
+            s = s.replaceFirst("\\{x}", arg);
+        }
+        return s;
+    }
+
     public static String fromClipboard() {
         try {
             Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -38,14 +48,7 @@ public final class StringUtils {
     }
 
     public static String revered(String s) {
-        StringBuilder b = new StringBuilder();
-        char[] a = s.toCharArray();
-
-        for (int i = a.length - 1; i >= 0; i--) {
-            b.append(a[i]);
-        }
-
-        return b.toString();
+        return new StringBuilder(s).reverse().toString();
     }
 
     public static String capitalize(String s) {

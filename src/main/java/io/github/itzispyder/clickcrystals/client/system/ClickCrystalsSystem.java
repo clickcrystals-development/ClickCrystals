@@ -8,6 +8,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
+import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.util.Util;
@@ -122,7 +123,19 @@ public class ClickCrystalsSystem implements Serializable {
         return keybinds().stream().filter(bind -> bind.getKey() == key).toList();
     }
 
-    public void prefixPrint(String msg) {
+    public void println(String msg) {
         System.out.println(prefix + msg);
+    }
+
+    public void printErr(String msg) {
+        System.err.println(prefix + msg);
+    }
+
+    public void printf(String msg, Object... args) {
+        println(StringUtils.format(msg, args));
+    }
+
+    public void printErrF(String msg, Object... args) {
+        printErr(StringUtils.format(msg, args));
     }
 }

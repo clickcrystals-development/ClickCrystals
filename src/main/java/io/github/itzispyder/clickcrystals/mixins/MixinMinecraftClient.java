@@ -30,14 +30,14 @@ public abstract class MixinMinecraftClient {
 
     @Inject(method = "stop", at = @At("HEAD"))
     public void stop(CallbackInfo ci) {
-        system.prefixPrint("Stopping client!");
-        system.prefixPrint("<- disconnecting from discord...");
+        system.println("Stopping client!");
+        system.println("<- disconnecting from discord...");
         ClickCrystals.discordPresence.stop();
-        system.prefixPrint("<- saving data...");
+        system.println("<- saving data...");
         ClickCrystals.config.saveKeybinds();
         ClickCrystals.config.saveHuds();
         ClickCrystals.config.saveModules();
-        system.prefixPrint("<- saving config...");
+        system.println("<- saving config...");
         ClickCrystals.config.save();
     }
 }
