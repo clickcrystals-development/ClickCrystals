@@ -29,23 +29,23 @@ public class ModuleFile {
         T d = setting.getVal();
         String id = setting.getId();
 
-        if (setting instanceof KeybindSetting v) {
-            integerEntries.put(id, v.getKey());
+        if (setting instanceof KeybindSetting) {
+            integerEntries.put(id, ((KeybindSetting) setting).getKey());
         }
-        else if (d instanceof Integer v) {
-            integerEntries.put(id, v);
+        else if (d instanceof Integer) {
+            integerEntries.put(id, (Integer) d);
         }
-        else if (d instanceof Double v) {
-            doubleEntries.put(id, v);
+        else if (d instanceof Double) {
+            doubleEntries.put(id, (Double) d);
         }
-        else if (d instanceof Boolean v) {
-            booleanEntries.put(id, v);
+        else if (d instanceof Boolean) {
+            booleanEntries.put(id, (Boolean) d);
         }
-        else if (d instanceof String v) {
-            stringEntries.put(id, v);
+        else if (d instanceof String) {
+            stringEntries.put(id, (String) d);
         }
-        else if (d instanceof Enum<?> v) {
-            stringEntries.put(id, v.name());
+        else if (d instanceof Enum<?>) {
+            stringEntries.put(id, ((Enum<?>) d).name());
         }
         else {
             objectEntries.put(id, d);
@@ -55,23 +55,23 @@ public class ModuleFile {
     public <T> void revert(ModuleSetting<T> setting) {
         String id = setting.getId();
 
-        if (setting instanceof KeybindSetting v) {
-            v.setKey(integerEntries.getOrDefault(id, v.getDefKey()));
+        if (setting instanceof KeybindSetting) {
+            ((KeybindSetting) setting).setKey(integerEntries.getOrDefault(id, ((KeybindSetting) setting).getDefKey()));
         }
-        else if (setting instanceof IntegerSetting v) {
-            v.setVal(integerEntries.getOrDefault(id, v.getDef()));
+        else if (setting instanceof IntegerSetting) {
+            ((IntegerSetting) setting).setVal(integerEntries.getOrDefault(id, ((IntegerSetting) setting).getDef()));
         }
-        else if (setting instanceof DoubleSetting v) {
-            v.setVal(doubleEntries.getOrDefault(id, v.getDef()));
+        else if (setting instanceof DoubleSetting) {
+            ((DoubleSetting) setting).setVal(doubleEntries.getOrDefault(id, ((DoubleSetting) setting).getDef()));
         }
-        else if (setting instanceof BooleanSetting v) {
-            v.setVal(booleanEntries.getOrDefault(id, v.getDef()));
+        else if (setting instanceof BooleanSetting) {
+            ((BooleanSetting) setting).setVal(booleanEntries.getOrDefault(id, ((BooleanSetting) setting).getDef()));
         }
-        else if (setting instanceof StringSetting v) {
-            v.setVal(stringEntries.getOrDefault(id, v.getDef()));
+        else if (setting instanceof StringSetting) {
+            ((StringSetting) setting).setVal(stringEntries.getOrDefault(id, ((StringSetting) setting).getDef()));
         }
-        else if (setting instanceof EnumSetting<?> v) {
-            v.setVal(Enum.valueOf(v.getDef().getClass(), stringEntries.getOrDefault(id, v.getDef().name())));
+        else if (setting instanceof EnumSetting<?>) {
+            ((EnumSetting<?>) setting).setVal(Enum.valueOf(((EnumSetting<?>) setting).getDef().getClass(), stringEntries.getOrDefault(id, ((EnumSetting<?>) setting).getDef().name())));
         }
         else {
             setting.setVal(objectEntries.getOrDefault(id, setting.getDef()));
@@ -104,11 +104,11 @@ public class ModuleFile {
 
     public Map<String, Object> getAllEntries() {
         return new HashMap<>() {{
-            this.putAll(objectEntries);
-            this.putAll(integerEntries);
-            this.putAll(doubleEntries);
-            this.putAll(booleanEntries);
-            this.putAll(stringEntries);
+            putAll(objectEntries);
+            putAll(integerEntries);
+            putAll(doubleEntries);
+            putAll(booleanEntries);
+            putAll(stringEntries);
         }};
     }
 
