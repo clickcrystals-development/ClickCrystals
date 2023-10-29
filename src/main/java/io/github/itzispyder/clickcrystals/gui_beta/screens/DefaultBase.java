@@ -105,8 +105,8 @@ public abstract class DefaultBase extends GuiScreen {
         context.getMatrices().translate(baseX, baseY, 0);
 
         // backdrop
-        RoundRectBrush.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Gray.DARK_GRAY);
-        RoundRectBrush.drawTabTop(context, 110, 10, 300, 230, 10, Gray.GRAY);
+        RoundRectBrush.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Gray.BLACK);
+        RoundRectBrush.drawTabTop(context, 110, 10, 300, 230, 10, Gray.DARK_GRAY);
 
         // navbar
         String text;
@@ -145,7 +145,7 @@ public abstract class DefaultBase extends GuiScreen {
         buttonSettings.y = baseY + caret;
 
         caret += 20;
-        RoundRectBrush.drawTabTop(context, 10, caret, 90, baseHeight - caret, 5, Gray.BLACK);
+        RoundRectBrush.drawTabTop(context, 10, caret, 90, baseHeight - caret, 5, Gray.DARK_GRAY);
         caret += 5;
         RenderUtils.drawText(context, "Client Owners: ", 15, caret, 0.65F, false);
         caret += 8;

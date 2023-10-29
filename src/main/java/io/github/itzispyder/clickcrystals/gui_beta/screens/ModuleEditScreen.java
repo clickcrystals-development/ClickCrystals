@@ -48,7 +48,7 @@ public class ModuleEditScreen extends DefaultBase {
         text = "%s%s \\ §f%s   §7§o(hover details)".formatted(isCategoryHovered(mouseX, mouseY) ? "§f" : "§7", module.getCategory().name(), module.getName());
         RenderUtils.drawText(context, text, contentX + 30, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.DARK_GRAY.argb);
+        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
 
         // description
         if (isModuleTitleHovered(mouseX, mouseY)) {

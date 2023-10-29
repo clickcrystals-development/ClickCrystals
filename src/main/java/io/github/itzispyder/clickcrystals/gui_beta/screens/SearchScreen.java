@@ -19,7 +19,7 @@ public class SearchScreen extends DefaultBase {
 
     protected final AtomicInteger buttonTranslation = new AtomicInteger(-100);
     protected final SearchBarElement searchbar = new SearchBarElement(0, 0);
-    private final GridOrganizer grid = new GridOrganizer(contentX, contentY + 21, contentWidth, 10, 1, 0);
+    private final GridOrganizer grid = new GridOrganizer(contentX, contentY + 21, contentWidth, 12, 1, 0);
 
     public SearchScreen() {
         super("Search Screen");
@@ -45,8 +45,8 @@ public class SearchScreen extends DefaultBase {
         context.getMatrices().translate(baseX, baseY, 0);
 
         // backdrop
-        RoundRectBrush.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Gray.DARK_GRAY);
-        RoundRectBrush.drawTabTop(context, 110, 10, 300, 230, 10, Gray.GRAY);
+        RoundRectBrush.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Gray.BLACK);
+        RoundRectBrush.drawTabTop(context, 110, 10, 300, 230, 10, Gray.DARK_GRAY);
 
         // navbar
         String text;
@@ -89,7 +89,7 @@ public class SearchScreen extends DefaultBase {
         }
         RenderUtils.drawText(context, text, contentX + 10, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.DARK_GRAY.argb);
+        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
     }
 
     public void filterByQuery(SearchBarElement searchbar) {

@@ -92,7 +92,7 @@ public final class ClickCrystals implements ModInitializer {
     public static final String modId   = "clickcrystals";
     public static final String prefix  = "[ClickCrystals] ";
     public static final String starter = "§7[§bClick§3Crystals§7] §r";
-    public static final String version = "1.0.5";
+    public static final String version = "1.0.6";
 
     public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
 
@@ -222,6 +222,8 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new TotemPops());
         system.addModule(new ChatPrefix());
         system.addModule(new NextBlock());
+        system.addModule(new AutoWalk());
+        system.addModule(new NoBreakDelay());
 
         // optimization
         system.addModule(new AntiCrash());

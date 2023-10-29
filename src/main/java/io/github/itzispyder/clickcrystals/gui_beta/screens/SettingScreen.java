@@ -65,7 +65,7 @@ public class SettingScreen extends DefaultBase {
         int caret = contentY + 10;
         RenderUtils.drawText(context, "Client Settings", contentX + 10, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.DARK_GRAY.argb);
+        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
     }
 
     @Override

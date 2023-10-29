@@ -9,6 +9,7 @@
     "MixinChatHud",
     "MixinChatInputSuggestor",
     "MixinClientConnection",
+    "MixinClientPlayerInteractionManager",
     "MixinClientPlayNetworkHandler",
     "MixinEntityRenderer",
     "MixinGameRenderer",
