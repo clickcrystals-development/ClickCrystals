@@ -8,10 +8,16 @@ public class AbstractElement extends GuiElement {
     private final RenderAction<AbstractElement> onRender;
     private final PressAction<AbstractElement> onPress;
 
-    public AbstractElement(int x, int y, int width, int height, RenderAction<AbstractElement> onRender, PressAction<AbstractElement> pressAction) {
+    public AbstractElement(int x, int y, int width, int height, RenderAction<AbstractElement> onRender, PressAction<AbstractElement> pressAction, String tooltip, long tooltipDelay) {
         super(x, y, width, height);
+        super.setTooltip(tooltip);
+        super.setTooltipDelay(tooltipDelay);
         this.onRender = onRender;
         this.onPress = pressAction;
+    }
+
+    public AbstractElement(int x, int y, int width, int height, RenderAction<AbstractElement> onRender, PressAction<AbstractElement> pressAction) {
+        this(x, y, width, height, onRender, pressAction, null, 500L);
     }
 
     @Override
@@ -41,11 +47,15 @@ public class AbstractElement extends GuiElement {
         private int x, y, width, height;
         private RenderAction<AbstractElement> onRender;
         private PressAction<AbstractElement> onPress;
+        private String tooltip;
+        private long tooltipDelay;
 
         public Builder() {
             onRender = (context, mouseX, mouseY, button) -> {};
             onPress = button -> {};
             x = y = width = height = 0;
+            tooltip = null;
+            tooltipDelay = 500L;
         }
 
         public Builder x(int x) {
@@ -90,8 +100,18 @@ public class AbstractElement extends GuiElement {
             return this;
         }
 
+        public Builder tooltip(String tooltip) {
+            this.tooltip = tooltip;
+            return this;
+        }
+
+        public Builder tooltipDelay(long tooltipDelay) {
+            this.tooltipDelay = tooltipDelay;
+            return this;
+        }
+
         public AbstractElement build() {
-            return new AbstractElement(x, y, width, height, onRender, onPress);
+            return new AbstractElement(x, y, width, height, onRender, onPress, tooltip, tooltipDelay);
         }
     }
 }

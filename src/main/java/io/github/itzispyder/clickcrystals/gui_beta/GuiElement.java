@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 public abstract class GuiElement implements Positionable, Global {
 
     public int x, y, width, height;
-    public boolean rendering, draggable, renderDependentOnParent;
+    public boolean rendering, draggable, renderDependentOnParent, isContainer;
     private GuiElement parent;
     private final List<GuiElement> children;
     private String tooltip;
@@ -34,6 +34,7 @@ public abstract class GuiElement implements Positionable, Global {
         this.children = new ArrayList<>();
         this.tooltip = null;
         this.tooltipDelay = 500L;
+        this.isContainer = false;
     }
 
     public void render(DrawContext context, int mouseX, int mouseY) {
@@ -286,6 +287,14 @@ public abstract class GuiElement implements Positionable, Global {
         this.renderDependentOnParent = renderDependentOnParent;
     }
 
+    public boolean isContainer() {
+        return isContainer;
+    }
+
+    public void setContainer(boolean container) {
+        isContainer = container;
+    }
+
     public boolean canRender() {
         if (rendering) {
             if (renderDependentOnParent && hasParent()) {
@@ -304,5 +313,15 @@ public abstract class GuiElement implements Positionable, Global {
         for (GuiElement child : children) {
             child.scrollOnPanel(panel, amount);
         }
+    }
+
+    public GuiElement getHoveredElement(double mouseX, double mouseY) {
+        for (int i = children.size() - 1; i >= 0; i--) {
+            GuiElement child = children.get(i);
+            if (child.isHovered((int)mouseX, (int)mouseY)) {
+                return child;
+            }
+        }
+        return null;
     }
 }

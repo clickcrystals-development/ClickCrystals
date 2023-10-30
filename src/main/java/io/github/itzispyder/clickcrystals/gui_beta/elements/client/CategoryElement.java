@@ -14,6 +14,7 @@ public class CategoryElement extends GuiElement {
 
     public CategoryElement(Category category, int x, int y) {
         super(x, y, 90, 10);
+        super.setTooltip("Filter by category: " + category.name());
         this.category = category;
     }
 

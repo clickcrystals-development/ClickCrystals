@@ -46,6 +46,7 @@ public abstract class DefaultBase extends GuiScreen {
         }
 
         buttonSearch = AbstractElement.create().dimensions(navWidth, 12)
+                .tooltip("LEFT-CLICK to search")
                 .onPress(button -> mc.setScreen(new SearchScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, 12, Gray.LIGHT);
@@ -56,6 +57,7 @@ public abstract class DefaultBase extends GuiScreen {
                     }
                 }).build();
         buttonHome = AbstractElement.create().dimensions(navWidth, 10)
+                .tooltip("Back to Home")
                 .onPress(button -> mc.setScreen(new HomeScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
@@ -65,6 +67,7 @@ public abstract class DefaultBase extends GuiScreen {
                     RenderUtils.drawText(context, "Home", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
         buttonModules = AbstractElement.create().dimensions(navWidth, 10)
+                .tooltip("Browse modules")
                 .onPress(button -> mc.setScreen(new ModuleScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
@@ -74,6 +77,7 @@ public abstract class DefaultBase extends GuiScreen {
                     RenderUtils.drawText(context, "Modules", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
         buttonNews = AbstractElement.create().dimensions(navWidth, 10)
+                .tooltip("View announcements")
                 .onPress(button -> mc.setScreen(new BulletinScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
@@ -83,6 +87,7 @@ public abstract class DefaultBase extends GuiScreen {
                     RenderUtils.drawText(context, "What's New?", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
         buttonSettings = AbstractElement.create().dimensions(navWidth, 10)
+                .tooltip("Browse settings")
                 .onPress(button -> mc.setScreen(new SettingScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {

@@ -30,7 +30,7 @@ public class ModuleEditScreen extends DefaultBase {
             }
             SettingSectionElement sse = new SettingSectionElement(section, contentX + 5, caret);
             panel.addChild(sse);
-            caret += sse.height + 2;
+            caret += sse.height + 5;
         }
         this.addChild(panel);
     }

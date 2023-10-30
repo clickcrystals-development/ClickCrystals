@@ -19,7 +19,7 @@ public class SearchScreen extends DefaultBase {
 
     protected final AtomicInteger buttonTranslation = new AtomicInteger(-100);
     protected final SearchBarElement searchbar = new SearchBarElement(0, 0);
-    private final GridOrganizer grid = new GridOrganizer(contentX, contentY + 21, contentWidth, 12, 1, 0);
+    private final GridOrganizer grid = new GridOrganizer(contentX, contentY + 21, contentWidth, 15, 1, 0);
 
     public SearchScreen() {
         super("Search Screen");

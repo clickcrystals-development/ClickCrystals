@@ -16,7 +16,7 @@ public class SettingSectionElement extends GuiElement {
         super(x, y, 285, 20);
         this.settingSection = settingSection;
 
-        int caret = y + 15;
+        int caret = y + 25;
         for (int i = 0; i < settingSection.getSettings().size(); i++) {
             ModuleSetting<?> setting = settingSection.getSettings().get(i);
             SettingElement<?> e = setting.toGuiElement(x + 5, caret);

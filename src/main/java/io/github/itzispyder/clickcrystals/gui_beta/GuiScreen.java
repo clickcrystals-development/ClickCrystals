@@ -272,7 +272,11 @@ public abstract class GuiScreen extends Screen implements Global {
     public GuiElement getHoveredElement(double mouseX, double mouseY) {
         for (int i = children.size() - 1; i >= 0; i--) {
             GuiElement child = children.get(i);
-            if (child.isHovered((int)mouseX, (int)mouseY)) {
+            if (child.isContainer() ? child.isMouseOver((int)mouseX, (int)mouseY) : child.isHovered((int)mouseX, (int)mouseY)) {
+                if (child.isContainer()) {
+                    GuiElement deepChild = child.getHoveredElement(mouseX, mouseY);
+                    return deepChild != null ? deepChild : child;
+                }
                 return child;
             }
         }

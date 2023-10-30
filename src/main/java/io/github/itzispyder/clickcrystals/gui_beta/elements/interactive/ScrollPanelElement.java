@@ -14,6 +14,7 @@ public class ScrollPanelElement extends GuiElement {
 
     public ScrollPanelElement(GuiScreen parentScreen, int x, int y, int width, int height) {
         super(x, y, width, height);
+        super.setContainer(true);
         this.parentScreen = parentScreen;
         remainingUp = remainingDown = 0;
         limitTop = y;

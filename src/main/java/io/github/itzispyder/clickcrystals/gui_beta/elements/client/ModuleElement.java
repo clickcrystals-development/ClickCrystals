@@ -11,7 +11,7 @@ public class ModuleElement extends GuiElement {
     private final Module module;
 
     public ModuleElement(Module module, int x, int y) {
-        super(x, y, 300, 12);
+        super(x, y, 300, 15);
         super.setTooltip("LEFT-CLICK to toggle, RIGHT-CLICK to edit");
         this.module = module;
     }

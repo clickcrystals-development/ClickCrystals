@@ -16,8 +16,7 @@ import java.util.List;
 public class ModuleScreen extends DefaultBase {
 
     public static Category currentCategory = Categories.MISC;
-    private final GridOrganizer grid = new GridOrganizer(contentX, contentY + 21, contentWidth, 12, 1, 0);
-
+    private final GridOrganizer grid = new GridOrganizer(contentX, contentY + 21, contentWidth, 15, 1, 0);
 
     public ModuleScreen() {
         super("Module Screen");
