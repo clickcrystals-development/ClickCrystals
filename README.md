@@ -29,21 +29,20 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 1.0.5
+Mod: 1.0.6
 
 Changelog:
   Tweaks:
-    - enemy armor hud moved from armor hud to target hud
-    - target hud shows enemy ping
-    - target hud shows enemy distance
-    - fit rotation hud into one line
+    - GUI made 3x darker (cuz I play really late at night with no sleep schedule)
+    - more beta-gui tooltips
+    - spaced out widgets for settings
   Added:
-    - pvp resource hud (shows totem count, crystal count, etc...)
-    - tooltip system
-    - added reset buttons to settings
-    - debug module: entity statuses
+    - NoBreakDelay - added back since last removal
+    - AutoWalk - holds down walk button
+    - MouseTaper - POV you taped down your mouse button to grind skyblock (that button would be disabled from manual input cuz its taped down!)
 
 Notice:
+  - Module MouseTaper does not register manual input from the button you taped down!
   - USE COMMAND ,keybinds IF YOU DON'T KNOW THE KEYBIND FOR SOMETHING
 ```
 
@@ -137,6 +136,8 @@ Notice:
 | GuiCursor        |                              Cursor center fix, etc...                               |
 | GapSwap          |          Swaps to golden apple or enchanted golden apples by clicking sword          |
 | EntityStatuses   |            Displays received entity status packets in chat for debugging             |
+| AutoWalk         |                             Holds down the walk button.                              |
+| MouseTaper       |          POV - you taped down your mouse button (for skyblock cobble gens)           |
 
 
 ## But isn't this cheating?
