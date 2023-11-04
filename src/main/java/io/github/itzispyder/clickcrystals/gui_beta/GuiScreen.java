@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui_beta;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.gui_beta.callbacks.*;
+import io.github.itzispyder.clickcrystals.gui_beta.misc.callbacks.*;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.modules.Module;

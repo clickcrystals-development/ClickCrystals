@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui_beta.callbacks;
+package io.github.itzispyder.clickcrystals.gui_beta.misc.callbacks;
 
 @FunctionalInterface
 public interface MouseMoveCallback {

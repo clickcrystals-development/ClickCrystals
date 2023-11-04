@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui_beta.organizers;
+package io.github.itzispyder.clickcrystals.gui_beta.misc.organizers;
 
 import java.util.List;
 import java.util.function.Consumer;

@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.Suggesti
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
-import io.github.itzispyder.clickcrystals.gui_beta.organizers.GridOrganizer;
+import io.github.itzispyder.clickcrystals.gui_beta.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;

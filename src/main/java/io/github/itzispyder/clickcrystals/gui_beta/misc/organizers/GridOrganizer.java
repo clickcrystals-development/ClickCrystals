@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui_beta.organizers;
+package io.github.itzispyder.clickcrystals.gui_beta.misc.organizers;
 
 import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
 import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
