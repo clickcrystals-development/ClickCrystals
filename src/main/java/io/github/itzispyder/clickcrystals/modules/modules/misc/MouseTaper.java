@@ -117,6 +117,9 @@ public class MouseTaper extends ListenerModule {
 
     @EventHandler
     public void onTick(ClientTickStartEvent e) {
+        if (shouldLockCursor.getVal()) {
+            CameraRotator.lockCursor();
+        }
         if (!(mc.crosshairTarget instanceof BlockHitResult hit)) {
             this.unpressAll();
             return;
