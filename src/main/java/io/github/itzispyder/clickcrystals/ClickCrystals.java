@@ -191,7 +191,9 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new GapSwap());
 
         // client
-        system.addModule(new DiscordRPC());
+        if (discordPresence.loadedSuccessfully) {
+            system.addModule(new DiscordRPC());
+        }
         system.addModule(new GuiBorders());
         system.addModule(new InGameHuds());
         system.addModule(new SilkTouch());
@@ -262,15 +264,20 @@ public final class ClickCrystals implements ModInitializer {
     }
 
     public void initRpc() {
-        discordWorker = new Thread(() -> {
-            while (!Thread.currentThread().isInterrupted()) {
-                discordPresence.api.Discord_RunCallbacks();
-                try {
-                    Thread.sleep(2000);
+        if (discordPresence.loadedSuccessfully) {
+            discordWorker = new Thread(() -> {
+                while (!Thread.currentThread().isInterrupted()) {
+                    discordPresence.api.Discord_RunCallbacks();
+                    try {
+                        Thread.sleep(2000);
+                    }
+                    catch (InterruptedException ignore) {}
                 }
-                catch (InterruptedException ignore) {}
-            }
-        });
-        discordWorker.start();
+            });
+            discordWorker.start();
+        }
+        else {
+            system.println("X<- Discord connection FAILED");
+        }
     }
 }

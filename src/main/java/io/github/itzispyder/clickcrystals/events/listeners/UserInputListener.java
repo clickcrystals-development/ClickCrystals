@@ -90,29 +90,36 @@ public class UserInputListener implements Listener {
 
     private void handleConfigSave(SetScreenEvent e) {
         if (e.getScreen() instanceof GameMenuScreen) {
+            system.println("<- saving data...");
+            config.saveKeybinds();
+            config.saveHuds();
+            config.saveModules();
+            system.println("<- saving config...");
             config.save();
         }
     }
 
     private void handleDiscordPresence(SetScreenEvent e) {
-        Screen s = e.getScreen();
+        if (discordPresence.loadedSuccessfully) {
+            Screen s = e.getScreen();
 
-        if (s == null) {
-            if (mc.player != null) {
-                discordPresence.setState(mc.isInSingleplayer() ? "In singleplayer world" : "In multiplayer server");
+            if (s == null) {
+                if (mc.player != null) {
+                    discordPresence.setState(mc.isInSingleplayer() ? "In singleplayer world" : "In multiplayer server");
+                }
+                else {
+                    discordPresence.setState("Looking at the title screen");
+                }
+            }
+            else if (s instanceof ModuleEditScreen mss) {
+                discordPresence.setState("Editing module " + mss.getModule().getName() + "...");
             }
             else {
-                discordPresence.setState("Looking at the title screen");
+                discordPresence.setState(SCREEN_STATES.getOrDefault(s.getClass(), "Clicking Crystals..."));
             }
-        }
-        else if (s instanceof ModuleEditScreen mss) {
-            discordPresence.setState("Editing module " + mss.getModule().getName() + "...");
-        }
-        else {
-            discordPresence.setState(SCREEN_STATES.getOrDefault(s.getClass(), "Clicking Crystals..."));
-        }
 
-        DiscordRPC.syncRPC();
+            DiscordRPC.syncRPC();
+        }
     }
 
     private void handleKeybindings(KeyPressEvent e) {
