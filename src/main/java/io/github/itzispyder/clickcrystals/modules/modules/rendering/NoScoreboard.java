@@ -24,7 +24,7 @@ public class NoScoreboard extends Module implements Listener {
     );
 
     public NoScoreboard() {
-        super("no-scoreboard", Categories.RENDERING, "Disables the scoreboard sidebar display render");
+        super("no-scoreboard", Categories.RENDER, "Disables the scoreboard sidebar display render");
     }
 
     @Override

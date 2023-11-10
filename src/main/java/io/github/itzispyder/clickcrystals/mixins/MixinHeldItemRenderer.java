@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.misc.SlowSwing;
+import io.github.itzispyder.clickcrystals.modules.modules.rendering.SlowSwing;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.ViewModel;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;

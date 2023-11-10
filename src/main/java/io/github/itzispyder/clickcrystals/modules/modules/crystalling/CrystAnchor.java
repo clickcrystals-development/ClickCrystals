@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.anchoring;
+package io.github.itzispyder.clickcrystals.modules.modules.crystalling;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -36,7 +36,7 @@ public class CrystAnchor extends Module implements Listener {
     );
 
     public CrystAnchor() {
-        super("crystal-anchor", Categories.ANCHORING,"Right click the ground with a crystal to switch to your respawn anchor.");
+        super("crystal-anchor", Categories.CRYSTAL,"Right click the ground with a crystal to switch to your respawn anchor.");
     }
 
     @Override

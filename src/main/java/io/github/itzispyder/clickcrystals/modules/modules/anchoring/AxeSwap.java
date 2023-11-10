@@ -12,7 +12,7 @@ import net.minecraft.item.AxeItem;
 public class AxeSwap extends Module implements Listener {
 
     public AxeSwap() {
-        super("axe-swap", Categories.ANCHORING, "Switch to axe if hitting a shielding opponent with a sword.");
+        super("axe-swap", Categories.PVP, "Switch to axe if hitting a shielding opponent with a sword.");
     }
 
     @Override

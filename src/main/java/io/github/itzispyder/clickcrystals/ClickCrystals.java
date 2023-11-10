@@ -21,12 +21,15 @@ import io.github.itzispyder.clickcrystals.gui_beta.hud.moveables.*;
 import io.github.itzispyder.clickcrystals.gui_beta.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
-import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.AxeSwap;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.GapSwap;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.ShieldSwitch;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.SwordSwap;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
-import io.github.itzispyder.clickcrystals.modules.modules.minecart.BowSwap;
-import io.github.itzispyder.clickcrystals.modules.modules.minecart.RailSwap;
-import io.github.itzispyder.clickcrystals.modules.modules.minecart.TntSwap;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.BowSwap;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.RailSwap;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.TntSwap;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
@@ -183,12 +186,13 @@ public final class ClickCrystals implements ModInitializer {
 
     public void initModules() {
         // anchors
-        system.addModule(new AnchorSwitch());
         system.addModule(new AxeSwap());
-        system.addModule(new CrystAnchor());
         system.addModule(new ShieldSwitch());
         system.addModule(new SwordSwap());
         system.addModule(new GapSwap());
+        system.addModule(new RailSwap());
+        system.addModule(new TntSwap());
+        system.addModule(new BowSwap());
 
         // client
         if (discordPresence.loadedSuccessfully) {
@@ -200,17 +204,14 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new EntityStatuses());
 
         // crystalling
+        system.addModule(new CrystAnchor());
+        system.addModule(new AnchorSwitch());
         system.addModule(new ClickCrystal());
         system.addModule(new ClientCryst());
         system.addModule(new CrystSwitch());
         system.addModule(new ObiSwitch());
         system.addModule(new PearlSwitch());
         system.addModule(new GuiCursor());
-
-        // minecart
-        system.addModule(new RailSwap());
-        system.addModule(new TntSwap());
-        system.addModule(new BowSwap());
 
         // misc
         system.addModule(new ArmorHud());
@@ -219,7 +220,6 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new CrystPerSec());
         system.addModule(new ModulesList());
         system.addModule(new MsgResend());
-        system.addModule(new SlowSwing());
         system.addModule(new ToolSwitcher());
         system.addModule(new TotemPops());
         system.addModule(new ChatPrefix());
@@ -234,9 +234,10 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new NoItemBounce());
         system.addModule(new NoLoading());
         system.addModule(new NoResPack());
+        system.addModule(new FullBright());
 
         // rendering
-        system.addModule(new FullBright());
+        system.addModule(new SlowSwing());
         system.addModule(new NoHurtCam());
         system.addModule(new NoOverlay());
         system.addModule(new TotemOverlay());
@@ -264,7 +265,10 @@ public final class ClickCrystals implements ModInitializer {
     }
 
     public void initRpc() {
-        if (discordPresence.loadedSuccessfully) {
+        try {
+            if (!discordPresence.loadedSuccessfully) {
+                throw new IllegalStateException();
+            }
             discordWorker = new Thread(() -> {
                 while (!Thread.currentThread().isInterrupted()) {
                     discordPresence.api.Discord_RunCallbacks();
@@ -275,8 +279,10 @@ public final class ClickCrystals implements ModInitializer {
                 }
             });
             discordWorker.start();
+            discordPresence.loadedSuccessfully = true;
         }
-        else {
+        catch (Exception ex) {
+            discordPresence.loadedSuccessfully = false;
             system.println("X<- Discord connection FAILED");
         }
     }

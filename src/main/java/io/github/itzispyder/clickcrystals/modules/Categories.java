@@ -9,13 +9,12 @@ public abstract class Categories {
 
     private static final LinkedHashMap<String,Category> categories = new LinkedHashMap<>();
     public static final Category
-            CRYSTALLING      = register("Crystal", "clickcrystals:textures/display/categories/crystal.png"),
-            ANCHORING        = register("Anchor",  "clickcrystals:textures/display/categories/anchor.png"),
-            MINECART         = register("Cart",    "clickcrystals:textures/display/categories/cart.png"),
+            CRYSTAL = register("Crystal", "clickcrystals:textures/display/categories/crystal.png"),
+            PVP = register("PvP",  "clickcrystals:textures/display/categories/pvp.png"),
             MISC             = register("Misc",    "clickcrystals:textures/display/categories/misc.png"),
-            RENDERING        = register("Render",  "clickcrystals:textures/display/categories/render.png"),
-            OPTIMIZATION     = register("Lag",     "clickcrystals:textures/display/categories/lag.png"),
-            CLICKCRYSTALS    = register("Client",  "clickcrystals:textures/display/categories/client.png");
+            RENDER = register("Render",  "clickcrystals:textures/display/categories/render.png"),
+            LAG = register("Lag",     "clickcrystals:textures/display/categories/lag.png"),
+            CLIENT = register("Client",  "clickcrystals:textures/display/categories/client.png");
 
     private static Category register(String name, String texPath) {
         Category c = new Category(name, new Identifier(texPath));

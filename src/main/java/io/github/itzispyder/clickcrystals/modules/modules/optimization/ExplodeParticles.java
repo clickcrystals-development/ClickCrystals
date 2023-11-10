@@ -35,7 +35,7 @@ public class ExplodeParticles extends Module implements Listener {
     );
 
     public ExplodeParticles() {
-        super("explode-particles", Categories.OPTIMIZATION, "Turns off explosion particles for smoother crystal pvp!");
+        super("explode-particles", Categories.LAG, "Turns off explosion particles for smoother crystal pvp!");
     }
 
     @Override

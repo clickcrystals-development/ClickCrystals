@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.minecart;
+package io.github.itzispyder.clickcrystals.modules.modules.anchoring;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -22,7 +22,7 @@ public class RailSwap extends Module implements Listener {
     );
 
     public RailSwap() {
-        super("rail-swap", Categories.MINECART, "Swaps to rails after shooting bow.");
+        super("rail-swap", Categories.PVP, "Swaps to rails after shooting bow.");
     }
 
     @Override

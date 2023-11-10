@@ -24,7 +24,7 @@ public class GhostTotem extends Module implements Listener {
     );
 
     public GhostTotem() {
-        super("ghost-totem", Categories.RENDERING, "Renders a totem in your hand upon dying. Will not work if AutoRespawn is enabled!");
+        super("ghost-totem", Categories.RENDER, "Renders a totem in your hand upon dying. Will not work if AutoRespawn is enabled!");
     }
 
     @Override

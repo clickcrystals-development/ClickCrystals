@@ -41,7 +41,7 @@ public class Zoom extends Module implements Listener {
     private int modifier;
 
     public Zoom() {
-        super("zoom", Categories.RENDERING, "Changes your FOV.");
+        super("zoom", Categories.RENDER, "Changes your FOV.");
     }
 
     @Override

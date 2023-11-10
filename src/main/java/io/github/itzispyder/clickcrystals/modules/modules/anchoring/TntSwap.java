@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.minecart;
+package io.github.itzispyder.clickcrystals.modules.modules.anchoring;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -29,7 +29,7 @@ public class TntSwap extends Module implements Listener, PostActionable {
     public static final List<PostAction> actions = new ArrayList<>();
 
     public TntSwap() {
-        super("tnt-swap", Categories.MINECART, "Swaps to tnt after placing rails.");
+        super("tnt-swap", Categories.PVP, "Swaps to tnt after placing rails.");
     }
 
     @Override

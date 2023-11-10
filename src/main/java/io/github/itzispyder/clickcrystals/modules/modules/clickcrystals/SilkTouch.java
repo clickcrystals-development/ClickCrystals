@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.util.ChatUtils;
 public class SilkTouch extends Module {
 
     public SilkTouch() {
-        super("silk-touch", Categories.CLICKCRYSTALS,"\"Is there a silk touch module?\" - I_Got_You_Dead");
+        super("silk-touch", Categories.CLIENT,"\"Is there a silk touch module?\" - I_Got_You_Dead");
     }
 
     @Override

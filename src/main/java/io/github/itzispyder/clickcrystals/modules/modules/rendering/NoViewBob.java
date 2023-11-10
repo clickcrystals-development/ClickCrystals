@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class NoViewBob extends Module {
 
     public NoViewBob() {
-        super("no-view-bob", Categories.RENDERING, "Turns off view bob.");
+        super("no-view-bob", Categories.RENDER, "Turns off view bob.");
     }
 
     @Override

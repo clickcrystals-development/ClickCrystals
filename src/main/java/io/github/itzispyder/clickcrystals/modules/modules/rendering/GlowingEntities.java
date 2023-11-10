@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class GlowingEntities extends Module {
 
     public GlowingEntities() {
-        super("glowing-entities", Categories.RENDERING, "Having trouble seeing entities in the dark?");
+        super("glowing-entities", Categories.RENDER, "Having trouble seeing entities in the dark?");
     }
 
     @Override

@@ -10,7 +10,7 @@ import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
 public class NoLoading extends Module implements Listener {
 
     public NoLoading() {
-        super("no-load-screen", Categories.OPTIMIZATION,"Prevents some loading screens from rendering.");
+        super("no-load-screen", Categories.LAG,"Prevents some loading screens from rendering.");
     }
 
     @Override

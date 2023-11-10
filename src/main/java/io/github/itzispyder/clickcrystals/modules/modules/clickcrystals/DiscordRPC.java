@@ -20,7 +20,7 @@ public class DiscordRPC extends Module {
     );
 
     public DiscordRPC() {
-        super("discord-rpc", Categories.CLICKCRYSTALS, "Show off your new mod to your friends in Discord!");
+        super("discord-rpc", Categories.CLIENT, "Show off your new mod to your friends in Discord!");
     }
 
     @Override

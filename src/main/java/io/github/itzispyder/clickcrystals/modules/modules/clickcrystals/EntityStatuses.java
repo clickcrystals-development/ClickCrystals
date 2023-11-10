@@ -13,7 +13,7 @@ import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 public class EntityStatuses extends ListenerModule {
 
     public EntityStatuses() {
-        super("entity-statuses", Categories.CLICKCRYSTALS, "DEBUG: Sends received EntityStatusPackets in chat");
+        super("entity-statuses", Categories.CLIENT, "DEBUG: Sends received EntityStatusPackets in chat");
     }
 
     @EventHandler

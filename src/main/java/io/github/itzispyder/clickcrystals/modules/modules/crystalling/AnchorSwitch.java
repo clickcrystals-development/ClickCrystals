@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.anchoring;
+package io.github.itzispyder.clickcrystals.modules.modules.crystalling;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -21,7 +21,7 @@ import net.minecraft.util.math.Direction;
 public class AnchorSwitch extends Module implements Listener {
 
     public AnchorSwitch() {
-        super("anchor-switch", Categories.ANCHORING,"Whenever you place an anchor, switch to glowstone then back after it has been charged.");
+        super("anchor-switch", Categories.CRYSTAL,"Whenever you place an anchor, switch to glowstone then back after it has been charged.");
     }
 
     @Override

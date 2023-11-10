@@ -63,7 +63,7 @@ public class AntiCrash extends Module implements Listener {
     );
 
     public AntiCrash() {
-        super("anti-crash", Categories.OPTIMIZATION,"Prevents various ways servers can crash your client. Be sure to report new crashes to us so we can add more!");
+        super("anti-crash", Categories.LAG,"Prevents various ways servers can crash your client. Be sure to report new crashes to us so we can add more!");
     }
 
     @Override
