@@ -122,6 +122,7 @@ public abstract class GuiElement implements Positionable, Global {
 
     public void addChild(GuiElement child) {
         if (child != null && child != this) {
+            child.parent = this;
             children.add(child);
         }
     }
@@ -320,6 +321,23 @@ public abstract class GuiElement implements Positionable, Global {
             GuiElement child = children.get(i);
             if (child.isHovered((int)mouseX, (int)mouseY)) {
                 return child;
+            }
+        }
+        return null;
+    }
+
+    public ScrollPanelElement trackScrollPanel() {
+        GuiElement parent = getParent();
+        if (parent == null) {
+            return null;
+        }
+        if (parent instanceof ScrollPanelElement p) {
+            return p;
+        }
+
+        while ((parent = parent.getParent()) != null) {
+            if (parent instanceof ScrollPanelElement p) {
+                return p;
             }
         }
         return null;

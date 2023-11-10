@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui_beta.screens;
 
 import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.SearchBarElement;
-import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.SearchResultListElement;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.SearchResultsElement;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.SuggestionElement;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
@@ -29,7 +29,7 @@ public class HomeScreen extends GuiScreen {
     public final SearchBarElement searchBar = new SearchBarElement(0, 0, 300) {{
         this.height = 15;
     }};
-    public final SearchResultListElement searchResults = new SearchResultListElement(searchBar);
+    public final SearchResultsElement searchResults = new SearchResultsElement(searchBar);
     protected final AtomicInteger titleTranslation = new AtomicInteger(-50);
     public final List<SuggestionElement> suggestions = new ArrayList<>();
 
