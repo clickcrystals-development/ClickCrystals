@@ -6,6 +6,9 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.gui_beta.ClickType;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.PlayerUtils;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
@@ -21,19 +24,51 @@ public class OnEventCmd extends ScriptCommand {
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
         EventType type = args.get(0).enumValue(EventType.class, null);
-        String toExecute = args.getAll(2).stringValue();
 
         switch (type) {
-            case LEFT_CLICK, RIGHT_CLICK, MIDDLE_CLICK, LEFT_RELEASE, RIGHT_RELEASE, MIDDLE_RELEASE -> passClick(args, type, toExecute);
+            case LEFT_CLICK, RIGHT_CLICK, MIDDLE_CLICK, LEFT_RELEASE, RIGHT_RELEASE, MIDDLE_RELEASE -> passClick(args, type);
+            case BLOCK_PLACE, BLOCK_BREAK, BLOCK_INTERACT, BLOCK_PUNCH -> passBlock(args, type);
+            case TICK -> passTick(args);
         }
     }
 
-    public void passClick(ScriptArgs args, EventType eventType, String toExecute) {
+    public void passTick(ScriptArgs args) {
+        ModuleCmd.runOnCurrentScriptModule(m -> m.tickListeners.add(event -> {
+            ClickScript.executeOneLine(args.getAll(1).stringValue());
+        }));
+    }
+
+    public void passBlock(ScriptArgs args, EventType eventType) {
+        switch (eventType) {
+            case BLOCK_BREAK -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockBreakListeners.add(event -> {
+                if (parseBlockPredicate(args.get(1).stringValue()).test(event.getState())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }));
+            case BLOCK_PLACE -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockPlaceListeners.add(event -> {
+                if (parseBlockPredicate(args.get(1).stringValue()).test(event.getState())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }));
+            case BLOCK_PUNCH -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockPunchListeners.add((pos, dir) -> {
+                if (PlayerUtils.playerNotNull() && parseBlockPredicate(args.get(1).stringValue()).test(PlayerUtils.getWorld().getBlockState(pos))) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }));
+            case BLOCK_INTERACT -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockInteractListeners.add((hit, hand) -> {
+                if (PlayerUtils.playerNotNull() && parseBlockPredicate(args.get(1).stringValue()).test(PlayerUtils.getWorld().getBlockState(hit.getBlockPos()))) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }));
+        }
+    }
+
+    public void passClick(ScriptArgs args, EventType eventType) {
         // ex.          on left_click #sword switch :golden_apple
         ModuleCmd.runOnCurrentScriptModule(m -> m.clickListeners.add(event -> {
-            if (parsePredicate(args.get(1).stringValue()).test(HotbarUtils.getHand())) {
+            if (parseItemPredicate(args.get(1).stringValue()).test(HotbarUtils.getHand())) {
                 if (matchMouseClick(eventType, event)) {
-                    ClickScript.executeOneLine(toExecute);
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
                 }
             }
         }));
@@ -72,7 +107,7 @@ public class OnEventCmd extends ScriptCommand {
         return false;
     }
 
-    public static Predicate<ItemStack> parsePredicate(String arg) {
+    public static Predicate<ItemStack> parseItemPredicate(String arg) {
         if (arg == null || arg.length() <= 1) {
             return item -> false;
         }
@@ -86,12 +121,45 @@ public class OnEventCmd extends ScriptCommand {
         return item -> false;
     }
 
+    public static Predicate<BlockState> parseBlockPredicate(String arg) {
+        if (arg == null || arg.length() <= 1) {
+            return block -> false;
+        }
+        else if (arg.startsWith("#")) {
+            return block -> block.getBlock().getTranslationKey().contains(arg.substring(1));
+        }
+        else if (arg.startsWith(":")) {
+            Identifier id = new Identifier("minecraft", arg.substring(1));
+            return block -> block.getBlock() == Registries.BLOCK.get(id);
+        }
+        return block -> false;
+    }
+
+    public static Predicate<Entity> parseEntityPredicate(String arg) {
+        if (arg == null || arg.length() <= 1) {
+            return ent -> false;
+        }
+        else if (arg.startsWith("#")) {
+            return ent -> ent.getType().getTranslationKey().contains(arg.substring(1));
+        }
+        else if (arg.startsWith(":")) {
+            Identifier id = new Identifier("minecraft", arg.substring(1));
+            return ent -> ent.getType() == Registries.ENTITY_TYPE.get(id);
+        }
+        return ent -> false;
+    }
+
     public enum EventType {
         RIGHT_CLICK,
         LEFT_CLICK,
         MIDDLE_CLICK,
         RIGHT_RELEASE,
         LEFT_RELEASE,
-        MIDDLE_RELEASE
+        MIDDLE_RELEASE,
+        BLOCK_PLACE,
+        BLOCK_BREAK,
+        BLOCK_PUNCH,
+        BLOCK_INTERACT,
+        TICK
     }
 }

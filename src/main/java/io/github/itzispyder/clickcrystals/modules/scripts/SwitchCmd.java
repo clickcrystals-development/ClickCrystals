@@ -12,6 +12,6 @@ public class SwitchCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        HotbarUtils.search(OnEventCmd.parsePredicate(args.get(0).stringValue()));
+        HotbarUtils.search(OnEventCmd.parseItemPredicate(args.get(0).stringValue()));
     }
 }
