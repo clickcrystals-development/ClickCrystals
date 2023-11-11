@@ -26,14 +26,17 @@ public class OnEventCmd extends ScriptCommand {
         switch (type) {
             case LEFT_CLICK, RIGHT_CLICK, MIDDLE_CLICK, LEFT_RELEASE, RIGHT_RELEASE, MIDDLE_RELEASE -> passClick(args, type);
             case PLACE_BLOCK, BREAK_BLOCK, INTERACT_BLOCK, PUNCH_BLOCK -> passBlock(args, type);
-            case TICK -> passTick(args);
-        }
-    }
 
-    public void passTick(ScriptArgs args) {
-        ModuleCmd.runOnCurrentScriptModule(m -> m.tickListeners.add(event -> {
-            ClickScript.executeOneLine(args.getAll(1).stringValue());
-        }));
+            case TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.tickListeners.add(event -> {
+                ClickScript.executeOneLine(args.getAll(1).stringValue());
+            }));
+            case ITEM_USE -> ModuleCmd.runOnCurrentScriptModule(m -> m.itemUseListeners.add(event -> {
+                ClickScript.executeOneLine(args.getAll(1).stringValue());
+            }));
+            case ITEM_CONSUME -> ModuleCmd.runOnCurrentScriptModule(m -> m.itemConsumeListeners.add(event -> {
+                ClickScript.executeOneLine(args.getAll(1).stringValue());
+            }));
+        }
     }
 
     public void passBlock(ScriptArgs args, EventType eventType) {
@@ -148,6 +151,8 @@ public class OnEventCmd extends ScriptCommand {
         BREAK_BLOCK,
         PUNCH_BLOCK,
         INTERACT_BLOCK,
-        TICK
+        TICK,
+        ITEM_USE,
+        ITEM_CONSUME
     }
 }

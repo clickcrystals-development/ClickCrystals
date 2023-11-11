@@ -4,9 +4,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
-import io.github.itzispyder.clickcrystals.events.events.world.BlockBreakEvent;
-import io.github.itzispyder.clickcrystals.events.events.world.BlockPlaceEvent;
-import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
+import io.github.itzispyder.clickcrystals.events.events.world.*;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
@@ -29,6 +27,8 @@ public class ScriptedModule extends ListenerModule {
     public final List<BlockBreakListener> blockBreakListeners = new ArrayList<>();
     public final List<BlockPunchListener> blockPunchListeners = new ArrayList<>();
     public final List<BlockInteractListener> blockInteractListeners = new ArrayList<>();
+    public final List<ItemUseListener> itemUseListeners = new ArrayList<>();
+    public final List<ItemConsumeListener> itemConsumeListeners = new ArrayList<>();
 
     public ScriptedModule(String name, String description) {
         super(name, Categories.SCRIPTED, description);
@@ -69,6 +69,20 @@ public class ScriptedModule extends ListenerModule {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         for (BlockBreakListener l : blockBreakListeners) {
+            l.pass(e);
+        }
+    }
+
+    @EventHandler
+    public void onItemUse(ItemUseEvent e) {
+        for (ItemUseListener l : itemUseListeners) {
+            l.pass(e);
+        }
+    }
+
+    @EventHandler
+    public void onItemConsume(ItemConsumeEvent e) {
+        for (ItemConsumeListener l : itemConsumeListeners) {
             l.pass(e);
         }
     }
@@ -117,6 +131,16 @@ public class ScriptedModule extends ListenerModule {
     @FunctionalInterface
     public interface BlockInteractListener {
         void pass(BlockHitResult hit, Hand hand);
+    }
+
+    @FunctionalInterface
+    public interface ItemUseListener {
+        void pass(ItemUseEvent e);
+    }
+
+    @FunctionalInterface
+    public interface ItemConsumeListener {
+        void pass(ItemConsumeEvent e);
     }
 
     public static void runModuleScripts() {
