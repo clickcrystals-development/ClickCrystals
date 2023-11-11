@@ -16,10 +16,19 @@ public class ClickScript {
             System.exit(args.get(0).intValue());
         }));
         this.put("print", ScriptCommand.create("print", (command, line, args) -> {
-            System.out.print(args.getAll().stringValue());
+            System.out.println(args.getAll().stringValue());
         }));
         this.put("throw", ScriptCommand.create("throw", (command, line, args) -> {
             throw new RuntimeException(args.getAll().stringValue());
+        }));
+        this.put("execute", ScriptCommand.create("execute", (command, line, args) -> {
+            ClickScript.executeOneLine(args.getAll().stringValue());
+        }));
+        this.put("loop", ScriptCommand.create("loop", (command, line, args) -> {
+            int times = args.get(0).intValue();
+            for (int i = 0; i < times; i++) {
+                ClickScript.executeOneLine(args.getAll(1).stringValue());
+            }
         }));
     }};
     private static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
@@ -79,7 +88,7 @@ public class ClickScript {
 
     public void execute() {
         try {
-            if (!file.exists()) {
+            if (!file.exists() || !path.endsWith(".ccs")) {
                 throw new ScriptNotFoundException(this);
             }
             FileReader fr = new FileReader(file);

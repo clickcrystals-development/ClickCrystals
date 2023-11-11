@@ -39,7 +39,7 @@ public class SettingScreen extends DefaultBase {
         caret += clientBindsElement.height + 5;
 
         // module keybind group
-        List<Module> modules = system.modules().values().stream()
+        List<Module> modules = system.collectModules().stream()
                 .sorted(Comparator.comparing(Module::getId))
                 .toList();
         SettingSection moduleBindsSection = new SettingSection("module-keybinds");

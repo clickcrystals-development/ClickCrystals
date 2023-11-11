@@ -13,7 +13,8 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
 
     public static int totalEnabled;
     private ModuleData data;
-    private final String name, description, id;
+    private final String name, id;
+    private String description;
     private final Category category;
 
     public Module(String name, Category category, String description) {
@@ -62,6 +63,10 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
     public String getDescriptionLimited() {
         if (description.length() <= 35) return description;
         return description.substring(0, 35) + "...";
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Category getCategory() {

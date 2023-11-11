@@ -42,7 +42,7 @@ public class ModuleScreen extends DefaultBase {
     public void filterByCategory(Category category) {
         grid.clearPanel();
         grid.clear();
-        List<Module> list = system.modules().values().stream()
+        List<Module> list = system.collectModules().stream()
                 .filter(m -> m.getCategory() == category)
                 .sorted(Comparator.comparing(Module::getId))
                 .toList();

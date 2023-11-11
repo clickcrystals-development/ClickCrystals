@@ -11,13 +11,13 @@ import java.util.function.Consumer;
  */
 public class EventBus {
 
-    private final Map<Class<? extends Listener>, Listener> subscribedListeners;
+    private final Set<Listener> subscribedListeners;
 
     /**
      * Constructs a new event bus for handling events
      */
     public EventBus() {
-        this.subscribedListeners = new HashMap<>();
+        this.subscribedListeners = new HashSet<>();
     }
 
     /**
@@ -26,8 +26,7 @@ public class EventBus {
      */
     public void subscribe(Listener listener) {
         if (listener == null) return;
-        subscribedListeners.remove(listener.getClass());
-        subscribedListeners.put(listener.getClass(),listener);
+        subscribedListeners.add(listener);
     }
 
     /**
@@ -36,7 +35,7 @@ public class EventBus {
      */
     public void unsubscribe(Listener listener) {
         if (listener == null) return;
-        subscribedListeners.remove(listener.getClass());
+        subscribedListeners.remove(listener);
     }
 
     /**
@@ -46,7 +45,7 @@ public class EventBus {
      * @param <E> event type
      */
     public <E extends Event> boolean pass(E event) {
-        listeners().values().forEach(listener -> {
+        listeners().forEach(listener -> {
             List<Method> methods = Arrays
                     .stream(listener.getClass().getDeclaredMethods())
                     .filter(Objects::nonNull)
@@ -96,7 +95,7 @@ public class EventBus {
      * Returns a map of registered events by the event bus
      * @return map
      */
-    public HashMap<Class<? extends Listener>, Listener> listeners() {
-        return new HashMap<>(subscribedListeners);
+    public Set<Listener> listeners() {
+        return new HashSet<>(subscribedListeners);
     }
 }

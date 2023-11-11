@@ -44,7 +44,7 @@ public class Config implements JsonSerializable<Config> {
     }
 
     public void saveModules() {
-        system.modules().values().forEach(this::saveModule);
+        system.collectModules().forEach(this::saveModule);
     }
 
     public void saveHuds() {
@@ -70,7 +70,7 @@ public class Config implements JsonSerializable<Config> {
     }
 
     public void loadModules() {
-        for (Module m : system.modules().values()) {
+        for (Module m : system.collectModules()) {
             ModuleFile f = moduleEntries.getOrDefault(m.getId(), new ModuleFile(m));
 
             if (f == null) {

@@ -47,8 +47,8 @@ public class CCDebugCommand extends Command {
                 })
                 .then(literal("listeners")
                         .executes(context -> {
-                            List<String> activeListeners = system.listeners().values().stream().map(l -> l.getClass().getSimpleName()).toList();
-                            List<String> moduleListeners = system.listeners().values().stream().filter(l -> l instanceof Module).map(l -> l.getClass().getSimpleName()).toList();
+                            List<String> activeListeners = system.listeners().stream().map(l -> l.getClass().getSimpleName()).toList();
+                            List<String> moduleListeners = system.listeners().stream().filter(l -> l instanceof Module).map(l -> l.getClass().getSimpleName()).toList();
 
                             ChatUtils.sendBlank(2);
                             ChatUtils.sendPrefixMessage("Listener Info:");

@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.gui_beta.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
+import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
@@ -37,6 +38,7 @@ public class ClickCrystalsSystem implements Serializable {
     public final Randomizer random = new Randomizer();
     public final Scheduler scheduler = new Scheduler();
     private final Map<Class<? extends Module>, Module> modules;
+    private final Map<String, ScriptedModule> scriptedModules;
     private final Map<Class<? extends Command>, Command> commands;
     private final Map<Class<? extends Hud>, Hud> huds;
     private final Set<Keybind> keybinds;
@@ -44,6 +46,7 @@ public class ClickCrystalsSystem implements Serializable {
     public ClickCrystalsSystem() {
         this.commands = new HashMap<>();
         this.modules = new HashMap<>();
+        this.scriptedModules = new HashMap<>();
         this.huds = new HashMap<>();
         this.keybinds = new HashSet<>();
     }
@@ -74,7 +77,12 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void addModule(Module module) {
         if (module == null) return;
-        modules.put(module.getClass(),module);
+        if (module instanceof ScriptedModule scripted) {
+            scriptedModules.put(scripted.getId(), scripted);
+        }
+        else {
+            modules.put(module.getClass(),module);
+        }
     }
 
     public void addHud(Hud hud) {
@@ -103,11 +111,18 @@ public class ClickCrystalsSystem implements Serializable {
         return new HashMap<>(modules);
     }
 
+    public List<Module> collectModules() {
+        return new ArrayList<>() {{
+            this.addAll(modules.values());
+            this.addAll(scriptedModules.values());
+        }};
+    }
+
     public Map<Class<? extends Command>, Command> commands() {
         return new HashMap<>(commands);
     }
 
-    public Map<Class<? extends Listener>, Listener> listeners() {
+    public Set<Listener> listeners() {
         return eventBus.listeners();
     }
 

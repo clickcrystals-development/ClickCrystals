@@ -26,7 +26,7 @@ public class ModuleListTextHud extends Hud {
         if (!hudModule.isEnabled()) return;
 
         TextRenderer tr = mc.textRenderer;
-        List<Module> modules = new ArrayList<>(system.modules().values().stream()
+        List<Module> modules = new ArrayList<>(system.collectModules().stream()
                 .filter(Module::isEnabled)
                 .sorted(Comparator.comparing(module -> (mc.textRenderer.getWidth(((Module) module).getId()))).reversed())
                 .toList());

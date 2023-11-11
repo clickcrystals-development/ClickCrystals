@@ -123,7 +123,7 @@ public abstract class DefaultBase extends GuiScreen {
         caret += 10;
         RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
         caret += 10;
-        text = "Modules (%s)".formatted(system.modules().size());
+        text = "Modules (%s)".formatted(system.collectModules().size());
         RenderUtils.drawText(context, text, 10, caret, 0.65F, false);
 
         for (CategoryElement ce : navlistModules) {

@@ -18,7 +18,7 @@ public class EntityStatuses extends ListenerModule {
 
     @EventHandler
     public void onReceiveStatus(PacketReceiveEvent e) {
-        if (e.getPacket() instanceof EntityStatusS2CPacket packet) {
+        if (e.getPacket() instanceof EntityStatusS2CPacket packet && PlayerUtils.playerNotNull()) {
             Entity ent = packet.getEntity(PlayerUtils.getWorld());
             int status = packet.getStatus();
             String name = ent instanceof PlayerEntity p ? p.getName().getString() : ent.getType().getName().getString();

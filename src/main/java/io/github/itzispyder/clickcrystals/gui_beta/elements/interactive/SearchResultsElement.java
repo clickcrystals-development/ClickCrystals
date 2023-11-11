@@ -61,7 +61,7 @@ public class SearchResultsElement extends GuiElement {
             this.setRendering(screen.selected == searchbar);
         }
 
-        List<Module> list = system.modules().values().stream()
+        List<Module> list = system.collectModules().stream()
                 .filter(m -> m.getSearchQuery().contains(searchbar.getLowercaseQuery()))
                 .sorted(Comparator.comparing(Module::getId))
                 .toList();

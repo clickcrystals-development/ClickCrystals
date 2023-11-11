@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals;
 
+import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.client.system.DiscordPresence;
@@ -21,18 +22,14 @@ import io.github.itzispyder.clickcrystals.gui_beta.hud.moveables.*;
 import io.github.itzispyder.clickcrystals.gui_beta.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
-import io.github.itzispyder.clickcrystals.modules.modules.anchoring.AxeSwap;
-import io.github.itzispyder.clickcrystals.modules.modules.anchoring.GapSwap;
-import io.github.itzispyder.clickcrystals.modules.modules.anchoring.ShieldSwitch;
-import io.github.itzispyder.clickcrystals.modules.modules.anchoring.SwordSwap;
+import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
-import io.github.itzispyder.clickcrystals.modules.modules.anchoring.BowSwap;
-import io.github.itzispyder.clickcrystals.modules.modules.anchoring.RailSwap;
-import io.github.itzispyder.clickcrystals.modules.modules.anchoring.TntSwap;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
+import io.github.itzispyder.clickcrystals.modules.scripts.*;
 import io.github.itzispyder.clickcrystals.util.ChatUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -109,6 +106,8 @@ public final class ClickCrystals implements ModInitializer {
         system.println("Loading ClickCrystals by ImproperIssues");
         System.setProperty("java.awt.headless", "false");
 
+        system.println("-> loading scripts...");
+        this.initClickScript();
         system.println("-> initializing...");
         this.init();
         this.startTicking();
@@ -140,6 +139,16 @@ public final class ClickCrystals implements ModInitializer {
             ClientTickEndEvent event = new ClientTickEndEvent();
             system.eventBus.pass(event);
         });
+    }
+
+    public void initClickScript() {
+        // exit, print, throw, execute, loop, module, description, on, switch, say
+        ClickScript.register(new ModuleCmd());
+        ClickScript.register(new DescCmd());
+        ClickScript.register(new OnEventCmd());
+        ClickScript.register(new SwitchCmd());
+        ClickScript.register(new SayCmd());
+        ScriptedModule.runModuleScripts();
     }
 
     public void init() {

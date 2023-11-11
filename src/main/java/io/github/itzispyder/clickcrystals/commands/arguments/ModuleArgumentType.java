@@ -36,7 +36,7 @@ public class ModuleArgumentType implements ArgumentType<Module> {
         String string = reader.readString();
         Module module = null;
 
-        for (Module value : system.modules().values()) {
+        for (Module value : system.collectModules()) {
             if (value.getId().equalsIgnoreCase(string)) {
                 module = value;
                 break;
@@ -49,7 +49,7 @@ public class ModuleArgumentType implements ArgumentType<Module> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        return CommandSource.suggestMatching(ArrayUtils.toNewList(system.modules().values(), Module::getId), builder);
+        return CommandSource.suggestMatching(ArrayUtils.toNewList(system.collectModules(), Module::getId), builder);
     }
 
     @Override
