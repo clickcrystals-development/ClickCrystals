@@ -3,8 +3,8 @@ package io.github.itzispyder.clickcrystals.modules.scripts;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
+import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.util.InteractionUtils;
-import net.minecraft.client.option.KeyBinding;
 
 public class InputCmd extends ScriptCommand implements Global {
 
@@ -20,22 +20,15 @@ public class InputCmd extends ScriptCommand implements Global {
     public enum Action {
         ATTACK(InteractionUtils::doAttack),
         USE(InteractionUtils::doUse),
-        FORWARD(() -> press(mc.options.forwardKey)),
-        BACKWARD(() -> press(mc.options.backKey)),
-        STRAFE_LEFT(() -> press(mc.options.leftKey)),
-        STRAFE_RIGHT(() -> press(mc.options.rightKey));
+        FORWARD(() -> TickEventListener.forward(500)),
+        BACKWARD(() -> TickEventListener.backward(500)),
+        STRAFE_LEFT(() -> TickEventListener.strafeLeft(500)),
+        STRAFE_RIGHT(() -> TickEventListener.strafeRight(500));
 
         private final Runnable action;
 
         Action(Runnable action) {
             this.action = action;
-        }
-
-        private static void press(KeyBinding binding) {
-            if (!binding.isPressed()) {
-                binding.setPressed(true);
-                system.scheduler.runDelayedTask(() -> binding.setPressed(false), 690L);
-            }
         }
 
         public void run() {

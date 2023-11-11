@@ -22,6 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.*;
+import java.util.function.Consumer;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.prefix;
@@ -141,6 +142,22 @@ public class ClickCrystalsSystem implements Serializable {
 
     public List<Keybind> getBindsOf(int key) {
         return keybinds().stream().filter(bind -> bind.getKey() == key).toList();
+    }
+
+    public Module getModuleById(String id) {
+        for (Module m : collectModules()) {
+            if (m.getId().equalsIgnoreCase(id)) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+    public void runModuleById(String id, Consumer<Module> action) {
+        Module m = getModuleById(id);
+        if (m != null) {
+            action.accept(m);
+        }
     }
 
     public void unloadModule(Module module) {

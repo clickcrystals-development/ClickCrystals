@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 
 import java.util.function.Consumer;
 
-public class ModuleCmd extends ScriptCommand {
+public class ModuleCmd extends ScriptCommand implements Global {
 
     private static ScriptedModule currentScriptModule;
 
@@ -27,7 +27,19 @@ public class ModuleCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        currentScriptModule = new ScriptedModule(args.get(0).stringValue(), "");
-        Global.system.addModule(currentScriptModule);
+        switch (args.get(0).enumValue(Action.class, null)) {
+            case CREATE -> {
+                currentScriptModule = new ScriptedModule(args.get(1).stringValue(), "");
+                system.addModule(currentScriptModule);
+            }
+            case ENABLE -> system.runModuleById(args.get(1).stringValue(), m -> m.setEnabled(true, true));
+            case DISABLE -> system.runModuleById(args.get(1).stringValue(), m -> m.setEnabled(false, true));
+        }
+    }
+
+    public enum Action {
+        CREATE,
+        ENABLE,
+        DISABLE
     }
 }
