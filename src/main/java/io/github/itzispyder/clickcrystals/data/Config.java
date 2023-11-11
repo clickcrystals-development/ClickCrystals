@@ -69,22 +69,24 @@ public class Config implements JsonSerializable<Config> {
         }
     }
 
-    public void loadModules() {
-        for (Module m : system.collectModules()) {
-            ModuleFile f = moduleEntries.getOrDefault(m.getId(), new ModuleFile(m));
+    public void loadModule(Module module) {
+        ModuleFile f = moduleEntries.getOrDefault(module.getId(), new ModuleFile(module));
 
-            if (f == null) {
-                throw new IllegalStateException("Failed to load module '%s'".formatted(m.getId()));
-            }
-            else {
-                ModuleData data = m.getData();
-                for (SettingSection section : data.getSettingSections()) {
-                    for (ModuleSetting<?> setting : section.getSettings()) {
-                        f.revert(setting);
-                    }
+        if (f == null) {
+            throw new IllegalStateException("Failed to load module '%s'".formatted(module.getId()));
+        }
+        else {
+            ModuleData data = module.getData();
+            for (SettingSection section : data.getSettingSections()) {
+                for (ModuleSetting<?> setting : section.getSettings()) {
+                    f.revert(setting);
                 }
             }
         }
+    }
+
+    public void loadModules() {
+        system.collectModules().forEach(this::loadModule);
     }
 
     public void loadEntireConfig() {

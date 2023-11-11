@@ -47,7 +47,6 @@ public class ModuleData implements Global {
                     module.onDisable();
                 }
 
-                Module.totalEnabled += enabled ? 1 : -1;
                 ClickCrystals.config.saveModule(module);
             }
         });

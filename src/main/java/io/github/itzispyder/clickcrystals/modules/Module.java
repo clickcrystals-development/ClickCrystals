@@ -11,7 +11,6 @@ import java.util.function.Function;
 
 public abstract class Module implements Toggleable, Global, SettingContainer {
 
-    public static int totalEnabled;
     private ModuleData data;
     private final String name, id;
     private String description;

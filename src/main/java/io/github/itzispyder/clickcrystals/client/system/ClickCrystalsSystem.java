@@ -23,6 +23,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.*;
 
+import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.prefix;
 
 public class ClickCrystalsSystem implements Serializable {
@@ -111,6 +112,10 @@ public class ClickCrystalsSystem implements Serializable {
         return new HashMap<>(modules);
     }
 
+    public Map<String, ScriptedModule> scriptedModules() {
+        return new HashMap<>(scriptedModules);
+    }
+
     public List<Module> collectModules() {
         return new ArrayList<>() {{
             this.addAll(modules.values());
@@ -136,6 +141,34 @@ public class ClickCrystalsSystem implements Serializable {
 
     public List<Keybind> getBindsOf(int key) {
         return keybinds().stream().filter(bind -> bind.getKey() == key).toList();
+    }
+
+    public void unloadModule(Module module) {
+        if (module instanceof ScriptedModule scripted) {
+            scripted.clearListeners();
+            scriptedModules.remove(scripted.getId());
+        }
+        else {
+            modules.remove(module.getClass());
+        }
+
+        if (module instanceof Listener listener) {
+            removeListener(listener);
+        }
+        keybinds.remove(module.getData().getBind());
+        module.setEnabled(false, false);
+    }
+
+    public void reloadScripts() {
+        println("-> reloading all scripts");
+
+        scriptedModules().values().forEach(this::unloadModule);
+        config.save();
+        scriptedModules.clear();
+        ScriptedModule.runModuleScripts();
+        scriptedModules.values().forEach(config::loadModule);
+
+        println("<- Scripts reloaded!");
     }
 
     public void println(String msg) {

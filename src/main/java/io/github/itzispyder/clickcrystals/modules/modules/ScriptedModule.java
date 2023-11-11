@@ -34,6 +34,15 @@ public class ScriptedModule extends ListenerModule {
         super(name, Categories.SCRIPTED, description);
     }
 
+    public void clearListeners() {
+        clickListeners.clear();
+        tickListeners.clear();
+        blockPlaceListeners.clear();
+        blockBreakListeners.clear();
+        blockPunchListeners.clear();
+        blockInteractListeners.clear();
+    }
+
     @EventHandler
     public void onMouseClick(MouseClickEvent e) {
         if (e.isScreenNull()) {

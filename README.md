@@ -12,13 +12,20 @@
 ---------------------------------------------------------------
 # *Message(s) from the developers!*
 
-## ClickCrystals Is Migrating Off Modrinth!
-Due to an excessive amount of rules we can no longer follow, we are currently setting up our independent host for download tracking and advertising! For now, the official website still links here on Modrinth and is still only hosted on GitHub. But once the database is set up, the migration will resume! Be ready CC users!
-[Check out current build!](https://itzispyder.github.io/clickcrystals)(WIP)
-<p>
-   Should you have any questions or concerns, please check out our discord for more info!
-   <a href="https://discord.gg/tMaShNzNtP">Join Discord</a>
-</p>
+## Introducing ClickCrystalsScripts! (CCS)
+Not enough modules? Your wonderful ideas aren't getting accepted?
+Want private features but don't know how to code?
+No worries, make your own modules with ClickCrystalsScripts (CCS)!
+
+Introducing CCS, a fast and easy way to create modules from simple swapping, 
+to selective interactions in game!
+CCS consists of a lot of CCS commands, and can be either
+executed separately or together in a `.ccs` file, like a Minecraft
+datapack!
+
+Interested? Download our latest version and start creating
+(CCS documentation coming soon on 
+[GitHub Wiki](https://github.com/itzispyder/clickcrystals/wiki))
 
 Happy coding and cpvping!
 
@@ -29,18 +36,16 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 1.0.6
+Mod: 1.1.0
 
 Changelog:
-  Tweaks:
-    - GUI made 3x darker (cuz I play really late at night with no sleep schedule)
-    - more beta-gui tooltips
-    - spaced out widgets for settings
   Added:
-    - NoBreakDelay - added back since last removal
-    - AutoWalk - holds down walk button
-    - MouseTaper - POV you taped down your mouse button to grind skyblock (that button would be disabled from manual input cuz its taped down!)
-
+    - ClickCrystalsScript - A custom module-maker
+  Tweaks:
+    - Fixed mouse taper unlocking mouse when a player joins
+    - Attempted a fix on discord rpc crashing Pojav and Mac
+    - Rearranged modules to more reasonable categories
+  
 Notice:
   - Module MouseTaper does not register manual input from the button you taped down!
   - USE COMMAND ,keybinds IF YOU DON'T KNOW THE KEYBIND FOR SOMETHING

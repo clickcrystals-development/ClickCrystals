@@ -92,7 +92,7 @@ public final class ClickCrystals implements ModInitializer {
     public static final String modId   = "clickcrystals";
     public static final String prefix  = "[ClickCrystals] ";
     public static final String starter = "§7[§bClick§3Crystals§7] §r";
-    public static final String version = "1.0.6";
+    public static final String version = "1.1.0";
 
     public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
 
@@ -143,7 +143,7 @@ public final class ClickCrystals implements ModInitializer {
 
     public void initClickScript() {
         // default provided:  [exit, print, throw, execute, loop]
-        // custom made:       [module, description, on, switch, say, input, wait, if, if_not]
+        // custom made:       [module, description, on, switch, say, input, wait, if, if_not, send]
         ClickScript.register(new ModuleCmd());
         ClickScript.register(new DescCmd());
         ClickScript.register(new OnEventCmd());
@@ -153,6 +153,7 @@ public final class ClickCrystals implements ModInitializer {
         ClickScript.register(new IfCmd());
         ClickScript.register(new IfNotCmd());
         ClickScript.register(new WaitCmd());
+        ClickScript.register(new SendCmd());
         ScriptedModule.runModuleScripts();
     }
 
@@ -178,6 +179,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addCommand(new KeybindsCommand());
         system.addCommand(new RotateCommand());
         system.addCommand(new LookCommand());
+        system.addCommand(new ClickScriptCommand());
 
         // Hud
         system.addHud(new ColorOverlayHud());
