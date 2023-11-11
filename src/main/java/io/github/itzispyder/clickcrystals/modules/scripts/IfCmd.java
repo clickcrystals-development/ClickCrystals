@@ -5,14 +5,15 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.InvUtils;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 
-public class ConditionCmd extends ScriptCommand implements Global {
+public class IfCmd extends ScriptCommand implements Global {
 
-    public ConditionCmd() {
-        super("condition");
+    public IfCmd() {
+        super("if");
     }
 
     @Override
@@ -42,11 +43,27 @@ public class ConditionCmd extends ScriptCommand implements Global {
                     }
                 }
             }
+            case INVENTORY_HAS -> {
+                if (mc != null && PlayerUtils.playerNotNull()) {
+                    if (InvUtils.has(OnEventCmd.parseItemPredicate(args.get(1).stringValue()))) {
+                        ClickScript.executeOneLine(toExecute);
+                    }
+                }
+            }
+            case HOTBAR_HAS -> {
+                if (mc != null && PlayerUtils.playerNotNull()) {
+                    if (HotbarUtils.has(OnEventCmd.parseItemPredicate(args.get(1).stringValue()))) {
+                        ClickScript.executeOneLine(toExecute);
+                    }
+                }
+            }
         }
     }
 
     public enum ConditionType {
         HOLDING,
+        INVENTORY_HAS,
+        HOTBAR_HAS,
         TARGET_BLOCK,
         TARGET_ENTITY
     }

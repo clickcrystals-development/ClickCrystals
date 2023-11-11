@@ -142,14 +142,16 @@ public final class ClickCrystals implements ModInitializer {
     }
 
     public void initClickScript() {
-        // exit, print, throw, execute, loop, module, description, on, switch, say
+        // default provided:  [exit, print, throw, execute, loop]
+        // custom made:       [module, description, on, switch, say, input, wait, if, if_not]
         ClickScript.register(new ModuleCmd());
         ClickScript.register(new DescCmd());
         ClickScript.register(new OnEventCmd());
         ClickScript.register(new SwitchCmd());
         ClickScript.register(new SayCmd());
         ClickScript.register(new InputCmd());
-        ClickScript.register(new ConditionCmd());
+        ClickScript.register(new IfCmd());
+        ClickScript.register(new IfNotCmd());
         ClickScript.register(new WaitCmd());
         ScriptedModule.runModuleScripts();
     }

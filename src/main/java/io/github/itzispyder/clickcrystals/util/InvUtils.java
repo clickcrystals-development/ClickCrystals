@@ -121,6 +121,18 @@ public final class InvUtils {
         return false;
     }
 
+    public static boolean has(Predicate<ItemStack> item) {
+        if (item == null) return false;
+
+        for (int i = 0; i < inv().main.size(); i++) {
+            ItemStack stack = inv().getStack(i);
+            if (stack == null || stack.isEmpty()) continue;
+            if (item.test(stack)) return true;
+        }
+
+        return false;
+    }
+
     public static boolean sendSlotPacket(int slot, int button, SlotActionType action) {
         ItemStack stack = inv().getStack(slot);
 
