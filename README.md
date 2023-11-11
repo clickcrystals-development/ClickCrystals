@@ -36,15 +36,12 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 1.1.0
+Mod: 1.1.1
 
 Changelog:
-  Added:
-    - ClickCrystalsScript - A custom module-maker
   Tweaks:
-    - Fixed mouse taper unlocking mouse when a player joins
-    - Attempted a fix on discord rpc crashing Pojav and Mac
-    - Rearranged modules to more reasonable categories
+    - Added commands [turn_to, swap] to CCS
+    - Added events [item_use, item_consume] to CCS
   
 Notice:
   - Module MouseTaper does not register manual input from the button you taped down!
