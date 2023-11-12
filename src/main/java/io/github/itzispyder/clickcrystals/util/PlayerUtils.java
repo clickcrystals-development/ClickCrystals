@@ -16,7 +16,10 @@ import net.minecraft.world.World;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
@@ -24,7 +27,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 public final class PlayerUtils {
 
     public static boolean playerNull() {
-        return mc.player == null;
+        return mc == null || mc.player == null;
     }
 
     public static boolean playerNotNull() {
@@ -47,6 +50,14 @@ public final class PlayerUtils {
 
     public static World getWorld() {
         return player().getWorld();
+    }
+
+    public static Vec3d getPos() {
+        return player().getPos();
+    }
+
+    public static Vec3d getEyes() {
+        return player().getEyePos();
     }
 
     public static ClientPlayerInteractionManager getInteractionManager() {
@@ -128,5 +139,50 @@ public final class PlayerUtils {
     public static PlayerEntity getNearestPlayer(double range, Predicate<Entity> filter) {
         if (playerNull()) return null;
         return (PlayerEntity)getNearestEntity(getWorld(), player(), player().getPos(), range, entity -> entity instanceof PlayerEntity && filter.test(entity));
+    }
+
+    public static boolean runOnNearestBlock(double range, BiPredicate<BlockPos, BlockState> filter, BiConsumer<BlockPos, BlockState> function) {
+        if (playerNull()) {
+            return false;
+        }
+
+        AtomicReference<Double> nearestDist = new AtomicReference<>(64.0);
+        AtomicReference<BlockPos> nearestPos = new AtomicReference<>();
+        AtomicReference<BlockState> nearestState = new AtomicReference<>();
+        Box box = player().getBoundingBox().expand(range);
+        Vec3d player = player().getPos();
+        World world = getWorld();
+
+        PlayerUtils.boxIterator(world, box, (pos, state) -> {
+            if (filter.test(pos, state) && pos.isWithinDistance(player, nearestDist.get())) {
+                nearestDist.set(Math.sqrt(pos.getSquaredDistance(player)));
+                nearestPos.set(pos);
+                nearestState.set(state);
+            }
+        });
+
+        if (nearestState.get() != null && nearestPos.get() != null) {
+            function.accept(nearestPos.get(), nearestState.get());
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean runOnNearestBlock(double range, Predicate<BlockState> filter, BiConsumer<BlockPos, BlockState> function) {
+        return runOnNearestBlock(range, (pos, state) -> filter.test(state), function);
+    }
+
+    public static boolean runOnNearestEntity(double range, Predicate<Entity> filter, Consumer<Entity> function) {
+        if (playerNull()) {
+            return false;
+        }
+
+        Entity ent = getNearestEntity(range, filter);
+
+        if (ent != null) {
+            function.accept(ent);
+            return true;
+        }
+        return false;
     }
 }

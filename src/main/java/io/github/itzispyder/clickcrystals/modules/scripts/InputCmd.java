@@ -6,6 +6,8 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.util.InteractionUtils;
 
+import java.util.function.BooleanSupplier;
+
 public class InputCmd extends ScriptCommand implements Global {
 
     public InputCmd() {
@@ -18,17 +20,24 @@ public class InputCmd extends ScriptCommand implements Global {
     }
 
     public enum Action {
-        ATTACK(InteractionUtils::doAttack),
-        USE(InteractionUtils::doUse),
-        FORWARD(() -> TickEventListener.forward(500)),
-        BACKWARD(() -> TickEventListener.backward(500)),
-        STRAFE_LEFT(() -> TickEventListener.strafeLeft(500)),
-        STRAFE_RIGHT(() -> TickEventListener.strafeRight(500));
+        ATTACK(InteractionUtils::doAttack, mc.options.attackKey::isPressed),
+        USE(InteractionUtils::doUse, mc.options.useKey::isPressed),
+        FORWARD(() -> TickEventListener.forward(500), mc.options.forwardKey::isPressed),
+        BACKWARD(() -> TickEventListener.backward(500), mc.options.backKey::isPressed),
+        STRAFE_LEFT(() -> TickEventListener.strafeLeft(500), mc.options.leftKey::isPressed),
+        STRAFE_RIGHT(() -> TickEventListener.strafeRight(500), mc.options.rightKey::isPressed),
+        SNEAK(() -> TickEventListener.sneak(500), mc.options.sneakKey::isPressed);
 
         private final Runnable action;
+        private final BooleanSupplier isActive;
 
-        Action(Runnable action) {
+        Action(Runnable action, BooleanSupplier isActive) {
             this.action = action;
+            this.isActive = isActive;
+        }
+
+        public boolean isActive() {
+            return isActive.getAsBoolean();
         }
 
         public void run() {

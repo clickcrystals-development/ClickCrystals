@@ -8,12 +8,8 @@ import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 
 public class TurnToCmd extends ScriptCommand {
@@ -29,35 +25,16 @@ public class TurnToCmd extends ScriptCommand {
         }
 
         // ex.      turn_to nearest_entity :creeper on_finish say Yo
-        World world = PlayerUtils.getWorld();
-        Box box = PlayerUtils.player().getBoundingBox().expand(16);
-        Vec3d player = PlayerUtils.player().getPos();
         Vec3d eyes = PlayerUtils.player().getEyePos();
 
         switch (args.get(0).enumValue(Mode.class, null)) {
             case NEAREST_BLOCK -> {
                 Predicate<BlockState> filter = OnEventCmd.parseBlockPredicate(args.get(1).stringValue());
-                AtomicReference<Double> nearestDist = new AtomicReference<>(64.0);
-                AtomicReference<BlockPos> nearestBlock = new AtomicReference<>();
-
-                PlayerUtils.boxIterator(world, box, (pos, state) -> {
-                    if (filter.test(state) && pos.isWithinDistance(player, nearestDist.get())) {
-                        nearestDist.set(Math.sqrt(pos.getSquaredDistance(player)));
-                        nearestBlock.set(pos);
-                    }
-                });
-
-                if (nearestBlock.get() != null) {
-                    buildCam(nearestBlock.get().toCenterPos(), eyes, args);
-                }
+                PlayerUtils.runOnNearestBlock(16, filter, (pos, state) -> buildCam(pos.toCenterPos(), eyes, args));
             }
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = OnEventCmd.parseEntityPredicate(args.get(1).stringValue());
-                Entity entity = PlayerUtils.getNearestEntity(16, filter);
-
-                if (entity != null) {
-                    buildCam(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
-                }
+                PlayerUtils.runOnNearestEntity(16, filter, entity -> buildCam(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args));
             }
         }
     }
