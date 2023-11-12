@@ -85,6 +85,36 @@ public class IfCmd extends ScriptCommand implements Global {
                     }
                 });
             }
+            case ATTACK_PROGRESS -> {
+                if (evalIntegers(PlayerUtils.player().getAttackCooldownProgress(1.0F), args.get(1).stringValue())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }
+            case HEALTH -> {
+                if (evalIntegers((int)PlayerUtils.player().getHealth(), args.get(1).stringValue())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }
+            case ARMOR -> {
+                if (evalIntegers(PlayerUtils.player().getArmor(), args.get(1).stringValue())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }
+            case POS_X -> {
+                if (evalIntegers((int)PlayerUtils.getPos().getX(), args.get(1).stringValue())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }
+            case POS_Y -> {
+                if (evalIntegers((int)PlayerUtils.getPos().getY(), args.get(1).stringValue())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }
+            case POS_Z -> {
+                if (evalIntegers((int)PlayerUtils.getPos().getZ(), args.get(1).stringValue())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }
         }
     }
 
@@ -97,6 +127,46 @@ public class IfCmd extends ScriptCommand implements Global {
         TARGET_ENTITY,
         INPUT_ACTIVE,
         BLOCK_IN_RANGE,
-        ENTITY_IN_RANGE
+        ENTITY_IN_RANGE,
+        ATTACK_PROGRESS,
+        HEALTH,
+        ARMOR,
+        POS_X,
+        POS_Y,
+        POS_Z
+    }
+
+    /**
+     * Evaluates if input [>, <, =, >=, <=, ==, !=] other number
+     * @param input a number
+     * @param other other number as string
+     * @return
+     */
+    public static boolean evalIntegers(double input, String other) {
+        if (other.isEmpty()) {
+            return false;
+        }
+
+        if (other.startsWith("<=")) {
+            return input <= new ScriptArgs(other.substring(2)).get(0).doubleValue();
+        }
+        else if (other.startsWith(">=")) {
+            return input >= new ScriptArgs(other.substring(2)).get(0).doubleValue();
+        }
+        else if (other.startsWith("!=") || other.startsWith("!")) {
+            return input != new ScriptArgs(other.substring(2)).get(0).doubleValue();
+        }
+        else if (other.startsWith("==") || other.startsWith("=")) {
+            return input == new ScriptArgs(other.substring(2)).get(0).doubleValue();
+        }
+        else if (other.startsWith("<")) {
+            return input < new ScriptArgs(other.substring(1)).get(0).doubleValue();
+        }
+        else if (other.startsWith(">")) {
+            return input > new ScriptArgs(other.substring(1)).get(0).doubleValue();
+        }
+        else {
+            return input == new ScriptArgs(other).get(0).doubleValue();
+        }
     }
 }

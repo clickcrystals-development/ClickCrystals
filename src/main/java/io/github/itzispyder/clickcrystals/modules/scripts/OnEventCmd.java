@@ -37,6 +37,8 @@ public class OnEventCmd extends ScriptCommand {
             case MODULE_ENABLE -> ModuleCmd.runOnCurrentScriptModule(m -> m.moduleEnableListeners.add(() -> exc(args, 1)));
             case MODULE_DISABLE -> ModuleCmd.runOnCurrentScriptModule(m -> m.moduleDisableListeners.add(() -> exc(args, 1)));
             case TOTEM_POP -> ModuleCmd.runOnCurrentScriptModule(m -> m.totemPopListeners.add(() -> exc(args, 1)));
+            case DAMAGE -> ModuleCmd.runOnCurrentScriptModule(m -> m.damageListeners.add(() -> exc(args, 1)));
+            case DEATH -> ModuleCmd.runOnCurrentScriptModule(m -> m.deathListeners.add(() -> exc(args, 1)));
         }
     }
 
@@ -200,6 +202,8 @@ public class OnEventCmd extends ScriptCommand {
         MOVE_POS,
         MOVE_LOOK,
         KEY_PRESS,
-        KEY_RELEASE
+        KEY_RELEASE,
+        DAMAGE,
+        DEATH
     }
 }

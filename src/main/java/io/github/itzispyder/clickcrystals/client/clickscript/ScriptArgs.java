@@ -6,7 +6,7 @@ public class ScriptArgs {
 
     private final String[] args;
 
-    public ScriptArgs(String[] args) {
+    public ScriptArgs(String... args) {
         this.args = args;
     }
 

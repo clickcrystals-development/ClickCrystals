@@ -91,6 +91,36 @@ public class IfNotCmd extends ScriptCommand implements Global {
                     ClickScript.executeOneLine(args.getAll(3).stringValue());
                 }
             }
+            case ATTACK_PROGRESS -> {
+                if (!IfCmd.evalIntegers(PlayerUtils.player().getAttackCooldownProgress(1.0F), args.get(1).stringValue())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }
+            case HEALTH -> {
+                if (!IfCmd.evalIntegers((int)PlayerUtils.player().getHealth(), args.get(1).stringValue())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }
+            case ARMOR -> {
+                if (!IfCmd.evalIntegers(PlayerUtils.player().getArmor(), args.get(1).stringValue())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }
+            case POS_X -> {
+                if (!IfCmd.evalIntegers((int)PlayerUtils.getPos().getX(), args.get(1).stringValue())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }
+            case POS_Y -> {
+                if (!IfCmd.evalIntegers((int)PlayerUtils.getPos().getY(), args.get(1).stringValue())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }
+            case POS_Z -> {
+                if (!IfCmd.evalIntegers((int)PlayerUtils.getPos().getZ(), args.get(1).stringValue())) {
+                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                }
+            }
         }
     }
 }

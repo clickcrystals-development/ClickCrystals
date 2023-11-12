@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
+import io.github.itzispyder.clickcrystals.events.events.client.TakeDamageEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.*;
@@ -41,6 +42,8 @@ public class ScriptedModule extends ListenerModule {
     public final List<Runnable> totemPopListeners = new ArrayList<>();
     public final List<Runnable> moduleEnableListeners = new ArrayList<>();
     public final List<Runnable> moduleDisableListeners = new ArrayList<>();
+    public final List<Runnable> damageListeners = new ArrayList<>();
+    public final List<Runnable> deathListeners = new ArrayList<>();
 
     public ScriptedModule(String name, String description) {
         super(name, Categories.SCRIPTED, description);
@@ -63,9 +66,12 @@ public class ScriptedModule extends ListenerModule {
         keyListeners.clear();
         moveListeners.clear();
         tickListeners.clear();
+
         totemPopListeners.clear();
         moduleEnableListeners.clear();
         moduleDisableListeners.clear();
+        damageListeners.clear();
+        deathListeners.clear();
 
         blockPlaceListeners.clear();
         blockBreakListeners.clear();
@@ -148,9 +154,12 @@ public class ScriptedModule extends ListenerModule {
         }
 
         if (e.getPacket() instanceof EntityStatusS2CPacket packet) {
-            if (packet.getStatus() == EntityStatusType.TOTEM_POP) {
-                if (packet.getEntity(PlayerUtils.getWorld()) instanceof PlayerEntity p && p.getId() == PlayerUtils.player().getId()) {
+            if (packet.getEntity(PlayerUtils.getWorld()) instanceof PlayerEntity p && p.getId() == PlayerUtils.player().getId()) {
+                if (packet.getStatus() == EntityStatusType.TOTEM_POP) {
                     totemPopListeners.forEach(Runnable::run);
+                }
+                else if (packet.getStatus() == EntityStatusType.DEATH) {
+                    deathListeners.forEach(Runnable::run);
                 }
             }
         }
@@ -163,6 +172,11 @@ public class ScriptedModule extends ListenerModule {
                 l.pass(e);
             }
         }
+    }
+
+    @EventHandler
+    public void onDamage(TakeDamageEvent e) {
+        damageListeners.forEach(Runnable::run);
     }
 
     @FunctionalInterface
