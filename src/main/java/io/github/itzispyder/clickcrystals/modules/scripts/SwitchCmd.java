@@ -3,8 +3,11 @@ package io.github.itzispyder.clickcrystals.modules.scripts;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.util.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.InvUtils;
 
 public class SwitchCmd extends ScriptCommand {
+
+    public static int lastSlot = -1;
 
     public SwitchCmd() {
         super("switch");
@@ -12,6 +15,12 @@ public class SwitchCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
+        if (lastSlot != -1 && args.get(0).stringValue().equalsIgnoreCase("back")) {
+            InvUtils.select(lastSlot);
+            return;
+        }
+
+        lastSlot = InvUtils.selected();
         HotbarUtils.search(OnEventCmd.parseItemPredicate(args.get(0).stringValue()));
     }
 }
