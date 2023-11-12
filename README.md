@@ -36,12 +36,36 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 1.1.1
+Mod: 1.1.2
 
 Changelog:
-  Tweaks:
-    - Added commands [turn_to, swap] to CCS
-    - Added events [item_use, item_consume] to CCS
+  ClickScript-Conditions:
+    - if block_in_range
+    - if entity_in_range
+    - if off_holding
+    - if input_active
+    - if attack_progress
+    - if armor
+    - if health
+    - if pos_x
+    - if pos_y
+    - if pos_z
+  
+  ClickScript-Inputs:
+    - input sneak
+    - input lock_cursor
+    - input unlock_cursor
+    
+  ClickScript-Events:
+    - on totem_pop
+    - on module_enable
+    - on module_disable
+    - on move_pos
+    - on move_look
+    - on key_press
+    - on key_release
+    - on damage
+    - on death
   
 Notice:
   - Module MouseTaper does not register manual input from the button you taped down!
