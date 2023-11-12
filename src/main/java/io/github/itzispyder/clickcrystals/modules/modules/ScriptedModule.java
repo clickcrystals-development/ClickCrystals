@@ -37,10 +37,14 @@ public class ScriptedModule extends ListenerModule {
     public void clearListeners() {
         clickListeners.clear();
         tickListeners.clear();
+
         blockPlaceListeners.clear();
         blockBreakListeners.clear();
         blockPunchListeners.clear();
         blockInteractListeners.clear();
+
+        itemUseListeners.clear();
+        itemConsumeListeners.clear();
     }
 
     @EventHandler
