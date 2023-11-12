@@ -1,14 +1,21 @@
 package io.github.itzispyder.clickcrystals.modules.modules;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
+import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
+import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
+import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.*;
 import io.github.itzispyder.clickcrystals.modules.Categories;
+import io.github.itzispyder.clickcrystals.util.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -22,6 +29,8 @@ public class ScriptedModule extends ListenerModule {
 
     public static final String PATH = "ClickCrystalsClient/scripts";
     public final List<ClickListener> clickListeners = new ArrayList<>();
+    public final List<KeyListener> keyListeners = new ArrayList<>();
+    public final List<MoveListener> moveListeners = new ArrayList<>();
     public final List<TickListener> tickListeners = new ArrayList<>();
     public final List<BlockPlaceListener> blockPlaceListeners = new ArrayList<>();
     public final List<BlockBreakListener> blockBreakListeners = new ArrayList<>();
@@ -29,14 +38,34 @@ public class ScriptedModule extends ListenerModule {
     public final List<BlockInteractListener> blockInteractListeners = new ArrayList<>();
     public final List<ItemUseListener> itemUseListeners = new ArrayList<>();
     public final List<ItemConsumeListener> itemConsumeListeners = new ArrayList<>();
+    public final List<Runnable> totemPopListeners = new ArrayList<>();
+    public final List<Runnable> moduleEnableListeners = new ArrayList<>();
+    public final List<Runnable> moduleDisableListeners = new ArrayList<>();
 
     public ScriptedModule(String name, String description) {
         super(name, Categories.SCRIPTED, description);
     }
 
+    @Override
+    protected void onEnable() {
+        super.onEnable();
+        moduleEnableListeners.forEach(Runnable::run);
+    }
+
+    @Override
+    protected void onDisable() {
+        super.onDisable();
+        moduleDisableListeners.forEach(Runnable::run);
+    }
+
     public void clearListeners() {
         clickListeners.clear();
+        keyListeners.clear();
+        moveListeners.clear();
         tickListeners.clear();
+        totemPopListeners.clear();
+        moduleEnableListeners.clear();
+        moduleDisableListeners.clear();
 
         blockPlaceListeners.clear();
         blockBreakListeners.clear();
@@ -105,6 +134,35 @@ public class ScriptedModule extends ListenerModule {
                 }
             }
         }
+        else if (e.getPacket() instanceof PlayerMoveC2SPacket packet) {
+            for (MoveListener l : moveListeners) {
+                l.pass(packet);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPacketReceive(PacketReceiveEvent e) {
+        if (PlayerUtils.playerNull()) {
+            return;
+        }
+
+        if (e.getPacket() instanceof EntityStatusS2CPacket packet) {
+            if (packet.getStatus() == EntityStatusType.TOTEM_POP) {
+                if (packet.getEntity(PlayerUtils.getWorld()) instanceof PlayerEntity p && p.getId() == PlayerUtils.player().getId()) {
+                    totemPopListeners.forEach(Runnable::run);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onKeyPress(KeyPressEvent e) {
+        if (e.isScreenNull()) {
+            for (KeyListener l : keyListeners) {
+                l.pass(e);
+            }
+        }
     }
 
     @FunctionalInterface
@@ -145,6 +203,16 @@ public class ScriptedModule extends ListenerModule {
     @FunctionalInterface
     public interface ItemConsumeListener {
         void pass(ItemConsumeEvent e);
+    }
+
+    @FunctionalInterface
+    public interface KeyListener {
+        void pass(KeyPressEvent e);
+    }
+
+    @FunctionalInterface
+    public interface MoveListener {
+        void pass(PlayerMoveC2SPacket e);
     }
 
     public static void runModuleScripts() {
