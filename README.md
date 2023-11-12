@@ -10,9 +10,12 @@
 </div>
 
 ---------------------------------------------------------------
-# *Message(s) from the developers!*
 
-## Introducing ClickCrystalsScripts! (CCS)
+<h2>
+    <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/030611366d1a3991702888fc834ddeb2c46a5b11.png", style="width: 50px; transform: translateY(10px);">
+    Introducing ClickCrystalsScripts! (CCS)
+</h2>
+
 Not enough modules? Your wonderful ideas aren't getting accepted?
 Want private features but don't know how to code?
 No worries, make your own modules with ClickCrystalsScripts (CCS)!
