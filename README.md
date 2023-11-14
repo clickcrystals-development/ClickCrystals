@@ -55,7 +55,7 @@ Changelog:
     - keyword "then" to commands [input, switch, swap, turn_to, module]
     - ex. input jump then input attack
     - ex. switch :respawn_anchor then switch :glowstone then input use
-    - added "swap back"
+    - added "switch back"
   
   Tweaked:
     - renamed "loop-period" to "loop_period"
