@@ -35,6 +35,10 @@ public class ModuleCmd extends ScriptCommand implements Global {
             case ENABLE -> system.runModuleById(args.get(1).stringValue(), m -> m.setEnabled(true, true));
             case DISABLE -> system.runModuleById(args.get(1).stringValue(), m -> m.setEnabled(false, true));
         }
+
+        if (args.match(2, "then")) {
+            args.executeAll(3);
+        }
     }
 
     public enum Action {
