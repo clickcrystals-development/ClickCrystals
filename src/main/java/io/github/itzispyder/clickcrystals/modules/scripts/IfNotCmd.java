@@ -32,93 +32,95 @@ public class IfNotCmd extends ScriptCommand implements Global {
         switch (type) {
             case HOLDING -> {
                 if (!OnEventCmd.parseItemPredicate(args.get(1).stringValue()).test(HotbarUtils.getHand())) {
-                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                    ClickScript.executeSingle(args.getAll(2).stringValue());
                 }
             }
             case OFF_HOLDING -> {
                 if (!OnEventCmd.parseItemPredicate(args.get(1).stringValue()).test(HotbarUtils.getHand(Hand.OFF_HAND))) {
-                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                    ClickScript.executeSingle(args.getAll(2).stringValue());
                 }
             }
             case TARGET_BLOCK -> {
                 if (mc.crosshairTarget instanceof BlockHitResult hit) {
                     if (!OnEventCmd.parseBlockPredicate(args.get(1).stringValue()).test(PlayerUtils.getWorld().getBlockState(hit.getBlockPos()))) {
-                        ClickScript.executeOneLine(args.getAll(2).stringValue());
+                        ClickScript.executeSingle(args.getAll(2).stringValue());
                     }
                 }
             }
             case TARGET_ENTITY -> {
                 if (mc.crosshairTarget instanceof EntityHitResult hit) {
                     if (!OnEventCmd.parseEntityPredicate(args.get(1).stringValue()).test(hit.getEntity())) {
-                        ClickScript.executeOneLine(args.getAll(2).stringValue());
+                        ClickScript.executeSingle(args.getAll(2).stringValue());
                     }
                 }
             }
             case INVENTORY_HAS -> {
                 if (!InvUtils.has(OnEventCmd.parseItemPredicate(args.get(1).stringValue()))) {
-                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                    ClickScript.executeSingle(args.getAll(2).stringValue());
                 }
             }
             case HOTBAR_HAS -> {
                 if (!HotbarUtils.has(OnEventCmd.parseItemPredicate(args.get(1).stringValue()))) {
-                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                    ClickScript.executeSingle(args.getAll(2).stringValue());
                 }
             }
             case INPUT_ACTIVE -> {
                 if (!args.get(1).enumValue(InputCmd.Action.class, null).isActive()) {
-                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                    ClickScript.executeSingle(args.getAll(2).stringValue());
                 }
             }
             case BLOCK_IN_RANGE -> {
-                Predicate<BlockState> filter = OnEventCmd.parseBlockPredicate(args.get(1).stringValue());
-                boolean result = PlayerUtils.runOnNearestBlock(16, filter, (pos, state) -> {
-                    if (pos.toCenterPos().distanceTo(PlayerUtils.getPos()) > args.get(2).doubleValue()) {
-                        ClickScript.executeOneLine(args.getAll(3).stringValue());
+                Predicate<BlockState> filter = args.match(1, "any_block") ? state -> true : OnEventCmd.parseBlockPredicate(args.get(1).stringValue());
+                double range = args.get(2).doubleValue();
+                boolean result = PlayerUtils.runOnNearestBlock(range, filter, (pos, state) -> {
+                    if (pos.toCenterPos().distanceTo(PlayerUtils.getPos()) > range) {
+                        ClickScript.executeSingle(args.getAll(3).stringValue());
                     }
                 });
                 if (!result) {
-                    ClickScript.executeOneLine(args.getAll(3).stringValue());
+                    ClickScript.executeSingle(args.getAll(3).stringValue());
                 }
             }
             case ENTITY_IN_RANGE -> {
-                Predicate<Entity> filter = OnEventCmd.parseEntityPredicate(args.get(1).stringValue());
-                boolean result = PlayerUtils.runOnNearestEntity(16, filter, entity -> {
-                    if (entity.distanceTo(PlayerUtils.player()) > args.get(2).doubleValue()) {
-                        ClickScript.executeOneLine(args.getAll(3).stringValue());
+                Predicate<Entity> filter = args.match(1, "any_entity") ? entity -> true : OnEventCmd.parseEntityPredicate(args.get(1).stringValue());
+                double range = args.get(2).doubleValue();
+                boolean result = PlayerUtils.runOnNearestEntity(range, filter, entity -> {
+                    if (entity.distanceTo(PlayerUtils.player()) > range) {
+                        ClickScript.executeSingle(args.getAll(3).stringValue());
                     }
                 });
                 if (!result) {
-                    ClickScript.executeOneLine(args.getAll(3).stringValue());
+                    ClickScript.executeSingle(args.getAll(3).stringValue());
                 }
             }
             case ATTACK_PROGRESS -> {
                 if (!IfCmd.evalIntegers(PlayerUtils.player().getAttackCooldownProgress(1.0F), args.get(1).stringValue())) {
-                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                    ClickScript.executeSingle(args.getAll(2).stringValue());
                 }
             }
             case HEALTH -> {
                 if (!IfCmd.evalIntegers((int)PlayerUtils.player().getHealth(), args.get(1).stringValue())) {
-                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                    ClickScript.executeSingle(args.getAll(2).stringValue());
                 }
             }
             case ARMOR -> {
                 if (!IfCmd.evalIntegers(PlayerUtils.player().getArmor(), args.get(1).stringValue())) {
-                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                    ClickScript.executeSingle(args.getAll(2).stringValue());
                 }
             }
             case POS_X -> {
                 if (!IfCmd.evalIntegers((int)PlayerUtils.getPos().getX(), args.get(1).stringValue())) {
-                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                    ClickScript.executeSingle(args.getAll(2).stringValue());
                 }
             }
             case POS_Y -> {
                 if (!IfCmd.evalIntegers((int)PlayerUtils.getPos().getY(), args.get(1).stringValue())) {
-                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                    ClickScript.executeSingle(args.getAll(2).stringValue());
                 }
             }
             case POS_Z -> {
                 if (!IfCmd.evalIntegers((int)PlayerUtils.getPos().getZ(), args.get(1).stringValue())) {
-                    ClickScript.executeOneLine(args.getAll(2).stringValue());
+                    ClickScript.executeSingle(args.getAll(2).stringValue());
                 }
             }
         }

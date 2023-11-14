@@ -13,6 +13,6 @@ public class WaitCmd extends ScriptCommand implements Global {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        system.scheduler.runDelayedTask(() -> ClickScript.executeOneLine(args.getAll(1).stringValue()), (long)(args.get(0).doubleValue() * 1000L));
+        system.scheduler.runDelayedTask(() -> ClickScript.executeSingle(args.getAll(1).stringValue()), (long)(args.get(0).doubleValue() * 1000L));
     }
 }

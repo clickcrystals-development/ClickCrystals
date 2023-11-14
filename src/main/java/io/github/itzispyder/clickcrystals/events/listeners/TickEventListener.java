@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.events.events.world.ClientTickStartEve
 
 public class TickEventListener implements Listener, Global {
 
-    public static boolean shouldForward, shouldBackward, shouldStrafeLeft, shouldStrafeRight, shouldSneak;
+    public static boolean shouldForward, shouldBackward, shouldStrafeLeft, shouldStrafeRight, shouldSneak, shouldJump;
 
     @EventHandler
     public void onTickStart(ClientTickStartEvent e) {
@@ -73,6 +73,16 @@ public class TickEventListener implements Listener, Global {
         }
     }
 
+    public static void jump(long millis) {
+        if (!shouldJump) {
+            shouldJump = true;
+            system.scheduler.runDelayedTask(() -> {
+                shouldJump = false;
+                mc.options.jumpKey.setPressed(false);
+            }, millis);
+        }
+    }
+
     private void handleAutoKeys() {
         if (shouldForward) {
             mc.options.forwardKey.setPressed(true);
@@ -88,6 +98,9 @@ public class TickEventListener implements Listener, Global {
         }
         if (shouldSneak) {
             mc.options.sneakKey.setPressed(true);
+        }
+        if (shouldJump) {
+            mc.options.jumpKey.setPressed(true);
         }
     }
 }

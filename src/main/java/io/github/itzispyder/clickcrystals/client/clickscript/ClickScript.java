@@ -22,12 +22,12 @@ public class ClickScript {
             throw new RuntimeException(args.getAll().stringValue());
         }));
         this.put("execute", ScriptCommand.create("execute", (command, line, args) -> {
-            ClickScript.executeOneLine(args.getAll().stringValue());
+            ClickScript.executeSingle(args.getAll().stringValue());
         }));
         this.put("loop", ScriptCommand.create("loop", (command, line, args) -> {
             int times = args.get(0).intValue();
             for (int i = 0; i < times; i++) {
-                ClickScript.executeOneLine(args.getAll(1).stringValue());
+                ClickScript.executeSingle(args.getAll(1).stringValue());
             }
         }));
     }};
@@ -58,7 +58,7 @@ public class ClickScript {
         return null;
     }
 
-    public static void executeOneLine(String commandLine) {
+    public static void executeSingle(String commandLine) {
         DEFAULT_DISPATCHER.executeLine(commandLine);
         DEFAULT_DISPATCHER.currentLine = 0;
     }

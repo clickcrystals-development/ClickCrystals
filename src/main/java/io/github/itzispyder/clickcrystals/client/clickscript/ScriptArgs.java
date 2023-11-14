@@ -2,13 +2,7 @@ package io.github.itzispyder.clickcrystals.client.clickscript;
 
 import java.util.regex.PatternSyntaxException;
 
-public class ScriptArgs {
-
-    private final String[] args;
-
-    public ScriptArgs(String... args) {
-        this.args = args;
-    }
+public record ScriptArgs(String... args) {
 
     public Arg getAll() {
         return getAll(0);
@@ -29,20 +23,40 @@ public class ScriptArgs {
         return new Arg(args[Math.min(Math.max(index, 0), args.length - 1)]);
     }
 
-    public String[] getArgs() {
-        return args;
+    public Arg first() {
+        return get(0);
+    }
+
+    public Arg last() {
+        return get(args.length - 1);
+    }
+
+    public boolean match(int index, String arg) {
+        if (index < 0 || index >= args.length) {
+            return false;
+        }
+        return get(index).stringValue().equalsIgnoreCase(arg);
+    }
+
+    public void executeAll(int begin) {
+        ClickScript.executeSingle(getAll(begin).stringValue());
     }
 
     public int getSize() {
         return args.length;
     }
 
-    public record Arg(String arg) {
+    public static class Arg {
+        private final String arg;
+
+        public Arg(String arg) {
+            this.arg = arg;
+        }
+
         public int intValue() {
             try {
                 return Integer.parseInt(arg.replaceAll("[^0-9-+]", ""));
-            }
-            catch (NumberFormatException | PatternSyntaxException ex) {
+            } catch (NumberFormatException | PatternSyntaxException ex) {
                 return 0;
             }
         }
@@ -50,8 +64,7 @@ public class ScriptArgs {
         public long longValue() {
             try {
                 return Long.parseLong(arg.replaceAll("[^0-9-+]", ""));
-            }
-            catch (NumberFormatException | PatternSyntaxException ex) {
+            } catch (NumberFormatException | PatternSyntaxException ex) {
                 return 0L;
             }
         }
@@ -59,8 +72,7 @@ public class ScriptArgs {
         public byte byteValue() {
             try {
                 return Byte.parseByte(arg.replaceAll("[^0-9-+]", ""));
-            }
-            catch (NumberFormatException | PatternSyntaxException ex) {
+            } catch (NumberFormatException | PatternSyntaxException ex) {
                 return 0;
             }
         }
@@ -68,8 +80,7 @@ public class ScriptArgs {
         public short shortValue() {
             try {
                 return Short.parseShort(arg.replaceAll("[^0-9-+]", ""));
-            }
-            catch (NumberFormatException | PatternSyntaxException ex) {
+            } catch (NumberFormatException | PatternSyntaxException ex) {
                 return 0;
             }
         }
@@ -77,8 +88,7 @@ public class ScriptArgs {
         public double doubleValue() {
             try {
                 return Double.parseDouble(arg.replaceAll("[^0-9-+e.]", ""));
-            }
-            catch (NumberFormatException | PatternSyntaxException ex) {
+            } catch (NumberFormatException | PatternSyntaxException ex) {
                 return 0.0;
             }
         }
@@ -86,8 +96,7 @@ public class ScriptArgs {
         public float floatValue() {
             try {
                 return Float.parseFloat(arg.replaceAll("[^0-9-+e.]", ""));
-            }
-            catch (NumberFormatException | PatternSyntaxException ex) {
+            } catch (NumberFormatException | PatternSyntaxException ex) {
                 return 0.0F;
             }
         }

@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.modules.scripts;
 
-import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.util.PlayerUtils;
@@ -30,17 +29,21 @@ public class TurnToCmd extends ScriptCommand {
         switch (args.get(0).enumValue(Mode.class, null)) {
             case NEAREST_BLOCK -> {
                 Predicate<BlockState> filter = OnEventCmd.parseBlockPredicate(args.get(1).stringValue());
-                PlayerUtils.runOnNearestBlock(16, filter, (pos, state) -> buildCam(pos.toCenterPos(), eyes, args));
+                PlayerUtils.runOnNearestBlock(64, filter, (pos, state) -> specifiedTurn(pos.toCenterPos(), eyes, args));
             }
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = OnEventCmd.parseEntityPredicate(args.get(1).stringValue());
-                PlayerUtils.runOnNearestEntity(16, filter, entity -> buildCam(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args));
+                PlayerUtils.runOnNearestEntity(64, filter, entity -> specifiedTurn(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args));
             }
+
+            case ANY_BLOCK -> PlayerUtils.runOnNearestBlock(64, (pos, state) -> true, (pos, state) -> singleTurn(pos.toCenterPos(), eyes, args));
+            case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(64, Entity::isAlive, entity -> {
+                singleTurn(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
+            });
         }
     }
 
-
-    private void buildCam(Vec3d dest, Vec3d camPos, ScriptArgs args) {
+    private void singleTurn(Vec3d dest, Vec3d camPos, ScriptArgs args) {
         if (!CameraRotator.isCameraRunning()) {
             Vec3d target = dest.subtract(camPos).normalize();
             CameraRotator.Builder cam = CameraRotator.create();
@@ -48,21 +51,32 @@ public class TurnToCmd extends ScriptCommand {
             cam.enableCursorLock();
             cam.addGoal(new CameraRotator.Goal(target));
 
-            if (args.getSize() >= 4) {
-                switch (args.get(2).enumValue(EndActions.class, null)) {
-                    case ON_FINISH -> cam.onFinish((pitch, yaw, cameraRotator) -> ClickScript.executeOneLine(args.getAll(3).stringValue()));
-                }
+            if (args.match(1, "then")) {
+                cam.onFinish((pitch, yaw, cameraRotator) -> args.executeAll(2));
             }
             cam.build().start();
         }
     }
 
-    public enum EndActions {
-        ON_FINISH
+    private void specifiedTurn(Vec3d dest, Vec3d camPos, ScriptArgs args) {
+        if (!CameraRotator.isCameraRunning()) {
+            Vec3d target = dest.subtract(camPos).normalize();
+            CameraRotator.Builder cam = CameraRotator.create();
+
+            cam.enableCursorLock();
+            cam.addGoal(new CameraRotator.Goal(target));
+
+            if (args.match(2, "then")) {
+                cam.onFinish((pitch, yaw, cameraRotator) -> args.executeAll(3));
+            }
+            cam.build().start();
+        }
     }
 
     public enum Mode {
         NEAREST_ENTITY,
-        NEAREST_BLOCK
+        NEAREST_BLOCK,
+        ANY_BLOCK,
+        ANY_ENTITY
     }
 }

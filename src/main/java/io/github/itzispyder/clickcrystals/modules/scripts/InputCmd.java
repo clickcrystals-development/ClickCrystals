@@ -3,7 +3,6 @@ package io.github.itzispyder.clickcrystals.modules.scripts;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
-import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.util.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 
@@ -18,16 +17,21 @@ public class InputCmd extends ScriptCommand implements Global {
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
         args.get(0).enumValue(Action.class, null).run();
+
+        if (args.match(1, "then")) {
+            args.executeAll(2);
+        }
     }
 
     public enum Action {
-        ATTACK(InteractionUtils::doAttack, mc.options.attackKey::isPressed),
-        USE(InteractionUtils::doUse, mc.options.useKey::isPressed),
-        FORWARD(() -> TickEventListener.forward(500), mc.options.forwardKey::isPressed),
-        BACKWARD(() -> TickEventListener.backward(500), mc.options.backKey::isPressed),
-        STRAFE_LEFT(() -> TickEventListener.strafeLeft(500), mc.options.leftKey::isPressed),
-        STRAFE_RIGHT(() -> TickEventListener.strafeRight(500), mc.options.rightKey::isPressed),
-        SNEAK(() -> TickEventListener.sneak(500), mc.options.sneakKey::isPressed),
+        ATTACK(InteractionUtils::inputAttack, mc.options.attackKey::isPressed),
+        USE(InteractionUtils::inputUse, mc.options.useKey::isPressed),
+        FORWARD(InteractionUtils::inputForward, mc.options.forwardKey::isPressed),
+        BACKWARD(InteractionUtils::inputBackward, mc.options.backKey::isPressed),
+        STRAFE_LEFT(InteractionUtils::inputStrafeLeft, mc.options.leftKey::isPressed),
+        STRAFE_RIGHT(InteractionUtils::inputStrafeRight, mc.options.rightKey::isPressed),
+        JUMP(InteractionUtils::inputJump, mc.options.jumpKey::isPressed),
+        SNEAK(InteractionUtils::inputSneak, mc.options.sneakKey::isPressed),
         LOCK_CURSOR(CameraRotator::lockCursor, CameraRotator::isCursorLocked),
         UNLOCK_CURSOR(CameraRotator::unlockCursor, () -> !CameraRotator.isCursorLocked());
 

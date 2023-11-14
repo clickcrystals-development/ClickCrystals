@@ -15,6 +15,10 @@ public class SwapCmd extends ScriptCommand {
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
         if (PlayerUtils.playerNotNull()) {
             HotbarUtils.swapWithOffhand();
+
+            if (args.match(0, "then")) {
+                args.executeAll(1);
+            }
         }
     }
 }

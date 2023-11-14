@@ -15,12 +15,16 @@ public class SwitchCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        if (lastSlot != -1 && args.get(0).stringValue().equalsIgnoreCase("back")) {
+        if (lastSlot != -1 && args.match(0, "back")) {
             InvUtils.select(lastSlot);
             return;
         }
 
         lastSlot = InvUtils.selected();
         HotbarUtils.search(OnEventCmd.parseItemPredicate(args.get(0).stringValue()));
+
+        if (args.match(1, "then")) {
+            args.executeAll(2);
+        }
     }
 }

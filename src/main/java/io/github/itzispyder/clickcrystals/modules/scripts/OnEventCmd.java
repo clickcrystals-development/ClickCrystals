@@ -85,7 +85,7 @@ public class OnEventCmd extends ScriptCommand {
     }
 
     public void exc(ScriptArgs args, int begin) {
-        ClickScript.executeOneLine(args.getAll(begin).stringValue());
+        ClickScript.executeSingle(args.getAll(begin).stringValue());
     }
 
     private boolean matchKeyPress(EventType type, KeyPressEvent event, ScriptArgs args) {

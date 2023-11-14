@@ -1,50 +1,49 @@
 package io.github.itzispyder.clickcrystals.util;
 
-import net.minecraft.client.network.ClientPlayerInteractionManager;
+import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
+import io.github.itzispyder.clickcrystals.interfaces.MinecraftClientAccessor;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
 
 /**
  * Client interaction utils
  */
-public final class InteractionUtils {
+public final class InteractionUtils implements Global {
 
     /**
      * Left clicks as if the player has inputted the click
      */
-    public static void doAttack() {
-        final HitResult hit = mc.crosshairTarget;
-        final ClientPlayerInteractionManager im = mc.interactionManager;
-
-        if (hit == null) return;
-
-        switch (hit.getType()) {
-            case ENTITY -> im.attackEntity(mc.player, ((EntityHitResult) hit).getEntity());
-            case BLOCK -> im.attackBlock(((BlockHitResult) hit).getBlockPos(), ((BlockHitResult) hit).getSide());
-        }
-
-        mc.player.swingHand(Hand.MAIN_HAND);
+    public static void inputAttack() {
+        ((MinecraftClientAccessor) mc).inputAttack();
     }
 
-    public static void doUse() {
-        final HitResult hit = mc.crosshairTarget;
-        final ClientPlayerInteractionManager im = mc.interactionManager;
+    public static void inputUse() {
+        ((MinecraftClientAccessor) mc).inputUse();
+    }
 
-        if (hit == null) return;
+    public static void inputJump() {
+        TickEventListener.jump(100);
+    }
 
-        switch (hit.getType()) {
-            case ENTITY -> im.interactEntity(mc.player, ((EntityHitResult) hit).getEntity(), Hand.MAIN_HAND);
-            case BLOCK -> im.interactBlock(mc.player, Hand.MAIN_HAND, (BlockHitResult) hit);
-            case MISS -> im.interactItem(mc.player, Hand.MAIN_HAND);
-        }
+    public static void inputForward() {
+        TickEventListener.forward(500);
+    }
 
-        mc.player.swingHand(Hand.MAIN_HAND);
+    public static void inputBackward() {
+        TickEventListener.backward(500);
+    }
+
+    public static void inputStrafeLeft() {
+        TickEventListener.strafeLeft(500);
+    }
+
+    public static void inputStrafeRight() {
+        TickEventListener.strafeRight(500);
+    }
+
+    public static void inputSneak() {
+        TickEventListener.sneak(500);
     }
 
     public static boolean canBreakCrystals() {
