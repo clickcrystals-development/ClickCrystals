@@ -205,7 +205,7 @@ public class ClickScriptIDE extends DefaultBase {
                 String str = "";
 
                 for (var i = reader.lines().iterator(); i.hasNext();) {
-                    str = str.concat(i.next() + " \n");
+                    str = str.concat(i.next() + "\n");
                 }
                 reader.close();
 

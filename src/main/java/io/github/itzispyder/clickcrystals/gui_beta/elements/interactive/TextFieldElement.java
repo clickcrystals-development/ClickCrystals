@@ -117,14 +117,14 @@ public class TextFieldElement extends GuiElement implements Typeable {
                 shiftRight();
             }
             else if (key == GLFW.GLFW_KEY_V && screen.ctrlKeyPressed) {
-                onInput(input -> insertInput(mc.keyboard.getClipboard().replace("\n", " \n")));
+                onInput(input -> insertInput(mc.keyboard.getClipboard()));
                 shiftRight();
             }
             else if (key == GLFW.GLFW_KEY_C && screen.ctrlKeyPressed && selectedAll) {
                 mc.keyboard.setClipboard(content);
             }
             else if (key == GLFW.GLFW_KEY_ENTER) {
-                onInput(input -> insertInput(" \n"));
+                onInput(input -> insertInput("\n"));
                 shiftRight();
                 shiftRight();
             }
@@ -286,17 +286,18 @@ public class TextFieldElement extends GuiElement implements Typeable {
         }
 
         public String highlightText(String text) {
-            for (String k : text.split(" ")) {
-                k = k.replace("\n", "");
-                if (k.isEmpty()) {
-                    continue;
-                }
+            for (String line : text.lines().toArray(String[]::new)) {
+                for (String k : line.split(" ")) {
+                    if (k.isEmpty()) {
+                        continue;
+                    }
 
-                String r = k;
-                for (HighlightFactory factory : stringFactories) {
-                    r = factory.process(r);
+                    String r = k;
+                    for (HighlightFactory factory : stringFactories) {
+                        r = factory.process(r);
+                    }
+                    text = text.replace(k, r);
                 }
-                text = text.replace(k, r);
             }
             return text;
         }
