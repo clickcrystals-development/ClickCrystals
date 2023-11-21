@@ -146,8 +146,6 @@ public class TextFieldElement extends GuiElement implements Typeable {
                 shiftRight();
             }
         }
-
-        this.styledContent = style(content);
     }
 
     @Override
@@ -165,6 +163,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
         }
         content = factory.apply(content);
         updateSelection();
+        this.styledContent = style(content);
     }
 
     public void shiftRight() {
@@ -176,6 +175,20 @@ public class TextFieldElement extends GuiElement implements Typeable {
     public void shiftLeft() {
         selectionStart = MathUtils.clamp(selectionStart - 1, 0, content.length());
         selectionEnd = selectionStart;
+        updateSelection();
+    }
+
+    public void shiftStart() {
+        selectionStart = MathUtils.clamp(0, 0, content.length());
+        selectionEnd = selectionStart;
+        textY = 5;
+        updateSelection();
+    }
+
+    public void shiftEnd() {
+        selectionStart = MathUtils.clamp(content.length(), 0, content.length());
+        selectionEnd = selectionStart;
+        textY = 5 - textHeight;
         updateSelection();
     }
 

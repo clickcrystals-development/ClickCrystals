@@ -47,7 +47,7 @@ public class ModuleElement extends GuiElement {
             mc.setScreen(new ModuleEditScreen(module));
         }
         else if (button == 2 && module instanceof ScriptedModule m) {
-            mc.setScreen(new ClickScriptIDE());
+            mc.setScreen(new ClickScriptIDE(m));
         }
     }
 

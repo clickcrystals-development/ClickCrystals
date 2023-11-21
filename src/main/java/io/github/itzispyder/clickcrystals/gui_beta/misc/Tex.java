@@ -8,6 +8,7 @@ public final class Tex {
 
     public static final Identifier ICON = new Identifier(modId, "icon.png");
     public static final Identifier ICON_PREMIUM = new Identifier(modId, "icon_premium.png");
+    public static final Identifier ICON_CLICKSCRIPT = new Identifier(modId, "icon_clickscript.png");
 
     public static class Shapes {
         public static final Identifier CIRCLE_DARK_GRAY = new Identifier(modId, "textures/display/shapes/circle/circle_dark_gray.png");

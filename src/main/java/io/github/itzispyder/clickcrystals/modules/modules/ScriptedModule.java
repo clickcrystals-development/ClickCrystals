@@ -44,9 +44,11 @@ public class ScriptedModule extends ListenerModule {
     public final List<Runnable> moduleDisableListeners = new ArrayList<>();
     public final List<Runnable> damageListeners = new ArrayList<>();
     public final List<Runnable> deathListeners = new ArrayList<>();
+    public final String filepath;
 
-    public ScriptedModule(String name, String description) {
+    public ScriptedModule(String name, String description, String filePath) {
         super(name, Categories.SCRIPTED, description);
+        this.filepath = filePath;
     }
 
     @Override

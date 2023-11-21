@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.scripts;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
@@ -29,8 +30,12 @@ public class ModuleCmd extends ScriptCommand implements Global {
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
         switch (args.get(0).enumValue(Action.class, null)) {
             case CREATE -> {
-                currentScriptModule = new ScriptedModule(args.get(1).stringValue(), "");
+                if (ClickScript.currentFile.get() == null) {
+                    throw new IllegalStateException("Module cannot be created: current file pointer is null!");
+                }
+                currentScriptModule = new ScriptedModule(args.get(1).stringValue(), "", ClickScript.currentFile.get().getPath());
                 system.addModule(currentScriptModule);
+                ClickScript.currentFile.set(null);
             }
             case ENABLE -> system.runModuleById(args.get(1).stringValue(), m -> m.setEnabled(true, true));
             case DISABLE -> system.runModuleById(args.get(1).stringValue(), m -> m.setEnabled(false, true));

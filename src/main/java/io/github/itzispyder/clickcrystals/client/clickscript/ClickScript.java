@@ -8,9 +8,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ClickScript {
 
+    public static final AtomicReference<File> currentFile = new AtomicReference<>();
     private static final Map<String, ScriptCommand> REGISTRATION = new HashMap<>() {{
         this.put("exit", ScriptCommand.create("exit", (command, line, args) -> {
             System.exit(args.get(0).intValue());
@@ -40,12 +42,14 @@ public class ClickScript {
         this.file = file;
         this.path = file.getPath();
         this.currentLine = 0;
+        currentFile.set(file);
     }
 
     private ClickScript(String fakePath) {
         this.path = fakePath;
         this.file = null;
         this.currentLine = 0;
+        currentFile.set(null);
     }
 
     public static ClickScript executeIfExists(String path) {
