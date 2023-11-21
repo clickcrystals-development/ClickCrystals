@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.InteractionUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 

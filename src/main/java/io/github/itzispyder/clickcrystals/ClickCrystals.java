@@ -30,7 +30,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
 import io.github.itzispyder.clickcrystals.modules.scripts.*;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;

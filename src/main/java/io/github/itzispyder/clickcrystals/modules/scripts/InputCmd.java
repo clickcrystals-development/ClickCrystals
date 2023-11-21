@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
-import io.github.itzispyder.clickcrystals.util.InteractionUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 
 import java.util.function.BooleanSupplier;

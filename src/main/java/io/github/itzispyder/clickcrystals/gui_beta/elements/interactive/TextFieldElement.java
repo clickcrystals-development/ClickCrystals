@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.ChatColor;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
-import io.github.itzispyder.clickcrystals.util.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.OrderedText;

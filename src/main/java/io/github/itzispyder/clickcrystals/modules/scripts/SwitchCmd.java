@@ -2,8 +2,8 @@ package io.github.itzispyder.clickcrystals.modules.scripts;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
-import io.github.itzispyder.clickcrystals.util.HotbarUtils;
-import io.github.itzispyder.clickcrystals.util.InvUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 
 public class SwitchCmd extends ScriptCommand {
 

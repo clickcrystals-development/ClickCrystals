@@ -7,8 +7,8 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.HotbarUtils;
-import io.github.itzispyder.clickcrystals.util.NbtUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.NbtUtils;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 

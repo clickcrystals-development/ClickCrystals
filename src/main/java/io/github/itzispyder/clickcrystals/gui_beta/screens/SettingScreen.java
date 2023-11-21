@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 

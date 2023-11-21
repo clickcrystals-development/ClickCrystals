@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui_beta.screens.ModuleEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;

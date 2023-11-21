@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.minecraft.network.packet.s2c.play.ExplosionS2CPacket;
 import net.minecraft.network.packet.s2c.play.ParticleS2CPacket;
 

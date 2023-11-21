@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 
 public class SendCmd extends ScriptCommand {
 

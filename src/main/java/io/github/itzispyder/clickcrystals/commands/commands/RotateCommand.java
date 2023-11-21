@@ -4,7 +4,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.PlayerArgumentType;
-import io.github.itzispyder.clickcrystals.util.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;

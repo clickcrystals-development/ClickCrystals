@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.clickcrystals;
 
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 
 public class SilkTouch extends Module {
 

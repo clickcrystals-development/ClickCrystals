@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.CommandArgumentType;
 import io.github.itzispyder.clickcrystals.commands.arguments.ModuleArgumentType;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.minecraft.command.CommandSource;
 
 /**

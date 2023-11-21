@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
-import io.github.itzispyder.clickcrystals.util.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import net.minecraft.item.Items;
 
 // CREDITS TO: TutlaMc

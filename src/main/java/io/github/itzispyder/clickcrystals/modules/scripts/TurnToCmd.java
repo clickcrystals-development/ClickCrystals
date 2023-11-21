@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
-import io.github.itzispyder.clickcrystals.util.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;

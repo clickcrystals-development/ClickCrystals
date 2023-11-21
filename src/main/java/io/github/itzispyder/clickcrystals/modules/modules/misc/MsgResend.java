@@ -10,7 +10,7 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import org.lwjgl.glfw.GLFW;
 
 public class MsgResend extends Module implements Listener {

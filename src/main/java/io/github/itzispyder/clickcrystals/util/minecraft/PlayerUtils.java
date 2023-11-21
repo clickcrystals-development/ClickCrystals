@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.util;
+package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import com.mojang.authlib.GameProfile;
 import io.github.itzispyder.clickcrystals.util.misc.Delta3d;

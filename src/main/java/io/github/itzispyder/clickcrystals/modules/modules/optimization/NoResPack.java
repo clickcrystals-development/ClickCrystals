@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceive
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.minecraft.network.packet.c2s.play.ResourcePackStatusC2SPacket;
 import net.minecraft.network.packet.s2c.play.ResourcePackSendS2CPacket;
 

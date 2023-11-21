@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui_beta.hud.fixed;
 import io.github.itzispyder.clickcrystals.gui_beta.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.ModulesList;
-import io.github.itzispyder.clickcrystals.util.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;

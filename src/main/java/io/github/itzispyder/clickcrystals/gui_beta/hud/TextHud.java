@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui_beta.hud;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
-import io.github.itzispyder.clickcrystals.util.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public abstract class TextHud extends Hud {

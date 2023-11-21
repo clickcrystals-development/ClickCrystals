@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.item.SwordItem;

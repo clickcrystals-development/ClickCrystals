@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui_beta.elements.client.module;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.modules.settings.EnumSetting;
-import io.github.itzispyder.clickcrystals.util.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class EnumSettingElement extends SettingElement<EnumSetting<?>> {

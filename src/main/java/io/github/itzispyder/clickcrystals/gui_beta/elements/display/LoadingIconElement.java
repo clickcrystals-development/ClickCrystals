@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui_beta.elements.display;
 
 import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
-import io.github.itzispyder.clickcrystals.util.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.math.RotationAxis;
 

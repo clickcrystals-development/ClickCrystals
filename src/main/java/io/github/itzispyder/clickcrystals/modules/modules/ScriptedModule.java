@@ -10,7 +10,7 @@ import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceive
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.*;
 import io.github.itzispyder.clickcrystals.modules.Categories;
-import io.github.itzispyder.clickcrystals.util.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;

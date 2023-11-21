@@ -1,5 +1,6 @@
-package io.github.itzispyder.clickcrystals.util;
+package io.github.itzispyder.clickcrystals.util.minecraft;
 
+import io.github.itzispyder.clickcrystals.util.MathUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.Tessellator;

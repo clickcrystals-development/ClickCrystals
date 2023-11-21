@@ -7,9 +7,9 @@ import io.github.itzispyder.clickcrystals.events.events.networking.PacketSentEve
 import io.github.itzispyder.clickcrystals.events.events.world.BlockPlaceEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.BlockUtils;
-import io.github.itzispyder.clickcrystals.util.HotbarUtils;
-import io.github.itzispyder.clickcrystals.util.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.BlockUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RespawnAnchorBlock;

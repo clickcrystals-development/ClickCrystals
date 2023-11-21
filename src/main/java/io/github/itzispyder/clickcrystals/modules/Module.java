@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.modules;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingContainer;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 import java.util.function.Consumer;

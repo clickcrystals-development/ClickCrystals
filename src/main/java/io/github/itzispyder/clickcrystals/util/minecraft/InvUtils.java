@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.util;
+package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import net.minecraft.entity.player.PlayerInventory;

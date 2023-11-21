@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;

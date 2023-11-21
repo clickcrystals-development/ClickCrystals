@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.commands.commands;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.commands.Command;
-import io.github.itzispyder.clickcrystals.util.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.Entity;

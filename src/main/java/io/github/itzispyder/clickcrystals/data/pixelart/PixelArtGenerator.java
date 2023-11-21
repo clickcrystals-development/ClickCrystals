@@ -1,8 +1,8 @@
 package io.github.itzispyder.clickcrystals.data.pixelart;
 
 import io.github.itzispyder.clickcrystals.commands.Command;
-import io.github.itzispyder.clickcrystals.util.ChatUtils;
-import io.github.itzispyder.clickcrystals.util.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;

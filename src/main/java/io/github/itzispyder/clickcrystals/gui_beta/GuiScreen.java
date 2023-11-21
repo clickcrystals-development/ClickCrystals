@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.ScrollPa
 import io.github.itzispyder.clickcrystals.gui_beta.misc.callbacks.*;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
-import io.github.itzispyder.clickcrystals.util.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
