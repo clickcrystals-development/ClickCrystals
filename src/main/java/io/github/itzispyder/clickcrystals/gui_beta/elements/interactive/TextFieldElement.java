@@ -1,16 +1,19 @@
 package io.github.itzispyder.clickcrystals.gui_beta.elements.interactive;
 
 import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
+import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.ChatColor;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,14 +26,19 @@ public class TextFieldElement extends GuiElement implements Typeable {
     private ChatColor backgroundColor = ChatColor.BLACK;
     private ChatColor textColor = ChatColor.WHITE;
     private int selectionStart, selectionEnd;
+    private Point selectedStartPoint, selectedEndPoint;
     private int textY = 5, textHeight;
     private String content = "";
     private String styledContent;
+    private boolean selectionBlinking, selectedAll;
+    private int selectionBlink;
 
     public TextFieldElement(int x, int y, int width, int height) {
         super(x, y, width, height);
-        this.resetSelection();
         this.styledContent = style(content);
+        this.selectedStartPoint = new Point();
+        this.selectedEndPoint = new Point();
+        this.resetSelection();
     }
 
     @Override
@@ -49,8 +57,17 @@ public class TextFieldElement extends GuiElement implements Typeable {
         for (var it = text.iterator(); it.hasNext(); caret += 9) {
             OrderedText line = it.next();
             Text index = Text.literal("" + (i++ + 1));
+            if (selectedAll) {
+                RenderUtils.fill(context, x + 20, caret - 1, mc.textRenderer.getWidth(line), 9, 0xA07E75FF);
+            }
             RenderUtils.drawDefaultScaledText(context, index, x + 5, caret + 1, 1.0F, false, color);
             context.drawText(mc.textRenderer, line, x + 20, caret, textColor.getHex(), false);
+        }
+
+        if (selectionBlinking) {
+            int tX = x + 20 + selectedStartPoint.x;
+            int tY = y - 1 + textY + selectedStartPoint.y;
+            RenderUtils.drawVerticalLine(context, tX, tY, 9, 1, 0xE0FFFFFF);
         }
 
         context.disableScissor();
@@ -58,19 +75,112 @@ public class TextFieldElement extends GuiElement implements Typeable {
     }
 
     @Override
-    public void onKey(int key, int scan) {
-        Typeable.super.onKey(key, scan);
+    public void onTick() {
+        super.onTick();
 
-        if (key == GLFW.GLFW_KEY_ENTER) {
-            onInput(input -> input.concat(" \n"));
+        if (mc.currentScreen instanceof GuiScreen screen) {
+            if (screen.selected != this) {
+                selectionBlinking = false;
+                return;
+            }
+
+            if (selectionBlink++ >= 20) {
+                selectionBlink = 0;
+            }
+            if (selectionBlink % 10 == 0 && selectionBlink > 0) {
+                selectionBlinking = !selectionBlinking;
+            }
+        }
+    }
+
+    @Override
+    public void onKey(int key, int scan) {
+        if (mc.currentScreen instanceof GuiScreen screen) {
+            String typed = GLFW.glfwGetKeyName(key, scan);
+
+            if (key == GLFW.GLFW_KEY_ESCAPE) {
+                selectedAll = false;
+                screen.selected = null;
+            }
+            else if (key == GLFW.GLFW_KEY_A && screen.ctrlKeyPressed) {
+                selectedAll = true;
+            }
+            else if (key == GLFW.GLFW_KEY_BACKSPACE) {
+                onInput(input -> StringUtils.insertString(content, selectionStart, null));
+                shiftLeft();
+            }
+            else if (key == GLFW.GLFW_KEY_DELETE) {
+                onInput(input -> StringUtils.insertString(content, selectionStart + 1, null));
+            }
+            else if (key == GLFW.GLFW_KEY_SPACE) {
+                onInput(input -> insertInput(" "));
+                shiftRight();
+            }
+            else if (key == GLFW.GLFW_KEY_V && screen.ctrlKeyPressed) {
+                onInput(input -> insertInput(mc.keyboard.getClipboard().replace("\n", " \n")));
+                shiftRight();
+            }
+            else if (key == GLFW.GLFW_KEY_ENTER) {
+                onInput(input -> insertInput(" \n"));
+                shiftRight();
+                shiftRight();
+            }
+            else if (key == GLFW.GLFW_KEY_LEFT) {
+                shiftLeft();
+            }
+            else if (key == GLFW.GLFW_KEY_RIGHT) {
+                shiftRight();
+            }
+            else if (key == GLFW.GLFW_KEY_UP) {
+                for (int i = 0; i < 45; i++) {
+                    shiftLeft();
+                }
+            }
+            else if (key == GLFW.GLFW_KEY_DOWN) {
+                for (int i = 0; i < 45; i++) {
+                    shiftRight();
+                }
+            }
+            else if (typed != null){
+                onInput(input -> insertInput(screen.shiftKeyPressed ? StringUtils.keyPressWithShift(typed) : typed));
+                shiftRight();
+            }
         }
 
         this.styledContent = style(content);
     }
 
     @Override
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        super.mouseClicked(mouseX, mouseY, button);
+        this.selectedAll = false;
+    }
+
+    @Override
     public void onInput(Function<String, String> factory) {
+        if (selectedAll) {
+            content = styledContent = "";
+            selectedAll = false;
+            resetSelection();
+        }
         content = factory.apply(content);
+        updateSelection();
+    }
+
+    public void shiftRight() {
+        selectionStart = MathUtils.minMax(selectionStart + 1, 0, content.length());
+        selectionEnd = selectionStart;
+        updateSelection();
+    }
+
+    public void shiftLeft() {
+        selectionStart = MathUtils.minMax(selectionStart - 1, 0, content.length());
+        selectionEnd = selectionStart;
+        updateSelection();
+    }
+
+    public String insertInput(String input) {
+        return StringUtils.insertString(content, selectionStart, input);
     }
 
     @Override
@@ -86,11 +196,25 @@ public class TextFieldElement extends GuiElement implements Typeable {
         if (s == null || s.isEmpty()) {
             return " ";
         }
+        this.updateSelection();
         return highlighter.highlightText(s);
     }
 
     public void resetSelection() {
         selectionStart = selectionEnd = 0;
+        updateSelection();
+    }
+
+    public void updateSelection() {
+        String str = content.substring(0, MathUtils.minMax(selectionStart, 0, content.length()));
+        List<OrderedText> lines = mc.textRenderer.wrapLines(StringVisitable.plain(str), width - 25);
+
+        if (lines == null || lines.isEmpty()) {
+            selectedStartPoint.setLocation(0, 0);
+            return;
+        }
+        selectedStartPoint.x = mc.textRenderer.getWidth(lines.get(Math.max(0, lines.size() - 1)));
+        selectedStartPoint.y = lines.size() * 9 - 9;
     }
 
     public String[] getLines() {
@@ -138,7 +262,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
 
         public String highlightText(String text) {
             for (String k : text.split(" ")) {
-                k = k.replaceAll("\n", "");
+                k = k.replace("\n", "");
                 if (k.isEmpty()) {
                     continue;
                 }
@@ -147,7 +271,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
                 for (HighlightFactory factory : stringFactories) {
                     r = factory.process(r);
                 }
-                text = text.replaceAll(k, r);
+                text = text.replace(k, r);
             }
             return text;
         }

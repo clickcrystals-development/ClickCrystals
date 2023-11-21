@@ -37,6 +37,20 @@ public final class StringUtils {
         return false;
     }
 
+    /**
+     * passing insert as null would world as backspace, deleting a character
+     */
+    public static String insertString(String str, int index, String insert) {
+        if (str == null || str.isEmpty()) {
+            return insert != null ? insert : "";
+        }
+
+        index = Math.max(Math.min(index, str.length()), 0);
+        String begin = str.substring(0, Math.max(Math.min(insert != null ? index : index - 1, str.length()), 0));
+        String end = str.substring(index);
+        return begin + (insert != null ? insert : "") + end;
+    }
+
     public static boolean containsAll(String str, String... values) {
         return matchAll(str, String::contains, values);
     }

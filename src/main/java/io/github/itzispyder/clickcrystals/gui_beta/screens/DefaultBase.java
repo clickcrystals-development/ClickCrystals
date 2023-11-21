@@ -104,7 +104,7 @@ public abstract class DefaultBase extends GuiScreen {
     }
 
     public void renderDefaultBase(DrawContext context) {
-        RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xE03873A9, 0xE0000000);
+        RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA03873A9, 0xA0000000);
 
         context.getMatrices().push();
         context.getMatrices().translate(baseX, baseY, 0);

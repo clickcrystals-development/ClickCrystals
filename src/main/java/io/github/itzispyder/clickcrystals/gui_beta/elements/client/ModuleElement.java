@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
 import io.github.itzispyder.clickcrystals.gui_beta.screens.ClickScriptIDE;
 import io.github.itzispyder.clickcrystals.gui_beta.screens.ModuleEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
@@ -13,8 +14,12 @@ public class ModuleElement extends GuiElement {
 
     public ModuleElement(Module module, int x, int y) {
         super(x, y, 300, 15);
-        super.setTooltip("LEFT-CLICK to toggle, RIGHT-CLICK to edit");
+        super.setTooltip("§eLEFT-CLICK§7 to toggle, §eRIGHT-CLICK§7 to edit");
         this.module = module;
+
+        if (module instanceof ScriptedModule) {
+            setTooltip(getTooltip().concat(", §6MIDDLE-CLICK§7 to open IDE"));
+        }
     }
 
     @Override
@@ -41,7 +46,7 @@ public class ModuleElement extends GuiElement {
         else if (button == 1) {
             mc.setScreen(new ModuleEditScreen(module));
         }
-        else if (button == 2) {
+        else if (button == 2 && module instanceof ScriptedModule m) {
             mc.setScreen(new ClickScriptIDE());
         }
     }
