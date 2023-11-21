@@ -33,7 +33,7 @@ public class ModuleCmd extends ScriptCommand implements Global {
                 if (ClickScript.currentFile.get() == null) {
                     throw new IllegalStateException("Module cannot be created: current file pointer is null!");
                 }
-                currentScriptModule = new ScriptedModule(args.get(1).stringValue(), "", ClickScript.currentFile.get().getPath());
+                currentScriptModule = new ScriptedModule(args.get(1).stringValue(), "", ClickScript.currentFile.get());
                 system.addModule(currentScriptModule);
                 ClickScript.currentFile.set(null);
             }

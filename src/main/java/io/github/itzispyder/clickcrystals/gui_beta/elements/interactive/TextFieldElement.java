@@ -258,6 +258,11 @@ public class TextFieldElement extends GuiElement implements Typeable {
         this.highlighter = highlighter;
     }
 
+    public void clear() {
+        content = styledContent = "";
+        resetSelection();
+    }
+
 
 
     // highlighters
@@ -290,7 +295,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
         }
 
         private HighlightFactory colorStringFactory(ChatColor color, String str) {
-            return new HighlightFactory(s -> s.replaceAll("\n", "").equals(str), s -> "%s%s%s".formatted(color, s, originalColor));
+            return new HighlightFactory(s -> s.replace("\n", "").equals(str), s -> "%s%s%s".formatted(color, s, originalColor));
         }
 
         private HighlightFactory predicateStringFactory(ChatColor color, Predicate<String> predicate) {

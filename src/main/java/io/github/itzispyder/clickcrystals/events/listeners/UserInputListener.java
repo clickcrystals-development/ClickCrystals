@@ -25,7 +25,7 @@ public class UserInputListener implements Listener {
     private static Class<? extends GuiScreen> previousScreen = null;
     public static void openPreviousScreen() {
         Class<? extends GuiScreen> p = previousScreen;
-        if (p == ModuleScreen.class || p == ModuleEditScreen.class) {
+        if (p == ModuleScreen.class || p == ModuleEditScreen.class || p == ClickScriptIDE.class) {
             mc.setScreen(new ModuleScreen());
         }
         else if (p == SearchScreen.class) {

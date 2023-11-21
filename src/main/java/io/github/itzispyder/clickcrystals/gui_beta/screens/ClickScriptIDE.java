@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui_beta.screens;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
+import io.github.itzispyder.clickcrystals.gui_beta.elements.display.LoadingIconElement;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.interactive.TextFieldElement;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.ChatColor;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
@@ -17,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 public class ClickScriptIDE extends DefaultBase {
@@ -36,6 +38,7 @@ public class ClickScriptIDE extends DefaultBase {
         this.put(ChatColor.YELLOW, Arrays.stream(IfCmd.ConditionType.values()).map(e -> e.name().toLowerCase()).toList());
     }};
     private final ScriptedModule module;
+    private final LoadingIconElement loading;
 
     public TextFieldElement textField = new TextFieldElement(contentX, contentY + 21, contentWidth, contentHeight - 21) {{
         this.setHighlighter(CLICKSCRIPT_HIGHLIGHTER);
@@ -46,23 +49,11 @@ public class ClickScriptIDE extends DefaultBase {
         this.addChild(textField);
         this.module = module;
 
-        try {
-            File file = new File(module.filepath);
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String str = "";
+        this.loading = new LoadingIconElement(contentX + contentWidth / 2 - 10, contentY + contentHeight / 2 - 10, 20);
+        this.loading.setRendering(false);
+        this.addChild(loading);
 
-            for (var i = reader.lines().iterator(); i.hasNext();) {
-                str = str.concat(i.next() + " \n");
-            }
-
-            String finalStr = str;
-            textField.onInput(input -> textField.insertInput(finalStr));
-            textField.shiftEnd();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            UserInputListener.openPreviousScreen();
-        }
+        this.loadContents();
     }
 
     @Override
@@ -72,9 +63,38 @@ public class ClickScriptIDE extends DefaultBase {
         // content
         int caret = contentY + 10;
         RenderUtils.drawTexture(context, Tex.ICON_CLICKSCRIPT, contentX + 10, caret - 7, 15, 15);
-        RenderUtils.drawText(context, "Editing '%s'".formatted(module.filepath), contentX + 30, caret - 4, false);
+        RenderUtils.drawText(context, "Editing '%s'".formatted(module.filename), contentX + 30, caret - 4, false);
         caret += 10;
         RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
+    }
+
+    public void loadContents() {
+        if (loading.isRendering()) {
+            return;
+        }
+        CompletableFuture.runAsync(() -> {
+            loading.setRendering(true);
+            try {
+                File file = new File(module.filepath);
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                String str = "";
+
+                for (var i = reader.lines().iterator(); i.hasNext();) {
+                    str = str.concat(i.next() + " \n");
+                }
+
+                String finalStr = str;
+                textField.clear();
+                textField.onInput(input -> textField.insertInput(finalStr));
+                textField.shiftEnd();
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+                UserInputListener.openPreviousScreen();
+            }
+        }).thenRun(() -> {
+            loading.setRendering(false);
+        });
     }
 
     @Override

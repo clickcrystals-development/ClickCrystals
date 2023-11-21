@@ -19,7 +19,7 @@ public class BulletinScreen extends DefaultBase {
     public BulletinScreen() {
         super("Bulletin Screen");
 
-        LoadingIconElement loadingIcon = new LoadingIconElement(contentX + contentWidth / 2, contentY + contentHeight / 2, 20);
+        LoadingIconElement loadingIcon = new LoadingIconElement(contentX + contentWidth / 2 - 10, contentY + contentHeight / 2 - 10, 20);
         this.addChild(loadingIcon);
 
         CompletableFuture<Void> f = BulletinBoard.request();
