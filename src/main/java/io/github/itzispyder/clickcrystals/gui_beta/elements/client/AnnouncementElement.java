@@ -4,8 +4,8 @@ import io.github.itzispyder.clickcrystals.data.announce.Announcement;
 import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class AnnouncementElement extends GuiElement {

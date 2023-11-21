@@ -58,6 +58,7 @@ public class SearchBarElement extends GuiElement implements Typeable {
 
     @Override
     public void onKey(int key, int scancode) {
+        Typeable.super.onKey(key, scancode);
         for (KeyPressCallback callback : keyPressCallbacks) {
             callback.handleKey(key, ClickType.CLICK, scancode, -1);
         }

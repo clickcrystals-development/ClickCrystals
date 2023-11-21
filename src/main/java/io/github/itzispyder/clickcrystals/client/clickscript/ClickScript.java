@@ -108,7 +108,7 @@ public class ClickScript {
 
     private void executeLine(String line) {
         currentLine++;
-        if (line != null && !line.isEmpty() && !line.startsWith("//")) {
+        if (line != null && !line.trim().isEmpty() && !line.startsWith("//")) {
             String name = line.split(" ")[0];
             ScriptCommand cmd = REGISTRATION.get(name);
 

@@ -5,8 +5,8 @@ import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.Typeable;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.ChatColor;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
@@ -120,6 +120,9 @@ public class TextFieldElement extends GuiElement implements Typeable {
                 onInput(input -> insertInput(mc.keyboard.getClipboard().replace("\n", " \n")));
                 shiftRight();
             }
+            else if (key == GLFW.GLFW_KEY_C && screen.ctrlKeyPressed && selectedAll) {
+                mc.keyboard.setClipboard(content);
+            }
             else if (key == GLFW.GLFW_KEY_ENTER) {
                 onInput(input -> insertInput(" \n"));
                 shiftRight();
@@ -231,7 +234,11 @@ public class TextFieldElement extends GuiElement implements Typeable {
     }
 
     public String[] getLines() {
-        return content.split("\n");
+        return content.lines().toArray(String[]::new);
+    }
+
+    public String getContent() {
+        return content;
     }
 
     public ChatColor getBackgroundColor() {

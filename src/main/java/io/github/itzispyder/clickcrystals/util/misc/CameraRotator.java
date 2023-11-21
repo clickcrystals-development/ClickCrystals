@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.util.misc;
 
-import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.math.Vec3d;

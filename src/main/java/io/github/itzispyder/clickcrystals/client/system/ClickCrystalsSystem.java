@@ -14,13 +14,10 @@ import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.util.Util;
 
-import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -64,9 +61,9 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void openFile(String path) {
         try {
-            Desktop.getDesktop().open(new File(path));
+            Util.getOperatingSystem().open(new File(path));
         }
-        catch (IOException ex) {
+        catch (Exception ex) {
             ex.printStackTrace();
         }
     }

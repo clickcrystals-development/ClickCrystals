@@ -51,7 +51,7 @@ public class UserInputListener implements Listener {
             SelectWorldScreen.class, "Selecting singleplayer",
             MultiplayerScreen.class, "Selecting server",
             GameMenuScreen.class, "Idling...",
-            //CreditsScreen.class, "Checking out the goats",
+            ClickScriptIDE.class, "Creating a custom module...",
             BulletinScreen.class, "Viewing CC Bulletin Board"
     );
 
@@ -79,6 +79,7 @@ public class UserInputListener implements Listener {
 
             if (p == BulletinScreen.class ||
                     p == ModuleEditScreen.class ||
+                    p == ClickScriptIDE.class ||
                     p == SearchScreen.class ||
                     p == SettingScreen.class ||
                     p == HomeScreen.class ||
