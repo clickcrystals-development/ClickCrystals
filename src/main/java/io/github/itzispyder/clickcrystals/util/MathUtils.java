@@ -24,11 +24,11 @@ public final class MathUtils {
         return Math.floor(value * nthPlace) / nthPlace;
     }
 
-    public static int minMax(int val, int min, int max) {
+    public static int clamp(int val, int min, int max) {
         return Math.min(max, Math.max(min, val));
     }
 
-    public static double minMax(double val, double min, double max) {
+    public static double clamp(double val, double min, double max) {
         return Math.min(max, Math.max(min, val));
     }
 

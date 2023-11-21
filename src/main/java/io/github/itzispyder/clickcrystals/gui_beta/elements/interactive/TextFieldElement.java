@@ -168,13 +168,13 @@ public class TextFieldElement extends GuiElement implements Typeable {
     }
 
     public void shiftRight() {
-        selectionStart = MathUtils.minMax(selectionStart + 1, 0, content.length());
+        selectionStart = MathUtils.clamp(selectionStart + 1, 0, content.length());
         selectionEnd = selectionStart;
         updateSelection();
     }
 
     public void shiftLeft() {
-        selectionStart = MathUtils.minMax(selectionStart - 1, 0, content.length());
+        selectionStart = MathUtils.clamp(selectionStart - 1, 0, content.length());
         selectionEnd = selectionStart;
         updateSelection();
     }
@@ -188,7 +188,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
         super.mouseScrolled(mouseX, mouseY, amount);
 
         for (int i = 0; i < ScrollPanelElement.SCROLL_MULTIPLIER; i++) {
-            textY = MathUtils.minMax(textY + amount, 5 - textHeight, 5);
+            textY = MathUtils.clamp(textY + amount, 5 - textHeight, 5);
         }
     }
 
@@ -206,7 +206,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
     }
 
     public void updateSelection() {
-        String str = content.substring(0, MathUtils.minMax(selectionStart, 0, content.length()));
+        String str = content.substring(0, MathUtils.clamp(selectionStart, 0, content.length()));
         List<OrderedText> lines = mc.textRenderer.wrapLines(StringVisitable.plain(str), width - 25);
 
         if (lines == null || lines.isEmpty()) {

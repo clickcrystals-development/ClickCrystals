@@ -39,7 +39,7 @@ public class IntegerSetting extends NumberSetting<Integer> {
 
         @Override
         public IntegerSetting build() {
-            return new IntegerSetting(name, description, MathUtils.minMax(def, min, max), getOrDef(val, def), min, max);
+            return new IntegerSetting(name, description, MathUtils.clamp(def, min, max), getOrDef(val, def), min, max);
         }
     }
 }

@@ -33,7 +33,7 @@ public class IntegerSettingElement extends SettingElement<IntegerSetting> {
         int sliderLen = sliderEnd - sliderStart;
 
         if (mc.currentScreen instanceof GuiScreen screen && screen.selected == this) {
-            this.fillEnd = MathUtils.minMax(mouseX, sliderStart, sliderEnd);
+            this.fillEnd = MathUtils.clamp(mouseX, sliderStart, sliderEnd);
             int range = settingMax - settingMin;
             double ratio = (double)(fillEnd - sliderStart) / (double)sliderLen;
             double value = range * ratio;

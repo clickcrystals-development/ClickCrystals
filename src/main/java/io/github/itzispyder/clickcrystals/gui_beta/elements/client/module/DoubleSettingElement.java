@@ -31,7 +31,7 @@ public class DoubleSettingElement extends SettingElement<DoubleSetting> {
         int sliderLen = sliderEnd - sliderStart;
 
         if (mc.currentScreen instanceof GuiScreen screen && screen.selected == this) {
-            this.fillEnd = MathUtils.minMax(mouseX, sliderStart, sliderEnd);
+            this.fillEnd = MathUtils.clamp(mouseX, sliderStart, sliderEnd);
             double range = setting.getMax() - setting.getMin();
             double ratio = (double)(fillEnd - sliderStart) / (double)sliderLen;
             double value = range * ratio;

@@ -52,7 +52,7 @@ public abstract class MixinSplashOverlay implements Global {
         int i = MathHelper.ceil((float)(maxX - minX - 2) * this.progress);
         int w = 50;
         int s = w / 2;
-        int x = MathUtils.minMax(minX + i, minX, maxX - s);
+        int x = MathUtils.clamp(minX + i, minX, maxX - s);
         int y = maxY - 50;
 
         m.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360 * progress), x + s, y + s, 1);

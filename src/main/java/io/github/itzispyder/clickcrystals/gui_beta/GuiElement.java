@@ -195,8 +195,8 @@ public abstract class GuiElement implements Positionable, Global {
     }
 
     public void boundIn(int frameWidth, int frameHeight) {
-        int x = MathUtils.minMax(this.x, 0, frameWidth - width);
-        int y = MathUtils.minMax(this.y, 0, frameHeight - height);
+        int x = MathUtils.clamp(this.x, 0, frameWidth - width);
+        int y = MathUtils.clamp(this.y, 0, frameHeight - height);
         moveTo(x, y);
     }
 
