@@ -8,12 +8,11 @@ import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.callbacks.KeyPressCallback;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
-import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class SearchBarElement extends GuiElement implements Typeable {
 
@@ -59,29 +58,14 @@ public class SearchBarElement extends GuiElement implements Typeable {
 
     @Override
     public void onKey(int key, int scancode) {
-        if (mc.currentScreen instanceof GuiScreen screen) {
-            String typed = GLFW.glfwGetKeyName(key, scancode);
-
-            if (key == GLFW.GLFW_KEY_ESCAPE) {
-                screen.selected = null;
-            }
-            else if (key == GLFW.GLFW_KEY_BACKSPACE && !query.isEmpty()) {
-                query = query.substring(0, query.length() - 1);
-            }
-            else if (key == GLFW.GLFW_KEY_SPACE) {
-                query = query.concat(" ");
-            }
-            else if (key == GLFW.GLFW_KEY_V && screen.ctrlKeyPressed) {
-                query = query.concat(StringUtils.fromClipboard());
-            }
-            else if (typed != null){
-                query = query.concat(screen.shiftKeyPressed ? StringUtils.keyPressWithShift(typed) : typed);
-            }
-
-            for (KeyPressCallback callback : keyPressCallbacks) {
-                callback.handleKey(key, ClickType.CLICK, scancode, -1);
-            }
+        for (KeyPressCallback callback : keyPressCallbacks) {
+            callback.handleKey(key, ClickType.CLICK, scancode, -1);
         }
+    }
+
+    @Override
+    public void onInput(Function<String, String> factory) {
+        query = factory.apply(query);
     }
 
     public String getQuery() {

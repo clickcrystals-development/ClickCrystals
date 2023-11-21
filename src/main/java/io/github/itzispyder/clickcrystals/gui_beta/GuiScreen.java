@@ -166,9 +166,11 @@ public abstract class GuiScreen extends Screen implements Global {
         }
 
         for (GuiElement child : children) {
-            if (child instanceof ScrollPanelElement panel && panel.isMouseOver((int)mouseX, (int)mouseY)) {
-                panel.onScroll(amount);
-                break;
+            if (child.isMouseOver((int)mouseX, (int)mouseY)) {
+                child.mouseScrolled(mouseX, mouseY, (int)amount);
+                if (child instanceof ScrollPanelElement panel) {
+                    panel.onScroll(amount);
+                }
             }
             scrollAt(child, (int)mouseX, (int)mouseY, amount);
         }

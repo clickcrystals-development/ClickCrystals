@@ -16,7 +16,7 @@ public final class RenderUtils {
 
     // default text
 
-    public static void drawDefaultScaledText(DrawContext context, Text text, int x, int y, float scale, boolean shadow) {
+    public static void drawDefaultScaledText(DrawContext context, Text text, int x, int y, float scale, boolean shadow, int color) {
         MatrixStack m = context.getMatrices();
         m.scale(scale, scale, scale);
 
@@ -24,11 +24,11 @@ public final class RenderUtils {
         x *= rescale;
         y *= rescale;
 
-        drawDefaultText(context, text, x, y, shadow);
+        drawDefaultText(context, text, x, y, shadow, color);
         m.scale(rescale, rescale, rescale);
     }
 
-    public static void drawDefaultCenteredScaledText(DrawContext context, Text text, int centerX, int y, float scale, boolean shadow) {
+    public static void drawDefaultCenteredScaledText(DrawContext context, Text text, int centerX, int y, float scale, boolean shadow, int color) {
         MatrixStack m = context.getMatrices();
         m.scale(scale, scale, scale);
 
@@ -37,11 +37,11 @@ public final class RenderUtils {
         centerX = centerX - (mc.textRenderer.getWidth(text) / 2);
         y *= rescale;
 
-        drawDefaultText(context, text, centerX, y, shadow);
+        drawDefaultText(context, text, centerX, y, shadow, color);
         m.scale(rescale, rescale, rescale);
     }
 
-    public static void drawDefaultRightScaledText(DrawContext context, Text text, int rightX, int y, float scale, boolean shadow) {
+    public static void drawDefaultRightScaledText(DrawContext context, Text text, int rightX, int y, float scale, boolean shadow, int color) {
         MatrixStack m = context.getMatrices();
         m.scale(scale, scale, scale);
 
@@ -50,12 +50,24 @@ public final class RenderUtils {
         rightX = rightX - mc.textRenderer.getWidth(text);
         y *= rescale;
 
-        drawDefaultText(context, text, rightX, y, shadow);
+        drawDefaultText(context, text, rightX, y, shadow, color);
         m.scale(rescale, rescale, rescale);
     }
 
-    public static void drawDefaultText(DrawContext context, Text text, int x, int y, boolean shadow) {
-        context.drawText(mc.textRenderer, text, x, y, 0xFFFFFFFF, shadow);
+    public static void drawDefaultScaledText(DrawContext context, Text text, int x, int y, float scale, boolean shadow) {
+        drawDefaultScaledText(context, text, x, y, scale, shadow, 0xFFFFFFFF);
+    }
+
+    public static void drawDefaultCenteredScaledText(DrawContext context, Text text, int centerX, int y, float scale, boolean shadow) {
+        drawDefaultCenteredScaledText(context, text, centerX, y, scale, shadow, 0xFFFFFFFF);
+    }
+
+    public static void drawDefaultRightScaledText(DrawContext context, Text text, int rightX, int y, float scale, boolean shadow) {
+        drawDefaultRightScaledText(context, text, rightX, y, scale, shadow, 0xFFFFFFFF);
+    }
+
+    public static void drawDefaultText(DrawContext context, Text text, int x, int y, boolean shadow, int color) {
+        context.drawText(mc.textRenderer, text, x, y, color, shadow);
     }
 
     // non-default

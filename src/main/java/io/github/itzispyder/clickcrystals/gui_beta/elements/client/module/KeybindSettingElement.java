@@ -10,6 +10,8 @@ import io.github.itzispyder.clickcrystals.util.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.function.Function;
+
 public class KeybindSettingElement extends SettingElement<KeybindSetting> implements Typeable {
 
     private final KeybindSetting setting;
@@ -56,6 +58,11 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
             currentScanCode = scanCode;
             screen.selected = null;
         }
+    }
+
+    @Override
+    public void onInput(Function<String, String> factory) {
+
     }
 
     public String getDisplay() {

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.BiPredicate;
 
 public final class StringUtils {
 
@@ -16,6 +17,48 @@ public final class StringUtils {
 
     public static String nullable(String s) {
         return s == null ? "" : s;
+    }
+
+    public static boolean matchAll(String str, BiPredicate<String, String> predicate, String... values) {
+        for (String value : values) {
+            if (!predicate.test(str, value)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean matchAny(String str, BiPredicate<String, String> predicate, String... values) {
+        for (String value : values) {
+            if (predicate.test(str, value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean containsAll(String str, String... values) {
+        return matchAll(str, String::contains, values);
+    }
+
+    public static boolean containsAny(String str, String... values) {
+        return matchAny(str, String::contains, values);
+    }
+
+    public static boolean startsWithAll(String str, String... values) {
+        return matchAll(str, String::startsWith, values);
+    }
+
+    public static boolean startsWithAny(String str, String... values) {
+        return matchAny(str, String::startsWith, values);
+    }
+
+    public static boolean endsWithAll(String str, String... values) {
+        return matchAll(str, String::endsWith, values);
+    }
+
+    public static boolean endsWithAny(String str, String... values) {
+        return matchAny(str, String::endsWith, values);
     }
 
     public static String decolor(String msg) {

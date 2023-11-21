@@ -100,6 +100,12 @@ public abstract class GuiElement implements Positionable, Global {
         }
     }
 
+    public void mouseScrolled(double mouseX, double mouseY, int amount) {
+        for (GuiElement child : children) {
+            child.mouseScrolled(mouseX, mouseY, amount);
+        }
+    }
+
     public boolean isMouseOver(int mouseX, int mouseY) {
         return rendering && mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height;
     }

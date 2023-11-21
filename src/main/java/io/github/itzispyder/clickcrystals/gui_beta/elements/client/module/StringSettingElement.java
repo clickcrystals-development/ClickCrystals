@@ -6,9 +6,9 @@ import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import io.github.itzispyder.clickcrystals.util.RenderUtils;
-import io.github.itzispyder.clickcrystals.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
-import org.lwjgl.glfw.GLFW;
+
+import java.util.function.Function;
 
 public class StringSettingElement extends SettingElement<StringSetting> implements Typeable {
 
@@ -61,28 +61,9 @@ public class StringSettingElement extends SettingElement<StringSetting> implemen
     }
 
     @Override
-    public void onKey(int key, int scancode) {
-        if (mc.currentScreen instanceof GuiScreen screen) {
-            String typed = GLFW.glfwGetKeyName(key, scancode);
-
-            if (key == GLFW.GLFW_KEY_ESCAPE) {
-                screen.selected = null;
-            }
-            else if (key == GLFW.GLFW_KEY_BACKSPACE && !input.isEmpty()) {
-                input = input.substring(0, input.length() - 1);
-            }
-            else if (key == GLFW.GLFW_KEY_SPACE) {
-                input = input.concat(" ");
-            }
-            else if (key == GLFW.GLFW_KEY_V && screen.ctrlKeyPressed) {
-                input = input.concat(StringUtils.fromClipboard());
-            }
-            else if (typed != null){
-                input = input.concat(screen.shiftKeyPressed ? StringUtils.keyPressWithShift(typed) : typed);
-            }
-
-            setting.setVal(input);
-        }
+    public void onInput(Function<String, String> factory) {
+        input = factory.apply(input);
+        setting.setVal(input);
     }
 
     public String getInput() {

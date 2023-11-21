@@ -152,4 +152,13 @@ public class ClickScript {
     public File getFile() {
         return file;
     }
+
+    public static String[] collectNames() {
+        String[] a = new String[REGISTRATION.size()];
+        int i = 0;
+        for (String s : REGISTRATION.keySet()) {
+            a[i++] = s;
+        }
+        return a;
+    }
 }
