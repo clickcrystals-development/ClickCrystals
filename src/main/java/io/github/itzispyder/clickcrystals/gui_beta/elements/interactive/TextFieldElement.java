@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.misc.ChatColor;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
@@ -14,9 +15,8 @@ import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -52,15 +52,22 @@ public class TextFieldElement extends GuiElement implements Typeable {
 
         int caret = y + textY;
         int color = ChatColor.DARK_GRAY.getHex();
-        int i = 0;
 
+        // lines indexes
+        int max = Math.max(99, text.size());
+        for (int i = 0; i < max; i++) {
+            Text index = Text.literal("" + (i + 1));
+            RenderUtils.drawDefaultScaledText(context, index, x + 5, caret + 1, 1.0F, false, color);
+            caret += 9;
+        }
+
+        // text
+        caret = y + textY;
         for (var it = text.iterator(); it.hasNext(); caret += 9) {
             OrderedText line = it.next();
-            Text index = Text.literal("" + (i++ + 1));
             if (selectedAll) {
                 RenderUtils.fill(context, x + 20, caret - 1, mc.textRenderer.getWidth(line), 9, 0xA07E75FF);
             }
-            RenderUtils.drawDefaultScaledText(context, index, x + 5, caret + 1, 1.0F, false, color);
             context.drawText(mc.textRenderer, line, x + 20, caret, textColor.getHex(), false);
         }
 
@@ -274,7 +281,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
 
     // highlighters
     public static class TextHighlighter {
-        private Set<HighlightFactory> stringFactories = new HashSet<>();
+        private List<HighlightFactory> stringFactories = new ArrayList<>();
         private ChatColor originalColor;
 
         public TextHighlighter(ChatColor originalColor) {
@@ -286,20 +293,38 @@ public class TextFieldElement extends GuiElement implements Typeable {
         }
 
         public String highlightText(String text) {
-            for (String line : text.lines().toArray(String[]::new)) {
-                for (String k : line.split(" ")) {
-                    if (k.isEmpty()) {
+            String[] lines = text.lines().toArray(String[]::new);
+            String result = "";
+
+            for (int i = 0; i < lines.length; i++) { // for each line
+                String line = lines[i];
+                String[] words = line.split(" ");
+
+                for (int j = 0; j < words.length; j++) { // for each word
+                    String word = words[j];
+
+                    if (word.isEmpty()) { // skip empty word (means more than one spaces in a row)
+                        result = result.concat(" ");
                         continue;
                     }
 
-                    String r = k;
-                    for (HighlightFactory factory : stringFactories) {
-                        r = factory.process(r);
+                    String r = word;
+                    for (HighlightFactory factory : stringFactories) { // apply style
+                        var product = factory.process(r);
+                        if (product.right) {
+                            r = product.left;
+                            break;
+                        }
                     }
-                    text = text.replace(k, r);
+
+                    result = result.concat(r + (j < words.length - 1? " " : "")); // add to result
+                }
+
+                if (i < lines.length - 1) {
+                    result = result.concat("\n"); // add new line to result
                 }
             }
-            return text;
+            return result;
         }
 
         private HighlightFactory colorStringFactory(ChatColor color, String str) {
@@ -338,7 +363,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
             return this;
         }
 
-        public TextHighlighter setStringFactory(Set<HighlightFactory> stringFactories) {
+        public TextHighlighter setStringFactory(List<HighlightFactory> stringFactories) {
             this.stringFactories = stringFactories;
             return this;
         }
@@ -356,11 +381,11 @@ public class TextFieldElement extends GuiElement implements Typeable {
         }
 
         public record HighlightFactory(Predicate<String> predicate, Function<String, String> factory) {
-            public String process(String str) {
+            public Pair<String, Boolean> process(String str) {
                 if (predicate.test(str)) {
-                    return factory.apply(str);
+                    return Pair.of(factory.apply(str), true);
                 }
-                return str;
+                return Pair.of(str, false);
             }
         }
     }

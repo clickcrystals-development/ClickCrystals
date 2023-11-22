@@ -29,8 +29,6 @@ public class ClickScriptIDE extends DefaultBase {
         ChatColor og = getOriginalColor();
         Function<ChatColor, Function<String, String>> applyColor = c -> s -> "%s%s%s".formatted(c, s, og);
 
-        this.put(ChatColor.ORANGE, ClickScript.collectNames());
-        this.put(ChatColor.GRAY, "then");
         this.put(s -> StringUtils.startsWithAny(s, ":", "#"), applyColor.apply(ChatColor.DARK_GREEN));
         this.put(s -> s.replaceAll("[0-9><=!.+-]", "").isEmpty(), applyColor.apply(ChatColor.DARK_AQUA));
         this.put(ChatColor.YELLOW, Arrays.stream(InputCmd.Action.values()).map(e -> e.name().toLowerCase()).toList());
@@ -38,6 +36,8 @@ public class ClickScriptIDE extends DefaultBase {
         this.put(ChatColor.YELLOW, Arrays.stream(ModuleCmd.Action.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(TurnToCmd.Mode.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(IfCmd.ConditionType.values()).map(e -> e.name().toLowerCase()).toList());
+        this.put(ChatColor.ORANGE, ClickScript.collectNames());
+        this.put(ChatColor.GRAY, "then");
     }};
     private final String filename, filepath;
     private final LoadingIconElement loading;
@@ -45,6 +45,7 @@ public class ClickScriptIDE extends DefaultBase {
 
     public TextFieldElement textField = new TextFieldElement(contentX, contentY + 21, contentWidth, contentHeight - 21) {{
         this.setHighlighter(CLICKSCRIPT_HIGHLIGHTER);
+        this.setBackgroundColor(ChatColor.RESET);
     }};
 
     public ClickScriptIDE(ScriptedModule module) {
