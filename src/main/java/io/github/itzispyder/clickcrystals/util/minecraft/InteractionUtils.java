@@ -2,9 +2,16 @@ package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
+import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.interfaces.MinecraftClientAccessor;
+import io.github.itzispyder.clickcrystals.interfaces.MouseAccessor;
+import io.github.itzispyder.clickcrystals.modules.modules.misc.GuiCursor;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.ItemStack;
+
+import java.awt.*;
+import java.util.function.Predicate;
 
 /**
  * Client interaction utils
@@ -69,5 +76,33 @@ public final class InteractionUtils implements Global {
         if (s != null && s.getAmplifier() > w.getAmplifier()) return true;
 
         return HotbarUtils.isHoldingTool();
+    }
+
+    public static void searchGuiItem(Predicate<ItemStack> item) {
+        UserInputListener.queueGuiItemSearch(item);
+    }
+
+    public static void setCursor(Point p) {
+        GuiCursor.setCursor(p.x, p.y);
+    }
+
+    public static void setCursor(int x, int y) {
+        setCursor(new Point(x, y));
+    }
+
+    public static Point getCursor() {
+        return new Point((int)GuiCursor.getCursorX(mc.mouse.getX()), (int)GuiCursor.getCursorY(mc.mouse.getY()));
+    }
+
+    public static void leftClick() {
+        ((MouseAccessor) mc.mouse).leftClick();
+    }
+
+    public static void rightClick() {
+        ((MouseAccessor) mc.mouse).rightClick();
+    }
+
+    public static void middleClick() {
+        ((MouseAccessor) mc.mouse).middleClick();
     }
 }

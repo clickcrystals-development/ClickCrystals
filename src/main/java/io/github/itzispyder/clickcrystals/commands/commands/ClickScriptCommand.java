@@ -4,6 +4,8 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.commands.Command;
+import io.github.itzispyder.clickcrystals.gui_beta.screens.ModuleScreen;
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
 import net.minecraft.command.CommandSource;
@@ -16,7 +18,14 @@ public class ClickScriptCommand extends Command {
 
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        builder.then(literal("compile")
+        builder.executes(cxt -> {
+                    system.scheduler.runDelayedTask(() -> {
+                        ModuleScreen.currentCategory = Categories.SCRIPTED;
+                        mc.execute(() -> mc.setScreen(new ModuleScreen()));
+                    }, 5 * 50);
+                    return SINGLE_SUCCESS;
+                })
+                .then(literal("compile")
                 .then(argument("commandline", StringArgumentType.greedyString())
                         .executes(cxt -> {
                             ClickScript.executeSingle(cxt.getArgument("commandline", String.class));

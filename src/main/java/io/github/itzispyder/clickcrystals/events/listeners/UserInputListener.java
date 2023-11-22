@@ -3,20 +3,25 @@ package io.github.itzispyder.clickcrystals.events.listeners;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
+import io.github.itzispyder.clickcrystals.events.events.client.RenderInventorySlotEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.gui_beta.ClickType;
 import io.github.itzispyder.clickcrystals.gui_beta.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui_beta.screens.*;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.DiscordRPC;
+import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
+import net.minecraft.item.ItemStack;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Predicate;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
 
@@ -55,6 +60,8 @@ public class UserInputListener implements Listener {
             BulletinScreen.class, "Viewing CC Bulletin Board"
     );
 
+    private static final ConcurrentLinkedQueue<QueuedGuiItemSearchListener> guiItemSearchQueue = new ConcurrentLinkedQueue<>();
+
     @EventHandler
     public void onKeyPress(KeyPressEvent e) {
         try {
@@ -71,6 +78,17 @@ public class UserInputListener implements Listener {
             this.handleScreenManagement(e);
         }
         catch (Exception ignore) {}
+    }
+
+    @EventHandler
+    public void onScreenRenderItem(RenderInventorySlotEvent e) {
+        guiItemSearchQueue.forEach(q -> q.accept(e));
+    }
+
+    public static void queueGuiItemSearch(Predicate<ItemStack> item) {
+        var q = new QueuedGuiItemSearchListener(item);
+        guiItemSearchQueue.add(q);
+        system.scheduler.runDelayedTask(() -> guiItemSearchQueue.remove(q), 50);
     }
 
     private void handleScreenManagement(SetScreenEvent e) {
@@ -129,6 +147,29 @@ public class UserInputListener implements Listener {
                 if (bind.canPress(e.getKeycode(), e.getScancode())) {
                     bind.onPress();
                 }
+            }
+        }
+    }
+
+    private static class QueuedGuiItemSearchListener {
+        private long sequence;
+        private Predicate<ItemStack> item;
+
+        public QueuedGuiItemSearchListener(Predicate<ItemStack> item) {
+            this.item = item;
+        }
+
+        public void accept(RenderInventorySlotEvent e) {
+            if (item.test(e.getItem())) {
+                InteractionUtils.setCursor(e.getX() + 8, e.getY() + 8);
+                sequence = 0;
+                item = null;
+                guiItemSearchQueue.remove(this);
+                return;
+            }
+
+            if (sequence++ >= 45) { // all inv slots
+                guiItemSearchQueue.remove(this);
             }
         }
     }

@@ -33,7 +33,10 @@ public class InputCmd extends ScriptCommand implements Global {
         JUMP(InteractionUtils::inputJump, mc.options.jumpKey::isPressed),
         SNEAK(InteractionUtils::inputSneak, mc.options.sneakKey::isPressed),
         LOCK_CURSOR(CameraRotator::lockCursor, CameraRotator::isCursorLocked),
-        UNLOCK_CURSOR(CameraRotator::unlockCursor, () -> !CameraRotator.isCursorLocked());
+        UNLOCK_CURSOR(CameraRotator::unlockCursor, () -> !CameraRotator.isCursorLocked()),
+        GUI_LEFT(InteractionUtils::leftClick, mc.mouse::wasLeftButtonClicked),
+        GUI_RIGHT(InteractionUtils::rightClick, mc.mouse::wasRightButtonClicked),
+        GUI_MIDDLE(InteractionUtils::middleClick, mc.mouse::wasMiddleButtonClicked);
 
         private final Runnable action;
         private final BooleanSupplier isActive;
