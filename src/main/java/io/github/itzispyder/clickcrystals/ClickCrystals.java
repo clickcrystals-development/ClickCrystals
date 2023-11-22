@@ -92,7 +92,7 @@ public final class ClickCrystals implements ModInitializer {
     public static final String modId   = "clickcrystals";
     public static final String prefix  = "[ClickCrystals] ";
     public static final String starter = "§7[§bClick§3Crystals§7] §r";
-    public static final String version = "1.1.3";
+    public static final String version = "1.1.4";
 
     public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
 

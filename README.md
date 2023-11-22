@@ -39,27 +39,32 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 1.1.3
+Mod: 1.1.4
 
 Changelog:
-  If-Conditions:
-    - if entity_in_range any_entity
-    - if block_in_range eny_block
-    - if_not entity_in_range any_entity
-    - if_not block_in_range eny_block
-    - turn_to any_block
-    - turn_to any_entity
+    ClickScript IDE:
+      - Make scripts in-game! (color coded keywords and stuff)
+      - Create custom modules via GUI!
+
+    Add:
+      - input left
+      - input right
+      - input middle
+      - input inventory
+      - # aka: to check if inventory is open just check "if input_active inventory"
+      - drop one
+      - drop all
+      - config save
+      - config reload
+      - if module_enabled
+      - on game_join
+      - on game_leave
+      - wait_random # <min> <max>
+      - search_gui # "search" command but for in gui
     
-  Added:
-    - input jump
-    - keyword "then" to commands [input, switch, swap, turn_to, module]
-    - ex. input jump then input attack
-    - ex. switch :respawn_anchor then switch :glowstone then input use
-    - added "switch back"
-  
-  Tweaked:
-    - renamed "loop-period" to "loop_period"
-    - renamed "on_finish" to "then"
+    Also:
+      - # make [if, if_not, wait] "then" chains optional (to avoid confusion)
+      - loop_period # change from millis to second
   
 Notice:
   - Module MouseTaper does not register manual input from the button you taped down!
