@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.modules.scripts;
 
-import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
@@ -39,6 +38,8 @@ public class OnEventCmd extends ScriptCommand {
             case TOTEM_POP -> ModuleCmd.runOnCurrentScriptModule(m -> m.totemPopListeners.add(() -> exc(args, 1)));
             case DAMAGE -> ModuleCmd.runOnCurrentScriptModule(m -> m.damageListeners.add(() -> exc(args, 1)));
             case DEATH -> ModuleCmd.runOnCurrentScriptModule(m -> m.deathListeners.add(() -> exc(args, 1)));
+            case GAME_JOIN -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameJoinListeners.add(() -> exc(args, 1)));
+            case GAME_LEAVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameLeaveListeners.add(() -> exc(args, 1)));
         }
     }
 
@@ -85,7 +86,7 @@ public class OnEventCmd extends ScriptCommand {
     }
 
     public void exc(ScriptArgs args, int begin) {
-        ClickScript.executeSingle(args.getAll(begin).stringValue());
+        executeWithThen(args, begin);
     }
 
     private boolean matchKeyPress(EventType type, KeyPressEvent event, ScriptArgs args) {
@@ -208,6 +209,8 @@ public class OnEventCmd extends ScriptCommand {
         KEY_PRESS,
         KEY_RELEASE,
         DAMAGE,
-        DEATH
+        DEATH,
+        GAME_JOIN,
+        GAME_LEAVE
     }
 }

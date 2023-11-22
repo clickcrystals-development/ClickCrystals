@@ -6,6 +6,8 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.TakeDamageEvent;
+import io.github.itzispyder.clickcrystals.events.events.networking.GameJoinEvent;
+import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.*;
@@ -44,6 +46,8 @@ public class ScriptedModule extends ListenerModule {
     public final List<Runnable> moduleDisableListeners = new ArrayList<>();
     public final List<Runnable> damageListeners = new ArrayList<>();
     public final List<Runnable> deathListeners = new ArrayList<>();
+    public final List<Runnable> gameJoinListeners = new ArrayList<>();
+    public final List<Runnable> gameLeaveListeners = new ArrayList<>();
     public final String filepath, filename;
 
     public ScriptedModule(String name, String description, File file) {
@@ -75,6 +79,8 @@ public class ScriptedModule extends ListenerModule {
         moduleDisableListeners.clear();
         damageListeners.clear();
         deathListeners.clear();
+        gameJoinListeners.clear();
+        gameLeaveListeners.clear();
 
         blockPlaceListeners.clear();
         blockBreakListeners.clear();
@@ -180,6 +186,16 @@ public class ScriptedModule extends ListenerModule {
     @EventHandler
     public void onDamage(TakeDamageEvent e) {
         damageListeners.forEach(Runnable::run);
+    }
+
+    @EventHandler
+    public void onGameJoin(GameJoinEvent e) {
+        gameJoinListeners.forEach(Runnable::run);
+    }
+
+    @EventHandler
+    public void onGameLeave(GameLeaveEvent e) {
+        gameLeaveListeners.forEach(Runnable::run);
     }
 
     @FunctionalInterface

@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
+import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.interfaces.MinecraftClientAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -42,6 +43,12 @@ public abstract class MixinMinecraftClient implements MinecraftClientAccessor {
         ClickCrystals.config.saveModules();
         system.println("<- saving config...");
         ClickCrystals.config.save();
+    }
+
+
+    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;)V", at = @At("HEAD"))
+    public void disconnect(Screen screen, CallbackInfo ci) {
+        system.eventBus.pass(new GameLeaveEvent());
     }
 
     @Override
