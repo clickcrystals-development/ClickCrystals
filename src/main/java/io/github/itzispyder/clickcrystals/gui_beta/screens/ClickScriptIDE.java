@@ -29,15 +29,20 @@ public class ClickScriptIDE extends DefaultBase {
         ChatColor og = getOriginalColor();
         Function<ChatColor, Function<String, String>> applyColor = c -> s -> "%s%s%s".formatted(c, s, og);
 
+        // special
         this.put(s -> StringUtils.startsWithAny(s, ":", "#"), applyColor.apply(ChatColor.DARK_GREEN));
         this.put(s -> s.replaceAll("[0-9><=!.+-]", "").isEmpty(), applyColor.apply(ChatColor.DARK_AQUA));
+        this.put(ChatColor.GRAY, "then");
+        // enums
         this.put(ChatColor.YELLOW, Arrays.stream(InputCmd.Action.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(OnEventCmd.EventType.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(ModuleCmd.Action.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(TurnToCmd.Mode.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(IfCmd.ConditionType.values()).map(e -> e.name().toLowerCase()).toList());
+        this.put(ChatColor.YELLOW, Arrays.stream(DropCmd.Type.values()).map(e -> e.name().toLowerCase()).toList());
+        this.put(ChatColor.YELLOW, Arrays.stream(ConfigCmd.Type.values()).map(e -> e.name().toLowerCase()).toList());
+        // main keywords
         this.put(ChatColor.ORANGE, ClickScript.collectNames());
-        this.put(ChatColor.GRAY, "then");
     }};
     private final String filename, filepath;
     private final LoadingIconElement loading;

@@ -142,12 +142,12 @@ public class TextFieldElement extends GuiElement implements Typeable {
                 shiftRight();
             }
             else if (key == GLFW.GLFW_KEY_UP) {
-                for (int i = 0; i < 45; i++) {
+                for (int i = 0; i < 10; i++) {
                     shiftLeft();
                 }
             }
             else if (key == GLFW.GLFW_KEY_DOWN) {
-                for (int i = 0; i < 45; i++) {
+                for (int i = 0; i < 10; i++) {
                     shiftRight();
                 }
             }

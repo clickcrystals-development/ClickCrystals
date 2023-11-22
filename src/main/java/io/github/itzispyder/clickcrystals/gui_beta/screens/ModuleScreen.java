@@ -118,7 +118,7 @@ public class ModuleScreen extends DefaultBase {
 
         public ScriptCreateNew(int x, int y) {
             super(null, x, y);
-            this.setTooltip("Click to create a custom module!");
+            this.setTooltip("§7Type the file name then hit §eENTER§7!");
             this.addChild(textField);
         }
 

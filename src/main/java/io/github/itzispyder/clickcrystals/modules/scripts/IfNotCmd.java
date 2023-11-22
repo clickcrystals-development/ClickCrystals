@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
+import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
@@ -121,6 +122,12 @@ public class IfNotCmd extends ScriptCommand implements Global {
             case POS_Z -> {
                 if (!IfCmd.evalIntegers((int)PlayerUtils.getPos().getZ(), args.get(1).stringValue())) {
                     ClickScript.executeSingle(args.getAll(2).stringValue());
+                }
+            }
+            case MODULE_ENABLED -> {
+                Module m = system.getModuleById(args.get(1).stringValue());
+                if (m == null || !m.isEnabled()) {
+                    args.executeAll(2);
                 }
             }
         }

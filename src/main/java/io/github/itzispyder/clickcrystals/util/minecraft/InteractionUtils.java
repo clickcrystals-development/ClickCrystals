@@ -46,6 +46,18 @@ public final class InteractionUtils implements Global {
         TickEventListener.sneak(500);
     }
 
+    public static void inputSwap() {
+        InvUtils.swapOffhand(InvUtils.selected());
+    }
+
+    public static void inputDrop() {
+        InvUtils.dropSlot(InvUtils.selected(), false);
+    }
+
+    public static void inputDropFull() {
+        InvUtils.dropSlot(InvUtils.selected(), true);
+    }
+
     public static boolean canBreakCrystals() {
         if (mc.player == null) return false;
 

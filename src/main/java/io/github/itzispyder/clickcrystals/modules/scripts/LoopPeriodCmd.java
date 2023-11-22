@@ -14,7 +14,7 @@ public class LoopPeriodCmd extends ScriptCommand implements Global {
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
         int times = args.get(0).intValue();
-        long period = args.get(1).longValue();
+        long period = (long)(args.get(1).doubleValue() * 1000L);
         system.scheduler.runRepeatingTask(() -> exc(args), 0, period, times);
     }
 

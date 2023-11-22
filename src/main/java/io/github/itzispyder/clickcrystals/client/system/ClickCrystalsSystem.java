@@ -43,10 +43,10 @@ public class ClickCrystalsSystem implements Serializable {
     private final Set<Keybind> keybinds;
 
     public ClickCrystalsSystem() {
-        this.commands = new HashMap<>();
-        this.modules = new HashMap<>();
-        this.scriptedModules = new HashMap<>();
-        this.huds = new HashMap<>();
+        this.commands = new LinkedHashMap<>();
+        this.modules = new LinkedHashMap<>();
+        this.scriptedModules = new LinkedHashMap<>();
+        this.huds = new LinkedHashMap<>();
         this.keybinds = new HashSet<>();
     }
 
