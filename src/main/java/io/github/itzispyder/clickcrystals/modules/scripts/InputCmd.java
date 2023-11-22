@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 
 import java.util.function.BooleanSupplier;
 
@@ -34,9 +35,10 @@ public class InputCmd extends ScriptCommand implements Global {
         SNEAK(InteractionUtils::inputSneak, mc.options.sneakKey::isPressed),
         LOCK_CURSOR(CameraRotator::lockCursor, CameraRotator::isCursorLocked),
         UNLOCK_CURSOR(CameraRotator::unlockCursor, () -> !CameraRotator.isCursorLocked()),
-        GUI_LEFT(InteractionUtils::leftClick, mc.mouse::wasLeftButtonClicked),
-        GUI_RIGHT(InteractionUtils::rightClick, mc.mouse::wasRightButtonClicked),
-        GUI_MIDDLE(InteractionUtils::middleClick, mc.mouse::wasMiddleButtonClicked);
+        LEFT(InteractionUtils::leftClick, mc.mouse::wasLeftButtonClicked),
+        RIGHT(InteractionUtils::rightClick, mc.mouse::wasRightButtonClicked),
+        MIDDLE(InteractionUtils::middleClick, mc.mouse::wasMiddleButtonClicked),
+        INVENTORY(InteractionUtils::inputInventory, () -> mc.currentScreen instanceof InventoryScreen);
 
         private final Runnable action;
         private final BooleanSupplier isActive;

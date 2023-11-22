@@ -182,6 +182,10 @@ public class OnEventCmd extends ScriptCommand {
         return ent -> false;
     }
 
+    public static void executeWithThen(ScriptArgs args, int begin) {
+        args.executeAll(args.match(begin, "then") ? begin + 1 : begin);
+    }
+
     public enum EventType {
         RIGHT_CLICK,
         LEFT_CLICK,

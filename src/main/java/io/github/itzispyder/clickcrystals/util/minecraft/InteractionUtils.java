@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.interfaces.MinecraftClientAccessor;
 import io.github.itzispyder.clickcrystals.interfaces.MouseAccessor;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.GuiCursor;
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
@@ -63,6 +64,19 @@ public final class InteractionUtils implements Global {
 
     public static void inputDropFull() {
         InvUtils.dropSlot(InvUtils.selected(), true);
+    }
+
+    public static void inputInventory() {
+        if (PlayerUtils.playerNull()) {
+            return;
+        }
+
+        if (mc.currentScreen instanceof InventoryScreen inv) {
+            mc.execute(inv::close);
+        }
+        else {
+            mc.execute(() -> mc.setScreen(new InventoryScreen(PlayerUtils.player())));
+        }
     }
 
     public static boolean canBreakCrystals() {
