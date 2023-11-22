@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui_beta.screens;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
+import io.github.itzispyder.clickcrystals.data.Voidable;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui_beta.elements.display.LoadingIconElement;
@@ -11,6 +12,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.modules.scripts.*;
+import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
@@ -37,7 +39,7 @@ public class ClickScriptIDE extends DefaultBase {
         this.put(ChatColor.YELLOW, Arrays.stream(TurnToCmd.Mode.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(IfCmd.ConditionType.values()).map(e -> e.name().toLowerCase()).toList());
     }};
-    private final ScriptedModule module;
+    private final String filename, filepath;
     private final LoadingIconElement loading;
     private final AbstractElement saveButton, saveAndCloseButton, closeButton, discardChangesButton, openFileButton, openScriptsButton;
 
@@ -46,9 +48,14 @@ public class ClickScriptIDE extends DefaultBase {
     }};
 
     public ClickScriptIDE(ScriptedModule module) {
+        this(new File(module.filepath));
+    }
+
+    public ClickScriptIDE(File file) {
         super("ClickScript IDE");
         this.addChild(textField);
-        this.module = module;
+        this.filename = file.getName();
+        this.filepath = file.getPath();
 
         this.loading = new LoadingIconElement(contentX + contentWidth / 2 - 10, contentY + contentHeight / 2 - 10, 20);
         this.loading.setRendering(false);
@@ -70,10 +77,7 @@ public class ClickScriptIDE extends DefaultBase {
                 }).build();
         saveAndCloseButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Save contents then close IDE")
-                .onPress(button -> {
-                    saveContents();
-                    mc.setScreen(new ModuleScreen());
-                })
+                .onPress(button -> saveContents().accept(f -> f.thenRun(() -> mc.execute(() -> mc.setScreen(new ModuleScreen())))))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
                         RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.LIGHT_GRAY);
@@ -100,7 +104,7 @@ public class ClickScriptIDE extends DefaultBase {
                 }).build();
         openFileButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Open file in File Explorer")
-                .onPress(button -> system.openFile(module.filepath))
+                .onPress(button -> system.openFile(filepath))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
                         RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.LIGHT_GRAY);
@@ -188,7 +192,7 @@ public class ClickScriptIDE extends DefaultBase {
         // content
         caret = contentY + 10;
         RenderUtils.drawTexture(context, Tex.ICON_CLICKSCRIPT, contentX + 10, caret - 7, 15, 15);
-        RenderUtils.drawText(context, "Editing '%s'".formatted(module.filename), contentX + 30, caret - 4, false);
+        RenderUtils.drawText(context, "Editing '%s'".formatted(filename), contentX + 30, caret - 4, false);
         caret += 10;
         RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
     }
@@ -200,7 +204,11 @@ public class ClickScriptIDE extends DefaultBase {
         CompletableFuture.runAsync(() -> {
             loading.setRendering(true);
             try {
-                File file = new File(module.filepath);
+                File file = new File(filepath);
+                if (!FileValidationUtils.validate(file)) {
+                    throw new IllegalStateException("File not found!");
+                }
+
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String str = "";
 
@@ -223,16 +231,19 @@ public class ClickScriptIDE extends DefaultBase {
         });
     }
 
-    public void saveContents() {
+    public Voidable<CompletableFuture<Void>> saveContents() {
         if (loading.isRendering()) {
-            return;
+            return Voidable.of(null);
         }
-        CompletableFuture.runAsync(() -> {
+        return Voidable.of(CompletableFuture.runAsync(() -> {
             loading.setRendering(true);
             try {
-                File file = new File(module.filepath);
-                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                File file = new File(filepath);
+                if (!FileValidationUtils.validate(file)) {
+                    throw new IllegalStateException("File not found!");
+                }
 
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                 writer.write(textField.getContent());
                 writer.close();
             }
@@ -243,11 +254,11 @@ public class ClickScriptIDE extends DefaultBase {
             system.reloadScripts();
         }).thenRun(() -> {
             loading.setRendering(false);
-        });
+        }));
     }
 
     @Override
     public void resize(MinecraftClient client, int width, int height) {
-        mc.setScreen(new ClickScriptIDE(module));
+        mc.setScreen(new ClickScriptIDE(new File(filepath)));
     }
 }

@@ -17,11 +17,12 @@ import java.util.function.Function;
 public class SearchBarElement extends GuiElement implements Typeable {
 
     public final List<KeyPressCallback> keyPressCallbacks = new ArrayList<>();
-    private String query;
+    private String query, defaultText;
 
     public SearchBarElement(int x, int y, int width) {
         super(x, y, width, 12);
         this.query = "";
+        this.defaultText = "§7Search module i.e.";
     }
 
     public SearchBarElement(int x, int y) {
@@ -46,7 +47,7 @@ public class SearchBarElement extends GuiElement implements Typeable {
                 }
             }
             else {
-                RenderUtils.drawText(context, "§7Search module i.e.", x + height / 2 + 2, y + height / 3, 0.7F, false);
+                RenderUtils.drawText(context, getDefaultText(), x + height / 2 + 2, y + height / 3, 0.7F, false);
             }
         }
     }
@@ -79,5 +80,13 @@ public class SearchBarElement extends GuiElement implements Typeable {
 
     public void setQuery(String query) {
         this.query = query;
+    }
+
+    public String getDefaultText() {
+        return defaultText;
+    }
+
+    public void setDefaultText(String defaultText) {
+        this.defaultText = defaultText;
     }
 }
