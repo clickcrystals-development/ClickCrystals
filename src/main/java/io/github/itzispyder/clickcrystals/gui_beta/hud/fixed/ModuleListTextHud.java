@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.ModulesList;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class ModuleListTextHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(MatrixStack context) {
         Module hudModule = Module.get(ModulesList.class);
 
         if (!hudModule.isEnabled()) return;
@@ -40,8 +40,8 @@ public class ModuleListTextHud extends Hud {
             final int lineColor = 0xFFACE8FB;
             final int length = tr.getWidth(display);
 
-            context.fill(x, y, x - length, y + 10, fillColor);
-            context.fill(x, y, x + 1, y + 10, lineColor);
+            RenderUtils.fill(context, x, y, length, 10, fillColor);
+            RenderUtils.fill(context, x, y, 1, 10, lineColor);
             RenderUtils.drawRightText(context, display, x, y, true);
         }
     }

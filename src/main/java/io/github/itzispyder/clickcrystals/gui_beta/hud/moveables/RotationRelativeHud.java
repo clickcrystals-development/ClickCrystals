@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHu
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.network.ClientPlayerEntity;
 
 public class RotationRelativeHud extends Hud {
@@ -16,7 +16,7 @@ public class RotationRelativeHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(MatrixStack context) {
         renderBackdrop(context);
 
         ClientPlayerEntity p = PlayerUtils.player();

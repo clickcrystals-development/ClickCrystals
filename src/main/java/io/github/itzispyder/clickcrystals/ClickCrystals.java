@@ -266,7 +266,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new NoViewBob());
         system.addModule(new GlowingEntities());
         system.addModule(new NoScoreboard());
-        system.addModule(new HealthAsBar());
+        //system.addModule(new HealthAsBar());
         system.addModule(new Zoom());
         system.addModule(new ViewModel());
         system.addModule(new GhostTotem());

@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -19,7 +19,7 @@ public class CrosshairTargetRelativeHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(MatrixStack context) {
         renderBackdrop(context);
 
         if (mc.crosshairTarget instanceof EntityHitResult hit) {
@@ -48,10 +48,10 @@ public class CrosshairTargetRelativeHud extends Hud {
             float scale = 0.8F;
             x = (int)((getX() + getWidth() * 0.75) / scale);
             y = (int)(getY() / scale);
-            context.getMatrices().push();
-            context.getMatrices().scale(scale, scale, scale);
-            context.drawItem(state.getBlock().asItem().getDefaultStack(), x, y);
-            context.getMatrices().pop();
+            context.push();
+            context.scale(scale, scale, scale);
+            mc.getItemRenderer().renderGuiItemIcon(context, state.getBlock().asItem().getDefaultStack(), x, y);
+            context.pop();
         }
     }
 

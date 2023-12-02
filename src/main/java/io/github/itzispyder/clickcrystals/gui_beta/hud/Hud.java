@@ -10,7 +10,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.Window;
 
 @Environment(EnvType.CLIENT)
@@ -50,9 +50,9 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
         this(id, new Dimension());
     }
 
-    public abstract void render(DrawContext context);
+    public abstract void render(MatrixStack context);
 
-    public void renderBackdrop(DrawContext context) {
+    public void renderBackdrop(MatrixStack context) {
         RenderUtils.fill(context, getX(), getY(), getWidth(), getHeight(), getArgb());
 
         if (canRenderBorder()) {
@@ -61,7 +61,7 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
     }
 
     @Override
-    public void onHudRender(DrawContext context, float tickDelta) {
+    public void onHudRender(MatrixStack context, float tickDelta) {
         if (canRender()) {
             render(context);
         }

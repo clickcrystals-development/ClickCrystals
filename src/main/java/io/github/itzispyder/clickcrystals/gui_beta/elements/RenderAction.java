@@ -1,10 +1,10 @@
 package io.github.itzispyder.clickcrystals.gui_beta.elements;
 
 import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 @FunctionalInterface
 public interface RenderAction<T extends GuiElement> {
 
-    void onRender(DrawContext context, int mouseX, int mouseY, T button);
+    void onRender(MatrixStack context, int mouseX, int mouseY, T button);
 }

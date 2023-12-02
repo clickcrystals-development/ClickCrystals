@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.callbacks.KeyPressCallback;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class SearchBarElement extends GuiElement implements Typeable {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(MatrixStack context, int mouseX, int mouseY) {
         RoundRectBrush.drawRoundHoriLine(context, x, y, width, height, Gray.LIGHT);
         if (mc.currentScreen instanceof GuiScreen screen) {
             String text = query;

@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
@@ -16,7 +16,7 @@ public class ResourceRelativeHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(MatrixStack context) {
         renderBackdrop(context);
 
         int y = getY();
@@ -38,7 +38,7 @@ public class ResourceRelativeHud extends Hud {
         setHeight(caret - y);
     }
 
-    private void drawItem(DrawContext context, Item item, int x, int y) {
+    private void drawItem(MatrixStack context, Item item, int x, int y) {
         RenderUtils.drawItem(context, item.getDefaultStack(), x, y, 1.0F, InvUtils.count(item) + "");
     }
 

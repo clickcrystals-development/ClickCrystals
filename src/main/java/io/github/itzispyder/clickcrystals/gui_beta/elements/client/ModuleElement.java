@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.screens.ModuleEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class ModuleElement extends GuiElement {
 
@@ -23,7 +23,7 @@ public class ModuleElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(MatrixStack context, int mouseX, int mouseY) {
         if (isHovered(mouseX, mouseY)) {
             RenderUtils.fill(context, x, y, width, height, 0x60FFFFFF);
         }

@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui_beta.hud.moveables;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.gui_beta.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
@@ -8,10 +9,10 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.HealthAsBar;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.PlayerSkinDrawer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -26,7 +27,7 @@ public class TargetRelativeHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(MatrixStack context) {
         renderBackdrop(context);
 
         if (target != null && !target.isDead() && timer > System.currentTimeMillis()) {
@@ -46,7 +47,8 @@ public class TargetRelativeHud extends Hud {
 
             // player head
             caret += g;
-            PlayerSkinDrawer.draw(context, targetEntry.getSkinTexture(), margin, caret, 15, true, false);
+            RenderSystem.setShaderTexture(0, targetEntry.getSkinTexture());
+            PlayerSkinDrawer.draw(context, margin, caret, 15, true, false);
 
             // player name (next to player head)
             // and player ping and distance
@@ -86,14 +88,14 @@ public class TargetRelativeHud extends Hud {
             float rescale = 1 / scale;
             int tx = (int) ((margin + 80 + g) / scale);
             int ty = (int) (y / scale);
-            context.getMatrices().push();
-            context.getMatrices().scale(scale, scale, scale);
-            context.drawItem(totem, tx, ty);
-            context.getMatrices().scale(rescale, rescale, rescale);
+            context.push();
+            context.scale(scale, scale, scale);
+            mc.getItemRenderer().renderGuiItemIcon(context, totem, tx, ty);
+            context.scale(rescale, rescale, rescale);
             tx = margin + 90 + g;
             ty = y + 15;
-            context.drawItemInSlot(mc.textRenderer, totem, tx, ty, pops);
-            context.getMatrices().pop();
+            mc.getItemRenderer().renderGuiItemOverlay(context, mc.textRenderer, totem, tx, ty, pops);
+            context.pop();
 
             caret += g + 8;
             setHeight(caret - y);

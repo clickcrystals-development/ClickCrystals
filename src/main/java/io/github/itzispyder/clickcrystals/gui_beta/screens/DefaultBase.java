@@ -10,7 +10,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,11 +103,11 @@ public abstract class DefaultBase extends GuiScreen {
         this.addChild(buttonSettings);
     }
 
-    public void renderDefaultBase(DrawContext context) {
+    public void renderDefaultBase(MatrixStack context) {
         RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA03873A9, 0xA0000000);
 
-        context.getMatrices().push();
-        context.getMatrices().translate(baseX, baseY, 0);
+        context.push();
+        context.translate(baseX, baseY, 0);
 
         // backdrop
         RoundRectBrush.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Gray.BLACK);
@@ -158,6 +158,6 @@ public abstract class DefaultBase extends GuiScreen {
         caret += 8;
         RenderUtils.drawText(context, "§bobvWolf §8(owner) ", 15, caret, 0.65F, false);
 
-        context.getMatrices().pop();
+        context.pop();
     }
 }

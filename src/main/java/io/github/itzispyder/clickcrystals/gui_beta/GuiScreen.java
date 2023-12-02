@@ -8,7 +8,8 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
@@ -52,7 +53,7 @@ public abstract class GuiScreen extends Screen implements Global {
         return mc.currentScreen != null && mc.currentScreen.getClass() == type;
     }
 
-    public abstract void baseRender(DrawContext context, int mouseX, int mouseY, float delta);
+    public abstract void baseRender(MatrixStack context, int mouseX, int mouseY, float delta);
 
     @Override
     public void tick() {
@@ -62,12 +63,12 @@ public abstract class GuiScreen extends Screen implements Global {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void render(MatrixStack context, int mouseX, int mouseY, float delta) {
         if (selected != null && selected.isDraggable()) {
             int dx = mouseX - cursor.left;
             int dy = mouseY - cursor.right;
             selected.move(dx, dy);
-            selected.boundIn(context.getScaledWindowWidth(), context.getScaledWindowHeight());
+            selected.boundIn(MinecraftClient.getInstance().getWindow().getScaledWidth(), MinecraftClient.getInstance().getWindow().getScaledHeight());
             this.cursor = Pair.of(mouseX, mouseY);
         }
 
@@ -263,7 +264,7 @@ public abstract class GuiScreen extends Screen implements Global {
         children.remove(child);
     }
 
-    public void tagGuiElement(DrawContext context, int mouseX, int mouseY, GuiElement element) {
+    public void tagGuiElement(MatrixStack context, int mouseX, int mouseY, GuiElement element) {
         String name = element.getClass().getSimpleName();
         double textScale = 0.7;
         int width = mc.textRenderer.getWidth(name) + 2;

@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class BooleanSettingElement extends SettingElement<BooleanSetting> {
 
@@ -14,7 +14,7 @@ public class BooleanSettingElement extends SettingElement<BooleanSetting> {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(MatrixStack context, int mouseX, int mouseY) {
         this.renderSettingDetails(context);
         int drawY = y + height / 2;
         int drawX = x + width - 20 - 5;

@@ -8,8 +8,8 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
@@ -38,13 +38,13 @@ public class ArmorHud extends Module {
 
     }
 
-    public void onRender(DrawContext context) {
+    public void onRender(MatrixStack context) {
         if (PlayerUtils.playerNull()) return;
 
         ClientPlayerEntity p = PlayerUtils.player();
         Arm arm = p.getMainArm();
-        int w = context.getScaledWindowWidth();
-        int h = context.getScaledWindowHeight();
+        int w = mc.getWindow().getScaledWidth();
+        int h = mc.getWindow().getScaledHeight();
         boolean right = hand.getVal() == Hand.MAIN_HAND;
 
         int slotW = right ? 20 : -20;
@@ -64,11 +64,11 @@ public class ArmorHud extends Module {
         renderItem(context, HotbarUtils.getHand(Hand.OFF_HAND), x += slotW, y);
     }
 
-    private void renderItem(DrawContext context, ItemStack item, int x, int y) {
+    private void renderItem(MatrixStack context, ItemStack item, int x, int y) {
         RenderUtils.fill(context, x, y, 22, 22, 0x90000000);
         RenderUtils.drawBorder(context, x, y, 22, 22, 1, 0xFF000000);
         RenderUtils.drawTexture(context, Tex.Defaults.ITEM_WIDGET, x, y, 22, 22);
-        context.drawItem(item, x + 3, y + 3);
-        context.drawItemInSlot(mc.textRenderer, item, x + 3, y + 3);
+        mc.getItemRenderer().renderGuiItemIcon(context, item, x + 3, y + 3);
+        mc.getItemRenderer().renderGuiItemOverlay(context, mc.textRenderer, item, x + 3, y + 3);
     }
 }

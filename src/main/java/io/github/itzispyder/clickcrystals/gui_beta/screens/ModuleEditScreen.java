@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class ModuleEditScreen extends DefaultBase {
     }
 
     @Override
-    public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void baseRender(MatrixStack context, int mouseX, int mouseY, float delta) {
         // default base
         this.renderDefaultBase(context);
 
@@ -76,7 +76,7 @@ public class ModuleEditScreen extends DefaultBase {
         return true;
     }
 
-    private void renderDescription(DrawContext context, int mouseX, int mouseY) {
+    private void renderDescription(MatrixStack context, int mouseX, int mouseY) {
         List<String> lines = StringUtils.wrapLines(module.getDescription(), 60, true);
         int height = lines.size() * 8;
         int caret = mouseY - height + 1;

@@ -3,12 +3,12 @@ package io.github.itzispyder.clickcrystals.gui_beta.misc.brushes;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public class RoundRectBrush {
 
-    public static void drawRoundRect(DrawContext context, int x, int y, int w, int h, int borderRadius, Gray gray) {
+    public static void drawRoundRect(MatrixStack context, int x, int y, int w, int h, int borderRadius, Gray gray) {
         // corners
         Identifier circle = Tex.Shapes.getCircle(gray);
         int diameter = borderRadius * 2;
@@ -24,7 +24,7 @@ public class RoundRectBrush {
         RenderUtils.fill(context, x + w - borderRadius, y + borderRadius, borderRadius, h - diameter, color); // right wing
     }
 
-    public static void drawRoundHoriLine(DrawContext context, int x, int y, int length, int thickness, Gray gray) {
+    public static void drawRoundHoriLine(MatrixStack context, int x, int y, int length, int thickness, Gray gray) {
         // thickness = diameter
         // ends
         Identifier circle = Tex.Shapes.getCircle(gray);
@@ -37,7 +37,7 @@ public class RoundRectBrush {
         RenderUtils.fill(context, x + diameter, y, length - thickness, thickness, color);
     }
 
-    public static void drawRoundVertLine(DrawContext context, int x, int y, int length, int thickness, Gray gray) {
+    public static void drawRoundVertLine(MatrixStack context, int x, int y, int length, int thickness, Gray gray) {
         // thickness = diameter
         // ends
         Identifier circle = Tex.Shapes.getCircle(gray);
@@ -50,7 +50,7 @@ public class RoundRectBrush {
         RenderUtils.fill(context, x, y + diameter, thickness, length - thickness, color);
     }
 
-    public static void drawTabTop(DrawContext context, int x, int y, int w, int h, int borderRadius, Gray gray) {
+    public static void drawTabTop(MatrixStack context, int x, int y, int w, int h, int borderRadius, Gray gray) {
         // corners
         Identifier circle = Tex.Shapes.getCircle(gray);
         int diameter = borderRadius * 2;
@@ -64,7 +64,7 @@ public class RoundRectBrush {
         RenderUtils.fill(context, x + w - borderRadius, y + borderRadius, borderRadius, h - borderRadius, color); // right wing
     }
 
-    public static void drawTabBottom(DrawContext context, int x, int y, int w, int h, int borderRadius, Gray gray) {
+    public static void drawTabBottom(MatrixStack context, int x, int y, int w, int h, int borderRadius, Gray gray) {
         // corners
         Identifier circle = Tex.Shapes.getCircle(gray);
         int diameter = borderRadius * 2;

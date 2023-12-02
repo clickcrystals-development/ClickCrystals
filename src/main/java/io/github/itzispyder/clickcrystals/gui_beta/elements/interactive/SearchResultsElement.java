@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui_beta.screens.ModuleEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -30,7 +30,7 @@ public class SearchResultsElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(MatrixStack context, int mouseX, int mouseY) {
         if (mc.currentScreen instanceof GuiScreen screen && screen.selected != searchbar) {
             this.setRendering(false);
             return;
@@ -97,7 +97,7 @@ public class SearchResultsElement extends GuiElement {
         }
 
         @Override
-        public void onRender(DrawContext context, int mouseX, int mouseY) {
+        public void onRender(MatrixStack context, int mouseX, int mouseY) {
             if (!SearchResultsElement.this.rendering) {
                 this.rendering = false;
                 return;

@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui_beta.elements.interactive;
 
 import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class HyperLinkElement extends GuiElement {
 
@@ -25,7 +25,7 @@ public class HyperLinkElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(MatrixStack context, int mouseX, int mouseY) {
         int color = isHovered(mouseX, mouseY) ? 0xFF55FFFF : 0xFF00AAAA;
         RenderUtils.drawText(context, "§3" + name, x, y, textScale, false);
         RenderUtils.drawHorizontalLine(context, x, y + height + 1, width, 1, color);

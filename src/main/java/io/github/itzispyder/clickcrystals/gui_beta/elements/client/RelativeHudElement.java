@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui_beta.elements.client;
 
 import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
 import io.github.itzispyder.clickcrystals.gui_beta.hud.Hud;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class RelativeHudElement extends GuiElement {
 
@@ -15,7 +15,7 @@ public class RelativeHudElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(MatrixStack context, int mouseX, int mouseY) {
         hud.setX(x);
         hud.setY(y);
         hud.render(context);

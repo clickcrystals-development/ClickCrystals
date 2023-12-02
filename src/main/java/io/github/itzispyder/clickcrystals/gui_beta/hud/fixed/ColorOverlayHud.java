@@ -7,8 +7,8 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.TotemOverlay
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Items;
 
 public class ColorOverlayHud extends Hud {
@@ -19,7 +19,7 @@ public class ColorOverlayHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(MatrixStack context) {
         TotemOverlay totemOverlay = Module.get(TotemOverlay.class);
         Window win = mc.getWindow();
 
@@ -31,16 +31,16 @@ public class ColorOverlayHud extends Hud {
                 RenderUtils.drawBorder(context,0,0,win.getScaledWidth(),win.getScaledHeight(),5,0xFFFF0000);
             }
             if (totemOverlay.icon.getVal()) {
-                context.drawTexture(Tex.Defaults.NO_TOTEMS_ICON, (mc.getWindow().getScaledWidth()/2)+10, (mc.getWindow().getScaledHeight()/2)-10, 0,0, 20,20,20,20);
+                RenderUtils.drawTexture(context, Tex.Defaults.NO_TOTEMS_ICON, (mc.getWindow().getScaledWidth()/2)+10, (mc.getWindow().getScaledHeight()/2)-10,20,20);
             }
             if (totemOverlay.meme.getVal()) {
-                context.drawTexture(Tex.Defaults.NO_TOTEMS_MEME, (mc.getWindow().getScaledWidth()/2)-57, 0, 0,0,115,75,115,75);
+                RenderUtils.drawTexture(context, Tex.Defaults.NO_TOTEMS_MEME, (mc.getWindow().getScaledWidth()/2)-57, 0, 115,75);
             }
         }
     }
 
-    private void renderColor(DrawContext context, int color) {
+    private void renderColor(MatrixStack context, int color) {
         final Window win = mc.getWindow();
-        context.fill(0, 0, win.getWidth(), win.getHeight(), color);
+        RenderUtils.fill(context, 0, 0, win.getWidth(), win.getHeight(), color);
     }
 }

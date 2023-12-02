@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.CrystPerSec;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.Window;
 import net.minecraft.item.Items;
 
@@ -17,7 +17,7 @@ public class ClickPerSecondHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(MatrixStack context) {
         Module cpsHud = Module.get(CrystPerSec.class);
         if (!cpsHud.isEnabled()) return;
         String text = "§f" + CrystPerSec.getCrystalPerSecond() + " §7c/s";

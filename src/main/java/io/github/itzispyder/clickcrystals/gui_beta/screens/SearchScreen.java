@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.misc.organizers.GridOrganizer
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.Comparator;
 import java.util.List;
@@ -38,11 +38,11 @@ public class SearchScreen extends DefaultBase {
     }
 
     @Override
-    public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void baseRender(MatrixStack context, int mouseX, int mouseY, float delta) {
         RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA03873A9, 0xA0000000);
 
-        context.getMatrices().push();
-        context.getMatrices().translate(baseX, baseY, 0);
+        context.push();
+        context.translate(baseX, baseY, 0);
 
         // backdrop
         RoundRectBrush.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Gray.BLACK);
@@ -74,7 +74,7 @@ public class SearchScreen extends DefaultBase {
         buttonSettings.x = baseX + 10;
         buttonSettings.y = baseY + caret - translation;
 
-        context.getMatrices().pop();
+        context.pop();
 
         // content
         caret = contentY + 10;

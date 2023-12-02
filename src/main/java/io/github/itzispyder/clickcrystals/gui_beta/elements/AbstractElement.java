@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui_beta.elements;
 
 import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class AbstractElement extends GuiElement {
 
@@ -21,7 +21,7 @@ public class AbstractElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(MatrixStack context, int mouseX, int mouseY) {
         this.onRender.onRender(context, mouseX, mouseY, this);
     }
 

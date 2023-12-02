@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorde
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public abstract class GuiElement implements Positionable, Global {
         this.isContainer = false;
     }
 
-    public void render(DrawContext context, int mouseX, int mouseY) {
+    public void render(MatrixStack context, int mouseX, int mouseY) {
         boolean bl = canRender();
         if (bl) {
             onRender(context, mouseX, mouseY);
@@ -60,7 +60,7 @@ public abstract class GuiElement implements Positionable, Global {
     /**
      * Should always call hasTooltip() before calling this method
      */
-    public void renderTooltip(DrawContext context, int x, int y) {
+    public void renderTooltip(MatrixStack context, int x, int y) {
         List<String> lines = StringUtils.wrapLines(getTooltip(), 33, true);
         int height = lines.size() * 8;
         int caret = y + 2;
@@ -73,13 +73,13 @@ public abstract class GuiElement implements Positionable, Global {
         }
     }
 
-    public abstract void onRender(DrawContext context, int mouseX, int mouseY);
+    public abstract void onRender(MatrixStack context, int mouseX, int mouseY);
 
     public void onClick(double mouseX, double mouseY, int button) {
 
     }
 
-    public void postRender(DrawContext context, int mouseX, int mouseY) {
+    public void postRender(MatrixStack context, int mouseX, int mouseY) {
 
     }
 

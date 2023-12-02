@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui_beta.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.RotationAxis;
 
 public class IconRelativeHud extends Hud {
@@ -15,7 +15,7 @@ public class IconRelativeHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(MatrixStack context) {
         renderBackdrop(context);
 
         int ogw = getWidth();
@@ -27,12 +27,12 @@ public class IconRelativeHud extends Hud {
         int cx = getCenter().getX();
         int cy = getCenter().getY();
 
-        context.getMatrices().push();
+        context.push();
 
-        context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-10.0F), cx, cy, 0);
-        context.drawTexture(Tex.ICON, x, y, 0, 0, w, h, w, h);
+        context.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-10.0F), cx, cy, 0);
+        RenderUtils.drawTexture(context, Tex.ICON, x, y, w, h);
 
-        context.getMatrices().pop();
+        context.pop();
 
         setWidth(ogw);
         RenderUtils.drawText(context, "§l§oClickCrystals", getX() + getHeight(), getY() + (int)(getHeight() * 0.33), 1.0F, true);
