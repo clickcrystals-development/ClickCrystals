@@ -6,12 +6,16 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.LocationParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.dimension.DimensionTypes;
 
 import java.util.function.Predicate;
 
@@ -123,6 +127,29 @@ public class IfCmd extends ScriptCommand implements Global {
                     OnEventCmd.executeWithThen(args, 2);
                 }
             }
+            case BLOCK -> {
+                LocationParser loc = new LocationParser(
+                        args.get(1).stringValue(),
+                        args.get(2).stringValue(),
+                        args.get(3).stringValue(),
+                        PlayerUtils.getPos()
+                );
+                Predicate<BlockState> pre = OnEventCmd.parseBlockPredicate(args.get(4).stringValue());
+                if (pre.test(loc.getBlock(PlayerUtils.getWorld()))) {
+                    OnEventCmd.executeWithThen(args, 5);
+                }
+            }
+            case DIMENSION -> {
+                boolean bl = false;
+                switch (args.get(1).enumValue(Dimensions.class, null)) {
+                    case OVERWORLD -> bl = Dimensions.isOverworld();
+                    case THE_NETHER -> bl = Dimensions.isNether();
+                    case THE_END -> bl = Dimensions.isEnd();
+                }
+                if (bl) {
+                    OnEventCmd.executeWithThen(args, 2);
+                }
+            }
         }
     }
 
@@ -142,7 +169,9 @@ public class IfCmd extends ScriptCommand implements Global {
         POS_X,
         POS_Y,
         POS_Z,
-        MODULE_ENABLED
+        MODULE_ENABLED,
+        BLOCK,
+        DIMENSION
     }
 
     /**
@@ -176,6 +205,38 @@ public class IfCmd extends ScriptCommand implements Global {
         }
         else {
             return input == new ScriptArgs(other).get(0).doubleValue();
+        }
+    }
+
+    public enum Dimensions {
+        OVERWORLD,
+        THE_END,
+        THE_NETHER;
+
+        public static boolean isOverworld() {
+            return check(DimensionTypes.OVERWORLD, DimensionTypes.OVERWORLD_CAVES);
+        }
+
+        public static boolean isNether() {
+            return check(DimensionTypes.THE_NETHER);
+        }
+
+        public static boolean isEnd() {
+            return check(DimensionTypes.THE_END);
+        }
+
+        @SafeVarargs
+        private static boolean check(RegistryKey<DimensionType>... dimKeys) {
+            if (PlayerUtils.playerNull()) {
+                return false;
+            }
+            RegistryKey<DimensionType> target = PlayerUtils.getWorld().getDimensionKey();
+            for (RegistryKey<DimensionType> key : dimKeys) {
+                if (key == target) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

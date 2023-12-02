@@ -29,15 +29,15 @@ public class TurnToCmd extends ScriptCommand {
         switch (args.get(0).enumValue(Mode.class, null)) {
             case NEAREST_BLOCK -> {
                 Predicate<BlockState> filter = OnEventCmd.parseBlockPredicate(args.get(1).stringValue());
-                PlayerUtils.runOnNearestBlock(64, filter, (pos, state) -> specifiedTurn(pos.toCenterPos(), eyes, args));
+                PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> specifiedTurn(pos.toCenterPos(), eyes, args));
             }
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = OnEventCmd.parseEntityPredicate(args.get(1).stringValue());
-                PlayerUtils.runOnNearestEntity(64, filter, entity -> specifiedTurn(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args));
+                PlayerUtils.runOnNearestEntity(32, filter, entity -> specifiedTurn(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args));
             }
 
-            case ANY_BLOCK -> PlayerUtils.runOnNearestBlock(64, (pos, state) -> true, (pos, state) -> singleTurn(pos.toCenterPos(), eyes, args));
-            case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(64, Entity::isAlive, entity -> {
+            case ANY_BLOCK -> PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> singleTurn(pos.toCenterPos(), eyes, args));
+            case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(32, Entity::isAlive, entity -> {
                 singleTurn(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
             });
         }

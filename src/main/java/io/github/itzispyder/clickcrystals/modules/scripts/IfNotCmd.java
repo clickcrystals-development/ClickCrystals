@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.LocationParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -126,6 +127,29 @@ public class IfNotCmd extends ScriptCommand implements Global {
             case MODULE_ENABLED -> {
                 Module m = system.getModuleById(args.get(1).stringValue());
                 if (m == null || !m.isEnabled()) {
+                    OnEventCmd.executeWithThen(args, 2);
+                }
+            }
+            case BLOCK -> {
+                LocationParser loc = new LocationParser(
+                        args.get(1).stringValue(),
+                        args.get(2).stringValue(),
+                        args.get(3).stringValue(),
+                        PlayerUtils.getPos()
+                );
+                Predicate<BlockState> pre = OnEventCmd.parseBlockPredicate(args.get(4).stringValue());
+                if (!pre.test(loc.getBlock(PlayerUtils.getWorld()))) {
+                    OnEventCmd.executeWithThen(args, 5);
+                }
+            }
+            case DIMENSION -> {
+                boolean bl = false;
+                switch (args.get(1).enumValue(IfCmd.Dimensions.class, null)) {
+                    case OVERWORLD -> bl = IfCmd.Dimensions.isOverworld();
+                    case THE_NETHER -> bl = IfCmd.Dimensions.isNether();
+                    case THE_END -> bl = IfCmd.Dimensions.isEnd();
+                }
+                if (!bl) {
                     OnEventCmd.executeWithThen(args, 2);
                 }
             }
