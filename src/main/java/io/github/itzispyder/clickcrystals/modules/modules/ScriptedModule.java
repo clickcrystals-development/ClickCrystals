@@ -248,16 +248,16 @@ public class ScriptedModule extends ListenerModule {
         void pass(PlayerMoveC2SPacket e);
     }
 
-    public static void runModuleScripts() {
+    public static int runModuleScripts() {
         File parentFolder = new File(Config.PATH_SCRIPTS);
         if (!parentFolder.exists() || !parentFolder.isDirectory()) {
             parentFolder.mkdirs();
-            return;
+            return 0;
         }
 
         File[] files = parentFolder.listFiles(f -> f.isFile() && f.getPath().endsWith(".ccs"));
         if (files == null || files.length == 0) {
-            return;
+            return 0;
         }
 
         Timer timer = Timer.start();
@@ -270,5 +270,6 @@ public class ScriptedModule extends ListenerModule {
             system.printf("<- [%s/%s] '%s'", i + 1, total, file.getName());
         }
         system.printf("<- [done] executed (%s) scripts in %s", total, timer.end().getStampPrecise());
+        return total;
     }
 }

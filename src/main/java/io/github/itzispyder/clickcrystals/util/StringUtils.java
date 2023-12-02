@@ -73,8 +73,7 @@ public final class StringUtils {
         return matchAny(str, String::endsWith, values);
     }
 
-    public static String decolor(String msg) {
-        String s = msg;
+    public static String decolor(String s) {
         while (s.length() >= 2 && s.contains("§")) {
             int index = s.indexOf("§");
             s = s.replaceAll(s.substring(index, index + 2), "");

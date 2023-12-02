@@ -3,7 +3,6 @@ package io.github.itzispyder.clickcrystals.client.system;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
-import net.minecraft.util.Util;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,6 +15,7 @@ public class ClickCrystalsLogger {
 
     public ClickCrystalsLogger(File log) {
         this.log = log;
+        log.delete();
         this.hasWriter = FileValidationUtils.validate(log);
 
         if (hasWriter) {
@@ -26,13 +26,21 @@ public class ClickCrystalsLogger {
         }
     }
 
-    public void log(String line) {
+    public void info(String line) {
+        log("CC/INFO", line);
+    }
+
+    public void error(String line) {
+        log("CC/ERROR", line);
+    }
+
+    public void log(String prefix, String line) {
         if (!hasWriter) {
             return;
         }
 
         try (FileWriter writer = new FileWriter(log, true)) {
-            line = "[%s] [%s]: %s%n".formatted(StringUtils.getCurrentTimeStamp(), Thread.currentThread().getName(), line);
+            line = "[%s] [%s] [%s]: %s%n".formatted(StringUtils.getCurrentTimeStamp(), Thread.currentThread().getName(), prefix, line);
             writer.append(line);
         }
         catch (IOException ex) {

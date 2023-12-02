@@ -12,11 +12,10 @@ import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.util.Util;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.Serializable;
@@ -26,7 +25,6 @@ import java.util.*;
 import java.util.function.Consumer;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
-import static io.github.itzispyder.clickcrystals.ClickCrystals.prefix;
 
 public class ClickCrystalsSystem implements Serializable {
 
@@ -40,8 +38,7 @@ public class ClickCrystalsSystem implements Serializable {
     public final CapeManager capeManager = new CapeManager();
     public final Randomizer random = new Randomizer();
     public final Scheduler scheduler = new Scheduler();
-    public final Logger logger = LoggerFactory.getLogger("ClickCrystals");
-    private final ClickCrystalsLogger logWriter = new ClickCrystalsLogger(new File(Config.PATH_LOG));
+    public final ClickCrystalsLogger logger = new ClickCrystalsLogger(new File(Config.PATH_LOG));
     private final Map<Class<? extends Module>, Module> modules;
     private final Map<String, ScriptedModule> scriptedModules;
     private final Map<Class<? extends Command>, Command> commands;
@@ -181,14 +178,16 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void reloadScripts() {
         println("-> reloading all scripts");
+        ChatUtils.sendPrefixMessage("Reloading all scripts...");
 
         scriptedModules().values().forEach(this::unloadModule);
         config.save();
         scriptedModules.clear();
-        ScriptedModule.runModuleScripts();
+        int total = ScriptedModule.runModuleScripts();
         scriptedModules.values().forEach(config::loadModule);
 
         println("<- Scripts reloaded!");
+        ChatUtils.sendPrefixMessage("%s scripts reloaded!".formatted(total));
     }
 
     public void onClientStopping() {
@@ -206,13 +205,11 @@ public class ClickCrystalsSystem implements Serializable {
     }
 
     public void println(String msg) {
-        logger.info(prefix + msg);
-        logWriter.log("[CC/INFO] " + msg);
+        logger.info(msg);
     }
 
     public void printErr(String msg) {
-        logger.error(prefix + msg);
-        logWriter.log("[CC/ERROR] " + msg);
+        logger.error(msg);
     }
 
     public void printf(String msg, Object... args) {
