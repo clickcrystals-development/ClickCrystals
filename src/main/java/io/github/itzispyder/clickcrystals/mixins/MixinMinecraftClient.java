@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
-import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.interfaces.MinecraftClientAccessor;
@@ -34,15 +33,7 @@ public abstract class MixinMinecraftClient implements MinecraftClientAccessor {
 
     @Inject(method = "stop", at = @At("HEAD"))
     public void stop(CallbackInfo ci) {
-        system.println("Stopping client!");
-        system.println("<- disconnecting from discord...");
-        ClickCrystals.discordPresence.stop();
-        system.println("<- saving data...");
-        ClickCrystals.config.saveKeybinds();
-        ClickCrystals.config.saveHuds();
-        ClickCrystals.config.saveModules();
-        system.println("<- saving config...");
-        ClickCrystals.config.save();
+        system.onClientStopping();
     }
 
 

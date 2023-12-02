@@ -1,7 +1,9 @@
 package io.github.itzispyder.clickcrystals.client.system;
 
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.client.client.CapeManager;
 import io.github.itzispyder.clickcrystals.commands.Command;
+import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.EventBus;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
@@ -13,6 +15,8 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.Serializable;
@@ -36,6 +40,8 @@ public class ClickCrystalsSystem implements Serializable {
     public final CapeManager capeManager = new CapeManager();
     public final Randomizer random = new Randomizer();
     public final Scheduler scheduler = new Scheduler();
+    public final Logger logger = LoggerFactory.getLogger("ClickCrystals");
+    private final ClickCrystalsLogger logWriter = new ClickCrystalsLogger(new File(Config.PATH_LOG));
     private final Map<Class<? extends Module>, Module> modules;
     private final Map<String, ScriptedModule> scriptedModules;
     private final Map<Class<? extends Command>, Command> commands;
@@ -185,12 +191,28 @@ public class ClickCrystalsSystem implements Serializable {
         println("<- Scripts reloaded!");
     }
 
+    public void onClientStopping() {
+        println("Stopping client!");
+        println("<- disconnecting from discord...");
+        ClickCrystals.discordPresence.stop();
+
+        println("<- saving data...");
+        ClickCrystals.config.saveKeybinds();
+        ClickCrystals.config.saveHuds();
+        ClickCrystals.config.saveModules();
+
+        println("<- saving config...");
+        ClickCrystals.config.save();
+    }
+
     public void println(String msg) {
-        System.out.println(prefix + msg);
+        logger.info(prefix + msg);
+        logWriter.log("[CC/INFO] " + msg);
     }
 
     public void printErr(String msg) {
-        System.err.println(prefix + msg);
+        logger.error(prefix + msg);
+        logWriter.log("[CC/ERROR] " + msg);
     }
 
     public void printf(String msg, Object... args) {

@@ -15,7 +15,10 @@ import java.util.Map;
 
 public class Config implements JsonSerializable<Config> {
 
-    public static final String PATH = "ClickCrystalsClient/config.json";
+    public static final String PATH = "ClickCrystalsClient/";
+    public static final String PATH_CONFIG = PATH + "config.json";
+    public static final String PATH_LOG = PATH + "current.log";
+    public static final String PATH_SCRIPTS = PATH + "scripts";
     private final Map<String, Integer> keybindEntries;
     private final Map<String, Positionable.Dimension> positionEntries;
     private final Map<String, ModuleFile> moduleEntries;
@@ -28,7 +31,7 @@ public class Config implements JsonSerializable<Config> {
 
     @Override
     public File getFile() {
-        return new File(PATH);
+        return new File(PATH_CONFIG);
     }
 
     public void saveKeybind(Keybind bind) {

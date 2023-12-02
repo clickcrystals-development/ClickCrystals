@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
+import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.elements.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.display.LoadingIconElement;
@@ -119,7 +120,7 @@ public class ClickScriptIDE extends DefaultBase {
                 }).build();
         openScriptsButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Open scripts folder")
-                .onPress(button -> system.openFile(ScriptedModule.PATH))
+                .onPress(button -> system.openFile(Config.PATH_SCRIPTS))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
                         RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.LIGHT_GRAY);

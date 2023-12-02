@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals;
 
+import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
@@ -58,7 +59,7 @@ public final class ClickCrystals implements ModInitializer {
 
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
-    public static final Config config = JsonSerializable.load(Config.PATH, Config.class, new Config());
+    public static final Config config = JsonSerializable.load(Config.PATH_CONFIG, Config.class, new Config());
     public static final DiscordPresence discordPresence = new DiscordPresence();
     public static Thread discordWorker;
     public static final Keybind openModuleKeybind = Keybind.create()
@@ -132,6 +133,7 @@ public final class ClickCrystals implements ModInitializer {
         }
         system.println("-> clicking crystals!");
         system.println("ClickCrystals had loaded successfully!");
+        system.println(new Gson().toJson(info));
     }
 
     /**

@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.client.ModuleElement;
 import io.github.itzispyder.clickcrystals.gui.elements.interactive.SearchBarElement;
@@ -9,7 +10,6 @@ import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -110,7 +110,7 @@ public class ModuleScreen extends DefaultBase {
                             .replace(' ', '-')
                             .replaceAll("[^a-zA-Z0-9_-]", "")
                             .toLowerCase();
-                    File file = new File(ScriptedModule.PATH + "/" + name + ".ccs");
+                    File file = new File(Config.PATH_SCRIPTS + "/" + name + ".ccs");
                     mc.setScreen(new ClickScriptIDE(file));
                 }
             }
