@@ -46,7 +46,7 @@ public class TargetRelativeHud extends Hud {
 
             // player head
             caret += g;
-            PlayerSkinDrawer.draw(context, targetEntry.getSkinTexture(), margin, caret, 15, true, false);
+            PlayerSkinDrawer.draw(context, targetEntry.getSkinTextures(), margin, caret, 15);
 
             // player name (next to player head)
             // and player ping and distance

@@ -2,10 +2,15 @@ package io.github.itzispyder.clickcrystals.client.networking;
 
 import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
 import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
+import net.minecraft.network.packet.c2s.common.KeepAliveC2SPacket;
+import net.minecraft.network.packet.c2s.common.ResourcePackStatusC2SPacket;
 import net.minecraft.network.packet.c2s.handshake.HandshakeC2SPacket;
 import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;
 import net.minecraft.network.packet.c2s.login.LoginQueryResponseC2SPacket;
 import net.minecraft.network.packet.c2s.play.*;
+import net.minecraft.network.packet.s2c.common.*;
+import net.minecraft.network.packet.s2c.config.FeaturesS2CPacket;
 import net.minecraft.network.packet.s2c.login.LoginHelloS2CPacket;
 import net.minecraft.network.packet.s2c.login.LoginQueryRequestS2CPacket;
 import net.minecraft.network.packet.s2c.login.LoginSuccessS2CPacket;
@@ -20,11 +25,10 @@ public final class PacketMapper {
 
     private static final Map<Class<? extends Packet<?>>, String> c2s = ManualMap.fromItems(
             ClickSlotC2SPacket.class, "ClickSlotC2SPacket",
-            ClientSettingsC2SPacket.class, "ClientSettingsC2SPacket",
+            //ClientSettingsC2SPacket.class, "ClientSettingsC2SPacket",
             CustomPayloadC2SPacket.class, "CustomPayloadC2SPacket",
             CommandExecutionC2SPacket.class, "CommandExecutionC2SPacket",
             ClientCommandC2SPacket.class, "ClientCommandC2SPacket",
-            ClientSettingsC2SPacket.class, "ClientSettingsC2SPacket",
             ChatMessageC2SPacket.class, "ChatMessageC2SPacket",
             ClientStatusC2SPacket.class, "ClientStatusC2SPacket",
             CraftRequestC2SPacket.class, "CraftRequestC2SPacket",
@@ -45,7 +49,7 @@ public final class PacketMapper {
             KeepAliveC2SPacket.class, "KeepAliveC2SPacket",
             MessageAcknowledgmentC2SPacket.class, "MessageAcknowledgmentC2SPacket",
             PickFromInventoryC2SPacket.class, "PickFromInventoryC2SPacket",
-            PlayPongC2SPacket.class, "PlayPongC2SPacket",
+            //PlayPongC2SPacket.class, "PlayPongC2SPacket",
             QueryBlockNbtC2SPacket.class, "QueryBlockNbtC2SPacket",
             QueryEntityNbtC2SPacket.class, "QueryEntityNbtC2SPacket",
             RecipeBookDataC2SPacket.class, "RecipeBookDataC2SPacket",
@@ -150,7 +154,7 @@ public final class PacketMapper {
             OpenWrittenBookS2CPacket.class, "OpenWrittenBookS2CPacket",
             EntitySpawnS2CPacket.class, "EntitySpawnS2CPacket",
             PlayerSpawnPositionS2CPacket.class, "PlayerSpawnPositionS2CPacket",
-            PlayerSpawnS2CPacket.class, "PlayerSpawnS2CPacket",
+            //PlayerSpawnS2CPacket.class, "PlayerSpawnS2CPacket",
             PlayerRemoveS2CPacket.class, "PlayerRemoveS2CPacket",
             GameStateChangeS2CPacket.class, "GameStateChangeS2CPacket",
             PlaySoundFromEntityS2CPacket.class, "PlaySoundFromEntityS2CPacket",
