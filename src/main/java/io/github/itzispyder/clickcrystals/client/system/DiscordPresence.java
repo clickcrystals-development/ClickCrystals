@@ -4,7 +4,7 @@ import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.prefix;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.version;
 
 public class DiscordPresence {
@@ -22,10 +22,7 @@ public class DiscordPresence {
             api = DiscordRPC.INSTANCE;
             rpc = new DiscordRichPresence();
             handlers = new DiscordEventHandlers();
-            handlers.ready = user -> {
-                String username = user.username + "#" + user.discriminator;
-                System.out.println(prefix + "Welcome, " + username);
-            };
+            handlers.ready = user -> system.printf("Welcome, %s#%s", user.username, user.discriminator);
             loadedSuccessfully = true;
         }
         catch (Exception ex) {

@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.commands.commands;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.ModuleArgumentType;
-import io.github.itzispyder.clickcrystals.gui_beta.screens.ModuleScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.ModuleScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import net.minecraft.command.CommandSource;
 

@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.client.clickscript;
 
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.ScriptNotFoundException;
 import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.UnknownCommandException;
 
@@ -10,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class ClickScript {
+public class ClickScript implements Global {
 
     public static final AtomicReference<File> currentFile = new AtomicReference<>();
     private static final Map<String, ScriptCommand> REGISTRATION = new HashMap<>() {{
@@ -18,7 +19,7 @@ public class ClickScript {
             System.exit(args.get(0).intValue());
         }));
         this.put("print", ScriptCommand.create("print", (command, line, args) -> {
-            System.out.println(args.getAll().stringValue());
+            system.println(args.getAll().stringValue());
         }));
         this.put("throw", ScriptCommand.create("throw", (command, line, args) -> {
             throw new RuntimeException(args.getAll().stringValue());
@@ -123,7 +124,7 @@ public class ClickScript {
 
 
     public void printErrorDetails(Exception ex, String cmd) {
-        System.err.println(getErrorDetails(ex, cmd));
+        system.printErr(getErrorDetails(ex, cmd));
     }
 
     public String getErrorDetails(Exception ex, String cmd) {

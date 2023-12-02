@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.modules;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
+import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
@@ -30,7 +31,6 @@ import java.util.List;
 
 public class ScriptedModule extends ListenerModule {
 
-    public static final String PATH = "ClickCrystalsClient/scripts";
     public final List<ClickListener> clickListeners = new ArrayList<>();
     public final List<KeyListener> keyListeners = new ArrayList<>();
     public final List<MoveListener> moveListeners = new ArrayList<>();
@@ -248,27 +248,28 @@ public class ScriptedModule extends ListenerModule {
         void pass(PlayerMoveC2SPacket e);
     }
 
-    public static void runModuleScripts() {
-        File parentFolder = new File(PATH);
+    public static int runModuleScripts() {
+        File parentFolder = new File(Config.PATH_SCRIPTS);
         if (!parentFolder.exists() || !parentFolder.isDirectory()) {
             parentFolder.mkdirs();
-            return;
+            return 0;
         }
 
         File[] files = parentFolder.listFiles(f -> f.isFile() && f.getPath().endsWith(".ccs"));
         if (files == null || files.length == 0) {
-            return;
+            return 0;
         }
 
         Timer timer = Timer.start();
         int total = files.length;
 
-        system.printf("-> executing scripts ({x})...", total);
+        system.printf("-> executing scripts (%s)...", total);
         for (int i = 0; i < files.length; i++) {
             File file = files[i];
             new ClickScript(file).execute();
-            system.printf("<- [{x}/{x}] '{x}'", i + 1, total, file.getName());
+            system.printf("<- [%s/%s] '%s'", i + 1, total, file.getName());
         }
-        system.printf("<- [done] executed ({x}) scripts in {x}", total, timer.end().getStampPrecise());
+        system.printf("<- [done] executed (%s) scripts in %s", total, timer.end().getStampPrecise());
+        return total;
     }
 }

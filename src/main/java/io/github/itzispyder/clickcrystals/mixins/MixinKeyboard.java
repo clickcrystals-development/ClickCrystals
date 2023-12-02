@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
-import io.github.itzispyder.clickcrystals.gui_beta.ClickType;
+import io.github.itzispyder.clickcrystals.gui.ClickType;
 import net.minecraft.client.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

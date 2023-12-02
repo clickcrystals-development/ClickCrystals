@@ -1,8 +1,6 @@
 package io.github.itzispyder.clickcrystals.util;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -75,8 +73,7 @@ public final class StringUtils {
         return matchAny(str, String::endsWith, values);
     }
 
-    public static String decolor(String msg) {
-        String s = msg;
+    public static String decolor(String s) {
         while (s.length() >= 2 && s.contains("§")) {
             int index = s.indexOf("§");
             s = s.replaceAll(s.substring(index, index + 2), "");
@@ -88,20 +85,10 @@ public final class StringUtils {
         for (int i = 0; i < args.length; i++) {
             Object obj = args[i];
             String arg = obj == null ? "null" : obj.toString();
-            s = s.replaceAll("\\{" + i + "}", arg);
-            s = s.replaceFirst("\\{x}", arg);
+            s = s.replaceAll("%" + i, arg);
+            s = s.replaceFirst("%s", arg);
         }
-        return s;
-    }
-
-    public static String fromClipboard() {
-        try {
-            Clipboard board = Toolkit.getDefaultToolkit().getSystemClipboard();
-            return (String)board.getData(DataFlavor.stringFlavor);
-        }
-        catch (Exception ex) {
-            return "";
-        }
+        return s.replace("%n", "\n");
     }
 
     public static String revered(String s) {
@@ -175,6 +162,18 @@ public final class StringUtils {
     public static String keyPressWithShift(String s) {
         if (s.length() != 1) return s;
         return Character.toString(toUpperCase(s.charAt(0)));
+    }
+
+    public static String getCurrentTimeStamp() {
+        LocalDateTime now = LocalDateTime.now();
+        String hr = min2placeDigit(now.getHour());
+        String min = min2placeDigit(now.getMinute());
+        String sec = min2placeDigit(now.getSecond());
+        return "%s:%s:%s".formatted(hr, min, sec);
+    }
+
+    public static String min2placeDigit(int digit) {
+        return (digit >= 0 && digit <= 9 ? "0" : "") + digit;
     }
 
     public static char toUpperCase(char c) {

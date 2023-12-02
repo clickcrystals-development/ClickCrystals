@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.BlockBreakEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickStartEvent;
-import io.github.itzispyder.clickcrystals.gui_beta.screens.ModuleEditScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.ModuleEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;

@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals;
 
+import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
@@ -14,12 +15,12 @@ import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
-import io.github.itzispyder.clickcrystals.gui_beta.hud.fixed.ArmorItemHud;
-import io.github.itzispyder.clickcrystals.gui_beta.hud.fixed.ClickPerSecondHud;
-import io.github.itzispyder.clickcrystals.gui_beta.hud.fixed.ColorOverlayHud;
-import io.github.itzispyder.clickcrystals.gui_beta.hud.fixed.ModuleListTextHud;
-import io.github.itzispyder.clickcrystals.gui_beta.hud.moveables.*;
-import io.github.itzispyder.clickcrystals.gui_beta.screens.HudEditScreen;
+import io.github.itzispyder.clickcrystals.gui.hud.fixed.ArmorItemHud;
+import io.github.itzispyder.clickcrystals.gui.hud.fixed.ClickPerSecondHud;
+import io.github.itzispyder.clickcrystals.gui.hud.fixed.ColorOverlayHud;
+import io.github.itzispyder.clickcrystals.gui.hud.fixed.ModuleListTextHud;
+import io.github.itzispyder.clickcrystals.gui.hud.moveables.*;
+import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
@@ -46,12 +47,19 @@ import org.lwjgl.glfw.GLFW;
  * TODO: (2) Update mod "gradle.properties"
  * TODO: (3) Update mod version in "GitHub Pages"
  * TODO: (4) Update "README.md"
+ *
+ * Publishing checklist
+ * TODO: (5) Modrinth Release
+ * TODO: (6) GitHub Release
+ * TODO: (7) PlanetMC Release
+ * TODO: (8) Update https://itzispyder.github.io/clickcrystals/info
+ * TODO: (9) Discord Announcement
  */
 public final class ClickCrystals implements ModInitializer {
 
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
-    public static final Config config = JsonSerializable.load(Config.PATH, Config.class, new Config());
+    public static final Config config = JsonSerializable.load(Config.PATH_CONFIG, Config.class, new Config());
     public static final DiscordPresence discordPresence = new DiscordPresence();
     public static Thread discordWorker;
     public static final Keybind openModuleKeybind = Keybind.create()
@@ -125,6 +133,7 @@ public final class ClickCrystals implements ModInitializer {
         }
         system.println("-> clicking crystals!");
         system.println("ClickCrystals had loaded successfully!");
+        system.println(new Gson().toJson(info));
     }
 
     /**

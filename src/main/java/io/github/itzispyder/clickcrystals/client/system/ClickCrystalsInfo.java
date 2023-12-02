@@ -129,21 +129,7 @@ public class ClickCrystalsInfo {
      * Try not to instantiate this class, parse it from json!
      * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/info</a>
      */
-    public static class ClickCrystalsUser {
-        private final String name;
-        private final UUID id;
+    public record ClickCrystalsUser(String name, UUID id) {
 
-        public ClickCrystalsUser(String name, UUID id) {
-            this.name = name;
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public UUID getId() {
-            return id;
-        }
     }
 }
