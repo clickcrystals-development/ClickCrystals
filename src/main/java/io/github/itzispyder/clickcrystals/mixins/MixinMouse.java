@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseScrollEvent;
-import io.github.itzispyder.clickcrystals.gui_beta.ClickType;
+import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.interfaces.MouseAccessor;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.client.Mouse;

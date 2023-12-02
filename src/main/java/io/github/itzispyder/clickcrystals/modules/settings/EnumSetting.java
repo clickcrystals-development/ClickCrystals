@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui_beta.elements.client.module.EnumSettingElement;
+import io.github.itzispyder.clickcrystals.gui.elements.client.module.EnumSettingElement;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 
 public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {

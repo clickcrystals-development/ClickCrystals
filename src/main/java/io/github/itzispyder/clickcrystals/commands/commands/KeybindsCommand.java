@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.commands.Command;
-import io.github.itzispyder.clickcrystals.gui_beta.screens.SettingScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.SettingScreen;
 import net.minecraft.command.CommandSource;
 
 public class KeybindsCommand extends Command {

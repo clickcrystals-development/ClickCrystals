@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.data;
 
-import io.github.itzispyder.clickcrystals.gui_beta.Positionable;
-import io.github.itzispyder.clickcrystals.gui_beta.hud.Hud;
+import io.github.itzispyder.clickcrystals.gui.Positionable;
+import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleData;
 import io.github.itzispyder.clickcrystals.modules.ModuleFile;

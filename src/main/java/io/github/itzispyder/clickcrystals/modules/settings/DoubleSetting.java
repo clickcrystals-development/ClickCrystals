@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui_beta.elements.client.module.DoubleSettingElement;
+import io.github.itzispyder.clickcrystals.gui.elements.client.module.DoubleSettingElement;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 
 public class DoubleSetting extends NumberSetting<Double> {

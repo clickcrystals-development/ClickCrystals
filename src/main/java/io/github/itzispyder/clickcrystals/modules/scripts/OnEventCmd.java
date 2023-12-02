@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
-import io.github.itzispyder.clickcrystals.gui_beta.ClickType;
+import io.github.itzispyder.clickcrystals.gui.ClickType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;

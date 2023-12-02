@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules;
 
-import io.github.itzispyder.clickcrystals.gui_beta.GuiElement;
+import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingBuilder;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingChangeCallback;
 import io.github.itzispyder.clickcrystals.util.StringUtils;

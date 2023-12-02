@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui_beta.elements.client.module.StringSettingElement;
+import io.github.itzispyder.clickcrystals.gui.elements.client.module.StringSettingElement;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 
 public class StringSetting extends ModuleSetting<String> {
