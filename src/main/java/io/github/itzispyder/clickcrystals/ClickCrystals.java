@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
-import io.github.itzispyder.clickcrystals.client.system.DiscordPresence;
 import io.github.itzispyder.clickcrystals.client.system.Version;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.Config;
@@ -56,8 +55,6 @@ public final class ClickCrystals implements ModInitializer {
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
     public static final Config config = JsonSerializable.load(Config.PATH_CONFIG, Config.class, new Config());
-    public static final DiscordPresence discordPresence = new DiscordPresence();
-    public static Thread discordWorker;
     public static final Keybind openModuleKeybind = Keybind.create()
             .id("open-clickcrystals-module-screen")
             .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
@@ -117,8 +114,6 @@ public final class ClickCrystals implements ModInitializer {
         this.startTicking();
         system.println("-> requesting mod info...");
         this.requestModInfo();
-        system.println("-> connecting to discord...");
-        this.initRpc();
         system.println("-> loading config...");
         config.loadEntireConfig();
 
@@ -223,9 +218,6 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new BowSwap());
 
         // client
-        if (discordPresence.loadedSuccessfully) {
-            system.addModule(new DiscordRPC());
-        }
         system.addModule(new GuiBorders());
         system.addModule(new InGameHuds());
         system.addModule(new SilkTouch());
@@ -290,29 +282,6 @@ public final class ClickCrystals implements ModInitializer {
     private void requestModInfo() {
         ClickCrystalsInfo.request();
         system.capeManager.reloadTextures();
-    }
-
-    public void initRpc() {
-        try {
-            if (!discordPresence.loadedSuccessfully) {
-                throw new IllegalStateException();
-            }
-            discordWorker = new Thread(() -> {
-                while (!Thread.currentThread().isInterrupted()) {
-                    discordPresence.api.Discord_RunCallbacks();
-                    try {
-                        Thread.sleep(2000);
-                    }
-                    catch (InterruptedException ignore) {}
-                }
-            });
-            discordWorker.start();
-            discordPresence.loadedSuccessfully = true;
-        }
-        catch (Exception ex) {
-            discordPresence.loadedSuccessfully = false;
-            system.println("X<- Discord connection FAILED");
-        }
     }
 }
 ///fr 
