@@ -12,7 +12,6 @@ import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.util.Util;
@@ -178,7 +177,14 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void reloadScripts() {
         println("-> reloading all scripts");
-        ChatUtils.sendPrefixMessage("Reloading all scripts...");
+        Notification.create()
+                .ccsIcon()
+                .stayTime(1000)
+                .id("clickscript-triggered-notification")
+                .title("ClickCrystals System")
+                .text("Reloading all scripts...")
+                .build()
+                .sendToClient();
 
         scriptedModules().values().forEach(this::unloadModule);
         config.save();
@@ -187,7 +193,14 @@ public class ClickCrystalsSystem implements Serializable {
         scriptedModules.values().forEach(config::loadModule);
 
         println("<- Scripts reloaded!");
-        ChatUtils.sendPrefixMessage("%s scripts reloaded!".formatted(total));
+        Notification.create()
+                .ccsIcon()
+                .stayTime(1000)
+                .id("clickscript-triggered-notification")
+                .title("ClickCrystals System")
+                .text("%s scripts reloaded!".formatted(total))
+                .build()
+                .sendToClient();
     }
 
     public void onClientStopping() {

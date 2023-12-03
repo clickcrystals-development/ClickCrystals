@@ -23,6 +23,22 @@ public final class ArrayUtils {
         return list;
     }
 
+    public static List<String> enumNames(Class<? extends Enum<?>> enumType) {
+        return Arrays.stream(enumType.getEnumConstants()).map(Enum::name).toList();
+    }
+
+    public static List<String> enumNamesLower(Class<? extends Enum<?>> enumType) {
+        return Arrays.stream(enumType.getEnumConstants()).map(e -> e.name().toLowerCase()).toList();
+    }
+
+    public static boolean enumContainsStrict(Class<? extends Enum<?>> enumType, String name) {
+        return enumNames(enumType).contains(name);
+    }
+
+    public static boolean enumContains(Class<? extends Enum<?>> enumType, String name) {
+        return enumNamesLower(enumType).contains(name.toLowerCase());
+    }
+
     public static <T> String list2string(List<T> list) {
         return "§7[§e" + String.join("§7, §e", ArrayUtils.toNewList(list, Object::toString)) + "§7]";
     }

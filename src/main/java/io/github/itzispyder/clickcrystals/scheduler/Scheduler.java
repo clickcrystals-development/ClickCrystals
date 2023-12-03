@@ -3,22 +3,21 @@ package io.github.itzispyder.clickcrystals.scheduler;
 import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.Stack;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Scheduler {
 
     public static final int INFINITE_ITERATIONS = -1;
-    private final ArrayList<Task> tasks;
+    private final ConcurrentLinkedQueue<Task> tasks;
     private Thread worker;
     private boolean started;
 
     public Scheduler() {
         this.started = false;
-        this.tasks = new ArrayList<>();
+        this.tasks = new ConcurrentLinkedQueue<>();
         this.init();
     }
 
@@ -38,10 +37,14 @@ public class Scheduler {
         worker = new Thread(() -> {
             while (true) {
                 try {
-                    try {
-                        new ArrayList<>(tasks).forEach(Task::tick);
+                    for (Task task : tasks) {
+                        try {
+                            task.tick();
+                        }
+                        catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
                     }
-                    catch (ConcurrentModificationException ignore) {}
                     Thread.sleep(1);
                 }
                 catch (InterruptedException ex) {

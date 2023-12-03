@@ -1,10 +1,8 @@
 package io.github.itzispyder.clickcrystals.util;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiPredicate;
 
 public final class StringUtils {
@@ -174,6 +172,14 @@ public final class StringUtils {
 
     public static String min2placeDigit(int digit) {
         return (digit >= 0 && digit <= 9 ? "0" : "") + digit;
+    }
+
+    public static UUID toUUID(String uuid) {
+        uuid = uuid.trim().replace("-", "");
+        return new UUID(
+                new BigInteger(uuid.substring(0, 16), 16).longValue(),
+                new BigInteger(uuid.substring(16), 16).longValue()
+        );
     }
 
     public static char toUpperCase(char c) {

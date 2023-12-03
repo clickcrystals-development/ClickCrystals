@@ -15,10 +15,7 @@ import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
-import io.github.itzispyder.clickcrystals.gui.hud.fixed.ArmorItemHud;
-import io.github.itzispyder.clickcrystals.gui.hud.fixed.ClickPerSecondHud;
-import io.github.itzispyder.clickcrystals.gui.hud.fixed.ColorOverlayHud;
-import io.github.itzispyder.clickcrystals.gui.hud.fixed.ModuleListTextHud;
+import io.github.itzispyder.clickcrystals.gui.hud.fixed.*;
 import io.github.itzispyder.clickcrystals.gui.hud.moveables.*;
 import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -45,7 +42,6 @@ import org.lwjgl.glfw.GLFW;
  * ClickCrystals main
  * TODO: (1) Update mod version down in "this file"
  * TODO: (2) Update mod "gradle.properties"
- * TODO: (3) Update mod version in "GitHub Pages"
  * TODO: (4) Update "README.md"
  *
  * Publishing checklist
@@ -100,7 +96,7 @@ public final class ClickCrystals implements ModInitializer {
     public static final String modId   = "clickcrystals";
     public static final String prefix  = "[ClickCrystals] ";
     public static final String starter = "§7[§bClick§3Crystals§7] §r";
-    public static final String version = "1.1.4";
+    public static final String version = "1.1.5";
 
     public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
 
@@ -168,6 +164,7 @@ public final class ClickCrystals implements ModInitializer {
         ClickScript.register(new LoopPeriodCmd());
         ClickScript.register(new DropCmd());
         ClickScript.register(new ConfigCmd());
+        ClickScript.register(new NotifyCmd());
         ScriptedModule.runModuleScripts();
     }
 
@@ -200,6 +197,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addHud(new ModuleListTextHud());
         system.addHud(new ClickPerSecondHud());
         system.addHud(new ArmorItemHud());
+        system.addHud(new NotificationHud());
 
         system.addHud(new IconRelativeHud());
         system.addHud(new PingRelativeHud());

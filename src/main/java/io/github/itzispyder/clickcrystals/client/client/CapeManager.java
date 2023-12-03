@@ -25,7 +25,7 @@ public class CapeManager {
     public void reloadTextures() {
         CompletableFuture.runAsync(() -> {
             if (ClickCrystals.info != null) {
-                Function<ClickCrystalsInfo.ClickCrystalsUser, String> TO_STRING = user -> user.id().toString();
+                Function<ClickCrystalsInfo.User, String> TO_STRING = user -> user.id().toString();
                 owners.clear();
                 staffs.clear();
                 donators.clear();

@@ -26,7 +26,7 @@ public class ClickCrystalsLogger {
         }
     }
 
-    public void info(String line) {
+    public synchronized void info(String line) {
         log("CC/INFO", line);
     }
 

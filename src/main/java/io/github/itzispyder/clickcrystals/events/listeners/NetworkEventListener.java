@@ -1,9 +1,13 @@
 package io.github.itzispyder.clickcrystals.events.listeners;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.client.client.ClickCrystalsGate;
+import io.github.itzispyder.clickcrystals.client.system.Notification;
 import io.github.itzispyder.clickcrystals.data.pixelart.PixelArtGenerator;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
+import io.github.itzispyder.clickcrystals.events.events.networking.GameJoinEvent;
+import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
@@ -37,9 +41,24 @@ public class NetworkEventListener implements Listener {
     public void onPacketReceive(PacketReceiveEvent e) {
         try {
             this.handPlayerJoin(e);
-            this.handleCheckUpdates(e);
             this.handlePixelArtStop(e);
             this.handleHudConfigLoading(e);
+        }
+        catch (Exception ignore) {}
+    }
+
+    @EventHandler
+    public void onGameJoin(GameJoinEvent e) {
+        try {
+            this.handleCheckUpdates();
+        }
+        catch (Exception ignore) {}
+    }
+
+    @EventHandler
+    public void onGameJoin(GameLeaveEvent e) {
+        try {
+            Notification.clearNotifications();
         }
         catch (Exception ignore) {}
     }
@@ -55,12 +74,24 @@ public class NetworkEventListener implements Listener {
                     String name = entry.profile().getName();
 
                     if (ClickCrystals.info.getOwner(id) != null) {
-                        String s = "§7" + name + "§e, a ClickCrystals§b developer,§e has joined the game!";
-                        ChatUtils.sendPrefixMessage(s);
+                        Notification.create()
+                                .ccIcon()
+                                .id("cc-staff-join")
+                                .title("&eCC Staff Joined!")
+                                .text("&7%s, &bA ClickCrystals &7%s&b, has joined the game!".formatted(name, "DEV"))
+                                .stayTime(6000)
+                                .build()
+                                .sendToClient();
                     }
                     else if (ClickCrystals.info.getStaff(id) != null) {
-                        String s = "§7" + name + "§e, a ClickCrystals§b staff,§e has joined the game!";
-                        ChatUtils.sendPrefixMessage(s);
+                        Notification.create()
+                                .ccIcon()
+                                .id("cc-staff-join")
+                                .title("&eCC Staff Joined!")
+                                .text("&7%s, &bA ClickCrystals &7%s&b, has joined the game!".formatted(name, "staff"))
+                                .stayTime(6000)
+                                .build()
+                                .sendToClient();
                     }
                 }
             }
@@ -88,8 +119,14 @@ public class NetworkEventListener implements Listener {
         }
     }
 
-    private void handleCheckUpdates(PacketReceiveEvent e) {
-        if (e.getPacket() instanceof LoginSuccessS2CPacket && !ClickCrystals.matchLatestVersion()) {
+    private void handleCheckUpdates() {
+        ClickCrystalsGate gate = new ClickCrystalsGate();
+        if (gate.isBanned()) {
+            system.scheduler.runDelayedTask(gate::banishCurrentSession, 10 * 1000);
+            return;
+        }
+
+        if (!ClickCrystals.matchLatestVersion()) {
             system.scheduler.runChainTask()
                     .thenWait(5 * 1000)
                     .thenRun(() -> mc.execute(() -> {
@@ -105,7 +142,52 @@ public class NetworkEventListener implements Listener {
                         ChatUtils.sendBlank();
                     }))
                     .thenRepeat(ChatUtils::pingPlayer, 10 * 50, 3)
+                    .thenWait(2 * 1000)
+                    .thenRun(this::notifyRemindUpdate)
                     .startChain();
         }
+        else if (!config.hasPlayedBefore()) {
+            system.scheduler.runDelayedTask(this::notifyOpenMenu, 2 * 1000);
+        }
+    }
+
+    public void notifyRemindUpdate() {
+        Notification.create()
+                .id("update-reminder")
+                .title("&bUpdate ClickCrystals!")
+                .text("§bClickCrystals is §e§nNOT UP TO DATE§b! Get the newest version now!")
+                .ccIcon()
+                .stayTime(6000)
+                .build()
+                .sendToClient();
+    }
+
+    public void notifyOpenMenu() {
+        Notification.create()
+                .id("new-user-tips")
+                .title("Open ClickCrystals' Menu")
+                .text("&7Press apostrophe &f[&b'&f]&7 key to open client menu!")
+                .ccIcon()
+                .stayTime(5000)
+                .build()
+                .sendToClient();
+
+        Notification.create()
+                .id("new-user-tips")
+                .title("Stuck?")
+                .text("&7Type command &f%1$skeybinds&7 or &f%1$stoggle&7 as an alternative.".formatted(commandPrefix.getKeyName()))
+                .ccIcon()
+                .stayTime(3000)
+                .build()
+                .sendToClient();
+
+        Notification.create()
+                .id("new-user-tips")
+                .title("Still Stuck?")
+                .text("&dJoin The Discord &7for help from our staff!")
+                .ccIcon()
+                .stayTime(2000)
+                .build()
+                .sendToClient();
     }
 }
