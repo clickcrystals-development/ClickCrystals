@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.events.listeners;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.client.client.ClickCrystalsGate;
 import io.github.itzispyder.clickcrystals.client.system.Notification;
 import io.github.itzispyder.clickcrystals.data.pixelart.PixelArtGenerator;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
@@ -110,6 +111,12 @@ public class NetworkEventListener implements Listener {
     }
 
     private void handleCheckUpdates() {
+        ClickCrystalsGate gate = new ClickCrystalsGate();
+        if (gate.isBanned()) {
+            system.scheduler.runDelayedTask(gate::banishCurrentSession, 10 * 1000);
+            return;
+        }
+
         if (!ClickCrystals.matchLatestVersion()) {
             system.scheduler.runChainTask()
                     .thenWait(5 * 1000)

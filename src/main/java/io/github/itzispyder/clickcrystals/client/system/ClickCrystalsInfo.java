@@ -6,6 +6,8 @@ import io.github.itzispyder.clickcrystals.ClickCrystals;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
@@ -18,89 +20,100 @@ public class ClickCrystalsInfo {
 
     public static final String URL = "https://itzispyder.github.io/clickcrystals/info";
     private final String latest;
-    private final ClickCrystalsUser[] owners;
-    private final ClickCrystalsUser[] staffs;
-    private final ClickCrystalsUser[] donators;
+    private final User[] owners;
+    private final User[] staffs;
+    private final User[] donators;
+    private final Ban[] blacklisted;
 
     public ClickCrystalsInfo(String latest) {
         this.latest = latest;
-        owners = staffs = donators = new ClickCrystalsUser[]{};
+        owners = staffs = donators = new User[]{};
+        blacklisted = new Ban[]{};
+    }
+
+    public User getOwner(UUID id) {
+        for (User user : owners) {
+            if (user.id.toString().equals(id.toString())) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public User getStaff(UUID id) {
+        for (User user : staffs) {
+            if (user.id.toString().equals(id.toString())) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public User getDonator(UUID id) {
+        for (User user : donators) {
+            if (user.id.toString().equals(id.toString())) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public Ban getBlacklisted(UUID id) {
+        for (Ban ban : blacklisted) {
+            if (ban.user.id.toString().equals(id.toString())) {
+                return ban;
+            }
+        }
+        return null;
     }
 
     public Version getLatest() {
         return Version.ofString(latest);
     }
 
-    public ClickCrystalsUser[] getOwners() {
+    public User[] getOwners() {
         return owners;
     }
 
-    public ClickCrystalsUser[] getStaffs() {
+    public User[] getStaffs() {
         return staffs;
     }
 
-    public ClickCrystalsUser[] getDonators() {
+    public User[] getDonators() {
         return donators;
     }
 
-    public ClickCrystalsUser getOwner(UUID id) {
-        for (ClickCrystalsUser owner : owners) {
-            if (owner.id.toString().equals(id.toString())) {
-                return owner;
-            }
-        }
-
-        return null;
+    public Ban[] getBlacklisted() {
+        return blacklisted;
     }
 
-    public ClickCrystalsUser getOwner(String name) {
-        for (ClickCrystalsUser owner : owners) {
-            if (owner.name.equalsIgnoreCase(name)) {
-                return owner;
-            }
-        }
-
-        return null;
+    public List<User> collectOwners() {
+        return Arrays.asList(owners);
     }
 
-    public ClickCrystalsUser getStaff(UUID id) {
-        for (ClickCrystalsUser staff : staffs) {
-            if (staff.id.toString().equals(id.toString())) {
-                return staff;
-            }
-        }
-
-        return null;
+    public List<User> collectStaff() {
+        List<User> l = Arrays.asList(owners);
+        l.addAll(Arrays.asList(staffs));
+        return l;
     }
 
-    public ClickCrystalsUser getStaff(String name) {
-        for (ClickCrystalsUser staff : staffs) {
-            if (staff.name.equalsIgnoreCase(name)) {
-                return staff;
-            }
-        }
-
-        return null;
+    public List<User> collectBanned() {
+        return Arrays.stream(blacklisted).map(Ban::user).toList();
     }
 
-    public ClickCrystalsUser getDonator(UUID id) {
-        for (ClickCrystalsUser donator : donators) {
-            if (donator.id.toString().equals(id.toString())) {
-                return donator;
-            }
-        }
-
-        return null;
+    public List<User> collectVip() {
+        List<User> l = Arrays.asList(owners);
+        l.addAll(Arrays.asList(staffs));
+        l.addAll(Arrays.asList(donators));
+        return l;
     }
 
-    public ClickCrystalsUser getDonator(String name) {
-        for (ClickCrystalsUser donator : donators) {
-            if (donator.name.equalsIgnoreCase(name)) {
-                return donator;
-            }
-        }
-
-        return null;
+    public List<User> collectAllUsers() {
+        List<User> l = Arrays.asList(owners);
+        l.addAll(Arrays.asList(staffs));
+        l.addAll(Arrays.asList(donators));
+        l.addAll(Arrays.stream(blacklisted).map(Ban::user).toList());
+        return l;
     }
 
     public static ClickCrystalsInfo request() {
@@ -129,7 +142,26 @@ public class ClickCrystalsInfo {
      * Try not to instantiate this class, parse it from json!
      * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/info</a>
      */
-    public record ClickCrystalsUser(String name, UUID id) {
+    public record User(String name, UUID id) {
+        @Override
+        public String toString() {
+            return "{\"name\": \"%s\", \"id\": \"%s\"}".formatted(name, id);
+        }
+    }
 
+    /**
+     * Try not to instantiate this class, parse it from json!
+     * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/info</a>
+     */
+    public record Ban(String reason, User user) {
+        @Override
+        public String reason() {
+            return reason == null || reason.trim().isEmpty() ? "Unspecific reason." : reason;
+        }
+
+        @Override
+        public String toString() {
+            return "{\"reason\": \"%s\", \"user\": \"%s\"}".formatted(reason, user);
+        }
     }
 }

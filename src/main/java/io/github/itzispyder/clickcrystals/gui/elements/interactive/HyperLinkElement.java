@@ -6,22 +6,21 @@ import net.minecraft.client.gui.DrawContext;
 
 public class HyperLinkElement extends GuiElement {
 
-    private final String url, name, message;
+    private final String url, name;
     private final float textScale;
 
-    public HyperLinkElement(int x, int y, String url, String name, float textScale, String message) {
+    public HyperLinkElement(int x, int y, String url, String name, float textScale) {
         super(x, y, 0, 0);
         this.url = url;
         this.name = name;
         this.textScale = textScale;
-        this.message = message;
 
         this.width = (int)(mc.textRenderer.getWidth(name) * textScale);
         this.height = (int)(textScale * 10);
     }
 
-    public HyperLinkElement(int x, int y, String url, float textScale, String message) {
-        this(x, y, url, url, textScale, message);
+    public HyperLinkElement(int x, int y, String url, float textScale) {
+        this(x, y, url, url, textScale);
     }
 
     @Override
@@ -43,9 +42,5 @@ public class HyperLinkElement extends GuiElement {
 
     public String getName() {
         return name;
-    }
-
-    public String getMessage() {
-        return message;
     }
 }
