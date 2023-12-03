@@ -3,7 +3,6 @@ package io.github.itzispyder.clickcrystals;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
-import io.github.itzispyder.clickcrystals.client.system.DiscordPresence;
 import net.minecraft.client.MinecraftClient;
 
 public interface Global {
@@ -14,7 +13,6 @@ public interface Global {
     String version = ClickCrystals.version;
     String starter = ClickCrystals.starter;
     String modId = ClickCrystals.modId;
-    DiscordPresence rpc = ClickCrystals.discordPresence;
     Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
 
 }
