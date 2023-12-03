@@ -315,3 +315,4 @@ public final class ClickCrystals implements ModInitializer {
         }
     }
 }
+///fr 
