@@ -21,9 +21,9 @@ public class ClickCrystalsGate {
     }
 
     public boolean isBanned() {
-        ClickCrystals.system.println("[Auth] <- Checking ClickCrystals Authentication...");
-        ClickCrystals.system.println("[Auth] Current session: " + getSessionUser().get());
-        ClickCrystals.system.println("[Auth] Ban session (null if not banned): " + getBanSession().get());
+        ClickCrystals.system.logger.log("CC/AUTH", "<- Checking ClickCrystals Authentication...");
+        ClickCrystals.system.logger.log("CC/AUTH", "Current session: " + getSessionUser().get());
+        ClickCrystals.system.logger.log("CC/AUTH", "Ban session (null if not banned): " + getBanSession().get());
         return getBanSession().isPresent();
     }
 
@@ -62,9 +62,9 @@ public class ClickCrystalsGate {
     }
 
     public void printBanList() {
-        ClickCrystals.system.println("ClickCrystals Ban List: ");
+        ClickCrystals.system.logger.log("CC/AUTH", "ClickCrystals Ban List: ");
         for (ClickCrystalsInfo.Ban ban : info().getBlacklisted()) {
-            ClickCrystals.system.printf("Username: %s, UUID: %s", ban.user().name(), ban.user().id());
+            ClickCrystals.system.logger.log("CC/AUTH", "Username: %s, UUID: %s".formatted(ban.user().name(), ban.user().id()));
         }
     }
 }

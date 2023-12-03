@@ -42,7 +42,6 @@ import org.lwjgl.glfw.GLFW;
  * ClickCrystals main
  * TODO: (1) Update mod version down in "this file"
  * TODO: (2) Update mod "gradle.properties"
- * TODO: (3) Update mod version in "GitHub Pages"
  * TODO: (4) Update "README.md"
  *
  * Publishing checklist
@@ -97,7 +96,7 @@ public final class ClickCrystals implements ModInitializer {
     public static final String modId   = "clickcrystals";
     public static final String prefix  = "[ClickCrystals] ";
     public static final String starter = "§7[§bClick§3Crystals§7] §r";
-    public static final String version = "1.1.4";
+    public static final String version = "1.1.5";
 
     public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
 

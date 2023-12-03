@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.data.pixelart.PixelArtGenerator;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameJoinEvent;
+import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
@@ -51,7 +52,15 @@ public class NetworkEventListener implements Listener {
         try {
             this.handleCheckUpdates();
         }
-        catch (Exception ex) {}
+        catch (Exception ignore) {}
+    }
+
+    @EventHandler
+    public void onGameJoin(GameLeaveEvent e) {
+        try {
+            Notification.clearNotifications();
+        }
+        catch (Exception ignore) {}
     }
 
     private void handPlayerJoin(PacketReceiveEvent e) {

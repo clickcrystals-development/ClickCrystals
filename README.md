@@ -39,35 +39,27 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Minecraft: 1.20-1.20.1
-Mod: 1.1.4
+Mod: 1.1.5
 
 Changelog:
-    ClickScript IDE:
-      - Make scripts in-game! (color coded keywords and stuff)
-      - Create custom modules via GUI!
-
-    Add:
-      - input left
-      - input right
-      - input middle
-      - input inventory
-      - # aka: to check if inventory is open just check "if input_active inventory"
-      - drop one
-      - drop all
-      - config save
-      - config reload
-      - if module_enabled
-      - on game_join
-      - on game_leave
-      - wait_random # <min> <max>
-      - search_gui # "search" command but for in gui
+    CUSTOM-LOG:
+      - ClickCrystals now has a custom log located in `.minecraft/ClickCrystalsClient/current.log`
+      - EVERY CLICKCRYSTALS MESSAGE IN CHAT, EVERY ERROR MESSAGE IN CONSOLE -> if they contain `clickcrystals`, they will be removed and sent to the ClickCrystals log instead (for "quick debug purposes")
     
-    Also:
-      - # make [if, if_not, wait] "then" chains optional (to avoid confusion)
-      - loop_period # change from millis to second
+    Add:
+      - Notification system # uses a builder to customize colors and stuff
+      - Use Notifications to teach players how to script and open men
+      - User blacklist and banishment (set to a screen you can't close with a text displaying the ban reason)
+    
+    Patches:
+      - Scheduler crashes due to unhandled exception outside of loop
+    
+    CCS:
+      - New CCS command [notify] to send a plain, gray notification
+      - if block_at <location> <:/#> # use location parser from my OgreDupeAlias project
+      - if dimension <dimension-enum>
   
 Notice:
-  - Module MouseTaper does not register manual input from the button you taped down!
   - USE COMMAND ,keybinds IF YOU DON'T KNOW THE KEYBIND FOR SOMETHING
 ```
 

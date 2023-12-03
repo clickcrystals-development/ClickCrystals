@@ -80,7 +80,7 @@ public class Notification implements Global {
         }
         if (!QUEUE.contains(this)) {
             QUEUE.add(this);
-            system.logger.send("(%s) [%s]: %s".formatted(id, title, text));
+            system.logger.log("CC/NOTIFICATIONS", "(%s) [%s]: %s".formatted(id, title, text));
         }
     }
 
@@ -162,6 +162,9 @@ public class Notification implements Global {
 
     public static Builder create() {
         return new Builder();
+    }
+    public static void clearNotifications() {
+        QUEUE.clear();
     }
 
     public static class Builder {

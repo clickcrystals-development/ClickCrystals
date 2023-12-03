@@ -34,10 +34,6 @@ public class ClickCrystalsLogger {
         log("CC/ERROR", line);
     }
 
-    public void send(String line) {
-        log("CC/NOTIFICATIONS", line);
-    }
-
     public void log(String prefix, String line) {
         if (!hasWriter) {
             return;
