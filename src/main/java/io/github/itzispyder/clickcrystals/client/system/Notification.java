@@ -7,7 +7,9 @@ import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.Window;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -78,6 +80,7 @@ public class Notification implements Global {
         }
         if (!QUEUE.contains(this)) {
             QUEUE.add(this);
+            system.logger.send("(%s) [%s]: %s".formatted(id, title, text));
         }
     }
 
@@ -88,18 +91,24 @@ public class Notification implements Global {
 
         showing.set(true);
         system.scheduler.runChainTask()
+                .thenRun(() -> ping(true))
                 .thenRepeat(translation::getAndIncrement, 1, 100)
                 .thenWait(stayTime)
                 .thenRepeat(() -> {
                     translation.getAndDecrement();
                     translation.getAndDecrement();
                 }, 1, 50)
+                .thenRun(() -> ping(false))
                 .thenRun(() -> {
                     QUEUE.remove(this);
                     dead.set(true);
                     showing.set(false);
                 })
                 .startChain();
+    }
+
+    public void ping(boolean in) {
+        mc.getSoundManager().play(PositionedSoundInstance.master(in ? SoundEvents.UI_TOAST_IN : SoundEvents.UI_TOAST_OUT, 1, 10));
     }
 
     public String getName() {
@@ -167,7 +176,7 @@ public class Notification implements Global {
             backgroundColor = Gray.DARK_GRAY;
             borderColor = Gray.LIGHT_GRAY;
             icon = Tex.Icons.SETTINGS;
-            stayTime = 6000;
+            stayTime = 3000;
         }
 
         public Builder id(String id) {

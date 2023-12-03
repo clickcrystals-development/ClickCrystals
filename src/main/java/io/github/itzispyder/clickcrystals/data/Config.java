@@ -19,6 +19,7 @@ public class Config implements JsonSerializable<Config> {
     public static final String PATH_CONFIG = PATH + "config.json";
     public static final String PATH_LOG = PATH + "current.log";
     public static final String PATH_SCRIPTS = PATH + "scripts";
+    private boolean hasPlayedBefore;
     private final Map<String, Integer> keybindEntries;
     private final Map<String, Positionable.Dimension> positionEntries;
     private final Map<String, ModuleFile> moduleEntries;
@@ -108,5 +109,16 @@ public class Config implements JsonSerializable<Config> {
 
     public Map<String, ModuleFile> getModuleEntries() {
         return moduleEntries;
+    }
+
+    public boolean hasPlayedBefore() {
+        return hasPlayedBefore;
+    }
+
+    public void markPlayedBefore() {
+        if (!hasPlayedBefore) {
+            hasPlayedBefore = true;
+            save();
+        }
     }
 }

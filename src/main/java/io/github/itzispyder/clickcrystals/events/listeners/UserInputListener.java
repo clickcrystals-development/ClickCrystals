@@ -45,6 +45,7 @@ public class UserInputListener implements Listener {
         else {
             mc.setScreen(new HomeScreen());
         }
+        config.markPlayedBefore();
     }
 
     public static final Map<Class<? extends Screen>, String> SCREEN_STATES = ManualMap.fromItems(
