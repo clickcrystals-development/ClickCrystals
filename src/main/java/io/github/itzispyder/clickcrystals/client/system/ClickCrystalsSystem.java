@@ -205,8 +205,6 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void onClientStopping() {
         println("Stopping client!");
-        println("<- disconnecting from discord...");
-        ClickCrystals.discordPresence.stop();
 
         println("<- saving data...");
         ClickCrystals.config.saveKeybinds();
