@@ -48,18 +48,6 @@ public class UserInputListener implements Listener {
         config.markPlayedBefore();
     }
 
-    public static final Map<Class<? extends Screen>, String> SCREEN_STATES = ManualMap.fromItems(
-            TitleScreen.class, "Looking at the title screen",
-            ModuleScreen.class, "Toggling modules",
-            HomeScreen.class, "Scanning through ClickCrystals home",
-            SearchScreen.class, "Searching modules",
-            SettingScreen.class, "Changing ClickCrystals keybinds",
-            SelectWorldScreen.class, "Selecting singleplayer",
-            MultiplayerScreen.class, "Selecting server",
-            GameMenuScreen.class, "Idling...",
-            ClickScriptIDE.class, "Creating a custom module...",
-            BulletinScreen.class, "Viewing CC Bulletin Board"
-    );
 
     private static final ConcurrentLinkedQueue<QueuedGuiItemSearchListener> guiItemSearchQueue = new ConcurrentLinkedQueue<>();
 
@@ -74,7 +62,6 @@ public class UserInputListener implements Listener {
     @EventHandler
     public void onScreenChange(SetScreenEvent e) {
         try {
-            this.handleDiscordPresence(e);
             this.handleConfigSave(e);
             this.handleScreenManagement(e);
         }
@@ -119,28 +106,7 @@ public class UserInputListener implements Listener {
         }
     }
 
-    private void handleDiscordPresence(SetScreenEvent e) {
-        if (discordPresence.loadedSuccessfully) {
-            Screen s = e.getScreen();
 
-            if (s == null) {
-                if (mc.player != null) {
-                    discordPresence.setState(mc.isInSingleplayer() ? "In singleplayer world" : "In multiplayer server");
-                }
-                else {
-                    discordPresence.setState("Looking at the title screen");
-                }
-            }
-            else if (s instanceof ModuleEditScreen mss) {
-                discordPresence.setState("Editing module " + mss.getModule().getName() + "...");
-            }
-            else {
-                discordPresence.setState(SCREEN_STATES.getOrDefault(s.getClass(), "Clicking Crystals..."));
-            }
-
-            DiscordRPC.syncRPC();
-        }
-    }
 
     private void handleKeybindings(KeyPressEvent e) {
         if (e.getAction() == ClickType.CLICK) {
