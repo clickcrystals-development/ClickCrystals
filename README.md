@@ -204,6 +204,6 @@ TheTrouper: For documenting the mod, and giving me ideas!
 breadandcarrots: For being a wonderful mod tester!
 ClickCrystals (bro really changed his name to this): For creating ClickCrystals' TikTok account
 Tesla Tower: Best NBT Creator frfr
-I No One: Bro is fr my infinite ideas source + \#1 Bug Spotter
+I No One: Bro is fr my infinite ideas source + \#1 Bug Spotter \ +he made this coustm version for macos and pojav users 💀
 TaxEvasion: Thank you for your changes to AntiCrash and addition of no explosion particles!
 ```
