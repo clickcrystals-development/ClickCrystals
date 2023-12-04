@@ -48,6 +48,7 @@ import org.lwjgl.glfw.GLFW;
  * TODO: (5) Modrinth Release
  * TODO: (6) GitHub Release
  * TODO: (7) PlanetMC Release
+ * TODO: (7) CurseForge Release
  * TODO: (8) Update https://itzispyder.github.io/clickcrystals/info
  * TODO: (9) Discord Announcement
  */
