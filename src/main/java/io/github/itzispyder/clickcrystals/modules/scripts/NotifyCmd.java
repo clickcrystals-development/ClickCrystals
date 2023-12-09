@@ -14,9 +14,10 @@ public class NotifyCmd extends ScriptCommand {
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
         Notification.create()
                 .ccsIcon()
+                .stayTime((long)(args.get(0).doubleValue() * 1000L))
                 .id("clickscript-triggered-notification")
                 .title("ClickCrystals System")
-                .text(args.getAll().stringValue())
+                .text(args.getAll(1).stringValue())
                 .build()
                 .sendToClient();
     }
