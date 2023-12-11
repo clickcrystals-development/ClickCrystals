@@ -25,21 +25,41 @@ public class ResourceRelativeHud extends Hud {
         int margin = getX() + g;
         int caret = y + g;
 
-        drawItem(context, Items.TOTEM_OF_UNDYING, margin, caret);
+        boolean itemsRendered = false; // Flag to check if any items are rendered
+
+        itemsRendered |= drawItem(context, Items.TOTEM_OF_UNDYING, margin, caret);
         caret += next;
-        drawItem(context, Items.END_CRYSTAL, margin, caret);
+        itemsRendered |= drawItem(context, Items.END_CRYSTAL, margin, caret);
         caret += next;
-        drawItem(context, Items.OBSIDIAN, margin, caret);
+        itemsRendered |= drawItem(context, Items.OBSIDIAN, margin, caret);
         caret += next;
-        drawItem(context, Items.EXPERIENCE_BOTTLE, margin, caret);
+        itemsRendered |= drawItem(context, Items.EXPERIENCE_BOTTLE, margin, caret);
         caret += next;
-        RenderUtils.drawItem(context, Items.ARROW.getDefaultStack(), margin, caret, 1.0F, InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) + "");
+        itemsRendered |= drawArrowItem(context, margin, caret);
         caret += next + g;
-        setHeight(caret - y);
+
+        if (itemsRendered) {
+            setHeight(caret - y);
+        }
     }
 
-    private void drawItem(DrawContext context, Item item, int x, int y) {
-        RenderUtils.drawItem(context, item.getDefaultStack(), x, y, 1.0F, InvUtils.count(item) + "");
+    private boolean drawItem(DrawContext context, Item item, int x, int y) {
+        // Check if the player has the item before rendering
+        if (InvUtils.count(item) > 0) {
+            RenderUtils.drawItem(context, item.getDefaultStack(), x, y, 1.0F, InvUtils.count(item) + "");
+            return true; // Item rendered, set the flag to true
+        }
+        return false; // Item not rendered, flag remains false
+    }
+
+    private boolean drawArrowItem(DrawContext context, int x, int y) {
+        Item arrowItem = Items.ARROW;
+        // Check if the player has arrows before rendering
+        if (InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) > 0) {
+            RenderUtils.drawItem(context, arrowItem.getDefaultStack(), x, y, 1.0F, InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) + "");
+            return true; // Arrow item rendered, set the flag to true
+        }
+        return false; // Arrow item not rendered, flag remains false
     }
 
     @Override
