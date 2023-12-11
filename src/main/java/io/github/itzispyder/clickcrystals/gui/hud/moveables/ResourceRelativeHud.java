@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -32,7 +33,7 @@ public class ResourceRelativeHud extends Hud {
         for (Item item : itemsWithBorder) {
             if (InvUtils.count(item) > 0) {
                 renderBackdrop(context, margin, caret, next);
-                renderItemWithBorder(context, item, margin, caret);
+                renderItem(context, item, margin, caret);
                 caret += next;
             }
         }
@@ -47,18 +48,7 @@ public class ResourceRelativeHud extends Hud {
             // Adjust these values according to your requirements
             int borderSize = 2;
             int borderColor = getArgb();
-            RenderUtils.drawRect(context, x - borderSize, y - borderSize, getWidth() + borderSize * 2, height + borderSize * 2, borderColor);
-        }
-    }
-
-    private void renderItemWithBorder(DrawContext context, Item item, int x, int y) {
-        renderBorderIfNeeded(context);
-        renderItem(context, item, x, y);
-    }
-
-    private void renderBorderIfNeeded(DrawContext context) {
-        if (shouldRenderBorder()) {
-            // You can customize border rendering here if needed
+            DrawableHelper.fill(context, x - borderSize, y - borderSize, x + getWidth() + borderSize * 2, y + height + borderSize * 2, borderColor);
         }
     }
 
@@ -73,6 +63,10 @@ public class ResourceRelativeHud extends Hud {
         if (InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) > 0) {
             RenderUtils.drawItem(context, arrowItem.getDefaultStack(), x, y, 1.0F, InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) + "");
         }
+    }
+
+    private boolean shouldRenderBorder() {
+        return Module.getFrom(InGameHuds.class, m -> m.renderHudBorders.getVal());
     }
 
     @Override
