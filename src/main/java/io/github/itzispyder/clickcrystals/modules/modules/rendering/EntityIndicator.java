@@ -10,7 +10,7 @@ import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
@@ -76,7 +76,11 @@ public class EntityIndicator extends ListenerModule {
         nearest = null;
 
         PlayerUtils.runOnNearestEntity(radarRange.getVal(), entity -> {
-            boolean bl = entity instanceof LivingEntity && entity.isAlive();
+            boolean bl = entity instanceof MobEntity
+                    && entity.isAlive()
+                    && player.canSee(entity)
+                    && !entity.isInvisibleTo(player);
+
             if (bl) {
                 EntityIndicator.entities.add(EntityDisplay.of(player, entity));
             }
