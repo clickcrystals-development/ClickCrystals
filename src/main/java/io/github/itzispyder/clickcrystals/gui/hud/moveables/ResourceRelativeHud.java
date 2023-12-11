@@ -27,25 +27,37 @@ public class ResourceRelativeHud extends Hud {
         int margin = getX() + g;
         int caret = y + g;
 
-        renderItemBackdrop(context, Items.TOTEM_OF_UNDYING, margin, caret);
+        drawItemBackdrop(context, Items.TOTEM_OF_UNDYING, margin, caret);
         caret += next;
-        renderItemBackdrop(context, Items.END_CRYSTAL, margin, caret);
+        drawItemBackdrop(context, Items.END_CRYSTAL, margin, caret);
         caret += next;
-        renderItemBackdrop(context, Items.OBSIDIAN, margin, caret);
+        drawItemBackdrop(context, Items.OBSIDIAN, margin, caret);
         caret += next;
-        renderItemBackdrop(context, Items.EXPERIENCE_BOTTLE, margin, caret);
+        drawItemBackdrop(context, Items.EXPERIENCE_BOTTLE, margin, caret);
         caret += next;
-        renderItemBackdrop(context, Items.ARROW, margin, caret);  // Updated to use ARROW instead of Items.ARROW
+        drawArrowItemBackdrop(context, margin, caret);  // Updated to use ARROW instead of Items.ARROW
         caret += next + g;
+
+        // Draw the colored square once after rendering all items
+        renderBackdrop(context);
+
         setHeight(caret - y);
     }
 
-    private void renderItemBackdrop(DrawContext context, Item item, int x, int y) {
+    private void drawItemBackdrop(DrawContext context, Item item, int x, int y) {
         // Check if the player has the item before rendering
         if (InvUtils.count(item) > 0) {
-            // Render the colored square only for the specific item being rendered
             renderColoredSquare(context, x - 2, y - 2, getWidth() + 4, getHeight() + 4);
             RenderUtils.drawItem(context, item.getDefaultStack(), x, y, 1.0F, InvUtils.count(item) + "");
+        }
+    }
+
+    private void drawArrowItemBackdrop(DrawContext context, int x, int y) {
+        Item arrowItem = Items.ARROW;
+        // Check if the player has arrows before rendering
+        if (InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) > 0) {
+            renderColoredSquare(context, x - 2, y - 2, getWidth() + 4, getHeight() + 4);
+            RenderUtils.drawItem(context, arrowItem.getDefaultStack(), x, y, 1.0F, InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) + "");
         }
     }
 
