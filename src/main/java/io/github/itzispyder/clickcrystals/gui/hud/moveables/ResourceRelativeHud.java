@@ -21,60 +21,56 @@ public class ResourceRelativeHud extends Hud {
             return;
         }
 
+        renderBackdrop(context);
+
         int y = getY();
         int g = 2;
         int next = 16 + g;
         int margin = getX() + g;
         int caret = y + g;
 
-        drawItemBackdrop(context, Items.TOTEM_OF_UNDYING, margin, caret);
+        drawItem(context, Items.TOTEM_OF_UNDYING, margin, caret);
         caret += next;
-        drawItemBackdrop(context, Items.END_CRYSTAL, margin, caret);
+        drawItem(context, Items.END_CRYSTAL, margin, caret);
         caret += next;
-        drawItemBackdrop(context, Items.OBSIDIAN, margin, caret);
+        drawItem(context, Items.OBSIDIAN, margin, caret);
         caret += next;
-        drawItemBackdrop(context, Items.EXPERIENCE_BOTTLE, margin, caret);
+        drawItem(context, Items.EXPERIENCE_BOTTLE, margin, caret);
         caret += next;
-        drawArrowItemBackdrop(context, margin, caret);  // Updated to use ARROW instead of Items.ARROW
+        drawArrowItem(context, margin, caret);
         caret += next + g;
-
-        // Draw the colored square once after rendering all items
-        renderBackdrop(context);
-
         setHeight(caret - y);
     }
 
-    private void drawItemBackdrop(DrawContext context, Item item, int x, int y) {
+    private void drawItem(DrawContext context, Item item, int x, int y) {
         // Check if the player has the item before rendering
         if (InvUtils.count(item) > 0) {
-            renderColoredSquare(context, x - 2, y - 2, getWidth() + 4, getHeight() + 4);
             RenderUtils.drawItem(context, item.getDefaultStack(), x, y, 1.0F, InvUtils.count(item) + "");
         }
     }
 
-    private void drawArrowItemBackdrop(DrawContext context, int x, int y) {
+    private void drawArrowItem(DrawContext context, int x, int y) {
         Item arrowItem = Items.ARROW;
         // Check if the player has arrows before rendering
         if (InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) > 0) {
-            renderColoredSquare(context, x - 2, y - 2, getWidth() + 4, getHeight() + 4);
             RenderUtils.drawItem(context, arrowItem.getDefaultStack(), x, y, 1.0F, InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) + "");
         }
-    }
-
-    private void renderColoredSquare(DrawContext context, int x, int y, int width, int height) {
-        int argb = Module.getFrom(InGameHuds.class, m -> m.getArgb());
-        context.fillGradient(x, y, x + width, y + height, argb, argb);
     }
 
     @Override
     public boolean canRender() {
         return super.canRender() && (
-            InvUtils.count(Items.TOTEM_OF_UNDYING) > 0 ||
-            InvUtils.count(Items.END_CRYSTAL) > 0 ||
-            InvUtils.count(Items.OBSIDIAN) > 0 ||
-            InvUtils.count(Items.EXPERIENCE_BOTTLE) > 0 ||
-            InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) > 0
+                InvUtils.count(Items.TOTEM_OF_UNDYING) > 0 ||
+                        InvUtils.count(Items.END_CRYSTAL) > 0 ||
+                        InvUtils.count(Items.OBSIDIAN) > 0 ||
+                        InvUtils.count(Items.EXPERIENCE_BOTTLE) > 0 ||
+                        InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) > 0
         );
+    }
+
+    @Override
+    public int getArgb() {
+        return Module.getFrom(InGameHuds.class, m -> m.getArgb());
     }
 
     @Override
