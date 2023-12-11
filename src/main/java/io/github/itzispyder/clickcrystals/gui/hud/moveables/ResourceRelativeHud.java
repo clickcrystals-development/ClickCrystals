@@ -1,5 +1,3 @@
-package io.github.itzispyder.clickcrystals.gui.hud.moveables;
-
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
@@ -11,6 +9,8 @@ import net.minecraft.item.Items;
 
 public class ResourceRelativeHud extends Hud {
 
+    private final Item[] itemsWithBorder = {Items.TOTEM_OF_UNDYING, Items.END_CRYSTAL, Items.OBSIDIAN, Items.EXPERIENCE_BOTTLE};
+
     public ResourceRelativeHud() {
         super("resource-hud", 200, 30, 20, 20);
     }
@@ -21,29 +21,40 @@ public class ResourceRelativeHud extends Hud {
             return;
         }
 
-        renderBackdrop(context);
-
         int y = getY();
         int g = 2;
         int next = 16 + g;
         int margin = getX() + g;
         int caret = y + g;
 
-        drawItem(context, Items.TOTEM_OF_UNDYING, margin, caret);
-        caret += next;
-        drawItem(context, Items.END_CRYSTAL, margin, caret);
-        caret += next;
-        drawItem(context, Items.OBSIDIAN, margin, caret);
-        caret += next;
-        drawItem(context, Items.EXPERIENCE_BOTTLE, margin, caret);
-        caret += next;
+        for (Item item : itemsWithBorder) {
+            if (InvUtils.count(item) > 0) {
+                renderBackdrop(context, margin, caret, next);
+                drawItem(context, item, margin, caret);
+                caret += next;
+            }
+        }
+
         drawArrowItem(context, margin, caret);
         caret += next + g;
         setHeight(caret - y);
     }
 
+    private void renderBackdrop(DrawContext context, int x, int y, int height) {
+        if (shouldRenderBorder()) {
+            // Adjust these values according to your requirements
+            int borderSize = 2;
+            int borderColor = getArgb();
+            RenderUtils.drawRect(context, x - borderSize, y - borderSize, getWidth() + borderSize * 2, height + borderSize * 2, borderColor);
+        }
+    }
+
+    private boolean shouldRenderBorder() {
+        // Adjust the condition based on when you want the regular border to be rendered
+        return Module.getFrom(InGameHuds.class, m -> m.renderHudBorders.getVal());
+    }
+
     private void drawItem(DrawContext context, Item item, int x, int y) {
-        // Check if the player has the item before rendering
         if (InvUtils.count(item) > 0) {
             RenderUtils.drawItem(context, item.getDefaultStack(), x, y, 1.0F, InvUtils.count(item) + "");
         }
@@ -51,7 +62,6 @@ public class ResourceRelativeHud extends Hud {
 
     private void drawArrowItem(DrawContext context, int x, int y) {
         Item arrowItem = Items.ARROW;
-        // Check if the player has arrows before rendering
         if (InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) > 0) {
             RenderUtils.drawItem(context, arrowItem.getDefaultStack(), x, y, 1.0F, InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) + "");
         }
