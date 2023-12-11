@@ -9,7 +9,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
-
 public class ResourceRelativeHud extends Hud {
 
     private final Item[] itemsWithBorder = {Items.TOTEM_OF_UNDYING, Items.END_CRYSTAL, Items.OBSIDIAN, Items.EXPERIENCE_BOTTLE};
@@ -33,7 +32,7 @@ public class ResourceRelativeHud extends Hud {
         for (Item item : itemsWithBorder) {
             if (InvUtils.count(item) > 0) {
                 renderBackdrop(context, margin, caret, next);
-                renderItem(context, item, margin, caret);
+                renderItemWithBorder(context, item, margin, caret);
                 caret += next;
             }
         }
@@ -49,6 +48,17 @@ public class ResourceRelativeHud extends Hud {
             int borderSize = 2;
             int borderColor = getArgb();
             RenderUtils.drawRect(context, x - borderSize, y - borderSize, getWidth() + borderSize * 2, height + borderSize * 2, borderColor);
+        }
+    }
+
+    private void renderItemWithBorder(DrawContext context, Item item, int x, int y) {
+        renderBorderIfNeeded(context);
+        renderItem(context, item, x, y);
+    }
+
+    private void renderBorderIfNeeded(DrawContext context) {
+        if (shouldRenderBorder()) {
+            // You can customize border rendering here if needed
         }
     }
 
