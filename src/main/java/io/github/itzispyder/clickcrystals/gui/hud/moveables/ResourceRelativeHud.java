@@ -17,6 +17,10 @@ public class ResourceRelativeHud extends Hud {
 
     @Override
     public void render(DrawContext context) {
+        if (!canRender()) {
+            return;
+        }
+
         renderBackdrop(context);
 
         int y = getY();
@@ -25,46 +29,43 @@ public class ResourceRelativeHud extends Hud {
         int margin = getX() + g;
         int caret = y + g;
 
-        boolean itemsRendered = false; // Flag to check if any items are rendered
-
-        itemsRendered |= drawItem(context, Items.TOTEM_OF_UNDYING, margin, caret);
+        drawItem(context, Items.TOTEM_OF_UNDYING, margin, caret);
         caret += next;
-        itemsRendered |= drawItem(context, Items.END_CRYSTAL, margin, caret);
+        drawItem(context, Items.END_CRYSTAL, margin, caret);
         caret += next;
-        itemsRendered |= drawItem(context, Items.OBSIDIAN, margin, caret);
+        drawItem(context, Items.OBSIDIAN, margin, caret);
         caret += next;
-        itemsRendered |= drawItem(context, Items.EXPERIENCE_BOTTLE, margin, caret);
+        drawItem(context, Items.EXPERIENCE_BOTTLE, margin, caret);
         caret += next;
-        itemsRendered |= drawArrowItem(context, margin, caret);
+        drawArrowItem(context, margin, caret);
         caret += next + g;
-
-        if (itemsRendered) {
-            setHeight(caret - y);
-        }
+        setHeight(caret - y);
     }
 
-    private boolean drawItem(DrawContext context, Item item, int x, int y) {
+    private void drawItem(DrawContext context, Item item, int x, int y) {
         // Check if the player has the item before rendering
         if (InvUtils.count(item) > 0) {
             RenderUtils.drawItem(context, item.getDefaultStack(), x, y, 1.0F, InvUtils.count(item) + "");
-            return true; // Item rendered, set the flag to true
         }
-        return false; // Item not rendered, flag remains false
     }
 
-    private boolean drawArrowItem(DrawContext context, int x, int y) {
+    private void drawArrowItem(DrawContext context, int x, int y) {
         Item arrowItem = Items.ARROW;
         // Check if the player has arrows before rendering
         if (InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) > 0) {
             RenderUtils.drawItem(context, arrowItem.getDefaultStack(), x, y, 1.0F, InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) + "");
-            return true; // Arrow item rendered, set the flag to true
         }
-        return false; // Arrow item not rendered, flag remains false
     }
 
     @Override
     public boolean canRender() {
-        return super.canRender() && Module.getFrom(InGameHuds.class, m -> m.hudResource.getVal());
+        return super.canRender() && (
+                InvUtils.count(Items.TOTEM_OF_UNDYING) > 0 ||
+                        InvUtils.count(Items.END_CRYSTAL) > 0 ||
+                        InvUtils.count(Items.OBSIDIAN) > 0 ||
+                        InvUtils.count(Items.EXPERIENCE_BOTTLE) > 0 ||
+                        InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) > 0
+        );
     }
 
     @Override
