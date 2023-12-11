@@ -30,7 +30,7 @@ public class ResourceRelativeHud extends Hud {
         for (Item item : itemsWithBorder) {
             if (InvUtils.count(item) > 0) {
                 renderBackdrop(context, margin, caret, next);
-                drawItem(context, item, margin, caret);
+                renderItem(context, item, margin, caret);
                 caret += next;
             }
         }
@@ -49,12 +49,7 @@ public class ResourceRelativeHud extends Hud {
         }
     }
 
-    private boolean shouldRenderBorder() {
-        // Adjust the condition based on when you want the regular border to be rendered
-        return Module.getFrom(InGameHuds.class, m -> m.renderHudBorders.getVal());
-    }
-
-    private void drawItem(DrawContext context, Item item, int x, int y) {
+    private void renderItem(DrawContext context, Item item, int x, int y) {
         if (InvUtils.count(item) > 0) {
             RenderUtils.drawItem(context, item.getDefaultStack(), x, y, 1.0F, InvUtils.count(item) + "");
         }
