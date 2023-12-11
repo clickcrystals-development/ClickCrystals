@@ -76,11 +76,7 @@ public class EntityIndicator extends ListenerModule {
         nearest = null;
 
         PlayerUtils.runOnNearestEntity(radarRange.getVal(), entity -> {
-            boolean bl = entity instanceof MobEntity
-                    && entity.isAlive()
-                    && player.canSee(entity)
-                    && !entity.isInvisibleTo(player);
-
+            boolean bl = entity instanceof MobEntity && entity.isAlive() && !entity.isInvisibleTo(player);
             if (bl) {
                 EntityIndicator.entities.add(EntityDisplay.of(player, entity));
             }
