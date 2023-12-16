@@ -1,33 +1,22 @@
 
-<div class="main-banner" style="border: 3px aqua solid; border-radius: 30px; border-style: outset; padding-left: 10px;">
-  <h1>
-    <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/a073ea1b025661446c83ba40f1445c8c4d840ab9.png" style="width: 15%; transform: translateY(20px) rotateZ(-10deg);"/>
-    ClickCrystals [1.20 - 1.20.1]
-  </h1>
-  <h5 style="margin-left: 15px">
-    Because who needs right click anyway?
-  </h5>
-</div>
+# ClickCrystals (CC)
 
 ---------------------------------------------------------------
 
-<h2>
-    <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/030611366d1a3991702888fc834ddeb2c46a5b11.png", style="width: 50px; transform: translateY(10px);">
-    Introducing ClickCrystalsScripts! (CCS)
-</h2>
+## Introducing ClickCrystalsScripts! (CCS)
 
 Not enough modules? Your wonderful ideas aren't getting accepted?
 Want private features but don't know how to code?
 No worries, make your own modules with ClickCrystalsScripts (CCS)!
 
-Introducing CCS, a fast and easy way to create modules from simple swapping, 
+Introducing CCS, a fast and easy way to create modules from simple swapping,
 to selective interactions in game!
 CCS consists of a lot of CCS commands, and can be either
 executed separately or together in a `.ccs` file, like a Minecraft
 datapack!
 
 Interested? Download our latest version and start creating
-(CCS documentation coming soon on 
+(CCS documentation coming soon on
 [GitHub Wiki](https://github.com/itzispyder/clickcrystals/wiki))
 
 Happy coding and cpvping!
@@ -38,34 +27,25 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Minecraft: 1.20-1.20.1
-Mod: 1.1.5
+CUSTOM-LOG:
+  - ClickCrystals now has a custom log located in `.minecraft/ClickCrystalsClient/current.log`
+  - EVERY CLICKCRYSTALS MESSAGE IN CHAT, EVERY ERROR MESSAGE IN CONSOLE -> if they contain `clickcrystals`, they will be removed and sent to the ClickCrystals log instead (for "quick debug purposes")
 
-Changelog:
-    CUSTOM-LOG:
-      - ClickCrystals now has a custom log located in `.minecraft/ClickCrystalsClient/current.log`
-      - EVERY CLICKCRYSTALS MESSAGE IN CHAT, EVERY ERROR MESSAGE IN CONSOLE -> if they contain `clickcrystals`, they will be removed and sent to the ClickCrystals log instead (for "quick debug purposes")
-    
-    Add:
-      - Notification system # uses a builder to customize colors and stuff
-      - Use Notifications to teach players how to script and open men
-      - User blacklist and banishment (set to a screen you can't close with a text displaying the ban reason)
-    
-    Patches:
-      - Scheduler crashes due to unhandled exception outside of loop
-    
-    CCS:
-      - New CCS command [notify] to send a plain, gray notification
-      - if block_at <location> <:/#> # use location parser from my OgreDupeAlias project
-      - if dimension <dimension-enum>
-  
-Notice:
-  - USE COMMAND ,keybinds IF YOU DON'T KNOW THE KEYBIND FOR SOMETHING
+Add:
+  - Notification system # uses a builder to customize colors and stuff
+  - Use Notifications to teach players how to script and open men
+  - User blacklist and banishment (set to a screen you can't close with a text displaying the ban reason)
+
+Patches:
+  - Scheduler crashes due to unhandled exception outside of loop
+
+CCS:
+  - New CCS command [notify] to send a plain, gray notification
+  - if block_at <location> <:/#> # use location parser from my OgreDupeAlias project
+  - if dimension <dimension-enum>
 ```
 
-<div class="demo-menu">
-  <img src="https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png" style="border: 3px aqua solid; border-radius: 30px; border-style: outset;"/>
-</div>
+![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png)
 
 ## How Do I Use ClickCrystals?
 

@@ -48,6 +48,7 @@ import org.lwjgl.glfw.GLFW;
  * TODO: (5) Modrinth Release
  * TODO: (6) GitHub Release
  * TODO: (7) PlanetMC Release
+ * TODO: (7) CurseForge Release
  * TODO: (8) Update https://itzispyder.github.io/clickcrystals/info
  * TODO: (9) Discord Announcement
  */
@@ -198,6 +199,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addHud(new ClickPerSecondHud());
         system.addHud(new ArmorItemHud());
         system.addHud(new NotificationHud());
+        system.addHud(new EntityIndicatorHud());
 
         system.addHud(new IconRelativeHud());
         system.addHud(new PingRelativeHud());
@@ -277,6 +279,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new Zoom());
         system.addModule(new ViewModel());
         system.addModule(new GhostTotem());
+        system.addModule(new EntityIndicator());
     }
 
     public static boolean matchLatestVersion() {

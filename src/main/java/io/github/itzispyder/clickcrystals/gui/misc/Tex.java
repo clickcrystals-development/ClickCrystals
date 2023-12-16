@@ -79,4 +79,8 @@ public final class Tex {
         public static final Identifier BACKDROP_0 = new Identifier(modId, "textures/gui/backdrop/backdrop.png");
         public static final Identifier BACKDROP_1 = new Identifier(modId, "textures/gui/backdrop/backdrop_1.png");
     }
+
+    public static class Overlays {
+        public static final Identifier DIRECTION = new Identifier(modId, "textures/overlays/direction.png");
+    }
 }
