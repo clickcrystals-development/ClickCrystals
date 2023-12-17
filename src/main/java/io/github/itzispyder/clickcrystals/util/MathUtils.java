@@ -2,7 +2,6 @@ package io.github.itzispyder.clickcrystals.util;
 
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -101,34 +100,5 @@ public final class MathUtils {
             return Math.abs(deg2 - deg1);
         }
         return Math.abs(wrapDegrees(diff));
-    }
-
-    public static int exp(int val, int power) {
-        int base = val;
-        for (int i = 1; i < power; i++) {
-            val *= base;
-        }
-        return val;
-    }
-
-    public static double exp(double val, double power) {
-        double base = val;
-        for (int i = 1; i < power; i++) {
-            val *= base;
-        }
-        return val;
-    }
-
-    public static String getSystemLogTime() {
-        LocalDateTime time = LocalDateTime.now();
-        return twoDigitFormat(time.getHour()) + ":" + twoDigitFormat(time.getMinute()) + ":" + twoDigitFormat(time.getSecond());
-    }
-
-    public static String twoDigitFormat(int i) {
-        return i < 10 && i >= 0 ? "0" + i : "" + i;
-    }
-
-    public static String twoDigitFormat(long i) {
-        return i < 10L && i >= 0L ? "0" + i : "" + i;
     }
 }

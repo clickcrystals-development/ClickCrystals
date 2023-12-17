@@ -11,6 +11,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.Monster;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class EntityIndicator extends ListenerModule {
     public final ModuleSetting<Boolean> updatePerRender = scGeneral.add(createBoolSetting()
             .name("update-per-render")
             .description("Updates every frame instead of every tick. Turning this on CAN slow down games for low end PC's.")
-            .def(false)
+            .def(true)
             .build()
     );
     public final ModuleSetting<Integer> radarRange = scGeneral.add(createIntSetting()
@@ -40,7 +41,7 @@ public class EntityIndicator extends ListenerModule {
             .description("Sprite display size.")
             .max(45)
             .min(10)
-            .def(45)
+            .def(25)
             .build()
     );
     public final ModuleSetting<Integer> spriteSize = scGeneral.add(createIntSetting()
@@ -51,9 +52,16 @@ public class EntityIndicator extends ListenerModule {
             .def(10)
             .build()
     );
+    private final SettingSection scSpecific = createSettingSection("specific");
+    public final ModuleSetting<Boolean> onlyMonsters = scSpecific.add(createBoolSetting()
+            .name("only-monsters")
+            .description("Only render monsters on the hud.")
+            .def(true)
+            .build()
+    );
 
     public EntityIndicator() {
-        super("entity-indicator", Categories.RENDER, "Indicates entities around you.");
+        super("entity-indicator", Categories.RENDER, "Indicates entities around you. Players are excluded.");
     }
 
     @Override
@@ -77,10 +85,11 @@ public class EntityIndicator extends ListenerModule {
 
         PlayerUtils.runOnNearestEntity(radarRange.getVal(), entity -> {
             boolean bl = entity instanceof MobEntity && entity.isAlive() && !entity.isInvisibleTo(player);
-            if (bl) {
+            boolean bl2 = !(!(entity instanceof Monster) && onlyMonsters.getVal());
+            if (bl && bl2) {
                 EntityIndicator.entities.add(EntityDisplay.of(player, entity));
             }
-            return bl;
+            return bl && bl2;
         }, nearest -> {
             EntityIndicator.nearest = EntityDisplay.of(player, nearest);
             EntityIndicator.entities.remove(EntityIndicator.nearest);
