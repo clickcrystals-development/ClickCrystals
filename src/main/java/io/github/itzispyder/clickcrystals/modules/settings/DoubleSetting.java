@@ -56,7 +56,7 @@ public class DoubleSetting extends NumberSetting<Double> {
     }
 
     private double round(double val) {
-        int ex = MathUtils.exp(10, decimalPlaces);
+        double ex = Math.pow(10, decimalPlaces);
         return Math.floor(val * ex) / ex;
     }
 
