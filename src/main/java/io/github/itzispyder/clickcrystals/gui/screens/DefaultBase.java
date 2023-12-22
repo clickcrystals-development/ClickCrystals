@@ -1,8 +1,8 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.elements.AbstractElement;
-import io.github.itzispyder.clickcrystals.gui.elements.client.CategoryElement;
+import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.CategoryElement;
+import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;

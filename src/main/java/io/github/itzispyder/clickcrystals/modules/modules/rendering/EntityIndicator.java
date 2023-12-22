@@ -99,8 +99,8 @@ public class EntityIndicator extends ListenerModule {
     public record EntityDisplay(Entity entity, float rotToYaw) {
         public static EntityDisplay of(ClientPlayerEntity player, Entity entity) {
             Vec3d vec = entity.getPos().subtract(player.getPos()).normalize();
-            var rot = MathUtils.toPolar(vec.x, vec.y, vec.z);
-            return new EntityDisplay(entity, rot.right - player.getYaw());
+            float[] rot = MathUtils.toPolar(vec.x, vec.y, vec.z);
+            return new EntityDisplay(entity, rot[1] - player.getYaw());
         }
 
         @Override

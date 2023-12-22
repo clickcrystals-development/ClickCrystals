@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.elements.client;
+package io.github.itzispyder.clickcrystals.gui.elements.browsingmode;
 
 import io.github.itzispyder.clickcrystals.data.announce.Announcement;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;

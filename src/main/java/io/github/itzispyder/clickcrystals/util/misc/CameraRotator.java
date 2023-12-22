@@ -295,11 +295,9 @@ public class CameraRotator {
         }
 
         public Goal(double x, double y, double z) {
-            Pair<Float, Float> polar = MathUtils.toPolar(x, y, z);
-            float left = polar.left;
-            float right = polar.right;
-            this.pitch = (int)MathUtils.wrapDegrees(left);
-            this.yaw = (int)MathUtils.wrapDegrees(right);
+            float[] polar = MathUtils.toPolar(x, y, z);
+            this.pitch = (int)MathUtils.wrapDegrees(polar[0]);
+            this.yaw = (int)MathUtils.wrapDegrees(polar[1]);
         }
 
         public Goal(Vec3d vec) {

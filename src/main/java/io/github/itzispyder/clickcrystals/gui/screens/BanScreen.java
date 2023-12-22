@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 import io.github.itzispyder.clickcrystals.client.client.ClickCrystalsGate;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.elements.interactive.HyperLinkElement;
+import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.HyperLinkElement;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;

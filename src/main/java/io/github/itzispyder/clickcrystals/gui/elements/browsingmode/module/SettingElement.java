@@ -1,7 +1,7 @@
-package io.github.itzispyder.clickcrystals.gui.elements.client.module;
+package io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.elements.AbstractElement;
+import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;

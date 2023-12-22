@@ -1,7 +1,6 @@
-package io.github.itzispyder.clickcrystals.scheduler;
+package io.github.itzispyder.clickcrystals.util.misc;
 
 import io.github.itzispyder.clickcrystals.events.Cancellable;
-import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 
 import java.util.Stack;
 import java.util.concurrent.CompletableFuture;

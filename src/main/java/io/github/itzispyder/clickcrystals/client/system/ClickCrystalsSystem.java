@@ -10,9 +10,9 @@ import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
-import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
+import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
 import net.minecraft.util.Util;
 
 import java.io.File;

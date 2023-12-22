@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.elements.display;
+package io.github.itzispyder.clickcrystals.gui.elements.common.display;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;

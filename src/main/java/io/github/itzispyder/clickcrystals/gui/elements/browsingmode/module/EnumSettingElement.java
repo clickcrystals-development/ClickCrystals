@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.elements.client.module;
+package io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module;
 
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;

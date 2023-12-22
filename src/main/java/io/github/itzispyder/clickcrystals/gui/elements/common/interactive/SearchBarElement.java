@@ -1,9 +1,9 @@
-package io.github.itzispyder.clickcrystals.gui.elements.interactive;
+package io.github.itzispyder.clickcrystals.gui.elements.common.interactive;
 
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.elements.Typeable;
+import io.github.itzispyder.clickcrystals.gui.elements.common.Typeable;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.misc.callbacks.KeyPressCallback;
