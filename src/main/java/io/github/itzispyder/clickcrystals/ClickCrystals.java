@@ -194,13 +194,6 @@ public final class ClickCrystals implements ModInitializer {
         system.addCommand(new ClickScriptCommand());
 
         // Hud
-        system.addHud(new ColorOverlayHud());
-        system.addHud(new ModuleListTextHud());
-        system.addHud(new ClickPerSecondHud());
-        system.addHud(new ArmorItemHud());
-        system.addHud(new NotificationHud());
-        system.addHud(new EntityIndicatorHud());
-
         system.addHud(new IconRelativeHud());
         system.addHud(new PingRelativeHud());
         system.addHud(new FpsRelativeHud());
@@ -212,6 +205,13 @@ public final class ClickCrystals implements ModInitializer {
         system.addHud(new CrosshairTargetRelativeHud());
         system.addHud(new RotationRelativeHud());
         system.addHud(new ResourceRelativeHud());
+
+        system.addHud(new ColorOverlayHud());
+        system.addHud(new ModuleListTextHud());
+        system.addHud(new ClickPerSecondHud());
+        system.addHud(new ArmorItemHud());
+        system.addHud(new NotificationHud());
+        system.addHud(new EntityIndicatorHud());
     }
 
     public void initModules() {

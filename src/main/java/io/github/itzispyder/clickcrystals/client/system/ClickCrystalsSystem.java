@@ -13,7 +13,6 @@ import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.util.Util;
 
 import java.io.File;
@@ -87,7 +86,7 @@ public class ClickCrystalsSystem implements Serializable {
     }
 
     public void addHud(Hud hud) {
-        HudRenderCallback.EVENT.register(hud);
+        if (hud == null) return;
         huds.put(hud.getClass(), hud);
     }
 

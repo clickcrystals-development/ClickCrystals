@@ -9,12 +9,11 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHu
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
 
 @Environment(EnvType.CLIENT)
-public abstract class Hud implements HudRenderCallback, Positionable, Global {
+public abstract class Hud implements Positionable, Global {
 
     public static final int DEFAULT_ARGB = 0x4007CDDF;
     private final Dimension defaultDimension;
@@ -57,13 +56,6 @@ public abstract class Hud implements HudRenderCallback, Positionable, Global {
 
         if (canRenderBorder()) {
             RenderUtils.drawBorder(context, getX(), getY(), getWidth(), getHeight(), 0x40FFFFFF);
-        }
-    }
-
-    @Override
-    public void onHudRender(DrawContext context, float tickDelta) {
-        if (canRender()) {
-            render(context);
         }
     }
 
