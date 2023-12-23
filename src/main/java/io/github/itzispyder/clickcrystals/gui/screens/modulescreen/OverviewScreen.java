@@ -1,11 +1,14 @@
 package io.github.itzispyder.clickcrystals.gui.screens.modulescreen;
 
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.CategoryElement;
+import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.ModuleEditElement;
 import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.SearchCategoryElement;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
+import io.github.itzispyder.clickcrystals.modules.Module;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
@@ -15,6 +18,7 @@ import java.util.List;
 public class OverviewScreen extends GuiScreen {
 
     private final List<CategoryElement> categories;
+    private ModuleEditElement currentEditing;
 
     public OverviewScreen() {
         super("Overview Module Screen");
@@ -46,6 +50,40 @@ public class OverviewScreen extends GuiScreen {
     @Override
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
 
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (currentEditing != null && !currentEditing.isMouseOver((int)mouseX, (int)mouseY)) {
+            this.removeCurrentEditing();
+            return true;
+        }
+
+        return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    public void setCurrentEditing(Module module, int mouseX, int mouseY) {
+        if (module == null) {
+            return;
+        }
+
+        this.removeCurrentEditing();
+        this.currentEditing = new ModuleEditElement(this, module, mouseX, mouseY);
+        this.addChild(currentEditing);
+        this.selected = currentEditing;
+    }
+
+    public void removeCurrentEditing() {
+        this.selected = null;
+
+        if (currentEditing == null) {
+            return;
+        }
+
+        this.removeChild(currentEditing);
+        ClickCrystals.config.saveModule(currentEditing.getModule());
+        ClickCrystals.config.save();
+        this.currentEditing = null;
     }
 
     public List<CategoryElement> getCategories() {
