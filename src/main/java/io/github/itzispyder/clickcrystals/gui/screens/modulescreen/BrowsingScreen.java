@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.screens;
+package io.github.itzispyder.clickcrystals.gui.screens.modulescreen;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.data.Config;
@@ -7,6 +7,8 @@ import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElemen
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
+import io.github.itzispyder.clickcrystals.gui.screens.ClickScriptIDE;
+import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -19,13 +21,13 @@ import java.io.File;
 import java.util.Comparator;
 import java.util.List;
 
-public class ModuleScreen extends DefaultBase {
+public class BrowsingScreen extends DefaultBase {
 
     public static Category currentCategory = Categories.MISC;
     private final GridOrganizer grid = new GridOrganizer(contentX, contentY + 21, contentWidth, 15, 1, 0);
 
-    public ModuleScreen() {
-        super("Module Screen");
+    public BrowsingScreen() {
+        super("Browsing Module Screen");
 
         grid.createPanel(this, contentHeight - 21);
         this.addChild(grid.getPanel());
@@ -67,7 +69,7 @@ public class ModuleScreen extends DefaultBase {
 
     @Override
     public void resize(MinecraftClient client, int width, int height) {
-        client.setScreen(new ModuleScreen());
+        client.setScreen(new BrowsingScreen());
     }
 
 

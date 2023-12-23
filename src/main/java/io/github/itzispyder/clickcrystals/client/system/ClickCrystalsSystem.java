@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.EventBus;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
+import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
@@ -140,6 +141,13 @@ public class ClickCrystalsSystem implements Serializable {
 
     public List<Keybind> getBindsOf(int key) {
         return keybinds().stream().filter(bind -> bind.getKey() == key).toList();
+    }
+
+    public List<Module> getModuleByCategory(Category category) {
+        return modules().values().stream()
+                .filter(m -> m.getCategory() == category)
+                .sorted(Comparator.comparing(Module::getId))
+                .toList();
     }
 
     public Module getModuleById(String id) {

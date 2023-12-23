@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.browsingmode;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
-import io.github.itzispyder.clickcrystals.gui.screens.ModuleScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -20,7 +20,7 @@ public class CategoryElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        if (ModuleScreen.currentCategory == category && mc.currentScreen instanceof ModuleScreen) {
+        if (BrowsingScreen.currentCategory == category && mc.currentScreen instanceof BrowsingScreen) {
             RoundRectBrush.drawRoundHoriLine(context, x, y, width, height, Gray.GENERIC_LOW);
         }
         else if (isHovered(mouseX, mouseY)) {
@@ -32,8 +32,8 @@ public class CategoryElement extends GuiElement {
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
-        ModuleScreen.currentCategory = category;
-        mc.setScreen(new ModuleScreen());
+        BrowsingScreen.currentCategory = category;
+        mc.setScreen(new BrowsingScreen());
     }
 
     public Category getCategory() {

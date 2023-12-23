@@ -8,6 +8,8 @@ import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.*;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.DiscordRPC;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
@@ -30,8 +32,8 @@ public class UserInputListener implements Listener {
     private static Class<? extends GuiScreen> previousScreen = null;
     public static void openPreviousScreen() {
         Class<? extends GuiScreen> p = previousScreen;
-        if (p == ModuleScreen.class || p == ModuleEditScreen.class || p == ClickScriptIDE.class) {
-            mc.setScreen(new ModuleScreen());
+        if (p == BrowsingScreen.class || p == ModuleEditScreen.class || p == ClickScriptIDE.class) {
+            mc.setScreen(new OverviewScreen());
         }
         else if (p == SearchScreen.class) {
             mc.setScreen(new SearchScreen());
@@ -50,7 +52,7 @@ public class UserInputListener implements Listener {
 
     public static final Map<Class<? extends Screen>, String> SCREEN_STATES = ManualMap.fromItems(
             TitleScreen.class, "Looking at the title screen",
-            ModuleScreen.class, "Toggling modules",
+            BrowsingScreen.class, "Toggling modules",
             HomeScreen.class, "Scanning through ClickCrystals home",
             SearchScreen.class, "Searching modules",
             SettingScreen.class, "Changing ClickCrystals keybinds",
@@ -102,7 +104,7 @@ public class UserInputListener implements Listener {
                     p == SearchScreen.class ||
                     p == SettingScreen.class ||
                     p == HomeScreen.class ||
-                    p == ModuleScreen.class) {
+                    p == BrowsingScreen.class) {
                 previousScreen = p;
             }
         }
