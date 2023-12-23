@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.misc.organizers;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.elements.interactive.ScrollPanelElement;
+import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
 
 import java.util.ArrayList;
 import java.util.List;

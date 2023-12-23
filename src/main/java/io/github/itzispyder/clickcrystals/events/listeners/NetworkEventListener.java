@@ -15,9 +15,9 @@ import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;
 import net.minecraft.network.packet.c2s.login.LoginKeyC2SPacket;
+import net.minecraft.network.packet.s2c.common.DisconnectS2CPacket;
 import net.minecraft.network.packet.s2c.login.LoginHelloS2CPacket;
 import net.minecraft.network.packet.s2c.login.LoginSuccessS2CPacket;
-import net.minecraft.network.packet.s2c.common.DisconnectS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.MutableText;
@@ -134,8 +134,8 @@ public class NetworkEventListener implements Listener {
                         ChatUtils.sendWarningMessage("§bClickCrystals is §e§nNOT UP TO DATE§b! Get the newest version now!");
                         ChatUtils.sendPrefixMessage("§bYour Version=§7" + version + "§b, §oNewest Version=§7" + ClickCrystals.getLatestVersion());
 
-                        Text literal = Text.literal(ClickCrystals.starter + "§a§o§n https://modrinth.com/mod/clickcrystals");
-                        ClickEvent event = new ClickEvent(ClickEvent.Action.OPEN_URL, "https://modrinth.com/mod/clickcrystals");
+                        Text literal = Text.literal(ClickCrystals.starter + "§a§o§n https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
+                        ClickEvent event = new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
                         MutableText text = literal.copy();
 
                         ChatUtils.sendRawText(text.fillStyle(text.getStyle().withClickEvent(event)));

@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.gui.elements.interactive.ScrollPanelElement;
+import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
@@ -79,6 +79,10 @@ public abstract class GuiElement implements Positionable, Global {
 
     }
 
+    public void onRelease(double mouseX, double mouseY, int button) {
+
+    }
+
     public void postRender(DrawContext context, int mouseX, int mouseY) {
 
     }
@@ -97,6 +101,17 @@ public abstract class GuiElement implements Positionable, Global {
         for (int i = getChildren().size() - 1; i >= 0; i--) {
             GuiElement child = getChildren().get(i);
             child.mouseClicked(mouseX, mouseY, button);
+        }
+    }
+
+    public void mouseReleased(double mouseX, double mouseY, int button) {
+        if (isHovered((int)mouseX, (int)mouseY)) {
+            onRelease(mouseX, mouseY, button);
+        }
+
+        for (int i = getChildren().size() - 1; i >= 0; i--) {
+            GuiElement child = getChildren().get(i);
+            child.mouseReleased(mouseX, mouseY, button);
         }
     }
 

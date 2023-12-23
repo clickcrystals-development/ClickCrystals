@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import io.github.itzispyder.clickcrystals.client.networking.PacketMapper;
 import io.github.itzispyder.clickcrystals.client.system.Notification;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.PlayerArgumentType;
@@ -56,20 +55,6 @@ public class CCDebugCommand extends Command {
                             ChatUtils.sendPrefixMessage("Scheduler Info");
                             ChatUtils.sendBlank(1);
                             ChatUtils.sendMessage("Active Tasks (" + system.scheduler.count() + ")");
-                            ChatUtils.sendBlank(2);
-                            return SINGLE_SUCCESS;
-                        }))
-                .then(literal("packets")
-                        .executes(context -> {
-                            List<String> c2s = PacketMapper.getC2SNames();
-                            List<String> s2c = PacketMapper.getS2CNames();
-
-                            ChatUtils.sendBlank(2);
-                            ChatUtils.sendPrefixMessage("Packets Info:");
-                            ChatUtils.sendBlank(1);
-                            ChatUtils.sendMessage("Client to Server (" + c2s.size() + "): " + ArrayUtils.list2string(c2s));
-                            ChatUtils.sendBlank(1);
-                            ChatUtils.sendMessage("Server to Client (" + s2c.size() + "): " + ArrayUtils.list2string(s2c));
                             ChatUtils.sendBlank(2);
                             return SINGLE_SUCCESS;
                         }))

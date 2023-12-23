@@ -43,5 +43,11 @@ public abstract class SettingBuilder<T, B extends SettingBuilder<T, B, S>, S ext
         return (B)this;
     }
 
-    public abstract S build();
+    protected abstract S buildSetting();
+
+    public final S build() {
+        S setting = buildSetting();
+        setting.setChangeAction((SettingChangeCallback<ModuleSetting<T>>)changeAction);
+        return setting;
+    }
 }

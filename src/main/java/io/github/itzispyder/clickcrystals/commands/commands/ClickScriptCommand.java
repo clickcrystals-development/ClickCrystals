@@ -4,7 +4,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.commands.Command;
-import io.github.itzispyder.clickcrystals.gui.screens.ModuleScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
@@ -20,8 +20,8 @@ public class ClickScriptCommand extends Command {
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(cxt -> {
                     system.scheduler.runDelayedTask(() -> {
-                        ModuleScreen.currentCategory = Categories.SCRIPTED;
-                        mc.execute(() -> mc.setScreen(new ModuleScreen()));
+                        BrowsingScreen.currentCategory = Categories.SCRIPTED;
+                        mc.execute(() -> mc.setScreen(new BrowsingScreen()));
                     }, 5 * 50);
                     return SINGLE_SUCCESS;
                 })

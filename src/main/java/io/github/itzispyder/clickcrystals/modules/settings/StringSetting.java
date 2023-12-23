@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui.elements.client.module.StringSettingElement;
+import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module.StringSettingElement;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 
 public class StringSetting extends ModuleSetting<String> {
@@ -20,7 +20,7 @@ public class StringSetting extends ModuleSetting<String> {
 
     public static class Builder extends SettingBuilder<String, Builder, StringSetting> {
         @Override
-        public StringSetting build() {
+        public StringSetting buildSetting() {
             return new StringSetting(name, description, def, getOrDef(val, def));
         }
     }

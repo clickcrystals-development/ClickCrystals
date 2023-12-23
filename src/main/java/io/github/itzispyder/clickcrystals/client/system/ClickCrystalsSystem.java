@@ -7,13 +7,13 @@ import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.EventBus;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
+import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
-import io.github.itzispyder.clickcrystals.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
 import net.minecraft.util.Util;
 
 import java.io.File;
@@ -87,7 +87,7 @@ public class ClickCrystalsSystem implements Serializable {
     }
 
     public void addHud(Hud hud) {
-        HudRenderCallback.EVENT.register(hud);
+        if (hud == null) return;
         huds.put(hud.getClass(), hud);
     }
 
@@ -141,6 +141,13 @@ public class ClickCrystalsSystem implements Serializable {
 
     public List<Keybind> getBindsOf(int key) {
         return keybinds().stream().filter(bind -> bind.getKey() == key).toList();
+    }
+
+    public List<Module> getModuleByCategory(Category category) {
+        return collectModules().stream()
+                .filter(m -> m.getCategory() == category)
+                .sorted(Comparator.comparing(Module::getId))
+                .toList();
     }
 
     public Module getModuleById(String id) {

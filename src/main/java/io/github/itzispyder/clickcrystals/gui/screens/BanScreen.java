@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 import io.github.itzispyder.clickcrystals.client.client.ClickCrystalsGate;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.elements.interactive.HyperLinkElement;
+import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.HyperLinkElement;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
@@ -33,7 +33,7 @@ public class BanScreen extends GuiScreen {
     @Override
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
         context.drawTexture(OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
-        RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA0000000, 0xA0FF4538);
+        //RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA0000000, 0xA0FF4538);
 
         int cX = baseX + baseWidth / 2;
         int cY = baseY + baseHeight / 6;

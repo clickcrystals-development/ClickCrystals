@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui.elements.client.module.KeybindSettingElement;
+import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module.KeybindSettingElement;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.keybinds.BindCondition;
 import io.github.itzispyder.clickcrystals.modules.keybinds.KeyAction;
@@ -91,7 +91,7 @@ public class KeybindSetting extends ModuleSetting<Keybind> {
         }
 
         @Override
-        public KeybindSetting build() {
+        public KeybindSetting buildSetting() {
             key = key == Keybind.NONE ? defaultKey : key;
             return new KeybindSetting(id, description, Keybind.create()
                     .id(id)

@@ -27,22 +27,22 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-CUSTOM-LOG:
-  - ClickCrystals now has a custom log located in `.minecraft/ClickCrystalsClient/current.log`
-  - EVERY CLICKCRYSTALS MESSAGE IN CHAT, EVERY ERROR MESSAGE IN CONSOLE -> if they contain `clickcrystals`, they will be removed and sent to the ClickCrystals log instead (for "quick debug purposes")
-
 Add:
-  - Notification system # uses a builder to customize colors and stuff
-  - Use Notifications to teach players how to script and open men
-  - User blacklist and banishment (set to a screen you can't close with a text displaying the ban reason)
+  - Entity hud
+  - ClickCrystals XYZ website link
+  - swap out ogredupe link with yessirbox
+  - splash MOTD's to homescreen
+  - second GUI mode
 
 Patches:
-  - Scheduler crashes due to unhandled exception outside of loop
+  - huds being dumb when rendering over chat
+  - config saving deleted modules
+
+Remove:
+  - remove packet mapper
 
 CCS:
-  - New CCS command [notify] to send a plain, gray notification
-  - if block_at <location> <:/#> # use location parser from my OgreDupeAlias project
-  - if dimension <dimension-enum>
+  - make [notify] command have an option for stay time
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png)

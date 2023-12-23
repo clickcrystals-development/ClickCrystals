@@ -3,13 +3,14 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
-import io.github.itzispyder.clickcrystals.gui.elements.AbstractElement;
-import io.github.itzispyder.clickcrystals.gui.elements.display.LoadingIconElement;
-import io.github.itzispyder.clickcrystals.gui.elements.interactive.TextFieldElement;
+import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
+import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
+import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.TextFieldElement;
 import io.github.itzispyder.clickcrystals.gui.misc.ChatColor;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.modules.scripts.*;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
@@ -89,7 +90,7 @@ public class ClickScriptIDE extends DefaultBase {
                 }).build();
         saveAndCloseButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Save contents then close IDE")
-                .onPress(button -> saveContents().accept(f -> f.thenRun(() -> mc.execute(() -> mc.setScreen(new ModuleScreen())))))
+                .onPress(button -> saveContents().accept(f -> f.thenRun(() -> mc.execute(() -> mc.setScreen(new BrowsingScreen())))))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
                         RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.LIGHT_GRAY);
@@ -98,7 +99,7 @@ public class ClickScriptIDE extends DefaultBase {
                 }).build();
         closeButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Close without saving")
-                .onPress(button -> mc.setScreen(new ModuleScreen()))
+                .onPress(button -> mc.setScreen(new BrowsingScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
                         RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.GENERIC_LOW);
@@ -143,7 +144,7 @@ public class ClickScriptIDE extends DefaultBase {
 
     @Override
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
-        RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA03873A9, 0xA0000000);
+        renderOpaqueBackground(context);
 
         context.getMatrices().push();
         context.getMatrices().translate(baseX, baseY, 0);

@@ -198,4 +198,12 @@ public final class RenderUtils {
     public static DrawContext createContext() {
         return new DrawContext(MinecraftClient.getInstance(), VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer()));
     }
+
+    public static int winWidth() {
+        return mc.getWindow().getScaledWidth();
+    }
+
+    public static int winHeight() {
+        return mc.getWindow().getScaledHeight();
+    }
 }

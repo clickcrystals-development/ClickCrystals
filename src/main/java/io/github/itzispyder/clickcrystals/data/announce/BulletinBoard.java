@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.data.announce;
 
 import com.google.gson.Gson;
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -72,6 +73,7 @@ public class BulletinBoard {
 
             isr.close();
             current.set(bulletin);
+            ClickCrystals.requestModInfo();
         }
         catch (Exception ex) {
             ex.printStackTrace();

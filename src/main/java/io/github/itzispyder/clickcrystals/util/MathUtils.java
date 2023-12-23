@@ -1,8 +1,5 @@
 package io.github.itzispyder.clickcrystals.util;
 
-import io.github.itzispyder.clickcrystals.util.misc.Pair;
-
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -32,13 +29,13 @@ public final class MathUtils {
         return Math.min(max, Math.max(min, val));
     }
 
-    public static Pair<Float, Float> toPolar(double x, double y, double z) {
+    public static float[] toPolar(double x, double y, double z) {
         double pi2 = 2 * Math.PI;
         float pitch, yaw;
 
         if (x == 0 && z == 0) {
             pitch = y > 0 ? -90 : 90;
-            return Pair.of(pitch, 0.0F);
+            return new float[] { pitch, 0.0F };
         }
 
         double theta = Math.atan2(-x, z);
@@ -47,17 +44,8 @@ public final class MathUtils {
         double xz = Math.sqrt(x * x + z * z);
         pitch = (float)Math.toDegrees(Math.atan(-y / xz));
 
-        return Pair.of(pitch, yaw);
+        return new float[] { pitch, yaw };
     }
-
-    /* // old code, not efficient!!!
-    public static Pair<Float, Float> toPolar(double x, double y, double z) {
-        double pitch = wrapDegrees(-Math.toDegrees(Math.asin(y)));
-        double h = -Math.cos(-Math.toRadians(pitch));
-        double yaw = wrapDegrees(-Math.toDegrees(Math.asin(x / h) + Math.PI));
-        return Pair.of((float)pitch, (float)yaw);
-    }
-     */
 
     public static float cosInverse(double a) {
         return (float)Math.toDegrees(Math.acos(a));
@@ -101,34 +89,5 @@ public final class MathUtils {
             return Math.abs(deg2 - deg1);
         }
         return Math.abs(wrapDegrees(diff));
-    }
-
-    public static int exp(int val, int power) {
-        int base = val;
-        for (int i = 1; i < power; i++) {
-            val *= base;
-        }
-        return val;
-    }
-
-    public static double exp(double val, double power) {
-        double base = val;
-        for (int i = 1; i < power; i++) {
-            val *= base;
-        }
-        return val;
-    }
-
-    public static String getSystemLogTime() {
-        LocalDateTime time = LocalDateTime.now();
-        return twoDigitFormat(time.getHour()) + ":" + twoDigitFormat(time.getMinute()) + ":" + twoDigitFormat(time.getSecond());
-    }
-
-    public static String twoDigitFormat(int i) {
-        return i < 10 && i >= 0 ? "0" + i : "" + i;
-    }
-
-    public static String twoDigitFormat(long i) {
-        return i < 10L && i >= 0L ? "0" + i : "" + i;
     }
 }

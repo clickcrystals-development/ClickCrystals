@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui.elements.client.module.EnumSettingElement;
+import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module.EnumSettingElement;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 
 public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {
@@ -44,7 +44,7 @@ public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {
 
     public static class Builder<E extends Enum<?>> extends SettingBuilder<E, Builder<E>, EnumSetting<E>> {
         @Override
-        public EnumSetting<E> build() {
+        public EnumSetting<E> buildSetting() {
             return new EnumSetting<>(name, description, def, getOrDef(val, def));
         }
     }

@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.client.system;
 
 import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -20,6 +21,7 @@ public class ClickCrystalsInfo {
 
     public static final String URL = "https://itzispyder.github.io/clickcrystals/info";
     private final String latest;
+    private final String motd;
     private final User[] owners;
     private final User[] staffs;
     private final User[] donators;
@@ -27,6 +29,7 @@ public class ClickCrystalsInfo {
 
     public ClickCrystalsInfo(String latest) {
         this.latest = latest;
+        motd = "";
         owners = staffs = donators = new User[]{};
         blacklisted = new Ban[]{};
     }
@@ -69,6 +72,10 @@ public class ClickCrystalsInfo {
 
     public Version getLatest() {
         return Version.ofString(latest);
+    }
+
+    public String getMotd() {
+        return StringUtils.color(motd);
     }
 
     public User[] getOwners() {

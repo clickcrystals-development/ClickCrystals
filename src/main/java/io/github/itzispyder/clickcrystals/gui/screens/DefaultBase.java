@@ -1,11 +1,13 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.elements.AbstractElement;
-import io.github.itzispyder.clickcrystals.gui.elements.client.CategoryElement;
+import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.CategoryElement;
+import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.settings.SettingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -68,7 +70,7 @@ public abstract class DefaultBase extends GuiScreen {
                 }).build();
         buttonModules = AbstractElement.create().dimensions(navWidth, 10)
                 .tooltip("Browse modules")
-                .onPress(button -> mc.setScreen(new ModuleScreen()))
+                .onPress(button -> mc.setScreen(new BrowsingScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
                         RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, 10, Gray.LIGHT_GRAY);
@@ -104,7 +106,7 @@ public abstract class DefaultBase extends GuiScreen {
     }
 
     public void renderDefaultBase(DrawContext context) {
-        RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA03873A9, 0xA0000000);
+        renderOpaqueBackground(context);
 
         context.getMatrices().push();
         context.getMatrices().translate(baseX, baseY, 0);

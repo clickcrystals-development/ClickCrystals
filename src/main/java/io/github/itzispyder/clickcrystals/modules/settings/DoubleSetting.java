@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.settings;
 
-import io.github.itzispyder.clickcrystals.gui.elements.client.module.DoubleSettingElement;
+import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module.DoubleSettingElement;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 
 public class DoubleSetting extends NumberSetting<Double> {
@@ -56,7 +56,7 @@ public class DoubleSetting extends NumberSetting<Double> {
     }
 
     private double round(double val) {
-        int ex = MathUtils.exp(10, decimalPlaces);
+        double ex = Math.pow(10, decimalPlaces);
         return Math.floor(val * ex) / ex;
     }
 
@@ -90,7 +90,7 @@ public class DoubleSetting extends NumberSetting<Double> {
         }
 
         @Override
-        public DoubleSetting build() {
+        public DoubleSetting buildSetting() {
             return new DoubleSetting(name, description, MathUtils.clamp(def, min, max), getOrDef(val, def), min, max, decimalPlaces);
         }
     }

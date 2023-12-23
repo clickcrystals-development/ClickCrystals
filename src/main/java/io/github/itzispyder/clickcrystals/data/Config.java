@@ -1,13 +1,18 @@
 package io.github.itzispyder.clickcrystals.data;
 
+import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.Positionable;
+import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.CategoryElement;
+import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.SearchCategoryElement;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleData;
 import io.github.itzispyder.clickcrystals.modules.ModuleFile;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
+import io.github.itzispyder.clickcrystals.util.misc.Pair;
 
 import java.io.File;
 import java.util.HashMap;
@@ -19,14 +24,16 @@ public class Config implements JsonSerializable<Config> {
     public static final String PATH_CONFIG = PATH + "config.json";
     public static final String PATH_LOG = PATH + "current.log";
     public static final String PATH_SCRIPTS = PATH + "scripts";
-    private boolean hasPlayedBefore;
+    private boolean hasPlayedBefore, overviewMode;
     private final Map<String, Integer> keybindEntries;
     private final Map<String, Positionable.Dimension> positionEntries;
+    private final Map<String, Pair<Positionable.Dimension, Boolean>> overviewScreenEntries;
     private final Map<String, ModuleFile> moduleEntries;
 
     public Config() {
         this.keybindEntries = new HashMap<>();
         this.positionEntries = new HashMap<>();
+        this.overviewScreenEntries = new HashMap<>();
         this.moduleEntries = new HashMap<>();
     }
 
@@ -43,20 +50,40 @@ public class Config implements JsonSerializable<Config> {
         positionEntries.put(hud.getId(), hud.getDimensions());
     }
 
+    public void saveOverviewScreen(OverviewScreen screen) {
+        for (GuiElement child : screen.getChildren()) {
+            if (child instanceof CategoryElement e) {
+                overviewScreenEntries.put(e.getCategory().name(), Pair.of(e.getDimensions(), e.isCollapsed()));
+            }
+            else if (child instanceof SearchCategoryElement e) {
+                overviewScreenEntries.put("search-category-element", Pair.of(e.getDimensions(), false));
+            }
+        }
+    }
+
     public void saveModule(Module module) {
         moduleEntries.put(module.getId(), new ModuleFile(module));
     }
 
-    public void saveModules() {
-        system.collectModules().forEach(this::saveModule);
+    public void saveKeybinds() {
+        this.keybindEntries.clear();
+        system.keybinds().forEach(this::saveKeybind);
     }
 
     public void saveHuds() {
+        this.positionEntries.clear();
         system.huds().values().forEach(this::saveHud);
     }
 
-    public void saveKeybinds() {
-        system.keybinds().forEach(this::saveKeybind);
+    public void saveModules() {
+        this.moduleEntries.clear();
+        system.collectModules().forEach(this::saveModule);
+    }
+
+    public void loadKeybinds() {
+        for (Keybind b : system.keybinds()) {
+            b.setKey(keybindEntries.getOrDefault(b.getId(), b.getDefaultKey()));
+        }
     }
 
     public void loadHuds() {
@@ -67,9 +94,25 @@ public class Config implements JsonSerializable<Config> {
         }
     }
 
-    public void loadKeybinds() {
-        for (Keybind b : system.keybinds()) {
-            b.setKey(keybindEntries.getOrDefault(b.getId(), b.getDefaultKey()));
+    public void loadModules() {
+        system.collectModules().forEach(this::loadModule);
+    }
+
+    public void loadOverviewScreen(OverviewScreen screen) {
+        for (GuiElement child : screen.getChildren()) {
+            if (child instanceof CategoryElement e) {
+                var d = overviewScreenEntries.get(e.getCategory().name());
+                if (d != null) {
+                    e.moveTo(d.left.x, d.left.y);
+                    e.setCollapsed(d.right);
+                }
+            }
+            else if (child instanceof SearchCategoryElement e) {
+                var d = overviewScreenEntries.get("search-category-element");
+                if (d != null) {
+                    e.moveTo(d.left.x, d.left.y);
+                }
+            }
         }
     }
 
@@ -89,10 +132,6 @@ public class Config implements JsonSerializable<Config> {
         }
     }
 
-    public void loadModules() {
-        system.collectModules().forEach(this::loadModule);
-    }
-
     public void loadEntireConfig() {
         this.loadKeybinds();
         this.loadHuds();
@@ -105,6 +144,10 @@ public class Config implements JsonSerializable<Config> {
 
     public Map<String, Positionable.Dimension> getPositionEntries() {
         return positionEntries;
+    }
+
+    public Map<String, Pair<Positionable.Dimension, Boolean>> getOverviewScreenEntries() {
+        return overviewScreenEntries;
     }
 
     public Map<String, ModuleFile> getModuleEntries() {
@@ -120,5 +163,13 @@ public class Config implements JsonSerializable<Config> {
             hasPlayedBefore = true;
             save();
         }
+    }
+
+    public boolean isOverviewMode() {
+        return overviewMode;
+    }
+
+    public void setOverviewMode(boolean overviewMode) {
+        this.overviewMode = overviewMode;
     }
 }
