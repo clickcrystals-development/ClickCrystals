@@ -39,7 +39,7 @@ public class SearchScreen extends DefaultBase {
 
     @Override
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
-        RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA03873A9, 0xA0000000);
+        //RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA03873A9, 0xA0000000);
 
         context.getMatrices().push();
         context.getMatrices().translate(baseX, baseY, 0);

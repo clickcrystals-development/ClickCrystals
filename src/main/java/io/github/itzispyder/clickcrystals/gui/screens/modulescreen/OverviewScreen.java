@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.screens.modulescreen;
 
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.CategoryElement;
+import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.SearchCategoryElement;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
@@ -19,13 +20,7 @@ public class OverviewScreen extends GuiScreen {
         super("Overview Module Screen");
         this.categories = new ArrayList<>();
 
-        if (mc.player == null || mc.world == null) {
-            mc.setScreen(new BrowsingScreen());
-            return;
-        }
-
-
-        GridOrganizer grid = new GridOrganizer(10, 30, 90, 0, 99, 5);
+        GridOrganizer grid = new GridOrganizer(105, 30, 90, 25, 3, 5);
         for (Category c : Categories.getCategories().values()) {
             CategoryElement ce = new CategoryElement(c, 0, 0, grid.getCellWidth());
             grid.addEntry(ce);
@@ -33,6 +28,19 @@ public class OverviewScreen extends GuiScreen {
             this.addChild(ce);
         }
         grid.organize();
+
+        SearchCategoryElement search = new SearchCategoryElement(10, 30, 90);
+        this.addChild(search);
+    }
+
+    @Override
+    protected void init() {
+        for (CategoryElement ce : categories) {
+            if (!ce.isCollapsed()) {
+                this.removeChild(ce);
+                this.addChild(ce);
+            }
+        }
     }
 
     @Override

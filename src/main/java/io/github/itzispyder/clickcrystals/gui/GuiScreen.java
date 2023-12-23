@@ -139,6 +139,14 @@ public abstract class GuiScreen extends Screen implements Global {
             this.selected = null;
         }
 
+        for (int i = children.size() - 1; i >= 0; i--) {
+            GuiElement child = children.get(i);
+            if (child.isMouseOver((int)mouseX, (int)mouseY)) {
+                child.mouseReleased(mouseX, mouseY, button);
+                break;
+            }
+        }
+
         for (MouseClickCallback callback : mouseClickListeners) {
             callback.handleMouse(mouseX, mouseY, button, ClickType.RELEASE);
         }

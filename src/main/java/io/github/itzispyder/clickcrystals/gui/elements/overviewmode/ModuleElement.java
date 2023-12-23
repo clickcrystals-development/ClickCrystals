@@ -13,6 +13,7 @@ public class ModuleElement extends GuiElement {
 
     public ModuleElement(Module module, int x, int y, int width, int height) {
         super(x, y, width, height);
+        this.setTooltip(module.getDescription());
         this.module = module;
     }
 

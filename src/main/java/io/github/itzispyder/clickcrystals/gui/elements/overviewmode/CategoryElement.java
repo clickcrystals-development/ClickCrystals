@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.elements.overviewmode;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
+import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
@@ -14,15 +15,15 @@ import java.util.Map;
 
 public class CategoryElement extends GuiElement {
 
-    private static final Map<Category, Boolean> collapsionCache = new HashMap<>();
+    private static final Map<String, Boolean> collapsionCache = new HashMap<>();
     private final Category category;
     private final GridOrganizer modules;
-    private final int collapsedHeight = 25;
-    private int uncollapsedHeight;
     private boolean collapsed;
+    private int lastClickX, lastClickY;
 
     public CategoryElement(Category category, int x, int y, int width) {
         super(x, y, width, 0);
+        this.setDraggable(true);
         this.category = category;
         this.modules = new GridOrganizer(x + 5, y + 20, width - 10, 10, 1, 2);
 
@@ -33,21 +34,31 @@ public class CategoryElement extends GuiElement {
         }
         modules.organize();
 
-        this.setCollapsed(collapsionCache.getOrDefault(category, true));
+        this.setCollapsed(collapsionCache.getOrDefault(category.name(), true));
     }
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         RoundRectBrush.drawRoundRect(context, x, y, width, height, 5, Gray.BLACK);
         RenderUtils.drawTexture(context, category.texture(), x + 5, y + 7, 10, 10);
-        RenderUtils.drawText(context, category.name(), x + 18, y + 9, 1.0F, false);
+        RenderUtils.drawText(context, category.name(), x + 18, y + 9, 0.9F, false);
         RenderUtils.drawText(context, collapsed ? "§7>" : "§b^", x + width - 10, y + 9, 1.0F, false);
     }
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
-        if (button == 0 && isHoverCollapsion((int)mouseX, (int)mouseY)) {
+        this.lastClickX = x;
+        this.lastClickY = y;
+    }
+
+    @Override
+    public void onRelease(double mouseX, double mouseY, int button) {
+        if (button == 0 && isHoverCollapsion((int)mouseX, (int)mouseY) && lastClickX == x && lastClickY == y) {
             setCollapsed(!isCollapsed());
+            if (mc.currentScreen instanceof GuiScreen screen) {
+                screen.removeChild(this);
+                screen.addChild(this);
+            }
         }
     }
 
@@ -61,27 +72,21 @@ public class CategoryElement extends GuiElement {
 
     public void setCollapsed(boolean collapsed) {
         this.collapsed = collapsed;
-        this.uncollapsedHeight = collapsedHeight + modules.getEntries().size() * (modules.getCellHeight() + modules.getGap());
-        this.height = collapsed ? collapsedHeight : uncollapsedHeight;
+        this.height = collapsed ? getCollapsedHeight() : getUncollapsedHeight();
 
-        if (!collapsed) {
-            modules.getEntries().forEach(m -> m.setRendering(true));
-        }
-        else {
-            modules.getEntries().forEach(m -> m.setRendering(false));
-        }
-        collapsionCache.put(category, collapsed);
+        modules.getEntries().forEach(m -> m.setRendering(!collapsed));
+        collapsionCache.put(category.name(), collapsed);
     }
 
     public int getCollapsedHeight() {
-        return collapsedHeight;
+        return 25;
     }
 
     public int getUncollapsedHeight() {
-        return uncollapsedHeight;
+        return getCollapsedHeight() + modules.getEntries().size() * (modules.getCellHeight() + modules.getGap());
     }
 
     public boolean isHoverCollapsion(int mouseX, int mouseY) {
-        return rendering && mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + collapsedHeight;
+        return rendering && mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + getCollapsedHeight() - 5;
     }
 }

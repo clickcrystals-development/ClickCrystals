@@ -73,7 +73,7 @@ public class DiscordInviteScreen extends GuiScreen {
 
     @Override
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
-        RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA0F95A70, 0xA06C64D3);
+        //RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA0F95A70, 0xA06C64D3);
         RenderUtils.drawTexture(context, Tex.Backdrops.BACKDROP_1, baseX, baseY, baseWidth, baseHeight);
 
         int caret = baseY + baseHeight / 5 * 3 + 20;

@@ -69,7 +69,7 @@ public class HomeScreen extends GuiScreen {
 
     @Override
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
-        RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA03873A9, 0xA0000000);
+        //RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA03873A9, 0xA0000000);
 
         // title card
         context.getMatrices().push();

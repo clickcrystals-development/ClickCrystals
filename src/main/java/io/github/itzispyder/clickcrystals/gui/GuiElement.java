@@ -79,6 +79,10 @@ public abstract class GuiElement implements Positionable, Global {
 
     }
 
+    public void onRelease(double mouseX, double mouseY, int button) {
+
+    }
+
     public void postRender(DrawContext context, int mouseX, int mouseY) {
 
     }
@@ -97,6 +101,17 @@ public abstract class GuiElement implements Positionable, Global {
         for (int i = getChildren().size() - 1; i >= 0; i--) {
             GuiElement child = getChildren().get(i);
             child.mouseClicked(mouseX, mouseY, button);
+        }
+    }
+
+    public void mouseReleased(double mouseX, double mouseY, int button) {
+        if (isHovered((int)mouseX, (int)mouseY)) {
+            onRelease(mouseX, mouseY, button);
+        }
+
+        for (int i = getChildren().size() - 1; i >= 0; i--) {
+            GuiElement child = getChildren().get(i);
+            child.mouseReleased(mouseX, mouseY, button);
         }
     }
 

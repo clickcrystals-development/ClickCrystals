@@ -32,7 +32,11 @@ public class UserInputListener implements Listener {
     private static Class<? extends GuiScreen> previousScreen = null;
     public static void openPreviousScreen() {
         Class<? extends GuiScreen> p = previousScreen;
-        if (p == BrowsingScreen.class || p == ModuleEditScreen.class || p == ClickScriptIDE.class) {
+        if (p == BrowsingScreen.class || p == OverviewScreen.class || p == ModuleEditScreen.class || p == ClickScriptIDE.class) {
+            if (mc.player == null || mc.world == null) {
+                mc.setScreen(new BrowsingScreen());
+                return;
+            }
             mc.setScreen(new OverviewScreen());
         }
         else if (p == SearchScreen.class) {
@@ -53,6 +57,7 @@ public class UserInputListener implements Listener {
     public static final Map<Class<? extends Screen>, String> SCREEN_STATES = ManualMap.fromItems(
             TitleScreen.class, "Looking at the title screen",
             BrowsingScreen.class, "Toggling modules",
+            OverviewScreen.class, "Overviewing modules",
             HomeScreen.class, "Scanning through ClickCrystals home",
             SearchScreen.class, "Searching modules",
             SettingScreen.class, "Changing ClickCrystals keybinds",
@@ -104,6 +109,7 @@ public class UserInputListener implements Listener {
                     p == SearchScreen.class ||
                     p == SettingScreen.class ||
                     p == HomeScreen.class ||
+                    p == OverviewScreen.class ||
                     p == BrowsingScreen.class) {
                 previousScreen = p;
             }
