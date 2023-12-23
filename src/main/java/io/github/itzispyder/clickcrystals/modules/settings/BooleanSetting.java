@@ -20,7 +20,7 @@ public class BooleanSetting extends ModuleSetting<Boolean> {
 
     public static class Builder extends SettingBuilder<Boolean, Builder, BooleanSetting> {
         @Override
-        public BooleanSetting build() {
+        public BooleanSetting buildSetting() {
             return new BooleanSetting(name, description, def, getOrDef(val, def));
         }
     }

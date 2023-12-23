@@ -103,6 +103,14 @@ public abstract class GuiScreen extends Screen implements Global {
         }
     }
 
+    public void renderOpaqueBackground(DrawContext context) {
+        if (mc.player == null || mc.world == null) {
+            context.setShaderColor(0.25F, 0.25F, 0.25F, 1.0F);
+            context.drawTexture(OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
+            context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        }
+    }
+
     @Override
     public void mouseMoved(double mouseX, double mouseY) {
         super.mouseMoved(mouseX, mouseY);

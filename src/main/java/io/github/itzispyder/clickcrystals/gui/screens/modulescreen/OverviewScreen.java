@@ -1,14 +1,19 @@
 package io.github.itzispyder.clickcrystals.gui.screens.modulescreen;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
+import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.CategoryElement;
 import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.ModuleEditElement;
 import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.SearchCategoryElement;
+import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
@@ -19,10 +24,28 @@ public class OverviewScreen extends GuiScreen {
 
     private final List<CategoryElement> categories;
     private ModuleEditElement currentEditing;
+    private final String switchModeText = "§e!§7 You're currently browsing ClickCrystals in §fOverview§7 mode,";
+    private final AbstractElement switchModeButton = AbstractElement.create()
+            .pos((int)(mc.textRenderer.getWidth(switchModeText) * 0.9 + 12), 2)
+            .dimensions(180, 16)
+            .onRender((context, mouseX, mouseY, button) -> {
+                if (button.isHovered(mouseX, mouseY)) {
+                    RoundRectBrush.drawRoundRect(context, button.x, button.y, button.width, button.height, 3, Gray.LIGHT_GRAY);
+                }
+                String text = "click to switch back to Browsing mode.";
+                RenderUtils.drawText(context, text, button.x + 5, button.y + button.height / 3, 0.9F, false);
+            })
+            .onPress(button -> {
+                ClickCrystals.config.setOverviewMode(false);
+                ClickCrystals.config.save();
+                mc.setScreen(new BrowsingScreen());
+            })
+            .build();
 
     public OverviewScreen() {
         super("Overview Module Screen");
         this.categories = new ArrayList<>();
+        this.addChild(switchModeButton);
 
         GridOrganizer grid = new GridOrganizer(105, 30, 90, 25, 3, 5);
         for (Category c : Categories.getCategories().values()) {
@@ -41,15 +64,18 @@ public class OverviewScreen extends GuiScreen {
     protected void init() {
         for (CategoryElement ce : categories) {
             if (!ce.isCollapsed()) {
-                this.removeChild(ce);
-                this.addChild(ce);
+                this.bringForward(ce);
             }
         }
+        ClickCrystals.config.loadOverviewScreen(this);
     }
 
     @Override
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
+        renderOpaqueBackground(context);
 
+        RenderUtils.fill(context, 0, 0, RenderUtils.winWidth(), 20, 0x90000000);
+        RenderUtils.drawText(context, switchModeText, 10, 20 / 3 + 1, 0.9F, false);
     }
 
     @Override
@@ -60,6 +86,13 @@ public class OverviewScreen extends GuiScreen {
         }
 
         return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        ClickCrystals.config.saveOverviewScreen(this);
+        ClickCrystals.config.save();
+        return super.mouseReleased(mouseX, mouseY, button);
     }
 
     public void setCurrentEditing(Module module, int mouseX, int mouseY) {
@@ -84,6 +117,11 @@ public class OverviewScreen extends GuiScreen {
         ClickCrystals.config.saveModule(currentEditing.getModule());
         ClickCrystals.config.save();
         this.currentEditing = null;
+    }
+
+    public void bringForward(GuiElement child) {
+        this.removeChild(child);
+        this.addChild(child);
     }
 
     public List<CategoryElement> getCategories() {

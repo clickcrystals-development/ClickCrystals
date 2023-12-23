@@ -86,6 +86,9 @@ public abstract class MixinInGameHud implements Global {
 
     @Inject(method = "render", at = @At("TAIL"))
     public void renderHuds(DrawContext context, float tickDelta, CallbackInfo ci) {
+        if (mc.currentScreen != null) {
+            return;
+        }
         for (Hud hud : system.huds().values()) {
             if (hud.canRender()) {
                 hud.render(context);

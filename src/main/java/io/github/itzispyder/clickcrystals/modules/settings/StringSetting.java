@@ -20,7 +20,7 @@ public class StringSetting extends ModuleSetting<String> {
 
     public static class Builder extends SettingBuilder<String, Builder, StringSetting> {
         @Override
-        public StringSetting build() {
+        public StringSetting buildSetting() {
             return new StringSetting(name, description, def, getOrDef(val, def));
         }
     }

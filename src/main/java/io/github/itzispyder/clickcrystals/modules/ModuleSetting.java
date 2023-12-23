@@ -68,7 +68,7 @@ public abstract class ModuleSetting<T> {
 
     public class Builder extends SettingBuilder<T, Builder, ModuleSetting<T>> {
         @Override
-        public ModuleSetting<T> build() {
+        public ModuleSetting<T> buildSetting() {
             return null;
         }
     }

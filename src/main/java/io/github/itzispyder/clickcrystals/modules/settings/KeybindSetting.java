@@ -91,7 +91,7 @@ public class KeybindSetting extends ModuleSetting<Keybind> {
         }
 
         @Override
-        public KeybindSetting build() {
+        public KeybindSetting buildSetting() {
             key = key == Keybind.NONE ? defaultKey : key;
             return new KeybindSetting(id, description, Keybind.create()
                     .id(id)

@@ -44,7 +44,7 @@ public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {
 
     public static class Builder<E extends Enum<?>> extends SettingBuilder<E, Builder<E>, EnumSetting<E>> {
         @Override
-        public EnumSetting<E> build() {
+        public EnumSetting<E> buildSetting() {
             return new EnumSetting<>(name, description, def, getOrDef(val, def));
         }
     }

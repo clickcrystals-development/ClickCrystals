@@ -38,7 +38,7 @@ public class IntegerSetting extends NumberSetting<Integer> {
         }
 
         @Override
-        public IntegerSetting build() {
+        public IntegerSetting buildSetting() {
             return new IntegerSetting(name, description, MathUtils.clamp(def, min, max), getOrDef(val, def), min, max);
         }
     }

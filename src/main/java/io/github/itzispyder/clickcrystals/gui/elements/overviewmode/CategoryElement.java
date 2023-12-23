@@ -1,21 +1,17 @@
 package io.github.itzispyder.clickcrystals.gui.elements.overviewmode;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CategoryElement extends GuiElement {
 
-    private static final Map<String, Boolean> collapsionCache = new HashMap<>();
     private final Category category;
     private final GridOrganizer modules;
     private boolean collapsed;
@@ -33,8 +29,7 @@ public class CategoryElement extends GuiElement {
             this.addChild(me);
         }
         modules.organize();
-
-        this.setCollapsed(collapsionCache.getOrDefault(category.name(), true));
+        this.setCollapsed(true);
     }
 
     @Override
@@ -55,9 +50,8 @@ public class CategoryElement extends GuiElement {
     public void onRelease(double mouseX, double mouseY, int button) {
         if (button == 0 && isHoverCollapsion((int)mouseX, (int)mouseY) && lastClickX == x && lastClickY == y) {
             setCollapsed(!isCollapsed());
-            if (mc.currentScreen instanceof GuiScreen screen) {
-                screen.removeChild(this);
-                screen.addChild(this);
+            if (mc.currentScreen instanceof OverviewScreen screen) {
+                screen.bringForward(this);
             }
         }
     }
@@ -75,7 +69,6 @@ public class CategoryElement extends GuiElement {
         this.height = collapsed ? getCollapsedHeight() : getUncollapsedHeight();
 
         modules.getEntries().forEach(m -> m.setRendering(!collapsed));
-        collapsionCache.put(category.name(), collapsed);
     }
 
     public int getCollapsedHeight() {

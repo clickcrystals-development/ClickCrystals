@@ -1,9 +1,10 @@
-package io.github.itzispyder.clickcrystals.gui.screens;
+package io.github.itzispyder.clickcrystals.gui.screens.settings;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module.SettingSectionElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
@@ -15,10 +16,10 @@ import net.minecraft.client.gui.DrawContext;
 import java.util.Comparator;
 import java.util.List;
 
-public class SettingScreen extends DefaultBase {
+public class KeybindScreen extends DefaultBase {
 
-    public SettingScreen() {
-        super("Settings Screen");
+    public KeybindScreen() {
+        super("Keybinds Settings Screen");
 
         ScrollPanelElement panel = new ScrollPanelElement(this, contentX + 5, contentY + 21, contentWidth - 5, contentHeight - 21);
         int caret = contentY + 25;
@@ -63,14 +64,14 @@ public class SettingScreen extends DefaultBase {
 
         // content
         int caret = contentY + 10;
-        RenderUtils.drawText(context, "Client Settings", contentX + 10, caret - 4, false);
+        RenderUtils.drawText(context, "Keybindings", contentX + 10, caret - 4, false);
         caret += 10;
         RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
     }
 
     @Override
     public void resize(MinecraftClient client, int width, int height) {
-        client.setScreen(new SettingScreen());
+        client.setScreen(new KeybindScreen());
         ClickCrystals.config.saveKeybinds();
         ClickCrystals.config.save();
     }

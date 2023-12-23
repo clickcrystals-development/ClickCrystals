@@ -1,12 +1,12 @@
 package io.github.itzispyder.clickcrystals.gui.elements.overviewmode;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -37,12 +37,11 @@ public class SearchCategoryElement extends GuiElement {
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
         super.onClick(mouseX, mouseY, button);
-        if (mc.currentScreen instanceof GuiScreen screen) {
+        if (mc.currentScreen instanceof OverviewScreen screen) {
             if (searchbar.isHovered((int)mouseX, (int)mouseY)) {
                 screen.selected = searchbar;
             }
-            screen.removeChild(this);
-            screen.addChild(this);
+            screen.bringForward(this);
         }
     }
 

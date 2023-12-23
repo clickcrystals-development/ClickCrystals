@@ -10,6 +10,9 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.*;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.settings.AdvancedSettingScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.settings.KeybindScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.settings.SettingScreen;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.DiscordRPC;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
@@ -33,11 +36,7 @@ public class UserInputListener implements Listener {
     public static void openPreviousScreen() {
         Class<? extends GuiScreen> p = previousScreen;
         if (p == BrowsingScreen.class || p == OverviewScreen.class || p == ModuleEditScreen.class || p == ClickScriptIDE.class) {
-            if (mc.player == null || mc.world == null) {
-                mc.setScreen(new BrowsingScreen());
-                return;
-            }
-            mc.setScreen(new OverviewScreen());
+            openModulesScreen();
         }
         else if (p == SearchScreen.class) {
             mc.setScreen(new SearchScreen());
@@ -54,14 +53,24 @@ public class UserInputListener implements Listener {
         config.markPlayedBefore();
     }
 
+    public static void openModulesScreen() {
+        if (mc.player != null && mc.world != null && config.isOverviewMode()) {
+            mc.setScreen(new OverviewScreen());
+            return;
+        }
+        mc.setScreen(new BrowsingScreen());
+    }
+
     public static final Map<Class<? extends Screen>, String> SCREEN_STATES = ManualMap.fromItems(
             TitleScreen.class, "Looking at the title screen",
             BrowsingScreen.class, "Toggling modules",
             OverviewScreen.class, "Overviewing modules",
             HomeScreen.class, "Scanning through ClickCrystals home",
             SearchScreen.class, "Searching modules",
-            SettingScreen.class, "Changing ClickCrystals keybinds",
-            SelectWorldScreen.class, "Selecting singleplayer",
+            SettingScreen.class, "Editing ClickCrystals settings",
+            KeybindScreen.class, "Changing ClickCrystals keybinds",
+            AdvancedSettingScreen.class, "Editing ClickCrystals advanced settings",
+            SelectWorldScreen.class, "Selecting single player",
             MultiplayerScreen.class, "Selecting server",
             GameMenuScreen.class, "Idling...",
             ClickScriptIDE.class, "Creating a custom module...",
@@ -100,6 +109,10 @@ public class UserInputListener implements Listener {
     }
 
     private void handleScreenManagement(SetScreenEvent e) {
+        if (e.getScreen() instanceof BrowsingScreen && mc.player != null && mc.world != null && config.isOverviewMode()) {
+            mc.setScreen(new OverviewScreen());
+            return;
+        }
         if (e.getScreen() == null && e.getPreviousScreen() instanceof GuiScreen screen) {
             Class<? extends GuiScreen> p = screen.getClass();
 

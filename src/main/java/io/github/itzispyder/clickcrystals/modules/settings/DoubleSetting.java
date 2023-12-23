@@ -90,7 +90,7 @@ public class DoubleSetting extends NumberSetting<Double> {
         }
 
         @Override
-        public DoubleSetting build() {
+        public DoubleSetting buildSetting() {
             return new DoubleSetting(name, description, MathUtils.clamp(def, min, max), getOrDef(val, def), min, max, decimalPlaces);
         }
     }
