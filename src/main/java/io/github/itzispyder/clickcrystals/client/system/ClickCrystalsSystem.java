@@ -144,7 +144,7 @@ public class ClickCrystalsSystem implements Serializable {
     }
 
     public List<Module> getModuleByCategory(Category category) {
-        return modules().values().stream()
+        return collectModules().stream()
                 .filter(m -> m.getCategory() == category)
                 .sorted(Comparator.comparing(Module::getId))
                 .toList();

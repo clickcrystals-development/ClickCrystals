@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
@@ -9,6 +10,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
+import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -39,7 +41,7 @@ public class HomeScreen extends GuiScreen {
 
         GridOrganizer grid = new GridOrganizer(baseX + 27, baseY + baseHeight - 65, 35, 35, 10, 31);
         suggestions.add(new SuggestionElement(Tex.Socials.DISCORD, "Discord", 0, 0, 35, button -> system.openUrl("https://discord.gg/tMaShNzNtP")));
-        suggestions.add(new SuggestionElement(Tex.Socials.MODRINTH, "Modrinth", 0, 0, 35, button -> system.openUrl("https://modrinth.com/mod/clickcrystals")));
+        suggestions.add(new SuggestionElement(Tex.Socials.CURSEFORGE, "CurseForge", 0, 0, 35, button -> system.openUrl("https://www.curseforge.com/minecraft/mc-mods/clickcrystals")));
         suggestions.add(new SuggestionElement(Tex.Socials.YOUTUBE, "Youtube", 0, 0, 35, button -> system.openUrl("https://youtube.com/@itzispyder")));
         suggestions.add(new SuggestionElement(Tex.Socials.PLANETMC, "Planet MC", 0, 0, 35, button -> system.openUrl("https://planetminecraft.com/mod/clickcrystal")));
         suggestions.add(new SuggestionElement(Tex.ICON, "Official Site", 0, 0, 35, button -> system.openUrl("https://clickcrystals.xyz")));
@@ -82,9 +84,18 @@ public class HomeScreen extends GuiScreen {
         context.getMatrices().pop();
 
         // content
-        int caret = baseY + 50;
-        int titleTrans = titleTranslation.get();
+        List<String> lines = StringUtils.wrapLines(ClickCrystals.info.getMotd(), 55, true);
+        int i = 3;
+        int x = baseX + baseWidth / 2 - 150;
+        int y = baseY + 20;
+        RoundRectBrush.drawRoundRect(context, x, y, 300, lines.size() * 9 + 6, 3, Gray.DARK_GRAY);
+        for (String line : lines) {
+            RenderUtils.drawText(context, "§e" + line, x + 5, y + i, 0.9F, false);
+            i += 10;
+        }
 
+        int caret = baseY + 70;
+        int titleTrans = titleTranslation.get();
         RenderUtils.drawCenteredText(context, "§lClickCrystals", baseX + baseWidth / 2, caret - titleTrans, 2.0F, false);
         caret += 20;
         RenderUtils.drawCenteredText(context, "Crystal PvP Enhanced", baseX + baseWidth / 2, caret - titleTrans, 1.0F, false);

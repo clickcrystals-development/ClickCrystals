@@ -117,7 +117,7 @@ public final class ClickCrystals implements ModInitializer {
         this.init();
         this.startTicking();
         system.println("-> requesting mod info...");
-        this.requestModInfo();
+        ClickCrystals.requestModInfo();
         system.println("-> connecting to discord...");
         this.initRpc();
         system.println("-> loading config...");
@@ -290,7 +290,7 @@ public final class ClickCrystals implements ModInitializer {
         return info.getLatest();
     }
 
-    private void requestModInfo() {
+    public static void requestModInfo() {
         ClickCrystalsInfo.request();
         system.capeManager.reloadTextures();
     }
