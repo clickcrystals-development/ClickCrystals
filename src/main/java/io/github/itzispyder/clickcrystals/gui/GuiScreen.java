@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.gui;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.elements.common.Typeable;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
+import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.callbacks.*;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
@@ -105,9 +106,7 @@ public abstract class GuiScreen extends Screen implements Global {
 
     public void renderOpaqueBackground(DrawContext context) {
         if (mc.player == null || mc.world == null) {
-            context.setShaderColor(0.25F, 0.25F, 0.25F, 1.0F);
-            context.drawTexture(OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
-            context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            context.drawTexture(Tex.Defaults.OPTIONS_BACKGROUND, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
         }
     }
 
