@@ -84,14 +84,8 @@ public class HomeScreen extends GuiScreen {
         context.getMatrices().pop();
 
         // content
-        List<String> lines = StringUtils.wrapLines(ClickCrystals.info.getMotd(), 55, true);
-        int i = 3;
-        int x = baseX + baseWidth / 2 - 150;
-        int y = baseY + 20;
-        RoundRectBrush.drawRoundRect(context, x, y, 300, lines.size() * 9 + 6, 3, Gray.DARK_GRAY);
-        for (String line : lines) {
-            RenderUtils.drawText(context, "§e" + line, x + 5, y + i, 0.9F, false);
-            i += 10;
+        if (!ClickCrystals.info.getMotd().trim().isEmpty()) {
+            renderMotd(context);
         }
 
         int caret = baseY + 70;
@@ -102,6 +96,18 @@ public class HomeScreen extends GuiScreen {
         caret += 30;
         searchBar.x = baseX + baseWidth / 2 - searchBar.width / 2;
         searchBar.y = caret - titleTrans;
+    }
+
+    public void renderMotd(DrawContext context) {
+        List<String> lines = StringUtils.wrapLines(ClickCrystals.info.getMotd(), 55, true);
+        int i = 3;
+        int x = baseX + baseWidth / 2 - 150;
+        int y = baseY + 20;
+        RoundRectBrush.drawRoundRect(context, x, y, 300, lines.size() * 9 + 6, 3, Gray.DARK_GRAY);
+        for (String line : lines) {
+            RenderUtils.drawText(context, "§e" + line, x + 5, y + i, 0.9F, false);
+            i += 10;
+        }
     }
 
     @Override

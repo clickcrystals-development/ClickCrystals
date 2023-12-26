@@ -12,7 +12,7 @@ public class SayCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        String msg = args.getAll().stringValue();
+        String msg = args.getQuoteAndRemove();
 
         if (msg != null && !msg.isEmpty()) {
             if (msg.startsWith("/") && msg.length() >= 2) {
@@ -21,6 +21,10 @@ public class SayCmd extends ScriptCommand {
             else {
                 ChatUtils.sendChatMessage(msg);
             }
+        }
+
+        if (args.match(0, "then")) {
+            args.executeAll(1);
         }
     }
 }

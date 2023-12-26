@@ -16,21 +16,24 @@ public class ClickScript implements Global {
     public static final AtomicReference<File> currentFile = new AtomicReference<>();
     private static final Map<String, ScriptCommand> REGISTRATION = new HashMap<>() {{
         this.put("exit", ScriptCommand.create("exit", (command, line, args) -> {
-            System.exit(args.get(0).intValue());
+            System.exit(args.get(0).toInt());
         }));
         this.put("print", ScriptCommand.create("print", (command, line, args) -> {
-            system.println(args.getAll().stringValue());
+            system.println(args.getQuoteAndRemove());
+            if (args.match(0, "then")) {
+                args.executeAll(1);
+            }
         }));
         this.put("throw", ScriptCommand.create("throw", (command, line, args) -> {
-            throw new RuntimeException(args.getAll().stringValue());
+            throw new RuntimeException(args.getQuoteAndRemove());
         }));
         this.put("execute", ScriptCommand.create("execute", (command, line, args) -> {
-            ClickScript.executeSingle(args.getAll().stringValue());
+            ClickScript.executeSingle(args.getAll().toString());
         }));
         this.put("loop", ScriptCommand.create("loop", (command, line, args) -> {
-            int times = args.get(0).intValue();
+            int times = args.get(0).toInt();
             for (int i = 0; i < times; i++) {
-                ClickScript.executeSingle(args.getAll(1).stringValue());
+                ClickScript.executeSingle(args.getAll(1).toString());
             }
         }));
     }};

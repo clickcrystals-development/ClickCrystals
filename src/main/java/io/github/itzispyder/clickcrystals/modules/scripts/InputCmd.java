@@ -17,7 +17,7 @@ public class InputCmd extends ScriptCommand implements Global {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        args.get(0).enumValue(Action.class, null).run();
+        args.get(0).toEnum(Action.class, null).run();
 
         if (args.match(1, "then")) {
             args.executeAll(2);

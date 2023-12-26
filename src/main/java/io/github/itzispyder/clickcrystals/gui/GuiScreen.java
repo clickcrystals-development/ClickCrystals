@@ -111,6 +111,11 @@ public abstract class GuiScreen extends Screen implements Global {
     }
 
     @Override
+    public void renderBackground(DrawContext context) {
+
+    }
+
+    @Override
     public void mouseMoved(double mouseX, double mouseY) {
         super.mouseMoved(mouseX, mouseY);
 

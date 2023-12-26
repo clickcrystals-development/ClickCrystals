@@ -26,13 +26,13 @@ public class TurnToCmd extends ScriptCommand {
         // ex.      turn_to nearest_entity :creeper on_finish say Yo
         Vec3d eyes = PlayerUtils.player().getEyePos();
 
-        switch (args.get(0).enumValue(Mode.class, null)) {
+        switch (args.get(0).toEnum(Mode.class, null)) {
             case NEAREST_BLOCK -> {
-                Predicate<BlockState> filter = OnEventCmd.parseBlockPredicate(args.get(1).stringValue());
+                Predicate<BlockState> filter = OnEventCmd.parseBlockPredicate(args.get(1).toString());
                 PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> specifiedTurn(pos.toCenterPos(), eyes, args));
             }
             case NEAREST_ENTITY -> {
-                Predicate<Entity> filter = OnEventCmd.parseEntityPredicate(args.get(1).stringValue());
+                Predicate<Entity> filter = OnEventCmd.parseEntityPredicate(args.get(1).toString());
                 PlayerUtils.runOnNearestEntity(32, filter, entity -> specifiedTurn(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args));
             }
 

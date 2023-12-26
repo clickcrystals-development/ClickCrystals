@@ -15,7 +15,7 @@ public class GuiSwitchCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        Predicate<ItemStack> item = OnEventCmd.parseItemPredicate(args.get(0).stringValue());
+        Predicate<ItemStack> item = OnEventCmd.parseItemPredicate(args.get(0).toString());
         InteractionUtils.searchGuiItem(item);
 
         if (args.match(1, "then")) {
