@@ -17,10 +17,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinArmorFeatureRenderer<T extends LivingEntity, M extends BipedEntityModel<T>, A extends BipedEntityModel<T>> {
 
     @Inject(method = "renderArmor", at = @At("HEAD"), cancellable = true)
-    private void onRenderArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, T livingEntity, EquipmentSlot equipmentSlot, int i, A bipedEntityModel, CallbackInfo ci) {
-        Module module = Module.get(NoArmorRender.class);
+    private void onRenderArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, T livingEntity, EquipmentSlot slot, int i, A bipedEntityModel, CallbackInfo ci) {
+        NoArmorRender nar = Module.get(NoArmorRender.class);
 
-        if (module.isEnabled() && ((NoArmorRender) module).armor) {
+        if (nar.isEnabled() && !nar.canRender(slot)) {
             ci.cancel();
         }
     }
