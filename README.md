@@ -33,7 +33,6 @@ Scripting:
   - scripts can be read through .txt now
 
 Add:
-  - tick_timeout command #(for providing a custom delay for the "on tick" script command)
   - Spectator Sight #(by i-no-am)
   - No Armor Render #(by i-no-am)
 
