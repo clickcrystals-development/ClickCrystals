@@ -1,12 +1,11 @@
 package io.github.itzispyder.clickcrystals.client.clickscript;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.client.clickscript.components.CommandLine;
 import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.ScriptNotFoundException;
 import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.UnknownCommandException;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -28,16 +27,16 @@ public class ClickScript implements Global {
             throw new RuntimeException(args.getQuoteAndRemove());
         }));
         this.put("execute", ScriptCommand.create("execute", (command, line, args) -> {
-            ClickScript.executeSingle(args.getAll().toString());
+            ClickScript.executeDynamic(args.getAll().toString());
         }));
         this.put("loop", ScriptCommand.create("loop", (command, line, args) -> {
             int times = args.get(0).toInt();
             for (int i = 0; i < times; i++) {
-                ClickScript.executeSingle(args.getAll(1).toString());
+                ClickScript.executeDynamic(args.getAll(1).toString());
             }
         }));
     }};
-    private static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
+    public static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
     private final String path;
     private final File file;
     private int currentLine;
@@ -66,9 +65,24 @@ public class ClickScript implements Global {
         return null;
     }
 
+    public static void executeDynamic(String commandLine) {
+        for (CommandLine line : ScriptParser.getStackLines(ScriptParser.condenseLines(commandLine))) {
+            if (line.isDeep()) {
+                line.executeDynamic();
+            }
+            else {
+                line.execute();
+            }
+        }
+    }
+
     public static void executeSingle(String commandLine) {
-        DEFAULT_DISPATCHER.executeLine(commandLine);
-        DEFAULT_DISPATCHER.currentLine = 0;
+        executeSingle(DEFAULT_DISPATCHER, commandLine);
+    }
+
+    public static void executeSingle(ClickScript executor, String commandLine) {
+        executor.executeLine(commandLine);
+        executor.currentLine = 0;
     }
 
     public static void register(ScriptCommand command) {
@@ -99,10 +113,14 @@ public class ClickScript implements Global {
             if (!file.exists() || !path.endsWith(".ccs")) {
                 throw new ScriptNotFoundException(this);
             }
+            String script = ScriptParser.readFile(file.getPath());
+            executeDynamic(script);
+            /*
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             br.lines().forEach(this::executeLine);
             br.close();
+             */
             currentLine = 0;
         }
         catch (Exception ex) {
@@ -111,6 +129,7 @@ public class ClickScript implements Global {
     }
 
     private void executeLine(String line) {
+        system.printf("executing script '%s'", line);
         currentLine++;
         if (line != null && !line.trim().isEmpty() && !line.startsWith("//")) {
             String name = line.split(" ")[0];

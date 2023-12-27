@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals.client.clickscript;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.components.CommandLine;
-import io.github.itzispyder.clickcrystals.client.clickscript.components.CommandStack;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 
 import java.io.BufferedReader;
@@ -25,34 +24,12 @@ public class ScriptParser {
         return lines;
     }
 
-    public static List<CommandLine> getAllLines(String line) {
-        List<CommandLine> lines = new ArrayList<>();
-        int index = 0;
-        var section = firstSectionWithIndex(line, '{', '}');
-
-        while (!section.left.isEmpty()) {
-            lines.add(new CommandLine(section.left));
-            index += section.right;
-            section = firstSectionWithIndex(line.substring(index), '{', '}');
-        }
-
-        return lines;
-    }
-
-    public static CommandStack getStack(String line) {
-        return new CommandStack(getAllLines(line));
-    }
-
     public static String firstSection(String line, char enclosingChar) {
         return firstSection(line, enclosingChar, enclosingChar);
     }
 
     public static String firstSection(String line, char openingChar, char closingChar) {
         return firstSectionWithIndex(line, openingChar, closingChar).left;
-    }
-
-    public static CommandLine firstLine(String line) {
-        return new CommandLine(firstSection(line, '{', '}'));
     }
 
     public static Pair<String, Integer> firstSectionWithIndex(String line, char openingChar, char closingChar) {
@@ -111,6 +88,8 @@ public class ScriptParser {
         throw new IllegalArgumentException(msg);
     }
 
+    // script specific
+
     public static String readFile(String path) {
         try {
             FileReader fr = new FileReader(path);
@@ -123,6 +102,9 @@ public class ScriptParser {
                 result.append(line);
 
                 if (!line.isEmpty()) {
+                    if (!line.endsWith("{") && !line.endsWith("}") && !line.endsWith(";")) {
+                        result.append(";");
+                    }
                     result.append(" ");
                 }
             }
@@ -153,5 +135,61 @@ public class ScriptParser {
         catch (Exception ex) {
             return "";
         }
+    }
+
+    public static List<CommandLine> getStackLines(String line) {
+        line = line == null ? "" : line;
+        List<CommandLine> lines = new ArrayList<>();
+
+        StringBuilder temp = new StringBuilder();
+        char[] chars = line.toCharArray();
+        boolean inQuote = false;
+        int i = 0;
+
+        while (i < chars.length) {
+            char c = chars[i];
+            boolean skip = i > 0 && chars[i - 1] == '\\';
+
+            if (c == '"') {
+                inQuote = !inQuote;
+            }
+
+            if (c == '{' && !skip && !inQuote) {
+                String subLine = line.substring(i);
+                var section = firstSectionWithIndex(subLine, '{', '}');
+
+                String lead = temp.toString().trim();
+                lines.add(new CommandLine((lead.isEmpty() ? "%s%s" : "%s {%s}").formatted(lead, section.left)));
+
+                temp = new StringBuilder();
+                i += section.right;
+                continue;
+            }
+            if (c == ';' && !skip && !inQuote) {
+                String subLine = temp.toString().trim();
+
+                if (!subLine.isEmpty()) {
+                    lines.add(new CommandLine(subLine));
+                }
+
+                temp = new StringBuilder();
+                i++;
+                continue;
+            }
+            else {
+                temp.append(c);
+            }
+            i++;
+        }
+
+        String remaining = temp.toString().trim();
+        if (!remaining.isEmpty()) {
+            lines.add(new CommandLine(remaining));
+        }
+
+        if (inQuote) {
+            throw new IllegalArgumentException("unclosed quotation marks scanned in script");
+        }
+        return lines;
     }
 }

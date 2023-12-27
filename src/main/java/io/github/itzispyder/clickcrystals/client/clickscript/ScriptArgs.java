@@ -72,7 +72,7 @@ public class ScriptArgs {
     }
 
     public void executeAll(int begin) {
-        ClickScript.executeSingle(getAll(begin).toString());
+        ClickScript.executeDynamic(getAll(begin).toString());
     }
 
     public void executeAll() {

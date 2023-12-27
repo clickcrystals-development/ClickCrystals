@@ -19,6 +19,6 @@ public class LoopPeriodCmd extends ScriptCommand implements Global {
     }
 
     public synchronized void exc(ScriptArgs args) {
-        ClickScript.executeSingle(args.getAll(2).toString());
+        ClickScript.executeDynamic(args.getAll(2).toString());
     }
 }
