@@ -5,8 +5,11 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
 
 public record CommandLine(String line) {
 
-    public CommandLine(String line) {
-        this.line = line.trim();
+    public CommandLine {
+        line = line.trim();
+        if (line.endsWith(";")) {
+            line = line.substring(0, line.length() - 1);
+        }
     }
 
     public boolean isDeep() {
