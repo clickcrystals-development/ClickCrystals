@@ -20,6 +20,13 @@ public class Scheduler {
         this.init();
     }
 
+    public synchronized void cancelAllTasks() {
+        for (Task task : tasks) {
+            task.cancel();
+            tasks.remove(task);
+        }
+    }
+
     public int count() {
         return tasks.size();
     }

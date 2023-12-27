@@ -183,15 +183,22 @@ public class ClickCrystalsSystem implements Serializable {
     }
 
     public void reloadScripts() {
+        reloadScripts(true);
+    }
+
+    public void reloadScripts(boolean notifyClient) {
         println("-> reloading all scripts");
-        Notification.create()
-                .ccsIcon()
-                .stayTime(1000)
-                .id("clickscript-triggered-notification")
-                .title("ClickCrystals System")
-                .text("Reloading all scripts...")
-                .build()
-                .sendToClient();
+
+        if (notifyClient) {
+            Notification.create()
+                    .ccsIcon()
+                    .stayTime(1000)
+                    .id("clickscript-triggered-notification")
+                    .title("ClickCrystals System")
+                    .text("Reloading all scripts...")
+                    .build()
+                    .sendToClient();
+        }
 
         scriptedModules().values().forEach(this::unloadModule);
         config.save();
@@ -200,14 +207,17 @@ public class ClickCrystalsSystem implements Serializable {
         scriptedModules.values().forEach(config::loadModule);
 
         println("<- Scripts reloaded!");
-        Notification.create()
-                .ccsIcon()
-                .stayTime(1000)
-                .id("clickscript-triggered-notification")
-                .title("ClickCrystals System")
-                .text("%s scripts reloaded!".formatted(total))
-                .build()
-                .sendToClient();
+
+        if (notifyClient) {
+            Notification.create()
+                    .ccsIcon()
+                    .stayTime(1000)
+                    .id("clickscript-triggered-notification")
+                    .title("ClickCrystals System")
+                    .text("%s scripts reloaded!".formatted(total))
+                    .build()
+                    .sendToClient();
+        }
     }
 
     public void onClientStopping() {

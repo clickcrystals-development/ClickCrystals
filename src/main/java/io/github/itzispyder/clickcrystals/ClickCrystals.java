@@ -122,12 +122,9 @@ public final class ClickCrystals implements ModInitializer {
         this.initRpc();
         system.println("-> loading config...");
         config.loadEntireConfig();
-
         system.println("-> checking updates...");
-        if (!matchLatestVersion()) {
-            system.println("WARNING: You are running an outdated version of ClickCrystals, please update!");
-            system.println("VERSIONS: Current=%s, Newest=%s".formatted(version, getLatestVersion()));
-        }
+        ClickCrystals.checkUpdates();
+
         system.println("-> clicking crystals!");
         system.println("ClickCrystals had loaded successfully!");
         system.println(new Gson().toJson(info));
@@ -191,7 +188,8 @@ public final class ClickCrystals implements ModInitializer {
         system.addCommand(new KeybindsCommand());
         system.addCommand(new RotateCommand());
         system.addCommand(new LookCommand());
-        system.addCommand(new ClickScriptCommand());
+        system.addCommand(new CCScriptCommand());
+        system.addCommand(new ReloadCommand());
 
         // Hud
         system.addHud(new IconRelativeHud());
@@ -290,6 +288,16 @@ public final class ClickCrystals implements ModInitializer {
 
     public static Version getLatestVersion() {
         return info.getLatest();
+    }
+
+    public static void checkUpdates() {
+        if (!matchLatestVersion()) {
+            system.println("WARNING: You are running an outdated version of ClickCrystals, please update!");
+            system.println("VERSIONS: Current=%s, Newest=%s".formatted(version, getLatestVersion()));
+        }
+        else {
+            system.printf("<- you are UP-TO-DATE (%s, %s)", version, getLatestVersion());
+        }
     }
 
     public static void requestModInfo() {

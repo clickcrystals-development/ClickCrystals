@@ -10,9 +10,9 @@ import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
 import net.minecraft.command.CommandSource;
 
-public class ClickScriptCommand extends Command {
+public class CCScriptCommand extends Command {
 
-    public ClickScriptCommand() {
+    public CCScriptCommand() {
         super("clickscript", "Manages ClickScript compiler", "/clickscript <action>", "ccs");
     }
 
