@@ -13,7 +13,7 @@ public class ConfigCmd extends ScriptCommand implements Global {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        switch (args.get(0).enumValue(Type.class, null)) {
+        switch (args.get(0).toEnum(Type.class, null)) {
             case SAVE -> saveEntireConfig();
             case RELOAD -> {
                 saveEntireConfig();

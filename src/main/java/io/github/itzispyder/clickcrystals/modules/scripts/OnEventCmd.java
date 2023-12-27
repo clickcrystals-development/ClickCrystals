@@ -22,7 +22,7 @@ public class OnEventCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        EventType type = args.get(0).enumValue(EventType.class, null);
+        EventType type = args.get(0).toEnum(EventType.class, null);
 
         switch (type) {
             case LEFT_CLICK, RIGHT_CLICK, MIDDLE_CLICK, LEFT_RELEASE, RIGHT_RELEASE, MIDDLE_RELEASE -> passClick(args, type);
@@ -100,10 +100,10 @@ public class OnEventCmd extends ScriptCommand {
         char input = typed.isEmpty() ? ' ' : typed.charAt(0);
 
         if (type == EventType.KEY_PRESS && action.isDown()) {
-            return args.get(1).charValue() == input;
+            return args.get(1).toChar() == input;
         }
         else if (type == EventType.KEY_RELEASE && action.isRelease()) {
-            return args.get(1).charValue() == input;
+            return args.get(1).toChar() == input;
         }
         return false;
     }

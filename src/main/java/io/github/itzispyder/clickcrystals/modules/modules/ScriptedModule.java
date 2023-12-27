@@ -255,21 +255,42 @@ public class ScriptedModule extends ListenerModule {
             return 0;
         }
 
-        File[] files = parentFolder.listFiles(f -> f.isFile() && f.getPath().endsWith(".ccs"));
-        if (files == null || files.length == 0) {
-            return 0;
-        }
-
+        List<File> files = listScriptFiles(parentFolder);
         Timer timer = Timer.start();
-        int total = files.length;
+        int total = files.size();
 
         system.printf("-> executing scripts (%s)...", total);
-        for (int i = 0; i < files.length; i++) {
-            File file = files[i];
+        for (int i = 0; i < files.size(); i++) {
+            File file = files.get(i);
             new ClickScript(file).execute();
             system.printf("<- [%s/%s] '%s'", i + 1, total, file.getName());
         }
         system.printf("<- [done] executed (%s) scripts in %s", total, timer.end().getStampPrecise());
         return total;
+    }
+
+    public static List<File> listScriptFiles(File parentFolder) {
+        File[] filesArray = parentFolder.listFiles();
+        if (filesArray == null || filesArray.length == 0) {
+            return new ArrayList<>();
+        }
+        List<File> files = new ArrayList<>();
+
+        for (File file : filesArray) {
+            if (file == null) {
+                continue;
+            }
+
+            String name = file.getName();
+            boolean nameValid = name.endsWith(".ccs") || name.endsWith(".txt");
+
+            if (file.isFile() && nameValid) {
+                files.add(file);
+            }
+            else if (file.isDirectory()) {
+                files.addAll(listScriptFiles(file));
+            }
+        }
+        return files;
     }
 }

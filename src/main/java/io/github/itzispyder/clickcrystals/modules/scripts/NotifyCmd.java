@@ -14,11 +14,15 @@ public class NotifyCmd extends ScriptCommand {
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
         Notification.create()
                 .ccsIcon()
-                .stayTime((long)(args.get(0).doubleValue() * 1000L))
+                .stayTime((long)(args.get(0).toDouble() * 1000L))
                 .id("clickscript-triggered-notification")
                 .title("ClickCrystals System")
-                .text(args.getAll(1).stringValue())
+                .text(args.getQuoteAndRemove(1))
                 .build()
                 .sendToClient();
+
+        if (args.match(0, "then")) {
+            args.executeAll(1);
+        }
     }
 }

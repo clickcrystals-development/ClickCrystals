@@ -90,9 +90,10 @@ public class OverviewScreen extends GuiScreen {
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        super.mouseReleased(mouseX, mouseY, button);
         ClickCrystals.config.saveOverviewScreen(this);
         ClickCrystals.config.save();
-        return super.mouseReleased(mouseX, mouseY, button);
+        return true;
     }
 
     public void setCurrentEditing(Module module, int mouseX, int mouseY) {

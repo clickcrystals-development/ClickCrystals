@@ -12,7 +12,7 @@ public class DropCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        switch (args.get(0).enumValue(Type.class, null)) {
+        switch (args.get(0).toEnum(Type.class, null)) {
             case ALL -> InteractionUtils.inputDropFull();
             case ONE -> InteractionUtils.inputDrop();
         }

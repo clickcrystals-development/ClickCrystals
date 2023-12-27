@@ -97,7 +97,7 @@ public final class ClickCrystals implements ModInitializer {
     public static final String modId   = "clickcrystals";
     public static final String prefix  = "[ClickCrystals] ";
     public static final String starter = "§7[§bClick§3Crystals§7] §r";
-    public static final String version = "1.1.6";
+    public static final String version = "1.1.7";
 
     public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
 
@@ -267,6 +267,8 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new FullBright());
 
         // rendering
+        system.addModule(new NoArmorRender());
+        system.addModule(new SpectatorSight());
         system.addModule(new SlowSwing());
         system.addModule(new NoHurtCam());
         system.addModule(new NoOverlay());

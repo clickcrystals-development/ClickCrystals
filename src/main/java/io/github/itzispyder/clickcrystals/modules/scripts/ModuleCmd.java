@@ -28,17 +28,17 @@ public class ModuleCmd extends ScriptCommand implements Global {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        switch (args.get(0).enumValue(Action.class, null)) {
+        switch (args.get(0).toEnum(Action.class, null)) {
             case CREATE -> {
                 if (ClickScript.currentFile.get() == null) {
                     throw new IllegalStateException("Module cannot be created: current file pointer is null!");
                 }
-                currentScriptModule = new ScriptedModule(args.get(1).stringValue(), "", ClickScript.currentFile.get());
+                currentScriptModule = new ScriptedModule(args.get(1).toString(), "", ClickScript.currentFile.get());
                 system.addModule(currentScriptModule);
                 ClickScript.currentFile.set(null);
             }
-            case ENABLE -> system.runModuleById(args.get(1).stringValue(), m -> m.setEnabled(true, true));
-            case DISABLE -> system.runModuleById(args.get(1).stringValue(), m -> m.setEnabled(false, true));
+            case ENABLE -> system.runModuleById(args.get(1).toString(), m -> m.setEnabled(true, true));
+            case DISABLE -> system.runModuleById(args.get(1).toString(), m -> m.setEnabled(false, true));
         }
 
         if (args.match(2, "then")) {

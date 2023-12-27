@@ -28,7 +28,7 @@ public class ClickScriptCommand extends Command {
                 .then(literal("compile")
                 .then(argument("commandline", StringArgumentType.greedyString())
                         .executes(cxt -> {
-                            ClickScript.executeSingle(cxt.getArgument("commandline", String.class));
+                            ClickScript.executeDynamic(cxt.getArgument("commandline", String.class));
                             return SINGLE_SUCCESS;
                         })))
                 .then(literal("reload-scripts")

@@ -21,7 +21,7 @@ public class SwitchCmd extends ScriptCommand {
         }
 
         lastSlot = InvUtils.selected();
-        HotbarUtils.search(OnEventCmd.parseItemPredicate(args.get(0).stringValue()));
+        HotbarUtils.search(OnEventCmd.parseItemPredicate(args.get(0).toString()));
 
         if (args.match(1, "then")) {
             args.executeAll(2);
