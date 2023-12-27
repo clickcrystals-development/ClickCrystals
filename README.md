@@ -27,22 +27,21 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
+Scripting:
+  - kept old syntax, revolutionized with newer syntax, both optional
+  - you can now sort scripts into folders, they will still and up unsorted in game tho
+  - scripts can be read through .txt now
+
 Add:
-  - Entity hud
-  - ClickCrystals XYZ website link
-  - swap out ogredupe link with yessirbox
-  - splash MOTD's to homescreen
-  - second GUI mode
+  - tick_timeout command #(for providing a custom delay for the "on tick" script command)
+  - Spectator Sight #(by i-no-am)
+  - No Armor Render #(by i-no-am)
 
-Patches:
-  - huds being dumb when rendering over chat
-  - config saving deleted modules
+Features:
+  - script commands [print, say, send, notify] now supports THEN chain calls when messages are surrounded with [""]
 
-Remove:
-  - remove packet mapper
-
-CCS:
-  - make [notify] command have an option for stay time
+Patch:
+  - gui background shader darkening on version 1.20.2
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png)
