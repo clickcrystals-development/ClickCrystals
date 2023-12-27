@@ -150,7 +150,7 @@ public class ScriptParser {
             char c = chars[i];
             boolean skip = i > 0 && chars[i - 1] == '\\';
 
-            if (c == '"') {
+            if (c == '"' && !skip) {
                 inQuote = !inQuote;
             }
 

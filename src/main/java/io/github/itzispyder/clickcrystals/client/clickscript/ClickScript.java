@@ -110,7 +110,7 @@ public class ClickScript implements Global {
 
     public void execute() {
         try {
-            if (!file.exists() || !path.endsWith(".ccs")) {
+            if (!file.exists() || !(path.endsWith(".ccs") || path.endsWith(".txt"))) {
                 throw new ScriptNotFoundException(this);
             }
             String script = ScriptParser.readFile(file.getPath());
@@ -129,7 +129,6 @@ public class ClickScript implements Global {
     }
 
     private void executeLine(String line) {
-        system.printf("executing script '%s'", line);
         currentLine++;
         if (line != null && !line.trim().isEmpty() && !line.startsWith("//")) {
             String name = line.split(" ")[0];
