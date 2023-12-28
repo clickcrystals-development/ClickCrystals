@@ -177,26 +177,32 @@ public class IfCmd extends ScriptCommand implements Global {
             return false;
         }
 
-        if (other.startsWith("<=")) {
-            return input <= new ScriptArgs(other.substring(2)).get(0).toDouble();
+        else if (other.startsWith("<=")) {
+            return input <= Double.parseDouble(other.substring(2));
         }
         else if (other.startsWith(">=")) {
-            return input >= new ScriptArgs(other.substring(2)).get(0).toDouble();
+            return input >= Double.parseDouble(other.substring(2));
         }
-        else if (other.startsWith("!=") || other.startsWith("!")) {
-            return input != new ScriptArgs(other.substring(2)).get(0).toDouble();
+        else if (other.startsWith("!=")) {
+            return input != Double.parseDouble(other.substring(2));
         }
-        else if (other.startsWith("==") || other.startsWith("=")) {
-            return input == new ScriptArgs(other.substring(2)).get(0).toDouble();
+        else if (other.startsWith("==")) {
+            return input == Double.parseDouble(other.substring(2));
         }
         else if (other.startsWith("<")) {
-            return input < new ScriptArgs(other.substring(1)).get(0).toDouble();
+            return input < Double.parseDouble(other.substring(1));
         }
         else if (other.startsWith(">")) {
-            return input > new ScriptArgs(other.substring(1)).get(0).toDouble();
+            return input > Double.parseDouble(other.substring(1));
+        }
+        else if (other.startsWith("!")) {
+            return input != Double.parseDouble(other.substring(1));
+        }
+        else if (other.startsWith("=")) {
+            return input == Double.parseDouble(other.substring(1));
         }
         else {
-            return input == new ScriptArgs(other).get(0).toDouble();
+            return input == Double.parseDouble(other);
         }
     }
 

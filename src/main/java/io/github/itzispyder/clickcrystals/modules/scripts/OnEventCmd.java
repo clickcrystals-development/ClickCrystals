@@ -56,18 +56,19 @@ public class OnEventCmd extends ScriptCommand {
     }
 
     public void passChat(ScriptArgs args, EventType type) {
+        ClickScript dispatcher = args.getExecutorOrDef();
         String msg = args.getQuoteAndRemove(1);
         String rest = args.getAll().toString();
 
         switch (type) {
             case CHAT_RECEIVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatReceiveListeners.add(event -> {
                 if (event.getMessage().contains(msg)) {
-                    ClickScript.executeDynamic(rest);
+                    ClickScript.executeDynamic(dispatcher, rest);
                 }
             }));
             case CHAT_SEND -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatSendListeners.add(event -> {
                 if (event.getMessage().contains(msg)) {
-                    ClickScript.executeDynamic(rest);
+                    ClickScript.executeDynamic(dispatcher, rest);
                 }
             }));
         }

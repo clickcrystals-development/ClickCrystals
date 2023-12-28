@@ -27,7 +27,7 @@ public class ExecuteRandomCmd extends ScriptCommand {
 
         if (!lines.isEmpty()) {
             Randomizer random = new Randomizer();
-            random.getRandomElement(lines).executeDynamic();
+            random.getRandomElement(lines).executeDynamic(args.getExecutorOrDef());
         }
     }
 }

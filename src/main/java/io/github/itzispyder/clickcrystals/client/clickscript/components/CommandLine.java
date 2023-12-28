@@ -27,4 +27,8 @@ public record CommandLine(String line) {
     public void executeDynamic() {
         ClickScript.executeDynamic(line);
     }
+
+    public void executeDynamic(ClickScript executor) {
+        ClickScript.executeDynamic(executor, line);
+    }
 }

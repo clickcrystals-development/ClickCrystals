@@ -28,31 +28,28 @@ public class ClickScript implements Global {
             throw new RuntimeException(args.getQuoteAndRemove());
         }));
         this.put("execute", ScriptCommand.create("execute", (command, line, args) -> {
-            ClickScript.executeDynamic(args.getAll().toString());
+            args.executeAll();
         }));
         this.put("loop", ScriptCommand.create("loop", (command, line, args) -> {
             int times = args.get(0).toInt();
             for (int i = 0; i < times; i++) {
-                ClickScript.executeDynamic(args.getAll(1).toString());
+                args.executeAll(1);
             }
         }));
     }};
     public static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
     private final String path;
     private final File file;
-    private int currentLine;
 
     public ClickScript(File file) {
         this.file = file;
         this.path = file.getPath();
-        this.currentLine = 0;
         currentFile.set(file);
     }
 
     private ClickScript(String fakePath) {
         this.path = fakePath;
         this.file = null;
-        this.currentLine = 0;
         currentFile.set(null);
     }
 
@@ -67,12 +64,16 @@ public class ClickScript implements Global {
     }
 
     public static void executeDynamic(String commandLine) {
+        executeDynamic(DEFAULT_DISPATCHER, commandLine);
+    }
+
+    public static void executeDynamic(ClickScript executor, String commandLine) {
         for (CommandLine line : ScriptParser.getStackLines(ScriptParser.condenseLines(commandLine))) {
             if (line.isDeep()) {
-                line.executeDynamic();
+                line.executeDynamic(executor);
             }
             else {
-                line.execute();
+                line.execute(executor);
             }
         }
     }
@@ -83,7 +84,6 @@ public class ClickScript implements Global {
 
     public static void executeSingle(ClickScript executor, String commandLine) {
         executor.executeLine(commandLine);
-        executor.currentLine = 0;
     }
 
     public static void register(ScriptCommand command) {
@@ -115,14 +115,13 @@ public class ClickScript implements Global {
                 throw new ScriptNotFoundException(this);
             }
             String script = ScriptParser.readFile(file.getPath());
-            executeDynamic(script);
+            executeDynamic(this, script);
             /*
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             br.lines().forEach(this::executeLine);
             br.close();
              */
-            currentLine = 0;
         }
         catch (Exception ex) {
             printErrorDetails(ex, "DEFAULT-START-EXECUTION");
@@ -130,7 +129,6 @@ public class ClickScript implements Global {
     }
 
     private void executeLine(String line) {
-        currentLine++;
         if (line != null && !line.trim().isEmpty() && !line.startsWith("//")) {
             String name = line.split(" ")[0];
             ScriptCommand cmd = REGISTRATION.get(name);
@@ -169,12 +167,8 @@ public class ClickScript implements Global {
             execution-details:
             -name: '%s'
             -command: '%s'
-            -location: [line %s at '%s']
-        """.formatted(from, type, msg, name, cmd, currentLine, path);
-    }
-
-    public int getCurrentLine() {
-        return currentLine;
+            -location: [at '%s']
+        """.formatted(from, type, msg, name, cmd, path);
     }
 
     public String getPath() {

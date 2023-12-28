@@ -4,10 +4,24 @@ import java.util.regex.PatternSyntaxException;
 
 public class ScriptArgs {
 
+    private final ClickScript executor;
     private String[] args;
 
-    public ScriptArgs(String... args) {
+    public ScriptArgs(ClickScript executor, String... args) {
+        this.executor = executor;
         this.args = args;
+    }
+
+    public ClickScript getExecutor() {
+        return executor;
+    }
+
+    public ClickScript getExecutorOrDef() {
+        return hasExecutor() ? getExecutor() : ClickScript.DEFAULT_DISPATCHER;
+    }
+
+    public boolean hasExecutor() {
+        return executor != null;
     }
 
     public Arg getAll() {
@@ -72,7 +86,7 @@ public class ScriptArgs {
     }
 
     public void executeAll(int begin) {
-        ClickScript.executeDynamic(getAll(begin).toString());
+        ClickScript.executeDynamic(getExecutorOrDef(), getAll(begin).toString());
     }
 
     public void executeAll() {

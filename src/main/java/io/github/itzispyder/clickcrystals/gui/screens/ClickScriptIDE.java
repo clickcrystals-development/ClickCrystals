@@ -37,14 +37,13 @@ public class ClickScriptIDE extends DefaultBase {
         // special
         this.put(s -> StringUtils.startsWithAny(s, ":", "#"), applyColor.apply(ChatColor.DARK_GREEN));
         this.put(s -> s.replaceAll("[0-9><=!.+~-]", "").isEmpty(), applyColor.apply(ChatColor.DARK_AQUA));
-        this.put(ChatColor.GRAY, "then", "back");
+        this.put(ChatColor.GRAY, "then", "back", "all");
         // enums-leading
         this.put(s -> ArrayUtils.enumContains(OnEventCmd.EventType.class, s), applyUnderline.apply(ChatColor.YELLOW));
         this.put(s -> ArrayUtils.enumContains(IfCmd.ConditionType.class, s), applyItalic.apply(ChatColor.YELLOW));
         this.put(ChatColor.YELLOW, Arrays.stream(InputCmd.Action.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(ModuleCmd.Action.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(TurnToCmd.Mode.values()).map(e -> e.name().toLowerCase()).toList());
-        this.put(ChatColor.YELLOW, Arrays.stream(DropCmd.Type.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(ConfigCmd.Type.values()).map(e -> e.name().toLowerCase()).toList());
         // enums-trailing
         this.put(ChatColor.YELLOW, Arrays.stream(IfCmd.Dimensions.values()).map(e -> e.name().toLowerCase()).toList());
