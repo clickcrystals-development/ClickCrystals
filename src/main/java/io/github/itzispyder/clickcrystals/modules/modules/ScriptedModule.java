@@ -4,9 +4,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
-import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
-import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
-import io.github.itzispyder.clickcrystals.events.events.client.TakeDamageEvent;
+import io.github.itzispyder.clickcrystals.events.events.client.*;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameJoinEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
@@ -41,6 +39,8 @@ public class ScriptedModule extends ListenerModule {
     public final List<BlockInteractListener> blockInteractListeners = new ArrayList<>();
     public final List<ItemUseListener> itemUseListeners = new ArrayList<>();
     public final List<ItemConsumeListener> itemConsumeListeners = new ArrayList<>();
+    public final List<ChatReceiveListener> chatReceiveListeners = new ArrayList<>();
+    public final List<ChatSendListener> chatSendListeners = new ArrayList<>();
     public final List<Runnable> totemPopListeners = new ArrayList<>();
     public final List<Runnable> moduleEnableListeners = new ArrayList<>();
     public final List<Runnable> moduleDisableListeners = new ArrayList<>();
@@ -89,6 +89,8 @@ public class ScriptedModule extends ListenerModule {
 
         itemUseListeners.clear();
         itemConsumeListeners.clear();
+        chatReceiveListeners.clear();
+        chatSendListeners.clear();
     }
 
     @EventHandler
@@ -131,6 +133,20 @@ public class ScriptedModule extends ListenerModule {
     @EventHandler
     public void onItemConsume(ItemConsumeEvent e) {
         for (ItemConsumeListener l : itemConsumeListeners) {
+            l.pass(e);
+        }
+    }
+
+    @EventHandler
+    public void onChatReceive(ChatReceiveEvent e) {
+        for (ChatReceiveListener l : chatReceiveListeners) {
+            l.pass(e);
+        }
+    }
+
+    @EventHandler
+    public void onChatSend(ChatSendEvent e) {
+        for (ChatSendListener l : chatSendListeners) {
             l.pass(e);
         }
     }
@@ -246,6 +262,16 @@ public class ScriptedModule extends ListenerModule {
     @FunctionalInterface
     public interface MoveListener {
         void pass(PlayerMoveC2SPacket e);
+    }
+
+    @FunctionalInterface
+    public interface ChatReceiveListener {
+        void pass(ChatReceiveEvent e);
+    }
+
+    @FunctionalInterface
+    public interface ChatSendListener {
+        void pass(ChatSendEvent e);
     }
 
     public static int runModuleScripts() {

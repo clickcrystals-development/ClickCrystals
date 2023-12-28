@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.scripts;
 
+import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
@@ -30,6 +31,7 @@ public class OnEventCmd extends ScriptCommand {
             case PLACE_BLOCK, BREAK_BLOCK, INTERACT_BLOCK, PUNCH_BLOCK -> passBlock(args, type);
             case KEY_PRESS, KEY_RELEASE -> passKey(args, type);
             case MOVE_LOOK, MOVE_POS -> passMove(args, type);
+            case CHAT_SEND, CHAT_RECEIVE -> passChat(args, type);
 
             case TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.tickListeners.add(event -> exc(args, 1)));
             case ITEM_USE -> ModuleCmd.runOnCurrentScriptModule(m -> m.itemUseListeners.add(event -> exc(args, 1)));
@@ -41,6 +43,24 @@ public class OnEventCmd extends ScriptCommand {
             case DEATH -> ModuleCmd.runOnCurrentScriptModule(m -> m.deathListeners.add(() -> exc(args, 1)));
             case GAME_JOIN -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameJoinListeners.add(() -> exc(args, 1)));
             case GAME_LEAVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameLeaveListeners.add(() -> exc(args, 1)));
+        }
+    }
+
+    public void passChat(ScriptArgs args, EventType type) {
+        String msg = args.getQuoteAndRemove(1);
+        String rest = args.getAll().toString();
+
+        switch (type) {
+            case CHAT_RECEIVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatReceiveListeners.add(event -> {
+                if (event.getMessage().contains(msg)) {
+                    ClickScript.executeDynamic(rest);
+                }
+            }));
+            case CHAT_SEND -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatSendListeners.add(event -> {
+                if (event.getMessage().contains(msg)) {
+                    ClickScript.executeDynamic(rest);
+                }
+            }));
         }
     }
 
@@ -234,6 +254,8 @@ public class OnEventCmd extends ScriptCommand {
         DAMAGE,
         DEATH,
         GAME_JOIN,
-        GAME_LEAVE
+        GAME_LEAVE,
+        CHAT_SEND,
+        CHAT_RECEIVE
     }
 }
