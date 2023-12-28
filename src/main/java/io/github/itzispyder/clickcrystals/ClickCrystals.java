@@ -164,6 +164,7 @@ public final class ClickCrystals implements ModInitializer {
         ClickScript.register(new ConfigCmd());
         ClickScript.register(new NotifyCmd());
         ClickScript.register(new ExecuteRandomCmd());
+        ClickScript.register(new PlaySoundCmd());
         ScriptedModule.runModuleScripts();
     }
 
@@ -191,6 +192,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addCommand(new LookCommand());
         system.addCommand(new CCScriptCommand());
         system.addCommand(new ReloadCommand());
+        system.addCommand(new FolderCommand());
 
         // Hud
         system.addHud(new IconRelativeHud());

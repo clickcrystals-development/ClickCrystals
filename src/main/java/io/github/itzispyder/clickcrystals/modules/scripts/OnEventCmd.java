@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
@@ -181,6 +182,28 @@ public class OnEventCmd extends ScriptCommand {
             return ent -> ent.getType() == Registries.ENTITY_TYPE.get(id);
         }
         return ent -> false;
+    }
+
+    public static SoundEvent parseSoundEvent(String arg) {
+        if (arg == null || arg.length() <= 1) {
+            return null;
+        }
+        else if (arg.startsWith("#")) {
+            String subArg = arg.substring(1);
+            Identifier result = null;
+            for (Identifier id : Registries.SOUND_EVENT.getIds()) {
+                if (id.getPath().contains(subArg)) {
+                    result = id;
+                    break;
+                }
+            }
+            return result == null ? null : Registries.SOUND_EVENT.get(result);
+        }
+        else if (arg.startsWith(":")) {
+            Identifier id = new Identifier("minecraft", arg.substring(1));
+            return Registries.SOUND_EVENT.get(id);
+        }
+        return null;
     }
 
     public static void executeWithThen(ScriptArgs args, int begin) {

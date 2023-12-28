@@ -1,6 +1,8 @@
 package io.github.itzispyder.clickcrystals.client.clickscript;
 
-public abstract class ScriptCommand {
+import io.github.itzispyder.clickcrystals.Global;
+
+public abstract class ScriptCommand implements Global {
 
     private final String name;
 

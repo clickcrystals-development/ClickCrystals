@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.clickscript.components.CommandLine;
 import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.ScriptNotFoundException;
 import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.UnknownCommandException;
+import io.github.itzispyder.clickcrystals.commands.Command;
 
 import java.io.File;
 import java.util.HashMap;
@@ -144,9 +145,14 @@ public class ClickScript implements Global {
         }
     }
 
-
     public void printErrorDetails(Exception ex, String cmd) {
-        system.printErr(getErrorDetails(ex, cmd));
+        String error = getErrorDetails(ex, cmd);
+        if (mc == null || mc.world == null || mc.player == null) {
+            system.printErr(error);
+        }
+        else {
+            Command.error(error);
+        }
     }
 
     public String getErrorDetails(Exception ex, String cmd) {
@@ -156,7 +162,7 @@ public class ClickScript implements Global {
         String name = cmd.split(" ")[0];
 
         return """
-        %nError found in ClickScript command execution:
+        \nError found in ClickScript command execution:
             from: %s
             type: %s
             message: '%s'
