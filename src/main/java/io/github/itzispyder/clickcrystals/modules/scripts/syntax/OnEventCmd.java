@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
+import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.scripts.client.ModuleCmd;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -16,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,7 +95,7 @@ public class OnEventCmd extends ScriptCommand {
 
     public void passKey(ScriptArgs args, EventType eventType) {
         ModuleCmd.runOnCurrentScriptModule(m -> m.keyListeners.add(event -> {
-            if (matchKeyPress(eventType, event, args)) {
+            if (matchKeyPress(eventType, event, args.get(1).toString())) {
                 exc(args, 2);
             }
         }));
@@ -122,21 +122,19 @@ public class OnEventCmd extends ScriptCommand {
         executeWithThen(args, begin);
     }
 
-    private boolean matchKeyPress(EventType type, KeyPressEvent event, ScriptArgs args) {
+    private boolean matchKeyPress(EventType type, KeyPressEvent event, String keyName) {
         ClickType action = event.getAction();
-        String typed = GLFW.glfwGetKeyName(event.getKeycode(), event.getScancode());
+        String typed = Keybind.getExtendedKeyName(event.getKeycode(), event.getScancode());
 
         if (typed == null) {
             return false;
         }
 
-        char input = typed.isEmpty() ? ' ' : typed.charAt(0);
-
         if (type == EventType.KEY_PRESS && action.isDown()) {
-            return args.get(1).toChar() == input;
+            return keyName.equalsIgnoreCase(typed);
         }
         else if (type == EventType.KEY_RELEASE && action.isRelease()) {
-            return args.get(1).toChar() == input;
+            return keyName.equalsIgnoreCase(typed);
         }
         return false;
     }

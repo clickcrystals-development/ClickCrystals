@@ -95,10 +95,8 @@ public class ScriptedModule extends ListenerModule {
 
     @EventHandler
     public void onMouseClick(MouseClickEvent e) {
-        if (e.isScreenNull()) {
-            for (ClickListener l : clickListeners) {
-                l.pass(e);
-            }
+        for (ClickListener l : clickListeners) {
+            l.pass(e);
         }
     }
 
@@ -192,10 +190,8 @@ public class ScriptedModule extends ListenerModule {
 
     @EventHandler
     public void onKeyPress(KeyPressEvent e) {
-        if (e.isScreenNull()) {
-            for (KeyListener l : keyListeners) {
-                l.pass(e);
-            }
+        for (KeyListener l : keyListeners) {
+            l.pass(e);
         }
     }
 
