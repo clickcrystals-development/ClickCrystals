@@ -1,7 +1,8 @@
-package io.github.itzispyder.clickcrystals.modules.scripts;
+package io.github.itzispyder.clickcrystals.modules.scripts.macros;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
+import io.github.itzispyder.clickcrystals.modules.scripts.syntax.OnEventCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 

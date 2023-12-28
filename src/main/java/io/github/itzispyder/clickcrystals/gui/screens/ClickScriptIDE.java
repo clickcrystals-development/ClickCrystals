@@ -12,7 +12,12 @@ import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
-import io.github.itzispyder.clickcrystals.modules.scripts.*;
+import io.github.itzispyder.clickcrystals.modules.scripts.client.ConfigCmd;
+import io.github.itzispyder.clickcrystals.modules.scripts.client.ModuleCmd;
+import io.github.itzispyder.clickcrystals.modules.scripts.macros.InputCmd;
+import io.github.itzispyder.clickcrystals.modules.scripts.macros.TurnToCmd;
+import io.github.itzispyder.clickcrystals.modules.scripts.syntax.IfCmd;
+import io.github.itzispyder.clickcrystals.modules.scripts.syntax.OnEventCmd;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
@@ -37,14 +42,13 @@ public class ClickScriptIDE extends DefaultBase {
         // special
         this.put(s -> StringUtils.startsWithAny(s, ":", "#"), applyColor.apply(ChatColor.DARK_GREEN));
         this.put(s -> s.replaceAll("[0-9><=!.+~-]", "").isEmpty(), applyColor.apply(ChatColor.DARK_AQUA));
-        this.put(ChatColor.GRAY, "then", "back");
+        this.put(ChatColor.GRAY, "then", "back", "all");
         // enums-leading
         this.put(s -> ArrayUtils.enumContains(OnEventCmd.EventType.class, s), applyUnderline.apply(ChatColor.YELLOW));
         this.put(s -> ArrayUtils.enumContains(IfCmd.ConditionType.class, s), applyItalic.apply(ChatColor.YELLOW));
         this.put(ChatColor.YELLOW, Arrays.stream(InputCmd.Action.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(ModuleCmd.Action.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(TurnToCmd.Mode.values()).map(e -> e.name().toLowerCase()).toList());
-        this.put(ChatColor.YELLOW, Arrays.stream(DropCmd.Type.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(ConfigCmd.Type.values()).map(e -> e.name().toLowerCase()).toList());
         // enums-trailing
         this.put(ChatColor.YELLOW, Arrays.stream(IfCmd.Dimensions.values()).map(e -> e.name().toLowerCase()).toList());

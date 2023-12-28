@@ -27,7 +27,13 @@ import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
-import io.github.itzispyder.clickcrystals.modules.scripts.*;
+import io.github.itzispyder.clickcrystals.modules.scripts.client.*;
+import io.github.itzispyder.clickcrystals.modules.scripts.macros.*;
+import io.github.itzispyder.clickcrystals.modules.scripts.macros.inventory.GuiDropCmd;
+import io.github.itzispyder.clickcrystals.modules.scripts.macros.inventory.GuiQuickMoveCmd;
+import io.github.itzispyder.clickcrystals.modules.scripts.macros.inventory.GuiSwapCmd;
+import io.github.itzispyder.clickcrystals.modules.scripts.macros.inventory.GuiSwitchCmd;
+import io.github.itzispyder.clickcrystals.modules.scripts.syntax.*;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -169,6 +175,9 @@ public final class ClickCrystals implements ModInitializer {
         ClickScript.register(new TeleportCmd());
         ClickScript.register(new WhileCmd());
         ClickScript.register(new WhileNotCmd());
+        ClickScript.register(new GuiSwapCmd());
+        ClickScript.register(new GuiDropCmd());
+        ClickScript.register(new GuiQuickMoveCmd());
         ScriptedModule.runModuleScripts();
     }
 

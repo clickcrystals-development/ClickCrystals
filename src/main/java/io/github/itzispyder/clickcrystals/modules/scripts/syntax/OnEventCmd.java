@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.scripts;
+package io.github.itzispyder.clickcrystals.modules.scripts.syntax;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
@@ -6,10 +6,12 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
+import io.github.itzispyder.clickcrystals.modules.scripts.client.ModuleCmd;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
@@ -56,18 +58,19 @@ public class OnEventCmd extends ScriptCommand {
     }
 
     public void passChat(ScriptArgs args, EventType type) {
+        ClickScript dispatcher = args.getExecutorOrDef();
         String msg = args.getQuoteAndRemove(1);
         String rest = args.getAll().toString();
 
         switch (type) {
             case CHAT_RECEIVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatReceiveListeners.add(event -> {
                 if (event.getMessage().contains(msg)) {
-                    ClickScript.executeDynamic(rest);
+                    ClickScript.executeDynamic(dispatcher, rest);
                 }
             }));
             case CHAT_SEND -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatSendListeners.add(event -> {
                 if (event.getMessage().contains(msg)) {
-                    ClickScript.executeDynamic(rest);
+                    ClickScript.executeDynamic(dispatcher, rest);
                 }
             }));
         }
@@ -237,6 +240,28 @@ public class OnEventCmd extends ScriptCommand {
         else if (arg.startsWith(":")) {
             Identifier id = new Identifier("minecraft", arg.substring(1));
             return Registries.SOUND_EVENT.get(id);
+        }
+        return null;
+    }
+
+    public static StatusEffect parseStatusEffect(String arg) {
+        if (arg == null || arg.length() <= 1) {
+            return null;
+        }
+        else if (arg.startsWith("#")) {
+            String subArg = arg.substring(1);
+            Identifier result = null;
+            for (Identifier id : Registries.STATUS_EFFECT.getIds()) {
+                if (id.getPath().contains(subArg)) {
+                    result = id;
+                    break;
+                }
+            }
+            return result == null ? null : Registries.STATUS_EFFECT.get(result);
+        }
+        else if (arg.startsWith(":")) {
+            Identifier id = new Identifier("minecraft", arg.substring(1));
+            return Registries.STATUS_EFFECT.get(id);
         }
         return null;
     }

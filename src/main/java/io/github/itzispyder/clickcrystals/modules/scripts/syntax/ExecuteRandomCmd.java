@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.scripts;
+package io.github.itzispyder.clickcrystals.modules.scripts.syntax;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
@@ -27,7 +27,7 @@ public class ExecuteRandomCmd extends ScriptCommand {
 
         if (!lines.isEmpty()) {
             Randomizer random = new Randomizer();
-            random.getRandomElement(lines).executeDynamic();
+            random.getRandomElement(lines).executeDynamic(args.getExecutorOrDef());
         }
     }
 }

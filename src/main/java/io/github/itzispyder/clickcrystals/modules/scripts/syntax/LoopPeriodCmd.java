@@ -1,7 +1,6 @@
-package io.github.itzispyder.clickcrystals.modules.scripts;
+package io.github.itzispyder.clickcrystals.modules.scripts.syntax;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 
@@ -19,6 +18,6 @@ public class LoopPeriodCmd extends ScriptCommand implements Global {
     }
 
     public synchronized void exc(ScriptArgs args) {
-        ClickScript.executeDynamic(args.getAll(2).toString());
+        mc.execute(() -> args.executeAll(2));
     }
 }

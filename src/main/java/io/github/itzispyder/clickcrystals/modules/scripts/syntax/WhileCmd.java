@@ -1,14 +1,14 @@
-package io.github.itzispyder.clickcrystals.modules.scripts;
+package io.github.itzispyder.clickcrystals.modules.scripts.syntax;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 
 import java.util.concurrent.CompletableFuture;
 
-public class WhileNotCmd extends ScriptCommand {
+public class WhileCmd extends ScriptCommand {
 
-    public WhileNotCmd() {
-        super("while_not");
+    public WhileCmd() {
+        super("while");
     }
 
     @Override
@@ -20,7 +20,7 @@ public class WhileNotCmd extends ScriptCommand {
 
         CompletableFuture.runAsync(() -> {
             var condition = IfCmd.parseCondition(type, args, beginIndex);
-            while (!condition.left) {
+            while (condition.left) {
                 try {
                     executeOnClient(args, condition.right);
                     Thread.sleep(millis);

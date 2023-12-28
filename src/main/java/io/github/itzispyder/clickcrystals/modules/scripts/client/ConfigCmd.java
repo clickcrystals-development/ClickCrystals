@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.scripts;
+package io.github.itzispyder.clickcrystals.modules.scripts.client;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
@@ -15,6 +15,7 @@ public class ConfigCmd extends ScriptCommand implements Global {
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
         switch (args.get(0).toEnum(Type.class, null)) {
             case SAVE -> saveEntireConfig();
+            case LOAD -> ClickCrystals.config.loadEntireConfig();
             case RELOAD -> {
                 saveEntireConfig();
                 ClickCrystals.config.loadEntireConfig();
@@ -37,6 +38,7 @@ public class ConfigCmd extends ScriptCommand implements Global {
 
     public enum Type {
         SAVE,
+        LOAD,
         RELOAD
     }
 }

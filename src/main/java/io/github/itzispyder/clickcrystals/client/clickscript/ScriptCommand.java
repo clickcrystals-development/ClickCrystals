@@ -16,7 +16,7 @@ public abstract class ScriptCommand implements Global {
         try {
             if (cmd != null && !cmd.isEmpty() && cmd.startsWith(name)) {
                 String[] args = cmd.replaceFirst(name, "").trim().split(" ");
-                onCommand(this, cmd, new ScriptArgs(args));
+                onCommand(this, cmd, new ScriptArgs(script, args));
             }
         }
         catch (Exception ex) {
