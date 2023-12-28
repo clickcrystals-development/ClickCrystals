@@ -26,6 +26,29 @@ public class Keybind {
             GLFW.GLFW_KEY_LEFT, "⇦",
             GLFW.GLFW_KEY_RIGHT, "⇨"
     );
+    public static final Map<Integer, String> EXTENDED_NAMES = ManualMap.fromItems(
+            GLFW.GLFW_KEY_LEFT_SHIFT, "left_shift",
+            GLFW.GLFW_KEY_RIGHT_SHIFT, "right_shift",
+            GLFW.GLFW_KEY_LEFT_ALT, "left_alt",
+            GLFW.GLFW_KEY_RIGHT_ALT, "right_alt",
+            GLFW.GLFW_KEY_LEFT_CONTROL, "left_control",
+            GLFW.GLFW_KEY_RIGHT_CONTROL, "right_control",
+            GLFW.GLFW_KEY_PAGE_DOWN, "page_down",
+            GLFW.GLFW_KEY_PAGE_UP, "page_up",
+            GLFW.GLFW_KEY_UP, "up_arrow",
+            GLFW.GLFW_KEY_DOWN, "down_arrow",
+            GLFW.GLFW_KEY_LEFT, "left_arrow",
+            GLFW.GLFW_KEY_RIGHT, "right_arrow",
+            GLFW.GLFW_KEY_ESCAPE, "escape",
+            GLFW.GLFW_KEY_BACKSPACE, "backspace",
+            GLFW.GLFW_KEY_INSERT, "insert",
+            GLFW.GLFW_KEY_DELETE, "delete",
+            GLFW.GLFW_KEY_HOME, "home",
+            GLFW.GLFW_KEY_END, "end",
+            GLFW.GLFW_KEY_TAB, "tab",
+            GLFW.GLFW_KEY_CAPS_LOCK, "capslock",
+            GLFW.GLFW_KEY_SPACE, "space"
+    );
     private final String name, id;
     private int key, defaultKey;
     private KeyAction keyAction, changeAction;
@@ -71,6 +94,14 @@ public class Keybind {
         String name = GLFW.glfwGetKeyName(key, 32);
         if (name == null) {
             name = EXTRAS.getOrDefault(key, "NONE");
+        }
+        return name;
+    }
+
+    public static String getExtendedKeyName(int key, int scancode) {
+        String name = GLFW.glfwGetKeyName(key, scancode);
+        if (name == null) {
+            name = EXTENDED_NAMES.get(key);
         }
         return name;
     }

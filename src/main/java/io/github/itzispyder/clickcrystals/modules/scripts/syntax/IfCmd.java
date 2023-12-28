@@ -139,20 +139,26 @@ public class IfCmd extends ScriptCommand implements Global {
                 return pair(bl, i + 2);
             }
             case EFFECT_AMPLIFIER -> {
-                StatusEffect statusEffect = OnEventCmd.parseStatusEffect(args.get(1).toString());
+                StatusEffect statusEffect = OnEventCmd.parseStatusEffect(args.get(i + 1).toString());
                 StatusEffectInstance effect = PlayerUtils.player().getStatusEffect(statusEffect);
                 if (effect == null) {
                     effect = new StatusEffectInstance(statusEffect);
                 }
-                return pair(evalIntegers(effect.getAmplifier(), args.get(2).toString()), 3);
+                return pair(evalIntegers(effect.getAmplifier(), args.get(i + 2).toString()), i + 3);
             }
             case EFFECT_DURATION -> {
-                StatusEffect statusEffect = OnEventCmd.parseStatusEffect(args.get(1).toString());
+                StatusEffect statusEffect = OnEventCmd.parseStatusEffect(args.get(i + 1).toString());
                 StatusEffectInstance effect = PlayerUtils.player().getStatusEffect(statusEffect);
                 if (effect == null) {
                     effect = new StatusEffectInstance(statusEffect);
                 }
-                return pair(evalIntegers(effect.getDuration(), args.get(2).toString()), 3);
+                return pair(evalIntegers(effect.getDuration(), args.get(i + 2).toString()), i + 3);
+            }
+            case IN_GAME -> {
+                return pair(mc != null && mc.world != null && mc.player != null, i + 1);
+            }
+            case PLAYING -> {
+                return pair(mc != null && mc.world != null && mc.player != null && mc.currentScreen == null, i + 1);
             }
         }
         return pair(false, 0);
@@ -184,7 +190,9 @@ public class IfCmd extends ScriptCommand implements Global {
         BLOCK,
         DIMENSION,
         EFFECT_DURATION,
-        EFFECT_AMPLIFIER
+        EFFECT_AMPLIFIER,
+        IN_GAME,
+        PLAYING
     }
 
     /**
