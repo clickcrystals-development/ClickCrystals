@@ -7,6 +7,8 @@ import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -14,9 +16,16 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class OnEventCmd extends ScriptCommand {
+
+    private static final Map<String, Predicate<BlockState>> defaultedBlockPredicates = new HashMap<>() {{
+        this.put("uncharged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) < 1);
+        this.put("charged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) > 0);
+    }};
 
     public OnEventCmd() {
         super("on");
@@ -184,7 +193,13 @@ public class OnEventCmd extends ScriptCommand {
             return block -> block.getBlock().getTranslationKey().contains(arg.substring(1));
         }
         else if (arg.startsWith(":")) {
-            Identifier id = new Identifier("minecraft", arg.substring(1));
+            String subArg = arg.substring(1);
+
+            if (defaultedBlockPredicates.containsKey(subArg)) {
+                return defaultedBlockPredicates.get(subArg);
+            }
+
+            Identifier id = new Identifier("minecraft", subArg);
             return block -> block.getBlock() == Registries.BLOCK.get(id);
         }
         return block -> false;

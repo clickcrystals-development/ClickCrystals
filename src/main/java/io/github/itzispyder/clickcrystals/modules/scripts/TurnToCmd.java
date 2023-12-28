@@ -23,7 +23,7 @@ public class TurnToCmd extends ScriptCommand {
             return;
         }
 
-        // ex.      turn_to nearest_entity :creeper on_finish say Yo
+        // ex.      turn_to nearest_entity :creeper then say Yo
         Vec3d eyes = PlayerUtils.player().getEyePos();
 
         switch (args.get(0).toEnum(Mode.class, null)) {

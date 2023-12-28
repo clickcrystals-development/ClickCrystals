@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.system.Notification;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.PlayerArgumentType;
@@ -21,6 +22,7 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CCDebugCommand extends Command {
@@ -35,6 +37,17 @@ public class CCDebugCommand extends Command {
                     ChatUtils.sendPrefixMessage(StringUtils.color("&cPlease provide an item!"));
                     return SINGLE_SUCCESS;
                 })
+                .then(literal("script-commands")
+                        .executes(context -> {
+                            List<String> scriptCommands = Arrays.asList(ClickScript.collectNames());
+
+                            ChatUtils.sendBlank(2);
+                            ChatUtils.sendPrefixMessage("All ClickScript commands:");
+                            ChatUtils.sendBlank(1);
+                            ChatUtils.sendMessage("Script commands (" + scriptCommands.size() + "): " + ArrayUtils.list2string(scriptCommands));
+                            ChatUtils.sendBlank(2);
+                            return SINGLE_SUCCESS;
+                        }))
                 .then(literal("listeners")
                         .executes(context -> {
                             List<String> activeListeners = system.listeners().stream().map(l -> l.getClass().getSimpleName()).toList();

@@ -165,6 +165,8 @@ public final class ClickCrystals implements ModInitializer {
         ClickScript.register(new NotifyCmd());
         ClickScript.register(new ExecuteRandomCmd());
         ClickScript.register(new PlaySoundCmd());
+        ClickScript.register(new SnapToCmd());
+        ClickScript.register(new TeleportCmd());
         ScriptedModule.runModuleScripts();
     }
 
