@@ -1,7 +1,5 @@
 package io.github.itzispyder.clickcrystals.client.clickscript;
 
-import java.util.regex.PatternSyntaxException;
-
 public class ScriptArgs {
 
     private final ClickScript executor;
@@ -116,51 +114,27 @@ public class ScriptArgs {
         }
 
         public int toInt() {
-            try {
-                return Integer.parseInt(arg.replaceAll("[^0-9-+]", ""));
-            } catch (NumberFormatException | PatternSyntaxException ex) {
-                return 0;
-            }
+            return Integer.parseInt(arg.replaceAll("[^0-9-+]", ""));
         }
 
         public long toLong() {
-            try {
-                return Long.parseLong(arg.replaceAll("[^0-9-+]", ""));
-            } catch (NumberFormatException | PatternSyntaxException ex) {
-                return 0L;
-            }
+            return Long.parseLong(arg.replaceAll("[^0-9-+]", ""));
         }
 
         public byte toByte() {
-            try {
-                return Byte.parseByte(arg.replaceAll("[^0-9-+]", ""));
-            } catch (NumberFormatException | PatternSyntaxException ex) {
-                return 0;
-            }
+            return Byte.parseByte(arg.replaceAll("[^0-9-+]", ""));
         }
 
         public short toShort() {
-            try {
-                return Short.parseShort(arg.replaceAll("[^0-9-+]", ""));
-            } catch (NumberFormatException | PatternSyntaxException ex) {
-                return 0;
-            }
+            return Short.parseShort(arg.replaceAll("[^0-9-+]", ""));
         }
 
         public double toDouble() {
-            try {
-                return Double.parseDouble(arg.replaceAll("[^0-9-+e.]", ""));
-            } catch (NumberFormatException | PatternSyntaxException ex) {
-                return 0.0;
-            }
+            return Double.parseDouble(arg.replaceAll("[^0-9-+e.]", ""));
         }
 
         public float toFloat() {
-            try {
-                return Float.parseFloat(arg.replaceAll("[^0-9-+e.]", ""));
-            } catch (NumberFormatException | PatternSyntaxException ex) {
-                return 0.0F;
-            }
+            return Float.parseFloat(arg.replaceAll("[^0-9-+e.]", ""));
         }
 
         public boolean toBool() {
@@ -176,12 +150,20 @@ public class ScriptArgs {
             return arg;
         }
 
+        public <T extends Enum<?>> T toEnum(Class<T> enumType) {
+            return toEnum(enumType, null);
+        }
+
         public <T extends Enum<?>> T toEnum(Class<T> enumType, T fallback) {
             String arg = this.arg.replace('-', '_');
             for (T constant : enumType.getEnumConstants()) {
                 if (arg.equalsIgnoreCase(constant.name())) {
                     return constant;
                 }
+            }
+
+            if (fallback == null) {
+                throw new IllegalArgumentException("'%s' is not a value of %s".formatted(arg, enumType.getSimpleName()));
             }
             return fallback;
         }

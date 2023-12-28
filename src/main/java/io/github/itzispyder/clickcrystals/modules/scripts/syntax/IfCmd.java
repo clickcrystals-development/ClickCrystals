@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.scripts.macros.InputCmd;
-import io.github.itzispyder.clickcrystals.modules.scripts.macros.OnEventCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.LocationParser;
@@ -13,6 +12,8 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -137,6 +138,22 @@ public class IfCmd extends ScriptCommand implements Global {
                 }
                 return pair(bl, i + 2);
             }
+            case EFFECT_AMPLIFIER -> {
+                StatusEffect statusEffect = OnEventCmd.parseStatusEffect(args.get(1).toString());
+                StatusEffectInstance effect = PlayerUtils.player().getStatusEffect(statusEffect);
+                if (effect == null) {
+                    effect = new StatusEffectInstance(statusEffect);
+                }
+                return pair(evalIntegers(effect.getAmplifier(), args.get(2).toString()), 3);
+            }
+            case EFFECT_DURATION -> {
+                StatusEffect statusEffect = OnEventCmd.parseStatusEffect(args.get(1).toString());
+                StatusEffectInstance effect = PlayerUtils.player().getStatusEffect(statusEffect);
+                if (effect == null) {
+                    effect = new StatusEffectInstance(statusEffect);
+                }
+                return pair(evalIntegers(effect.getDuration(), args.get(2).toString()), 3);
+            }
         }
         return pair(false, 0);
     }
@@ -165,7 +182,9 @@ public class IfCmd extends ScriptCommand implements Global {
         POS_Z,
         MODULE_ENABLED,
         BLOCK,
-        DIMENSION
+        DIMENSION,
+        EFFECT_DURATION,
+        EFFECT_AMPLIFIER
     }
 
     /**

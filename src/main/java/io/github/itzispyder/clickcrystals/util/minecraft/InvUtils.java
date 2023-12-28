@@ -51,12 +51,16 @@ public final class InvUtils {
     }
 
     public static int search(Item item) {
+        return search(stack -> stack.isOf(item));
+    }
+
+    public static int search(Predicate<ItemStack> item) {
         if (item == null) return -1;
 
         for (int i = 0; i < inv().main.size(); i++) {
             ItemStack stack = inv().getStack(i);
             if (stack == null || stack.isEmpty()) continue;
-            if (stack.isOf(item)) return i;
+            if (item.test(stack)) return i;
         }
 
         return -1;
