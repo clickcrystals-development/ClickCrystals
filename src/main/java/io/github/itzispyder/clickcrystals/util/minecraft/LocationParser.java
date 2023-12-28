@@ -10,7 +10,7 @@ public class LocationParser {
     private final double x, y, z;
 
     public LocationParser(String input) {
-        String[] secs = input.replaceAll("[^0-9 -]", "").trim().split(" ");
+        String[] secs = input.replaceAll("[^0-9 .-]", "").trim().split(" ");
         double x = 0.0;
         double y = 0.0;
         double z = 0.0;
@@ -36,7 +36,7 @@ public class LocationParser {
     }
 
     public LocationParser(String input, Vec3d relativeTo) {
-        String[] secs = input.replaceAll("[^0-9 ~-]", "").trim().split(" ");
+        String[] secs = input.replaceAll("[^0-9 .~-]", "").trim().split(" ");
         double x = 0.0;
         double y = 0.0;
         double z = 0.0;
@@ -44,21 +44,21 @@ public class LocationParser {
         for (int i = 0; i < secs.length; i++) {
             switch (i) {
                 case 0 -> {
-                    String parsing = secs[i].replaceAll("[^0-9-]", "");
+                    String parsing = secs[i].replaceAll("[^0-9.-]", "");
                     if (!parsing.isEmpty()) {
                         x = Double.parseDouble(parsing);
                     }
                     x = secs[i].contains("~") ? relativeTo.getX() + x : x;
                 }
                 case 1 -> {
-                    String parsing = secs[i].replaceAll("[^0-9-]", "");
+                    String parsing = secs[i].replaceAll("[^0-9.-]", "");
                     if (!parsing.isEmpty()) {
                         y = Double.parseDouble(parsing);
                     }
                     y = secs[i].contains("~") ? relativeTo.getY() + y : y;
                 }
                 case 2 -> {
-                    String parsing = secs[i].replaceAll("[^0-9-]", "");
+                    String parsing = secs[i].replaceAll("[^0-9.-]", "");
                     if (!parsing.isEmpty()) {
                         z = Double.parseDouble(parsing);
                     }
