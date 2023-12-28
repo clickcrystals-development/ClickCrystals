@@ -130,7 +130,6 @@ public class ClickScript implements Global {
     }
 
     private void executeLine(String line) {
-        system.scriptHistoryLogger.log("EXECUTION", line);
         currentLine++;
         if (line != null && !line.trim().isEmpty() && !line.startsWith("//")) {
             String name = line.split(" ")[0];

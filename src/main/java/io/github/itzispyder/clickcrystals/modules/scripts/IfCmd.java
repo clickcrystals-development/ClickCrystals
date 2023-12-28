@@ -8,6 +8,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.LocationParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.registry.RegistryKey;
@@ -27,130 +28,119 @@ public class IfCmd extends ScriptCommand implements Global {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        ConditionType type = args.get(0).toEnum(ConditionType.class, null);
+        int beginIndex = 0;
+        ConditionType type = args.get(beginIndex).toEnum(ConditionType.class, null);
+        var condition = parseCondition(type, args, beginIndex);
 
-        if (mc == null || PlayerUtils.playerNull()) {
-            return;
+        if (condition.left) {
+            OnEventCmd.executeWithThen(args, condition.right);
         }
+    }
 
+    /**
+     * Parse clickscript condition
+     * @param type target condition type
+     * @param args script command arguments
+     * @param beginIndex begin read index
+     * @return pair(yourCondition, theNextBeginIndex)
+     */
+    public static Pair<Boolean, Integer> parseCondition(ConditionType type, ScriptArgs args, int beginIndex) {
+        int i = beginIndex;
         switch (type) {
             case HOLDING -> {
-                if (OnEventCmd.parseItemPredicate(args.get(1).toString()).test(HotbarUtils.getHand())) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                return pair(OnEventCmd.parseItemPredicate(args.get(i + 1).toString()).test(HotbarUtils.getHand()), i + 2);
             }
             case OFF_HOLDING -> {
-                if (OnEventCmd.parseItemPredicate(args.get(1).toString()).test(HotbarUtils.getHand(Hand.OFF_HAND))) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                return pair(OnEventCmd.parseItemPredicate(args.get(i + 1).toString()).test(HotbarUtils.getHand(Hand.OFF_HAND)), i + 2);
             }
             case TARGET_BLOCK -> {
-                if (mc.crosshairTarget instanceof BlockHitResult hit) {
-                    if (OnEventCmd.parseBlockPredicate(args.get(1).toString()).test(PlayerUtils.getWorld().getBlockState(hit.getBlockPos()))) {
-                        OnEventCmd.executeWithThen(args, 2);
-                    }
-                }
+                boolean bl = mc.crosshairTarget instanceof BlockHitResult hit && OnEventCmd.parseBlockPredicate(args.get(i + 1).toString()).test(PlayerUtils.getWorld().getBlockState(hit.getBlockPos()));
+                return pair(bl, i + 2);
             }
             case TARGET_ENTITY -> {
-                if (mc.crosshairTarget instanceof EntityHitResult hit) {
-                    if (OnEventCmd.parseEntityPredicate(args.get(1).toString()).test(hit.getEntity())) {
-                        OnEventCmd.executeWithThen(args, 2);
-                    }
-                }
+                boolean bl = mc.crosshairTarget instanceof EntityHitResult hit && OnEventCmd.parseEntityPredicate(args.get(i + 1).toString()).test(hit.getEntity());
+                return pair(bl, i + 2);
+            }
+            case TARGETING_BLOCK -> {
+                return pair(mc.crosshairTarget instanceof BlockHitResult hit && !PlayerUtils.getWorld().getBlockState(hit.getBlockPos()).isAir(), i + 1);
+            }
+            case TARGETING_ENTITY -> {
+                return pair(mc.crosshairTarget instanceof EntityHitResult hit && hit.getEntity().isAlive(), i + 1);
             }
             case INVENTORY_HAS -> {
-                if (InvUtils.has(OnEventCmd.parseItemPredicate(args.get(1).toString()))) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                return pair(InvUtils.has(OnEventCmd.parseItemPredicate(args.get(i + 1).toString())), i + 2);
             }
             case HOTBAR_HAS -> {
-                if (HotbarUtils.has(OnEventCmd.parseItemPredicate(args.get(1).toString()))) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                return pair(HotbarUtils.has(OnEventCmd.parseItemPredicate(args.get(i + 1).toString())), i + 2);
             }
             case INPUT_ACTIVE -> {
-                if (args.get(1).toEnum(InputCmd.Action.class, null).isActive()) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                return pair(args.get(i + 1).toEnum(InputCmd.Action.class, null).isActive(), i + 2);
             }
             case BLOCK_IN_RANGE -> {
-                Predicate<BlockState> filter = args.match(1, "any_block") ? state -> true : OnEventCmd.parseBlockPredicate(args.get(1).toString());
-                double range = args.get(2).toDouble();
+                Predicate<BlockState> filter = args.match(i + 1, "any_block") ? state -> true : OnEventCmd.parseBlockPredicate(args.get(i + 1).toString());
+                double range = args.get(i + 2).toDouble();
+                boolean[] bl = { false };
                 PlayerUtils.runOnNearestBlock(range, filter, (pos, state) -> {
-                    if (pos.toCenterPos().distanceTo(PlayerUtils.getPos()) <= range) {
-                        OnEventCmd.executeWithThen(args, 3);
-                    }
+                    bl[0] = pos.toCenterPos().distanceTo(PlayerUtils.getPos()) <= range;
                 });
+                return pair(bl[0], i + 3);
             }
             case ENTITY_IN_RANGE -> {
-                Predicate<Entity> filter = args.match(1, "any_entity") ? entity -> true : OnEventCmd.parseEntityPredicate(args.get(1).toString());
-                double range = args.get(2).toDouble();
+                Predicate<Entity> filter = args.match(i + 1, "any_entity") ? entity -> true : OnEventCmd.parseEntityPredicate(args.get(i + 1).toString());
+                double range = args.get(i + 2).toDouble();
+                boolean[] bl = { false };
                 PlayerUtils.runOnNearestEntity(range, filter, entity -> {
-                    if (entity.distanceTo(PlayerUtils.player()) <= range) {
-                        OnEventCmd.executeWithThen(args, 3);
-                    }
+                    bl[0] = entity.distanceTo(PlayerUtils.player()) <= range;
                 });
+                return pair(bl[0], i + 3);
             }
             case ATTACK_PROGRESS -> {
-                if (evalIntegers(PlayerUtils.player().getAttackCooldownProgress(1.0F), args.get(1).toString())) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                return pair(evalIntegers(PlayerUtils.player().getAttackCooldownProgress(1.0F), args.get(i + 1).toString()), i + 2);
             }
             case HEALTH -> {
-                if (evalIntegers((int)PlayerUtils.player().getHealth(), args.get(1).toString())) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                return pair(evalIntegers((int)PlayerUtils.player().getHealth(), args.get(i + 1).toString()), i + 2);
             }
             case ARMOR -> {
-                if (evalIntegers(PlayerUtils.player().getArmor(), args.get(1).toString())) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                return pair(evalIntegers(PlayerUtils.player().getArmor(), args.get(i + 1).toString()), i + 2);
             }
             case POS_X -> {
-                if (evalIntegers((int)PlayerUtils.getPos().getX(), args.get(1).toString())) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                return pair(evalIntegers((int)PlayerUtils.getPos().getX(), args.get(i + 1).toString()), i + 2);
             }
             case POS_Y -> {
-                if (evalIntegers((int)PlayerUtils.getPos().getY(), args.get(1).toString())) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                return pair(evalIntegers((int)PlayerUtils.getPos().getY(), args.get(i + 1).toString()), i + 2);
             }
             case POS_Z -> {
-                if (evalIntegers((int)PlayerUtils.getPos().getZ(), args.get(1).toString())) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                return pair(evalIntegers((int)PlayerUtils.getPos().getZ(), args.get(i + 1).toString()), i + 2);
             }
             case MODULE_ENABLED -> {
-                Module m = system.getModuleById(args.get(1).toString());
-                if (m != null && m.isEnabled()) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                Module m = system.getModuleById(args.get(i + 1).toString());
+                return pair(m != null && m.isEnabled(), i + 2);
             }
             case BLOCK -> {
                 LocationParser loc = new LocationParser(
-                        args.get(1).toString(),
-                        args.get(2).toString(),
-                        args.get(3).toString(),
+                        args.get(i + 1).toString(),
+                        args.get(i + 2).toString(),
+                        args.get(i + 3).toString(),
                         PlayerUtils.getPos()
                 );
-                Predicate<BlockState> pre = OnEventCmd.parseBlockPredicate(args.get(4).toString());
-                if (pre.test(loc.getBlock(PlayerUtils.getWorld()))) {
-                    OnEventCmd.executeWithThen(args, 5);
-                }
+                Predicate<BlockState> pre = OnEventCmd.parseBlockPredicate(args.get(i + 4).toString());
+                return pair(pre.test(loc.getBlock(PlayerUtils.getWorld())), i + 5);
             }
             case DIMENSION -> {
                 boolean bl = false;
-                switch (args.get(1).toEnum(Dimensions.class, null)) {
+                switch (args.get(i + 1).toEnum(Dimensions.class, null)) {
                     case OVERWORLD -> bl = Dimensions.isOverworld();
                     case THE_NETHER -> bl = Dimensions.isNether();
                     case THE_END -> bl = Dimensions.isEnd();
                 }
-                if (bl) {
-                    OnEventCmd.executeWithThen(args, 2);
-                }
+                return pair(bl, i + 2);
             }
         }
+        return pair(false, 0);
+    }
+
+    private static <L, R> Pair<L, R> pair(L left, R right) {
+        return Pair.of(left, right);
     }
 
     public enum ConditionType {
@@ -160,6 +150,8 @@ public class IfCmd extends ScriptCommand implements Global {
         HOTBAR_HAS,
         TARGET_BLOCK,
         TARGET_ENTITY,
+        TARGETING_BLOCK,
+        TARGETING_ENTITY,
         INPUT_ACTIVE,
         BLOCK_IN_RANGE,
         ENTITY_IN_RANGE,

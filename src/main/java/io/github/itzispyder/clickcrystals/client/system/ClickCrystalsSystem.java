@@ -38,7 +38,6 @@ public class ClickCrystalsSystem implements Serializable {
     public final Randomizer random = new Randomizer();
     public final Scheduler scheduler = new Scheduler();
     public final ClickCrystalsLogger logger = new ClickCrystalsLogger(new File(Config.PATH_LOG));
-    public final ClickCrystalsLogger scriptHistoryLogger = new ClickCrystalsLogger(new File(Config.PATH_SCRIPT_HISTORY_LOG));
     private final Map<Class<? extends Module>, Module> modules;
     private final Map<String, ScriptedModule> scriptedModules;
     private final Map<Class<? extends Command>, Command> commands;

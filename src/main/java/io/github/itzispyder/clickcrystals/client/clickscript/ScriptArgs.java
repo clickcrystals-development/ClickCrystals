@@ -163,6 +163,7 @@ public class ScriptArgs {
         }
 
         public <T extends Enum<?>> T toEnum(Class<T> enumType, T fallback) {
+            String arg = this.arg.replace('-', '_');
             for (T constant : enumType.getEnumConstants()) {
                 if (arg.equalsIgnoreCase(constant.name())) {
                     return constant;
