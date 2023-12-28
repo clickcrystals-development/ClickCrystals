@@ -65,20 +65,22 @@ public class Scheduler {
         return worker;
     }
 
-    public synchronized void runDelayedTask(Runnable runnable, long delay) {
+    public synchronized Task runDelayedTask(Runnable runnable, long delay) {
         Task task = new Task(runnable, delay);
         task.activate();
         tasks.add(task);
+        return task;
     }
 
-    public synchronized void runRepeatingTask(Runnable runnable, long delay, long period) {
-        this.runRepeatingTask(runnable, delay, period, INFINITE_ITERATIONS);
+    public synchronized Task runRepeatingTask(Runnable runnable, long delay, long period) {
+        return this.runRepeatingTask(runnable, delay, period, INFINITE_ITERATIONS);
     }
 
-    public synchronized void runRepeatingTask(Runnable runnable, long delay, long period, int iterations) {
+    public synchronized Task runRepeatingTask(Runnable runnable, long delay, long period, int iterations) {
         Task task = new Task(runnable, delay, period, iterations);
         task.activate();
         tasks.add(task);
+        return task;
     }
 
     public synchronized TaskChain runChainTask() {
@@ -154,7 +156,7 @@ public class Scheduler {
         }
     }
 
-    private class Task implements Cancellable {
+    public class Task implements Cancellable {
         private final Runnable task;
         private final long period;
         private long delay;
@@ -184,7 +186,7 @@ public class Scheduler {
             this.iterated = 0;
         }
 
-        public void activate() {
+        protected void activate() {
             if (!active.get() && !activating.get()) {
                 activating.set(true);
                 CompletableFuture.runAsync(() -> {
@@ -200,7 +202,7 @@ public class Scheduler {
             }
         }
 
-        public synchronized void tick() {
+        protected synchronized void tick() {
             if (!active.get()) {
                 return;
             }
@@ -226,7 +228,7 @@ public class Scheduler {
             }
         }
 
-        public synchronized void unsafeRawExecute() {
+        protected synchronized void unsafeRawExecute() {
             try {
                 Thread.sleep(delay);
             }
