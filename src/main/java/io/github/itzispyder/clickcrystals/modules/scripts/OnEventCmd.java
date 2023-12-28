@@ -1,20 +1,31 @@
 package io.github.itzispyder.clickcrystals.modules.scripts;
 
+import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class OnEventCmd extends ScriptCommand {
+
+    private static final Map<String, Predicate<BlockState>> defaultedBlockPredicates = new HashMap<>() {{
+        this.put("uncharged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) < 1);
+        this.put("charged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) > 0);
+    }};
 
     public OnEventCmd() {
         super("on");
@@ -29,6 +40,7 @@ public class OnEventCmd extends ScriptCommand {
             case PLACE_BLOCK, BREAK_BLOCK, INTERACT_BLOCK, PUNCH_BLOCK -> passBlock(args, type);
             case KEY_PRESS, KEY_RELEASE -> passKey(args, type);
             case MOVE_LOOK, MOVE_POS -> passMove(args, type);
+            case CHAT_SEND, CHAT_RECEIVE -> passChat(args, type);
 
             case TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.tickListeners.add(event -> exc(args, 1)));
             case ITEM_USE -> ModuleCmd.runOnCurrentScriptModule(m -> m.itemUseListeners.add(event -> exc(args, 1)));
@@ -40,6 +52,24 @@ public class OnEventCmd extends ScriptCommand {
             case DEATH -> ModuleCmd.runOnCurrentScriptModule(m -> m.deathListeners.add(() -> exc(args, 1)));
             case GAME_JOIN -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameJoinListeners.add(() -> exc(args, 1)));
             case GAME_LEAVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameLeaveListeners.add(() -> exc(args, 1)));
+        }
+    }
+
+    public void passChat(ScriptArgs args, EventType type) {
+        String msg = args.getQuoteAndRemove(1);
+        String rest = args.getAll().toString();
+
+        switch (type) {
+            case CHAT_RECEIVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatReceiveListeners.add(event -> {
+                if (event.getMessage().contains(msg)) {
+                    ClickScript.executeDynamic(rest);
+                }
+            }));
+            case CHAT_SEND -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatSendListeners.add(event -> {
+                if (event.getMessage().contains(msg)) {
+                    ClickScript.executeDynamic(rest);
+                }
+            }));
         }
     }
 
@@ -163,7 +193,13 @@ public class OnEventCmd extends ScriptCommand {
             return block -> block.getBlock().getTranslationKey().contains(arg.substring(1));
         }
         else if (arg.startsWith(":")) {
-            Identifier id = new Identifier("minecraft", arg.substring(1));
+            String subArg = arg.substring(1);
+
+            if (defaultedBlockPredicates.containsKey(subArg)) {
+                return defaultedBlockPredicates.get(subArg);
+            }
+
+            Identifier id = new Identifier("minecraft", subArg);
             return block -> block.getBlock() == Registries.BLOCK.get(id);
         }
         return block -> false;
@@ -181,6 +217,28 @@ public class OnEventCmd extends ScriptCommand {
             return ent -> ent.getType() == Registries.ENTITY_TYPE.get(id);
         }
         return ent -> false;
+    }
+
+    public static SoundEvent parseSoundEvent(String arg) {
+        if (arg == null || arg.length() <= 1) {
+            return null;
+        }
+        else if (arg.startsWith("#")) {
+            String subArg = arg.substring(1);
+            Identifier result = null;
+            for (Identifier id : Registries.SOUND_EVENT.getIds()) {
+                if (id.getPath().contains(subArg)) {
+                    result = id;
+                    break;
+                }
+            }
+            return result == null ? null : Registries.SOUND_EVENT.get(result);
+        }
+        else if (arg.startsWith(":")) {
+            Identifier id = new Identifier("minecraft", arg.substring(1));
+            return Registries.SOUND_EVENT.get(id);
+        }
+        return null;
     }
 
     public static void executeWithThen(ScriptArgs args, int begin) {
@@ -211,6 +269,8 @@ public class OnEventCmd extends ScriptCommand {
         DAMAGE,
         DEATH,
         GAME_JOIN,
-        GAME_LEAVE
+        GAME_LEAVE,
+        CHAT_SEND,
+        CHAT_RECEIVE
     }
 }

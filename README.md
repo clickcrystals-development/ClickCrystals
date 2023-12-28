@@ -27,21 +27,18 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Scripting:
-  - kept old syntax, revolutionized with newer syntax, both optional
-  - you can now sort scripts into folders, they will still and up unsorted in game tho
-  - scripts can be read through .txt now
+Scripts:
+  - on chat_send "message here"
+  - on chat_receive "message here"
+  - playsound <ID>
+  - playsound <ID> <volume>
+  - playsound <ID> <volume> <pitch>
+  - execute_random <CCS... args>
 
 Add:
-  - tick_timeout command #(for providing a custom delay for the "on tick" script command)
-  - Spectator Sight #(by i-no-am)
-  - No Armor Render #(by i-no-am)
-
-Features:
-  - script commands [print, say, send, notify] now supports THEN chain calls when messages are surrounded with [""]
-
-Patch:
-  - gui background shader darkening on version 1.20.2
+  - ',reload' command
+  - ',folder' command
+  - ',ccs copy-file <script file>' command
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png)
