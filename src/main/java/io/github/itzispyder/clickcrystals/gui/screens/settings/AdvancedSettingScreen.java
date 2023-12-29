@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module.Setti
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
@@ -29,6 +30,12 @@ public class AdvancedSettingScreen extends DefaultBase {
                 .onSettingChange(setting -> {
                     ClickCrystals.config.setOverviewMode(setting.getVal());
                     ClickCrystals.config.save();
+
+                    system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+                        if (setting.getVal()) {
+                            mc.setScreen(new OverviewScreen());
+                        }
+                    }), 500);
                 })
                 .build()
         );

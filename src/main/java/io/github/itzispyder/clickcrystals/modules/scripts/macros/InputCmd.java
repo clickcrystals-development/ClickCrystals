@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
-import net.minecraft.client.gui.screen.ingame.InventoryScreen;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
 
 import java.util.function.BooleanSupplier;
 
@@ -38,7 +38,7 @@ public class InputCmd extends ScriptCommand implements Global {
         LEFT(InteractionUtils::leftClick, mc.mouse::wasLeftButtonClicked),
         RIGHT(InteractionUtils::rightClick, mc.mouse::wasRightButtonClicked),
         MIDDLE(InteractionUtils::middleClick, mc.mouse::wasMiddleButtonClicked),
-        INVENTORY(InteractionUtils::inputInventory, () -> mc.currentScreen instanceof InventoryScreen);
+        INVENTORY(InteractionUtils::inputInventory, () -> mc.currentScreen instanceof HandledScreen<?>);
 
         private final Runnable action;
         private final BooleanSupplier isActive;
