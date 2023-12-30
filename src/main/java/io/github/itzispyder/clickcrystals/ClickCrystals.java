@@ -3,7 +3,6 @@ package io.github.itzispyder.clickcrystals;
 import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
-import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.client.system.Version;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.Config;
@@ -39,7 +38,6 @@ import io.github.itzispyder.clickcrystals.modules.scripts.syntax.*;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
@@ -48,7 +46,7 @@ import org.lwjgl.glfw.GLFW;
 
 /**
  * ClickCrystals main
- * TODO: (1) Update mod version down in "this file"
+ * TODO: (1) Update mod version down in "Global.java"
  * TODO: (2) Update mod "gradle.properties"
  * TODO: (4) Update "README.md"
  *
@@ -60,11 +58,10 @@ import org.lwjgl.glfw.GLFW;
  * TODO: (8) Update <a href="https://itzispyder.github.io/clickcrystals/info">...</a>
  * TODO: (9) Discord Announcement
  */
-public final class ClickCrystals implements ModInitializer {
+public final class ClickCrystals implements ModInitializer, Global {
 
-    public static final MinecraftClient mc = MinecraftClient.getInstance();
-    public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
-    public static final Config config = JsonSerializable.load(Config.PATH_CONFIG, Config.class, new Config());
+    public static Config config = JsonSerializable.load(Config.PATH_CONFIG, Config.class, new Config());
+    public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
 
     @SuppressWarnings("unused")
     public static final Keybind openModuleKeybind = Keybind.create()
@@ -99,19 +96,6 @@ public final class ClickCrystals implements ModInitializer {
             .onPress(bind -> mc.setScreen(new ChatScreen("")))
             .onChange(config::saveKeybind)
             .build();
-
-    /**
-     * TODO: UPDATE THE MOD VERSION HERE!!!!!!
-     * TODO: DON'T FORGET AGAIN!!!!
-     */
-    @SuppressWarnings("unused")
-    public static final String modId   = "clickcrystals";
-    public static final String prefix  = "[ClickCrystals] ";
-    public static final String starter = "§7[§bClick§3Crystals§7] §r";
-    public static final String version = "1.1.9";
-
-    public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
-
 
     /**
      * Runs the mod initializer.
@@ -301,7 +285,7 @@ public final class ClickCrystals implements ModInitializer {
 
     @SuppressWarnings("all")
     public static boolean matchLatestVersion() {
-        return Version.ofString(version).isUpToDate(getLatestVersion());
+        return version.isUpToDate(getLatestVersion());
     }
 
     public static Version getLatestVersion() {

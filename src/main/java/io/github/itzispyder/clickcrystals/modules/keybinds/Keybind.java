@@ -1,15 +1,13 @@
 package io.github.itzispyder.clickcrystals.modules.keybinds;
 
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Map;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
-
-public class Keybind {
+public class Keybind implements Global {
 
     public static final int NONE = 256;
     public static final Map<Integer, String> EXTRAS = ManualMap.fromItems(

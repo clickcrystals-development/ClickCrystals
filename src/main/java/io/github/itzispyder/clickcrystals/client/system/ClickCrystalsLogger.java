@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.client.system;
 
-import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class ClickCrystalsLogger {
+public class ClickCrystalsLogger implements Global {
 
     private final File log;
     private final boolean hasWriter;
@@ -22,7 +22,7 @@ public class ClickCrystalsLogger {
             clearLog();
         }
         else {
-            System.err.println(ClickCrystals.prefix + "Log writer has failed to initialize!");
+            System.err.println(prefix + "Log writer has failed to initialize!");
         }
     }
 

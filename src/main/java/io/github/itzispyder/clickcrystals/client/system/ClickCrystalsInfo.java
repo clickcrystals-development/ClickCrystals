@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.client.system;
 
 import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 import java.io.BufferedReader;
@@ -11,13 +12,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
-
 /**
  * Try not to instantiate this class, parse it from json!
  * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/info</a>
  */
-public class ClickCrystalsInfo {
+public class ClickCrystalsInfo implements Global {
 
     public static final String URL = "https://itzispyder.github.io/clickcrystals/info";
     private final String latest;
@@ -27,8 +26,8 @@ public class ClickCrystalsInfo {
     private final User[] donators;
     private final Ban[] blacklisted;
 
-    public ClickCrystalsInfo(String latest) {
-        this.latest = latest;
+    public ClickCrystalsInfo(Version latest) {
+        this.latest = latest.getVersionString();
         motd = "";
         owners = staffs = donators = new User[]{};
         blacklisted = new Ban[]{};

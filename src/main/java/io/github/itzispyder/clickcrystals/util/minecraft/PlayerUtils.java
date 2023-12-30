@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import com.mojang.authlib.GameProfile;
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.misc.Delta3d;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -22,9 +23,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
-public final class PlayerUtils {
+public final class PlayerUtils implements Global {
 
     public static boolean playerNull() {
         return mc == null || mc.player == null;

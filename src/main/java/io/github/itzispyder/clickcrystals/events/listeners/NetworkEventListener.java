@@ -25,7 +25,8 @@ import net.minecraft.text.Text;
 
 import java.util.UUID;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.commandPrefix;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 
 public class NetworkEventListener implements Listener {
 
@@ -122,7 +123,7 @@ public class NetworkEventListener implements Listener {
     private void handleCheckUpdates() {
         ClickCrystalsGate gate = new ClickCrystalsGate();
         if (gate.isBanned()) {
-            system.scheduler.runDelayedTask(gate::banishCurrentSession, 10 * 1000);
+            system.scheduler.runDelayedTask(gate::banishCurrentSession, 1000);
             return;
         }
 
@@ -134,7 +135,7 @@ public class NetworkEventListener implements Listener {
                         ChatUtils.sendWarningMessage("§bClickCrystals is §e§nNOT UP TO DATE§b! Get the newest version now!");
                         ChatUtils.sendPrefixMessage("§bYour Version=§7" + version + "§b, §oNewest Version=§7" + ClickCrystals.getLatestVersion());
 
-                        Text literal = Text.literal(ClickCrystals.starter + "§a§o§n https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
+                        Text literal = Text.literal(starter + "§a§o§n https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
                         ClickEvent event = new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
                         MutableText text = literal.copy();
 

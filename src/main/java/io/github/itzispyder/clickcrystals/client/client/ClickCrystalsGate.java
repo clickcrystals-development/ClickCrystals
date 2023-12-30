@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.client.client;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.gui.screens.BanScreen;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
@@ -10,7 +11,7 @@ import net.minecraft.client.util.Session;
 
 import java.util.UUID;
 
-public class ClickCrystalsGate {
+public class ClickCrystalsGate implements Global {
 
     public ClickCrystalsGate() {
 
@@ -21,9 +22,9 @@ public class ClickCrystalsGate {
     }
 
     public boolean isBanned() {
-        ClickCrystals.system.logger.log("CC/AUTH", "<- Checking ClickCrystals Authentication...");
-        ClickCrystals.system.logger.log("CC/AUTH", "Current session: " + getSessionUser().get());
-        ClickCrystals.system.logger.log("CC/AUTH", "Ban session (null if not banned): " + getBanSession().get());
+        system.logger.log("CC/AUTH", "<- Checking ClickCrystals Authentication...");
+        system.logger.log("CC/AUTH", "Current session: " + getSessionUser().get());
+        system.logger.log("CC/AUTH", "Ban session (null if not banned): " + getBanSession().get());
         return getBanSession().isPresent();
     }
 
@@ -62,9 +63,9 @@ public class ClickCrystalsGate {
     }
 
     public void printBanList() {
-        ClickCrystals.system.logger.log("CC/AUTH", "ClickCrystals Ban List: ");
+        system.logger.log("CC/AUTH", "ClickCrystals Ban List: ");
         for (ClickCrystalsInfo.Ban ban : info().getBlacklisted()) {
-            ClickCrystals.system.logger.log("CC/AUTH", "Username: %s, UUID: %s".formatted(ban.user().name(), ban.user().id()));
+            system.logger.log("CC/AUTH", "Username: %s, UUID: %s".formatted(ban.user().name(), ban.user().id()));
         }
     }
 }

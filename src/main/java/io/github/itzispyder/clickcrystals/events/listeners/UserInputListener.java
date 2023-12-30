@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Predicate;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 
 public class UserInputListener implements Listener {
 

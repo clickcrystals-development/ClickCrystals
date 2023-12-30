@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.events.events.client.ChatCommandEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.ChatReceiveEvent;
@@ -13,10 +14,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
-
 @Mixin(ClientPlayNetworkHandler.class)
-public abstract class MixinClientPlayNetworkHandler {
+public abstract class MixinClientPlayNetworkHandler implements Global {
 
     @Shadow
     public abstract void sendChatMessage(String content);

@@ -1,13 +1,11 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
+import io.github.itzispyder.clickcrystals.Global;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-import static io.github.itzispyder.clickcrystals.ClickCrystals.starter;
-
-public final class ChatUtils {
+public final class ChatUtils implements Global {
 
     public static void sendMessage(String message) {
         if (message == null) return;

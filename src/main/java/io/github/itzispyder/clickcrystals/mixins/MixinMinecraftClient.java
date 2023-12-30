@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.interfaces.MinecraftClientAccessor;
@@ -12,10 +13,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
-
 @Mixin(MinecraftClient.class)
-public abstract class MixinMinecraftClient implements MinecraftClientAccessor {
+public abstract class MixinMinecraftClient implements MinecraftClientAccessor, Global {
 
     @Shadow public abstract void setScreen(@Nullable Screen screen);
     @Shadow protected abstract boolean doAttack();

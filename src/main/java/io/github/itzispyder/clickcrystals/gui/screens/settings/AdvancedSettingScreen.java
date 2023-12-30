@@ -35,12 +35,11 @@ public class AdvancedSettingScreen extends DefaultBase {
                         if (setting.getVal()) {
                             mc.setScreen(new OverviewScreen());
                         }
-                    }), 500);
+                    }), 200);
                 })
                 .build()
         );
         SettingSectionElement guiElement = new SettingSectionElement(guiSection, margin, caret);
-        caret += guiElement.height + 5;
 
         // add groups to screen
         panel.addChild(guiElement);
