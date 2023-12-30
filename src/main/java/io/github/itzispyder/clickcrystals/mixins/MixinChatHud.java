@@ -27,7 +27,7 @@ public abstract class MixinChatHud implements Global {
         String msg = StringUtils.decolor(message.getString());
         if (msg.toLowerCase().contains(modId)) {
             ci.cancel();
-            system.logger.log("CC/SYSTEM-CHAT", msg);
+            system.logger.log("SYSTEM-CHAT", msg);
         }
     }
 }

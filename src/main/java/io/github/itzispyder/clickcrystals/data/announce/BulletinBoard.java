@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.data.announce;
 
 import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.Global;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,7 +14,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Try not to instantiate this class, parse it from json!
  * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/bulletin</a>
  */
-public class BulletinBoard {
+public class BulletinBoard implements Global {
 
     private static AtomicReference<BulletinBoard> current = new AtomicReference<>(null);
     public static final String URL = "https://itzispyder.github.io/clickcrystals/bulletin";
@@ -76,7 +77,8 @@ public class BulletinBoard {
             ClickCrystals.requestModInfo();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            system.printErr("Error requesting bulletin board");
+            system.printErr(ex.getMessage());
         }
     }
 

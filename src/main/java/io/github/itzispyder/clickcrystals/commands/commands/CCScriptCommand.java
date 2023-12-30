@@ -8,8 +8,6 @@ import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
-import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
-import io.github.itzispyder.clickcrystals.util.misc.Timer;
 import net.minecraft.command.CommandSource;
 
 import java.io.File;
@@ -56,10 +54,7 @@ public class CCScriptCommand extends Command {
                                 })))
                 .then(literal("reload-scripts")
                         .executes(cxt -> {
-                            Timer timer = Timer.start();
-                            ChatUtils.sendPrefixMessage("-> Reloading all scripts!");
-                            system.reloadScripts();
-                            ChatUtils.sendPrefixMessage("-> Scripts reloaded! (%s)".formatted(timer.end().getStampPrecise()));
+                            ReloadCommand.reload();
                             return SINGLE_SUCCESS;
                         }));
     }

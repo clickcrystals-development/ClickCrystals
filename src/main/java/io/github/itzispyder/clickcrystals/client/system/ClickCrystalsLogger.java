@@ -27,11 +27,11 @@ public class ClickCrystalsLogger implements Global {
     }
 
     public synchronized void info(String line) {
-        log("CC/INFO", line);
+        log("INFO", line);
     }
 
     public void error(String line) {
-        log("CC/ERROR", line);
+        log("ERROR", line);
     }
 
     public void log(String prefix, String line) {
@@ -40,12 +40,10 @@ public class ClickCrystalsLogger implements Global {
         }
 
         try (FileWriter writer = new FileWriter(log, true)) {
-            line = "[%s] [%s] [%s]: %s%n".formatted(StringUtils.getCurrentTimeStamp(), Thread.currentThread().getName(), prefix, line);
+            line = "[%s] [%s/%s]: %s%n".formatted(StringUtils.getCurrentTimeStamp(), Thread.currentThread().getName(), prefix, line);
             writer.append(line);
         }
-        catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        catch (IOException ignore) {}
     }
 
     public void clearLog() {
@@ -56,9 +54,7 @@ public class ClickCrystalsLogger implements Global {
         try (FileWriter writer = new FileWriter(log)) {
             writer.write("");
         }
-        catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        catch (IOException ignore) {}
     }
 
     public File getLog() {

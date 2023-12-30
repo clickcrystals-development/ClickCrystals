@@ -76,4 +76,8 @@ public class SearchCategoryElement extends GuiElement {
         this.height = caret.get() + 5;
         grid.organize();
     }
+
+    public SearchBarElement getSearchbar() {
+        return searchbar;
+    }
 }

@@ -80,7 +80,7 @@ public class Notification implements Global {
         }
         if (!QUEUE.contains(this)) {
             QUEUE.add(this);
-            system.logger.log("CC/NOTIFICATIONS", "(%s) [%s]: %s".formatted(id, title, text));
+            system.logger.log("NOTIFICATIONS", "(%s) [%s]: %s".formatted(id, title, text));
         }
     }
 

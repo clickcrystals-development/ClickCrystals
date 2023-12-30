@@ -21,7 +21,7 @@ public class Version {
         for (int x : i) {
             b.append(x).append(".");
         }
-        return ofString(b.toString());
+        return ofString(b.substring(0, b.length() - 1));
     }
 
     public static Version ofAnother(Version v) {
@@ -33,7 +33,7 @@ public class Version {
         for (int d : digits) {
             b.append(d).append(".");
         }
-        return b.toString();
+        return b.substring(0, b.length() - 1);
     }
 
     public int[] getDigits() {
@@ -76,5 +76,13 @@ public class Version {
     @Override
     public String toString() {
         return getVersionString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Version version)) {
+            return false;
+        }
+        return isSameAs(version);
     }
 }

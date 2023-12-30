@@ -22,9 +22,9 @@ public class ClickCrystalsGate implements Global {
     }
 
     public boolean isBanned() {
-        system.logger.log("CC/AUTH", "<- Checking ClickCrystals Authentication...");
-        system.logger.log("CC/AUTH", "Current session: " + getSessionUser().get());
-        system.logger.log("CC/AUTH", "Ban session (null if not banned): " + getBanSession().get());
+        system.logger.log("AUTH", "<- Checking ClickCrystals Authentication...");
+        system.logger.log("AUTH", "Current session: " + getSessionUser().get());
+        system.logger.log("AUTH", "Ban session (null if not banned): " + getBanSession().get());
         return getBanSession().isPresent();
     }
 
@@ -34,7 +34,8 @@ public class ClickCrystalsGate implements Global {
             return Voidable.of(info().getBlacklisted(id));
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            system.printErr("Error loading ban session");
+            system.printErr(ex.getMessage());
             return Voidable.of(null);
         }
     }
@@ -47,7 +48,8 @@ public class ClickCrystalsGate implements Global {
             return Voidable.of(new ClickCrystalsInfo.User(name, id));
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            system.printErr("Error loading session user");
+            system.printErr(ex.getMessage());
             return Voidable.of(null);
         }
     }
@@ -58,14 +60,15 @@ public class ClickCrystalsGate implements Global {
             mc.execute(() -> mc.disconnect(new BanScreen()));
         }
         catch (Exception ex) {
-            throw new RuntimeException(ex);
+            system.printErr("Logging ClickCrystals user out: user is banned!");
+            System.exit(0);
         }
     }
 
     public void printBanList() {
-        system.logger.log("CC/AUTH", "ClickCrystals Ban List: ");
+        system.logger.log("AUTH", "ClickCrystals Ban List: ");
         for (ClickCrystalsInfo.Ban ban : info().getBlacklisted()) {
-            system.logger.log("CC/AUTH", "Username: %s, UUID: %s".formatted(ban.user().name(), ban.user().id()));
+            system.logger.log("AUTH", "Username: %s, UUID: %s".formatted(ban.user().name(), ban.user().id()));
         }
     }
 }

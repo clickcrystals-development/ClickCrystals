@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.util.misc;
 
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.Cancellable;
 
 import java.util.Stack;
@@ -7,7 +8,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Scheduler {
+public class Scheduler implements Global {
 
     public static final int INFINITE_ITERATIONS = -1;
     private final ConcurrentLinkedQueue<Task> tasks;
@@ -48,13 +49,13 @@ public class Scheduler {
                             task.tick();
                         }
                         catch (Exception ex) {
-                            ex.printStackTrace();
+                            system.printErr("Scheduler error: " + ex.getMessage());
                         }
                     }
                     Thread.sleep(1);
                 }
                 catch (InterruptedException ex) {
-                    ex.printStackTrace();
+                    system.printErr("Scheduler error: " + ex.getMessage());
                 }
             }
         }, "System Scheduler");
@@ -194,7 +195,7 @@ public class Scheduler {
                         Thread.sleep(delay);
                     }
                     catch (InterruptedException ex) {
-                        ex.printStackTrace();
+                        system.printErr("Scheduler error: " + ex.getMessage());
                     }
                     active.set(true);
                     activating.set(false);
@@ -233,7 +234,7 @@ public class Scheduler {
                 Thread.sleep(delay);
             }
             catch (InterruptedException ex) {
-                ex.printStackTrace();
+                system.printErr("Scheduler error: " + ex.getMessage());
             }
 
             while (iterated < iterations && !cancelled) {
@@ -243,7 +244,7 @@ public class Scheduler {
                     Thread.sleep(period);
                 }
                 catch (InterruptedException ex) {
-                    ex.printStackTrace();
+                    system.printErr("Scheduler error: " + ex.getMessage());
                 }
             }
             tasks.remove(this);
