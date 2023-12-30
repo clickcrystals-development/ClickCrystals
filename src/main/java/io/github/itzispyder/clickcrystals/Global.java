@@ -13,7 +13,6 @@ public interface Global {
     String version = ClickCrystals.version;
     String starter = ClickCrystals.starter;
     String modId = ClickCrystals.modId;
-    DiscordPresence rpc = ClickCrystals.discordPresence;
     Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
 
 }
