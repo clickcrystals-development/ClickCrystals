@@ -10,21 +10,12 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.*;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
-import io.github.itzispyder.clickcrystals.gui.screens.settings.AdvancedSettingScreen;
-import io.github.itzispyder.clickcrystals.gui.screens.settings.KeybindScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.SettingScreen;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.DiscordRPC;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
-import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
 import net.minecraft.client.gui.screen.GameMenuScreen;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
-import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.item.ItemStack;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Predicate;
 
@@ -61,22 +52,6 @@ public class UserInputListener implements Listener {
         mc.setScreen(new BrowsingScreen());
     }
 
-    public static final Map<Class<? extends Screen>, String> SCREEN_STATES = ManualMap.fromItems(
-            TitleScreen.class, "Looking at the title screen",
-            BrowsingScreen.class, "Toggling modules",
-            OverviewScreen.class, "Overviewing modules",
-            HomeScreen.class, "Scanning through ClickCrystals home",
-            SearchScreen.class, "Searching modules",
-            SettingScreen.class, "Editing ClickCrystals settings",
-            KeybindScreen.class, "Changing ClickCrystals keybinds",
-            AdvancedSettingScreen.class, "Editing ClickCrystals advanced settings",
-            SelectWorldScreen.class, "Selecting single player",
-            MultiplayerScreen.class, "Selecting server",
-            GameMenuScreen.class, "Idling...",
-            ClickScriptIDE.class, "Creating a custom module...",
-            BulletinScreen.class, "Viewing CC Bulletin Board"
-    );
-
     private static final ConcurrentLinkedQueue<QueuedGuiItemSearchListener> guiItemSearchQueue = new ConcurrentLinkedQueue<>();
 
     @EventHandler
@@ -90,7 +65,6 @@ public class UserInputListener implements Listener {
     @EventHandler
     public void onScreenChange(SetScreenEvent e) {
         try {
-            this.handleDiscordPresence(e);
             this.handleConfigSave(e);
             this.handleScreenManagement(e);
         }
@@ -137,29 +111,6 @@ public class UserInputListener implements Listener {
             config.saveModules();
             system.println("<- saving config...");
             config.save();
-        }
-    }
-
-    private void handleDiscordPresence(SetScreenEvent e) {
-        if (discordPresence.loadedSuccessfully) {
-            Screen s = e.getScreen();
-
-            if (s == null) {
-                if (mc.player != null) {
-                    discordPresence.setState(mc.isInSingleplayer() ? "In singleplayer world" : "In multiplayer server");
-                }
-                else {
-                    discordPresence.setState("Looking at the title screen");
-                }
-            }
-            else if (s instanceof ModuleEditScreen mss) {
-                discordPresence.setState("Editing module " + mss.getModule().getName() + "...");
-            }
-            else {
-                discordPresence.setState(SCREEN_STATES.getOrDefault(s.getClass(), "Clicking Crystals..."));
-            }
-
-            DiscordRPC.syncRPC();
         }
     }
 

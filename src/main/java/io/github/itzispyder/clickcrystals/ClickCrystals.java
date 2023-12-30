@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
-import io.github.itzispyder.clickcrystals.client.system.DiscordPresence;
 import io.github.itzispyder.clickcrystals.client.system.Version;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
 import io.github.itzispyder.clickcrystals.data.Config;
@@ -22,7 +21,10 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.EntityStatuses;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
@@ -55,7 +57,7 @@ import org.lwjgl.glfw.GLFW;
  * TODO: (6) GitHub Release
  * TODO: (7) PlanetMC Release
  * TODO: (7) CurseForge Release
- * TODO: (8) Update https://itzispyder.github.io/clickcrystals/info
+ * TODO: (8) Update <a href="https://itzispyder.github.io/clickcrystals/info">...</a>
  * TODO: (9) Discord Announcement
  */
 public final class ClickCrystals implements ModInitializer {
@@ -63,8 +65,8 @@ public final class ClickCrystals implements ModInitializer {
     public static final MinecraftClient mc = MinecraftClient.getInstance();
     public static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
     public static final Config config = JsonSerializable.load(Config.PATH_CONFIG, Config.class, new Config());
-    public static final DiscordPresence discordPresence = new DiscordPresence();
-    public static Thread discordWorker;
+
+    @SuppressWarnings("unused")
     public static final Keybind openModuleKeybind = Keybind.create()
             .id("open-clickcrystals-module-screen")
             .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
@@ -73,6 +75,7 @@ public final class ClickCrystals implements ModInitializer {
             .onChange(config::saveKeybind)
             .build();
 
+    @SuppressWarnings("unused")
     public static final Keybind openHudEditorKeybind = Keybind.create()
             .id("open-hud-editor-screen")
             .defaultKey(GLFW.GLFW_KEY_SEMICOLON)
@@ -87,6 +90,8 @@ public final class ClickCrystals implements ModInitializer {
             })
             .onChange(config::saveKeybind)
             .build();
+
+    @SuppressWarnings("unused")
     public static final Keybind commandPrefix = Keybind.create()
             .id("command-prefix")
             .defaultKey(GLFW.GLFW_KEY_COMMA)
@@ -124,8 +129,6 @@ public final class ClickCrystals implements ModInitializer {
         this.startTicking();
         system.println("-> requesting mod info...");
         ClickCrystals.requestModInfo();
-        system.println("-> connecting to discord...");
-        this.initRpc();
         system.println("-> loading config...");
         config.loadEntireConfig();
         system.println("-> checking updates...");
@@ -240,9 +243,6 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new BowSwap());
 
         // client
-        if (discordPresence.loadedSuccessfully) {
-            system.addModule(new DiscordRPC());
-        }
         system.addModule(new GuiBorders());
         system.addModule(new InGameHuds());
         system.addModule(new SilkTouch());
@@ -299,6 +299,7 @@ public final class ClickCrystals implements ModInitializer {
         system.addModule(new EntityIndicator());
     }
 
+    @SuppressWarnings("all")
     public static boolean matchLatestVersion() {
         return Version.ofString(version).isUpToDate(getLatestVersion());
     }
@@ -320,28 +321,5 @@ public final class ClickCrystals implements ModInitializer {
     public static void requestModInfo() {
         ClickCrystalsInfo.request();
         system.capeManager.reloadTextures();
-    }
-
-    public void initRpc() {
-        try {
-            if (!discordPresence.loadedSuccessfully) {
-                throw new IllegalStateException();
-            }
-            discordWorker = new Thread(() -> {
-                while (!Thread.currentThread().isInterrupted()) {
-                    discordPresence.api.Discord_RunCallbacks();
-                    try {
-                        Thread.sleep(2000);
-                    }
-                    catch (InterruptedException ignore) {}
-                }
-            });
-            discordWorker.start();
-            discordPresence.loadedSuccessfully = true;
-        }
-        catch (Exception ex) {
-            discordPresence.loadedSuccessfully = false;
-            system.println("X<- Discord connection FAILED");
-        }
     }
 }

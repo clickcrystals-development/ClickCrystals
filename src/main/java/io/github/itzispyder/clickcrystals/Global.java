@@ -3,7 +3,6 @@ package io.github.itzispyder.clickcrystals;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
-import io.github.itzispyder.clickcrystals.client.system.DiscordPresence;
 import net.minecraft.client.MinecraftClient;
 
 public interface Global {

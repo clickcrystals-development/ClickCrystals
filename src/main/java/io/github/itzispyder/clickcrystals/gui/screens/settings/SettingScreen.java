@@ -61,6 +61,7 @@ public class SettingScreen extends DefaultBase {
 
         public ScreenShortcut(String title, String details, int x, int y, Screen destination) {
             super(null, x, y);
+            super.setTooltip("§7Browsing shortcut");
             this.destination = destination;
             this.title = title;
             this.details = details;
