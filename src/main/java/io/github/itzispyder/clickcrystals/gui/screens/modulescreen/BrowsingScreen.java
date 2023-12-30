@@ -76,7 +76,7 @@ public class BrowsingScreen extends DefaultBase {
     private static class ScriptDetails extends ModuleElement {
         public ScriptDetails(int x, int y) {
             super(null, x, y);
-            super.setTooltip("");
+            super.setTooltip(null);
         }
 
         @Override
