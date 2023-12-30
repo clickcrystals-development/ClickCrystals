@@ -28,12 +28,29 @@ public class TextUtils implements Global {
                 }
                 current.append(c);
             }
-
-            if (!current.isEmpty()) {
-                result.add(current.toString());
-            }
+            result.add(current.toString());
         }
 
         return result;
+    }
+
+    public static int getSelectionMax(String input, int toWidth) {
+        var tr = mc.textRenderer;
+
+        if (tr == null || input.isEmpty()) {
+            return 0;
+        }
+        if (tr.getWidth(input) <= toWidth) {
+            return input.length();
+        }
+
+        StringBuilder current = new StringBuilder();
+        for (char c : input.toCharArray()) {
+            current.append(c);
+            if (tr.getWidth(current.toString()) >= toWidth) {
+                return current.length();
+            }
+        }
+        return 0;
     }
 }
