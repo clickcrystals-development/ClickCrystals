@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.ChatColor;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.OrderedText;
@@ -47,7 +48,8 @@ public class TextFieldElement extends GuiElement implements Typeable {
         context.enableScissor(x, y, x + width, y + height);
 
         RenderUtils.fill(context, x, y, width, height, backgroundColor.getHex());
-        List<OrderedText> text = mc.textRenderer.wrapLines(StringVisitable.plain(styledContent), width - 25);
+        List<String> text = TextUtils.wrapLines(styledContent, width - 25);
+        //List<OrderedText> text = mc.textRenderer.wrapLines(StringVisitable.plain(styledContent), width - 25);
         textHeight = text.size() * 9;
 
         int caret = y + textY;
@@ -64,7 +66,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
         // text
         caret = y + textY;
         for (var it = text.iterator(); it.hasNext(); caret += 9) {
-            OrderedText line = it.next();
+            String line = it.next();
             if (selectedAll) {
                 RenderUtils.fill(context, x + 20, caret - 1, mc.textRenderer.getWidth(line), 9, 0xA07E75FF);
             }
