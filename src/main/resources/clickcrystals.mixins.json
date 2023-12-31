@@ -12,6 +12,7 @@
     "MixinClientConnection",
     "MixinClientPlayerInteractionManager",
     "MixinClientPlayNetworkHandler",
+    "MixinClientWorld",
     "MixinEntityRenderer",
     "MixinGameRenderer",
     "MixinHandledScreen",

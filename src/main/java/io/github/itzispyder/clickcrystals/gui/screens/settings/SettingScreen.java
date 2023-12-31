@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
+import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
@@ -19,6 +20,7 @@ public class SettingScreen extends DefaultBase {
         GridOrganizer grid = new GridOrganizer(contentX, contentY + 21, contentWidth, 15, 1, 0);
 
         grid.addEntry(new ScreenShortcut("Modules Configuration", "Browse ClickCrystals modules and features", new BrowsingScreen()));
+        grid.addEntry(new ScreenShortcut("HUD Position Config", "Edit and move HUDs around", new HudEditScreen()));
         grid.addEntry(new ScreenShortcut("Keybindings Settings", "Edit and change keybindings for the client", new KeybindScreen()));
         grid.addEntry(new ScreenShortcut("Advanced", "More detailed settings for the client", new AdvancedSettingScreen()));
         grid.addEntry(new ScreenShortcut("Client Information", "...", new InfoScreen()));
