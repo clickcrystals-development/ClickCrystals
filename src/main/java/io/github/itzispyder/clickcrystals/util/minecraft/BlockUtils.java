@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
+import io.github.itzispyder.clickcrystals.Global;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -12,12 +13,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 /**
  * Client block utils
  */
-public final class BlockUtils {
+public final class BlockUtils implements Global {
 
     /**
      * Interact a block

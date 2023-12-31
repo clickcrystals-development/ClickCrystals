@@ -9,14 +9,6 @@ jar {
                 "main-class": "io.github.itzispyder.clickcrystals.ClickCrystals",
         )
     }
-
-    from {
-        configurations.runtimeClasspath.collect {
-            if (it.name.contains("discord")) {
-                it.isDirectory() ? it : zipTree(it)
-            }
-        }
-    }
 }
 
 version = project.mod_version
@@ -39,9 +31,6 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-    // Java discord RPC API
-    implementation "club.minnced:java-discord-rpc:${project.discord_rpc_version}"
 }
 
 processResources {

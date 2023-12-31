@@ -2,13 +2,10 @@ package io.github.itzispyder.clickcrystals.client.system;
 
 public class Version {
 
-    private final String versionString;
     private final int[] digits;
 
     public Version(String versionString) {
-        this.versionString = versionString;
-
-        String[] i = versionString.replaceAll("[^0-9]", "").split("\\.");
+        String[] i = versionString.replaceAll("[^0-9.]", "").split("\\.");
         this.digits = new int[i.length];
         for (int j = 0; j < i.length; j++) {
             digits[j] = Integer.parseInt(i[j]);
@@ -24,7 +21,7 @@ public class Version {
         for (int x : i) {
             b.append(x).append(".");
         }
-        return ofString(b.toString());
+        return ofString(b.substring(0, b.length() - 1));
     }
 
     public static Version ofAnother(Version v) {
@@ -32,7 +29,11 @@ public class Version {
     }
 
     public String getVersionString() {
-        return versionString;
+        StringBuilder b = new StringBuilder();
+        for (int d : digits) {
+            b.append(d).append(".");
+        }
+        return b.substring(0, b.length() - 1);
     }
 
     public int[] getDigits() {
@@ -54,16 +55,14 @@ public class Version {
     public boolean isSameAs(Version another) {
         int[] cur = getDigits();
         int[] oth = another.getDigits();
-        boolean bl = false;
 
         for (int i = 0; i < cur.length; i++) {
-            if (cur[i] == oth[i]) {
-                bl = true;
-                break;
+            if (cur[i] != oth[i]) {
+                return false;
             }
         }
 
-        return bl;
+        return true;
     }
 
     public boolean isOlderThan(Version another) {
@@ -76,6 +75,14 @@ public class Version {
 
     @Override
     public String toString() {
-        return versionString;
+        return getVersionString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Version version)) {
+            return false;
+        }
+        return isSameAs(version);
     }
 }

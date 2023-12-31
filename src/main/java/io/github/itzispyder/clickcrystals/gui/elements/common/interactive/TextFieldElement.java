@@ -33,12 +33,17 @@ public class TextFieldElement extends GuiElement implements Typeable {
     private boolean selectionBlinking, selectedAll;
     private int selectionBlink;
 
-    public TextFieldElement(int x, int y, int width, int height) {
+    public TextFieldElement(String preText, int x, int y, int width, int height) {
         super(x, y, width, height);
-        this.styledContent = style(content);
         this.selectedStartPoint = new Point();
         this.selectedEndPoint = new Point();
+        this.content = preText;
+        this.styledContent = style(content);
         this.resetSelection();
+    }
+
+    public TextFieldElement(int x, int y, int width, int height) {
+        this("", x, y, width, height);
     }
 
     @Override

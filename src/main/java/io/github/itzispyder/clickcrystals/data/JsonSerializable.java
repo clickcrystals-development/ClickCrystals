@@ -58,7 +58,7 @@ public interface JsonSerializable<T> extends Global {
                 bw.close();
             }
             catch (Exception ex) {
-                ex.printStackTrace();
+                system.printErr("JSON failed to save for " + f.getName());
             }
         }
     }
@@ -81,7 +81,7 @@ public interface JsonSerializable<T> extends Global {
                 return t;
             }
             catch (Exception ex) {
-                ex.printStackTrace();
+                system.printErr("JSON failed to parse/load for " + file.getName());
             }
         }
         system.println("'%s' has failed to save, returning fallback! (If this is your first launch, you can ignore this message)".formatted(file.getPath()));

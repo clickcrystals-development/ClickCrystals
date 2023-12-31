@@ -128,7 +128,7 @@ public class ClickScript implements Global {
         }
     }
 
-    private void executeLine(String line) {
+    private synchronized void executeLine(String line) {
         if (line != null && !line.trim().isEmpty() && !line.startsWith("//")) {
             String name = line.split(" ")[0];
             ScriptCommand cmd = REGISTRATION.get(name);

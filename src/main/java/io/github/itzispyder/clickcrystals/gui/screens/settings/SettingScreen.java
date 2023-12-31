@@ -21,6 +21,7 @@ public class SettingScreen extends DefaultBase {
         grid.addEntry(new ScreenShortcut("Modules Configuration", "Browse ClickCrystals modules and features", new BrowsingScreen()));
         grid.addEntry(new ScreenShortcut("Keybindings Settings", "Edit and change keybindings for the client", new KeybindScreen()));
         grid.addEntry(new ScreenShortcut("Advanced", "More detailed settings for the client", new AdvancedSettingScreen()));
+        grid.addEntry(new ScreenShortcut("Client Information", "...", new InfoScreen()));
 
         grid.organize();
         grid.createPanel(this, contentHeight - 21);
@@ -61,6 +62,7 @@ public class SettingScreen extends DefaultBase {
 
         public ScreenShortcut(String title, String details, int x, int y, Screen destination) {
             super(null, x, y);
+            super.setTooltip("§7Browsing shortcut");
             this.destination = destination;
             this.title = title;
             this.details = details;

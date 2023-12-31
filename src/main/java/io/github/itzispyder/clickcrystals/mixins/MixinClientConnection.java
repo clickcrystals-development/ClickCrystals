@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameJoinEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
@@ -13,10 +14,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
-
 @Mixin(ClientConnection.class)
-public abstract class MixinClientConnection {
+public abstract class MixinClientConnection implements Global {
 
     @Inject(method = "send(Lnet/minecraft/network/packet/Packet;)V", at = @At("HEAD"), cancellable = true)
     public void onPacketSend(Packet<?> packet, CallbackInfo ci) {

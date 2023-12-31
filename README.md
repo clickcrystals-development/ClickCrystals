@@ -28,17 +28,24 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Scripts:
-  - on chat_send "message here"
-  - on chat_receive "message here"
-  - playsound <ID>
-  - playsound <ID> <volume>
-  - playsound <ID> <volume> <pitch>
-  - execute_random <CCS... args>
+  - while (N) (condition) (CCS... args)
+  - while_not (N) (condition) (CCS... args)
+  - if effect_duration (ID) (N)
+  - if effect_amplifier (ID) (N)
+  - gui_swap (ID)
+  - gui_drop (ID) (N)
+  - gui_quickmove (ID)
+  - gui_switch (ID)
 
-Add:
-  - ',reload' command
-  - ',folder' command
-  - ',ccs copy-file <script file>' command
+Tweaks:
+  - drop (N)
+  - added more key names such as [space, backspace, escape]
+
+Patches:
+  - CCS dispatcher tree root
+
+Remove:
+  - removed the script_history.log
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png)

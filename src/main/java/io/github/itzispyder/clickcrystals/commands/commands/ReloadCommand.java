@@ -31,8 +31,6 @@ public class ReloadCommand extends Command {
 
     public static synchronized void reload() {
         Timer timer = Timer.start();
-        system.logger.clearLog();
-        system.println("LOG HAS BEEN CLEARED DUE TO CLIENT RELOAD!");
         system.println("Reloading entire ClickCrystals client, might take a while!");
 
         // config save

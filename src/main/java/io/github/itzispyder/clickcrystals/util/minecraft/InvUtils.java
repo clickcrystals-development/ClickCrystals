@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
+import io.github.itzispyder.clickcrystals.Global;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
@@ -10,9 +11,7 @@ import net.minecraft.util.Hand;
 
 import java.util.function.Predicate;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
-public final class InvUtils {
+public final class InvUtils implements Global {
 
     public static PlayerInventory inv() {
         return mc.player.getInventory();

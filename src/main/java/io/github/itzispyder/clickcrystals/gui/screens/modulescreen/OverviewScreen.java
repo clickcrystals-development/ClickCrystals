@@ -58,6 +58,8 @@ public class OverviewScreen extends GuiScreen {
 
         SearchCategoryElement search = new SearchCategoryElement(10, 30, 90);
         this.addChild(search);
+
+        this.selected = search.getSearchbar();
     }
 
     @Override

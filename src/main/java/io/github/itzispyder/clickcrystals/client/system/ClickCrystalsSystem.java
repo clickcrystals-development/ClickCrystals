@@ -57,7 +57,8 @@ public class ClickCrystalsSystem implements Serializable {
             Util.getOperatingSystem().open(new URI(url));
         }
         catch (URISyntaxException ex) {
-            ex.printStackTrace();
+            system.printErr("Failed to open url " + url);
+            system.printErr(ex.getMessage());
         }
     }
 
@@ -66,7 +67,8 @@ public class ClickCrystalsSystem implements Serializable {
             Util.getOperatingSystem().open(new File(path));
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            system.printErr("Failed to open file " + path);
+            system.printErr(ex.getMessage());
         }
     }
 
@@ -222,9 +224,6 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void onClientStopping() {
         println("Stopping client!");
-        println("<- disconnecting from discord...");
-        ClickCrystals.discordPresence.stop();
-
         println("<- saving data...");
         ClickCrystals.config.saveKeybinds();
         ClickCrystals.config.saveHuds();

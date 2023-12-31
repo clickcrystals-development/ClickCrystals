@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -11,9 +12,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
-public final class RenderUtils {
+public final class RenderUtils implements Global {
 
     // default text
 

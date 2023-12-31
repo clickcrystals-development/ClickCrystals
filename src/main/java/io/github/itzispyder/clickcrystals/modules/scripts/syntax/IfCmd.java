@@ -21,9 +21,12 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.dimension.DimensionTypes;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 
 public class IfCmd extends ScriptCommand implements Global {
+
+    public static final AtomicReference<Boolean> previousOutput = new AtomicReference<>(null);
 
     public IfCmd() {
         super("if");
@@ -35,6 +38,7 @@ public class IfCmd extends ScriptCommand implements Global {
         ConditionType type = args.get(beginIndex).toEnum(ConditionType.class, null);
         var condition = parseCondition(type, args, beginIndex);
 
+        previousOutput.set(condition.left);
         if (condition.left) {
             OnEventCmd.executeWithThen(args, condition.right);
         }
@@ -119,6 +123,10 @@ public class IfCmd extends ScriptCommand implements Global {
                 Module m = system.getModuleById(args.get(i + 1).toString());
                 return pair(m != null && m.isEnabled(), i + 2);
             }
+            case MODULE_DISABLED -> {
+                Module m = system.getModuleById(args.get(i + 1).toString());
+                return pair(m != null && !m.isEnabled(), i + 2);
+            }
             case BLOCK -> {
                 LocationParser loc = new LocationParser(
                         args.get(i + 1).toString(),
@@ -187,6 +195,7 @@ public class IfCmd extends ScriptCommand implements Global {
         POS_Y,
         POS_Z,
         MODULE_ENABLED,
+        MODULE_DISABLED,
         BLOCK,
         DIMENSION,
         EFFECT_DURATION,

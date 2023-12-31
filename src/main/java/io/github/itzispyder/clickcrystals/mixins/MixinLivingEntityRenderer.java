@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.RenderOwnName;
 import net.minecraft.client.MinecraftClient;
@@ -10,10 +11,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 @Mixin(LivingEntityRenderer.class)
-public abstract class MixinLivingEntityRenderer {
+public abstract class MixinLivingEntityRenderer implements Global {
 
     @Inject(method = "hasLabel(Lnet/minecraft/entity/LivingEntity;)Z", at = @At("RETURN"), cancellable = true)
     public void hasLabel(LivingEntity ent, CallbackInfoReturnable<Boolean> cir) {

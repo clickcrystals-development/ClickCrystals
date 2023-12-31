@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.events;
 
+import io.github.itzispyder.clickcrystals.Global;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.lang.reflect.Method;
@@ -9,7 +10,7 @@ import java.util.function.Consumer;
 /**
  * Represents an event bus for calling and passing events
  */
-public class EventBus {
+public class EventBus implements Global {
 
     private final Set<Listener> subscribedListeners;
 
@@ -79,7 +80,12 @@ public class EventBus {
             method.invoke(listener, event);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            system.printErr("EventBus dropped a passenger XD");
+            system.printErrF("method=%s, listener=%s, for event emitted %s",
+                    method.getName(),
+                    listener.getClass().getSimpleName(),
+                    event.getClass().getSimpleName()
+            );
         }
     }
 

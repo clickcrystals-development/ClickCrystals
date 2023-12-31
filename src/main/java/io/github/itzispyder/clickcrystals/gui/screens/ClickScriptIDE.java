@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
+import io.github.itzispyder.clickcrystals.commands.commands.ReloadCommand;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
@@ -11,6 +12,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.modules.scripts.client.ConfigCmd;
 import io.github.itzispyder.clickcrystals.modules.scripts.client.ModuleCmd;
@@ -57,7 +59,14 @@ public class ClickScriptIDE extends DefaultBase {
     }};
     private final String filename, filepath;
     private final LoadingIconElement loading;
-    private final AbstractElement saveButton, saveAndCloseButton, closeButton, discardChangesButton, openFileButton, openScriptsButton;
+    private final AbstractElement
+            saveButton,
+            saveAndCloseButton,
+            closeButton,
+            discardChangesButton,
+            openFileButton,
+            openScriptsButton,
+            deleteButton;
 
     public TextFieldElement textField = new TextFieldElement(contentX, contentY + 21, contentWidth, contentHeight - 21) {{
         this.setHighlighter(CLICKSCRIPT_HIGHLIGHTER);
@@ -137,6 +146,15 @@ public class ClickScriptIDE extends DefaultBase {
                     }
                     RenderUtils.drawText(context, "Open Scripts", button.x + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
+        deleteButton = AbstractElement.create().dimensions(navWidth, 12)
+                .tooltip("Delete this script (Can't Undo This!)")
+                .onPress(button -> deleteScript())
+                .onRender((context, mouseX, mouseY, button) -> {
+                    if (button.isHovered(mouseX, mouseY)) {
+                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.LIGHT_GRAY);
+                    }
+                    RenderUtils.drawText(context, "§cDelete File", button.x + 7, button.y + button.height / 3, 0.7F, false);
+                }).build();
 
         this.addChild(saveButton);
         this.addChild(saveAndCloseButton);
@@ -144,6 +162,9 @@ public class ClickScriptIDE extends DefaultBase {
         this.addChild(discardChangesButton);
         this.addChild(openFileButton);
         this.addChild(openScriptsButton);
+        this.addChild(deleteButton);
+
+        this.selected = textField;
     }
 
     @Override
@@ -202,6 +223,9 @@ public class ClickScriptIDE extends DefaultBase {
         caret += 16;
         openScriptsButton.x = baseX + 10;
         openScriptsButton.y = baseY + caret;
+        caret += 16;
+        deleteButton.x = baseX + 10;
+        deleteButton.y = baseY + caret;
 
         context.getMatrices().pop();
 
@@ -240,7 +264,7 @@ public class ClickScriptIDE extends DefaultBase {
                 textField.shiftEnd();
             }
             catch (Exception ex) {
-                ex.printStackTrace();
+                system.printErr("Failed to load IDE contents: " + ex.getMessage());
                 UserInputListener.openPreviousScreen();
             }
         }).thenRun(() -> {
@@ -265,13 +289,32 @@ public class ClickScriptIDE extends DefaultBase {
                 writer.close();
             }
             catch (Exception ex) {
-                ex.printStackTrace();
+                system.printErr("Error: IDE failed to save script");
                 UserInputListener.openPreviousScreen();
             }
-            system.reloadScripts();
+            ReloadCommand.reload();
         }).thenRun(() -> {
             loading.setRendering(false);
         }));
+    }
+
+    public void deleteScript() {
+        try {
+            File file = new File(filepath);
+            if (file.delete()) {
+                ReloadCommand.reload();
+            }
+            else {
+                throw new IllegalStateException("file refused");
+            }
+        }
+        catch (Exception ex) {
+            system.printErr("Error: cannot delete script");
+            system.printErr(ex.getMessage());
+        }
+
+        BrowsingScreen.currentCategory = Categories.SCRIPTED;
+        mc.execute(() -> mc.setScreen(new BrowsingScreen()));
     }
 
     @Override

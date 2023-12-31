@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
+import io.github.itzispyder.clickcrystals.Global;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
@@ -13,12 +14,10 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.mc;
-
 /**
  * Client hot bar utils
  */
-public final class HotbarUtils {
+public final class HotbarUtils implements Global {
 
     /**
      * Search of the item in a player's hot bar.

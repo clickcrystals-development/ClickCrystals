@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.client.system;
 
-import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class ClickCrystalsLogger {
+public class ClickCrystalsLogger implements Global {
 
     private final File log;
     private final boolean hasWriter;
@@ -22,16 +22,16 @@ public class ClickCrystalsLogger {
             clearLog();
         }
         else {
-            System.err.println(ClickCrystals.prefix + "Log writer has failed to initialize!");
+            System.err.println(prefix + "Log writer has failed to initialize!");
         }
     }
 
     public synchronized void info(String line) {
-        log("CC/INFO", line);
+        log("INFO", line);
     }
 
     public void error(String line) {
-        log("CC/ERROR", line);
+        log("ERROR", line);
     }
 
     public void log(String prefix, String line) {
@@ -40,12 +40,10 @@ public class ClickCrystalsLogger {
         }
 
         try (FileWriter writer = new FileWriter(log, true)) {
-            line = "[%s] [%s] [%s]: %s%n".formatted(StringUtils.getCurrentTimeStamp(), Thread.currentThread().getName(), prefix, line);
+            line = "[%s] [%s/%s]: %s%n".formatted(StringUtils.getCurrentTimeStamp(), Thread.currentThread().getName(), prefix, line);
             writer.append(line);
         }
-        catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        catch (IOException ignore) {}
     }
 
     public void clearLog() {
@@ -56,9 +54,7 @@ public class ClickCrystalsLogger {
         try (FileWriter writer = new FileWriter(log)) {
             writer.write("");
         }
-        catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        catch (IOException ignore) {}
     }
 
     public File getLog() {

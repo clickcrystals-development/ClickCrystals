@@ -1,10 +1,9 @@
 package io.github.itzispyder.clickcrystals.gui.misc;
 
-import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.Global;
 import net.minecraft.util.Identifier;
 
-public final class Tex {
-    private static final String modId = ClickCrystals.modId;
+public final class Tex implements Global {
 
     public static final Identifier ICON = new Identifier(modId, "icon.png");
     public static final Identifier ICON_PREMIUM = new Identifier(modId, "icon_premium.png");

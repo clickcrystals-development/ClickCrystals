@@ -2,22 +2,19 @@ package io.github.itzispyder.clickcrystals.client.system;
 
 import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
-import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
+import java.util.*;
 
 /**
  * Try not to instantiate this class, parse it from json!
  * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/info</a>
  */
-public class ClickCrystalsInfo {
+public class ClickCrystalsInfo implements Global {
 
     public static final String URL = "https://itzispyder.github.io/clickcrystals/info";
     private final String latest;
@@ -27,8 +24,8 @@ public class ClickCrystalsInfo {
     private final User[] donators;
     private final Ban[] blacklisted;
 
-    public ClickCrystalsInfo(String latest) {
-        this.latest = latest;
+    public ClickCrystalsInfo(Version latest) {
+        this.latest = latest.getVersionString();
         motd = "";
         owners = staffs = donators = new User[]{};
         blacklisted = new Ban[]{};
@@ -99,9 +96,7 @@ public class ClickCrystalsInfo {
     }
 
     public List<User> collectStaff() {
-        List<User> l = Arrays.asList(owners);
-        l.addAll(Arrays.asList(staffs));
-        return l;
+        return collect(owners, staffs);
     }
 
     public List<User> collectBanned() {
@@ -109,17 +104,38 @@ public class ClickCrystalsInfo {
     }
 
     public List<User> collectVip() {
-        List<User> l = Arrays.asList(owners);
-        l.addAll(Arrays.asList(staffs));
-        l.addAll(Arrays.asList(donators));
-        return l;
+        return collect(owners, staffs, donators);
     }
 
     public List<User> collectAllUsers() {
-        List<User> l = Arrays.asList(owners);
-        l.addAll(Arrays.asList(staffs));
-        l.addAll(Arrays.asList(donators));
-        l.addAll(Arrays.stream(blacklisted).map(Ban::user).toList());
+        List<User> l = collectVip();
+        l.addAll(collectBanned());
+        return l;
+    }
+
+    private List<User> collect(User... users) {
+        List<User> l = new ArrayList<>();
+        Collections.addAll(l, users);
+        return l;
+    }
+
+    public List<String> names(List<User> users) {
+        return users.stream().filter(Objects::nonNull).map(User::name).toList();
+    }
+
+    public String namesStringLong(List<User> users) {
+        return String.join(", ", names(users));
+    }
+
+    public String namesStringTall(List<User> users) {
+        return String.join(",\n", names(users));
+    }
+
+    private List<User> collect(User[]... users) {
+        List<User> l = new ArrayList<>();
+        for (User[] user : users) {
+            Collections.addAll(l, user);
+        }
         return l;
     }
 

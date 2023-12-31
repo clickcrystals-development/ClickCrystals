@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.events.listeners;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.client.client.ClickCrystalsGate;
 import io.github.itzispyder.clickcrystals.client.system.Notification;
+import io.github.itzispyder.clickcrystals.data.announce.BulletinBoard;
 import io.github.itzispyder.clickcrystals.data.pixelart.PixelArtGenerator;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -25,7 +26,8 @@ import net.minecraft.text.Text;
 
 import java.util.UUID;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.*;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.commandPrefix;
+import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 
 public class NetworkEventListener implements Listener {
 
@@ -51,14 +53,16 @@ public class NetworkEventListener implements Listener {
     public void onGameJoin(GameJoinEvent e) {
         try {
             this.handleCheckUpdates();
+            BulletinBoard.request();
         }
         catch (Exception ignore) {}
     }
 
     @EventHandler
-    public void onGameJoin(GameLeaveEvent e) {
+    public void onGameLeave(GameLeaveEvent e) {
         try {
             Notification.clearNotifications();
+            BulletinBoard.request();
         }
         catch (Exception ignore) {}
     }
@@ -122,7 +126,7 @@ public class NetworkEventListener implements Listener {
     private void handleCheckUpdates() {
         ClickCrystalsGate gate = new ClickCrystalsGate();
         if (gate.isBanned()) {
-            system.scheduler.runDelayedTask(gate::banishCurrentSession, 10 * 1000);
+            system.scheduler.runDelayedTask(gate::banishCurrentSession, 1000);
             return;
         }
 
@@ -134,7 +138,7 @@ public class NetworkEventListener implements Listener {
                         ChatUtils.sendWarningMessage("§bClickCrystals is §e§nNOT UP TO DATE§b! Get the newest version now!");
                         ChatUtils.sendPrefixMessage("§bYour Version=§7" + version + "§b, §oNewest Version=§7" + ClickCrystals.getLatestVersion());
 
-                        Text literal = Text.literal(ClickCrystals.starter + "§a§o§n https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
+                        Text literal = Text.literal(starter + "§a§o§n https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
                         ClickEvent event = new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
                         MutableText text = literal.copy();
 
