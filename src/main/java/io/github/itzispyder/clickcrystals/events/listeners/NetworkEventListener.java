@@ -11,6 +11,7 @@ import io.github.itzispyder.clickcrystals.events.events.networking.GameJoinEvent
 import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
+import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.network.packet.Packet;
@@ -54,6 +55,7 @@ public class NetworkEventListener implements Listener {
         try {
             this.handleCheckUpdates();
             BulletinBoard.request();
+            Module.disableAllGameJoinDisabled();
         }
         catch (Exception ignore) {}
     }

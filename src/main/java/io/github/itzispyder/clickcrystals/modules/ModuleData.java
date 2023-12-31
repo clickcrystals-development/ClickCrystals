@@ -30,6 +30,13 @@ public class ModuleData implements Global {
             .condition((bind, screen) -> screen == null)
             .build()
     );
+    private final ModuleSetting<Boolean> gameJoinDisable = scDefault.add(BooleanSetting.create()
+            .name("module-game-join-disable")
+            .description("Automatically disables the module upon joining a world.")
+            .def(false)
+            .val(false)
+            .build()
+    );
     private final List<SettingSection> settingSections;
 
     public ModuleData(Module module) {
@@ -64,6 +71,14 @@ public class ModuleData implements Global {
 
     public void setEnabled(boolean enabled) {
         this.enabled.setVal(enabled);
+    }
+
+    public boolean isGameJoinDisable() {
+        return gameJoinDisable.getVal();
+    }
+
+    public void setGameJoinDisable(boolean gameJoinDisable) {
+        this.gameJoinDisable.setVal(gameJoinDisable);
     }
 
     public void addSettingSection(SettingSection section) {
