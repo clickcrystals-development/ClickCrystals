@@ -23,7 +23,6 @@ public class Config implements JsonSerializable<Config> {
     public static final String PATH = "ClickCrystalsClient/";
     public static final String PATH_CONFIG = PATH + "config.json";
     public static final String PATH_LOG = PATH + "current.log";
-    public static final String PATH_SCRIPT_HISTORY_LOG = PATH + "script_history.log";
     public static final String PATH_SCRIPTS = PATH + "scripts";
     private boolean hasPlayedBefore, overviewMode;
     private final Map<String, Integer> keybindEntries;

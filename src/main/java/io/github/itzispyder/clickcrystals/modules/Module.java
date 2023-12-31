@@ -139,4 +139,12 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
             return action.apply(module);
         }
     }
+
+    public static void disableAllGameJoinDisabled() {
+        system.collectModules().stream().filter(m -> {
+            return m.getData().isGameJoinDisable();
+        }).forEach(m -> {
+            m.setEnabled(false, true);
+        });
+    }
 }
