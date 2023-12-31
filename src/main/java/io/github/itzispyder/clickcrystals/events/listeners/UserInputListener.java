@@ -10,12 +10,19 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.*;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.settings.AdvancedSettingScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.settings.KeybindScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.SettingScreen;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
+import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
 import net.minecraft.client.gui.screen.GameMenuScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Predicate;
 
@@ -23,25 +30,45 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 
 public class UserInputListener implements Listener {
 
+    private static final ConcurrentLinkedQueue<QueuedGuiItemSearchListener> guiItemSearchQueue = new ConcurrentLinkedQueue<>();
+    private static final Set<Class<? extends GuiScreen>> moduleScreenRoot = new HashSet<>() {{
+        add(BrowsingScreen.class);
+        add(OverviewScreen.class);
+        add(ModuleEditScreen.class);
+        add(ClickScriptIDE.class);
+    }};
+    private static final Map<Class<? extends GuiScreen>, Class<? extends GuiScreen>> screenTracker = ManualMap.fromItems(
+            SearchScreen.class, SearchScreen.class,
+            SettingScreen.class, SettingScreen.class,
+            BulletinScreen.class, BulletinScreen.class,
+            HomeScreen.class, HomeScreen.class,
+            AdvancedSettingScreen.class, AdvancedSettingScreen.class,
+            KeybindScreen.class, KeybindScreen.class
+    );
     private static Class<? extends GuiScreen> previousScreen = null;
+
+    @SuppressWarnings("deprecation")
     public static void openPreviousScreen() {
-        Class<? extends GuiScreen> p = previousScreen;
-        if (p == BrowsingScreen.class || p == OverviewScreen.class || p == ModuleEditScreen.class || p == ClickScriptIDE.class) {
+        config.markPlayedBefore();
+        if (previousScreen == null || !(screenTracker.containsKey(previousScreen) || moduleScreenRoot.contains(previousScreen))) {
+            mc.setScreen(new HomeScreen());
+            return;
+        }
+        if (moduleScreenRoot.contains(previousScreen)) {
             openModulesScreen();
+            return;
         }
-        else if (p == SearchScreen.class) {
-            mc.setScreen(new SearchScreen());
+
+        try {
+            mc.setScreen(previousScreen.newInstance());
         }
-        else if (p == SettingScreen.class) {
-            mc.setScreen(new SettingScreen());
-        }
-        else if (p == BulletinScreen.class) {
-            mc.setScreen(new BulletinScreen());
-        }
-        else {
+        catch (Exception e) {
             mc.setScreen(new HomeScreen());
         }
-        config.markPlayedBefore();
+    }
+
+    public static boolean isScreenTracked(Screen screen) {
+        return screen instanceof GuiScreen gui && (screenTracker.containsKey(gui.getClass()) || moduleScreenRoot.contains(gui.getClass()));
     }
 
     public static void openModulesScreen() {
@@ -51,8 +78,6 @@ public class UserInputListener implements Listener {
         }
         mc.setScreen(new BrowsingScreen());
     }
-
-    private static final ConcurrentLinkedQueue<QueuedGuiItemSearchListener> guiItemSearchQueue = new ConcurrentLinkedQueue<>();
 
     @EventHandler
     public void onKeyPress(KeyPressEvent e) {
@@ -87,19 +112,8 @@ public class UserInputListener implements Listener {
             mc.setScreen(new OverviewScreen());
             return;
         }
-        if (e.getScreen() == null && e.getPreviousScreen() instanceof GuiScreen screen) {
-            Class<? extends GuiScreen> p = screen.getClass();
-
-            if (p == BulletinScreen.class ||
-                    p == ModuleEditScreen.class ||
-                    p == ClickScriptIDE.class ||
-                    p == SearchScreen.class ||
-                    p == SettingScreen.class ||
-                    p == HomeScreen.class ||
-                    p == OverviewScreen.class ||
-                    p == BrowsingScreen.class) {
-                previousScreen = p;
-            }
+        if (e.getScreen() == null && isScreenTracked(e.getPreviousScreen())) {
+            previousScreen = ((GuiScreen) e.getPreviousScreen()).getClass();
         }
     }
 
