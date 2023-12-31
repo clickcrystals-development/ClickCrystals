@@ -12,6 +12,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -104,18 +105,25 @@ public class BrowsingScreen extends DefaultBase {
                     return;
                 }
 
-                if (key == GLFW.GLFW_KEY_ENTER) {
-                    if (getQuery().isEmpty()) {
-                        screen.selected = null;
-                        return;
-                    }
-                    String name = getQuery().trim()
-                            .replace(' ', '-')
-                            .replaceAll("[^a-zA-Z0-9_-]", "")
-                            .toLowerCase();
-                    File file = new File(Config.PATH_SCRIPTS + "/" + name + ".ccs");
-                    mc.setScreen(new ClickScriptIDE(file));
+                if (key != GLFW.GLFW_KEY_ENTER) {
+                    return;
                 }
+                if (getQuery().isEmpty()) {
+                    screen.selected = null;
+                    return;
+                }
+
+                String name = getQuery().trim()
+                        .replace(' ', '-')
+                        .replaceAll("[^a-zA-Z0-9_-]", "")
+                        .toLowerCase();
+
+                File file = new File(Config.PATH_SCRIPTS + "/" + name + ".ccs");
+                if (!file.exists()) {
+                    String preText = "module create %s \ndescription Custom scripted Module \n\n".formatted(name);
+                    FileValidationUtils.quickWrite(file, preText);
+                }
+                mc.setScreen(new ClickScriptIDE(file));
             }
         };
 

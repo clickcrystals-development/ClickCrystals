@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.hud.fixed;
 
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.misc.CrystPerSec;
+import io.github.itzispyder.clickcrystals.modules.modules.rendering.CrystPerSec;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;

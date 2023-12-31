@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.misc;
+package io.github.itzispyder.clickcrystals.modules.modules.rendering;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
