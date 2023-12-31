@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.events.listeners;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.client.client.ClickCrystalsGate;
 import io.github.itzispyder.clickcrystals.client.system.Notification;
+import io.github.itzispyder.clickcrystals.data.announce.BulletinBoard;
 import io.github.itzispyder.clickcrystals.data.pixelart.PixelArtGenerator;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -52,14 +53,16 @@ public class NetworkEventListener implements Listener {
     public void onGameJoin(GameJoinEvent e) {
         try {
             this.handleCheckUpdates();
+            BulletinBoard.request();
         }
         catch (Exception ignore) {}
     }
 
     @EventHandler
-    public void onGameJoin(GameLeaveEvent e) {
+    public void onGameLeave(GameLeaveEvent e) {
         try {
             Notification.clearNotifications();
+            BulletinBoard.request();
         }
         catch (Exception ignore) {}
     }

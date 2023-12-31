@@ -11,6 +11,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.*;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.AdvancedSettingScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.settings.InfoScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.KeybindScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.SettingScreen;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
@@ -43,7 +44,8 @@ public class UserInputListener implements Listener {
             BulletinScreen.class, BulletinScreen.class,
             HomeScreen.class, HomeScreen.class,
             AdvancedSettingScreen.class, AdvancedSettingScreen.class,
-            KeybindScreen.class, KeybindScreen.class
+            KeybindScreen.class, KeybindScreen.class,
+            InfoScreen.class, InfoScreen.class
     );
     private static Class<? extends GuiScreen> previousScreen = null;
 
