@@ -32,7 +32,7 @@ public class AdvancedSettingScreen extends DefaultBase {
                     ClickCrystals.config.save();
 
                     system.scheduler.runDelayedTask(() -> mc.execute(() -> {
-                        if (setting.getVal()) {
+                        if (setting.getVal() && mc.player != null && mc.world != null) {
                             mc.setScreen(new OverviewScreen());
                         }
                     }), 200);
