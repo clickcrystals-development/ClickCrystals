@@ -16,7 +16,6 @@ public class IfNotCmd extends ScriptCommand implements Global {
         IfCmd.ConditionType type = args.get(beginIndex).toEnum(IfCmd.ConditionType.class, null);
         var condition = IfCmd.parseCondition(type, args, beginIndex);
 
-        IfCmd.previousOutput.set(condition.left);
         if (!condition.left) {
             OnEventCmd.executeWithThen(args, condition.right);
         }
