@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.screens.settings;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Gray;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
@@ -18,16 +19,20 @@ import java.util.function.BooleanSupplier;
 public class SettingScreen extends DefaultBase {
 
     public static final BooleanSupplier REQUIRE_IN_GAME = () -> mc != null && mc.player != null && mc.world != null;
+    public static final BooleanSupplier TRUE = () -> true;
 
     public SettingScreen() {
         super("Setting Screen");
         GridOrganizer grid = new GridOrganizer(contentX, contentY + 21, contentWidth, 15, 1, 0);
 
-        grid.addEntry(new ScreenShortcut("Modules Configuration", "Browse ClickCrystals modules and features", new BrowsingScreen()));
-        grid.addEntry(new ScreenShortcut("HUD Position Config", "Edit and move HUDs around", new HudEditScreen(), REQUIRE_IN_GAME));
-        grid.addEntry(new ScreenShortcut("Keybindings Settings", "Edit and change keybindings for the client", new KeybindScreen()));
-        grid.addEntry(new ScreenShortcut("Advanced", "More detailed settings for the client", new AdvancedSettingScreen()));
-        grid.addEntry(new ScreenShortcut("Client Information", "...", new InfoScreen()));
+        grid.addEntry(new ScreenShortcut("Modules Configuration", "Browse ClickCrystals modules and features", 0, 0, new BrowsingScreen(), TRUE));
+        grid.addEntry(new ScreenShortcut("HUD Position Config", "Edit and move HUDs around", 0, 0, new HudEditScreen(), REQUIRE_IN_GAME));
+        grid.addEntry(new ScreenShortcut("Keybindings Settings", "Edit and change keybindings for the client", 0, 0, new KeybindScreen(), TRUE));
+        grid.addEntry(new ScreenShortcut("Advanced", "More detailed settings for the client", 0, 0, new AdvancedSettingScreen(), TRUE));
+        grid.addEntry(new ScreenShortcut("Client Information", "...", 0, 0, new InfoScreen(), TRUE));
+        grid.addEntry(new FileShortcut("ClickCrystals Folder", "CC config, scripts, etc...", 0, 0, Config.PATH, TRUE));
+        grid.addEntry(new FileShortcut(".Minecraft Folder", "MC assets", 0, 0, "", TRUE));
+        grid.addEntry(new URLShortcut("Support", "ClickCrystals user support", 0, 0, "https://discord.gg/tMaShNzNtP", TRUE));
 
         grid.organize();
         grid.createPanel(this, contentHeight - 21);
@@ -62,12 +67,12 @@ public class SettingScreen extends DefaultBase {
     }
 
 
-    private static class ScreenShortcut extends ModuleElement {
-        private final Screen destination;
+    public static class ShortCut extends ModuleElement {
+        private final Runnable destination;
         private final String title, details;
         private final BooleanSupplier check;
 
-        public ScreenShortcut(String title, String details, int x, int y, Screen destination, BooleanSupplier check) {
+        public ShortCut(String title, String details, int x, int y, Runnable destination, BooleanSupplier check) {
             super(null, x, y);
             super.setTooltip(check.getAsBoolean() ? "§7Browsing shortcut" : "§cUnavailable, §cmost §clikely §cneed §cto §cbe §cin §cgame!");
             this.destination = destination;
@@ -76,28 +81,38 @@ public class SettingScreen extends DefaultBase {
             this.check = check;
         }
 
-        public ScreenShortcut(String title, String details, Screen destination, BooleanSupplier check) {
-            this(title, details, 0, 0, destination, check);
-        }
-
-        public ScreenShortcut(String title, String details, Screen destination) {
-            this(title, details, destination, () -> true);
-        }
-
         @Override
         public void onRender(DrawContext context, int mouseX, int mouseY) {
-            if (isHovered(mouseX, mouseY)) {
+            if (isHovered(mouseX, mouseY) && check.getAsBoolean()) {
                 RenderUtils.fill(context, x, y, width, height, 0x60FFFFFF);
             }
-            RenderUtils.drawText(context, title, x + 10, y + height / 3, 0.7F, false);
+            RenderUtils.drawText(context, check.getAsBoolean() ? title : "§7" + title, x + 10, y + height / 3, 0.7F, false);
             RenderUtils.drawText(context, "§7- " + details, x + 100, y + height / 3, 0.7F, false);
         }
 
         @Override
         public void onClick(double mouseX, double mouseY, int button) {
             if (check.getAsBoolean()) {
-                mc.setScreen(destination);
+                destination.run();
             }
+        }
+    }
+
+    public static class ScreenShortcut extends ShortCut {
+        public ScreenShortcut(String title, String details, int x, int y, Screen destination, BooleanSupplier check) {
+            super(title, details, x, y, () -> mc.execute(() -> mc.setScreen(destination)), check);
+        }
+    }
+
+    public static class FileShortcut extends ShortCut {
+        public FileShortcut(String title, String details, int x, int y, String filePath, BooleanSupplier check) {
+            super(title, details, x, y, () -> system.openFile(filePath), check);
+        }
+    }
+
+    public static class URLShortcut extends ShortCut {
+        public URLShortcut(String title, String details, int x, int y, String url, BooleanSupplier check) {
+            super(title, details, x, y, () -> system.openUrl(url), check);
         }
     }
 }
