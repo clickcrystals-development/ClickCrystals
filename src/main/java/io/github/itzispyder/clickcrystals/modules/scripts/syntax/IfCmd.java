@@ -21,12 +21,9 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.dimension.DimensionTypes;
 
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 
 public class IfCmd extends ScriptCommand implements Global {
-
-    public static final AtomicReference<Boolean> previousOutput = new AtomicReference<>(null);
 
     public IfCmd() {
         super("if");
@@ -38,7 +35,6 @@ public class IfCmd extends ScriptCommand implements Global {
         ConditionType type = args.get(beginIndex).toEnum(ConditionType.class, null);
         var condition = parseCondition(type, args, beginIndex);
 
-        previousOutput.set(condition.left);
         if (condition.left) {
             OnEventCmd.executeWithThen(args, condition.right);
         }
