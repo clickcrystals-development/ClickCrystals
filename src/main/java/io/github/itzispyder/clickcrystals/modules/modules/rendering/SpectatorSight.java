@@ -1,9 +1,9 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering;
 
 import io.github.itzispyder.clickcrystals.modules.Categories;
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -31,8 +31,7 @@ public class SpectatorSight extends DummyModule {
     public boolean canRender(Entity entity) {
         if (entity instanceof PlayerEntity) {
             return playerSetting.getVal();
-        } else {
-            return entitySetting.getVal();
         }
+        return entitySetting.getVal();
     }
 }
