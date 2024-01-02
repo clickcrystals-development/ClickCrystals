@@ -13,7 +13,7 @@ public interface Global {
     Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
 
 
-    Version version = Version.ofString("1.1.9");
+    Version version = Version.ofString("1.2.0");
     String prefix = "[ClickCrystals] ";
     String starter = "§7[§bClick§3Crystals§7] §r";
     String modId = "clickcrystals";
