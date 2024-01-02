@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.events.events.client.EntityDamageEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameJoinEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
@@ -9,6 +10,7 @@ import net.minecraft.network.ClientConnection;
 import net.minecraft.network.listener.PacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.login.LoginSuccessS2CPacket;
+import net.minecraft.network.packet.s2c.play.EntityDamageS2CPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -34,6 +36,9 @@ public abstract class MixinClientConnection implements Global {
     private static void onPacketRead(Packet<?> packet, PacketListener listener, CallbackInfo ci) {
         if (packet instanceof LoginSuccessS2CPacket) {
             system.eventBus.pass(new GameJoinEvent());
+        }
+        if (packet instanceof EntityDamageS2CPacket p) {
+            system.eventBus.pass(new EntityDamageEvent(p));
         }
         system.eventBus.passWithCallbackInfo(ci, new PacketReceiveEvent(packet));
     }

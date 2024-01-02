@@ -8,6 +8,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class VectorParser {
 
@@ -15,6 +16,7 @@ public class VectorParser {
     private static final String REGEX_RELATIVE = "[^0-9 ^~.-]";
     private static final Function<String, String> toNumber = s -> s.replaceAll(REGEX_DECIMAL, "").trim();
     private static final Function<String, String> toRelation = s -> s.replaceAll(REGEX_RELATIVE, "").trim();
+    private static final Predicate<String> isRelative = s -> s.startsWith("~") || s.startsWith("^");
     private final double x, y, z;
 
     public VectorParser(String arg1, String arg2, String arg3) {
@@ -84,15 +86,18 @@ public class VectorParser {
         double argX = 0.0;
         double argY = 0.0;
         double argZ = 0.0;
+        String argNum1 = toNumber.apply(arg1);
+        String argNum2 = toNumber.apply(arg2);
+        String argNum3 = toNumber.apply(arg3);
 
-        if (!toNumber.apply(arg1).isEmpty()) {
-            argX = Double.parseDouble(toNumber.apply(arg1));
+        if (!argNum1.isEmpty()) {
+            argX = Double.parseDouble(argNum1);
         }
-        if (!toNumber.apply(arg2).isEmpty()) {
-            argY = Double.parseDouble(toNumber.apply(arg2));
+        if (!argNum2.isEmpty()) {
+            argY = Double.parseDouble(argNum2);
         }
-        if (!toNumber.apply(arg3).isEmpty()) {
-            argZ = Double.parseDouble(toNumber.apply(arg3));
+        if (!argNum3.isEmpty()) {
+            argZ = Double.parseDouble(argNum3);
         }
 
         Vec3d result = relativePos;
@@ -122,9 +127,9 @@ public class VectorParser {
             result = distInFront(result, pitch, yaw, argZ);
         }
 
-        this.x = result.x;
-        this.y = result.y;
-        this.z = result.z;
+        this.x = isRelative.test(arg1) ? result.x : argX;
+        this.y = isRelative.test(arg2) ? result.y : argY;
+        this.z = isRelative.test(arg3) ? result.z : argZ;
     }
 
     public static Vec3d distInFront(Vec3d start, Vec3d dir, double dist) {
