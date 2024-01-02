@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.modules.scripts.syntax.OnEventCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 
 import java.util.function.Predicate;
 
@@ -21,7 +22,7 @@ public class DamageCmd extends ScriptCommand {
         Predicate<Entity> filter = OnEventCmd.parseEntityPredicate(args.get(1).toString());
         PlayerUtils.runOnNearestEntity(32, filter, entity -> mc.interactionManager.attackEntity(mc.player, entity));
       }
-      case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(32, Entity::isAlive, entity -> mc.interactionManager.attackEntity(mc.player, entity));
+      case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(32, entity -> entity instanceof LivingEntity, entity -> mc.interactionManager.attackEntity(mc.player, entity));
     }
   }
   
