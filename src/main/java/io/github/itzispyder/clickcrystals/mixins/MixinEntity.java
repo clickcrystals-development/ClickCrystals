@@ -14,7 +14,9 @@ public abstract class MixinEntity {
 
     @Inject(method = "isInvisibleTo", at = @At("HEAD"), cancellable = true)
     private void overrideIsInvisibleToPlayer(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
-        if (Module.isEnabled(SpectatorSight.class)) {
+        SpectatorSight ss = Module.get(SpectatorSight.class);
+
+        if (ss.isEnabled() && ss.canRender((Entity)(Object)this)) {
             cir.setReturnValue(false);
         }
     }

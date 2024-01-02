@@ -196,8 +196,10 @@ public class ScriptedModule extends ListenerModule {
     }
 
     @EventHandler
-    public void onDamage(TakeDamageEvent e) {
-        damageListeners.forEach(Runnable::run);
+    public void onDamage(EntityDamageEvent e) {
+        if (e.isSelf()) {
+            damageListeners.forEach(Runnable::run);
+        }
     }
 
     @EventHandler

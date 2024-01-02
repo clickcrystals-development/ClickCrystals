@@ -7,8 +7,8 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.scripts.macros.InputCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.LocationParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -124,11 +124,11 @@ public class IfCmd extends ScriptCommand implements Global {
                 return pair(m != null && !m.isEnabled(), i + 2);
             }
             case BLOCK -> {
-                LocationParser loc = new LocationParser(
+                VectorParser loc = new VectorParser(
                         args.get(i + 1).toString(),
                         args.get(i + 2).toString(),
                         args.get(i + 3).toString(),
-                        PlayerUtils.getPos()
+                        PlayerUtils.player()
                 );
                 Predicate<BlockState> pre = OnEventCmd.parseBlockPredicate(args.get(i + 4).toString());
                 return pair(pre.test(loc.getBlock(PlayerUtils.getWorld())), i + 5);

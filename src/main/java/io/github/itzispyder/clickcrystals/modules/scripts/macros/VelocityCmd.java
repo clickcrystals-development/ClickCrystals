@@ -6,10 +6,10 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
 import net.minecraft.util.math.Vec3d;
 
-public class TeleportCmd extends ScriptCommand {
+public class VelocityCmd extends ScriptCommand {
 
-    public TeleportCmd() {
-        super("teleport");
+    public VelocityCmd() {
+        super("velocity");
     }
 
     @Override
@@ -18,10 +18,11 @@ public class TeleportCmd extends ScriptCommand {
                 args.get(0).toString(),
                 args.get(1).toString(),
                 args.get(2).toString(),
-                PlayerUtils.player()
+                PlayerUtils.player().getVelocity(),
+                PlayerUtils.player().getRotationClient()
         );
         Vec3d dest = parser.getVector();
-        PlayerUtils.player().setPos(dest.x, dest.y, dest.z);
+        PlayerUtils.player().setVelocity(dest);
 
         if (args.match(3, "then")) {
             args.executeAll(4);
