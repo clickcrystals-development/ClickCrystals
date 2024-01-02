@@ -160,6 +160,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         ClickScript.register(new PlaySoundCmd());
         ClickScript.register(new SnapToCmd());
         ClickScript.register(new TeleportCmd());
+        ClickScript.register(new VelocityCmd());
         ClickScript.register(new WhileCmd());
         ClickScript.register(new WhileNotCmd());
         ClickScript.register(new GuiSwapCmd());

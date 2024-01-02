@@ -82,7 +82,7 @@ public class BrowsingScreen extends DefaultBase {
 
         @Override
         public void onRender(DrawContext context, int mouseX, int mouseY) {
-            String text = "§7To manually reload scripts, execute chat command §f%sccs reload-scripts".formatted(ClickCrystals.commandPrefix.getKeyName());
+            String text = "§7To manually reload scripts, execute chat command §f%sreload".formatted(ClickCrystals.commandPrefix.getKeyName());
             RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
         }
 
@@ -94,6 +94,19 @@ public class BrowsingScreen extends DefaultBase {
 
     private static class ScriptCreateNew extends ModuleElement {
         private final SearchBarElement textField = new SearchBarElement(0, 0) {
+            private static final String newModule = """
+                    module create %s
+                    description Custom Scripted Module
+                    
+                    on module_enable {
+                        
+                    }
+                    
+                    on module_disable {
+                        
+                    }
+                    """;
+
             {
                 this.setDefaultText("§7Enter module name");
             }
@@ -120,7 +133,7 @@ public class BrowsingScreen extends DefaultBase {
 
                 File file = new File(Config.PATH_SCRIPTS + "/" + name + ".ccs");
                 if (!file.exists()) {
-                    String preText = "module create %s \ndescription Custom scripted Module \n\n".formatted(name);
+                    String preText = newModule.formatted(name);
                     FileValidationUtils.quickWrite(file, preText);
                 }
                 mc.setScreen(new ClickScriptIDE(file));
