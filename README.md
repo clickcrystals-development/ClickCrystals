@@ -28,24 +28,27 @@ Happy coding and cpvping!
 ## Newest Changes
 ```yml
 Scripts:
-  - while (N) (condition) (CCS... args)
-  - while_not (N) (condition) (CCS... args)
-  - if effect_duration (ID) (N)
-  - if effect_amplifier (ID) (N)
-  - gui_swap (ID)
-  - gui_drop (ID) (N)
-  - gui_quickmove (ID)
-  - gui_switch (ID)
+  - if module_disabled (module)
+  - on damage works on servers now
 
 Tweaks:
-  - drop (N)
-  - added more key names such as [space, backspace, escape]
+  - make input_active inventory work for containers as well
+  - overview mode toggle on enable -> redirect to overview screen
 
-Patches:
-  - CCS dispatcher tree root
+Add:
+  - script delete button in IDE
+  - IDE auto module declaration
+  - Credits screen
+  - shortcut to hud edit screen
+  - new option for each module to disable upon joining a world
 
-Remove:
-  - removed the script_history.log
+Modules:
+  - time changer module
+  - totem pop scale module
+
+Patch:
+  - Custom made module screen top element tooltips
+  - Settings screen shortcut element tooltips
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png)
