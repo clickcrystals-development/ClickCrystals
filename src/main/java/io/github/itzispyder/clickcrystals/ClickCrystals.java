@@ -49,7 +49,6 @@ import org.lwjgl.glfw.GLFW;
  * TODO: (1) Update mod version down in "Global.java"
  * TODO: (2) Update mod "gradle.properties"
  * TODO: (4) Update "README.md"
- *
  * Publishing checklist
  * TODO: (5) Modrinth Release
  * TODO: (6) GitHub Release
@@ -243,6 +242,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new GuiCursor());
 
         // misc
+        system.addModule(new NoContainersInteractions());
         system.addModule(new ArmorHud());
         system.addModule(new AutoGG());
         system.addModule(new AutoRespawn());
