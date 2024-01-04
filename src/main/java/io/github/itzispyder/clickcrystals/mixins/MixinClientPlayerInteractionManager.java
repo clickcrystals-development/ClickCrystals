@@ -3,8 +3,8 @@ package io.github.itzispyder.clickcrystals.mixins;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.NoBreakDelay;
-import io.github.itzispyder.clickcrystals.modules.modules.misc.NoContainersInteractions;
-import net.minecraft.block.*;
+import io.github.itzispyder.clickcrystals.modules.modules.misc.NoInteractions;
+import net.minecraft.block.Block;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.util.ActionResult;
@@ -36,26 +36,17 @@ public abstract class MixinClientPlayerInteractionManager implements Global {
             blockBreakingCooldown = 0;
         }
     }
+
     @Inject(method = "interactBlock", at = @At("HEAD"), cancellable = true)
     private void interactBlock(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
         if (mc == null || mc.world == null || hitResult == null || hitResult.getBlockPos() == null) {
-            return; // Add null checks
+            return;
         }
 
-        Block bs = mc.world.getBlockState(hitResult.getBlockPos()).getBlock();
-        if (Module.isEnabled(NoContainersInteractions.class) && (
-                bs == Blocks.CHEST ||
-                        bs == Blocks.TRAPPED_CHEST ||
-                        bs == Blocks.FURNACE ||
-                        bs == Blocks.ANVIL ||
-                        bs == Blocks.CRAFTING_TABLE ||
-                        bs == Blocks.HOPPER ||
-                        bs == Blocks.JUKEBOX ||
-                        bs == Blocks.NOTE_BLOCK ||
-                        bs == Blocks.ENDER_CHEST ||
-                        bs instanceof ShulkerBoxBlock ||
-                        bs instanceof FenceBlock ||
-                        bs instanceof FenceGateBlock)) {
+        Block block = mc.world.getBlockState(hitResult.getBlockPos()).getBlock();
+        NoInteractions nci = Module.get(NoInteractions.class);
+
+        if (nci.isEnabled() && !nci.canInteract(block)) {
             cir.setReturnValue(ActionResult.PASS);
         }
     }
