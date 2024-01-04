@@ -45,6 +45,7 @@ public class ScriptedModule extends ListenerModule {
     public final List<Runnable> moduleEnableListeners = new ArrayList<>();
     public final List<Runnable> moduleDisableListeners = new ArrayList<>();
     public final List<Runnable> damageListeners = new ArrayList<>();
+    public final List<Runnable> respawnListeners = new ArrayList<>();
     public final List<Runnable> deathListeners = new ArrayList<>();
     public final List<Runnable> gameJoinListeners = new ArrayList<>();
     public final List<Runnable> gameLeaveListeners = new ArrayList<>();
@@ -78,6 +79,7 @@ public class ScriptedModule extends ListenerModule {
         moduleEnableListeners.clear();
         moduleDisableListeners.clear();
         damageListeners.clear();
+        respawnListeners.clear();
         deathListeners.clear();
         gameJoinListeners.clear();
         gameLeaveListeners.clear();
@@ -200,6 +202,11 @@ public class ScriptedModule extends ListenerModule {
         if (e.isSelf()) {
             damageListeners.forEach(Runnable::run);
         }
+    }
+    
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent e) {
+        respawnListeners.forEach(Runnable::run);
     }
 
     @EventHandler
