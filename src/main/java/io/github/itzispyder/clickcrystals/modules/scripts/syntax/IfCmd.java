@@ -21,7 +21,6 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.dimension.DimensionTypes;
 
-import java.util.Random;
 import java.util.function.Predicate;
 
 public class IfCmd extends ScriptCommand implements Global {
@@ -166,7 +165,7 @@ public class IfCmd extends ScriptCommand implements Global {
                 return pair(mc != null && mc.world != null && mc.player != null && mc.currentScreen == null, i + 1);
             }
             case CHANCE_OF -> {
-                return pair(new Random().nextDouble() * 100 < args.get(i + 1).toDouble(), i + 2);
+                return pair(Math.random() * 100 < args.get(i + 1).toDouble(), i + 2);
             }
         }
         return pair(false, 0);

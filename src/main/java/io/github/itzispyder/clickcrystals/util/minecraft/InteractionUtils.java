@@ -66,6 +66,13 @@ public final class InteractionUtils implements Global {
         InvUtils.dropSlot(InvUtils.selected(), true);
     }
 
+    public static void inputToggleSprint() {
+        mc.options.getSprintToggled().setValue(true);
+        if (!mc.options.sprintKey.isPressed()) {
+            mc.options.sprintKey.setPressed(true);
+        }
+    }
+
     public static void inputInventory() {
         if (PlayerUtils.playerNull()) {
             return;

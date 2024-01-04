@@ -18,6 +18,7 @@ import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
+import net.minecraft.network.packet.s2c.play.PlayerRespawnS2CPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -188,6 +189,9 @@ public class ScriptedModule extends ListenerModule {
                 }
             }
         }
+        else if (e.getPacket() instanceof PlayerRespawnS2CPacket) {
+            respawnListeners.forEach(Runnable::run);
+        }
     }
 
     @EventHandler
@@ -202,11 +206,6 @@ public class ScriptedModule extends ListenerModule {
         if (e.isSelf()) {
             damageListeners.forEach(Runnable::run);
         }
-    }
-    
-    @EventHandler
-    public void onRespawn(PlayerRespawnEvent e) {
-        respawnListeners.forEach(Runnable::run);
     }
 
     @EventHandler
