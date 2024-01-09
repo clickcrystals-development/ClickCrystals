@@ -10,6 +10,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
@@ -53,6 +54,13 @@ public class ObiSwitch extends Module implements Listener {
             .def(true)
             .build()
     );
+    private final SettingSection scDetails = createSettingSection("details");
+    public final ModuleSetting<Boolean> excludeBedrock = scDetails.add(createBoolSetting()
+            .name("exclude-bedrock")
+            .description("Prevents triggers when targeting bedrock.")
+            .def(false)
+            .build()
+    );
 
     private static long cooldown;
 
@@ -76,13 +84,12 @@ public class ObiSwitch extends Module implements Listener {
             final BlockPos pos = packet.getPos();
 
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
-            if (BlockUtils.isCrystallabe(pos)) return;
             if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
 
             if (cooldown > System.currentTimeMillis()) return;
             cooldown = System.currentTimeMillis() + (50 * 4);
 
-            if (canUse()) {
+            if (canUse() && !isCrystallable(pos)) {
                 e.setCancelled(true);
                 HotbarUtils.search(Items.OBSIDIAN);
                 BlockUtils.interact(pos,packet.getDirection());
@@ -99,5 +106,9 @@ public class ObiSwitch extends Module implements Listener {
         boolean useObsidian = HotbarUtils.isHolding(Items.OBSIDIAN) && onObsidian.getVal();
 
         return useSword || useCrystal || useTotem || useGlowstone || useAnchor || useObsidian;
+    }
+
+    public boolean isCrystallable(BlockPos pos) {
+        return BlockUtils.matchBlock(pos, Blocks.OBSIDIAN) || (!excludeBedrock.getVal() && BlockUtils.matchBlock(pos, Blocks.BEDROCK));
     }
 }
