@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Consumer;
 
 /**
@@ -12,13 +13,13 @@ import java.util.function.Consumer;
  */
 public class EventBus implements Global {
 
-    private final Set<Listener> subscribedListeners;
+    private final ConcurrentLinkedQueue<Listener> subscribedListeners;
 
     /**
      * Constructs a new event bus for handling events
      */
     public EventBus() {
-        this.subscribedListeners = new HashSet<>();
+        this.subscribedListeners = new ConcurrentLinkedQueue<>();
     }
 
     /**
