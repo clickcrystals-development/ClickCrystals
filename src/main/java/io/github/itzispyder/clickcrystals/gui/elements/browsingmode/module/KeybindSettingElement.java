@@ -54,7 +54,7 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
     @Override
     public void onKey(int key, int scanCode) {
         if (mc.currentScreen instanceof GuiScreen screen) {
-            setting.setKey(key);
+            setting.setKey(key == GLFW.GLFW_KEY_ESCAPE ? Keybind.NONE : key);
             currentScanCode = scanCode;
             screen.selected = null;
         }
@@ -77,7 +77,7 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
             name = Keybind.EXTRAS.get(key);
         }
 
-        name = name != null ? "§7[§f" + name.toUpperCase() + "§7]" : "§7NONE";
+        name = name != null && key != Keybind.NONE ? "§7[§f" + name.toUpperCase() + "§7]" : "§7NONE";
         display = name;
     }
 }

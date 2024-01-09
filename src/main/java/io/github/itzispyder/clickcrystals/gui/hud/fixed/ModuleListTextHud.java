@@ -31,18 +31,19 @@ public class ModuleListTextHud extends Hud {
                 .sorted(Comparator.comparing(module -> (mc.textRenderer.getWidth(((Module) module).getId()))).reversed())
                 .toList());
 
-        int i = 5;
+        int i = 0;
         for (Module module : modules) {
-            final Text display = Text.literal("  §b" + module.getName() + " ");
-            final int x = mc.getWindow().getScaledWidth() - 1;
-            final int y = i += 10;
-            final int fillColor = 0x70000000;
-            final int lineColor = 0xFFACE8FB;
-            final int length = tr.getWidth(display);
+            Text display = Text.literal("  §b" + module.getName() + " ");
+            int x = mc.getWindow().getScaledWidth() - 1;
+            int y = i;
+            int fillColor = 0x70000000;
+            int lineColor = 0xFF008EC2;
+            int length = tr.getWidth(display);
 
-            context.fill(x, y, x - length, y + 10, fillColor);
-            context.fill(x, y, x + 1, y + 10, lineColor);
-            RenderUtils.drawRightText(context, display, x, y, true);
+            RenderUtils.fill(context, x - length, y, length, 10, fillColor);
+            RenderUtils.fill(context, x - 1, y, 2, 10, lineColor);
+            RenderUtils.drawRightText(context, display, x, y + 1, true);
+            i += 10;
         }
     }
 }
