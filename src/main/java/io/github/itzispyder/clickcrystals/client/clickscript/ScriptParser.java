@@ -137,7 +137,7 @@ public class ScriptParser {
         }
     }
 
-    public static List<CommandLine> getStackLines(String line) {
+    public static List<CommandLine> parse(String line) {
         line = line == null ? "" : line;
         List<CommandLine> lines = new ArrayList<>();
 

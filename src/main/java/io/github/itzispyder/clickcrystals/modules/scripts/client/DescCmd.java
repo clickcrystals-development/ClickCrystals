@@ -6,11 +6,11 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 public class DescCmd extends ScriptCommand {
 
     public DescCmd() {
-        super("description");
+        super("description", "desc");
     }
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        ModuleCmd.runOnCurrentScriptModule(m -> m.setDescription(args.getAll().toString()));
+        ModuleCmd.runOnCurrentScriptModule(m -> m.setDescription(args.getQuoteAndRemove()));
     }
 }
