@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts.macros;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
-import io.github.itzispyder.clickcrystals.modules.scripts.syntax.OnEventCmd;
+import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 
@@ -22,7 +22,7 @@ public class SwitchCmd extends ScriptCommand {
         }
 
         lastSlot = InvUtils.selected();
-        HotbarUtils.search(OnEventCmd.parseItemPredicate(args.get(0).toString()));
+        HotbarUtils.search(ScriptParser.parseItemPredicate(args.get(0).toString()));
 
         if (args.match(1, "then")) {
             args.executeAll(2);

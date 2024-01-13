@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts.client;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
-import io.github.itzispyder.clickcrystals.modules.scripts.syntax.OnEventCmd;
+import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.sound.SoundEvent;
@@ -20,7 +20,7 @@ public class PlaySoundCmd extends ScriptCommand {
             return;
         }
 
-        SoundEvent soundEvent = OnEventCmd.parseSoundEvent(args.get(0).toString());
+        SoundEvent soundEvent = ScriptParser.parseSoundEvent(args.get(0).toString());
 
         if (soundEvent == null) {
             throw new IllegalArgumentException("unknown sound " + args.get(0));

@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts.macros;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
-import io.github.itzispyder.clickcrystals.modules.scripts.syntax.OnEventCmd;
+import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.block.BlockState;
@@ -29,11 +29,11 @@ public class SnapToCmd extends ScriptCommand {
 
         switch (args.get(0).toEnum(TurnToCmd.Mode.class, null)) {
             case NEAREST_BLOCK -> {
-                Predicate<BlockState> filter = OnEventCmd.parseBlockPredicate(args.get(1).toString());
+                Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(args.get(1).toString());
                 PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> specifiedSnap(pos.toCenterPos(), eyes, args));
             }
             case NEAREST_ENTITY -> {
-                Predicate<Entity> filter = OnEventCmd.parseEntityPredicate(args.get(1).toString());
+                Predicate<Entity> filter = ScriptParser.parseEntityPredicate(args.get(1).toString());
                 PlayerUtils.runOnNearestEntity(32, filter, entity -> specifiedSnap(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args));
             }
 

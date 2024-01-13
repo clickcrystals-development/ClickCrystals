@@ -30,7 +30,13 @@ public class CCScriptCommand extends Command {
                 .then(literal("compile")
                         .then(argument("commandline", StringArgumentType.greedyString())
                                 .executes(cxt -> {
-                                    ClickScript.executeDynamic(cxt.getArgument("commandline", String.class));
+                                    String cmd = cxt.getArgument("commandline", String.class);
+                                    try {
+                                        ClickScript.executeDynamic(cmd);
+                                    }
+                                    catch (Exception ex) {
+                                        ClickScript.DEFAULT_DISPATCHER.printErrorDetails(ex, cmd);
+                                    }
                                     return SINGLE_SUCCESS;
                                 })))
                 .then(literal("copy-file")

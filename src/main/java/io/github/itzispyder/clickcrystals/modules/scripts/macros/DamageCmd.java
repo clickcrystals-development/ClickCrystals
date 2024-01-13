@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts.macros;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
+import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
 import io.github.itzispyder.clickcrystals.modules.scripts.syntax.OnEventCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.entity.Entity;
@@ -25,7 +26,7 @@ public class DamageCmd extends ScriptCommand {
 
         switch (args.get(0).toEnum(Mode.class, null)) {
             case NEAREST_ENTITY -> {
-                Predicate<Entity> filter = OnEventCmd.parseEntityPredicate(args.get(1).toString());
+                Predicate<Entity> filter = ScriptParser.parseEntityPredicate(args.get(1).toString());
                 PlayerUtils.runOnNearestEntity(32, filter, entity -> mc.interactionManager.attackEntity(mc.player, entity));
                 OnEventCmd.executeWithThen(args, 2);
             }
