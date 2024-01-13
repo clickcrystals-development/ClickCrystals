@@ -207,7 +207,6 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addHud(new CrosshairTargetRelativeHud());
         system.addHud(new RotationRelativeHud());
         system.addHud(new ResourceRelativeHud());
-
         system.addHud(new ColorOverlayHud());
         system.addHud(new ModuleListTextHud());
         system.addHud(new ClickPerSecondHud());
@@ -267,6 +266,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new TimeChanger());
 
         // rendering
+        system.addModule(new NoGUiBackground());
         system.addModule(new CrystPerSec());
         system.addModule(new TotemPopScale());
         system.addModule(new NoArmorRender());
