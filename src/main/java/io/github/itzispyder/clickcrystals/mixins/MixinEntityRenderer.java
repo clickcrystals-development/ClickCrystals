@@ -18,8 +18,8 @@ public abstract class MixinEntityRenderer {
         GlowingEntities glowingEntities = Module.get(GlowingEntities.class);
 
         if (glowingEntities.isEnabled()) {
-            double entityLightLevel = glowingEntities.light_level.getVal();
-            cir.setReturnValue((int) entityLightLevel);
+            double light = glowingEntities.lightLevel.getVal();
+            cir.setReturnValue((int) light);
         }
     }
 }
