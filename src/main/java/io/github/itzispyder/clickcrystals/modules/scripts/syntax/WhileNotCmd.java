@@ -8,7 +8,7 @@ import java.util.concurrent.CompletableFuture;
 public class WhileNotCmd extends ScriptCommand {
 
     public WhileNotCmd() {
-        super("while_not");
+        super("while_not", "!while");
     }
 
     @Override

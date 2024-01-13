@@ -5,17 +5,19 @@ import io.github.itzispyder.clickcrystals.Global;
 public abstract class ScriptCommand implements Global {
 
     private final String name;
+    private final String[] aliases;
 
-    public ScriptCommand(String name) {
+    public ScriptCommand(String name, String... aliases) {
         this.name = name;
+        this.aliases = aliases;
     }
 
     public abstract void onCommand(ScriptCommand command, String line, ScriptArgs args);
 
-    public void dispatch(ClickScript script, String cmd) {
+    public void dispatch(ClickScript script, String label, String cmd) {
         try {
-            if (cmd != null && !cmd.isEmpty() && cmd.startsWith(name)) {
-                String[] args = cmd.replaceFirst(name, "").trim().split(" ");
+            if (cmd != null && !cmd.isEmpty() && cmd.startsWith(label)) {
+                String[] args = cmd.replaceFirst(label, "").trim().split(" ");
                 onCommand(this, cmd, new ScriptArgs(script, args));
             }
         }
@@ -26,6 +28,10 @@ public abstract class ScriptCommand implements Global {
 
     public String getName() {
         return name;
+    }
+
+    public String[] getAliases() {
+        return aliases;
     }
 
     public static ScriptCommand create(String name, Execution execution) {

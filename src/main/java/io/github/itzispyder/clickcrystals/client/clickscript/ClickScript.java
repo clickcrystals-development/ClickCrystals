@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.UnknownC
 import io.github.itzispyder.clickcrystals.commands.Command;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -89,23 +90,14 @@ public class ClickScript implements Global {
     public static void register(ScriptCommand command) {
         if (command != null) {
             REGISTRATION.put(command.getName(), command);
-        }
-    }
-
-    public static void register(String name, ScriptCommand.Execution execution) {
-        if (name != null && !name.isEmpty() && execution != null) {
-            REGISTRATION.put(name, new ScriptCommand(name) {
-                @Override
-                public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-                    execution.execute(command, line, args);
-                }
-            });
+            Arrays.stream(command.getAliases()).forEach(alias -> REGISTRATION.put(alias, command));
         }
     }
 
     public static void unregister(ScriptCommand command) {
         if (command != null) {
             REGISTRATION.remove(command.getName());
+            Arrays.stream(command.getAliases()).forEach(REGISTRATION::remove);
         }
     }
 
@@ -116,12 +108,6 @@ public class ClickScript implements Global {
             }
             String script = ScriptParser.readFile(file.getPath());
             executeDynamic(this, script);
-            /*
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-            br.lines().forEach(this::executeLine);
-            br.close();
-             */
         }
         catch (Exception ex) {
             printErrorDetails(ex, "DEFAULT-START-EXECUTION");
@@ -134,7 +120,7 @@ public class ClickScript implements Global {
             ScriptCommand cmd = REGISTRATION.get(name);
 
             if (cmd != null) {
-                cmd.dispatch(this, line);
+                cmd.dispatch(this, name, line);
             }
             else {
                 printErrorDetails(new UnknownCommandException("No such command found"), line);
