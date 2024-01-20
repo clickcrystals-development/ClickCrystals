@@ -5,16 +5,17 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 
-public class CameraUtils extends DummyModule {
+public class CameraClip extends DummyModule {
+
     private final SettingSection scGeneral = getGeneralSection();
     public final ModuleSetting<Boolean> enableCameraClip = scGeneral.add(createBoolSetting()
-            .name("enableCameraClip")
+            .name("enable-camera-clip")
             .description("Make the third perspective camera to ignore blocks.")
-            .def(false)
+            .def(true)
             .build()
     );
     public final ModuleSetting<Double> clipDistance = scGeneral.add(createDoubleSetting()
-            .name("camera distance")
+            .name("camera-distance")
             .description("The distance from the player to the camera.")
             .def(5.0)
             .max(100.0)
@@ -22,7 +23,7 @@ public class CameraUtils extends DummyModule {
             .build()
     );
 
-    public CameraUtils() {
+    public CameraClip() {
         super("camera-utils", Categories.RENDER, "Change the camera behavior.");
     }
 

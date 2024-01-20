@@ -1,8 +1,8 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.rendering.CameraClip;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoOverlay;
-import io.github.itzispyder.clickcrystals.modules.modules.rendering.CameraUtils;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.CameraSubmersionType;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,8 +25,7 @@ public abstract class MixinCamera {
 
     @Inject(method = "getSubmersionType", at = @At("RETURN"), cancellable = true)
     public void getSubmersionType(CallbackInfoReturnable<CameraSubmersionType> cir) {
-        Module noOverlay = Module.get(NoOverlay.class);
-        if (noOverlay.isEnabled()) {
+        if (Module.isEnabled(NoOverlay.class)) {
             cir.setReturnValue(CameraSubmersionType.NONE);
         }
     }
@@ -35,19 +34,21 @@ public abstract class MixinCamera {
     private void onClipToSpace(double desiredCameraDistance, CallbackInfoReturnable<Double> info) {
         if (bypassCameraClip) {
             bypassCameraClip = false;
-        } else {
-            CameraUtils cameraUtils = Module.get(CameraUtils.class);
+            return;
+        }
 
-            if (cameraUtils.isEnabled()) {
-                if (cameraUtils.getEnableCameraClipSetting()) {
-                    info.setReturnValue(cameraUtils.getClipDistanceSetting());
-                } else {
-                    if (cameraUtils.getClipDistanceSetting() > 0.0) {
-                        bypassCameraClip = true;
-                        info.setReturnValue(clipToSpace(cameraUtils.getClipDistanceSetting()));
-                    }
-                }
-            }
+        CameraClip clip = Module.get(CameraClip.class);
+
+        if (!clip.isEnabled()) {
+            return;
+        }
+
+        if (clip.getEnableCameraClipSetting()) {
+            info.setReturnValue(clip.getClipDistanceSetting());
+        }
+        else if (clip.getClipDistanceSetting() > 0.0) {
+            bypassCameraClip = true;
+            info.setReturnValue(clipToSpace(clip.getClipDistanceSetting()));
         }
     }
 }
