@@ -19,7 +19,6 @@ public abstract class MixinHandledScreen implements Global {
 
     @Inject(method = "drawSlot", at = @At("HEAD"))
     public void drawItemInSlot(DrawContext context, Slot slot, CallbackInfo ci) {
-        RenderInventorySlotEvent event = new RenderInventorySlotEvent(slot.getStack(), slot.x + x, slot.y + y);
-        system.eventBus.pass(event);
+        system.eventBus.pass(new RenderInventorySlotEvent(slot.getStack(), slot.x + x, slot.y + y));
     }
 }

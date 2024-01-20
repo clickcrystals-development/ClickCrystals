@@ -21,15 +21,12 @@ public abstract class MixinClientConnection implements Global {
 
     @Inject(method = "send(Lnet/minecraft/network/packet/Packet;)V", at = @At("HEAD"), cancellable = true)
     public void onPacketSend(Packet<?> packet, CallbackInfo ci) {
-        PacketSendEvent event = new PacketSendEvent(packet);
-        system.eventBus.pass(event);
-        if (event.isCancelled()) ci.cancel();
+        system.eventBus.passWithCallbackInfo(ci, new PacketSendEvent(packet));
     }
 
     @Inject(method = "send(Lnet/minecraft/network/packet/Packet;)V", at = @At("TAIL"))
     public void onPacketSent(Packet<?> packet, CallbackInfo ci) {
-        PacketSentEvent event = new PacketSentEvent(packet);
-        system.eventBus.pass(event);
+        system.eventBus.passWithCallbackInfo(ci, new PacketSentEvent(packet));
     }
 
     @Inject(method = "handlePacket", at = @At("HEAD"), cancellable = true)

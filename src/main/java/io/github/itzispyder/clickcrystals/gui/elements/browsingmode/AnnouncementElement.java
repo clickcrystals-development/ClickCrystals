@@ -17,10 +17,10 @@ public class AnnouncementElement extends GuiElement {
         this.announcement = announcement;
 
         int caret = y + 28;
-        caret += StringUtils.wrapLines(announcement.getDesc(), 60, true).size() * 8;
+        caret += StringUtils.wrapLines(announcement.desc(), 60, true).size() * 8;
 
-        for (Announcement.Field field : announcement.getFields()) {
-            for (String line : StringUtils.wrapLines(field.getDesc(), 45, true)) {
+        for (Announcement.Field field : announcement.fields()) {
+            for (String line : StringUtils.wrapLines(field.desc(), 45, true)) {
                 caret += 7;
             }
             caret += 22;
@@ -34,11 +34,11 @@ public class AnnouncementElement extends GuiElement {
         RoundRectBrush.drawRoundRect(context, x, y, width, height, 3, Gray.BLACK);
 
         int caret = y + 5;
-        RenderUtils.drawText(context, announcement.getTitle(), x + 5, caret, 0.8F, false);
+        RenderUtils.drawText(context, announcement.title(), x + 5, caret, 0.8F, false);
         caret += 8;
         RenderUtils.drawHorizontalLine(context, x + 5, caret, width - 10, 1, Gray.GRAY.argb);
 
-        for (String line : StringUtils.wrapLines(announcement.getDesc(), 60, true)) {
+        for (String line : StringUtils.wrapLines(announcement.desc(), 60, true)) {
             caret += 8;
             RenderUtils.drawText(context, line, x + 5, caret, 0.7F, false);
         }
@@ -46,11 +46,11 @@ public class AnnouncementElement extends GuiElement {
         RenderUtils.drawHorizontalLine(context, x + 5, caret, width / 10 * 8, 1, Gray.GRAY.argb);
         caret += 5;
 
-        for (Announcement.Field field : announcement.getFields()) {
+        for (Announcement.Field field : announcement.fields()) {
             caret += 5;
-            RenderUtils.drawText(context, field.getTitle(), x + 15, caret, 0.7F, false);
+            RenderUtils.drawText(context, field.title(), x + 15, caret, 0.7F, false);
             caret += 2;
-            for (String line : StringUtils.wrapLines(field.getDesc(), 45, true)) {
+            for (String line : StringUtils.wrapLines(field.desc(), 45, true)) {
                 caret += 7;
                 RenderUtils.drawText(context, "§7" + line, x + 15, caret, 0.7F, false);
             }

@@ -15,7 +15,6 @@ public abstract class MixinBlockItem implements Global {
 
     @Inject(method = "place(Lnet/minecraft/item/ItemPlacementContext;Lnet/minecraft/block/BlockState;)Z", at = @At("HEAD"), cancellable = true)
     private void onPlace(ItemPlacementContext context, BlockState state, CallbackInfoReturnable<Boolean> ci) {
-        BlockPlaceEvent event = new BlockPlaceEvent(state, context.getBlockPos());
-        system.eventBus.passWithCallbackInfo(ci, event);
+        system.eventBus.passWithCallbackInfo(ci, new BlockPlaceEvent(state, context.getBlockPos()));
     }
 }

@@ -16,7 +16,6 @@ public abstract class MixinBlock implements Global {
 
     @Inject(method = "onBroken", at = @At("HEAD"))
     public void afterBreak(WorldAccess world, BlockPos pos, BlockState state, CallbackInfo ci) {
-        BlockBreakEvent event = new BlockBreakEvent(pos, state, world);
-        system.eventBus.passWithCallbackInfo(ci, event);
+        system.eventBus.passWithCallbackInfo(ci, new BlockBreakEvent(pos, state, world));
     }
 }

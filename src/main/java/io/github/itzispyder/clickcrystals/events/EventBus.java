@@ -8,33 +8,19 @@ import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Consumer;
 
-/**
- * Represents an event bus for calling and passing events
- */
 public class EventBus implements Global {
 
     private final ConcurrentLinkedQueue<Listener> subscribedListeners;
 
-    /**
-     * Constructs a new event bus for handling events
-     */
     public EventBus() {
         this.subscribedListeners = new ConcurrentLinkedQueue<>();
     }
 
-    /**
-     * Subscribe a listener to the event bus
-     * @param listener listener
-     */
     public void subscribe(Listener listener) {
         if (listener == null) return;
         subscribedListeners.add(listener);
     }
 
-    /**
-     * Unsubscribes a listener from the event bus
-     * @param listener listener
-     */
     public void unsubscribe(Listener listener) {
         if (listener == null) return;
         subscribedListeners.remove(listener);
@@ -98,10 +84,6 @@ public class EventBus implements Global {
         return method.getParameters()[0].getType() == event.getClass();
     }
 
-    /**
-     * Returns a map of registered events by the event bus
-     * @return map
-     */
     public Set<Listener> listeners() {
         return new HashSet<>(subscribedListeners);
     }

@@ -12,15 +12,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LightmapTextureManager.class)
 public abstract class MixinLightmapTextureManager {
 
-    /**
-     * When the game gets the render brightness
-     * @param type dimension type
-     * @param lightLevel light level
-     * @param cir returnable callback info
-     */
     @Inject(method = "getBrightness", at = @At("RETURN"), cancellable = true)
     private static void getBrightness(DimensionType type, int lightLevel, CallbackInfoReturnable<Float> cir) {
-        Module fullBright = Module.get(FullBright.class);
-        if (fullBright.isEnabled()) cir.setReturnValue(15.0F);
+        if (Module.isEnabled(FullBright.class)) {
+            cir.setReturnValue(15.0F);
+        }
     }
 }

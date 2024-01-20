@@ -15,10 +15,10 @@ public abstract class MixinEntityRenderer {
 
     @Inject(method = "getBlockLight", at = @At("RETURN"), cancellable = true)
     public <T extends Entity> void getLight(T entity, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
-        GlowingEntities glowingEntities = Module.get(GlowingEntities.class);
+        GlowingEntities ge = Module.get(GlowingEntities.class);
 
-        if (glowingEntities.isEnabled()) {
-            double light = glowingEntities.lightLevel.getVal();
+        if (ge.isEnabled()) {
+            double light = ge.lightLevel.getVal();
             cir.setReturnValue((int) light);
         }
     }

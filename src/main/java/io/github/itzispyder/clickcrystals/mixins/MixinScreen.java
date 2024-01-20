@@ -25,9 +25,7 @@ public abstract class MixinScreen implements Global {
 
     @Inject(at = @At("HEAD"), method = "renderBackground(Lnet/minecraft/client/gui/DrawContext;)V", cancellable = true)
     public void onRenderBackground(DrawContext context, CallbackInfo ci) {
-        NoGuiBackground noBg = Module.get(NoGuiBackground.class);
-
-        if (noBg.isEnabled() && mc.currentScreen instanceof HandledScreen) {
+        if (Module.isEnabled(NoGuiBackground.class) && mc.currentScreen instanceof HandledScreen) {
             ci.cancel();
         }
     }

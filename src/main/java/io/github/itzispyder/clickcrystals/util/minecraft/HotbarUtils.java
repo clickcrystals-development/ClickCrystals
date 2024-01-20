@@ -14,18 +14,15 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-/**
- * Client hot bar utils
- */
 public final class HotbarUtils implements Global {
 
-    /**
-     * Search of the item in a player's hot bar.
-     * Scrolls to the item.
-     * @param item item to search
-     */
     public static boolean search(Item item) {
-        final PlayerInventory inv = mc.player.getInventory();
+        if (mc.player == null) {
+            return false;
+        }
+
+        PlayerInventory inv = mc.player.getInventory();
+
         for (int i = 0; i <= 8; i ++) {
             if (inv.getStack(i).isOf(item)) {
                 inv.selectedSlot = i;
@@ -36,7 +33,12 @@ public final class HotbarUtils implements Global {
     }
 
     public static boolean search(Predicate<ItemStack> item) {
-        final PlayerInventory inv = mc.player.getInventory();
+        if (mc.player == null) {
+            return false;
+        }
+
+        PlayerInventory inv = mc.player.getInventory();
+
         for (int i = 0; i <= 8; i ++) {
             if (item.test(inv.getStack(i))) {
                 inv.selectedSlot = i;
@@ -46,37 +48,32 @@ public final class HotbarUtils implements Global {
         return false;
     }
 
-    /**
-     * Checks of the hotbar has an item
-     * @param item item
-     * @return has item
-     */
     public static boolean has(Item item) {
-        final PlayerInventory inv = mc.player.getInventory();
+        if (mc.player == null) {
+            return false;
+        }
+
+        PlayerInventory inv = mc.player.getInventory();
+
         for (int i = 0; i <= 8; i ++) {
             if (inv.getStack(i).isOf(item)) return true;
         }
         return false;
     }
 
-    /**
-     * Checks of the hotbar has an item
-     * @param item item
-     * @return has item
-     */
     public static boolean has(Predicate<ItemStack> item) {
-        final PlayerInventory inv = mc.player.getInventory();
+        if (mc.player == null) {
+            return false;
+        }
+
+        PlayerInventory inv = mc.player.getInventory();
+
         for (int i = 0; i <= 8; i ++) {
             if (item.test(inv.getStack(i))) return true;
         }
         return false;
     }
 
-    /**
-     * If the player's held item matches the provided item type
-     * @param item item type
-     * @return match
-     */
     public static boolean isHolding(Item item) {
         return isHolding(item,Hand.MAIN_HAND);
     }
@@ -86,41 +83,39 @@ public final class HotbarUtils implements Global {
     }
 
     public static ItemStack getHand(Hand hand) {
+        if (mc.player == null) {
+            return ItemStack.EMPTY;
+        }
+
         ItemStack item = mc.player.getStackInHand(hand);
         return item != null ? item : ItemStack.EMPTY;
     }
 
-    /**
-     * If the players held item in the specified hand matches the provided type
-     * @param item item type
-     * @param hand hand to check
-     * @return match
-     */
     public static boolean isHolding(Item item, Hand hand) {
+        if (mc.player == null) {
+            return false;
+        }
         return mc.player.getStackInHand(hand).isOf(item);
     }
 
-    /**
-     * If the player's held item's name contains the following string
-     * @param contains string to check
-     * @return match
-     */
     public static boolean nameContains(String contains) {
         return nameContains(contains,Hand.MAIN_HAND);
     }
 
-    /**
-     * If the player's held item in thee specified hand's name contains the following string
-     * @param contains string to check
-     * @param hand hand to check
-     * @return match
-     */
     public static boolean nameContains(String contains, Hand hand) {
+        if (mc.player == null) {
+            return false;
+        }
+
         ItemStack item = mc.player.getStackInHand(hand);
         return item != null && item.getTranslationKey().toLowerCase().contains(contains.toLowerCase());
     }
 
     public static void forEachItem(Consumer<ItemStack> run) {
+        if (mc.player == null) {
+            return;
+        }
+
         for (int i = 0; i < 9; i ++) {
             ItemStack item = mc.player.getInventory().getStack(i);
             if (item == null) continue;
@@ -130,30 +125,16 @@ public final class HotbarUtils implements Global {
     }
 
     public static void forEachItem(BiConsumer<Integer,ItemStack> run) {
+        if (mc.player == null) {
+            return;
+        }
+
         for (int i = 0; i < 9; i ++) {
             ItemStack item = mc.player.getInventory().getStack(i);
             if (item == null) continue;
             if (item.isEmpty()) continue;
             run.accept(i,item);
         }
-    }
-
-    public static ItemStack[] getContents() {
-        PlayerInventory inv = mc.player.getInventory();
-        ItemStack[] stacks = new ItemStack[]{};
-        for (int i = 0; i < 9; i++) {
-            stacks[i] = inv.getStack(i);
-        }
-        return stacks;
-    }
-
-    public static boolean isForClickCrystal() {
-        return nameContains("sword")
-                || isHolding(Items.END_CRYSTAL)
-                || isHolding(Items.OBSIDIAN)
-                || isHolding(Items.TOTEM_OF_UNDYING)
-                || isHolding(Items.GLOWSTONE)
-                || isHolding(Items.RESPAWN_ANCHOR);
     }
 
     public static boolean isHoldingTool() {
@@ -166,14 +147,18 @@ public final class HotbarUtils implements Global {
     }
 
     public static void swapWithOffhand() {
-        PlayerActionC2SPacket swap = new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND, mc.player.getBlockPos(), Direction.UP);
+        if (mc.player == null) {
+            return;
+        }
+
+        PlayerActionC2SPacket.Action action = PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND;
+        PlayerActionC2SPacket swap = new PlayerActionC2SPacket(action, mc.player.getBlockPos(), Direction.UP);
         mc.player.networkHandler.sendPacket(swap);
     }
 
     public static double getFullHealthRatio() {
-        final PlayerEntity p = mc.player;
-        if (p == null) return 0.0;
-        return p.getHealth() / p.getMaxHealth();
+        PlayerEntity p = mc.player;
+        return p == null ? 0.0 : p.getHealth() / p.getMaxHealth();
     }
 
     public static boolean isTotemed() {
@@ -181,19 +166,23 @@ public final class HotbarUtils implements Global {
     }
 
     public static boolean isHoldingEitherHand(Item item) {
-        if (mc.player == null) return false;
+        if (mc.player == null) {
+            return false;
+        }
 
-        final ItemStack main = mc.player.getStackInHand(Hand.MAIN_HAND);
-        final ItemStack off = mc.player.getStackInHand(Hand.OFF_HAND);
+        ItemStack main = mc.player.getStackInHand(Hand.MAIN_HAND);
+        ItemStack off = mc.player.getStackInHand(Hand.OFF_HAND);
 
         return (main != null && main.getItem() == item) || (off != null && off.getItem() == item);
     }
 
     public static boolean isHoldingEitherHand(Predicate<ItemStack> item) {
-        if (mc.player == null) return false;
+        if (mc.player == null) {
+            return false;
+        }
 
-        final ItemStack main = mc.player.getStackInHand(Hand.MAIN_HAND);
-        final ItemStack off = mc.player.getStackInHand(Hand.OFF_HAND);
+        ItemStack main = mc.player.getStackInHand(Hand.MAIN_HAND);
+        ItemStack off = mc.player.getStackInHand(Hand.OFF_HAND);
 
         return (main != null && item.test(main)) || (off != null && item.test(off));
     }

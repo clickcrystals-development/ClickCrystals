@@ -54,7 +54,7 @@ public class CrystAnchor extends Module implements Listener {
         if (e.getPacket() instanceof PlayerInteractBlockC2SPacket packet) {
             final BlockPos pos = packet.getBlockHitResult().getBlockPos();
 
-            if (BlockUtils.isCrystallabe(pos)) return;
+            if (BlockUtils.canCrystalOn(pos)) return;
             if (!HotbarUtils.has(Items.RESPAWN_ANCHOR)) return;
 
             boolean crystal = onCrystal.getVal() && HotbarUtils.isHolding(Items.END_CRYSTAL);

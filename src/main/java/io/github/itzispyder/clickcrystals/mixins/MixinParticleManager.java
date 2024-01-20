@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
-import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.ParticleReceiveEvent;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleManager;
@@ -11,14 +11,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ParticleManager.class)
-public abstract class MixinParticleManager {
-
-    private static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
+public abstract class MixinParticleManager implements Global {
 
     @Inject(method = "addParticle(Lnet/minecraft/particle/ParticleEffect;DDDDDD)Lnet/minecraft/client/particle/Particle;", at = @At("HEAD"), cancellable = true)
     public void addParticle(ParticleEffect parameters, double x, double y, double z, double velocityX, double velocityY, double velocityZ, CallbackInfoReturnable<Particle> cir) {
         ParticleReceiveEvent event = new ParticleReceiveEvent(parameters.getType(), x, y, z, velocityX, velocityY, velocityZ);
-        system.eventBus.pass(event);
-        if (event.isCancelled()) cir.cancel();
+        system.eventBus.passWithCallbackInfo(cir, event);
     }
 }

@@ -24,6 +24,7 @@ public abstract class MixinMinecraftClient implements MinecraftClientAccessor, G
     public void set(Screen screen, CallbackInfo ci) {
         SetScreenEvent event = new SetScreenEvent(screen);
         system.eventBus.pass(event);
+
         if (event.isCancelled()) {
             ci.cancel();
             setScreen(null);

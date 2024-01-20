@@ -14,19 +14,10 @@ import java.util.concurrent.atomic.AtomicReference;
  * Try not to instantiate this class, parse it from json!
  * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/bulletin</a>
  */
-public class BulletinBoard implements Global {
+public record BulletinBoard(Announcement... announcements) implements Global {
 
-    private static AtomicReference<BulletinBoard> current = new AtomicReference<>(null);
+    private static final AtomicReference<BulletinBoard> current = new AtomicReference<>(null);
     public static final String URL = "https://itzispyder.github.io/clickcrystals/bulletin";
-    private final Announcement[] announcements;
-
-    public BulletinBoard(Announcement... announcements) {
-        this.announcements = announcements;
-    }
-
-    public Announcement[] getAnnouncements() {
-        return announcements;
-    }
 
     public int size() {
         return announcements.length;
@@ -46,6 +37,7 @@ public class BulletinBoard implements Global {
 
     /**
      * Should call hasCurrent() before this!
+     *
      * @return BulletinBoard
      */
     public static BulletinBoard getCurrent() {
@@ -54,6 +46,7 @@ public class BulletinBoard implements Global {
 
     /**
      * Runs async, might have to wait awhile.
+     *
      * @return async future
      */
     public static synchronized CompletableFuture<Void> request() {
@@ -75,8 +68,7 @@ public class BulletinBoard implements Global {
             isr.close();
             current.set(bulletin);
             ClickCrystals.requestModInfo();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             system.printErr("Error requesting bulletin board");
             system.printErr(ex.getMessage());
         }

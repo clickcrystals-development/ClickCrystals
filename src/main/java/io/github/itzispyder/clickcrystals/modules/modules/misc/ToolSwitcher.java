@@ -83,7 +83,7 @@ public class ToolSwitcher extends Module implements Listener {
                 final BlockPos pos = packet.getPos();
                 final BlockState state = mc.player.getWorld().getBlockState(pos);
 
-                if (BlockUtils.isCrystallabe(pos)) return;
+                if (BlockUtils.canCrystalOn(pos)) return;
                 if (itemExcluded()) return;
 
                 final Map<Integer,Float> entries = new HashMap<>();

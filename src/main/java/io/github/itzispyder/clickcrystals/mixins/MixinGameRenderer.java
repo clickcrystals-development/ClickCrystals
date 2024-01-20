@@ -21,21 +21,21 @@ public abstract class MixinGameRenderer {
 
     @Inject(method = "tiltViewWhenHurt", at = @At("HEAD"), cancellable = true)
     public void onHurtViewTilt(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-        final Module noHurtCam = Module.get(NoHurtCam.class);
-
-        if (noHurtCam.isEnabled()) ci.cancel();
+        if (Module.isEnabled(NoHurtCam.class)) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "bobView", at = @At("HEAD"), cancellable = true)
     public void onViewBob(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-        final Module noViewBob = Module.get(NoViewBob.class);
-
-        if (noViewBob.isEnabled()) ci.cancel();
+        if (Module.isEnabled(NoViewBob.class)) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "getFov", at = @At("RETURN"), cancellable = true)
     public void getFov(Camera camera, float tickDelta, boolean changingFov, CallbackInfoReturnable<Double> cir) {
-        final Zoom zoom = Module.get(Zoom.class);
+        Zoom zoom = Module.get(Zoom.class);
 
         if (zoom.isEnabled() && zoom.isZooming()) {
             cir.setReturnValue(zoom.getZoomMultiplierValue(cir.getReturnValue()));
