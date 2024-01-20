@@ -17,8 +17,7 @@ public abstract class MixinChatHud implements Global {
 
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;ILnet/minecraft/client/gui/hud/MessageIndicator;Z)V",at = @At("HEAD"), cancellable = true)
     public void addMessage(Text message, MessageSignatureData signature, int ticks, MessageIndicator indicator, boolean refresh, CallbackInfo ci) {
-        ChatReceiveEvent event = new ChatReceiveEvent(message.getString());
-        system.eventBus.passWithCallbackInfo(ci, event);
+        system.eventBus.passWithCallbackInfo(ci, new ChatReceiveEvent(message.getString()));
         ChatReceiveEvent.unlock();
     }
 

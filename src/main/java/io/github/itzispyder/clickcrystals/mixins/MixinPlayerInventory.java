@@ -14,8 +14,6 @@ public abstract class MixinPlayerInventory implements Global {
 
     @Inject(method = "addStack(ILnet/minecraft/item/ItemStack;)I", at = @At("HEAD"))
     public void addStack(int slot, ItemStack stack, CallbackInfoReturnable<Integer> cir) {
-        final InventoryAddItemEvent event = new InventoryAddItemEvent(slot, stack);
-
-        system.eventBus.pass(event);
+        system.eventBus.pass(new InventoryAddItemEvent(slot, stack));
     }
 }

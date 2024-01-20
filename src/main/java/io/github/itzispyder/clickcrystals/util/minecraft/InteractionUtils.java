@@ -14,14 +14,8 @@ import net.minecraft.item.ItemStack;
 import java.awt.*;
 import java.util.function.Predicate;
 
-/**
- * Client interaction utils
- */
 public final class InteractionUtils implements Global {
 
-    /**
-     * Left clicks as if the player has inputted the click
-     */
     public static void inputAttack() {
         ((MinecraftClientAccessor) mc).inputAttack();
     }
@@ -66,6 +60,13 @@ public final class InteractionUtils implements Global {
         InvUtils.dropSlot(InvUtils.selected(), true);
     }
 
+    public static void inputToggleSprint() {
+        mc.options.getSprintToggled().setValue(true);
+        if (!mc.options.sprintKey.isPressed()) {
+            mc.options.sprintKey.setPressed(true);
+        }
+    }
+
     public static void inputInventory() {
         if (PlayerUtils.playerNull()) {
             return;
@@ -82,12 +83,18 @@ public final class InteractionUtils implements Global {
     public static boolean canBreakCrystals() {
         if (mc.player == null) return false;
 
-        final StatusEffectInstance s = mc.player.getStatusEffect(StatusEffects.STRENGTH);
-        final StatusEffectInstance w = mc.player.getStatusEffect(StatusEffects.WEAKNESS);
+        StatusEffectInstance s = mc.player.getStatusEffect(StatusEffects.STRENGTH);
+        StatusEffectInstance w = mc.player.getStatusEffect(StatusEffects.WEAKNESS);
 
-        if (s == null && w == null) return true;
-        if (w == null) return true;
-        if (s != null && s.getAmplifier() > w.getAmplifier()) return true;
+        if (s == null && w == null) {
+            return true;
+        }
+        if (w == null) {
+            return true;
+        }
+        if (s != null && s.getAmplifier() > w.getAmplifier()) {
+            return true;
+        }
 
         return HotbarUtils.isHoldingTool();
     }

@@ -32,7 +32,7 @@ public class ClickCrystal extends Module implements Listener {
         if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
             final BlockPos pos = packet.getPos();
-            if (!BlockUtils.isCrystallabe(pos)) return;
+            if (!BlockUtils.canCrystalOn(pos)) return;
 
             if (HotbarUtils.isHolding(Items.END_CRYSTAL)) {
                 e.setCancelled(true);

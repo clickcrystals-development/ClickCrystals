@@ -34,7 +34,7 @@
     "MixinBlock",
     "MixinEntity",
     "MixinItem",
-    "MixinItemstack",
+    "MixinItemStack",
     "MixinLivingEntity",
     "MixinMinecraftClient",
     "MixinPlayerEntity",

@@ -15,6 +15,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScree
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.modules.scripts.client.ConfigCmd;
+import io.github.itzispyder.clickcrystals.modules.scripts.client.DefineCmd;
 import io.github.itzispyder.clickcrystals.modules.scripts.client.ModuleCmd;
 import io.github.itzispyder.clickcrystals.modules.scripts.macros.InputCmd;
 import io.github.itzispyder.clickcrystals.modules.scripts.macros.TurnToCmd;
@@ -52,6 +53,7 @@ public class ClickScriptIDE extends DefaultBase {
         this.put(ChatColor.YELLOW, Arrays.stream(ModuleCmd.Action.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(TurnToCmd.Mode.values()).map(e -> e.name().toLowerCase()).toList());
         this.put(ChatColor.YELLOW, Arrays.stream(ConfigCmd.Type.values()).map(e -> e.name().toLowerCase()).toList());
+        this.put(ChatColor.YELLOW, Arrays.stream(DefineCmd.Type.values()).map(e -> e.name().toLowerCase()).toList());
         // enums-trailing
         this.put(ChatColor.YELLOW, Arrays.stream(IfCmd.Dimensions.values()).map(e -> e.name().toLowerCase()).toList());
         // main keywords

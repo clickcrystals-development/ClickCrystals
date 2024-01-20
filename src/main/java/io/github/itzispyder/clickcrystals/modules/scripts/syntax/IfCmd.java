@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts.syntax;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
+import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.scripts.macros.InputCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
@@ -51,17 +52,17 @@ public class IfCmd extends ScriptCommand implements Global {
         int i = beginIndex;
         switch (type) {
             case HOLDING -> {
-                return pair(OnEventCmd.parseItemPredicate(args.get(i + 1).toString()).test(HotbarUtils.getHand()), i + 2);
+                return pair(ScriptParser.parseItemPredicate(args.get(i + 1).toString()).test(HotbarUtils.getHand()), i + 2);
             }
             case OFF_HOLDING -> {
-                return pair(OnEventCmd.parseItemPredicate(args.get(i + 1).toString()).test(HotbarUtils.getHand(Hand.OFF_HAND)), i + 2);
+                return pair(ScriptParser.parseItemPredicate(args.get(i + 1).toString()).test(HotbarUtils.getHand(Hand.OFF_HAND)), i + 2);
             }
             case TARGET_BLOCK -> {
-                boolean bl = mc.crosshairTarget instanceof BlockHitResult hit && OnEventCmd.parseBlockPredicate(args.get(i + 1).toString()).test(PlayerUtils.getWorld().getBlockState(hit.getBlockPos()));
+                boolean bl = mc.crosshairTarget instanceof BlockHitResult hit && ScriptParser.parseBlockPredicate(args.get(i + 1).toString()).test(PlayerUtils.getWorld().getBlockState(hit.getBlockPos()));
                 return pair(bl, i + 2);
             }
             case TARGET_ENTITY -> {
-                boolean bl = mc.crosshairTarget instanceof EntityHitResult hit && OnEventCmd.parseEntityPredicate(args.get(i + 1).toString()).test(hit.getEntity());
+                boolean bl = mc.crosshairTarget instanceof EntityHitResult hit && ScriptParser.parseEntityPredicate(args.get(i + 1).toString()).test(hit.getEntity());
                 return pair(bl, i + 2);
             }
             case TARGETING_BLOCK -> {
@@ -71,16 +72,16 @@ public class IfCmd extends ScriptCommand implements Global {
                 return pair(mc.crosshairTarget instanceof EntityHitResult hit && hit.getEntity().isAlive(), i + 1);
             }
             case INVENTORY_HAS -> {
-                return pair(InvUtils.has(OnEventCmd.parseItemPredicate(args.get(i + 1).toString())), i + 2);
+                return pair(InvUtils.has(ScriptParser.parseItemPredicate(args.get(i + 1).toString())), i + 2);
             }
             case HOTBAR_HAS -> {
-                return pair(HotbarUtils.has(OnEventCmd.parseItemPredicate(args.get(i + 1).toString())), i + 2);
+                return pair(HotbarUtils.has(ScriptParser.parseItemPredicate(args.get(i + 1).toString())), i + 2);
             }
             case INPUT_ACTIVE -> {
                 return pair(args.get(i + 1).toEnum(InputCmd.Action.class, null).isActive(), i + 2);
             }
             case BLOCK_IN_RANGE -> {
-                Predicate<BlockState> filter = args.match(i + 1, "any_block") ? state -> true : OnEventCmd.parseBlockPredicate(args.get(i + 1).toString());
+                Predicate<BlockState> filter = args.match(i + 1, "any_block") ? state -> true : ScriptParser.parseBlockPredicate(args.get(i + 1).toString());
                 double range = args.get(i + 2).toDouble();
                 boolean[] bl = { false };
                 PlayerUtils.runOnNearestBlock(range, filter, (pos, state) -> {
@@ -89,7 +90,7 @@ public class IfCmd extends ScriptCommand implements Global {
                 return pair(bl[0], i + 3);
             }
             case ENTITY_IN_RANGE -> {
-                Predicate<Entity> filter = args.match(i + 1, "any_entity") ? entity -> true : OnEventCmd.parseEntityPredicate(args.get(i + 1).toString());
+                Predicate<Entity> filter = args.match(i + 1, "any_entity") ? entity -> true : ScriptParser.parseEntityPredicate(args.get(i + 1).toString());
                 double range = args.get(i + 2).toDouble();
                 boolean[] bl = { false };
                 PlayerUtils.runOnNearestEntity(range, filter, entity -> {
@@ -130,7 +131,7 @@ public class IfCmd extends ScriptCommand implements Global {
                         args.get(i + 3).toString(),
                         PlayerUtils.player()
                 );
-                Predicate<BlockState> pre = OnEventCmd.parseBlockPredicate(args.get(i + 4).toString());
+                Predicate<BlockState> pre = ScriptParser.parseBlockPredicate(args.get(i + 4).toString());
                 return pair(pre.test(loc.getBlock(PlayerUtils.getWorld())), i + 5);
             }
             case DIMENSION -> {
@@ -143,7 +144,7 @@ public class IfCmd extends ScriptCommand implements Global {
                 return pair(bl, i + 2);
             }
             case EFFECT_AMPLIFIER -> {
-                StatusEffect statusEffect = OnEventCmd.parseStatusEffect(args.get(i + 1).toString());
+                StatusEffect statusEffect = ScriptParser.parseStatusEffect(args.get(i + 1).toString());
                 StatusEffectInstance effect = PlayerUtils.player().getStatusEffect(statusEffect);
                 if (effect == null) {
                     effect = new StatusEffectInstance(statusEffect);
@@ -151,7 +152,7 @@ public class IfCmd extends ScriptCommand implements Global {
                 return pair(evalIntegers(effect.getAmplifier(), args.get(i + 2).toString()), i + 3);
             }
             case EFFECT_DURATION -> {
-                StatusEffect statusEffect = OnEventCmd.parseStatusEffect(args.get(i + 1).toString());
+                StatusEffect statusEffect = ScriptParser.parseStatusEffect(args.get(i + 1).toString());
                 StatusEffectInstance effect = PlayerUtils.player().getStatusEffect(statusEffect);
                 if (effect == null) {
                     effect = new StatusEffectInstance(statusEffect);
@@ -163,6 +164,9 @@ public class IfCmd extends ScriptCommand implements Global {
             }
             case PLAYING -> {
                 return pair(mc != null && mc.world != null && mc.player != null && mc.currentScreen == null, i + 1);
+            }
+            case CHANCE_OF -> {
+                return pair(Math.random() * 100 < args.get(i + 1).toDouble(), i + 2);
             }
         }
         return pair(false, 0);
@@ -197,7 +201,8 @@ public class IfCmd extends ScriptCommand implements Global {
         EFFECT_DURATION,
         EFFECT_AMPLIFIER,
         IN_GAME,
-        PLAYING
+        PLAYING,
+        CHANCE_OF
     }
 
     /**

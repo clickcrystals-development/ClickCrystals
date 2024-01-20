@@ -16,9 +16,7 @@ public abstract class MixinLivingEntityRenderer implements Global {
 
     @Inject(method = "hasLabel(Lnet/minecraft/entity/LivingEntity;)Z", at = @At("RETURN"), cancellable = true)
     public void hasLabel(LivingEntity ent, CallbackInfoReturnable<Boolean> cir) {
-        final Module renderOwnName = Module.get(RenderOwnName.class);
-
-        if (renderOwnName.isEnabled() && mc.getCameraEntity() == ent) {
+        if (Module.isEnabled(RenderOwnName.class) && mc.getCameraEntity() == ent) {
             cir.setReturnValue(MinecraftClient.isHudEnabled());
         }
     }

@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.UnknownC
 import io.github.itzispyder.clickcrystals.commands.Command;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -36,21 +37,32 @@ public class ClickScript implements Global {
                 args.executeAll(1);
             }
         }));
+        ScriptCommand cmd = ScriptCommand.create("function", (command, line, args) -> {
+            ClickScript exe = args.getExecutor();
+            String name = args.get(0).toString();
+            executeDynamic(exe, exe.getFunction(name));
+        });
+        this.put("function", cmd);
+        this.put("func", cmd);
     }};
     public static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
+    private final Map<String, String> functions;
     private final String path;
     private final File file;
 
-    public ClickScript(File file) {
+    private ClickScript(File file, String path) {
         this.file = file;
-        this.path = file.getPath();
+        this.path = path;
+        this.functions = new HashMap<>();
         currentFile.set(file);
     }
 
+    public ClickScript(File file) {
+        this(file, file.getPath());
+    }
+
     private ClickScript(String fakePath) {
-        this.path = fakePath;
-        this.file = null;
-        currentFile.set(null);
+        this(null, fakePath);
     }
 
     public static ClickScript executeIfExists(String path) {
@@ -68,7 +80,7 @@ public class ClickScript implements Global {
     }
 
     public static void executeDynamic(ClickScript executor, String commandLine) {
-        for (CommandLine line : ScriptParser.getStackLines(ScriptParser.condenseLines(commandLine))) {
+        for (CommandLine line : ScriptParser.parse(ScriptParser.condenseLines(commandLine))) {
             if (line.isDeep()) {
                 line.executeDynamic(executor);
             }
@@ -89,23 +101,14 @@ public class ClickScript implements Global {
     public static void register(ScriptCommand command) {
         if (command != null) {
             REGISTRATION.put(command.getName(), command);
-        }
-    }
-
-    public static void register(String name, ScriptCommand.Execution execution) {
-        if (name != null && !name.isEmpty() && execution != null) {
-            REGISTRATION.put(name, new ScriptCommand(name) {
-                @Override
-                public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-                    execution.execute(command, line, args);
-                }
-            });
+            Arrays.stream(command.getAliases()).forEach(alias -> REGISTRATION.put(alias, command));
         }
     }
 
     public static void unregister(ScriptCommand command) {
         if (command != null) {
             REGISTRATION.remove(command.getName());
+            Arrays.stream(command.getAliases()).forEach(REGISTRATION::remove);
         }
     }
 
@@ -116,12 +119,6 @@ public class ClickScript implements Global {
             }
             String script = ScriptParser.readFile(file.getPath());
             executeDynamic(this, script);
-            /*
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-            br.lines().forEach(this::executeLine);
-            br.close();
-             */
         }
         catch (Exception ex) {
             printErrorDetails(ex, "DEFAULT-START-EXECUTION");
@@ -134,7 +131,7 @@ public class ClickScript implements Global {
             ScriptCommand cmd = REGISTRATION.get(name);
 
             if (cmd != null) {
-                cmd.dispatch(this, line);
+                cmd.dispatch(this, name, line);
             }
             else {
                 printErrorDetails(new UnknownCommandException("No such command found"), line);
@@ -169,6 +166,20 @@ public class ClickScript implements Global {
             -command: '%s'
             -location: [at '%s']
         """.formatted(from, type, msg, name, cmd, path);
+    }
+
+    public void createFunction(String name, String command) {
+        if (name == null || name.trim().isEmpty() || command == null || command.trim().isEmpty()) {
+            return;
+        }
+        functions.put(name, command);
+    }
+
+    private String getFunction(String name) {
+        if (name == null || name.trim().isEmpty() || !functions.containsKey(name)) {
+            throw new IllegalArgumentException("Function '%s' is not defined!".formatted(name));
+        }
+        return "execute " + functions.getOrDefault(name, "");
     }
 
     public String getPath() {

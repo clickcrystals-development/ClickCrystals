@@ -16,6 +16,10 @@ public final class NbtUtils {
                 NbtCompound nbt = list.getCompound(i);
                 Identifier id = Identifier.tryParse(nbt.getString("id"));
                 Identifier id2 = Registries.ENCHANTMENT.getId(enchant);
+
+                if (id == null || id2 == null) {
+                    continue;
+                }
                 if (id.toTranslationKey().equalsIgnoreCase(id2.toTranslationKey())) {
                     return nbt.getInt("lvl");
                 }

@@ -16,10 +16,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class TargetRelativeHud extends Hud {
 
     private static PlayerEntity target;
     private static long timer;
+    private final AtomicInteger translation = new AtomicInteger(0);
+    private final AtomicBoolean showingArmor = new AtomicBoolean();
 
     public TargetRelativeHud() {
         super("target-hud", 150, 30, 120, 12);
@@ -42,15 +47,15 @@ public class TargetRelativeHud extends Hud {
             int x = getX();
             int y = getY();
             int caret = y;
-            int margin = x + g;
+            int margin = x + g + 2;
 
             // player head
-            caret += g;
+            caret += g + 2;
             PlayerSkinDrawer.draw(context, targetEntry.getSkinTextures(), margin, caret, 15);
 
             // player name (next to player head)
             // and player ping and distance
-            caret += 5;
+            caret += 7;
             String name = targetEntry.getProfile().getName();
             String info = "§f" + targetEntry.getLatency() + " §7ms,  §f" + MathUtils.round(target.distanceTo(p), 10) + " §7dist";
             RenderUtils.drawText(context, name, margin + 15 + g, caret, 0.8F, true);
@@ -59,16 +64,26 @@ public class TargetRelativeHud extends Hud {
 
             // target armor
             if (!isTargetNaked()) {
-                caret += 10;
+                if (!showingArmor.get()) {
+                    showingArmor.set(true);
+                    system.scheduler.runRepeatingTask(translation::getAndIncrement, 0, 5, 10);
+                }
+                caret += translation.get();
                 for (ItemStack item : target.getInventory().armor) {
                     RenderUtils.drawItem(context, item, margin, caret - 1, 13);
                     margin += 13;
                 }
                 RenderUtils.drawItem(context, target.getMainHandStack(), margin, caret - 1, 13);
-                margin += 13;
-                RenderUtils.drawItem(context, target.getOffHandStack(), margin, caret - 1, 13);
-                margin = x + g;
+                RenderUtils.drawItem(context, target.getOffHandStack(), margin + 13, caret - 1, 13);
+                margin = x + g + 2;
                 caret += 3;
+            }
+            else {
+                if (showingArmor.get()) {
+                    showingArmor.set(false);
+                    system.scheduler.runRepeatingTask(translation::getAndDecrement, 0, 5, 10);
+                }
+                caret += translation.get();
             }
 
             // health indicator
@@ -82,22 +97,20 @@ public class TargetRelativeHud extends Hud {
             // totem indicator
             ItemStack totem = Items.TOTEM_OF_UNDYING.getDefaultStack();
             String pops = "§c-" + Module.get(TotemPops.class).getPops(target);
-            float scale = 2.0F;
-            float rescale = 1 / scale;
-            int tx = (int) ((margin + 80 + g) / scale);
-            int ty = (int) (y / scale);
+            float scale = 1.8F;
+            int tx = (int) ((margin + 80 + g) / scale - 1);
+            int ty = (int) (y / scale + 5);
             context.getMatrices().push();
             context.getMatrices().scale(scale, scale, scale);
             context.drawItem(totem, tx, ty);
-            context.getMatrices().scale(rescale, rescale, rescale);
-            tx = margin + 90 + g;
-            ty = y + 15;
             context.drawItemInSlot(mc.textRenderer, totem, tx, ty, pops);
             context.getMatrices().pop();
 
+            // end
             caret += g + 8;
             setHeight(caret - y);
-        } else {
+        }
+        else {
             setHeight(12);
             String text = "Not in combat";
             int x = getX() + getWidth() / 2;

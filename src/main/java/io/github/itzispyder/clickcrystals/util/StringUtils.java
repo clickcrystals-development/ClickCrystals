@@ -72,11 +72,7 @@ public final class StringUtils {
     }
 
     public static String decolor(String s) {
-        while (s.length() >= 2 && s.contains("§")) {
-            int index = s.indexOf("§");
-            s = s.replaceAll(s.substring(index, index + 2), "");
-        }
-        return s;
+        return s.replaceAll("[§|&][1234567890abcdefklmnor]", "");
     }
 
     public static String format(String s, Object... args) {

@@ -23,7 +23,7 @@ public class ExecuteRandomCmd extends ScriptCommand {
         }
 
         all = all.substring(1, all.length() - 1);
-        List<CommandLine> lines = ScriptParser.getStackLines(all);
+        List<CommandLine> lines = ScriptParser.parse(all);
 
         if (!lines.isEmpty()) {
             Randomizer random = new Randomizer();

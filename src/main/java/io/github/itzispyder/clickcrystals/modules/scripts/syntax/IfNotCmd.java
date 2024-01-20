@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 public class IfNotCmd extends ScriptCommand implements Global {
 
     public IfNotCmd() {
-        super("if_not");
+        super("if_not", "!if");
     }
 
     @Override

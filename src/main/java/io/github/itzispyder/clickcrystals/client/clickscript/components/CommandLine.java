@@ -13,7 +13,7 @@ public record CommandLine(String line) {
     }
 
     public boolean isDeep() {
-        return ScriptParser.getStackLines(line).size() > 1;
+        return ScriptParser.parse(line).size() > 1;
     }
 
     public void execute() {

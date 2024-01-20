@@ -6,6 +6,7 @@ import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
@@ -101,13 +102,19 @@ public abstract class Command implements Global {
     }
 
     public String getHelp() {
-        StringBuilder builder = new StringBuilder(
-                " \n" + starter + "§f/" + name + "\n"
-                        + "§7" + description + "\n"
-                        + "§fUsage: §7" + usage +"\n"
-                        + "§fAliases:"
-        );
-        for (String alias : aliases) builder.append("\n§8 -§7 ").append(alias);
-        return builder.append("\n ").toString();
+        String prefix = ClickCrystals.commandPrefix.getKeyName();
+
+        StringBuilder builder = new StringBuilder("""
+                
+        %s§f%s%s
+        §7%s
+        §fUsage: §7%s
+        §fAliases:
+        """.formatted(starter, prefix, name, description, usage));
+
+        for (String alias : aliases) {
+            builder.append("§8 -§7%s\n ".formatted(alias));
+        }
+        return builder.toString();
     }
 }

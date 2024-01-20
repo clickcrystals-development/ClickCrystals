@@ -94,9 +94,13 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
     }
 
     public String getHelp() {
-        return " \n" + starter + "§f" + name +
-                "\n" + "§3Category: §b" + category.name() +
-                "\n" + "§7" + description + "\n ";
+        return """
+        
+        %s§f%s
+        §3Category: §b%s
+        §7%s
+        
+        """.formatted(starter, name, category.name(), description);
     }
 
     public void sendUpdateInfo() {

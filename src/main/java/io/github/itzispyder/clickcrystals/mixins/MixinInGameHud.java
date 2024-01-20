@@ -55,33 +55,40 @@ public abstract class MixinInGameHud implements Global {
 
     @Inject(method = "renderSpyglassOverlay", at = @At("HEAD"), cancellable = true)
     public void renderSpyglassOverlay(DrawContext context, float scale, CallbackInfo ci) {
-        Module noOverlay = Module.get(NoOverlay.class);
-        if (noOverlay.isEnabled()) ci.cancel();
+        if (Module.isEnabled(NoOverlay.class)) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "renderPortalOverlay", at = @At("HEAD"), cancellable = true)
     public void renderPortalOverlay(DrawContext context, float nauseaStrength, CallbackInfo ci) {
-        Module noOverlay = Module.get(NoOverlay.class);
-        if (noOverlay.isEnabled()) ci.cancel();
+        if (Module.isEnabled(NoOverlay.class)) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "renderVignetteOverlay", at = @At("HEAD"), cancellable = true)
     public void renderVignetteOverlay(DrawContext context, Entity entity, CallbackInfo ci) {
-        Module noOverlay = Module.get(NoOverlay.class);
-        if (noOverlay.isEnabled()) ci.cancel();
+        if (Module.isEnabled(NoOverlay.class)) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "renderOverlay", at = @At("HEAD"), cancellable = true)
     public void renderOverlay(DrawContext context, Identifier texture, float opacity, CallbackInfo ci) {
-        if (!texture.getPath().contains("pumpkinblur")) return;
-        Module noOverlay = Module.get(NoOverlay.class);
-        if (noOverlay.isEnabled()) ci.cancel();
+        if (!texture.getPath().contains("pumpkinblur")) {
+            return;
+        }
+        if (Module.isEnabled(NoOverlay.class)) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "renderScoreboardSidebar", at = @At("HEAD"), cancellable = true)
     public void renderOverlay(DrawContext context, ScoreboardObjective objective, CallbackInfo ci) {
-        Module noScoreboard = Module.get(NoScoreboard.class);
-        if (noScoreboard.isEnabled()) ci.cancel();
+        if (Module.isEnabled(NoScoreboard.class)) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "render", at = @At("TAIL"))

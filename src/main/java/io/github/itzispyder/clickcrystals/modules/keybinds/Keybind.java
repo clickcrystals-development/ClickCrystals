@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Keybind implements Global {
 
-    public static final int NONE = 256;
+    public static final int NONE = -1;
     public static final Map<Integer, String> EXTRAS = ManualMap.fromItems(
             GLFW.GLFW_KEY_LEFT_SHIFT, "LS",
             GLFW.GLFW_KEY_RIGHT_SHIFT, "RS",

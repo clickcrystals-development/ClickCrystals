@@ -21,8 +21,8 @@ public final class RenderUtils implements Global {
         m.scale(scale, scale, scale);
 
         float rescale = 1 / scale;
-        x *= rescale;
-        y *= rescale;
+        x = (int)(x * rescale);
+        y = (int)(y * rescale);
 
         drawDefaultText(context, text, x, y, shadow, color);
         m.scale(rescale, rescale, rescale);
@@ -33,9 +33,9 @@ public final class RenderUtils implements Global {
         m.scale(scale, scale, scale);
 
         float rescale = 1 / scale;
-        centerX *= rescale;
+        centerX = (int)(centerX * rescale);
         centerX = centerX - (mc.textRenderer.getWidth(text) / 2);
-        y *= rescale;
+        y = (int)(y * rescale);
 
         drawDefaultText(context, text, centerX, y, shadow, color);
         m.scale(rescale, rescale, rescale);
@@ -46,9 +46,9 @@ public final class RenderUtils implements Global {
         m.scale(scale, scale, scale);
 
         float rescale = 1 / scale;
-        rightX *= rescale;
+        rightX = (int)(rightX * rescale);
         rightX = rightX - mc.textRenderer.getWidth(text);
-        y *= rescale;
+        y = (int)(y * rescale);
 
         drawDefaultText(context, text, rightX, y, shadow, color);
         m.scale(rescale, rescale, rescale);
@@ -167,8 +167,8 @@ public final class RenderUtils implements Global {
     }
 
     public static void drawItem(DrawContext context, ItemStack item, int x, int y, float scale) {
-        x /= scale;
-        y /= scale;
+        x = (int)(x / scale);
+        y = (int)(y / scale);
         context.getMatrices().push();
         context.getMatrices().scale(scale, scale, scale);
         context.drawItem(item, x, y);
@@ -177,8 +177,8 @@ public final class RenderUtils implements Global {
     }
 
     public static void drawItem(DrawContext context, ItemStack item, int x, int y, float scale, String text) {
-        x /= scale;
-        y /= scale;
+        x = (int)(x / scale);
+        y = (int)(y / scale);
         context.getMatrices().push();
         context.getMatrices().scale(scale, scale, scale);
         context.drawItem(item, x, y);

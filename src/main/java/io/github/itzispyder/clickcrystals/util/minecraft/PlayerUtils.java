@@ -2,7 +2,6 @@ package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import com.mojang.authlib.GameProfile;
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.util.misc.Delta3d;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
@@ -34,7 +33,9 @@ public final class PlayerUtils implements Global {
     }
 
     public static boolean playerValid(PlayerEntity player) {
-        if (playerNull() || player == null) return false;
+        if (playerNull() || player == null) {
+            return false;
+        }
 
         ClientPlayerEntity p = mc.player;
         GameProfile profile = player.getGameProfile();
@@ -93,14 +94,6 @@ public final class PlayerUtils implements Global {
         ClientPlayerEntity p = player();
 
         return p.sidewaysSpeed != 0 || p.forwardSpeed != 0;
-    }
-
-    public static Delta3d toDelta3d(Vec3d del) {
-        return new Delta3d(del.x, del.y, del.z);
-    }
-
-    public static Vec3d fromDelta3d(Delta3d del) {
-        return new Vec3d(del.x(), del.y(), del.z());
     }
 
     public static void boxIterator(World world, Box box, BiConsumer<BlockPos, BlockState> function) {

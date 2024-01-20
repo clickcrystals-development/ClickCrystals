@@ -49,7 +49,6 @@ import org.lwjgl.glfw.GLFW;
  * TODO: (1) Update mod version down in "Global.java"
  * TODO: (2) Update mod "gradle.properties"
  * TODO: (4) Update "README.md"
- *
  * Publishing checklist
  * TODO: (5) Modrinth Release
  * TODO: (6) GitHub Release
@@ -166,6 +165,8 @@ public final class ClickCrystals implements ModInitializer, Global {
         ClickScript.register(new GuiSwapCmd());
         ClickScript.register(new GuiDropCmd());
         ClickScript.register(new GuiQuickMoveCmd());
+        ClickScript.register(new DamageCmd());
+        ClickScript.register(new DefineCmd());
         ScriptedModule.runModuleScripts();
     }
 
@@ -207,7 +208,6 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addHud(new CrosshairTargetRelativeHud());
         system.addHud(new RotationRelativeHud());
         system.addHud(new ResourceRelativeHud());
-
         system.addHud(new ColorOverlayHud());
         system.addHud(new ModuleListTextHud());
         system.addHud(new ClickPerSecondHud());
@@ -243,6 +243,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new GuiCursor());
 
         // misc
+        system.addModule(new NoInteractions());
         system.addModule(new ArmorHud());
         system.addModule(new AutoGG());
         system.addModule(new AutoRespawn());
@@ -266,6 +267,8 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new TimeChanger());
 
         // rendering
+        system.addModule(new CameraClip());
+        system.addModule(new NoGuiBackground());
         system.addModule(new CrystPerSec());
         system.addModule(new TotemPopScale());
         system.addModule(new NoArmorRender());

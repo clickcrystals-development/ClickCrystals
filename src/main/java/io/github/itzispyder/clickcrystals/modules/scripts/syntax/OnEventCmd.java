@@ -51,6 +51,7 @@ public class OnEventCmd extends ScriptCommand {
             case MODULE_DISABLE -> ModuleCmd.runOnCurrentScriptModule(m -> m.moduleDisableListeners.add(() -> exc(args, 1)));
             case TOTEM_POP -> ModuleCmd.runOnCurrentScriptModule(m -> m.totemPopListeners.add(() -> exc(args, 1)));
             case DAMAGE -> ModuleCmd.runOnCurrentScriptModule(m -> m.damageListeners.add(() -> exc(args, 1)));
+            case RESPAWN -> ModuleCmd.runOnCurrentScriptModule(m -> m.respawnListeners.add(() -> exc(args, 1)));
             case DEATH -> ModuleCmd.runOnCurrentScriptModule(m -> m.deathListeners.add(() -> exc(args, 1)));
             case GAME_JOIN -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameJoinListeners.add(() -> exc(args, 1)));
             case GAME_LEAVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameLeaveListeners.add(() -> exc(args, 1)));
@@ -290,6 +291,7 @@ public class OnEventCmd extends ScriptCommand {
         KEY_PRESS,
         KEY_RELEASE,
         DAMAGE,
+        RESPAWN,
         DEATH,
         GAME_JOIN,
         GAME_LEAVE,

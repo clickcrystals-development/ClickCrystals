@@ -32,7 +32,7 @@ public class BulletinScreen extends DefaultBase {
             else {
                 this.bulletin = BulletinBoard.createNull();
             }
-            if (bulletin.getAnnouncements().length == 0) {
+            if (bulletin.announcements().length == 0) {
                 return;
             }
 
@@ -41,8 +41,8 @@ public class BulletinScreen extends DefaultBase {
             int caret = contentY + 21;
             int margin = contentX + 5;
 
-            for (int i = bulletin.getAnnouncements().length - 1; i >= 0; i--) {
-                Announcement announcement = bulletin.getAnnouncements()[i];
+            for (int i = bulletin.announcements().length - 1; i >= 0; i--) {
+                Announcement announcement = bulletin.announcements()[i];
                 caret += 5;
                 AnnouncementElement ae = new AnnouncementElement(announcement, margin, caret);
                 panel.addChild(ae);

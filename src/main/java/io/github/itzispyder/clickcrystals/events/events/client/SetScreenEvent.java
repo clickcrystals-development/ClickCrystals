@@ -4,9 +4,6 @@ import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.events.Event;
 import net.minecraft.client.gui.screen.Screen;
 
-/**
- * Called when your client's screen changes
- */
 public class SetScreenEvent extends Event implements Cancellable {
 
     private final Screen screen, previousScreen;
