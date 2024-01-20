@@ -27,6 +27,8 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
+Updating to: 1.20.4
+
 Scripts:
   - if module_disabled (module)
   - on damage works on servers now
