@@ -30,7 +30,7 @@ public class NoResPack extends Module implements Listener {
     private void onResourceReceive(PacketReceiveEvent e) {
         if (e.getPacket() instanceof ResourcePackSendS2CPacket packet) {
             e.setCancelled(true);
-            String status = packet.isRequired() ? "forced" : "suggested";
+            String status = packet.required() ? "forced" : "suggested";
             ChatUtils.sendPrefixMessage("Blocked 1 " + status + " resource pack");
         }
     }

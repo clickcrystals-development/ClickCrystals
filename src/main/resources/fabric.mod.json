@@ -22,9 +22,9 @@
     ]
   },
   "depends": {
-    "fabricloader": ">=0.14.22",
+    "fabricloader": ">=0.14.23",
     "fabric": "*",
-    "minecraft": "1.20.2"
+    "minecraft": "1.20.4"
   },
   "mixins": [
     "clickcrystals.mixins.json"
