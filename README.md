@@ -29,28 +29,31 @@ Happy coding and cpvping!
 ```yml
 Updating to: 1.20.4
 
-Scripts:
-  - if module_disabled (module)
-  - on damage works on servers now
+Script:
+  - on respawn # im not stable
+  - if chance_of (N) # im not stable
+  - if input_active sprint # im not stable
+  - input sprint # im not stable
+  - damage nearest_entity (ID) # im not stable
+  - damage any_entity # im not stable
+  - def function (name) (CCS.. args)
+  - def module (name)
+  - def desc ("")
+  - function (name)
 
 Tweaks:
-  - make input_active inventory work for containers as well
-  - overview mode toggle on enable -> redirect to overview screen
+  - added option to disable bedrock interaction when using crystal and obsidian switch modules
+  - script (ID) arguments are now supported with commas, essentially making an or operator
 
-Add:
-  - script delete button in IDE
-  - IDE auto module declaration
-  - Credits screen
-  - shortcut to hud edit screen
-  - new option for each module to disable upon joining a world
+Patches:
+  - make event bus use concurrentlinkedqueue
+  - Target hud totem pop text
+  - escape key toggling modules on pojav
 
 Modules:
-  - time changer module
-  - totem pop scale module
-
-Patch:
-  - Custom made module screen top element tooltips
-  - Settings screen shortcut element tooltips
+  - no block/container interactions # i no one
+  - no gui background # i no one
+  - camera clip # i no one
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png)
