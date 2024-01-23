@@ -5,10 +5,10 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 
-public class BlockOverlay extends DummyModule {
+public class BlockOutline extends DummyModule {
 
-    public BlockOverlay() {
-        super("block-overlay", Categories.RENDER, "Change the color of the block overlay.");
+    public BlockOutline() {
+        super("block-outline", Categories.RENDER, "Change the color of the block outline.");
     }
     private final SettingSection scGeneral = getGeneralSection();
     public final ModuleSetting<Double> green = scGeneral.add(createDoubleSetting()
