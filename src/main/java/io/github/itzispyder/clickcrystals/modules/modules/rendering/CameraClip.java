@@ -9,8 +9,8 @@ public class CameraClip extends DummyModule {
 
     private final SettingSection scGeneral = getGeneralSection();
     public final ModuleSetting<Boolean> enableCameraClip = scGeneral.add(createBoolSetting()
-            .name("enable-camera-clip")
-            .description("Make the third perspective camera to ignore blocks.")
+            .name("camera-clip")
+            .description("Set the camera to ignore walls when it encounters them.")
             .def(true)
             .build()
     );
@@ -24,7 +24,7 @@ public class CameraClip extends DummyModule {
     );
 
     public CameraClip() {
-        super("camera-utils", Categories.RENDER, "Change the camera behavior.");
+        super("camera-clip", Categories.RENDER, "Change the camera distance and the camera behavior when encounter walls.");
     }
 
     public boolean getEnableCameraClipSetting() {
