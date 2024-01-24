@@ -3,7 +3,6 @@
   "package": "io.github.itzispyder.clickcrystals.mixins",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "MixinWorldRenderer",
     "MixinAbstractClientPlayerEntity",
     "MixinArmorFeatureRenderer",
     "MixinBlockItem",
@@ -26,7 +25,8 @@
     "MixinMouse",
     "MixinParticleManager",
     "MixinScreen",
-    "MixinSplashOverlay"
+    "MixinSplashOverlay",
+    "MixinWorldRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

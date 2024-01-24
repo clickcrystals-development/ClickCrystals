@@ -34,6 +34,10 @@ public class HealthAsBar extends Module {
     }
 
     public void renderHealthBar(DrawContext context, int x, int y, float maxHealth, int lastHealth, int health, int absorption) {
+        render(context, x, y, maxHealth, lastHealth, health, absorption, showValueText.getVal());
+    }
+
+    public static void render(DrawContext context, int x, int y, float maxHealth, int lastHealth, int health, int absorption, boolean showValue) {
         int height = 8;
         int width = height * 10;
 
@@ -55,7 +59,7 @@ public class HealthAsBar extends Module {
         RenderUtils.fill(context, x + widthNormal, y, widthAbsorp, (int)(height * 0.33), 0xAAFEDA00); // current abs glint
         RenderUtils.drawBorder(context, x, y, width, height, 0xAA000000); // border
 
-        if (showValueText.getVal()) {
+        if (showValue) {
             double hearts = MathUtils.round((lastHealth + absorption) / 2.0, 10);
             String text = hearts + "";
             int textWidth = (int)(mc.textRenderer.getWidth(text) * 0.6);

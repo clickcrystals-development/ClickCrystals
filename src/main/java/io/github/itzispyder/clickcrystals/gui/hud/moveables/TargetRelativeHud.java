@@ -92,7 +92,7 @@ public class TargetRelativeHud extends Hud {
             float maxHp = target.getMaxHealth();
             float hp = target.getHealth();
             float ab = target.getAbsorptionAmount();
-            Module.get(HealthAsBar.class).renderHealthBar(context, margin, caret, maxHp, (int) hp, (int) hp, (int) ab);
+            HealthAsBar.render(context, margin, caret, maxHp, (int) hp, (int) hp, (int) ab, true);
 
             // totem indicator
             ItemStack totem = Items.TOTEM_OF_UNDYING.getDefaultStack();

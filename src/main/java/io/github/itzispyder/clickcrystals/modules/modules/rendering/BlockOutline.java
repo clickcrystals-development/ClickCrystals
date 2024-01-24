@@ -7,9 +7,6 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 
 public class BlockOutline extends DummyModule {
 
-    public BlockOutline() {
-        super("block-outline", Categories.RENDER, "Change the color of the block outline.");
-    }
     private final SettingSection scGeneral = getGeneralSection();
     public final ModuleSetting<Double> green = scGeneral.add(createDoubleSetting()
             .name("Green")
@@ -38,4 +35,9 @@ public class BlockOutline extends DummyModule {
             .decimalPlaces(1)
             .build()
     );
+
+    public BlockOutline() {
+        super("block-outline", Categories.RENDER, "Change the color of the block outline.");
+    }
+
 }
