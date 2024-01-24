@@ -13,22 +13,19 @@ public class MixinWorldRenderer {
 
     @ModifyArgs(method = "drawBlockOutline", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;drawCuboidShapeOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/util/shape/VoxelShape;DDDFFFF)V"))
     public void setOutlineColor(Args args) {
-        BlockOutline blockOutline = Module.get(BlockOutline.class);
-        if (blockOutline != null && blockOutline.isEnabled()) {
-            // Retrieve color values from BlockOutline module settings
-            double red = blockOutline.red.getVal();
-            double greenValue = blockOutline.green.getVal();
-            double blue = blockOutline.blue.getVal();
+        BlockOutline bo = Module.get(BlockOutline.class);
 
-            // Convert color values to the range [0.0, 1.0]
-            float redFloat = (float) (red / 255.0);
-            float greenFloat = (float) (greenValue / 255.0);
-            float blueFloat = (float) (blue / 255.0);
+        if (bo != null && bo.isEnabled()) {
+            double r = bo.red.getVal();
+            double g = bo.green.getVal();
+            double b = bo.blue.getVal();
+            float rf = (float)(r / 255.0);
+            float gf = (float)(g / 255.0);
+            float bf = (float)(b / 255.0);
 
-            // Set the color values in the modify args
-            args.set(6, redFloat);
-            args.set(7, greenFloat);
-            args.set(8, blueFloat);
+            args.set(6, rf);
+            args.set(7, gf);
+            args.set(8, bf);
         }
     }
 }
