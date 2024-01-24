@@ -181,6 +181,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         this.initModules();
 
         // Commands
+        system.addCommand(new ClientInfoCommand());
         system.addCommand(new CCToggleCommand());
         system.addCommand(new CCHelpCommand());
         system.addCommand(new GmcCommand());
@@ -267,6 +268,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new TimeChanger());
 
         // rendering
+        system.addModule(new BlockOutline());
         system.addModule(new CameraClip());
         system.addModule(new NoGuiBackground());
         system.addModule(new CrystPerSec());
