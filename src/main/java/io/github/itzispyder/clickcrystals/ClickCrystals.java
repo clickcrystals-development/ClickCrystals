@@ -181,6 +181,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         this.initModules();
 
         // Commands
+        system.addCommand(new ClientInfoCommand());
         system.addCommand(new CCToggleCommand());
         system.addCommand(new CCHelpCommand());
         system.addCommand(new GmcCommand());
