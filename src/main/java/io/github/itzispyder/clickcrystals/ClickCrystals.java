@@ -50,7 +50,6 @@ import org.lwjgl.glfw.GLFW;
  * TODO: (2) Update mod "gradle.properties"
  * TODO: (4) Update "README.md"
  * Publishing checklist
- * TODO: (5) Modrinth Release
  * TODO: (6) GitHub Release
  * TODO: (7) PlanetMC Release
  * TODO: (7) CurseForge Release
