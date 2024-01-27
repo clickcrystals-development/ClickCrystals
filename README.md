@@ -62,46 +62,29 @@ Patches:
   - make event bus use concurrentlinkedqueue
   - Target hud totem pop text
   - escape key toggling modules on pojav
+  - Fixed pojav crashes for target hud
 
 Modules:
   - no block/container interactions # i no one
   - no gui background # i no one
   - camera clip # i no one
+  - block outline # i no one
+
+Commands:
+  - ,version
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png)
-
-## How Do I Use ClickCrystals?
 
 ### Keybindings
 
 -----------------------------------------
 
-| **Keybinding** |       **Description**       |
-|----------------|:---------------------------:|
-| APOSTROPHE     | Open module settings screen |
-| COMMA          |   Custom commands prefix    |
-| UP_ARROW       |     Message resend bind     |
-| B              |        Zoom keybind         |
-| COLON          |   Open hud editor screen    |
-
-### Commands
-
------------------------------------------
-
-| **Command** | **Usage**                                             |              **Description**               |
-|-------------|-------------------------------------------------------|:------------------------------------------:|
-| .help       | .help `<module>`                                      |            Module info and help            |
-| .debug      | .debug `<item>`                                       |       Sends ClickCrystals debug info       |
-| .toggle     | .toggle `<module>` `[on,off,help]`                    |           Module toggle and help           |
-| .gma        | .gma                                                  |  Command alias for `/gamemode adventure`   |
-| .gmc        | .gmc                                                  |   Command alias for `/gamemode creative`   |
-| .gms        | .gms                                                  |   Command alias for `/gamemode survival`   |
-| .gmsp       | .gmsp                                                 |  Command alias for `/gamemode spectator`   |
-| .keybinds   | .keybinds                                             |     Opens the keybinds setting screen      |
-| .look       | .look `[at, rot, to]`                                 |            Look at a position.             |
-| .pixelart   | .pixelart `<mode>` `values` `image url (https://...)` | Spawns in pixel art! (Requires GMC and OP) |
-| .rotate     | .rotate `<pitch>` `<yaw>`                             |         Rotate to a pitch and yaw.         |
+| **Keybinding** | **Key Name** | **Description**             |
+|----------------|--------------|:----------------------------|
+| APOSTROPHE     | `'`          | Open module settings screen |
+| COMMA          | `,`          | Custom commands prefix      |
+| COLON          | `;`          | Open hud editor screen      |
 
 ### Modules
 
