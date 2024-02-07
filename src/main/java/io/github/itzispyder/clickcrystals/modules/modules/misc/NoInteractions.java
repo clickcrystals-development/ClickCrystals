@@ -40,6 +40,12 @@ public class NoInteractions extends DummyModule {
             .def(false)
             .build()
     );
+    public final ModuleSetting<Boolean> AllowSign = scGeneral.add(createBoolSetting()
+            .name("allow-Sign-editing")
+            .description("Allow access the Sign editing GUI.")
+            .def(false)
+            .build()
+    );
 
     public NoInteractions() {
         super("no-interactions", Categories.MISC, "Prevents opening certain containers(e-chests,chests,etc).");
@@ -63,7 +69,9 @@ public class NoInteractions extends DummyModule {
         else if (b == Blocks.CRAFTING_TABLE || b == Blocks.ANVIL || b == Blocks.NOTE_BLOCK || b == Blocks.JUKEBOX || b == Blocks.SMOKER || key.contains("furnace")) {
             return allowDecor.getVal();
         }
-
+        else if (b == Blocks.OAK_SIGN || b == Blocks.BIRCH_SIGN || b == Blocks.SPRUCE_SIGN || b == Blocks.ACACIA_SIGN || b == Blocks.JUNGLE_SIGN || b == Blocks.DARK_OAK_SIGN || b == Blocks.WARPED_SIGN || b == Blocks.CRIMSON_SIGN || b == Blocks.BAMBOO_SIGN || b == Blocks.OAK_WALL_SIGN || b == Blocks.BIRCH_WALL_SIGN || b == Blocks.SPRUCE_WALL_SIGN || b == Blocks.ACACIA_WALL_SIGN || b == Blocks.JUNGLE_WALL_SIGN || b == Blocks.DARK_OAK_WALL_SIGN || b == Blocks.WARPED_WALL_SIGN || b == Blocks.CRIMSON_WALL_SIGN) {
+            return AllowSign.getVal();
+        }
         return true;
     }
 }
