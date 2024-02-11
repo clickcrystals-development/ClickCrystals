@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.hud.moveables;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
+import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.gui.hud.TextHud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
@@ -16,18 +17,30 @@ public class CpsRelativeHud extends TextHud implements Listener {
     private int leftClicks = 0;
     private int rightClicks = 0;
     private double cps = 0.0;
+    private Timer timer;
 
     public CpsRelativeHud() {
-        super("cps-hud", 10, 90, 50, 12);
+        super("cps-hud", 10, 60, 50, 12);
         system.addListener(this);
+        startTimer();
+    }
 
-        Timer timer = new Timer();
+    private void startTimer() {
+        timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                update();
+                updateCps();
             }
         }, CPS_UPDATE_INTERVAL, CPS_UPDATE_INTERVAL);
+    }
+
+    private void stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+            timer = null;
+        }
     }
 
     @Override
@@ -36,17 +49,16 @@ public class CpsRelativeHud extends TextHud implements Listener {
         if (cpsString.endsWith(".00")) {
             cpsString = cpsString.substring(0, cpsString.length() - 3);
         }
-        return cpsString + " CPS";
+        return cpsString + " cps";
     }
 
     @EventHandler
     private void onMouseClick(MouseClickEvent event) {
-        if (!event.isCancelled()) {
-            // Increment left or right clicks based on the mouse button identifier
+        if (!event.isCancelled() && event.getAction() == ClickType.RELEASE) {
             int button = event.getButton();
-            if (button == 0) { // Left mouse button
+            if (button == 0) {
                 leftClicks++;
-            } else if (button == 1) { // Right mouse button
+            } else if (button == 1) {
                 rightClicks++;
             }
         }
@@ -54,10 +66,18 @@ public class CpsRelativeHud extends TextHud implements Listener {
 
     @Override
     public boolean canRender() {
-        return super.canRender() && Boolean.TRUE.equals(Module.getFrom(InGameHuds.class, m -> m.hudCps.getVal()));
+        boolean canRender = super.canRender() && Boolean.TRUE.equals(Module.getFrom(InGameHuds.class, m -> m.hudCps.getVal()));
+        if (canRender) {
+            if (timer == null) {
+                startTimer();
+            }
+        } else {
+            stopTimer();
+        }
+        return canRender;
     }
 
-    private void update() {
+    private void updateCps() {
         long currentTime = System.currentTimeMillis();
         long timeElapsed = currentTime - lastUpdateTime;
 
@@ -71,4 +91,5 @@ public class CpsRelativeHud extends TextHud implements Listener {
             lastUpdateTime = currentTime;
         }
     }
+
 }
