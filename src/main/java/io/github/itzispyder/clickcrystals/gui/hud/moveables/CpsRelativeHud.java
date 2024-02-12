@@ -22,25 +22,6 @@ public class CpsRelativeHud extends TextHud implements Listener {
     public CpsRelativeHud() {
         super("cps-hud", 10, 60, 50, 12);
         system.addListener(this);
-        startTimer();
-    }
-
-    private void startTimer() {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                updateCps();
-            }
-        }, CPS_UPDATE_INTERVAL, CPS_UPDATE_INTERVAL);
-    }
-
-    private void stopTimer() {
-        if (timer != null) {
-            timer.cancel();
-            timer.purge();
-            timer = null;
-        }
     }
 
     @Override
@@ -67,14 +48,34 @@ public class CpsRelativeHud extends TextHud implements Listener {
     @Override
     public boolean canRender() {
         boolean canRender = super.canRender() && Boolean.TRUE.equals(Module.getFrom(InGameHuds.class, m -> m.hudCps.getVal()));
+
         if (canRender) {
-            if (timer == null) {
-                startTimer();
-            }
+            startTimer(); // Start the timer if rendering is allowed
         } else {
-            stopTimer();
+            stopTimer(); // Stop the timer if rendering is not allowed
         }
+
         return canRender;
+    }
+
+    private void startTimer() {
+        if (timer == null) {
+            timer = new Timer();
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    updateCps();
+                }
+            }, CPS_UPDATE_INTERVAL, CPS_UPDATE_INTERVAL);
+        }
+    }
+
+    private void stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+            timer = null;
+        }
     }
 
     private void updateCps() {
@@ -91,5 +92,4 @@ public class CpsRelativeHud extends TextHud implements Listener {
             lastUpdateTime = currentTime;
         }
     }
-
 }
