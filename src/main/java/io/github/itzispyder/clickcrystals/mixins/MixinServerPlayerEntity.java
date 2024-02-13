@@ -13,7 +13,7 @@ public class MixinServerPlayerEntity {
     @Inject(method = "openEditSignScreen", at = @At("HEAD"), cancellable = true)
     private void cancelOpenContainer(SignBlockEntity sign, boolean front, CallbackInfo ci) {
         NoInteractions noInteractions = new NoInteractions();
-        if (noInteractions.isEnabled() && !noInteractions.AllowSign.getVal()) {
+        if (noInteractions.isEnabled() && !noInteractions.allowSign.getVal()) {
             ci.cancel();
         }
     }
