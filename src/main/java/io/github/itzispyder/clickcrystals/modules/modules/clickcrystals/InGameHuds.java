@@ -74,12 +74,19 @@ public class InGameHuds extends Module implements Listener {
             .def(true)
             .build()
     );
+    public final ModuleSetting<Boolean> hudCps = scHudVisibility.add(BooleanSetting.create()
+            .name("render-cps-hud")
+            .description("Renders the clicks per second hud.")
+            .def(true)
+            .build()
+    );
     public final ModuleSetting<Boolean> hudClock = scHudVisibility.add(BooleanSetting.create()
             .name("render-clock-hud")
             .description("Renders the clock hud.")
             .def(true)
             .build()
     );
+
     public final ModuleSetting<Boolean> hudTarget = scHudVisibility.add(BooleanSetting.create()
             .name("render-target-hud")
             .description("Renders the target hud.")
