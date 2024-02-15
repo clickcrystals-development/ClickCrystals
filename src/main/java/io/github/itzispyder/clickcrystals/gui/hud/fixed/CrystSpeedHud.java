@@ -9,10 +9,10 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
 import net.minecraft.item.Items;
 
-public class ClickPerSecondHud extends Hud {
+public class CrystSpeedHud extends Hud {
 
-    public ClickPerSecondHud() {
-        super("cps-hud");
+    public CrystSpeedHud() {
+        super("crystal-speed-hud");
         this.setFixed(true);
     }
 

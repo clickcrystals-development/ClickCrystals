@@ -41,8 +41,8 @@ public class NoInteractions extends DummyModule {
             .build()
     );
     public final ModuleSetting<Boolean> allowSign = scGeneral.add(createBoolSetting()
-            .name("allow-Sign-editing")
-            .description("Allow access the Sign editing GUI.")
+            .name("allow-sign-editing")
+            .description("Allow sign interactions or editing.")
             .def(false)
             .build()
     );

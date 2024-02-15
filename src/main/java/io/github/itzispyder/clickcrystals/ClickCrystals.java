@@ -211,7 +211,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addHud(new ResourceRelativeHud());
         system.addHud(new ColorOverlayHud());
         system.addHud(new ModuleListTextHud());
-        system.addHud(new ClickPerSecondHud());
+        system.addHud(new CrystSpeedHud());
         system.addHud(new ArmorItemHud());
         system.addHud(new NotificationHud());
         system.addHud(new EntityIndicatorHud());
