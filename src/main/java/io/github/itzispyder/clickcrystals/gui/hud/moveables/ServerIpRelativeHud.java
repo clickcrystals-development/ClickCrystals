@@ -8,19 +8,24 @@ import net.minecraft.client.MinecraftClient;
 public class ServerIpRelativeHud extends TextHud {
 
     public ServerIpRelativeHud() {
-        super("server-ip-hud", 10, 190, 150, 12);
+        super("server-ip-hud", 10, 70, 150, 12);
+    }
+
+    @Override
+    public String getId() {
+        return "server_ip_hud";
     }
 
     @Override
     public String getText() {
-        return "Server IP: " + getServerIp();
-    }
-
-    private String getServerIp() {
-        if (MinecraftClient.getInstance().getCurrentServerEntry() != null && MinecraftClient.getInstance().getServer() != null) {
-            return MinecraftClient.getInstance().getServer().getServerIp();
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client.isInSingleplayer()) {
+            return "Singleplayer";
         }
-        return "Not connected to a server";
+        if (client.getCurrentServerEntry() == null) {
+            return "Not connected to a server";
+        }
+        return "Server IP: " + client.getCurrentServerEntry().address;
     }
 
     @Override
