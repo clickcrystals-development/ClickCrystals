@@ -8,7 +8,7 @@ import net.minecraft.client.MinecraftClient;
 public class ServerIpRelativeHud extends TextHud {
 
     public ServerIpRelativeHud() {
-        super("server-ip-hud", 10, 70, 150, 12);
+        super("server-ip-hud", 10, 195, 150, 12);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class ServerIpRelativeHud extends TextHud {
     public String getText() {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.isInSingleplayer()) {
-            return "Singleplayer";
+            return "In Singleplayer";
         }
         if (client.getCurrentServerEntry() == null) {
             return "Not connected to a server";
