@@ -5,8 +5,6 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import net.minecraft.client.MinecraftClient;
 
-import java.util.Objects;
-
 public class ServerIpRelativeHud extends TextHud {
 
     public ServerIpRelativeHud() {
@@ -19,8 +17,8 @@ public class ServerIpRelativeHud extends TextHud {
     }
 
     private String getServerIp() {
-        if (MinecraftClient.getInstance().getCurrentServerEntry() != null) {
-            return Objects.requireNonNull(MinecraftClient.getInstance().getServer()).getServerIp();
+        if (MinecraftClient.getInstance().getCurrentServerEntry() != null && MinecraftClient.getInstance().getServer() != null) {
+            return MinecraftClient.getInstance().getServer().getServerIp();
         }
         return "Not connected to a server";
     }
