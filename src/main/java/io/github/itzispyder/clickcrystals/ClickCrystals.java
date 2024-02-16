@@ -197,6 +197,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addCommand(new FolderCommand());
 
         // Hud
+        system.addHud(new ServerIpRelativeHud());
         system.addHud(new CpsRelativeHud());
         system.addHud(new IconRelativeHud());
         system.addHud(new PingRelativeHud());
