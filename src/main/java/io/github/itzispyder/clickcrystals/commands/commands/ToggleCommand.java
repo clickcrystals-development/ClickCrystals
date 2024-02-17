@@ -7,9 +7,9 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScree
 import io.github.itzispyder.clickcrystals.modules.Module;
 import net.minecraft.command.CommandSource;
 
-public class CCToggleCommand extends Command {
+public class ToggleCommand extends Command {
 
-    public CCToggleCommand() {
+    public ToggleCommand() {
         super("toggle","§7Toggles the modules from this mod. THIS CAN ALSO BE DONE VIA GUI MENU, PRESS YOUR §l§oAPOSTROPHE §7KEY!",",toggle <module> [on|off|help]","t");
     }
 

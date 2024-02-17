@@ -8,12 +8,9 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.minecraft.command.CommandSource;
 
-/**
- * /cchelp command
- */
-public class CCHelpCommand extends Command {
+public class HelpCommand extends Command {
 
-    public CCHelpCommand() {
+    public HelpCommand() {
         super("help","ClickCrystals Info and help",",help <item>");
     }
 

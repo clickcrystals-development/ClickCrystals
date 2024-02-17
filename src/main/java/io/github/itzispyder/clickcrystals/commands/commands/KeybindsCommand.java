@@ -8,7 +8,7 @@ import net.minecraft.command.CommandSource;
 public class KeybindsCommand extends Command {
 
     public KeybindsCommand() {
-        super("keybinds", "Opens up the keybind screen.", "/keybinds", "keys");
+        super("keybinds", "Opens up the keybind screen.", ",keybinds", "keys");
     }
 
     @Override

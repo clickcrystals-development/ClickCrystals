@@ -52,6 +52,6 @@ public class PlayerArgumentType implements ArgumentType<PlayerListEntry> {
 
     @Override
     public Collection<String> getExamples() {
-        return ArgumentType.super.getExamples();
+        return examples;
     }
 }

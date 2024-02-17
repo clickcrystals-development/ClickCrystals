@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 public class PixelArtCommand extends Command {
 
     public PixelArtCommand() {
-        super("pixelart", "Generates pixel art.", "/pixelart");
+        super("pixelart", "Generates pixel art.", ",pixelart");
     }
 
     @Override

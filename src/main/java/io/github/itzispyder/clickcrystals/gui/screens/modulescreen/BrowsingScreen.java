@@ -131,7 +131,7 @@ public class BrowsingScreen extends DefaultBase {
                         .replaceAll("[^a-zA-Z0-9_-]", "")
                         .toLowerCase();
 
-                File file = new File(Config.PATH_SCRIPTS + "/" + name + ".ccs");
+                File file = new File(Config.PATH_SCRIPTS + name + ".ccs");
                 if (!file.exists()) {
                     String preText = newModule.formatted(name);
                     FileValidationUtils.quickWrite(file, preText);

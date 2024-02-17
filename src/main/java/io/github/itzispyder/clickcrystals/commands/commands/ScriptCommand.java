@@ -12,10 +12,10 @@ import net.minecraft.command.CommandSource;
 
 import java.io.File;
 
-public class CCScriptCommand extends Command {
+public class ScriptCommand extends Command {
 
-    public CCScriptCommand() {
-        super("clickscript", "Manages ClickScript compiler", "/clickscript <action>", "ccs");
+    public ScriptCommand() {
+        super("clickscript", "Manages ClickScript compiler", ",clickscript <action>", "ccs");
     }
 
     @Override
@@ -42,7 +42,7 @@ public class CCScriptCommand extends Command {
                 .then(literal("copy-file")
                         .then(argument("script-file-path", StringArgumentType.greedyString())
                                 .executes(cxt -> {
-                                    String path = Config.PATH_SCRIPTS + "/" + cxt.getArgument("script-file-path", String.class);
+                                    String path = Config.PATH_SCRIPTS + cxt.getArgument("script-file-path", String.class);
                                     File file = new File(path);
                                     String name = file.getName();
                                     boolean nameValid = name.endsWith(".ccs") || name.endsWith(".txt");

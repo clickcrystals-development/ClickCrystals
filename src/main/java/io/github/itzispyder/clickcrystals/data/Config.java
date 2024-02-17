@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.data;
 
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.Positionable;
 import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.CategoryElement;
@@ -18,17 +19,20 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Config implements JsonSerializable<Config> {
+public class Config implements JsonSerializable<Config>, Global {
 
-    public static final String PATH = "ClickCrystalsClient/";
+    public static final String PATH = "." + modId + "/";
+    public static final String PATH_SCRIPTS = PATH + "scripts/";
+    public static final String PATH_PROFILES = PATH + "profiles/";
+    public static final String PATH_CONFIG_PROFILE = PATH + "profiles.json";
     public static final String PATH_CONFIG = PATH + "config.json";
     public static final String PATH_LOG = PATH + "current.log";
-    public static final String PATH_SCRIPTS = PATH + "scripts";
     private boolean hasPlayedBefore, overviewMode;
     private final Map<String, Integer> keybindEntries;
     private final Map<String, Positionable.Dimension> positionEntries;
     private final Map<String, Pair<Positionable.Dimension, Boolean>> overviewScreenEntries;
     private final Map<String, ModuleFile> moduleEntries;
+    private String customPath;
 
     public Config() {
         this.keybindEntries = new HashMap<>();
@@ -37,9 +41,14 @@ public class Config implements JsonSerializable<Config> {
         this.moduleEntries = new HashMap<>();
     }
 
+    public Config(String customPath) {
+        this();
+        this.customPath = customPath;
+    }
+
     @Override
     public File getFile() {
-        return new File(PATH_CONFIG);
+        return new File(customPath != null && !customPath.isEmpty() ? customPath : PATH_CONFIG);
     }
 
     public void saveKeybind(Keybind bind) {
