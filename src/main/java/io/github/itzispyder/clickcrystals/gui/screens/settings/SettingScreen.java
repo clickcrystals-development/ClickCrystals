@@ -25,6 +25,7 @@ public class SettingScreen extends DefaultBase {
         super("Setting Screen");
         GridOrganizer grid = new GridOrganizer(contentX, contentY + 21, contentWidth, 15, 1, 0);
 
+        grid.addEntry(new ScreenShortcut("Configuration Profiles", "Switch between profiles via GUI", 0, 0, new ProfilesScreen(), TRUE));
         grid.addEntry(new ScreenShortcut("Modules Configuration", "Browse ClickCrystals modules and features", 0, 0, new BrowsingScreen(), TRUE));
         grid.addEntry(new ScreenShortcut("HUD Position Config", "Edit and move HUDs around", 0, 0, new HudEditScreen(), REQUIRE_IN_GAME));
         grid.addEntry(new ScreenShortcut("Keybindings Settings", "Edit and change keybindings for the client", 0, 0, new KeybindScreen(), TRUE));

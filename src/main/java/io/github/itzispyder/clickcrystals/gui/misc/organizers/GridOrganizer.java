@@ -104,7 +104,9 @@ public class GridOrganizer implements Organizer<GuiElement> {
     }
 
     public void clearPanel() {
-        panel.clearChildren();
+        if (hasPanel()) {
+            panel.clearChildren();
+        }
     }
 
     public void addAllToPanel() {

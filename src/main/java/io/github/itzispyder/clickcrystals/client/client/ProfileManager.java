@@ -59,6 +59,15 @@ public class ProfileManager  {
         switchDefaultProfile();
     }
 
+    public boolean hasProfile(String name) {
+        for (String p : getCustomProfiles()) {
+            if (p.equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private String validateName(String name) {
         return name == null || name.isEmpty() ? Config.PATH_CONFIG : Config.PATH_PROFILES + name.toLowerCase().replaceAll("[^a-z_-]", "") + ".json";
     }
@@ -91,6 +100,10 @@ public class ProfileManager  {
 
         public String getCurrentProfileName() {
             return currentConfig == null || currentConfig.isEmpty() ? "Main Config" : StringUtils.capitalizeWords(currentConfig);
+        }
+
+        public String getCurrentProfileId() {
+            return currentConfig == null || currentConfig.isEmpty() ? "main-config" : currentConfig;
         }
     }
 }
