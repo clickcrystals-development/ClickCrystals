@@ -57,7 +57,7 @@ public class ProfilesScreen extends DefaultBase {
         private final String profileId, displayName;
         private final AbstractElement deleteButton = AbstractElement.create()
                 .pos(0, 0)
-                .dimensions(70, 12)
+                .dimensions(50, 12)
                 .onRender((context, mouseX, mouseY, button) -> {
                     RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, button.width, button.height, Gray.GENERIC_LOW);
                     if (!ProfileSelect.this.isHovered(mouseX, mouseY)) {
@@ -101,17 +101,10 @@ public class ProfilesScreen extends DefaultBase {
                 system.profiles.switchProfile(profileId);
             }
             else {
-                forceDelete();
-                mc.setScreen(new ProfilesScreen());
-            }
-        }
-
-        private void forceDelete() {
-            while (system.profiles.hasProfile(profileId)) {
-                try {
+                while (system.profiles.hasProfile(profileId)) {
                     system.profiles.deleteProfile(profileId);
                 }
-                catch (Exception ignore) {}
+                mc.setScreen(new ProfilesScreen());
             }
         }
     }

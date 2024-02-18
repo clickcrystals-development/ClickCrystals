@@ -51,12 +51,12 @@ public class ProfileManager  {
             return;
         }
 
+        switchDefaultProfile();
+
         File file = new File(name);
         if (file.exists()) {
             file.delete();
         }
-
-        switchDefaultProfile();
     }
 
     public boolean hasProfile(String name) {
