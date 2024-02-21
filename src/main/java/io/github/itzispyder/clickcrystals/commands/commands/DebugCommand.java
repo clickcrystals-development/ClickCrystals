@@ -25,10 +25,10 @@ import net.minecraft.world.World;
 import java.util.Arrays;
 import java.util.List;
 
-public class CCDebugCommand extends Command {
+public class DebugCommand extends Command {
 
-    public CCDebugCommand() {
-        super("debug", "ClickCrystals Debug Info", "/debug <item>");
+    public DebugCommand() {
+        super("debug", "ClickCrystals Debug Info", ",debug <item>");
     }
 
     @Override

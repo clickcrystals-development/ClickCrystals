@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals;
 
 import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
+import io.github.itzispyder.clickcrystals.client.client.ProfileManager;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
 import io.github.itzispyder.clickcrystals.client.system.Version;
 import io.github.itzispyder.clickcrystals.commands.commands.*;
@@ -58,6 +59,11 @@ import org.lwjgl.glfw.GLFW;
  */
 public final class ClickCrystals implements ModInitializer, Global {
 
+    // provide update fixes here
+    static {
+        ProfileManager.renameOldFolder();
+    }
+
     public static Config config = JsonSerializable.load(Config.PATH_CONFIG, Config.class, new Config());
     public static ClickCrystalsInfo info = new ClickCrystalsInfo(version);
 
@@ -113,6 +119,9 @@ public final class ClickCrystals implements ModInitializer, Global {
         ClickCrystals.requestModInfo();
         system.println("-> loading config...");
         config.loadEntireConfig();
+        system.println("-> loading profiles...");
+        system.profiles.init();
+        system.printf("<- Profile set '%s'", system.profiles.profileConfig.getCurrentProfileName());
         system.println("-> checking updates...");
         ClickCrystals.checkUpdates();
 
@@ -181,20 +190,21 @@ public final class ClickCrystals implements ModInitializer, Global {
 
         // Commands
         system.addCommand(new VersionCommand());
-        system.addCommand(new CCToggleCommand());
-        system.addCommand(new CCHelpCommand());
+        system.addCommand(new ToggleCommand());
+        system.addCommand(new HelpCommand());
         system.addCommand(new GmcCommand());
         system.addCommand(new GmsCommand());
         system.addCommand(new GmaCommand());
         system.addCommand(new GmspCommand());
-        system.addCommand(new CCDebugCommand());
+        system.addCommand(new DebugCommand());
         system.addCommand(new PixelArtCommand());
         system.addCommand(new KeybindsCommand());
         system.addCommand(new RotateCommand());
         system.addCommand(new LookCommand());
-        system.addCommand(new CCScriptCommand());
+        system.addCommand(new ScriptCommand());
         system.addCommand(new ReloadCommand());
         system.addCommand(new FolderCommand());
+        system.addCommand(new ProfileCommand());
 
         // Hud
         system.addHud(new ServerIpRelativeHud());

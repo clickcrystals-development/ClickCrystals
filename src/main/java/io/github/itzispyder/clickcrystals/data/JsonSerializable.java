@@ -2,12 +2,11 @@ package io.github.itzispyder.clickcrystals.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 
 import java.io.*;
 
-public interface JsonSerializable<T> extends Global {
+public interface JsonSerializable<T> {
 
     File getFile();
 
@@ -35,6 +34,7 @@ public interface JsonSerializable<T> extends Global {
     @SuppressWarnings("unchecked")
     default T deserialize(String json) {
         try {
+            Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
             JsonSerializable<?> v = gson.fromJson(json, this.getClass());
             if (v == null) {
                 throw new IllegalStateException("json parse failed");
@@ -57,9 +57,7 @@ public interface JsonSerializable<T> extends Global {
                 bw.write(json);
                 bw.close();
             }
-            catch (Exception ex) {
-                system.printErr("JSON failed to save for " + f.getName());
-            }
+            catch (Exception ignore) {}
         }
     }
 
@@ -72,6 +70,7 @@ public interface JsonSerializable<T> extends Global {
             try {
                 FileReader fr = new FileReader(file);
                 BufferedReader br = new BufferedReader(fr);
+                Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
                 T t = gson.fromJson(br, jsonSerializable);
 
                 if (t == null) {
@@ -80,11 +79,8 @@ public interface JsonSerializable<T> extends Global {
 
                 return t;
             }
-            catch (Exception ex) {
-                system.printErr("JSON failed to parse/load for " + file.getName());
-            }
+            catch (Exception ignore) {}
         }
-        system.println("'%s' has failed to save, returning fallback! (If this is your first launch, you can ignore this message)".formatted(file.getPath()));
         return fallback;
     }
 

@@ -95,7 +95,6 @@ public class MouseTaper extends ListenerModule {
         // locks cursor
         if (shouldLockCursor.getVal()) {
             CameraRotator.lockCursor();
-            ChatUtils.sendPrefixMessage("Cursor locked! (configure in settings)");
         }
     }
 
@@ -107,7 +106,6 @@ public class MouseTaper extends ListenerModule {
             targetType = null; // reset because punch-to-set-target only triggers once
             targetPos = null;
             CameraRotator.unlockCursor();
-            ChatUtils.sendPrefixMessage("Tape removed from §7%s§r button".formatted(button.getVal().name()));
 
             if (reopenOnDisable.getVal() && mc.currentScreen == null) {
                 mc.setScreen(new ModuleEditScreen(this));

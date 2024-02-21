@@ -19,7 +19,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 public class ReloadCommand extends Command {
 
     public ReloadCommand() {
-        super("reload", "Reloads config, scripts, the entire ClickCrystals Client.", "/reload");
+        super("reload", "Reloads config, scripts, the entire ClickCrystals Client.", ",reload");
     }
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {

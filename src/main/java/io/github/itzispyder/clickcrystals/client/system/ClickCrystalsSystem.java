@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.client.system;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.client.client.CapeManager;
+import io.github.itzispyder.clickcrystals.client.client.ProfileManager;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.EventBus;
@@ -38,6 +39,7 @@ public class ClickCrystalsSystem implements Serializable {
     public final Randomizer random = new Randomizer();
     public final Scheduler scheduler = new Scheduler();
     public final ClickCrystalsLogger logger = new ClickCrystalsLogger(new File(Config.PATH_LOG));
+    public final ProfileManager profiles = new ProfileManager();
     private final Map<Class<? extends Module>, Module> modules;
     private final Map<String, ScriptedModule> scriptedModules;
     private final Map<Class<? extends Command>, Command> commands;
