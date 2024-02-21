@@ -62,9 +62,9 @@ public class InGameHuds extends Module implements Listener {
             .def(false)
             .build()
     );
-    public final ModuleSetting<Boolean> hudServerIp = scHudVisibility.add(BooleanSetting.create()
-            .name("render-server-ip-hud")
-            .description("Renders the server ip hud.")
+    public final ModuleSetting<Boolean> hudVersion = scHudVisibility.add(BooleanSetting.create()
+            .name("render-version-hud")
+            .description("Renders game version hud.")
             .def(false)
             .build()
     );
