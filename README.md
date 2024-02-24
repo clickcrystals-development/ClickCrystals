@@ -1,14 +1,7 @@
 # 💎 ClickCrystals
-
-<div align="center">
-  <img src="clickscript/img/icon.png" alt="ClickCrystals" width="200">
-</div>
 <p align="center">
-  <strong>Your Crystal PvP Companion</strong>
-  <br>
-  ClickCrystals at your service
+<img align="center" src="https://socialify.git.ci/ItziSpyder/ClickCrystals/image?description=1&descriptionEditable=Your%20ultimate%20crystal%20PvP%20assistance%2C%20ClickCrystals%20at%20your%20service.&font=Jost&forks=1&issues=1&language=1&logo=https%3A%2F%2Fclickcrystals.xyz%2Fcommon%2Fassets%2Ficon.png&name=1&owner=1&pattern=Solid&pulls=1&stargazers=1&theme=Auto" alt="ClickCrystals" width="640" height="320" />
 </p>
-
 <p align="center">
   <a href="#-key-features">Features</a> •
   <a href="#-introducing-clickcrystal-scripts">ClickScript</a> •
@@ -19,20 +12,6 @@
   <a href="#-contributing">Contributing</a> •
 </p>
 
-<p align="center">
-<a href="https://discord.gg/GdNnK37Etw">
-  <img alt="Discord" src="https://img.shields.io/discord/1095079504516493404?label=Discord&logo=discord&style=flat-square">
-</a>
-  <a href="https://github.com/ItziSpyder/ClickCrystals/graphs/contributors">
-    <img alt="Contributors" src="https://img.shields.io/github/contributors/ItziSpyder/ClickCrystals?style=flat-square">
-  </a>
-  <a href="https://github.com/ItziSpyder/ClickCrystals">
-    <img alt="Code size" src="https://img.shields.io/github/languages/code-size/ItziSpyder/ClickCrystals?style=flat-square">
-  </a>
-  <a href="https://github.com/ItziSpyder/ClickCrystals">
-    <img alt="Lines of Code" src="https://tokei.rs/b1/github/ItziSpyder/ClickCrystals?style=flat-square">
-  </a>
-</p>
 
 
 
