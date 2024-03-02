@@ -4,6 +4,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.ProfileArgumentType;
+import io.github.itzispyder.clickcrystals.gui.screens.settings.ProfilesScreen;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.minecraft.command.CommandSource;
@@ -19,13 +20,19 @@ public class ProfileCommand extends Command {
 
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        builder.then(literal("default")
-                .executes(cxt -> {
-                    info("Switching to profile 'main-config' ...");
-                    system.profiles.switchDefaultProfile();
-                    info("Profile set 'Main Config'");
+        builder.executes(cxt -> {
+                    system.scheduler.runDelayedTask(() -> {
+                        mc.execute(() -> mc.setScreen(new ProfilesScreen()));
+                    }, 5 * 50);
                     return SINGLE_SUCCESS;
-                }))
+                })
+                .then(literal("default")
+                        .executes(cxt -> {
+                            info("Switching to profile 'main-config' ...");
+                            system.profiles.switchDefaultProfile();
+                            info("Profile set 'Main Config'");
+                            return SINGLE_SUCCESS;
+                        }))
                 .then(literal("list")
                         .executes(cxt -> {
                             List<String> profiles = Arrays.asList(system.profiles.getCustomProfiles());

@@ -12,10 +12,7 @@ public class IfNotCmd extends ScriptCommand implements Global {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        int beginIndex = 0;
-        IfCmd.ConditionType type = args.get(beginIndex).toEnum(IfCmd.ConditionType.class, null);
-        var condition = IfCmd.parseCondition(type, args, beginIndex);
-
+        var condition = IfCmd.parseCondition(args, 0);
         if (!condition.left) {
             OnEventCmd.executeWithThen(args, condition.right);
         }

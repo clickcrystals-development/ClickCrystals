@@ -33,6 +33,10 @@ public final class StringUtils {
         return false;
     }
 
+    public static boolean isNumber(String str) {
+        return str.matches("^-?\\d*\\.?\\d*$");
+    }
+
     /**
      * passing insert as null would world as backspace, deleting a character
      */

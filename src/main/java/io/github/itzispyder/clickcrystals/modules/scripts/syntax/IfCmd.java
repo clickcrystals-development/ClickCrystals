@@ -33,8 +33,7 @@ public class IfCmd extends ScriptCommand implements Global {
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
         int beginIndex = 0;
-        ConditionType type = args.get(beginIndex).toEnum(ConditionType.class, null);
-        var condition = parseCondition(type, args, beginIndex);
+        var condition = parseCondition(args, beginIndex);
 
         if (condition.left) {
             OnEventCmd.executeWithThen(args, condition.right);
@@ -43,14 +42,20 @@ public class IfCmd extends ScriptCommand implements Global {
 
     /**
      * Parse clickscript condition
-     * @param type target condition type
      * @param args script command arguments
-     * @param beginIndex begin read index
+     * @param beginIndex begin index
      * @return pair(yourCondition, theNextBeginIndex)
      */
-    public static Pair<Boolean, Integer> parseCondition(ConditionType type, ScriptArgs args, int beginIndex) {
+    public static Pair<Boolean, Integer> parseCondition(ScriptArgs args, int beginIndex) {
+        ConditionType type = args.get(beginIndex).toEnum(ConditionType.class, null);
         int i = beginIndex;
         switch (type) {
+            case TRUE -> {
+                return pair(true, i + 1);
+            }
+            case FALSE -> {
+                return pair(false, i + 1);
+            }
             case HOLDING -> {
                 return pair(ScriptParser.parseItemPredicate(args.get(i + 1).toString()).test(HotbarUtils.getHand()), i + 2);
             }
@@ -177,6 +182,8 @@ public class IfCmd extends ScriptCommand implements Global {
     }
 
     public enum ConditionType {
+        TRUE,
+        FALSE,
         HOLDING,
         OFF_HOLDING,
         INVENTORY_HAS,
