@@ -37,36 +37,26 @@ Happy coding and cpvping!
 ```yml
 Version: 1.2.2
 
-Script:
-  - on respawn # im not stable
-  - if chance_of (N) # im not stable
-  - if input_active sprint # im not stable
-  - input sprint # im not stable
-  - damage nearest_entity (ID) # im not stable
-  - damage any_entity # im not stable
-  - def function (name) (CCS.. args)
-  - def module (name)
-  - def desc ("")
-  - function (name)
+Add:
+  - profile system
+  - profile management screen
+  - remove darkness and blindness effect when NoGameOverlay is enabled # i no one
+  - add sign exclusion from NoInteractions module # i no one
+  - command ,profile open up the profile screen
+  - add conditionals "true" and "false" directly, for while loops
+  - tab completion for ",ccs copy-file"
+
+Huds:
+  - cps hud # i no one
 
 Tweaks:
-  - added option to disable bedrock interaction when using crystal and obsidian switch modules
-  - script (ID) arguments are now supported with commas, essentially making an or operator
+  - option for while loops to not including period (defaults to 0.05 or one tick)
+  - in script IDE template, change to using "define" command
+  - changed home screen wallpaper
 
-Patches:
-  - make event bus use concurrentlinkedqueue
-  - Target hud totem pop text
-  - escape key toggling modules on pojav
-  - Fixed pojav crashes for target hud
-
-Modules:
-  - no block/container interactions # i no one
-  - no gui background # i no one
-  - camera clip # i no one
-  - block outline # i no one
-
-Commands:
-  - ,version
+Patch:
+  - chat saying "Tape removed from ... button!" upon reloading client
+  - while loops continue running even after script reload
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png)
