@@ -3,21 +3,16 @@
 
 ---------------------------------------------------------------
 
-## Introducing ClickCrystalsScripts! (CCS)
+## Scripting Now Has a Wiki!
 
-Not enough modules? Your wonderful ideas aren't getting accepted?
-Want private features but don't know how to code?
-No worries, make your own modules with ClickCrystalsScripts (CCS)!
+Want to script custom modules but don't know how to script? 
+Don't worry, there's a full guide on how to create your own custom scripts and modules!
 
-Introducing CCS, a fast and easy way to create modules from simple swapping,
-to selective interactions in game!
-CCS consists of a lot of CCS commands, and can be either
-executed separately or together in a `.ccs` file, like a Minecraft
-datapack!
+ClickCrystals script is an interrupted scripting language that allows you to scripts and macros
+without any knowledge of coding. It contains no variables and mostly are just command lines that 
+are very similar to Minecraft.
 
-Interested? Download our latest version and start creating
-(CCS documentation coming soon on
-[GitHub Wiki](https://github.com/itzispyder/clickcrystals/wiki))
+The full documentation can be found [here](https://bit.ly/ccs-wiki)
 
 Happy coding and cpvping!
 
@@ -40,7 +35,7 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Updating to: 1.20.4
+Version: 1.2.2
 
 Script:
   - on respawn # im not stable
