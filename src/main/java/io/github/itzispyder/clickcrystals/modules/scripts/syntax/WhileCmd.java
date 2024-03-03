@@ -5,6 +5,8 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class WhileCmd extends ScriptCommand {
 
     public WhileCmd() {
@@ -25,15 +27,19 @@ public class WhileCmd extends ScriptCommand {
             beginIndex = 0;
         }
 
-        system.scheduler.runRepeatingTask(() -> {
+        AtomicReference<Scheduler.Task> task = new AtomicReference<>();
+        task.set(system.scheduler.runRepeatingTask(() -> {
             try {
                 var condition = IfCmd.parseCondition(args, beginIndex);
                 if (condition.left) {
                     executeOnClient(args, condition.right);
                 }
+                else if (task.get() != null) {
+                    task.get().cancel();
+                }
             }
             catch (Exception ignore) {}
-        }, 0, period, Scheduler.INFINITE_ITERATIONS);
+        }, 0, period, Scheduler.INFINITE_ITERATIONS));
     }
 
     private void executeOnClient(ScriptArgs args, int beginIndex) {

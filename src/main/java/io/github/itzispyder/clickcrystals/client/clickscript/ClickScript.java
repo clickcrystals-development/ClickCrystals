@@ -5,12 +5,13 @@ import io.github.itzispyder.clickcrystals.client.clickscript.components.CommandL
 import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.ScriptNotFoundException;
 import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.UnknownCommandException;
 import io.github.itzispyder.clickcrystals.commands.Command;
+import io.github.itzispyder.clickcrystals.data.Config;
+import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
 
 public class ClickScript implements Global {
 
@@ -197,5 +198,34 @@ public class ClickScript implements Global {
             a[i++] = s;
         }
         return a;
+    }
+
+    public static List<File> collectFiles() {
+        File folder = new File(Config.PATH_SCRIPTS);
+        Function<File, List<File>> getSubFiles = file -> {
+            if (!file.isDirectory()) {
+                return new ArrayList<>();
+            }
+            File[] subs = file.listFiles();
+            return subs == null ? new ArrayList<>() : Arrays.asList(subs);
+        };
+        List<File> files = new ArrayList<>();
+
+        if (FileValidationUtils.validate(folder)) {
+            File[] subs = folder.listFiles();
+            if (subs == null) {
+                return files;
+            }
+
+            for (File sub : subs) {
+                if (sub.isDirectory()) {
+                    files.addAll(getSubFiles.apply(sub));
+                }
+                else {
+                    files.add(sub);
+                }
+            }
+        }
+        return files;
     }
 }

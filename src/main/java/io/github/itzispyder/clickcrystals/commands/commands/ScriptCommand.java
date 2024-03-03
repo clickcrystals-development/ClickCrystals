@@ -5,6 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
 import io.github.itzispyder.clickcrystals.commands.Command;
+import io.github.itzispyder.clickcrystals.commands.arguments.ScriptFileArgumentType;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
@@ -40,7 +41,7 @@ public class ScriptCommand extends Command {
                                     return SINGLE_SUCCESS;
                                 })))
                 .then(literal("copy-file")
-                        .then(argument("script-file-path", StringArgumentType.greedyString())
+                        .then(argument("script-file-path", ScriptFileArgumentType.create())
                                 .executes(cxt -> {
                                     String path = Config.PATH_SCRIPTS + cxt.getArgument("script-file-path", String.class);
                                     File file = new File(path);
