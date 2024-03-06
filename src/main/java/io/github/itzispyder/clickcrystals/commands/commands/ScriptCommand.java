@@ -9,7 +9,10 @@ import io.github.itzispyder.clickcrystals.commands.arguments.ScriptFileArgumentT
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.minecraft.command.CommandSource;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.Text;
 
 import java.io.File;
 
@@ -59,6 +62,13 @@ public class ScriptCommand extends Command {
                                     info("&7" + mc.keyboard.getClipboard());
                                     return SINGLE_SUCCESS;
                                 })))
+                .then(literal("help")
+                        .executes(cxt -> {
+                            Text message = Text.literal("§7[§bClick§3Crystals§7] §rNeed help scripting? §b§nTry out our wiki!")
+                                    .styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://bit.ly/ccs-wiki")));
+                            ChatUtils.sendRawText(message);
+                            return SINGLE_SUCCESS;
+                        }))
                 .then(literal("reload-scripts")
                         .executes(cxt -> {
                             ReloadCommand.reload();
