@@ -1,8 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -32,7 +31,7 @@ public class SettingSectionElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        RoundRectBrush.drawRoundRect(context, x, y, width, height, 3, Gray.BLACK);
+        RenderUtils.fillRoundRect(context, x, y, width, height, 3, Shades.TRANS_BLACK);
 
         String text;
         int caret = y + 5;
@@ -40,7 +39,7 @@ public class SettingSectionElement extends GuiElement {
         text = settingSection.getName();
         RenderUtils.drawText(context, text, x + 5, caret, 0.8F, false);
         caret += 8;
-        RenderUtils.drawHorLine(context, x + 5, caret, width - 10, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, x + 5, caret, width - 10, Shades.GRAY);
     }
 
     @Override

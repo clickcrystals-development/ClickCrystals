@@ -21,7 +21,7 @@ public class CpsRelativeHud extends TextHud implements Listener {
     private boolean enabled;
 
     public CpsRelativeHud() {
-        super("cps-hud", 10, 60, 50, 12);
+        super("cps-hud", 10, 60, 50, 16);
         this.clicks = Pair.of(0, 0);
         this.clickQueues = Pair.of(new ClickQueue(), new ClickQueue());
         this.clickSpeeds = Pair.of(0.0, 0.0);

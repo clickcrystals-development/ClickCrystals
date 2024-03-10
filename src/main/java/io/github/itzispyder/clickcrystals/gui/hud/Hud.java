@@ -18,7 +18,7 @@ public abstract class Hud implements Positionable, Global {
     public static final int DEFAULT_ARGB = 0x4007CDDF;
     private final Dimension defaultDimension;
     private int x, y, width, height, argb;
-    private boolean renderBorder, fixed;
+    private boolean fixed;
     private final String id;
 
     public Hud(String id, int x, int y, int width, int height, Dimension defaultDimension, int argb, boolean renderBorder) {
@@ -28,7 +28,6 @@ public abstract class Hud implements Positionable, Global {
         this.height = height;
         this.defaultDimension = defaultDimension;
         this.argb = argb;
-        this.renderBorder = renderBorder;
         this.id = id;
         this.fixed = false;
     }
@@ -52,11 +51,7 @@ public abstract class Hud implements Positionable, Global {
     public abstract void render(DrawContext context);
 
     public void renderBackdrop(DrawContext context) {
-        RenderUtils.fillRect(context, getX(), getY(), getWidth(), getHeight(), getArgb());
-
-        if (canRenderBorder()) {
-            RenderUtils.drawRect(context, getX(), getY(), getWidth(), getHeight(), 0x40FFFFFF);
-        }
+        RenderUtils.fillRoundRect(context, getX(), getY(), getWidth(), getHeight(), 5, getArgb());
     }
 
     public boolean canRender() {
@@ -117,14 +112,6 @@ public abstract class Hud implements Positionable, Global {
 
     public void setArgb(int argb) {
         this.argb = argb;
-    }
-
-    public void setRenderBorder(boolean renderBorder) {
-        this.renderBorder = renderBorder;
-    }
-
-    public boolean canRenderBorder() {
-        return renderBorder;
     }
 
     public Dimension getDefaultDimension() {

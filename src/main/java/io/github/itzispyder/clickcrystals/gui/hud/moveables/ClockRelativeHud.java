@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class ClockRelativeHud extends TextHud {
 
     public ClockRelativeHud() {
-        super("clock-hud", 10, 105, 50, 12);
+        super("clock-hud", 10, 105, 50, 16);
     }
 
     @Override

@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.ClickScriptIDE;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
@@ -45,7 +45,7 @@ public class BrowsingScreen extends DefaultBase {
         RenderUtils.drawTexture(context, currentCategory.texture(), contentX + 10, caret - 7, 15, 15);
         RenderUtils.drawText(context, currentCategory.name(), contentX + 30, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorLine(context, contentX, caret, 300, Gray.BLACK.argb);
+        RenderUtils.drawHorLine(context, contentX, caret, 300, Shades.BLACK);
     }
 
     public void filterByCategory(Category category) {

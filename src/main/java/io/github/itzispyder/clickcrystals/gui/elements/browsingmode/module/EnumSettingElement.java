@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module;
 
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.modules.settings.EnumSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -28,8 +27,8 @@ public class EnumSettingElement extends SettingElement<EnumSetting<?>> {
         int drawW = width / 4;
         int drawH = 12;
 
-        Gray fill = isHovered(mouseX, mouseY) ? Gray.LIGHT_GRAY : Gray.GRAY;
-        RoundRectBrush.drawRoundHoriLine(context, drawX, drawY, drawW, drawH, fill);
+        int fill = isHovered(mouseX, mouseY) ? Shades.LIGHT_GRAY : Shades.GRAY;
+        RenderUtils.fillRoundHoriLine(context, drawX, drawY, drawW, drawH, fill);
 
         int cX = drawX + drawW / 2;
         int cY = drawY + drawH / 3;

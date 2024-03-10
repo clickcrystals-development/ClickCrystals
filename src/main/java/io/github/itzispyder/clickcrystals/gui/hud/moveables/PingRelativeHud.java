@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 public class PingRelativeHud extends TextHud {
 
     public PingRelativeHud() {
-        super("ping-hud", 10, 75, 50, 12);
+        super("ping-hud", 10, 75, 50, 16);
     }
 
     @Override

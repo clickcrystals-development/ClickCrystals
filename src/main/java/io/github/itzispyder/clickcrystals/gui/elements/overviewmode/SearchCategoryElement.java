@@ -2,9 +2,8 @@ package io.github.itzispyder.clickcrystals.gui.elements.overviewmode;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -29,7 +28,7 @@ public class SearchCategoryElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        RoundRectBrush.drawRoundRect(context, x, y, width, height, 5, Gray.BLACK);
+        RenderUtils.fillRoundRect(context, x, y, width, height, 5, Shades.TRANS_BLACK);
         RenderUtils.drawTexture(context, Tex.ICON, x + 5, y + 7, 10, 10);
         RenderUtils.drawText(context, "Overview GUI", x + 18, y + 9, 0.9F, false);
     }

@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.screens.settings;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
@@ -51,7 +51,7 @@ public class SettingScreen extends DefaultBase {
         RenderUtils.drawTexture(context, Tex.Icons.SETTINGS, contentX + 10, caret - 7, 15, 15);
         RenderUtils.drawText(context, "Client Settings", contentX + 30, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorLine(context, contentX, caret, 300, Gray.BLACK.argb);
+        RenderUtils.drawHorLine(context, contentX, caret, 300, Shades.BLACK);
     }
 
     @Override

@@ -4,9 +4,8 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
@@ -45,7 +44,7 @@ public class ProfilesScreen extends DefaultBase {
         RenderUtils.drawTexture(context, Tex.Icons.MODULES, contentX + 10, caret - 7, 15, 15);
         RenderUtils.drawText(context, "Configuration Profiles", contentX + 30, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorLine(context, contentX, caret, 300, Gray.BLACK.argb);
+        RenderUtils.drawHorLine(context, contentX, caret, 300, Shades.BLACK);
     }
 
     @Override
@@ -59,9 +58,9 @@ public class ProfilesScreen extends DefaultBase {
                 .pos(0, 0)
                 .dimensions(50, 12)
                 .onRender((context, mouseX, mouseY, button) -> {
-                    RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, button.width, button.height, Gray.GENERIC_LOW);
+                    RenderUtils.fillRoundHoriLine(context, button.x, button.y, button.width, button.height, Shades.GENERIC_LOW);
                     if (!ProfileSelect.this.isHovered(mouseX, mouseY)) {
-                        RoundRectBrush.drawRoundHoriLine(context, button.x + 1, button.y + 1, button.width - 2, button.height - 2, Gray.DARK_GRAY);
+                        RenderUtils.fillRoundHoriLine(context, button.x + 1, button.y + 1, button.width - 2, button.height - 2, Shades.DARK_GRAY);
                     }
                     RenderUtils.drawCenteredText(context, "Delete", button.x + button.width / 2, button.y + button.height / 3, 0.7F, false);
                 })

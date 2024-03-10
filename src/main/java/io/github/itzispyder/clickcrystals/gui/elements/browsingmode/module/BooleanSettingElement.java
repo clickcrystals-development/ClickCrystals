@@ -1,8 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module;
 
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.Tex;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -21,11 +19,12 @@ public class BooleanSettingElement extends SettingElement<BooleanSetting> {
 
         // custom
         if (setting.getVal()) {
-            RoundRectBrush.drawRoundHoriLine(context, drawX, drawY, 20, 6, Gray.GENERIC_LOW);
-            RenderUtils.drawTexture(context, Tex.Shapes.CIRCLE_BLUE, drawX + 10, drawY - 2, 10, 10);
-        } else {
-            RoundRectBrush.drawRoundHoriLine(context, drawX, drawY, 20, 6, Gray.GRAY);
-            RenderUtils.drawTexture(context, Tex.Shapes.CIRCLE_LIGHT_GRAY, drawX, drawY - 2, 10, 10);
+            RenderUtils.fillRoundHoriLine(context, drawX, drawY, 20, 6, Shades.GENERIC_LOW);
+            RenderUtils.fillCircle(context, drawX + 17, drawY + 3, 5, Shades.GENERIC);
+        }
+        else {
+            RenderUtils.fillRoundHoriLine(context, drawX, drawY, 20, 6, Shades.GRAY);
+            RenderUtils.fillCircle(context, drawX + 3, drawY + 3, 5, Shades.LIGHT_GRAY);
         }
     }
 

@@ -16,7 +16,7 @@ import java.util.Optional;
 public class BiomeRelativeHud extends TextHud {
 
     public BiomeRelativeHud() {
-        super("biome-hud", 10, 135, 120, 12);
+        super("biome-hud", 10, 135, 120, 16);
     }
 
     @Override

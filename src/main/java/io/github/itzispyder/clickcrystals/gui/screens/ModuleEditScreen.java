@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module.SettingSectionElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
@@ -49,7 +49,7 @@ public class ModuleEditScreen extends DefaultBase {
         text = "%s%s \\ §f%s   §7§o(hover details)".formatted(isCategoryHovered(mouseX, mouseY) ? "§f" : "§7", module.getCategory().name(), module.getName());
         RenderUtils.drawText(context, text, contentX + 30, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorLine(context, contentX, caret, 300, Gray.BLACK.argb);
+        RenderUtils.drawHorLine(context, contentX, caret, 300, Shades.BLACK);
 
         // description
         if (isModuleTitleHovered(mouseX, mouseY)) {

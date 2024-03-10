@@ -2,8 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.common.interactive;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.ModuleEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -44,7 +43,7 @@ public class SearchResultsElement extends GuiElement {
         int w = searchbar.width;
         int h = searchbar.height;
 
-        RoundRectBrush.drawTabBottom(context, x, y + h / 2, w, this.height, 5, Gray.LIGHT);
+        RenderUtils.fillRoundTabBottom(context, x, y + h / 2, w, this.height, 5, Shades.LIGHT);
     }
 
     @Override

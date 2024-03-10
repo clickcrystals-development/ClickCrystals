@@ -5,8 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module.SettingSectionElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
@@ -39,14 +38,14 @@ public class ModuleEditElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        RoundRectBrush.drawRoundRect(context, x, y, width, height, 5, Gray.DARK_GRAY);
+        RenderUtils.fillRoundRect(context, x, y, width, height, 5, Shades.TRANS_DARK_GRAY);
 
         int caret = y + 10;
         RenderUtils.drawTexture(context, module.getCategory().texture(), x + 10, caret - 7, 15, 15);
         RenderUtils.drawText(context, module.getName(), x + 30, caret - 4, false);
         RenderUtils.drawText(context, isHoverExit(mouseX, mouseY) ? "§bx" : "§7x", x + width - 15, caret - 4, 1.2F, false);
         caret += 10;
-        RenderUtils.drawHorLine(context, x, caret, 300, Gray.BLACK.argb);
+        RenderUtils.drawHorLine(context, x, caret, 300, Shades.BLACK);
     }
 
     @Override

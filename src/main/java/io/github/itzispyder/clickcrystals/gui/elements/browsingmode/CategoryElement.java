@@ -1,8 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.elements.browsingmode;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -21,10 +20,10 @@ public class CategoryElement extends GuiElement {
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         if (BrowsingScreen.currentCategory == category && mc.currentScreen instanceof BrowsingScreen) {
-            RoundRectBrush.drawRoundHoriLine(context, x, y, width, height, Gray.GENERIC_LOW);
+            RenderUtils.fillRoundHoriLine(context, x, y, width, height, Shades.GENERIC_LOW);
         }
         else if (isHovered(mouseX, mouseY)) {
-            RoundRectBrush.drawRoundHoriLine(context, x, y, width, height, Gray.LIGHT_GRAY);
+            RenderUtils.fillRoundHoriLine(context, x, y, width, height, Shades.LIGHT_GRAY);
         }
         RenderUtils.drawTexture(context, category.texture(), 10 + x + 1, y + 1, 8, 8);
         RenderUtils.drawText(context, category.name(), 15 + x + height - 2, y + height / 3, 0.65F, false);

@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 public class DirectionRelativeHud extends TextHud {
 
     public DirectionRelativeHud() {
-        super("direction-hud", 10, 150, 120, 12);
+        super("direction-hud", 10, 150, 120, 16);
     }
 
     @Override

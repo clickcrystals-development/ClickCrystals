@@ -2,8 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.browsingmode;
 
 import io.github.itzispyder.clickcrystals.data.announce.Announcement;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -31,19 +30,19 @@ public class AnnouncementElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        RoundRectBrush.drawRoundRect(context, x, y, width, height, 3, Gray.BLACK);
+        RenderUtils.fillRoundRect(context, x, y, width, height, 3, Shades.BLACK);
 
         int caret = y + 5;
         RenderUtils.drawText(context, announcement.title(), x + 5, caret, 0.8F, false);
         caret += 8;
-        RenderUtils.drawHorLine(context, x + 5, caret, width - 10, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, x + 5, caret, width - 10, Shades.GRAY);
 
         for (String line : StringUtils.wrapLines(announcement.desc(), 60, true)) {
             caret += 8;
             RenderUtils.drawText(context, line, x + 5, caret, 0.7F, false);
         }
         caret += 10;
-        RenderUtils.drawHorLine(context, x + 5, caret, width / 10 * 8, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, x + 5, caret, width / 10 * 8, Shades.GRAY);
         caret += 5;
 
         for (Announcement.Field field : announcement.fields()) {

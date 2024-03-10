@@ -1,9 +1,8 @@
 package io.github.itzispyder.clickcrystals.client.system;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -25,12 +24,12 @@ public class Notification implements Global {
     private final AtomicBoolean showing = new AtomicBoolean(false);
     private final AtomicBoolean dead = new AtomicBoolean(false);
     private final String name, id, title, text;
-    private final Gray backgroundColor, borderColor;
+    private final int backgroundColor, borderColor;
     private final Identifier icon;
     private final long stayTime;
     private long startTime = - 1;
 
-    public Notification(String id, Identifier icon, Gray backgroundColor, Gray borderColor, String title, String text, long stayTime) {
+    public Notification(String id, Identifier icon, int backgroundColor, int borderColor, String title, String text, long stayTime) {
         this.id = id;
         this.name = StringUtils.capitalizeWords(id);
         this.backgroundColor = backgroundColor;
@@ -52,13 +51,13 @@ public class Notification implements Global {
         int x = win.getScaledWidth() / 2 - w / 2;
         int y = 10 + translation.get();
 
-        RoundRectBrush.drawRoundRect(context, x, y, w, h, 5, borderColor);
+        RenderUtils.fillRoundRect(context, x, y, w, h, 5, borderColor);
 
         w -= 4;
         h -= 4;
         x += 2;
         y += 2;
-        RoundRectBrush.drawRoundRect(context, x, y, w, h, 5, backgroundColor);
+        RenderUtils.fillRoundRect(context, x, y, w, h, 5, backgroundColor);
 
         w -= 10;
         h -= 10;
@@ -127,11 +126,11 @@ public class Notification implements Global {
         return text;
     }
 
-    public Gray getBackgroundColor() {
+    public int getBackgroundColor() {
         return backgroundColor;
     }
 
-    public Gray getBorderColor() {
+    public int getBorderColor() {
         return borderColor;
     }
 
@@ -169,15 +168,15 @@ public class Notification implements Global {
 
     public static class Builder {
         private String id, title, text;
-        private Gray backgroundColor, borderColor;
+        private int backgroundColor, borderColor;
         private Identifier icon;
         private long stayTime;
 
         private Builder() {
             id = "unnamed-notification";
             title = text = "";
-            backgroundColor = Gray.DARK_GRAY;
-            borderColor = Gray.LIGHT_GRAY;
+            backgroundColor = Shades.DARK_GRAY;
+            borderColor = Shades.LIGHT_GRAY;
             icon = Tex.Icons.SETTINGS;
             stayTime = 3000;
         }
@@ -197,12 +196,12 @@ public class Notification implements Global {
             return this;
         }
 
-        public Builder colorBackground(Gray color) {
+        public Builder colorBackground(int color) {
             this.backgroundColor = color;
             return this;
         }
 
-        public Builder colorBorder(Gray color) {
+        public Builder colorBorder(int color) {
             this.borderColor = color;
             return this;
         }

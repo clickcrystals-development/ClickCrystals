@@ -47,9 +47,4 @@ public class IconRelativeHud extends Hud {
     public int getArgb() {
         return Module.getFrom(InGameHuds.class, m -> m.getArgb());
     }
-
-    @Override
-    public boolean canRenderBorder() {
-        return Module.getFrom(InGameHuds.class, m -> m.renderHudBorders.getVal());
-    }
 }
