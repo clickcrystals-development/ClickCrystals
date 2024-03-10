@@ -40,8 +40,8 @@ public class ModuleListTextHud extends Hud {
             int lineColor = 0xFF008EC2;
             int length = tr.getWidth(display);
 
-            RenderUtils.fill(context, x - length, y, length, 10, fillColor);
-            RenderUtils.fill(context, x - 1, y, 2, 10, lineColor);
+            RenderUtils.fillRect(context, x - length, y, length, 10, fillColor);
+            RenderUtils.fillRect(context, x - 1, y, 2, 10, lineColor);
             RenderUtils.drawRightText(context, display, x, y + 1, true);
             i += 10;
         }

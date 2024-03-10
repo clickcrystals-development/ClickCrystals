@@ -49,7 +49,7 @@ public abstract class GuiElement implements Positionable, Global {
 
         Module guiBorders = Module.get(GuiBorders.class);
         if (guiBorders.isEnabled()) {
-            RenderUtils.drawBorder(context, x, y, width, height, 0xFFFFFFFF);
+            RenderUtils.drawRect(context, x, y, width, height, 0xFFFFFFFF);
         }
 
         if (bl) {
@@ -66,7 +66,7 @@ public abstract class GuiElement implements Positionable, Global {
         int caret = y + 2;
         int margin = x + 6;
 
-        RenderUtils.fill(context, x, y, 150, height + 2, 0xD0000000);
+        RenderUtils.fillRect(context, x, y, 150, height + 2, 0xD0000000);
         for (String line : lines) {
             RenderUtils.drawText(context, "§7" + line, margin, caret, 0.7F, false);
             caret += 8;

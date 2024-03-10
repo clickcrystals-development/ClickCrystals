@@ -2,8 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module;
 
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.common.Typeable;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -34,8 +33,8 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
         int drawY = y + height / 2 - 2;
 
         if (mc.currentScreen instanceof GuiScreen screen) {
-            Gray fill = screen.selected == this ? Gray.LIGHT_GRAY : Gray.GRAY;
-            RoundRectBrush.drawRoundRect(context, drawX, drawY, drawW, drawH, 3, fill);
+            int fill = screen.selected == this ? Shades.LIGHT_GRAY : Shades.GRAY;
+            RenderUtils.fillRoundRect(context, drawX, drawY, drawW, drawH, 3, fill);
 
             updateDisplay();
             int cX = drawX + drawW / 2;

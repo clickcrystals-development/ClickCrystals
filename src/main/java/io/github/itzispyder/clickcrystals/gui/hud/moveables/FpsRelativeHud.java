@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 public class FpsRelativeHud extends TextHud {
 
     public FpsRelativeHud() {
-        super("fps-hud", 10, 90, 50, 12);
+        super("fps-hud", 10, 90, 50, 16);
     }
 
     @Override

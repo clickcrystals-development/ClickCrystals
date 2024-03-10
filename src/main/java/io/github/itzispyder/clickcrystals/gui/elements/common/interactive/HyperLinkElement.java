@@ -27,7 +27,7 @@ public class HyperLinkElement extends GuiElement {
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         int color = isHovered(mouseX, mouseY) ? 0xFF55FFFF : 0xFF00AAAA;
         RenderUtils.drawText(context, "§3" + name, x, y, textScale, false);
-        RenderUtils.drawHorizontalLine(context, x, y + height + 1, width, 1, color);
+        RenderUtils.drawHorLine(context, x, y + height + 1, width, color);
     }
 
     @Override

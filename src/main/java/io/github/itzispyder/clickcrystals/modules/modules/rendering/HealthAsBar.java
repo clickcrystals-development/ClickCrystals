@@ -49,15 +49,15 @@ public class HealthAsBar extends Module {
         int widthNormal = (int)(ratioCurr * width);
         int widthAbsorp = (int)(ratioAbs * width);
 
-        RenderUtils.fill(context, x, y, width, height, 0xAA000000); // base
-        RenderUtils.fill(context, x, y, widthPrev, height, 0x90D93F24); // last hp
+        RenderUtils.fillRect(context, x, y, width, height, 0xAA000000); // base
+        RenderUtils.fillRect(context, x, y, widthPrev, height, 0x90D93F24); // last hp
 
-        RenderUtils.fill(context, x, y, widthNormal, height, 0xFFD93F24); // current hp
-        RenderUtils.fill(context, x, y, widthNormal, (int)(height * 0.33), 0xAAF18B78); // current hp glint
+        RenderUtils.fillRect(context, x, y, widthNormal, height, 0xFFD93F24); // current hp
+        RenderUtils.fillRect(context, x, y, widthNormal, (int)(height * 0.33), 0xAAF18B78); // current hp glint
 
-        RenderUtils.fill(context, x + widthNormal, y, widthAbsorp, height, 0xFFFEDA00); // current abs
-        RenderUtils.fill(context, x + widthNormal, y, widthAbsorp, (int)(height * 0.33), 0xAAFEDA00); // current abs glint
-        RenderUtils.drawBorder(context, x, y, width, height, 0xAA000000); // border
+        RenderUtils.fillRect(context, x + widthNormal, y, widthAbsorp, height, 0xFFFEDA00); // current abs
+        RenderUtils.fillRect(context, x + widthNormal, y, widthAbsorp, (int)(height * 0.33), 0xAAFEDA00); // current abs glint
+        RenderUtils.drawRect(context, x, y, width, height, 0xAA000000); // border
 
         if (showValue) {
             double hearts = MathUtils.round((lastHealth + absorption) / 2.0, 10);

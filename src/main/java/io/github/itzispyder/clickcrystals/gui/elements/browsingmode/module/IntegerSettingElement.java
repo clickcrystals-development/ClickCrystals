@@ -1,8 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module;
 
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.modules.settings.IntegerSetting;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -49,8 +48,8 @@ public class IntegerSettingElement extends SettingElement<IntegerSetting> {
             setting.setVal((int)(range * ratio + settingMin));
         }
 
-        RoundRectBrush.drawRoundHoriLine(context, drawX, drawY, width / 4, 10, Gray.GRAY);
-        RoundRectBrush.drawRoundHoriLine(context, drawX, drawY, len, 10, Gray.GENERIC);
+        RenderUtils.fillRoundHoriLine(context, drawX, drawY, width / 4, 10, Shades.GRAY);
+        RenderUtils.fillRoundHoriLine(context, drawX, drawY, len, 10, Shades.GENERIC);
         RenderUtils.drawRightText(context, "" + setting.getVal(), fillEnd, drawY - 6, 0.7F, false);
         this.fillEnd = drawX + len;
     }

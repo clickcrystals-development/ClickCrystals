@@ -8,9 +8,8 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.TextFieldElement;
 import io.github.itzispyder.clickcrystals.gui.misc.ChatColor;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
@@ -24,7 +23,6 @@ import io.github.itzispyder.clickcrystals.modules.scripts.syntax.OnEventCmd;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -33,6 +31,8 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
+
+import static io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils.*;
 
 public class ClickScriptIDE extends DefaultBase {
 
@@ -99,63 +99,63 @@ public class ClickScriptIDE extends DefaultBase {
                 .onPress(button -> saveContents())
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
-                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.LIGHT_GRAY);
+                        fillRoundHoriLine(context, button.x, button.y, navWidth, button.height, Shades.LIGHT_GRAY);
                     }
-                    RenderUtils.drawText(context, "Save", button.x + 7, button.y + button.height / 3, 0.7F, false);
+                    drawText(context, "Save", button.x + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
         saveAndCloseButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Save contents then close IDE")
                 .onPress(button -> saveContents().accept(f -> f.thenRun(() -> mc.execute(() -> mc.setScreen(new BrowsingScreen())))))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
-                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.LIGHT_GRAY);
+                        fillRoundHoriLine(context, button.x, button.y, navWidth, button.height, Shades.LIGHT_GRAY);
                     }
-                    RenderUtils.drawText(context, "Save & Close", button.x + 7, button.y + button.height / 3, 0.7F, false);
+                    drawText(context, "Save & Close", button.x + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
         closeButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Close without saving")
                 .onPress(button -> mc.setScreen(new BrowsingScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
-                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.GENERIC_LOW);
+                        fillRoundHoriLine(context, button.x, button.y, navWidth, button.height, Shades.GENERIC_LOW);
                     }
-                    RenderUtils.drawText(context, "Close", button.x + 7, button.y + button.height / 3, 0.7F, false);
+                    drawText(context, "Close", button.x + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
         discardChangesButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Undo all modifications")
                 .onPress(button -> loadContents())
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
-                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.GENERIC_LOW);
+                        fillRoundHoriLine(context, button.x, button.y, navWidth, button.height, Shades.GENERIC_LOW);
                     }
-                    RenderUtils.drawText(context, "Discard Changes", button.x + 7, button.y + button.height / 3, 0.7F, false);
+                    drawText(context, "Discard Changes", button.x + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
         openFileButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Open file in File Explorer")
                 .onPress(button -> system.openFile(filepath))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
-                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.LIGHT_GRAY);
+                        fillRoundHoriLine(context, button.x, button.y, navWidth, button.height, Shades.LIGHT_GRAY);
                     }
-                    RenderUtils.drawText(context, "Open .CCS File", button.x + 7, button.y + button.height / 3, 0.7F, false);
+                    drawText(context, "Open .CCS File", button.x + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
         openScriptsButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Open scripts folder")
                 .onPress(button -> system.openFile(Config.PATH_SCRIPTS))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
-                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.LIGHT_GRAY);
+                        fillRoundHoriLine(context, button.x, button.y, navWidth, button.height, Shades.LIGHT_GRAY);
                     }
-                    RenderUtils.drawText(context, "Open Scripts", button.x + 7, button.y + button.height / 3, 0.7F, false);
+                    drawText(context, "Open Scripts", button.x + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
         deleteButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Delete this script (Can't Undo This!)")
                 .onPress(button -> deleteScript())
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
-                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, button.height, Gray.LIGHT_GRAY);
+                        fillRoundHoriLine(context, button.x, button.y, navWidth, button.height, Shades.LIGHT_GRAY);
                     }
-                    RenderUtils.drawText(context, "§cDelete File", button.x + 7, button.y + button.height / 3, 0.7F, false);
+                    drawText(context, "§cDelete File", button.x + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
 
         this.addChild(saveButton);
@@ -177,18 +177,18 @@ public class ClickScriptIDE extends DefaultBase {
         context.getMatrices().translate(baseX, baseY, 0);
 
         // backdrop
-        RoundRectBrush.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Gray.BLACK);
-        RoundRectBrush.drawTabTop(context, 110, 10, 300, 230, 10, Gray.DARK_GRAY);
+        fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
+        fillRoundTabTop(context, 110, 10, 300, 230, 10, Shades.DARK_GRAY);
 
         // navbar
         String text;
         int caret = 10;
 
-        RenderUtils.drawTexture(context, Tex.ICON, 8, caret - 2, 10, 10);
+        drawTexture(context, Tex.ICON, 8, caret - 2, 10, 10);
         text = "ClickCrystals v%s".formatted(version);
-        RenderUtils.drawText(context, text, 22, 11, 0.7F, false);
+        drawText(context, text, 22, 11, 0.7F, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
+        drawHorLine(context, 10, caret, 90, Shades.GRAY);
         caret += 6;
         buttonHome.x = baseX + 10;
         buttonHome.y = baseY + caret;
@@ -203,7 +203,7 @@ public class ClickScriptIDE extends DefaultBase {
         buttonSettings.y = baseY + caret;
 
         caret += 16;
-        RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
+        drawHorLine(context, 10, caret, 90, Shades.GRAY);
         caret += 6;
         saveButton.x = baseX + 10;
         saveButton.y = baseY + caret;
@@ -218,7 +218,7 @@ public class ClickScriptIDE extends DefaultBase {
         discardChangesButton.y = baseY + caret;
 
         caret += 16;
-        RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
+        drawHorLine(context, 10, caret, 90, Shades.GRAY);
         caret += 6;
         openFileButton.x = baseX + 10;
         openFileButton.y = baseY + caret;
@@ -234,10 +234,10 @@ public class ClickScriptIDE extends DefaultBase {
 
         // content
         caret = contentY + 10;
-        RenderUtils.drawTexture(context, Tex.ICON_CLICKSCRIPT, contentX + 10, caret - 7, 15, 15);
-        RenderUtils.drawText(context, "Editing '%s'".formatted(filename), contentX + 30, caret - 4, false);
+        drawTexture(context, Tex.ICON_CLICKSCRIPT, contentX + 10, caret - 7, 15, 15);
+        drawText(context, "Editing '%s'".formatted(filename), contentX + 30, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
+        drawHorLine(context, contentX, caret, 300, Shades.BLACK);
     }
 
     public void loadContents() {

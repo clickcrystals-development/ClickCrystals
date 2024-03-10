@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.screens.settings;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module.SettingSectionElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
@@ -66,7 +66,7 @@ public class KeybindScreen extends DefaultBase {
         int caret = contentY + 10;
         RenderUtils.drawText(context, "Keybindings", contentX + 10, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
+        RenderUtils.drawHorLine(context, contentX, caret, 300, Shades.BLACK);
     }
 
     @Override

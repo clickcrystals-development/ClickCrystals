@@ -27,7 +27,7 @@ public class TargetRelativeHud extends Hud {
     private final AtomicBoolean showingArmor = new AtomicBoolean();
 
     public TargetRelativeHud() {
-        super("target-hud", 150, 30, 120, 12);
+        super("target-hud", 150, 30, 120, 16);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class TargetRelativeHud extends Hud {
             // and player ping and distance
             caret += 7;
             String name = targetEntry.getProfile().getName();
-            String info = "§f" + targetEntry.getLatency() + " §7ms,  §f" + MathUtils.round(target.distanceTo(p), 10) + " §7dist";
+            String info = "§f" + targetEntry.getLatency() + " §7ms, §f" + MathUtils.round(target.distanceTo(p), 10) + " §7dist";
             RenderUtils.drawText(context, name, margin + 15 + g, caret, 0.8F, true);
             caret += 15;
             RenderUtils.drawText(context, info, margin, caret, 0.8F, true);
@@ -140,11 +140,6 @@ public class TargetRelativeHud extends Hud {
     @Override
     public int getArgb() {
         return Module.getFrom(InGameHuds.class, m -> m.getArgb());
-    }
-
-    @Override
-    public boolean canRenderBorder() {
-        return Module.getFrom(InGameHuds.class, m -> m.renderHudBorders.getVal());
     }
 
     public boolean isTargetNaked() {

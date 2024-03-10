@@ -65,8 +65,8 @@ public class ArmorHud extends Module {
     }
 
     private void renderItem(DrawContext context, ItemStack item, int x, int y) {
-        RenderUtils.fill(context, x, y, 22, 22, 0x90000000);
-        RenderUtils.drawBorder(context, x, y, 22, 22, 1, 0xFF000000);
+        RenderUtils.fillRect(context, x, y, 22, 22, 0x90000000);
+        RenderUtils.drawRect(context, x, y, 22, 22, 0xFF000000);
         RenderUtils.drawTexture(context, Tex.Defaults.ITEM_WIDGET, x, y, 22, 22);
         context.drawItem(item, x + 3, y + 3);
         context.drawItemInSlot(mc.textRenderer, item, x + 3, y + 3);

@@ -55,7 +55,7 @@ public class EntityIndicatorHud extends Hud {
             int y = (int)(cY + Math.sin(Math.toRadians(θ - 90)) * radius);
             int bigger = size + 2;
 
-            RenderUtils.fill(context, x - bigger / 2 - 1, y - bigger / 2 - 1, bigger + 2, bigger + 2, 0xFFFFFFFF);
+            RenderUtils.fillRect(context, x - bigger / 2 - 1, y - bigger / 2 - 1, bigger + 2, bigger + 2, 0xFFFFFFFF);
             MobHeadBrush.drawHead(context, display.entity(), x - bigger / 2, y - bigger / 2, bigger);
         });
     }

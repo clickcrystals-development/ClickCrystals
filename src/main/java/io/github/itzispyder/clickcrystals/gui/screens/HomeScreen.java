@@ -6,9 +6,8 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchResultsElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SuggestionElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -29,9 +28,7 @@ public class HomeScreen extends GuiScreen {
     public final int baseHeight = 240;
     public final int baseX = (int)(windowWidth / 2.0 - baseWidth / 2.0);
     public final int baseY = (int)(windowHeight / 2.0 - baseHeight / 2.0);
-    public final SearchBarElement searchBar = new SearchBarElement(0, 0, 300) {{
-        this.height = 15;
-    }};
+    public final SearchBarElement searchBar = new SearchBarElement(0, 0, 300);
     public final SearchResultsElement searchResults = new SearchResultsElement(searchBar);
     protected final AtomicInteger titleTranslation = new AtomicInteger(-50);
     public final List<SuggestionElement> suggestions = new ArrayList<>();
@@ -77,8 +74,9 @@ public class HomeScreen extends GuiScreen {
         context.getMatrices().push();
         context.getMatrices().translate(baseX, baseY, 0);
 
-        RoundRectBrush.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Gray.BLACK);
-        RoundRectBrush.drawTabBottom(context, 15, baseHeight / 2 - 10, baseWidth - 30, baseHeight / 2, 10, Gray.DARK_GRAY);
+        RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
+        RenderUtils.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.BLACK);
+        RenderUtils.fillRoundTabBottom(context, 15, baseHeight / 2 - 10, baseWidth - 30, baseHeight / 2, 10, Shades.TRANS_BLACK);
         RenderUtils.drawTexture(context, Tex.Backdrops.BACKDROP_0, 10, 10, baseWidth - 20, baseHeight / 2 + 40);
 
         context.getMatrices().pop();
@@ -103,7 +101,7 @@ public class HomeScreen extends GuiScreen {
         int i = 3;
         int x = baseX + baseWidth / 2 - 150;
         int y = baseY + 20;
-        RoundRectBrush.drawRoundRect(context, x, y, 300, lines.size() * 9 + 6, 3, Gray.DARK_GRAY);
+        RenderUtils.fillRoundRect(context, x, y, 300, lines.size() * 9 + 6, 3, Shades.DARK_GRAY);
         for (String line : lines) {
             RenderUtils.drawText(context, "§e" + line, x + 5, y + i, 0.9F, false);
             i += 10;

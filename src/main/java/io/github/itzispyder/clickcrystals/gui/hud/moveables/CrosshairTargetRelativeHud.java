@@ -15,7 +15,7 @@ import net.minecraft.util.hit.HitResult;
 public class CrosshairTargetRelativeHud extends Hud {
 
     public CrosshairTargetRelativeHud() {
-        super("crosshair-hud", 10, 165, 120, 12);
+        super("crosshair-hud", 10, 165, 120, 16);
     }
 
     @Override
@@ -68,10 +68,5 @@ public class CrosshairTargetRelativeHud extends Hud {
     @Override
     public int getArgb() {
         return Module.getFrom(InGameHuds.class, m -> m.getArgb());
-    }
-
-    @Override
-    public boolean canRenderBorder() {
-        return Module.getFrom(InGameHuds.class, m -> m.renderHudBorders.getVal());
     }
 }

@@ -4,8 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.common.Typeable;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.callbacks.KeyPressCallback;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -31,15 +30,15 @@ public class SearchBarElement extends GuiElement implements Typeable {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        RoundRectBrush.drawRoundHoriLine(context, x, y, width, height, Gray.LIGHT);
+        RenderUtils.fillRoundHoriLine(context, x, y, width, height, Shades.LIGHT);
         if (mc.currentScreen instanceof GuiScreen screen) {
             String text = query;
 
             if (screen.selected == this) {
-                if (text.length() == 0) {
+                if (text.isEmpty()) {
                     RenderUtils.drawText(context, "§8§0§l︳", x + height / 2 + 2, y + height / 3, 0.7F, false);
                 } else {
-                    while (text.length() > 0 && mc.textRenderer.getWidth(text) * 0.7F > width - height - 4) {
+                    while (!text.isEmpty() && mc.textRenderer.getWidth(text) * 0.7F > width - height - 4) {
                         text = text.substring(1);
                     }
                     String displayText = screen.selected == this ? "§8%s§0§l︳".formatted(text) : text;

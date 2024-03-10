@@ -12,7 +12,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 public class RotationRelativeHud extends Hud {
 
     public RotationRelativeHud() {
-        super("rotation-hud", 10, 180, 120, 12);
+        super("rotation-hud", 10, 180, 120, 16);
     }
 
     @Override
@@ -45,10 +45,5 @@ public class RotationRelativeHud extends Hud {
     @Override
     public int getArgb() {
         return Module.getFrom(InGameHuds.class, m -> m.getArgb());
-    }
-
-    @Override
-    public boolean canRenderBorder() {
-        return Module.getFrom(InGameHuds.class, m -> m.renderHudBorders.getVal());
     }
 }

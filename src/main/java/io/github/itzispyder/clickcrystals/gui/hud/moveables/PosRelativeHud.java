@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 public class PosRelativeHud extends TextHud {
 
     public PosRelativeHud() {
-        super("pos-hud", 10, 120, 120, 12);
+        super("pos-hud", 10, 120, 120, 16);
     }
 
     @Override

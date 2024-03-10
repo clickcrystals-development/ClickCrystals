@@ -3,9 +3,8 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.CategoryElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.SettingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
@@ -51,9 +50,9 @@ public abstract class DefaultBase extends GuiScreen {
                 .tooltip("LEFT-CLICK to search")
                 .onPress(button -> mc.setScreen(new SearchScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
-                    RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, 12, Gray.LIGHT);
+                    RenderUtils.fillRoundHoriLine(context, button.x, button.y, navWidth, 12, Shades.LIGHT);
                     if (button.isHovered(mouseX, mouseY)) {
-                        RenderUtils.drawVerticalLine(context, button.x + 7, button.y + 2, 8, 1, 0xFF222222);
+                        RenderUtils.drawVerLine(context, button.x + 7, button.y + 2, 8, 0xFF222222);
                     } else {
                         RenderUtils.drawText(context, "§7Search module i.e.", button.x + 7, button.y + button.height / 3, 0.7F, false);
                     }
@@ -63,7 +62,7 @@ public abstract class DefaultBase extends GuiScreen {
                 .onPress(button -> mc.setScreen(new HomeScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
-                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, 10, Gray.LIGHT_GRAY);
+                        RenderUtils.fillRoundHoriLine(context, button.x, button.y, navWidth, 10, Shades.LIGHT_GRAY);
                     }
                     RenderUtils.drawTexture(context, Tex.Icons.HOME, button.x + 2, button.y, button.height, button.height);
                     RenderUtils.drawText(context, "Home", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
@@ -73,7 +72,7 @@ public abstract class DefaultBase extends GuiScreen {
                 .onPress(button -> mc.setScreen(new BrowsingScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
-                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, 10, Gray.LIGHT_GRAY);
+                        RenderUtils.fillRoundHoriLine(context, button.x, button.y, navWidth, 10, Shades.LIGHT_GRAY);
                     }
                     RenderUtils.drawTexture(context, Tex.Icons.MODULES, button.x + 2, button.y, button.height, button.height);
                     RenderUtils.drawText(context, "Modules", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
@@ -83,7 +82,7 @@ public abstract class DefaultBase extends GuiScreen {
                 .onPress(button -> mc.setScreen(new BulletinScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
-                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, 10, Gray.LIGHT_GRAY);
+                        RenderUtils.fillRoundHoriLine(context, button.x, button.y, navWidth, 10, Shades.LIGHT_GRAY);
                     }
                     RenderUtils.drawTexture(context, Tex.Icons.ANNOUNCE, button.x + 2, button.y, button.height, button.height);
                     RenderUtils.drawText(context, "What's New?", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
@@ -93,7 +92,7 @@ public abstract class DefaultBase extends GuiScreen {
                 .onPress(button -> mc.setScreen(new SettingScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
-                        RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, 10, Gray.LIGHT_GRAY);
+                        RenderUtils.fillRoundHoriLine(context, button.x, button.y, navWidth, 10, Shades.LIGHT_GRAY);
                     }
                     RenderUtils.drawTexture(context, Tex.Icons.SETTINGS, button.x + 2, button.y, button.height, button.height);
                     RenderUtils.drawText(context, "Settings", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
@@ -112,8 +111,9 @@ public abstract class DefaultBase extends GuiScreen {
         context.getMatrices().translate(baseX, baseY, 0);
 
         // backdrop
-        RoundRectBrush.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Gray.BLACK);
-        RoundRectBrush.drawTabTop(context, 110, 10, 300, 230, 10, Gray.DARK_GRAY);
+        RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
+        RenderUtils.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.BLACK);
+        RenderUtils.fillRoundTabTop(context, 110, 10, 300, 230, 10, Shades.TRANS_DARK_GRAY);
 
         // navbar
         String text;
@@ -123,7 +123,7 @@ public abstract class DefaultBase extends GuiScreen {
         text = "ClickCrystals v%s".formatted(version);
         RenderUtils.drawText(context, text, 22, 11, 0.7F, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, 10, caret, 90, Shades.GRAY);
         caret += 10;
         text = "Modules (%s)".formatted(system.collectModules().size());
         RenderUtils.drawText(context, text, 10, caret, 0.65F, false);
@@ -134,7 +134,7 @@ public abstract class DefaultBase extends GuiScreen {
             ce.y = baseY + caret;
         }
         caret += 20;
-        RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, 10, caret, 90, Shades.GRAY);
         caret += 6;
         buttonSearch.x = baseX + 10;
         buttonSearch.y = baseY + caret;
@@ -152,7 +152,7 @@ public abstract class DefaultBase extends GuiScreen {
         buttonSettings.y = baseY + caret;
 
         caret += 20;
-        RoundRectBrush.drawTabTop(context, 10, caret, 90, baseHeight - caret, 5, Gray.DARK_GRAY);
+        RenderUtils.fillRoundTabTop(context, 10, caret, 90, baseHeight - caret, 5, Shades.TRANS_BLACK);
         caret += 5;
         RenderUtils.drawText(context, "Client Owners: ", 15, caret, 0.65F, false);
         caret += 8;

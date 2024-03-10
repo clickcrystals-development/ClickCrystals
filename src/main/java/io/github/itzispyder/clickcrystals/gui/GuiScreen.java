@@ -287,7 +287,7 @@ public abstract class GuiScreen extends Screen implements Global {
         String name = element.getClass().getSimpleName();
         double textScale = 0.7;
         int width = mc.textRenderer.getWidth(name) + 2;
-        RenderUtils.fill(context, mouseX, mouseY, (int)(width * textScale), 9, 0xFF000000);
+        RenderUtils.fillRect(context, mouseX, mouseY, (int)(width * textScale), 9, 0xFF000000);
         RenderUtils.drawText(context, name, mouseX + 2, mouseY + (int)(9 * 0.33), 0.7F, true);
     }
 

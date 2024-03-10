@@ -2,9 +2,8 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -45,8 +44,9 @@ public class SearchScreen extends DefaultBase {
         context.getMatrices().translate(baseX, baseY, 0);
 
         // backdrop
-        RoundRectBrush.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Gray.BLACK);
-        RoundRectBrush.drawTabTop(context, 110, 10, 300, 230, 10, Gray.DARK_GRAY);
+        RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
+        RenderUtils.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.BLACK);
+        RenderUtils.fillRoundTabTop(context, 110, 10, 300, 230, 10, Shades.TRANS_DARK_GRAY);
 
         // navbar
         String text;
@@ -57,7 +57,7 @@ public class SearchScreen extends DefaultBase {
         text = "ClickCrystals v%s".formatted(version);
         RenderUtils.drawText(context, text, 22, 11, 0.7F, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, 10, caret, 90, Shades.GRAY);
         caret += 6;
         searchbar.x = baseX + 10;
         searchbar.y = baseY + caret - translation;
@@ -89,7 +89,7 @@ public class SearchScreen extends DefaultBase {
         }
         RenderUtils.drawText(context, text, contentX + 10, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
+        RenderUtils.drawHorLine(context, contentX, caret, 300, Shades.BLACK);
     }
 
     public void filterByQuery(SearchBarElement searchbar) {

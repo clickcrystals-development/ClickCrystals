@@ -7,8 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.CategoryElement;
 import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.ModuleEditElement;
 import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.SearchCategoryElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
@@ -30,7 +29,7 @@ public class OverviewScreen extends GuiScreen {
             .dimensions(180, 16)
             .onRender((context, mouseX, mouseY, button) -> {
                 if (button.isHovered(mouseX, mouseY)) {
-                    RoundRectBrush.drawRoundRect(context, button.x, button.y, button.width, button.height, 3, Gray.LIGHT_GRAY);
+                    RenderUtils.fillRoundRect(context, button.x, button.y, button.width, button.height, 3, Shades.LIGHT_GRAY);
                 }
                 String text = "click to switch back to Browsing mode.";
                 RenderUtils.drawText(context, text, button.x + 5, button.y + button.height / 3, 0.9F, false);
@@ -76,7 +75,7 @@ public class OverviewScreen extends GuiScreen {
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
         renderOpaqueBackground(context);
 
-        RenderUtils.fill(context, 0, 0, RenderUtils.winWidth(), 20, 0x90000000);
+        RenderUtils.fillRect(context, 0, 0, RenderUtils.width(), 20, 0x90000000);
         RenderUtils.drawText(context, switchModeText, 10, 20 / 3 + 1, 0.9F, false);
     }
 

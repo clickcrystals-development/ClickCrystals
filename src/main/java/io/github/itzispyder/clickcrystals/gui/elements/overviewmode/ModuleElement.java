@@ -2,8 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.overviewmode;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -21,16 +20,16 @@ public class ModuleElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        Gray color = Gray.DARK_GRAY;
+        int color = Shades.TRANS_DARK_GRAY;
 
         if (module.isEnabled()) {
-            color = Gray.GRAY;
+            color = Shades.TRANS_GRAY;
         }
         if (isHovered(mouseX, mouseY) && hasParent() && mc.currentScreen instanceof GuiScreen screen && screen.hovered == getParent()) {
-            color = Gray.LIGHT_GRAY;
+            color = Shades.TRANS_LIGHT_GRAY;
         }
 
-        RoundRectBrush.drawRoundRect(context, x, y, width, height, 3, color);
+        RenderUtils.fillRoundRect(context, x, y, width, height, 3, color);
 
         String text = (module.isEnabled() ? "§b" : "§7") + module.getNameLimited();
         RenderUtils.drawText(context, text, x + 5, y + height / 3, 0.8F, false);

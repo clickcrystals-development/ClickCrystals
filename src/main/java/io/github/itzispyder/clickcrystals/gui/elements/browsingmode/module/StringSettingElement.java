@@ -2,8 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module;
 
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.common.Typeable;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
-import io.github.itzispyder.clickcrystals.gui.misc.brushes.RoundRectBrush;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -32,8 +31,8 @@ public class StringSettingElement extends SettingElement<StringSetting> implemen
             int drawY = y + height / 2;
             int drawX = x + width - drawW - 7;
 
-            Gray fill = screen.selected == this ? Gray.LIGHT_GRAY : Gray.GRAY;
-            RoundRectBrush.drawRoundHoriLine(context, drawX, drawY, drawW, drawH, fill);
+            int fill = screen.selected == this ? Shades.LIGHT_GRAY : Shades.GRAY;
+            RenderUtils.fillRoundHoriLine(context, drawX, drawY, drawW, drawH, fill);
 
             String text = input;
             while (text.length() > 0 && mc.textRenderer.getWidth(text) * 0.7F > drawW - 10) {

@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
-import io.github.itzispyder.clickcrystals.gui.misc.Gray;
+import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
@@ -33,7 +33,7 @@ public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElem
 
         if (shouldUnderline) {
             caret += 10;
-            RenderUtils.drawHorizontalLine(context, x + 5, caret, width - 10, 1, Gray.DARK_GRAY.argb);
+            RenderUtils.drawHorLine(context, x + 5, caret, width - 10, Shades.DARK_GRAY);
         }
     }
 

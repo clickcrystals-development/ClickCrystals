@@ -25,7 +25,7 @@ public class ModuleElement extends GuiElement {
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         if (isHovered(mouseX, mouseY)) {
-            RenderUtils.fill(context, x, y, width, height, 0x60FFFFFF);
+            RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
         }
 
         String text;
