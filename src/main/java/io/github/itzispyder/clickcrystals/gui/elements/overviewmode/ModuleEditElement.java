@@ -46,7 +46,7 @@ public class ModuleEditElement extends GuiElement {
         RenderUtils.drawText(context, module.getName(), x + 30, caret - 4, false);
         RenderUtils.drawText(context, isHoverExit(mouseX, mouseY) ? "§bx" : "§7x", x + width - 15, caret - 4, 1.2F, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, x, caret, 300, 1, Gray.BLACK.argb);
+        RenderUtils.drawHorLine(context, x, caret, 300, Gray.BLACK.argb);
     }
 
     @Override

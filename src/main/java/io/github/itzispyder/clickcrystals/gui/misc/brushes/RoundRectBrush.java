@@ -19,9 +19,9 @@ public class RoundRectBrush {
 
         // fillings
         int color = gray.argb;
-        RenderUtils.fill(context, x + borderRadius, y, w - diameter, h, color); // middle
-        RenderUtils.fill(context, x, y + borderRadius, borderRadius, h - diameter, color); // left wing
-        RenderUtils.fill(context, x + w - borderRadius, y + borderRadius, borderRadius, h - diameter, color); // right wing
+        RenderUtils.fillRect(context, x + borderRadius, y, w - diameter, h, color); // middle
+        RenderUtils.fillRect(context, x, y + borderRadius, borderRadius, h - diameter, color); // left wing
+        RenderUtils.fillRect(context, x + w - borderRadius, y + borderRadius, borderRadius, h - diameter, color); // right wing
     }
 
     public static void drawRoundHoriLine(DrawContext context, int x, int y, int length, int thickness, Gray gray) {
@@ -34,7 +34,7 @@ public class RoundRectBrush {
         // fillings
         int color = gray.argb;
         int diameter = thickness / 2;
-        RenderUtils.fill(context, x + diameter, y, length - thickness, thickness, color);
+        RenderUtils.fillRect(context, x + diameter, y, length - thickness, thickness, color);
     }
 
     public static void drawRoundVertLine(DrawContext context, int x, int y, int length, int thickness, Gray gray) {
@@ -47,7 +47,7 @@ public class RoundRectBrush {
         // fillings
         int color = gray.argb;
         int diameter = thickness / 2;
-        RenderUtils.fill(context, x, y + diameter, thickness, length - thickness, color);
+        RenderUtils.fillRect(context, x, y + diameter, thickness, length - thickness, color);
     }
 
     public static void drawTabTop(DrawContext context, int x, int y, int w, int h, int borderRadius, Gray gray) {
@@ -59,9 +59,9 @@ public class RoundRectBrush {
 
         // fillings
         int color = gray.argb;
-        RenderUtils.fill(context, x + borderRadius, y, w - diameter, h, color); // middle
-        RenderUtils.fill(context, x, y + borderRadius, borderRadius, h - borderRadius, color); // left wing
-        RenderUtils.fill(context, x + w - borderRadius, y + borderRadius, borderRadius, h - borderRadius, color); // right wing
+        RenderUtils.fillRect(context, x + borderRadius, y, w - diameter, h, color); // middle
+        RenderUtils.fillRect(context, x, y + borderRadius, borderRadius, h - borderRadius, color); // left wing
+        RenderUtils.fillRect(context, x + w - borderRadius, y + borderRadius, borderRadius, h - borderRadius, color); // right wing
     }
 
     public static void drawTabBottom(DrawContext context, int x, int y, int w, int h, int borderRadius, Gray gray) {
@@ -73,8 +73,8 @@ public class RoundRectBrush {
 
         // fillings
         int color = gray.argb;
-        RenderUtils.fill(context, x + borderRadius, y, w - diameter, h, color); // middle
-        RenderUtils.fill(context, x, y, borderRadius, h - borderRadius, color); // left wing
-        RenderUtils.fill(context, x + w - borderRadius, y, borderRadius, h - borderRadius, color); // right wing
+        RenderUtils.fillRect(context, x + borderRadius, y, w - diameter, h, color); // middle
+        RenderUtils.fillRect(context, x, y, borderRadius, h - borderRadius, color); // left wing
+        RenderUtils.fillRect(context, x + w - borderRadius, y, borderRadius, h - borderRadius, color); // right wing
     }
 }

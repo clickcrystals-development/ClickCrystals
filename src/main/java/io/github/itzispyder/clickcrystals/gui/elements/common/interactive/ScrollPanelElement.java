@@ -107,7 +107,7 @@ public class ScrollPanelElement extends GuiElement {
             prevDrag = mouseY;
         }
 
-        RenderUtils.fill(context, x + width - 6, y, 6, height, 0xFF1F1F1F);
+        RenderUtils.fillRect(context, x + width - 6, y, 6, height, 0xFF1F1F1F);
 
         double fullDoc = remainingUp + remainingDown + this.height;
         double drawStartRatio = remainingUp / fullDoc;
@@ -115,9 +115,9 @@ public class ScrollPanelElement extends GuiElement {
         int drawStart = (int)(this.height * drawStartRatio);
         int drawLength = (int)(this.height * ratio);
 
-        RenderUtils.fill(context, this.x + this.width - 6, this.y + drawStart, 6, drawLength, 0xFFAAAAAA);
-        RenderUtils.fill(context, this.x + this.width - 1, this.y + drawStart, 1, drawLength, 0xFF555555);
-        RenderUtils.fill(context, this.x + this.width - 6, this.y + drawStart + drawLength - 1, 6, 1, 0xFF555555);
+        RenderUtils.fillRect(context, this.x + this.width - 6, this.y + drawStart, 6, drawLength, 0xFFAAAAAA);
+        RenderUtils.fillRect(context, this.x + this.width - 1, this.y + drawStart, 1, drawLength, 0xFF555555);
+        RenderUtils.fillRect(context, this.x + this.width - 6, this.y + drawStart + drawLength - 1, 6, 1, 0xFF555555);
 
         scrollbarY = this.y + drawStart;
         scrollbarHeight = drawLength;

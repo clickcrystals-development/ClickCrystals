@@ -33,7 +33,7 @@ public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElem
 
         if (shouldUnderline) {
             caret += 10;
-            RenderUtils.drawHorizontalLine(context, x + 5, caret, width - 10, 1, Gray.DARK_GRAY.argb);
+            RenderUtils.drawHorLine(context, x + 5, caret, width - 10, Gray.DARK_GRAY.argb);
         }
     }
 

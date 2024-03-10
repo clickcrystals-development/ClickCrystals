@@ -188,7 +188,7 @@ public class ClickScriptIDE extends DefaultBase {
         text = "ClickCrystals v%s".formatted(version);
         RenderUtils.drawText(context, text, 22, 11, 0.7F, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, 10, caret, 90, Gray.GRAY.argb);
         caret += 6;
         buttonHome.x = baseX + 10;
         buttonHome.y = baseY + caret;
@@ -203,7 +203,7 @@ public class ClickScriptIDE extends DefaultBase {
         buttonSettings.y = baseY + caret;
 
         caret += 16;
-        RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, 10, caret, 90, Gray.GRAY.argb);
         caret += 6;
         saveButton.x = baseX + 10;
         saveButton.y = baseY + caret;
@@ -218,7 +218,7 @@ public class ClickScriptIDE extends DefaultBase {
         discardChangesButton.y = baseY + caret;
 
         caret += 16;
-        RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, 10, caret, 90, Gray.GRAY.argb);
         caret += 6;
         openFileButton.x = baseX + 10;
         openFileButton.y = baseY + caret;
@@ -237,7 +237,7 @@ public class ClickScriptIDE extends DefaultBase {
         RenderUtils.drawTexture(context, Tex.ICON_CLICKSCRIPT, contentX + 10, caret - 7, 15, 15);
         RenderUtils.drawText(context, "Editing '%s'".formatted(filename), contentX + 30, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
+        RenderUtils.drawHorLine(context, contentX, caret, 300, Gray.BLACK.argb);
     }
 
     public void loadContents() {

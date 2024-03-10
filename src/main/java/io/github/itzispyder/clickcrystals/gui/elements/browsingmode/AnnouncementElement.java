@@ -36,14 +36,14 @@ public class AnnouncementElement extends GuiElement {
         int caret = y + 5;
         RenderUtils.drawText(context, announcement.title(), x + 5, caret, 0.8F, false);
         caret += 8;
-        RenderUtils.drawHorizontalLine(context, x + 5, caret, width - 10, 1, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, x + 5, caret, width - 10, Gray.GRAY.argb);
 
         for (String line : StringUtils.wrapLines(announcement.desc(), 60, true)) {
             caret += 8;
             RenderUtils.drawText(context, line, x + 5, caret, 0.7F, false);
         }
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, x + 5, caret, width / 10 * 8, 1, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, x + 5, caret, width / 10 * 8, Gray.GRAY.argb);
         caret += 5;
 
         for (Announcement.Field field : announcement.fields()) {

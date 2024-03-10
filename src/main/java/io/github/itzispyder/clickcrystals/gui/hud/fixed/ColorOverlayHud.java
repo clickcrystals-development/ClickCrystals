@@ -28,7 +28,7 @@ public class ColorOverlayHud extends Hud {
                 this.renderColor(context, 0x30FF0000);
             }
             if (totemOverlay.border.getVal()) {
-                RenderUtils.drawBorder(context,0,0,win.getScaledWidth(),win.getScaledHeight(),5,0xFFFF0000);
+                RenderUtils.drawRect(context,0,0, win.getScaledWidth(), win.getScaledHeight(), 0xFFFF0000);
             }
             if (totemOverlay.icon.getVal()) {
                 context.drawTexture(Tex.Defaults.NO_TOTEMS_ICON, (mc.getWindow().getScaledWidth()/2)+10, (mc.getWindow().getScaledHeight()/2)-10, 0,0, 20,20,20,20);

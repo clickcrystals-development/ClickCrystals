@@ -53,7 +53,7 @@ public abstract class DefaultBase extends GuiScreen {
                 .onRender((context, mouseX, mouseY, button) -> {
                     RoundRectBrush.drawRoundHoriLine(context, button.x, button.y, navWidth, 12, Gray.LIGHT);
                     if (button.isHovered(mouseX, mouseY)) {
-                        RenderUtils.drawVerticalLine(context, button.x + 7, button.y + 2, 8, 1, 0xFF222222);
+                        RenderUtils.drawVerLine(context, button.x + 7, button.y + 2, 8, 0xFF222222);
                     } else {
                         RenderUtils.drawText(context, "§7Search module i.e.", button.x + 7, button.y + button.height / 3, 0.7F, false);
                     }
@@ -123,7 +123,7 @@ public abstract class DefaultBase extends GuiScreen {
         text = "ClickCrystals v%s".formatted(version);
         RenderUtils.drawText(context, text, 22, 11, 0.7F, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, 10, caret, 90, Gray.GRAY.argb);
         caret += 10;
         text = "Modules (%s)".formatted(system.collectModules().size());
         RenderUtils.drawText(context, text, 10, caret, 0.65F, false);
@@ -134,7 +134,7 @@ public abstract class DefaultBase extends GuiScreen {
             ce.y = baseY + caret;
         }
         caret += 20;
-        RenderUtils.drawHorizontalLine(context, 10, caret, 90, 1, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, 10, caret, 90, Gray.GRAY.argb);
         caret += 6;
         buttonSearch.x = baseX + 10;
         buttonSearch.y = baseY + caret;

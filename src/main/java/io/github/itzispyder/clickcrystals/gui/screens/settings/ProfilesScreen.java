@@ -45,7 +45,7 @@ public class ProfilesScreen extends DefaultBase {
         RenderUtils.drawTexture(context, Tex.Icons.MODULES, contentX + 10, caret - 7, 15, 15);
         RenderUtils.drawText(context, "Configuration Profiles", contentX + 30, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
+        RenderUtils.drawHorLine(context, contentX, caret, 300, Gray.BLACK.argb);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class ProfilesScreen extends DefaultBase {
         @Override
         public void onRender(DrawContext context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
-                RenderUtils.fill(context, x, y, width, height, 0x60FFFFFF);
+                RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
             }
 
             String text = "§7 -    " + (system.profiles.profileConfig.getCurrentProfileName().equals(displayName) ? "§7> §b" : "§7") + displayName;
@@ -149,7 +149,7 @@ public class ProfilesScreen extends DefaultBase {
         @Override
         public void onRender(DrawContext context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
-                RenderUtils.fill(context, x, y, width, height, 0x60FFFFFF);
+                RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
             }
 
             String text = "Create a new config profile.";

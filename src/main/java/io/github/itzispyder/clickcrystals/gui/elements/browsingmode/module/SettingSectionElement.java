@@ -40,7 +40,7 @@ public class SettingSectionElement extends GuiElement {
         text = settingSection.getName();
         RenderUtils.drawText(context, text, x + 5, caret, 0.8F, false);
         caret += 8;
-        RenderUtils.drawHorizontalLine(context, x + 5, caret, width - 10, 1, Gray.GRAY.argb);
+        RenderUtils.drawHorLine(context, x + 5, caret, width - 10, Gray.GRAY.argb);
     }
 
     @Override

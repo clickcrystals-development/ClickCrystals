@@ -45,7 +45,7 @@ public class BrowsingScreen extends DefaultBase {
         RenderUtils.drawTexture(context, currentCategory.texture(), contentX + 10, caret - 7, 15, 15);
         RenderUtils.drawText(context, currentCategory.name(), contentX + 30, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
+        RenderUtils.drawHorLine(context, contentX, caret, 300, Gray.BLACK.argb);
     }
 
     public void filterByCategory(Category category) {
@@ -149,7 +149,7 @@ public class BrowsingScreen extends DefaultBase {
         @Override
         public void onRender(DrawContext context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
-                RenderUtils.fill(context, x, y, width, height, 0x60FFFFFF);
+                RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
             }
 
             String text = "§7Create new with ClickScript IDE - §eBETA";

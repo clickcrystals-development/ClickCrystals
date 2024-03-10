@@ -51,7 +51,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
         context.getMatrices().push();
         context.enableScissor(x, y, x + width, y + height);
 
-        RenderUtils.fill(context, x, y, width, height, backgroundColor.getHex());
+        RenderUtils.fillRect(context, x, y, width, height, backgroundColor.getHex());
         List<OrderedText> text = mc.textRenderer.wrapLines(StringVisitable.plain(styledContent), width - 25);
         textHeight = text.size() * 9;
 
@@ -71,7 +71,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
         for (var it = text.iterator(); it.hasNext(); caret += 9) {
             OrderedText line = it.next();
             if (selectedAll) {
-                RenderUtils.fill(context, x + 20, caret - 1, mc.textRenderer.getWidth(line), 9, 0xA07E75FF);
+                RenderUtils.fillRect(context, x + 20, caret - 1, mc.textRenderer.getWidth(line), 9, 0xA07E75FF);
             }
             context.drawText(mc.textRenderer, line, x + 20, caret, textColor.getHex(), false);
         }
@@ -79,7 +79,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
         if (selectionBlinking) {
             int tX = x + 20 + selectedStartPoint.x;
             int tY = y - 1 + textY + selectedStartPoint.y;
-            RenderUtils.drawVerticalLine(context, tX, tY, 9, 1, 0xE0FFFFFF);
+            RenderUtils.drawVerLine(context, tX, tY, 9, 0xE0FFFFFF);
         }
 
         context.disableScissor();

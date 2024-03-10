@@ -52,10 +52,10 @@ public abstract class Hud implements Positionable, Global {
     public abstract void render(DrawContext context);
 
     public void renderBackdrop(DrawContext context) {
-        RenderUtils.fill(context, getX(), getY(), getWidth(), getHeight(), getArgb());
+        RenderUtils.fillRect(context, getX(), getY(), getWidth(), getHeight(), getArgb());
 
         if (canRenderBorder()) {
-            RenderUtils.drawBorder(context, getX(), getY(), getWidth(), getHeight(), 0x40FFFFFF);
+            RenderUtils.drawRect(context, getX(), getY(), getWidth(), getHeight(), 0x40FFFFFF);
         }
     }
 

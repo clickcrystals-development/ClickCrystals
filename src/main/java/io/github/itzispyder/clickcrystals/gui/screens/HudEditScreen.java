@@ -49,20 +49,20 @@ public class HudEditScreen extends GuiScreen {
 
     @Override
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
-        RenderUtils.fill(context, 0, 0, this.width, this.height, 0x90000000);
+        RenderUtils.fillRect(context, 0, 0, this.width, this.height, 0x90000000);
 
-        RenderUtils.drawHorizontalLine(context, 0, context.getScaledWindowHeight() / 2, context.getScaledWindowWidth(), 1, 0xFF8C8C8C);
-        RenderUtils.drawHorizontalLine(context, 0, context.getScaledWindowHeight() - 10, context.getScaledWindowWidth(), 1, 0xFF8C8C8C);
-        RenderUtils.drawHorizontalLine(context, 0, 10, context.getScaledWindowWidth(), 1, 0xFF8C8C8C);
-        RenderUtils.drawVerticalLine(context, context.getScaledWindowWidth() / 2, 0, context.getScaledWindowHeight(), 1, 0xFF8C8C8C);
-        RenderUtils.drawVerticalLine(context, context.getScaledWindowWidth() - 10, 0, context.getScaledWindowHeight(), 1, 0xFF8C8C8C);
-        RenderUtils.drawVerticalLine(context, 10, 0, context.getScaledWindowHeight(), 1, 0xFF8C8C8C);
+        RenderUtils.drawHorLine(context, 0, context.getScaledWindowHeight() / 2, context.getScaledWindowWidth(), 0xFF8C8C8C);
+        RenderUtils.drawHorLine(context, 0, context.getScaledWindowHeight() - 10, context.getScaledWindowWidth(), 0xFF8C8C8C);
+        RenderUtils.drawHorLine(context, 0, 10, context.getScaledWindowWidth(), 0xFF8C8C8C);
+        RenderUtils.drawVerLine(context, context.getScaledWindowWidth() / 2, 0, context.getScaledWindowHeight(), 0xFF8C8C8C);
+        RenderUtils.drawVerLine(context, context.getScaledWindowWidth() - 10, 0, context.getScaledWindowHeight(), 0xFF8C8C8C);
+        RenderUtils.drawVerLine(context, 10, 0, context.getScaledWindowHeight(), 0xFF8C8C8C);
 
         if (selected != null) {
-            RenderUtils.drawHorizontalLine(context, 0, selected.y, context.getScaledWindowWidth(), 1, 0xFFFFFFFF);
-            RenderUtils.drawVerticalLine(context, selected.x, 0, context.getScaledWindowHeight(), 1, 0xFFFFFFFF);
-            RenderUtils.drawHorizontalLine(context, 0, selected.y + selected.height - 1, context.getScaledWindowWidth(), 1, 0xFFFFFFFF);
-            RenderUtils.drawVerticalLine(context, selected.x + selected.width - 1, 0, context.getScaledWindowHeight(), 1, 0xFFFFFFFF);
+            RenderUtils.drawHorLine(context, 0, selected.y, context.getScaledWindowWidth(), 0xFFFFFFFF);
+            RenderUtils.drawVerLine(context, selected.x, 0, context.getScaledWindowHeight(), 0xFFFFFFFF);
+            RenderUtils.drawHorLine(context, 0, selected.y + selected.height - 1, context.getScaledWindowWidth(), 0xFFFFFFFF);
+            RenderUtils.drawVerLine(context, selected.x + selected.width - 1, 0, context.getScaledWindowHeight(), 0xFFFFFFFF);
         }
     }
 

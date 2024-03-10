@@ -86,7 +86,7 @@ public class InfoScreen extends DefaultBase {
         int caret = contentY + 10;
         RenderUtils.drawText(context, "ClickCrystals Information", contentX + 10, caret - 4, false);
         caret += 10;
-        RenderUtils.drawHorizontalLine(context, contentX, caret, 300, 1, Gray.BLACK.argb);
+        RenderUtils.drawHorLine(context, contentX, caret, 300, Gray.BLACK.argb);
     }
 
     @Override

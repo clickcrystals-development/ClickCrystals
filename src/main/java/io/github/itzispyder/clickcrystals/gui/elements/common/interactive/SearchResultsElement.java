@@ -107,7 +107,7 @@ public class SearchResultsElement extends GuiElement {
             }
 
             if (isHovered(mouseX, mouseY)) {
-                RenderUtils.fill(context, x, y, width, height, 0x60B0B0B0);
+                RenderUtils.fillRect(context, x, y, width, height, 0x60B0B0B0);
             }
 
             String text;

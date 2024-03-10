@@ -76,7 +76,7 @@ public class OverviewScreen extends GuiScreen {
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
         renderOpaqueBackground(context);
 
-        RenderUtils.fill(context, 0, 0, RenderUtils.winWidth(), 20, 0x90000000);
+        RenderUtils.fillRect(context, 0, 0, RenderUtils.width(), 20, 0x90000000);
         RenderUtils.drawText(context, switchModeText, 10, 20 / 3 + 1, 0.9F, false);
     }
 
