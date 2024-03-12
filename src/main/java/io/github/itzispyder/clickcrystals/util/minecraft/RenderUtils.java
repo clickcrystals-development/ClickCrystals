@@ -283,7 +283,23 @@ public final class RenderUtils implements Global {
     // misc
 
     public static void drawTexture(DrawContext context, Identifier texture, int x, int y, int w, int h) {
-        context.drawTexture(texture, x, y, 0, 0, w, h, w, h);
+        BufferBuilder buf = Tessellator.getInstance().getBuffer();
+        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+
+        buf.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+        buf.vertex(mat, x, y, 0).texture(0, 0).next();
+        buf.vertex(mat, x, y + h, 0).texture(0, 1).next();
+        buf.vertex(mat, x + w, y + h, 0).texture(1, 1).next();
+        buf.vertex(mat, x + w, y, 0).texture(1, 0).next();
+
+        disableCull();
+        setShader(GameRenderer::getPositionTexProgram);
+        setShaderTexture(0, texture);
+        setShaderColor(1, 1, 1, 1);
+
+        BufferRenderer.drawWithGlobalProgram(buf.end());
+
+        enableCull();
     }
 
     public static void drawItem(DrawContext context, ItemStack item, int x, int y, float scale) {
