@@ -195,5 +195,14 @@ public class NetworkEventListener implements Listener {
                 .stayTime(2000)
                 .build()
                 .sendToClient();
+
+        Notification.create()
+                .id("Q&A")
+                .title("Have some questions?")
+                .text("Try using the command ,faq to answer your questions!")
+                .ccIcon()
+                .stayTime(2000)
+                .build()
+                .sendToClient();
     }
 }
