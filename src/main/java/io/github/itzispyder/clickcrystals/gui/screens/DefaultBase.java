@@ -112,7 +112,7 @@ public abstract class DefaultBase extends GuiScreen {
 
         // backdrop
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
-        RenderUtils.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.BLACK);
+        RenderUtils.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.LIGHT_GRAY);
         RenderUtils.fillRoundTabTop(context, 110, 10, 300, 230, 10, Shades.TRANS_DARK_GRAY);
 
         // navbar

@@ -4,10 +4,10 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils.*;
 
@@ -20,7 +20,7 @@ public class DiscordInviteScreen extends GuiScreen {
     public final int baseX = (int)(windowWidth / 2.0 - baseWidth / 2.0);
     public final int baseY = (int)(windowHeight / 2.0 - baseHeight / 2.0);
     private final AbstractElement inviteCC, inviteYSB, decline;
-    private final AtomicInteger translationCC, translationOgre, translationDecline;
+    private final Animator aniCC, aniYSB, aniDecline;
 
     public DiscordInviteScreen() {
         super("Discord Invitation Screen");
@@ -56,18 +56,18 @@ public class DiscordInviteScreen extends GuiScreen {
         this.addChild(inviteYSB);
         this.addChild(decline);
 
-        translationCC = new AtomicInteger(-50);
-        translationOgre = new AtomicInteger(-50);
-        translationDecline = new AtomicInteger(-50);
+        aniCC = new PollingAnimator(100, inviteCC::isRendering);
+        aniYSB = new PollingAnimator(100, inviteYSB::isRendering);
+        aniDecline = new PollingAnimator(100, decline::isRendering);
 
         system.scheduler.runChainTask()
                 .thenWait(500)
                 .thenRun(() -> inviteCC.setRendering(true))
-                .thenRepeat(translationCC::getAndIncrement, 2, 50)
+                .thenWait(100)
                 .thenRun(() -> inviteYSB.setRendering(true))
-                .thenRepeat(translationOgre::getAndIncrement, 2, 50)
+                .thenWait(100)
                 .thenRun(() -> decline.setRendering(true))
-                .thenRepeat(translationDecline::getAndIncrement, 2, 50)
+                .thenWait(100)
                 .startChain();
     }
 
@@ -80,12 +80,12 @@ public class DiscordInviteScreen extends GuiScreen {
         int margin = baseX + baseWidth / 3 * 2;
 
         inviteCC.x = margin;
-        inviteCC.y = caret - translationCC.get();
+        inviteCC.y = (int)(caret - (-50 * aniCC.getProgressClampedReversed()));
         caret += 18;
         inviteYSB.x = margin;
-        inviteYSB.y = caret - translationOgre.get();
+        inviteYSB.y = (int)(caret - (-50 * aniYSB.getProgressClampedReversed()));
         caret += 18;
-        decline.x = margin - translationDecline.get();
+        decline.x = (int)(margin - (-50 * aniDecline.getProgressClampedReversed()));
         decline.y = caret;
     }
 

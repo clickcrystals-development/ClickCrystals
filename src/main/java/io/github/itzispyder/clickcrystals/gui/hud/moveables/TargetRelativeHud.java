@@ -1,6 +1,8 @@
 package io.github.itzispyder.clickcrystals.gui.hud.moveables;
 
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.TotemPops;
@@ -16,15 +18,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class TargetRelativeHud extends Hud {
 
     private static PlayerEntity target;
     private static long timer;
-    private final AtomicInteger translation = new AtomicInteger(0);
-    private final AtomicBoolean showingArmor = new AtomicBoolean();
+    private final Animator animator = new PollingAnimator(200, this::isTargetNaked);
 
     public TargetRelativeHud() {
         super("target-hud", 150, 30, 120, 16);
@@ -63,12 +61,8 @@ public class TargetRelativeHud extends Hud {
             RenderUtils.drawText(context, info, margin, caret, 0.8F, true);
 
             // target armor
+            caret += (int)(10 * animator.getProgressClampedReversed());
             if (!isTargetNaked()) {
-                if (!showingArmor.get()) {
-                    showingArmor.set(true);
-                    system.scheduler.runRepeatingTask(translation::getAndIncrement, 0, 5, 10);
-                }
-                caret += translation.get();
                 for (ItemStack item : target.getInventory().armor) {
                     RenderUtils.drawItem(context, item, margin, caret - 1, 13);
                     margin += 13;
@@ -77,13 +71,6 @@ public class TargetRelativeHud extends Hud {
                 RenderUtils.drawItem(context, target.getOffHandStack(), margin + 13, caret - 1, 13);
                 margin = x + g + 2;
                 caret += 3;
-            }
-            else {
-                if (showingArmor.get()) {
-                    showingArmor.set(false);
-                    system.scheduler.runRepeatingTask(translation::getAndDecrement, 0, 5, 10);
-                }
-                caret += translation.get();
             }
 
             // health indicator

@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElemen
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -12,11 +13,10 @@ import net.minecraft.client.gui.DrawContext;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class SearchScreen extends DefaultBase {
 
-    protected final AtomicInteger buttonTranslation = new AtomicInteger(-100);
+    protected final Animator animator = new Animator(200);
     protected final SearchBarElement searchbar = new SearchBarElement(0, 0);
     private final GridOrganizer grid = new GridOrganizer(contentX, contentY + 21, contentWidth, 15, 1, 0);
 
@@ -25,10 +25,6 @@ public class SearchScreen extends DefaultBase {
         this.navlistModules.forEach(this::removeChild);
         this.removeChild(buttonSearch);
         this.addChild(searchbar);
-        system.scheduler.runRepeatingTask(() -> {
-            buttonTranslation.getAndIncrement();
-            buttonTranslation.getAndIncrement();
-        }, 0, 1, 50);
 
         grid.createPanel(this, contentHeight - 21);
         this.addChild(grid.getPanel());
@@ -45,13 +41,13 @@ public class SearchScreen extends DefaultBase {
 
         // backdrop
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
-        RenderUtils.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.BLACK);
+        RenderUtils.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.LIGHT_GRAY);
         RenderUtils.fillRoundTabTop(context, 110, 10, 300, 230, 10, Shades.TRANS_DARK_GRAY);
 
         // navbar
         String text;
         int caret = 10;
-        int translation = buttonTranslation.get();
+        int translation = (int)(-100 * animator.getProgressClampedReversed());
 
         RenderUtils.drawTexture(context, Tex.ICON, 8, caret - 2, 10, 10);
         text = "ClickCrystals v%s".formatted(version);

@@ -8,6 +8,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.Search
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SuggestionElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -17,7 +18,6 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class HomeScreen extends GuiScreen {
 
@@ -30,7 +30,7 @@ public class HomeScreen extends GuiScreen {
     public final int baseY = (int)(windowHeight / 2.0 - baseHeight / 2.0);
     public final SearchBarElement searchBar = new SearchBarElement(0, 0, 300);
     public final SearchResultsElement searchResults = new SearchResultsElement(searchBar);
-    protected final AtomicInteger titleTranslation = new AtomicInteger(-50);
+    protected final Animator animator = new Animator(200);
     public final List<SuggestionElement> suggestions = new ArrayList<>();
 
     public HomeScreen() {
@@ -55,7 +55,6 @@ public class HomeScreen extends GuiScreen {
         }
 
         system.scheduler.runRepeatingTask(() -> {
-            titleTranslation.getAndIncrement();
             for (SuggestionElement suggestion : suggestions) {
                 suggestion.y++;
             }
@@ -75,7 +74,7 @@ public class HomeScreen extends GuiScreen {
         context.getMatrices().translate(baseX, baseY, 0);
 
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
-        RenderUtils.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.BLACK);
+        RenderUtils.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.LIGHT_GRAY);
         RenderUtils.fillRoundTabBottom(context, 15, baseHeight / 2 - 10, baseWidth - 30, baseHeight / 2, 10, Shades.TRANS_BLACK);
         RenderUtils.drawTexture(context, Tex.Backdrops.BACKDROP_0, 10, 10, baseWidth - 20, baseHeight / 2 + 40);
 
@@ -87,7 +86,7 @@ public class HomeScreen extends GuiScreen {
         }
 
         int caret = baseY + 70;
-        int titleTrans = titleTranslation.get();
+        int titleTrans = (int)(-50 * animator.getProgressClampedReversed());
         RenderUtils.drawCenteredText(context, "§lClickCrystals", baseX + baseWidth / 2, caret - titleTrans, 2.0F, false);
         caret += 20;
         RenderUtils.drawCenteredText(context, "Crystal PvP Enhanced", baseX + baseWidth / 2, caret - titleTrans, 1.0F, false);
