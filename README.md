@@ -35,28 +35,10 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Version: 1.2.2
-
-Add:
-  - profile system
-  - profile management screen
-  - remove darkness and blindness effect when NoGameOverlay is enabled # i no one
-  - add sign exclusion from NoInteractions module # i no one
-  - command ,profile open up the profile screen
-  - add conditionals "true" and "false" directly, for while loops
-  - tab completion for ",ccs copy-file"
-
-Huds:
-  - cps hud # i no one
+Version: 1.2.3
 
 Tweaks:
-  - option for while loops to not including period (defaults to 0.05 or one tick)
-  - in script IDE template, change to using "define" command
-  - changed home screen wallpaper
-
-Patch:
-  - chat saying "Tape removed from ... button!" upon reloading client
-  - while loops continue running even after script reload
+  - replaced schedulers and atomic integers with Animator.java that's way more optimized and efficient
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png)
