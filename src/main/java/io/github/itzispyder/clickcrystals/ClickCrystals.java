@@ -269,7 +269,6 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new MouseTaper());
 
         // optimization
-        system.addModule(new NoServerRotations());
         system.addModule(new AntiCrash());
         system.addModule(new ExplodeParticles());
         system.addModule(new NoItemBounce());
