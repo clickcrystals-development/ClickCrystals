@@ -237,7 +237,6 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new RailSwap());
         system.addModule(new TntSwap());
         system.addModule(new BowSwap());
-        system.addModule(new ElytraSwitch());
         // client
         system.addModule(new GuiBorders());
         system.addModule(new InGameHuds());
@@ -270,6 +269,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new MouseTaper());
 
         // optimization
+        system.addModule(new NoServerRotations());
         system.addModule(new AntiCrash());
         system.addModule(new ExplodeParticles());
         system.addModule(new NoItemBounce());

@@ -46,6 +46,12 @@ public class NoInteractions extends DummyModule {
             .def(false)
             .build()
     );
+    public final ModuleSetting<Boolean> villagerInteractions = scGeneral.add(createBoolSetting()
+            .name("allow-villager-interactions")
+            .description("Allow interactions with villagers.")
+            .def(true)
+            .build()
+    );
 
     public NoInteractions() {
         super("no-interactions", Categories.MISC, "Prevents opening certain containers(e-chests,chests,etc).");
