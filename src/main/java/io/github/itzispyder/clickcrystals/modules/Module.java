@@ -49,10 +49,12 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
     }
 
     public void setEnabled(boolean enabled, boolean sendFeedback) {
+        if (enabled == isEnabled())
+            return;
+
         this.data.setEnabled(enabled);
-        if (sendFeedback) {
+        if (sendFeedback)
             this.sendUpdateInfo();
-        }
     }
 
     public String getDescription() {
