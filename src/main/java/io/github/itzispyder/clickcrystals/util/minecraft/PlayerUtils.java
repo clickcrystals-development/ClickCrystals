@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.util.Comparator;
 import java.util.List;
@@ -54,7 +55,8 @@ public final class PlayerUtils implements Global {
                 return player().getWorld();
 
             } catch (Exception e) {
-                e.printStackTrace();
+
+                system.logger.error(ExceptionUtils.getStackTrace(e.fillInStackTrace()));
             }
         }
         return player().getWorld();
@@ -121,9 +123,7 @@ public final class PlayerUtils implements Global {
     }
 
     public static Entity getNearestEntity(World world, Entity exclude, Vec3d at, double range, Predicate<Entity> filter) {
-        List<Entity> candidates = world.getOtherEntities(exclude, Box.from(at).expand(range), filter).stream()
-                .sorted(Comparator.comparing(entity -> entity.getPos().distanceTo(at)))
-                .toList();
+        List<Entity> candidates = world.getOtherEntities(exclude, Box.from(at).expand(range), filter).stream().sorted(Comparator.comparing(entity -> entity.getPos().distanceTo(at))).toList();
 
         if (candidates.isEmpty()) {
             return null;
