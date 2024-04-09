@@ -6,12 +6,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.Packet;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 import java.util.Comparator;
@@ -25,7 +28,7 @@ import java.util.function.Predicate;
 public final class PlayerUtils implements Global {
 
     public static boolean playerNull() {
-        return mc == null || mc.player == null;
+        return mc == null || mc.player == null || mc.world == null;
     }
 
     public static boolean playerNotNull() {
@@ -49,6 +52,14 @@ public final class PlayerUtils implements Global {
     }
 
     public static World getWorld() {
+        if (playerNull()) {
+            try {
+                return player().getWorld();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return player().getWorld();
     }
 

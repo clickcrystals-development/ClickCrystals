@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.events;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.lang.reflect.Method;
@@ -33,6 +34,10 @@ public class EventBus implements Global {
      * @param <E> event type
      */
     public <E extends Event> boolean pass(E event) {
+        if (PlayerUtils.playerNull()) {
+            // A unfortunate fix.
+            return false;
+        }
         listeners().forEach(listener -> {
             List<Method> methods = Arrays
                     .stream(listener.getClass().getDeclaredMethods())
@@ -50,6 +55,7 @@ public class EventBus implements Global {
     }
 
     public <C extends CallbackInfo, E extends Event> void passWithCallbackInfo(C info, E event, Consumer<CallbackInfo> action) {
+
         pass(event);
         if (event instanceof Cancellable c && c.isCancelled()) {
             action.accept(info);

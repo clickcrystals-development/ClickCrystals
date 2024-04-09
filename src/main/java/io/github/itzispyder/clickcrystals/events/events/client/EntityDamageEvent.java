@@ -12,7 +12,13 @@ public class EntityDamageEvent extends Event {
     private final Entity entity;
 
     public EntityDamageEvent(EntityDamageS2CPacket packet) {
+        if (PlayerUtils.playerNull()) {
+            entity = null;
+            source = null;
+            return;
+        }
         var world = PlayerUtils.getWorld();
+
         this.source = packet.createDamageSource(world);
         this.entity = world.getEntityById(packet.entityId());
     }
