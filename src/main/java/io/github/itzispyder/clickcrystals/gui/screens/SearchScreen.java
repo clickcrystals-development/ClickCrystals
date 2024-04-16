@@ -41,7 +41,8 @@ public class SearchScreen extends DefaultBase {
 
         // backdrop
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
-        RenderUtils.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.LIGHT_GRAY);
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, 0xFF00B7FF, 0xFF00B7FF);
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, 0x8000B7FF, 0x0000B7FF);
         RenderUtils.fillRoundTabTop(context, 110, 10, 300, 230, 10, Shades.TRANS_DARK_GRAY);
 
         // navbar

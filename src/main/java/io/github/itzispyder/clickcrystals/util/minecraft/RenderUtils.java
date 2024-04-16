@@ -113,7 +113,7 @@ public final class RenderUtils implements Global {
         }
 
         buf.vertex(mat, corners[0][0], y, 0).color(innerColor).next(); // connect last to first vertex
-        buf.vertex(mat, corners[0][0], y - r, 0).color(outerColor).next(); // connect last to first vertex
+        buf.vertex(mat, corners[0][0], y - thickness, 0).color(outerColor).next(); // connect last to first vertex
 
         setupRender();
         drawBuffer(buf);
@@ -185,17 +185,11 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillRoundHoriLine(DrawContext context, int x, int y, int length, int thickness, int color) {
-        int radius = thickness / 2;
-        fillArc(context, x + radius, y + radius, radius, 180, 360, color);
-        fillArc(context, x + length - radius, y + radius, radius, 0, 180, color);
-        fillRect(context, x + radius, y, length - thickness, thickness, color);
+        fillRoundRect(context, x, y, length, thickness, thickness / 2, color);
     }
 
     public static void fillRoundVertLine(DrawContext context, int x, int y, int length, int thickness, int color) {
-        int radius = thickness / 2;
-        fillArc(context, x + radius, y + radius, radius, 270, 450, color);
-        fillArc(context, x + radius, y + length - radius, radius, 90, 270, color);
-        fillRect(context, x, y + radius, thickness, length - thickness, color);
+        fillRoundRect(context, x, y, thickness, length, thickness / 2, color);
     }
     
     // draw
@@ -282,19 +276,11 @@ public final class RenderUtils implements Global {
     }
 
     public static void drawRoundHoriLine(DrawContext context, int x, int y, int length, int thickness, int color) {
-        int radius = thickness / 2;
-        drawArc(context, x + radius, y + radius, radius, 180, 360, color);
-        drawArc(context, x + length - radius, y + radius, radius, 0, 180, color);
-        drawLine(context, x + radius, y, x + length - radius, y, color);
-        drawLine(context, x + radius, y + thickness, x + length - radius, y + thickness, color);
+        drawRoundRect(context, x, y, length, thickness, thickness / 2, color);
     }
 
     public static void drawRoundVertLine(DrawContext context, int x, int y, int length, int thickness, int color) {
-        int radius = thickness / 2;
-        drawArc(context, x + radius, y + radius, radius, 270, 450, color);
-        drawArc(context, x + radius, y + length - radius, radius, 90, 270, color);
-        drawLine(context, x, y + radius, x, y + length - radius, color);
-        drawLine(context, x + thickness, y + radius, x + thickness, y + length - radius, color);
+        drawRoundRect(context, x, y, thickness, length, thickness / 2, color);
     }
 
     // default text

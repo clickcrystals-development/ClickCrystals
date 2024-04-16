@@ -74,10 +74,11 @@ public class HomeScreen extends GuiScreen {
         context.getMatrices().translate(baseX, baseY, 0);
 
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
-        RenderUtils.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.LIGHT_GRAY);
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, 0xFF00B7FF, 0xFF00B7FF);
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, 0x8000B7FF, 0x0000B7FF);
         RenderUtils.fillRoundTabBottom(context, 15, baseHeight / 2 - 10, baseWidth - 30, baseHeight / 2, 10, Shades.TRANS_BLACK);
         RenderUtils.drawRoundTexture(context, Tex.Backdrops.BACKDROP_0, 10, 10, baseWidth - 20, baseHeight / 2 + 40, 5);
-        RenderUtils.fillRoundShadow(context,10, 10, baseWidth - 20, baseHeight / 2 + 40, 5, 5, 0xFF00B7FF, 0x0000B7FF);
+        RenderUtils.fillRoundShadow(context,10, 10, baseWidth - 20, baseHeight / 2 + 40, 5, 5, 0xFF000000, 0x00000000);
 
         context.getMatrices().pop();
 
