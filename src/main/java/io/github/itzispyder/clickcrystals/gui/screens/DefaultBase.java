@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.CategoryElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
@@ -112,7 +113,10 @@ public abstract class DefaultBase extends GuiScreen {
 
         // backdrop
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
+        float f = RenderSystem.getShaderLineWidth();
+        RenderSystem.lineWidth(3);
         RenderUtils.drawRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.LIGHT_GRAY);
+        RenderSystem.lineWidth(f);
         RenderUtils.fillRoundTabTop(context, 110, 10, 300, 230, 10, Shades.TRANS_DARK_GRAY);
 
         // navbar

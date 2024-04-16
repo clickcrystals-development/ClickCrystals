@@ -53,16 +53,71 @@ public final class RenderUtils implements Global {
         fillArc(context, cX, cY, radius, 0, 360, color);
     }
 
-    public static void fillRoundRect(DrawContext context, int x, int y, int w, int h, int borderRadius, int color) {
-        // corners [ top-left, top-right, bottom-right, bottom-left ]
-        fillArc(context, x + borderRadius, y + borderRadius, borderRadius, 270, 360, color);
-        fillArc(context, x + w - borderRadius, y + borderRadius, borderRadius, 0, 90, color);
-        fillArc(context, x + w - borderRadius, y + h - borderRadius, borderRadius, 90, 180, color);
-        fillArc(context, x + borderRadius, y + h - borderRadius, borderRadius, 180, 270, color);
-        // filling [ middle, left-wing, right-wing ]
-        fillRect(context, x + borderRadius, y, w - borderRadius - borderRadius, h, color);
-        fillRect(context, x, y + borderRadius, borderRadius, h - borderRadius - borderRadius, color);
-        fillRect(context, x + w - borderRadius, y + borderRadius, borderRadius, h - borderRadius - borderRadius, color);
+    public static void fillRoundRect(DrawContext context, int x, int y, int w, int h, int r, int color) {
+        BufferBuilder buf = getBuffer();
+        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+
+        buf.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(color).next();
+
+        int[][] corners = {
+                { x + w - r, y + r },
+                { x + w - r, y + h - r},
+                { x + r, y + h - r },
+                { x + r, y + r }
+        };
+
+        for (int corner = 0; corner < 4; corner++) {
+            int cornerStart = (corner - 1) * 90;
+            int cornerEnd = cornerStart + 90;
+            for (int i = cornerStart; i <= cornerEnd; i += 10) {
+                float angle = (float)Math.toRadians(i);
+                float rx = corners[corner][0] + (float)(Math.cos(angle) * r);
+                float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
+                buf.vertex(mat, rx, ry, 0).color(color).next();
+            }
+        }
+
+        buf.vertex(mat, corners[0][0], y, 0).color(color).next(); // connect last to first vertex
+
+        setupRender();
+        drawBuffer(buf);
+        endRender();
+    }
+
+    public static void fillRoundShadow(DrawContext context, int x, int y, int w, int h, int r, int thickness, int innerColor, int outerColor) {
+        BufferBuilder buf = getBuffer();
+        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+
+        buf.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
+
+        int[][] corners = {
+                { x + w - r, y + r },
+                { x + w - r, y + h - r},
+                { x + r, y + h - r },
+                { x + r, y + r }
+        };
+
+        for (int corner = 0; corner < 4; corner++) {
+            int cornerStart = (corner - 1) * 90;
+            int cornerEnd = cornerStart + 90;
+            for (int i = cornerStart; i <= cornerEnd; i += 10) {
+                float angle = (float)Math.toRadians(i);
+                float rx1 = corners[corner][0] + (float)(Math.cos(angle) * r);
+                float ry1 = corners[corner][1] + (float)(Math.sin(angle) * r);
+                float rx2 = corners[corner][0] + (float)(Math.cos(angle) * (r + thickness));
+                float ry2 = corners[corner][1] + (float)(Math.sin(angle) * (r + thickness));
+                buf.vertex(mat, rx1, ry1, 0).color(innerColor).next();
+                buf.vertex(mat, rx2, ry2, 0).color(outerColor).next();
+            }
+        }
+
+        buf.vertex(mat, corners[0][0], y, 0).color(innerColor).next(); // connect last to first vertex
+        buf.vertex(mat, corners[0][0], y - r, 0).color(outerColor).next(); // connect last to first vertex
+
+        setupRender();
+        drawBuffer(buf);
+        endRender();
     }
 
     public static void fillRoundTabTop(DrawContext context, int x, int y, int w, int h, int borderRadius, int color) {
@@ -149,16 +204,35 @@ public final class RenderUtils implements Global {
         drawArc(context, cX, cY, radius, 0, 360, color);
     }
 
-    public static void drawRoundRect(DrawContext context, int x, int y, int w, int h, int borderRadius, int color) {
-        drawArc(context, x + borderRadius, y + borderRadius, borderRadius, 270, 360, color);
-        drawArc(context, x + w - borderRadius, y + borderRadius, borderRadius, 0, 90, color);
-        drawArc(context, x + w - borderRadius, y + h - borderRadius, borderRadius, 90, 180, color);
-        drawArc(context, x + borderRadius, y + h - borderRadius, borderRadius, 180, 270, color);
+    public static void drawRoundRect(DrawContext context, int x, int y, int w, int h, int r, int color) {
+        BufferBuilder buf = getBuffer();
+        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
-        drawLine(context, x, y + borderRadius, x, y + h - borderRadius, color);
-        drawLine(context, x + w, y + borderRadius, x + w, y + h - borderRadius, color);
-        drawLine(context, x + borderRadius, y, x + w - borderRadius, y, color);
-        drawLine(context, x + borderRadius, y + h, x + w - borderRadius, y + h, color);
+        buf.begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
+
+        int[][] corners = {
+                { x + w - r, y + r },
+                { x + w - r, y + h - r},
+                { x + r, y + h - r },
+                { x + r, y + r }
+        };
+
+        for (int corner = 0; corner < 4; corner++) {
+            int cornerStart = (corner - 1) * 90;
+            int cornerEnd = cornerStart + 90;
+            for (int i = cornerStart; i <= cornerEnd; i += 10) {
+                float angle = (float)Math.toRadians(i);
+                float rx = corners[corner][0] + (float)(Math.cos(angle) * r);
+                float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
+                buf.vertex(mat, rx, ry, 0).color(color).next();
+            }
+        }
+
+        buf.vertex(mat, corners[0][0], y, 0).color(color).next(); // connect last to first vertex
+
+        setupRender();
+        drawBuffer(buf);
+        endRender();
     }
 
     public static void drawRoundHoriLine(DrawContext context, int x, int y, int length, int thickness, int color) {
@@ -291,6 +365,45 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, x, y + h, 0).texture(0, 1).next();
         buf.vertex(mat, x + w, y + h, 0).texture(1, 1).next();
         buf.vertex(mat, x + w, y, 0).texture(1, 0).next();
+
+        disableCull();
+        setShader(GameRenderer::getPositionTexProgram);
+        setShaderTexture(0, texture);
+        setShaderColor(1, 1, 1, 1);
+
+        BufferRenderer.drawWithGlobalProgram(buf.end());
+
+        enableCull();
+    }
+
+    public static void drawRoundTexture(DrawContext context, Identifier texture, int x, int y, int w, int h, int r) {
+        BufferBuilder buf = getBuffer();
+        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+
+        buf.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE);
+        buf.vertex(mat, x + w / 2F, y + h / 2F, 0).texture(0.5F, 0.5F).next();
+
+        int[][] corners = {
+                { x + w - r, y + r },
+                { x + w - r, y + h - r},
+                { x + r, y + h - r },
+                { x + r, y + r }
+        };
+
+        for (int corner = 0; corner < 4; corner++) {
+            int cornerStart = (corner - 1) * 90;
+            int cornerEnd = cornerStart + 90;
+            for (int i = cornerStart; i <= cornerEnd; i += 10) {
+                float angle = (float)Math.toRadians(i);
+                float rx = corners[corner][0] + (float)(Math.cos(angle) * r);
+                float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
+                float u = (rx - x) / w;
+                float v = (ry - y) / h;
+                buf.vertex(mat, rx, ry, 0).texture(u, v).next();
+            }
+        }
+
+        buf.vertex(mat, corners[0][0], y, 0).texture(((float)corners[0][0] - x) / w, 0).next(); // connect last to first vertex
 
         disableCull();
         setShader(GameRenderer::getPositionTexProgram);
