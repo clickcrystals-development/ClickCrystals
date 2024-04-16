@@ -120,22 +120,68 @@ public final class RenderUtils implements Global {
         endRender();
     }
 
-    public static void fillRoundTabTop(DrawContext context, int x, int y, int w, int h, int borderRadius, int color) {
-        fillArc(context, x + borderRadius, y + borderRadius, borderRadius, 270, 360, color);
-        fillArc(context, x + w - borderRadius, y + borderRadius, borderRadius, 0, 90, color);
+    public static void fillRoundTabTop(DrawContext context, int x, int y, int w, int h, int r, int color) {
+        BufferBuilder buf = getBuffer();
+        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
-        fillRect(context, x + borderRadius, y, w - borderRadius - borderRadius, h, color);
-        fillRect(context, x, y + borderRadius, borderRadius, h - borderRadius, color);
-        fillRect(context, x + w - borderRadius, y + borderRadius, borderRadius, h - borderRadius, color);
+        buf.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(color).next();
+
+        int[][] corners = {
+                { x + r, y + r },
+                { x + w - r, y + r }
+        };
+
+        for (int corner = 0; corner < 2; corner++) {
+            int cornerStart = (corner - 2) * 90;
+            int cornerEnd = cornerStart + 90;
+            for (int i = cornerStart; i <= cornerEnd; i += 10) {
+                float angle = (float)Math.toRadians(i);
+                float rx = corners[corner][0] + (float)(Math.cos(angle) * r);
+                float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
+                buf.vertex(mat, rx, ry, 0).color(color).next();
+            }
+        }
+
+        buf.vertex(mat, x + w, y + h, 0).color(color).next();
+        buf.vertex(mat, x, y + h, 0).color(color).next();
+        buf.vertex(mat, x, corners[0][1], 0).color(color).next(); // connect last to first vertex
+
+        setupRender();
+        drawBuffer(buf);
+        endRender();
     }
 
-    public static void fillRoundTabBottom(DrawContext context, int x, int y, int w, int h, int borderRadius, int color) {
-        fillArc(context, x + w - borderRadius, y + h - borderRadius, borderRadius, 90, 180, color);
-        fillArc(context, x + borderRadius, y + h - borderRadius, borderRadius, 180, 270, color);
+    public static void fillRoundTabBottom(DrawContext context, int x, int y, int w, int h, int r, int color) {
+        BufferBuilder buf = getBuffer();
+        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
-        fillRect(context, x + borderRadius, y, w - borderRadius - borderRadius, h, color);
-        fillRect(context, x, y, borderRadius, h - borderRadius, color);
-        fillRect(context, x + w - borderRadius, y, borderRadius, h - borderRadius, color);
+        buf.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(color).next();
+
+        int[][] corners = {
+                { x + w - r, y + h - r},
+                { x + r, y + h - r }
+        };
+
+        for (int corner = 0; corner < 2; corner++) {
+            int cornerStart = corner * 90;
+            int cornerEnd = cornerStart + 90;
+            for (int i = cornerStart; i <= cornerEnd; i += 10) {
+                float angle = (float)Math.toRadians(i);
+                float rx = corners[corner][0] + (float)(Math.cos(angle) * r);
+                float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
+                buf.vertex(mat, rx, ry, 0).color(color).next();
+            }
+        }
+
+        buf.vertex(mat, x, y, 0).color(color).next();
+        buf.vertex(mat, x + w, y, 0).color(color).next();
+        buf.vertex(mat, x + w, corners[0][1], 0).color(color).next(); // connect last to first vertex
+
+        setupRender();
+        drawBuffer(buf);
+        endRender();
     }
 
     public static void fillRoundHoriLine(DrawContext context, int x, int y, int length, int thickness, int color) {
