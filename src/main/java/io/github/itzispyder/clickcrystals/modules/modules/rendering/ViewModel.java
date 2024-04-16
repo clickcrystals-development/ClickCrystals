@@ -120,7 +120,7 @@ public class ViewModel extends Module {
     );
 
     public ViewModel() {
-        super("view-model", Categories.RENDER, "Changes your view model in your first person hand view.");
+        super("view-model", Categories.RENDER, "Changes your view model in your first person hand view");
     }
 
     @Override

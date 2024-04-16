@@ -20,7 +20,7 @@ public class HealthAsBar extends Module {
     );
 
     public HealthAsBar() {
-        super("health-as-bar", Categories.RENDER, "Renders your health bar as a singular bar to prevent lag. Recommended for NBT pvp.");
+        super("health-as-bar", Categories.RENDER, "Renders your health bar as a singular bar to prevent lag. Recommended for NBT pvp");
     }
 
     @Override

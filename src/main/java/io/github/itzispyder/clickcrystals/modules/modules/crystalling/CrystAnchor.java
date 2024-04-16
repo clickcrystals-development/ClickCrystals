@@ -36,7 +36,7 @@ public class CrystAnchor extends Module implements Listener {
     );
 
     public CrystAnchor() {
-        super("crystal-anchor", Categories.CRYSTAL,"Right click the ground with a crystal to switch to your respawn anchor.");
+        super("crystal-anchor", Categories.CRYSTAL,"Right click the ground with a crystal to switch to your respawn anchor");
     }
 
     @Override

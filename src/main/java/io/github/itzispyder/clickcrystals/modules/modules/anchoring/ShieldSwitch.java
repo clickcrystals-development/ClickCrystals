@@ -13,7 +13,7 @@ import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 public class ShieldSwitch extends Module implements Listener {
 
     public ShieldSwitch() {
-        super("shield-switch", Categories.PVP, "Hotkey to shield after clicking sword.");
+        super("shield-switch", Categories.PVP, "Hotkey to shield after clicking sword");
     }
 
     @Override

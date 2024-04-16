@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class GuiBorders extends Module {
     
     public GuiBorders() {
-        super("gui-borders", Categories.CLIENT, "DEBUG: Renders borders around all ClickCrystals GUI elements.");
+        super("gui-borders", Categories.CLIENT, "DEBUG: Renders borders around all ClickCrystals GUI elements");
     }
 
     @Override

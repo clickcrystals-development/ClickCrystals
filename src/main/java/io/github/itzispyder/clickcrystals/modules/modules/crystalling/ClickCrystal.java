@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 public class ClickCrystal extends Module implements Listener {
 
     public ClickCrystal() {
-        super("click-crystal", Categories.CRYSTAL,"Binds end crystal place to left click.");
+        super("click-crystal", Categories.CRYSTAL,"Binds end crystal place to left click");
     }
 
     @Override

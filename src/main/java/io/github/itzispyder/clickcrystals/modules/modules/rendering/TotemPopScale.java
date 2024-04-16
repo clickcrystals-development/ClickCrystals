@@ -35,6 +35,6 @@ public class TotemPopScale extends DummyModule {
     );
 
     public TotemPopScale() {
-        super("totem-scale", Categories.RENDER, "Changes the scale of the totem pop.");
+        super("totem-scale", Categories.RENDER, "Changes the scale of the totem pop");
     }
 }

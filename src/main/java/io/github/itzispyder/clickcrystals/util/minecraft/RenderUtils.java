@@ -25,9 +25,9 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, (float)(x + w), (float)(y + h), 0).color(color).next();
         buf.vertex(mat, (float)x, (float)(y + h), 0).color(color).next();
 
-        setupRender();
+        beginRendering();
         BufferRenderer.drawWithGlobalProgram(buf.end());
-        endRender();
+        finishRendering();
     }
 
     public static void fillArc(DrawContext context, int cX, int cY, int radius, int start, int end, int color) {
@@ -44,9 +44,9 @@ public final class RenderUtils implements Global {
             buf.vertex(mat, x, y, 0).color(color).next();
         }
 
-        setupRender();
+        beginRendering();
         drawBuffer(buf);
-        endRender();
+        finishRendering();
     }
 
     public static void fillCircle(DrawContext context, int cX, int cY, int radius, int color) {
@@ -80,9 +80,9 @@ public final class RenderUtils implements Global {
 
         buf.vertex(mat, corners[0][0], y, 0).color(color).next(); // connect last to first vertex
 
-        setupRender();
+        beginRendering();
         drawBuffer(buf);
-        endRender();
+        finishRendering();
     }
 
     public static void fillRoundShadow(DrawContext context, int x, int y, int w, int h, int r, int thickness, int innerColor, int outerColor) {
@@ -115,9 +115,9 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, corners[0][0], y, 0).color(innerColor).next(); // connect last to first vertex
         buf.vertex(mat, corners[0][0], y - thickness, 0).color(outerColor).next(); // connect last to first vertex
 
-        setupRender();
+        beginRendering();
         drawBuffer(buf);
-        endRender();
+        finishRendering();
     }
 
     public static void fillRoundTabTop(DrawContext context, int x, int y, int w, int h, int r, int color) {
@@ -147,9 +147,9 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, x, y + h, 0).color(color).next();
         buf.vertex(mat, x, corners[0][1], 0).color(color).next(); // connect last to first vertex
 
-        setupRender();
+        beginRendering();
         drawBuffer(buf);
-        endRender();
+        finishRendering();
     }
 
     public static void fillRoundTabBottom(DrawContext context, int x, int y, int w, int h, int r, int color) {
@@ -179,9 +179,9 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, x + w, y, 0).color(color).next();
         buf.vertex(mat, x + w, corners[0][1], 0).color(color).next(); // connect last to first vertex
 
-        setupRender();
+        beginRendering();
         drawBuffer(buf);
-        endRender();
+        finishRendering();
     }
 
     public static void fillRoundHoriLine(DrawContext context, int x, int y, int length, int thickness, int color) {
@@ -217,9 +217,9 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, (float)x1, (float)y1, 0).color(color).next();
         buf.vertex(mat, (float)x2, (float)y2, 0).color(color).next();
 
-        setupRender();
+        beginRendering();
         drawBuffer(buf);
-        endRender();
+        finishRendering();
     }
 
     public static void drawArc(DrawContext context, int cX, int cY, int radius, int start, int end, int color) {
@@ -235,9 +235,9 @@ public final class RenderUtils implements Global {
             buf.vertex(mat, x, y, 0).color(color).next();
         }
 
-        setupRender();
+        beginRendering();
         drawBuffer(buf);
-        endRender();
+        finishRendering();
     }
 
     public static void drawCircle(DrawContext context, int cX, int cY, int radius, int color) {
@@ -270,9 +270,9 @@ public final class RenderUtils implements Global {
 
         buf.vertex(mat, corners[0][0], y, 0).color(color).next(); // connect last to first vertex
 
-        setupRender();
+        beginRendering();
         drawBuffer(buf);
-        endRender();
+        finishRendering();
     }
 
     public static void drawRoundHoriLine(DrawContext context, int x, int y, int length, int thickness, int color) {
@@ -477,7 +477,7 @@ public final class RenderUtils implements Global {
 
     // util
 
-    public static void setupRender() {
+    public static void beginRendering() {
         disableCull();
         enableBlend();
         defaultBlendFunc();
@@ -485,7 +485,7 @@ public final class RenderUtils implements Global {
         setShaderColor(1, 1, 1, 1);
     }
 
-    public static void endRender() {
+    public static void finishRendering() {
         enableCull();
         disableBlend();
         setShader(GameRenderer::getPositionTexProgram);

@@ -38,7 +38,7 @@ public class GuiCursor extends Module implements Listener {
     private boolean listeningForNextDraw, shiftKeyDown;
 
     public GuiCursor() {
-        super("gui-cursor", Categories.MISC, "What to do with your cursor when you open inventory gui.");
+        super("gui-cursor", Categories.MISC, "What to do with your cursor when you open inventory gui");
     }
 
     @Override

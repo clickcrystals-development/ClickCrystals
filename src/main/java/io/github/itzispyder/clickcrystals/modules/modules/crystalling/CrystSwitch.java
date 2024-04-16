@@ -63,7 +63,7 @@ public class CrystSwitch extends Module implements Listener {
     );
 
     public CrystSwitch() {
-        super("crystal-switch", Categories.CRYSTAL,"Whenever you punch bedrock or obsidian with a sword, it will switch to a crystal.");
+        super("crystal-switch", Categories.CRYSTAL,"Whenever you punch bedrock or obsidian with a sword, it will switch to a crystal");
     }
 
     @Override

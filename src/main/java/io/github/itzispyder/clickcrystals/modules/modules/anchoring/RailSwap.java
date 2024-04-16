@@ -22,7 +22,7 @@ public class RailSwap extends Module implements Listener {
     );
 
     public RailSwap() {
-        super("rail-swap", Categories.PVP, "Swaps to rails after shooting bow.");
+        super("rail-swap", Categories.PVP, "Swaps to rails after shooting bow");
     }
 
     @Override

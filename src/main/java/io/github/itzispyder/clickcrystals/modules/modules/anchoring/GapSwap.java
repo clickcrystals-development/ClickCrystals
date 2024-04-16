@@ -11,7 +11,7 @@ import net.minecraft.item.Items;
 public class GapSwap extends ListenerModule {
 
     public GapSwap() {
-        super("gap-swap", Categories.PVP, "Swaps to gap when you right click with sword.");
+        super("gap-swap", Categories.PVP, "Swaps to gap when you right click with sword");
     }
 
     @EventHandler

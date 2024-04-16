@@ -48,7 +48,7 @@ public class NoInteractions extends DummyModule {
     );
 
     public NoInteractions() {
-        super("no-interactions", Categories.MISC, "Prevents opening certain containers(e-chests,chests,etc).");
+        super("no-interactions", Categories.MISC, "Prevents opening certain containers(e-chests,chests,etc)");
     }
 
     public boolean canInteract(Block b) {

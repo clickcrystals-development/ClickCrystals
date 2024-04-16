@@ -32,7 +32,7 @@ public class BowSwap extends Module implements Listener {
     };
 
     public BowSwap() {
-        super("bow-swap", Categories.PVP, "Hotkey flame bow after placing cart. Requires TntSwap and its \"instant\" setting to be active.");
+        super("bow-swap", Categories.PVP, "Hotkey flame bow after placing cart. Requires TntSwap and its \"instant\" setting to be active");
     }
 
     @Override

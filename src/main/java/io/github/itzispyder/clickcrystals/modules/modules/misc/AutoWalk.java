@@ -19,7 +19,7 @@ public class AutoWalk extends ListenerModule {
     );
 
     public AutoWalk() {
-        super("auto-walk", Categories.MISC, "Presses the walk key for you (only useful in survival).");
+        super("auto-walk", Categories.MISC, "Presses the walk key for you (only useful in survival)");
     }
 
     @Override

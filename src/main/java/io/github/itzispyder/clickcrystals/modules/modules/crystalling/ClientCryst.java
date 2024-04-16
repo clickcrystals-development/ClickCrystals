@@ -12,7 +12,7 @@ import net.minecraft.entity.decoration.EndCrystalEntity;
 public class ClientCryst extends Module implements Listener {
 
     public ClientCryst() {
-        super("client-crystals", Categories.CRYSTAL, "Removes crystals client-side the moment you punch them.");
+        super("client-crystals", Categories.CRYSTAL, "Removes crystals client-side the moment you punch them");
     }
 
     @Override

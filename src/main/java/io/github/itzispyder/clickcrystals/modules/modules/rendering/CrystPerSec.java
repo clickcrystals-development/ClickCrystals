@@ -22,7 +22,7 @@ public class CrystPerSec extends Module implements Listener {
     private static int timer = 0;
 
     public CrystPerSec() {
-        super("crystal-speed", Categories.MISC, "Crystals per second counter.");
+        super("crystal-speed", Categories.MISC, "Crystals per second counter");
     }
 
     @Override

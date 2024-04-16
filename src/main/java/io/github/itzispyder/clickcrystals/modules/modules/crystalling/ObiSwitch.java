@@ -65,7 +65,7 @@ public class ObiSwitch extends Module implements Listener {
     private static long cooldown;
 
     public ObiSwitch() {
-        super("obsidian-switch", Categories.CRYSTAL,"Punch the ground with your sword to switch to obsidian.");
+        super("obsidian-switch", Categories.CRYSTAL,"Punch the ground with your sword to switch to obsidian");
     }
 
     @Override

@@ -61,7 +61,7 @@ public class EntityIndicator extends ListenerModule {
     );
 
     public EntityIndicator() {
-        super("entity-indicator", Categories.RENDER, "Indicates entities around you. Players are excluded.");
+        super("entity-indicator", Categories.RENDER, "Indicates entities around you. Players are excluded");
     }
 
     @Override

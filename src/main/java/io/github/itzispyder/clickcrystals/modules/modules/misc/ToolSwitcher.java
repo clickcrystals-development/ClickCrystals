@@ -63,7 +63,7 @@ public class ToolSwitcher extends Module implements Listener {
     );
 
     public ToolSwitcher() {
-        super("tool-switcher", Categories.MISC,"Switches to the right tool for mining a block.");
+        super("tool-switcher", Categories.MISC,"Switches to the right tool for mining a block");
     }
 
     @Override

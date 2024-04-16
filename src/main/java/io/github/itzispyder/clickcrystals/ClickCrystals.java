@@ -21,10 +21,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.EntityStatuses;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
@@ -242,6 +239,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new InGameHuds());
         system.addModule(new SilkTouch());
         system.addModule(new EntityStatuses());
+        system.addModule(new HealthTags());
 
         // crystalling
         system.addModule(new CrystAnchor());

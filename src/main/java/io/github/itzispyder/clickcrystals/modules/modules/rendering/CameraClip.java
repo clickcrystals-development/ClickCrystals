@@ -24,7 +24,7 @@ public class CameraClip extends DummyModule {
     );
 
     public CameraClip() {
-        super("camera-clip", Categories.RENDER, "Change the camera distance and the camera behavior when encounter walls.");
+        super("camera-clip", Categories.RENDER, "Change the camera distance and the camera behavior when encounter walls");
     }
 
     public boolean getEnableCameraClipSetting() {

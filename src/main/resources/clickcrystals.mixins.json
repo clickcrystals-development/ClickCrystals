@@ -22,8 +22,10 @@
     "MixinKeyboard",
     "MixinLightmapTextureManager",
     "MixinLivingEntityRenderer",
+    "MixinMobEntityRenderer",
     "MixinMouse",
     "MixinParticleManager",
+    "MixinPlayerEntityRenderer",
     "MixinScreen",
     "MixinSplashOverlay",
     "MixinWorldRenderer"

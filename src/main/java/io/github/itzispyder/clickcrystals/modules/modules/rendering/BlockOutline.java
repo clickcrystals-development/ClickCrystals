@@ -37,7 +37,7 @@ public class BlockOutline extends DummyModule {
     );
 
     public BlockOutline() {
-        super("block-outline", Categories.RENDER, "Change the color of the block outline.");
+        super("block-outline", Categories.RENDER, "Change the color of the block outline");
     }
 
 }

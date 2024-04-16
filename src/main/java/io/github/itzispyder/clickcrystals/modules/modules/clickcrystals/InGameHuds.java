@@ -146,7 +146,7 @@ public class InGameHuds extends Module implements Listener {
     );
 
     public InGameHuds() {
-        super("in-game-huds", Categories.CLIENT,"Manager of all custom ClickCrystals in-game huds.");
+        super("in-game-huds", Categories.CLIENT,"Manager of all custom ClickCrystals in-game huds");
     }
 
     @Override

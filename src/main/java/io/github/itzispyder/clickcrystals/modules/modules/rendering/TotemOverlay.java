@@ -37,7 +37,7 @@ public class TotemOverlay extends Module {
     );
 
     public TotemOverlay() {
-        super("totem-overlay", Categories.RENDER, "Renders red overlay when not holding totem.");
+        super("totem-overlay", Categories.RENDER, "Renders red overlay when not holding totem");
     }
 
     @Override

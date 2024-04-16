@@ -16,7 +16,7 @@ public class TimeChanger extends DummyModule {
     );
 
     public TimeChanger() {
-        super("time-changer", Categories.LAG, "Changes client world time.");
+        super("time-changer", Categories.LAG, "Changes client world time");
     }
 
     public enum TimeMode {

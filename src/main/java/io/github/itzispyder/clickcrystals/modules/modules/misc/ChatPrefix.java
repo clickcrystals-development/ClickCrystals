@@ -69,7 +69,7 @@ public class ChatPrefix extends Module implements Listener {
     public final Map<Character, Character> FONT_BUBBLED = new HashMap<>();
 
     public ChatPrefix() {
-        super("chat-prefix", Categories.MISC, "Chat tweaks and additional features.");
+        super("chat-prefix", Categories.MISC, "Chat tweaks and additional features");
 
         String[] fontNormal =       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
         String[] fontSmallCaps =    "ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘQʀsᴛᴜᴠᴡxʏᴢABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");

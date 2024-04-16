@@ -65,7 +65,7 @@ public class AutoGG extends Module implements Listener {
     );
 
     public AutoGG() {
-        super("auto-gg", Categories.MISC, "Sends a message upon killing a player.");
+        super("auto-gg", Categories.MISC, "Sends a message upon killing a player");
     }
 
     @Override

@@ -28,7 +28,7 @@ public class MsgResend extends Module implements Listener {
     private boolean wasCommand;
 
     public MsgResend() {
-        super("message-resend", Categories.MISC, "Press up arrow key to resend your last message.");
+        super("message-resend", Categories.MISC, "Press up arrow key to resend your last message");
         this.lastMessage = null;
     }
 

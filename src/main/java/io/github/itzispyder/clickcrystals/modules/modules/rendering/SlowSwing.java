@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 public class SlowSwing extends Module {
 
     public SlowSwing() {
-        super("slow-hand-swing", Categories.RENDER,"Makes your hand swing as if you had mining fatigue.");
+        super("slow-hand-swing", Categories.RENDER,"Makes your hand swing as if you had mining fatigue");
     }
 
     @Override
