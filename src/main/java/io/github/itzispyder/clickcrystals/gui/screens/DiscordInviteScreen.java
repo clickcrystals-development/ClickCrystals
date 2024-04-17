@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
@@ -74,7 +75,9 @@ public class DiscordInviteScreen extends GuiScreen {
     @Override
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
         renderOpaqueBackground(context);
-        drawTexture(context, Tex.Backdrops.BACKDROP_1, baseX, baseY, baseWidth, baseHeight);
+        drawRoundTexture(context, Tex.Backdrops.BACKDROP_1, baseX, baseY, baseWidth, baseHeight, 10);
+        RenderUtils.fillRoundShadow(context, baseX, baseY, baseWidth, baseHeight, 35, 1, 0xFFE860FC, 0xFFE860FC);
+        RenderUtils.fillRoundShadow(context, baseX, baseY, baseWidth, baseHeight, 35, 10, 0x80E860FC, 0x00E860FC);
 
         int caret = baseY + baseHeight / 5 * 3 + 20;
         int margin = baseX + baseWidth / 3 * 2;

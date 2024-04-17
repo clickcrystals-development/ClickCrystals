@@ -51,11 +51,7 @@ public abstract class DefaultBase extends GuiScreen {
                 .onPress(button -> mc.setScreen(new SearchScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     RenderUtils.fillRoundHoriLine(context, button.x, button.y, navWidth, 12, Shades.LIGHT);
-                    if (button.isHovered(mouseX, mouseY)) {
-                        RenderUtils.drawVerLine(context, button.x + 7, button.y + 2, 8, 0xFF222222);
-                    } else {
-                        RenderUtils.drawText(context, "§7Search module i.e.", button.x + 7, button.y + button.height / 3, 0.7F, false);
-                    }
+                    RenderUtils.drawText(context, "§7Search module i.e.", button.x + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
         buttonHome = AbstractElement.create().dimensions(navWidth, 10)
                 .tooltip("Back to Home")

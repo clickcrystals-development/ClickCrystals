@@ -21,6 +21,7 @@ public class CategoryElement extends GuiElement {
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         if (BrowsingScreen.currentCategory == category && mc.currentScreen instanceof BrowsingScreen) {
             RenderUtils.fillRoundHoriLine(context, x, y, width, height, Shades.GENERIC_LOW);
+            RenderUtils.fillRoundShadow(context, x, y, width, height, height / 2, 3, 0x8000B7FF, 0x0000B7FF);
         }
         else if (isHovered(mouseX, mouseY)) {
             RenderUtils.fillRoundHoriLine(context, x, y, width, height, Shades.LIGHT_GRAY);

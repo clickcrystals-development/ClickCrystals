@@ -43,6 +43,12 @@ public class HealthTags extends DummyModule {
             .def(true)
             .build()
     );
+    public final ModuleSetting<Boolean> noUnliving = scGeneral.add(createBoolSetting()
+            .name("no-unliving")
+            .description("Not render health tags of unliving entities.")
+            .def(true)
+            .build()
+    );
     
     public HealthTags() {
         super("health-tags", Categories.CLIENT, "Renders a health tag card above selected entities");
@@ -50,6 +56,8 @@ public class HealthTags extends DummyModule {
 
     public void render(MatrixStack matrices, Entity entity, VertexConsumerProvider vertexConsumers) {
         if (onlyPlayers.getVal() && !(entity instanceof PlayerEntity))
+            return;
+        if (noUnliving.getVal() && !(entity instanceof LivingEntity))
             return;
         if (entity instanceof PlayerEntity player && noNPC.getVal() && !PlayerUtils.playerValid(player))
             return;

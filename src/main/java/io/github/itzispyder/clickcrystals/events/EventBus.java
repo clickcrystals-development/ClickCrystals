@@ -17,12 +17,12 @@ public class EventBus implements Global {
     }
 
     public void subscribe(Listener listener) {
-        if (listener == null) return;
+        if (listener == null || subscribedListeners.contains(listener))
+            return;
         subscribedListeners.add(listener);
     }
 
     public void unsubscribe(Listener listener) {
-        if (listener == null) return;
         subscribedListeners.remove(listener);
     }
 
