@@ -37,8 +37,23 @@ Happy coding and cpvping!
 ```yml
 Version: 1.2.3
 
+# I'M BACK FROM BREAK!
+
 Tweaks:
+  - Added render tweaks to the GUI, hope you like it!
+
+Optimizations:
+  - now rendering round rectangles with a single draw call instead of 7, more optimized
   - replaced schedulers and atomic integers with Animator.java that's way more optimized and efficient
+
+Modules:
+  - added module HealthTags -> this is in beta
+  
+Hotfixes and Patches:
+  - Fixed PlayerUtils kick screen permanently - cause was handling packets didn't have a player null check
+  - Fixed enabled Scripts not unregistering events - discovered by obvWolf, reported by Ceptea
+  - Memory leak being able to register the same Listener to the EventBus multiple times
+  - Fixed resource hud's hitbox being weird inside of Hud Edit Screen - reported multiple times
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png)
@@ -109,6 +124,7 @@ Tweaks:
 | EntityStatuses   |            Displays received entity status packets in chat for debugging             |
 | AutoWalk         |                             Holds down the walk button.                              |
 | MouseTaper       |          POV - you taped down your mouse button (for skyblock cobble gens)           |
+| ...              |                         _find out more by downloading now!_                          |
 
 
 ## But isn't this cheating?
