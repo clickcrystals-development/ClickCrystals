@@ -17,11 +17,11 @@ import java.util.function.Predicate;
 public final class HotbarUtils implements Global {
 
     public static boolean search(Item item) {
-        if (mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return false;
         }
 
-        PlayerInventory inv = mc.player.getInventory();
+        PlayerInventory inv = PlayerUtils.player().getInventory();
 
         for (int i = 0; i <= 8; i ++) {
             if (inv.getStack(i).isOf(item)) {
@@ -33,11 +33,11 @@ public final class HotbarUtils implements Global {
     }
 
     public static boolean search(Predicate<ItemStack> item) {
-        if (mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return false;
         }
 
-        PlayerInventory inv = mc.player.getInventory();
+        PlayerInventory inv = PlayerUtils.player().getInventory();
 
         for (int i = 0; i <= 8; i ++) {
             if (item.test(inv.getStack(i))) {
@@ -49,11 +49,11 @@ public final class HotbarUtils implements Global {
     }
 
     public static boolean has(Item item) {
-        if (mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return false;
         }
 
-        PlayerInventory inv = mc.player.getInventory();
+        PlayerInventory inv = PlayerUtils.player().getInventory();
 
         for (int i = 0; i <= 8; i ++) {
             if (inv.getStack(i).isOf(item)) return true;
@@ -62,11 +62,11 @@ public final class HotbarUtils implements Global {
     }
 
     public static boolean has(Predicate<ItemStack> item) {
-        if (mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return false;
         }
 
-        PlayerInventory inv = mc.player.getInventory();
+        PlayerInventory inv = PlayerUtils.player().getInventory();
 
         for (int i = 0; i <= 8; i ++) {
             if (item.test(inv.getStack(i))) return true;
@@ -83,19 +83,19 @@ public final class HotbarUtils implements Global {
     }
 
     public static ItemStack getHand(Hand hand) {
-        if (mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return ItemStack.EMPTY;
         }
 
-        ItemStack item = mc.player.getStackInHand(hand);
+        ItemStack item = PlayerUtils.player().getStackInHand(hand);
         return item != null ? item : ItemStack.EMPTY;
     }
 
     public static boolean isHolding(Item item, Hand hand) {
-        if (mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return false;
         }
-        return mc.player.getStackInHand(hand).isOf(item);
+        return PlayerUtils.player().getStackInHand(hand).isOf(item);
     }
 
     public static boolean nameContains(String contains) {
@@ -103,21 +103,21 @@ public final class HotbarUtils implements Global {
     }
 
     public static boolean nameContains(String contains, Hand hand) {
-        if (mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return false;
         }
 
-        ItemStack item = mc.player.getStackInHand(hand);
+        ItemStack item = PlayerUtils.player().getStackInHand(hand);
         return item != null && item.getTranslationKey().toLowerCase().contains(contains.toLowerCase());
     }
 
     public static void forEachItem(Consumer<ItemStack> run) {
-        if (mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return;
         }
 
         for (int i = 0; i < 9; i ++) {
-            ItemStack item = mc.player.getInventory().getStack(i);
+            ItemStack item = PlayerUtils.player().getInventory().getStack(i);
             if (item == null) continue;
             if (item.isEmpty()) continue;
             run.accept(item);
@@ -125,12 +125,12 @@ public final class HotbarUtils implements Global {
     }
 
     public static void forEachItem(BiConsumer<Integer,ItemStack> run) {
-        if (mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return;
         }
 
         for (int i = 0; i < 9; i ++) {
-            ItemStack item = mc.player.getInventory().getStack(i);
+            ItemStack item = PlayerUtils.player().getInventory().getStack(i);
             if (item == null) continue;
             if (item.isEmpty()) continue;
             run.accept(i,item);
@@ -147,17 +147,17 @@ public final class HotbarUtils implements Global {
     }
 
     public static void swapWithOffhand() {
-        if (mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return;
         }
 
         PlayerActionC2SPacket.Action action = PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND;
-        PlayerActionC2SPacket swap = new PlayerActionC2SPacket(action, mc.player.getBlockPos(), Direction.UP);
-        mc.player.networkHandler.sendPacket(swap);
+        PlayerActionC2SPacket swap = new PlayerActionC2SPacket(action, PlayerUtils.player().getBlockPos(), Direction.UP);
+        PlayerUtils.player().networkHandler.sendPacket(swap);
     }
 
     public static double getFullHealthRatio() {
-        PlayerEntity p = mc.player;
+        PlayerEntity p = PlayerUtils.player();
         return p == null ? 0.0 : p.getHealth() / p.getMaxHealth();
     }
 
@@ -166,23 +166,23 @@ public final class HotbarUtils implements Global {
     }
 
     public static boolean isHoldingEitherHand(Item item) {
-        if (mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return false;
         }
 
-        ItemStack main = mc.player.getStackInHand(Hand.MAIN_HAND);
-        ItemStack off = mc.player.getStackInHand(Hand.OFF_HAND);
+        ItemStack main = PlayerUtils.player().getStackInHand(Hand.MAIN_HAND);
+        ItemStack off = PlayerUtils.player().getStackInHand(Hand.OFF_HAND);
 
         return (main != null && main.getItem() == item) || (off != null && off.getItem() == item);
     }
 
     public static boolean isHoldingEitherHand(Predicate<ItemStack> item) {
-        if (mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return false;
         }
 
-        ItemStack main = mc.player.getStackInHand(Hand.MAIN_HAND);
-        ItemStack off = mc.player.getStackInHand(Hand.OFF_HAND);
+        ItemStack main = PlayerUtils.player().getStackInHand(Hand.MAIN_HAND);
+        ItemStack off = PlayerUtils.player().getStackInHand(Hand.OFF_HAND);
 
         return (main != null && item.test(main)) || (off != null && item.test(off));
     }

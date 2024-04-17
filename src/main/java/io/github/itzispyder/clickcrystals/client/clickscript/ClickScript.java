@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.UnknownC
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 
 import java.io.File;
 import java.util.*;
@@ -142,7 +143,7 @@ public class ClickScript implements Global {
 
     public void printErrorDetails(Exception ex, String cmd) {
         String error = getErrorDetails(ex, cmd);
-        if (mc == null || mc.world == null || mc.player == null) {
+        if (PlayerUtils.invalid()) {
             system.printErr(error);
         }
         else {

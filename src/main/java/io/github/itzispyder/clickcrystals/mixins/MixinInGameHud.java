@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.HealthAsBar;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoOverlay;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoScoreboard;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -93,9 +94,8 @@ public abstract class MixinInGameHud implements Global {
 
     @Inject(method = "render", at = @At("TAIL"))
     public void renderHuds(DrawContext context, float tickDelta, CallbackInfo ci) {
-        if (mc.currentScreen != null || mc.world == null || mc.player == null) {
+        if (PlayerUtils.invalid())
             return;
-        }
         for (Hud hud : system.huds().values()) {
             if (hud.canRender()) {
                 hud.render(context);

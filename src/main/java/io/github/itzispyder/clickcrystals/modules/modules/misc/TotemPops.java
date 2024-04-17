@@ -12,6 +12,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
@@ -67,17 +68,18 @@ public class TotemPops extends Module implements Listener {
     @EventHandler
     private void onReceiveStatus(PacketReceiveEvent e) {
         if (e.getPacket() instanceof EntityStatusS2CPacket packet) {
-            if (mc.player == null) return;
-            if (mc.player.getWorld() == null) return;
+            if (PlayerUtils.invalid())
+                return;
 
-            final Entity ent = packet.getEntity(mc.player.getWorld());
+            var p = PlayerUtils.player();
+            final Entity ent = packet.getEntity(PlayerUtils.getWorld());
             final int status = packet.getStatus();
 
             if (ent == null) return;
             if (ent.getType() != EntityType.PLAYER) return;
 
             String name = ent.getDisplayName().getString();
-            if (name.equals(mc.player.getDisplayName().getString())) {
+            if (name.equals(p.getDisplayName().getString())) {
                 if (hightlightOwn.getVal()) {
                     name = StringUtils.color(ownText.getVal());
                 } else {

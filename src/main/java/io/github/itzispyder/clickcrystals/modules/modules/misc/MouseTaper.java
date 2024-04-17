@@ -74,7 +74,7 @@ public class MouseTaper extends ListenerModule {
 
         // checks (disable module if fail)
         Mode mode = this.mode.getVal();
-        if (mode.requiresTarget()) {
+        if (mode.requiresTarget() && PlayerUtils.valid()) {
             if (mc.crosshairTarget instanceof BlockHitResult hit && mc.crosshairTarget.getType() != HitResult.Type.MISS) {
                 if (mode == Mode.One_Pos && targetPos == null) {
                     targetPos = hit.getBlockPos();

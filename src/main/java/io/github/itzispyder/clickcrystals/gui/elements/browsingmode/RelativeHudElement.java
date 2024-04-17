@@ -19,6 +19,7 @@ public class RelativeHudElement extends GuiElement {
         hud.setX(x);
         hud.setY(y);
         hud.render(context);
+        this.setHeight(hud.getHeight());
     }
 
     @Override

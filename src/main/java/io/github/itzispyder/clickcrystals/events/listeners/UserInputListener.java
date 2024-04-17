@@ -13,6 +13,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScree
 import io.github.itzispyder.clickcrystals.gui.screens.settings.*;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -72,7 +73,7 @@ public class UserInputListener implements Listener {
     }
 
     public static void openModulesScreen() {
-        if (mc.player != null && mc.world != null && config.isOverviewMode()) {
+        if (PlayerUtils.valid() && config.isOverviewMode()) {
             mc.setScreen(new OverviewScreen());
             return;
         }
@@ -108,7 +109,7 @@ public class UserInputListener implements Listener {
     }
 
     private void handleScreenManagement(SetScreenEvent e) {
-        if (e.getScreen() instanceof BrowsingScreen && mc.player != null && mc.world != null && config.isOverviewMode()) {
+        if (e.getScreen() instanceof BrowsingScreen && PlayerUtils.valid() && config.isOverviewMode()) {
             mc.setScreen(new OverviewScreen());
             return;
         }

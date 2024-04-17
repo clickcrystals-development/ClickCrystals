@@ -157,7 +157,7 @@ public class CameraRotator {
     }
 
     private synchronized void setGoalAndTarget(Goal goal) {
-        if (PlayerUtils.playerNotNull()) {
+        if (PlayerUtils.valid()) {
             currentGoal.set(goal);
             Goal rot = getRotation();
 
@@ -231,7 +231,7 @@ public class CameraRotator {
     }
 
     private synchronized Goal getRotation() {
-        if (PlayerUtils.playerNotNull()) {
+        if (PlayerUtils.valid()) {
             float pitch = PlayerUtils.player().getPitch();
             float yaw = PlayerUtils.player().getYaw();
             return new Goal(pitch, yaw);

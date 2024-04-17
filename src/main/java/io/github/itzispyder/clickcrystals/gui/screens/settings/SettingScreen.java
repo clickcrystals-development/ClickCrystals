@@ -9,6 +9,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -18,7 +19,7 @@ import java.util.function.BooleanSupplier;
 
 public class SettingScreen extends DefaultBase {
 
-    public static final BooleanSupplier REQUIRE_IN_GAME = () -> mc != null && mc.player != null && mc.world != null;
+    public static final BooleanSupplier REQUIRE_IN_GAME = PlayerUtils::valid;
     public static final BooleanSupplier TRUE = () -> true;
 
     public SettingScreen() {

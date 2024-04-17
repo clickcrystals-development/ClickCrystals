@@ -23,7 +23,7 @@ public class BiomeRelativeHud extends TextHud {
     public String getText() {
         String name = "UNKNOWN";
 
-        if (PlayerUtils.playerNotNull()) {
+        if (PlayerUtils.valid()) {
             ClientPlayerEntity p = PlayerUtils.player();
             BlockPos pos = p.getBlockPos();
             World w = p.getWorld();

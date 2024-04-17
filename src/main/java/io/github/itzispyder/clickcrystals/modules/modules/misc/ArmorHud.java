@@ -39,7 +39,7 @@ public class ArmorHud extends Module {
     }
 
     public void onRender(DrawContext context) {
-        if (PlayerUtils.playerNull()) return;
+        if (PlayerUtils.invalid()) return;
 
         ClientPlayerEntity p = PlayerUtils.player();
         Arm arm = p.getMainArm();

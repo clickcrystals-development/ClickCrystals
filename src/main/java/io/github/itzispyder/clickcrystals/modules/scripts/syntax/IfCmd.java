@@ -165,10 +165,10 @@ public class IfCmd extends ScriptCommand implements Global {
                 return pair(evalIntegers(effect.getDuration(), args.get(i + 2).toString()), i + 3);
             }
             case IN_GAME -> {
-                return pair(mc != null && mc.world != null && mc.player != null, i + 1);
+                return pair(PlayerUtils.valid(), i + 1);
             }
             case PLAYING -> {
-                return pair(mc != null && mc.world != null && mc.player != null && mc.currentScreen == null, i + 1);
+                return pair(PlayerUtils.valid() && mc.currentScreen == null, i + 1);
             }
             case CHANCE_OF -> {
                 return pair(Math.random() * 100 < args.get(i + 1).toDouble(), i + 2);
@@ -271,7 +271,7 @@ public class IfCmd extends ScriptCommand implements Global {
 
         @SafeVarargs
         private static boolean check(RegistryKey<DimensionType>... dimKeys) {
-            if (PlayerUtils.playerNull()) {
+            if (PlayerUtils.invalid()) {
                 return false;
             }
             RegistryKey<DimensionType> target = PlayerUtils.getWorld().getDimensionKey();

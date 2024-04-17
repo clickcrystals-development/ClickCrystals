@@ -24,22 +24,25 @@ public final class BlockUtils implements Global {
     }
 
     public static ActionResult interact(Vec3d vec3d, Direction dir) {
-        if (mc.interactionManager == null || mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return ActionResult.FAIL;
         }
 
         Vec3i vec3i = new Vec3i((int) vec3d.x, (int) vec3d.y, (int) vec3d.z);
         BlockPos pos = new BlockPos(vec3i);
         BlockHitResult result = new BlockHitResult(vec3d, dir, pos, false);
-        return mc.interactionManager.interactBlock(mc.player,mc.player.getActiveHand(),result);
+        var p = PlayerUtils.player();
+        return PlayerUtils.getInteractions().interactBlock(p, p.getActiveHand(), result);
     }
 
     public static ActionResult interact(BlockHitResult result) {
-        if (mc.interactionManager == null || mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return ActionResult.FAIL;
         }
 
-        return mc.interactionManager.interactBlock(mc.player,mc.player.getActiveHand(),result);
+        var im = PlayerUtils.getInteractions();
+        var p = PlayerUtils.player();
+        return im.interactBlock(p, p.getActiveHand(), result);
     }
 
     public static boolean matchTargetBlock(Block block) {
@@ -60,7 +63,7 @@ public final class BlockUtils implements Global {
      * @return match
      */
     public static boolean matchBlock(BlockPos pos, Block block) {
-        if (pos == null || block == null || mc.player == null) {
+        if (PlayerUtils.invalid()) {
             return false;
         }
 

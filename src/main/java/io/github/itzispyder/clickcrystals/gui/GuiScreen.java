@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.callbacks.*;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.client.gui.DrawContext;
@@ -105,7 +106,7 @@ public abstract class GuiScreen extends Screen implements Global {
     }
 
     public void renderOpaqueBackground(DrawContext context) {
-        if (mc.player == null || mc.world == null) {
+        if (PlayerUtils.invalid()) {
             context.drawTexture(Tex.Defaults.OPTIONS_BACKGROUND, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
         }
     }

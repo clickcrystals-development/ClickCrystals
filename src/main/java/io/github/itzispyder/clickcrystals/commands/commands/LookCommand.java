@@ -67,7 +67,7 @@ public class LookCommand extends Command {
     }
 
     private void rotateTo(int x, int y, int z) {
-        if (PlayerUtils.playerNotNull()) {
+        if (PlayerUtils.valid()) {
             BlockPos pos = new BlockPos(x, y, z);
             Vec3d dir = pos.toCenterPos().subtract(PlayerUtils.player().getEyePos());
 
@@ -78,7 +78,7 @@ public class LookCommand extends Command {
     }
 
     private void rotateTo(int pitch, int yaw) {
-        if (PlayerUtils.playerNotNull()) {
+        if (PlayerUtils.valid()) {
             cameraRotator.clearGoals();
             cameraRotator.addGoal(new CameraRotator.Goal(pitch, yaw));
             cameraRotator.start();
@@ -90,7 +90,7 @@ public class LookCommand extends Command {
     }
 
     private int dist(Entity ent) {
-        if (PlayerUtils.playerNull() || ent == null) {
+        if (PlayerUtils.invalid() || ent == null) {
             return 0;
         }
         return (int)ent.getPos().distanceTo(PlayerUtils.player().getPos());

@@ -16,7 +16,7 @@ public class DirectionRelativeHud extends TextHud {
     public String getText() {
         String name = "UNKNOWN";
 
-        if (PlayerUtils.playerNotNull()) {
+        if (PlayerUtils.valid()) {
             name = StringUtils.capitalizeWords(PlayerUtils.player().getMovementDirection().name());
         }
 

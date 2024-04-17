@@ -175,7 +175,7 @@ public class ScriptedModule extends ListenerModule {
 
     @EventHandler
     public void onPacketReceive(PacketReceiveEvent e) {
-        if (PlayerUtils.playerNull()) {
+        if (PlayerUtils.invalid()) {
             return;
         }
 

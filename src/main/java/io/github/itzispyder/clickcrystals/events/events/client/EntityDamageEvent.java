@@ -18,7 +18,7 @@ public class EntityDamageEvent extends Event {
     }
 
     public boolean isSelf() {
-        return PlayerUtils.playerNotNull() && entity.getId() == PlayerUtils.player().getId();
+        return PlayerUtils.valid() && entity.getId() == PlayerUtils.player().getId();
     }
 
     public DamageSource getSource() {
@@ -26,6 +26,6 @@ public class EntityDamageEvent extends Event {
     }
 
     public float getCurrentHealth() {
-        return PlayerUtils.playerNull() ? 0.0F : PlayerUtils.player().getHealth();
+        return PlayerUtils.invalid() ? 0.0F : PlayerUtils.player().getHealth();
     }
 }

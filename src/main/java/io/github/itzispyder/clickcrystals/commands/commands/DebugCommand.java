@@ -129,7 +129,7 @@ public class DebugCommand extends Command {
     }
 
     private void printItem(ItemStack stack) {
-        if (PlayerUtils.playerNotNull()) {
+        if (PlayerUtils.valid()) {
             Item item = stack.getItem();
             String key = item.getTranslationKey();
             String pre = "§8";

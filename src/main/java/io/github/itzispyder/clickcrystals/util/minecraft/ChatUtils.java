@@ -11,8 +11,8 @@ import net.minecraft.text.Text;
 public final class ChatUtils implements Global {
 
     public static void sendMessage(String message) {
-        if (message != null && mc.player != null) {
-            mc.player.sendMessage(Text.literal(message));
+        if (message != null && PlayerUtils.valid()) {
+            PlayerUtils.player().sendMessage(Text.literal(message));
         }
     }
 
@@ -25,8 +25,8 @@ public final class ChatUtils implements Global {
     }
 
     public static void sendRawText(Text text) {
-        if (mc.player != null && text != null) {
-            mc.player.sendMessage(text);
+        if (PlayerUtils.valid() && text != null) {
+            PlayerUtils.player().sendMessage(text);
         }
     }
 
@@ -35,14 +35,14 @@ public final class ChatUtils implements Global {
     }
 
     public static void sendChatCommand(String cmd) {
-        if (mc.player != null) {
-            mc.player.networkHandler.sendCommand(cmd);
+        if (PlayerUtils.valid()) {
+            PlayerUtils.player().networkHandler.sendCommand(cmd);
         }
     }
 
     public static void sendChatMessage(String msg) {
-        if (mc.player != null) {
-            mc.player.networkHandler.sendChatMessage(msg);
+        if (PlayerUtils.valid()) {
+            PlayerUtils.player().networkHandler.sendChatMessage(msg);
         }
     }
 

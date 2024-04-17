@@ -12,7 +12,7 @@ public interface PostActionable {
     List<PostAction> getActions();
 
     default void action() {
-        if (PlayerUtils.playerNotNull()) {
+        if (PlayerUtils.valid()) {
             ClientPlayerEntity p = PlayerUtils.player();
             MinecraftClient mc = MinecraftClient.getInstance();
             getActions().forEach(action -> action.trigger(mc, p));

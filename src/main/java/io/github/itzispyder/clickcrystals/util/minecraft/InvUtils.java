@@ -143,7 +143,7 @@ public final class InvUtils implements Global {
             slot += 36;
         }
 
-        if (stack == null || PlayerUtils.playerNull()) return false;
+        if (stack == null || PlayerUtils.invalid()) return false;
 
         ClickSlotC2SPacket swap = new ClickSlotC2SPacket(0, 1, slot, button, action, stack, Int2ObjectMaps.singleton(slot, stack));
         PlayerUtils.sendPacket(swap);

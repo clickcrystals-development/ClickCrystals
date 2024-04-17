@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.events.events.networking.GameJoinEvent
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSentEvent;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.listener.PacketListener;
 import net.minecraft.network.packet.Packet;
@@ -31,6 +32,9 @@ public abstract class MixinClientConnection implements Global {
 
     @Inject(method = "handlePacket", at = @At("HEAD"), cancellable = true)
     private static void onPacketRead(Packet<?> packet, PacketListener listener, CallbackInfo ci) {
+        if (PlayerUtils.invalid())
+            return;
+
         if (packet instanceof LoginSuccessS2CPacket) {
             system.eventBus.pass(new GameJoinEvent());
         }

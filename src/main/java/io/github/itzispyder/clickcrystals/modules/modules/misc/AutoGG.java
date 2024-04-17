@@ -80,7 +80,7 @@ public class AutoGG extends Module implements Listener {
 
     @EventHandler
     private void onReceivePacket(PacketReceiveEvent e) {
-        if (e.getPacket() instanceof EntityStatusS2CPacket packet && !PlayerUtils.playerNull()) {
+        if (e.getPacket() instanceof EntityStatusS2CPacket packet && !PlayerUtils.invalid()) {
             ClientPlayerEntity p = PlayerUtils.player();
             Entity ent = packet.getEntity(p.getWorld());
             int status = packet.getStatus();

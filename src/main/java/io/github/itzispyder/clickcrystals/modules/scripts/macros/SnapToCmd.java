@@ -20,7 +20,7 @@ public class SnapToCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        if (PlayerUtils.playerNull()) {
+        if (PlayerUtils.invalid()) {
             return;
         }
 

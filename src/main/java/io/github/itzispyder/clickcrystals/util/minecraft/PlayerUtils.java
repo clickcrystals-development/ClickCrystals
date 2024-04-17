@@ -24,16 +24,16 @@ import java.util.function.Predicate;
 
 public final class PlayerUtils implements Global {
 
-    public static boolean playerNull() {
-        return mc == null || mc.player == null;
+    public static boolean invalid() {
+        return mc == null || mc.player == null || mc.world == null || mc.interactionManager == null || mc.options == null;
     }
 
-    public static boolean playerNotNull() {
-        return !playerNull();
+    public static boolean valid() {
+        return !invalid();
     }
 
     public static boolean playerValid(PlayerEntity player) {
-        if (playerNull() || player == null) {
+        if (invalid() || player == null) {
             return false;
         }
 
@@ -46,6 +46,10 @@ public final class PlayerUtils implements Global {
 
     public static ClientPlayerEntity player() {
         return mc.player;
+    }
+
+    public static ClientPlayerInteractionManager getInteractions() {
+        return mc.interactionManager;
     }
 
     public static World getWorld() {
@@ -65,13 +69,13 @@ public final class PlayerUtils implements Global {
     }
 
     public static void sendPacket(Packet<?> packet) {
-        if (!playerNull()) {
+        if (!invalid()) {
             player().networkHandler.sendPacket(packet);
         }
     }
 
     public static long getPing() {
-        if (playerNull()) {
+        if (invalid()) {
             return -1;
         }
 
@@ -90,7 +94,7 @@ public final class PlayerUtils implements Global {
     }
 
     public static boolean isMoving() {
-        if (playerNull()) return false;
+        if (invalid()) return false;
         ClientPlayerEntity p = player();
 
         return p.sidewaysSpeed != 0 || p.forwardSpeed != 0;
@@ -124,17 +128,17 @@ public final class PlayerUtils implements Global {
     }
 
     public static Entity getNearestEntity(double range, Predicate<Entity> filter) {
-        if (playerNull()) return null;
+        if (invalid()) return null;
         return getNearestEntity(getWorld(), player(), player().getPos(), range, filter);
     }
 
     public static PlayerEntity getNearestPlayer(double range, Predicate<Entity> filter) {
-        if (playerNull()) return null;
+        if (invalid()) return null;
         return (PlayerEntity)getNearestEntity(getWorld(), player(), player().getPos(), range, entity -> entity instanceof PlayerEntity && filter.test(entity));
     }
 
     public static boolean runOnNearestBlock(double range, BiPredicate<BlockPos, BlockState> filter, BiConsumer<BlockPos, BlockState> function) {
-        if (playerNull()) {
+        if (invalid()) {
             return false;
         }
 
@@ -165,7 +169,7 @@ public final class PlayerUtils implements Global {
     }
 
     public static boolean runOnNearestEntity(double range, Predicate<Entity> filter, Consumer<Entity> function) {
-        if (playerNull()) {
+        if (invalid()) {
             return false;
         }
 

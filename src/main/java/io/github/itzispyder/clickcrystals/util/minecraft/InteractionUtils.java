@@ -68,7 +68,7 @@ public final class InteractionUtils implements Global {
     }
 
     public static void inputInventory() {
-        if (PlayerUtils.playerNull()) {
+        if (PlayerUtils.invalid()) {
             return;
         }
 
@@ -81,10 +81,12 @@ public final class InteractionUtils implements Global {
     }
 
     public static boolean canBreakCrystals() {
-        if (mc.player == null) return false;
+        if (PlayerUtils.invalid())
+            return false;
+        var p = PlayerUtils.player();
 
-        StatusEffectInstance s = mc.player.getStatusEffect(StatusEffects.STRENGTH);
-        StatusEffectInstance w = mc.player.getStatusEffect(StatusEffects.WEAKNESS);
+        StatusEffectInstance s = p.getStatusEffect(StatusEffects.STRENGTH);
+        StatusEffectInstance w = p.getStatusEffect(StatusEffects.WEAKNESS);
 
         if (s == null && w == null) {
             return true;

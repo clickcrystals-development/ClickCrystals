@@ -112,7 +112,7 @@ public class NextBlock extends Module implements Listener {
 
     @EventHandler
     private void onTick(ClientTickStartEvent e) {
-        if (PlayerUtils.playerNotNull() && shouldRaytrace.getVal() && mc.options.attackKey.isPressed()) {
+        if (PlayerUtils.valid() && shouldRaytrace.getVal() && mc.options.attackKey.isPressed()) {
             if (!CameraRotator.isCameraRunning() && mc.crosshairTarget instanceof BlockHitResult hit) {
                 BlockState state = PlayerUtils.getWorld().getBlockState(hit.getBlockPos());
                 if (!state.isOf(lastTouched)) {
