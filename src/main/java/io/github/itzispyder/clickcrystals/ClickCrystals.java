@@ -256,7 +256,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new ArmorHud());
         system.addModule(new AutoGG());
         system.addModule(new AutoRespawn());
-        system.addModule(new ModulesList());
+        system.addModule(new ArrayListHud());
         system.addModule(new MsgResend());
         system.addModule(new ToolSwitcher());
         system.addModule(new TotemPops());
