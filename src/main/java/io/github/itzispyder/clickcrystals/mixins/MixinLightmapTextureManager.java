@@ -15,7 +15,7 @@ public abstract class MixinLightmapTextureManager {
     @Inject(method = "getBrightness", at = @At("RETURN"), cancellable = true)
     private static void getBrightness(DimensionType type, int lightLevel, CallbackInfoReturnable<Float> cir) {
         if (Module.isEnabled(FullBright.class)) {
-            cir.setReturnValue(15.0F);
+            cir.setReturnValue(1.0F);
         }
     }
 }
