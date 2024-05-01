@@ -8,14 +8,21 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class ModuleListTextHud extends Hud {
 
+    private long lastRenderTime;
+    private float hue;
+
     public ModuleListTextHud() {
         super("module-list-text-hud");
         this.setFixed(true);
+        this.lastRenderTime = System.currentTimeMillis();
+        this.hue = 0;
     }
 
     @Override
@@ -24,8 +31,13 @@ public class ModuleListTextHud extends Hud {
 
         if (!hudModule.isEnabled()) return;
 
+        long currentTime = System.currentTimeMillis();
+        long elapsedTime = currentTime - lastRenderTime;
+        lastRenderTime = currentTime;
+        hue += (float) ((elapsedTime / 1000.0) * 30); // Change color every 30 seconds
+
         TextRenderer tr = mc.textRenderer;
-        List<Module> modules = new java.util.ArrayList<>(system.collectModules().stream()
+        List<Module> modules = new ArrayList<>(system.collectModules().stream()
                 .filter(Module::isEnabled)
                 .sorted(Comparator.comparing(module -> (mc.textRenderer.getWidth(((Module) module).getId()))))
                 .toList());
@@ -41,11 +53,16 @@ public class ModuleListTextHud extends Hud {
             int paddingX = 2;
             int paddingY = 1;
 
+            int randomColor = Color.HSBtoRGB(hue / 360f, 0.7f, 1.0f);
 
-            RenderUtils.fillRoundRectGradient(context, x - length - paddingX, y - paddingY, length + 2 * paddingX, 10 + 2 * paddingY, 5, 0xFF1CE6ED, 0xFF127073,0xFF3C6A6B,0xFF98E9EB,0xFF2B9EA1 );
-//            (context, "Active Modules:", x, i - 6, true);
+            // Reduce alpha by 40%
+            randomColor = (randomColor & 0x00FFFFFF) | 0xAA000000;
+
+            RenderUtils.fillRoundRectGradient(context, x - length - paddingX, y - paddingY, length + 2 * paddingX, 10 + 2 * paddingY, 4, randomColor, 0xA6127073, 0xA63C6A6B, 0xA698E9EB, 0xA62B9EA1);
+//            RenderUtils.drawText(context, "Active Modules:", x, i -1, true); -> An idea that I had 🤷‍♂️
             RenderUtils.drawRightText(context, display, x, y + 1, true);
             i += 10;
         }
     }
 }
+

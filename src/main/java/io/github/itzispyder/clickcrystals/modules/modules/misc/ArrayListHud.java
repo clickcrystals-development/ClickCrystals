@@ -8,4 +8,7 @@ public class ArrayListHud extends DummyModule {
         super("array-list", Categories.MISC, "Shows the enabled modules on screen");
     }
 }
-///TODO make colors to animate, add settings to color, add keybinds to modules in the ModuleListTextHud class and add a way to choose hud direction (up or down), make it so the defualt colors will be cc colors, fix armor hud to "Tail"
+/*TODO:
+Finish all the rendering in ModuleListTextHud
+Add settings
+ */
