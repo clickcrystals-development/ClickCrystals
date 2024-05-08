@@ -226,6 +226,7 @@ public final class ClickCrystals implements ModInitializer, Global {
 
     public void initModules() {
         // anchors
+        system.addModule(new ElytraSwitch());
         system.addModule(new AxeSwap());
         system.addModule(new ShieldSwitch());
         system.addModule(new SwordSwap());
