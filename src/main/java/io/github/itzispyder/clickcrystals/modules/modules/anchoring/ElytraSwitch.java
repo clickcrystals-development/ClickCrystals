@@ -12,15 +12,20 @@ import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import net.minecraft.item.ItemStack;
 
-
-@SuppressWarnings("DataFlowIssue")
 public class ElytraSwitch extends DummyModule implements Listener, Global {
 
     private final SettingSection scGeneral = getGeneralSection();
     public final ModuleSetting<Boolean> chestplateSwitch = scGeneral.add(createBoolSetting()
             .name("chestplate-switch")
             .description("switch to chestplate after landing on the ground")
-            .def(true)
+            .def(false)
+            .build()
+    );
+
+    public final ModuleSetting<Boolean> rocketSwitch = scGeneral.add(createBoolSetting()
+            .name("rocket-switch")
+            .description("switch to rockets and use one after switching to elytra")
+            .def(false)
             .build()
     );
 
@@ -62,6 +67,14 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
     }
 
     public void onDeparture() {
+        if (rocketSwitch.getVal()) {
+            HotbarUtils.search(this::isRocket);
+            InteractionUtils.inputUse();
+        }
+    }
+
+    public boolean isRocket(ItemStack stack) {
+        return stack.getItem().getTranslationKey().toLowerCase().contains("rocket");
     }
 
     public void reset() {
@@ -72,6 +85,3 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
         return stack.getItem().getTranslationKey().toLowerCase().contains("chestplate");
     }
 }
-/*TODO:
- Optional! - Make Auto Switch to rockets and then use one rocket(Maybe it will trigger the ac so it's not the best idea) after the elytra swapped
- */

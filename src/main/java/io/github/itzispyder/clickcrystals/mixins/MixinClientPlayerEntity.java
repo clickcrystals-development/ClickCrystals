@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.ElytraSwitch;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
@@ -12,11 +13,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static io.github.itzispyder.clickcrystals.Global.mc;
 import static net.minecraft.item.Items.ELYTRA;
 
 @Mixin(ClientPlayerEntity.class)
-public class MixinClientPlayerEntity {
+public class MixinClientPlayerEntity implements Global {
     @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getEquippedStack(Lnet/minecraft/entity/EquipmentSlot;)Lnet/minecraft/item/ItemStack;", shift = At.Shift.BEFORE))
     public void swapToElytra(CallbackInfo callbackInfo) {
         if (Module.isEnabled(ElytraSwitch.class)) {
