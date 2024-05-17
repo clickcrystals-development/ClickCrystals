@@ -8,14 +8,14 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 public class NoGuiBackground extends DummyModule {
 
     private final SettingSection scGeneral = getGeneralSection();
-    public final ModuleSetting<Boolean> DisableBlackOverlayBackground = scGeneral.add(createBoolSetting()
+    public final ModuleSetting<Boolean> noOverlay = scGeneral.add(createBoolSetting()
             .name("disable-black-overlay-effect")
             .description("Disable the black overlay background in the GUI.")
             .def(true)
             .build()
     );
 
-    public final ModuleSetting<Boolean> blurToggle = scGeneral.add(createBoolSetting()
+    public final ModuleSetting<Boolean> noBlur = scGeneral.add(createBoolSetting()
             .name("disable-blur-effect.")
             .description("Disable the blur effect in the GUI.")
             .def(true)
