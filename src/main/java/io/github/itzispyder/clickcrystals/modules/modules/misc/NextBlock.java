@@ -164,7 +164,7 @@ public class NextBlock extends Module implements Listener {
         Box box = new Box(p.getBlockPos()).expand(5);
         AtomicDouble nearest = new AtomicDouble(10.0);
         AtomicReference<Vec3d> target = new AtomicReference<>(null);
-        double max = PlayerUtils.getInteractionManager().getReachDistance();
+        double max = p.getBlockInteractionRange();
 
         PlayerUtils.boxIterator(w, box, (pos, state) -> {
             Vec3d posVec = pos.toCenterPos();
@@ -200,7 +200,7 @@ public class NextBlock extends Module implements Listener {
         Box box = new Box(pos).expand(5);
         AtomicDouble nearest = new AtomicDouble(10.0);
         AtomicReference<Vec3d> target = new AtomicReference<>(null);
-        double max = PlayerUtils.getInteractionManager().getReachDistance();
+        double max = PlayerUtils.player().getBlockInteractionRange();
 
         PlayerUtils.boxIterator(w, box, (blockPos, state) -> {
             Vec3d posVec = blockPos.toCenterPos();

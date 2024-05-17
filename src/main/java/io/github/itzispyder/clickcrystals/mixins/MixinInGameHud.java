@@ -38,13 +38,6 @@ public abstract class MixinInGameHud implements Global {
         }
     }
 
-    @ModifyArgs(method = "Lnet/minecraft/client/gui/hud/InGameHud;renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V", ordinal = 2))
-    public void renderArmor2(Args args) {
-        if (Module.isEnabled(HealthAsBar.class)) {
-            args.set(2, MinecraftClient.getInstance().getWindow().getScaledHeight() - 50);
-        }
-    }
-
     @Inject(method = "renderHealthBar", at = @At("HEAD"), cancellable = true)
     public void renderHealthBar(DrawContext context, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci) {
         HealthAsBar hpBar = Module.get(HealthAsBar.class);
@@ -85,7 +78,7 @@ public abstract class MixinInGameHud implements Global {
         }
     }
 
-    @Inject(method = "renderScoreboardSidebar", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderScoreboardSidebar(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/scoreboard/ScoreboardObjective;)V", at = @At("HEAD"), cancellable = true)
     public void renderOverlay(DrawContext context, ScoreboardObjective objective, CallbackInfo ci) {
         if (Module.isEnabled(NoScoreboard.class)) {
             ci.cancel();

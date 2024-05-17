@@ -13,8 +13,8 @@ import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -149,15 +149,16 @@ public class IfCmd extends ScriptCommand implements Global {
                 return pair(bl, i + 2);
             }
             case EFFECT_AMPLIFIER -> {
-                StatusEffect statusEffect = ScriptParser.parseStatusEffect(args.get(i + 1).toString());
+                var statusEffect = Registries.STATUS_EFFECT.getEntry(ScriptParser.parseStatusEffect(args.get(i + 1).toString()));
                 StatusEffectInstance effect = PlayerUtils.player().getStatusEffect(statusEffect);
+
                 if (effect == null) {
                     effect = new StatusEffectInstance(statusEffect);
                 }
                 return pair(evalIntegers(effect.getAmplifier(), args.get(i + 2).toString()), i + 3);
             }
             case EFFECT_DURATION -> {
-                StatusEffect statusEffect = ScriptParser.parseStatusEffect(args.get(i + 1).toString());
+                var statusEffect = Registries.STATUS_EFFECT.getEntry(ScriptParser.parseStatusEffect(args.get(i + 1).toString()));
                 StatusEffectInstance effect = PlayerUtils.player().getStatusEffect(statusEffect);
                 if (effect == null) {
                     effect = new StatusEffectInstance(statusEffect);
@@ -274,7 +275,11 @@ public class IfCmd extends ScriptCommand implements Global {
             if (PlayerUtils.invalid()) {
                 return false;
             }
-            RegistryKey<DimensionType> target = PlayerUtils.getWorld().getDimensionKey();
+            var entry = PlayerUtils.getWorld().getDimensionEntry().getKey();
+            if (entry.isEmpty())
+                return false;
+
+            var target = entry.get();
             for (RegistryKey<DimensionType> key : dimKeys) {
                 if (key == target) {
                     return true;

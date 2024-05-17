@@ -199,7 +199,7 @@ public class PixelArtGenerator {
         }
 
         private boolean isValid(Block b, BlockView v, BlockPos p) {
-            boolean full = b.getDefaultState().isFullCube(v, p) && !b.isTransparent(b.getDefaultState(), v, p);
+            boolean full = b.getDefaultState().isFullCube(v, p);
             boolean type = !BLACKLIST.contains(b);
             boolean keys = !b.getTranslationKey().contains("cherry") && !b.getTranslationKey().contains("leaves");
             return full && type && keys;

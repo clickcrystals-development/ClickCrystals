@@ -14,7 +14,6 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
@@ -54,7 +53,7 @@ public class HealthTags extends DummyModule {
         super("health-tags", Categories.CLIENT, "Renders a health tag card above selected entities");
     }
 
-    public void render(MatrixStack matrices, Entity entity, VertexConsumerProvider vertexConsumers) {
+    public void render(MatrixStack matrices, LivingEntity entity, VertexConsumerProvider vertexConsumers) {
         if (onlyPlayers.getVal() && !(entity instanceof PlayerEntity))
             return;
         if (noUnliving.getVal() && !(entity instanceof LivingEntity))
@@ -67,7 +66,7 @@ public class HealthTags extends DummyModule {
         float scale = !scaleWithDistance.getVal() ? 0.025F : (float)MathUtils.clamp(0.00015 * (dist + 10), 0.025, 0.25);
 
         Text text = entity.getName();
-        float height = entity.getNameLabelHeight();
+        float height = PlayerUtils.getEntityNameLabelHeight(entity, 1.0F);
         var tr = mc.textRenderer;
         float width = Math.max(100, tr.getWidth(text)) + 10;
         float x = -width / 2;
@@ -83,7 +82,7 @@ public class HealthTags extends DummyModule {
         matrices.pop();
     }
 
-    private void render(MatrixStack matrices, Entity entity, VertexConsumerProvider vertexConsumers, Text text, float x, float y, float width) {
+    private void render(MatrixStack matrices, LivingEntity entity, VertexConsumerProvider vertexConsumers, Text text, float x, float y, float width) {
         Matrix4f mat = matrices.peek().getPositionMatrix();
         var type = TextRenderer.TextLayerType.SEE_THROUGH;
         int bg = 0x00000000;
@@ -98,7 +97,7 @@ public class HealthTags extends DummyModule {
             damage += (item.getMaxDamage() - item.getDamage());
         }
         boolean hasArmor = damage > 0 && maxDamage > 0;
-        boolean hasHealth = entity instanceof LivingEntity living && (int)living.getHealth() > 0;
+        boolean hasHealth = (int)entity.getHealth() > 0;
         boolean hasPing = entity instanceof PlayerEntity p && PlayerUtils.playerValid(p);
         int height = 50;
         height = height + (hasPing ? 0 : -10);
