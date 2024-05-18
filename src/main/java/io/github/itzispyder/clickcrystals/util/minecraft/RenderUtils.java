@@ -151,6 +151,38 @@ public final class RenderUtils implements Global {
         drawBuffer(buf);
         finishRendering();
     }
+    public static void fillRoundRectGradient(DrawContext context, int x, int y, int w, int h, int r, int color1, int color2, int color3, int color4, int colorCenter) {
+        BufferBuilder buf = getBuffer();
+        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+
+        buf.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(colorCenter).next();
+
+        int[][] corners = {
+                { x + w - r, y + r },
+                { x + w - r, y + h - r},
+                { x + r, y + h - r },
+                { x + r, y + r }
+        };
+        int[] colors = { color1, color4, color3, color2 };
+
+        for (int corner = 0; corner < 4; corner++) {
+            int cornerStart = (corner - 1) * 90;
+            int cornerEnd = cornerStart + 90;
+            for (int i = cornerStart; i <= cornerEnd; i += 10) {
+                float angle = (float)Math.toRadians(i);
+                float rx = corners[corner][0] + (float)(Math.cos(angle) * r);
+                float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
+                buf.vertex(mat, rx, ry, 0).color(colors[corner]).next();
+            }
+        }
+
+        buf.vertex(mat, corners[0][0], y, 0).color(colors[0]).next(); // connect last to first vertex
+
+        beginRendering();
+        drawBuffer(buf);
+        finishRendering();
+    }
 
     public static void fillRoundTabBottom(DrawContext context, int x, int y, int w, int h, int r, int color) {
         BufferBuilder buf = getBuffer();

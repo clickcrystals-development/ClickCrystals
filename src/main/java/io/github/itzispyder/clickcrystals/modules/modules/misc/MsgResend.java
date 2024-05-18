@@ -16,6 +16,13 @@ import org.lwjgl.glfw.GLFW;
 public class MsgResend extends Module implements Listener {
 
     private final SettingSection scGeneral = getGeneralSection();
+    public final ModuleSetting<Boolean> resendCommandOnly = scGeneral.add(createBoolSetting()
+            .name("resend-only-commands")
+            .description("Make the module to resend only the commands that you written.")
+            .def(false)
+            .build()
+    );
+
     public final ModuleSetting<Keybind> resendKeybind = scGeneral.add(KeybindSetting.create()
             .name("message-resend-keybind")
             .description("Key to resend last message/command.")
@@ -46,8 +53,10 @@ public class MsgResend extends Module implements Listener {
     private void onChatSend(ChatSendEvent e) {
         final String msg = e.getMessage();
 
+        boolean isCommand = msg.startsWith("/");
+
         this.lastMessage = msg;
-        this.wasCommand = false;
+        this.wasCommand = isCommand;
     }
 
     @EventHandler
@@ -60,10 +69,9 @@ public class MsgResend extends Module implements Listener {
 
     public void resendMessage() {
         if (lastMessage != null && !lastMessage.isEmpty()) {
-            if (wasCommand) {
+            if (resendCommandOnly.getVal() && wasCommand) {
                 ChatUtils.sendChatCommand(lastMessage);
-            }
-            else {
+            } else if (!resendCommandOnly.getVal() && !wasCommand) {
                 ChatUtils.sendChatMessage(lastMessage);
             }
         }
