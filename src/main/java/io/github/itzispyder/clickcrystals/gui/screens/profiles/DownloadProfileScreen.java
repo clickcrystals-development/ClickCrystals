@@ -55,7 +55,7 @@ public class DownloadProfileScreen extends GuiScreen {
         );
 
         CompletableFuture<Void> f = ProfileInfo.request();
-        this.panel = new GridOrganizer(baseX + 15, baseY + 60, 120, 120, 4, 10);
+        this.panel = new GridOrganizer(baseX + 15, baseY + 60, 120, 120, 3, 10);
         int panelWidth = baseWidth - 15;
         int panelHeight = baseHeight - 60;
 
