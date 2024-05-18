@@ -151,6 +151,7 @@ public final class RenderUtils implements Global {
         drawBuffer(buf);
         finishRendering();
     }
+
     public static void fillRoundRectGradient(DrawContext context, int x, int y, int w, int h, int r, int color1, int color2, int color3, int color4, int colorCenter) {
         BufferBuilder buf = getBuffer();
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
