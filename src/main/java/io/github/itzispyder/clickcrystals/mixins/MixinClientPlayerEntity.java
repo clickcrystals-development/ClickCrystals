@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.ElytraSwitch;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.effect.StatusEffects;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,13 +18,16 @@ import static net.minecraft.item.Items.ELYTRA;
 
 @Mixin(ClientPlayerEntity.class)
 public class MixinClientPlayerEntity implements Global {
+
     @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getEquippedStack(Lnet/minecraft/entity/EquipmentSlot;)Lnet/minecraft/item/ItemStack;", shift = At.Shift.BEFORE))
     public void swapToElytra(CallbackInfo callbackInfo) {
-        if (Module.isEnabled(ElytraSwitch.class)) {
-            if (!mc.player.isOnGround() && !mc.player.isFallFlying() && !mc.player.isTouchingWater() && !mc.player.hasStatusEffect(StatusEffects.LEVITATION)) {
-                HotbarUtils.search(ELYTRA);
-                InteractionUtils.inputUse();
-            }
+        if (PlayerUtils.invalid() || !Module.isEnabled(ElytraSwitch.class))
+            return;
+
+        var p = PlayerUtils.player();
+        if (!p.isOnGround() && !p.isFallFlying() && !p.isTouchingWater() && !p.hasStatusEffect(StatusEffects.LEVITATION)) {
+            HotbarUtils.search(ELYTRA);
+            InteractionUtils.inputUse();
         }
     }
 }

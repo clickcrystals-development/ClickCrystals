@@ -10,7 +10,9 @@ import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 public class ElytraSwitch extends DummyModule implements Listener, Global {
 
@@ -38,22 +40,26 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
     @Override
     protected void onEnable() {
         system.addListener(this);
-        reset();
+        fallFlying = false;
     }
 
     @Override
     protected void onDisable() {
         system.removeListener(this);
-        reset();
+        fallFlying = false;
     }
 
     @EventHandler
     public void onTick(ClientTickEndEvent e) {
-        boolean bl = mc.player.isFallFlying();
+        if (PlayerUtils.invalid())
+            return;
+
+        boolean bl = PlayerUtils.player().isFallFlying();
         if (bl && !fallFlying) {
             fallFlying = true;
             onDeparture();
-        } else if (!bl && fallFlying) {
+        }
+        else if (!bl && fallFlying) {
             fallFlying = false;
             onTouchDown();
         }
@@ -74,11 +80,7 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
     }
 
     public boolean isRocket(ItemStack stack) {
-        return stack.getItem().getTranslationKey().toLowerCase().contains("rocket");
-    }
-
-    public void reset() {
-        fallFlying = false;
+        return stack.getItem() == Items.FIREWORK_ROCKET;
     }
 
     public boolean isChestplate(ItemStack stack) {
