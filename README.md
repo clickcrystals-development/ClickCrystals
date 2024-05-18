@@ -56,7 +56,7 @@ Hotfixes and Patches:
   - Fixed resource hud's hitbox being weird inside of Hud Edit Screen - reported multiple times
 ```
 
-![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/9b07a5d8c628b349386210cf537050bf73e21964.png)
+![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)
 
 ### Keybindings
 
