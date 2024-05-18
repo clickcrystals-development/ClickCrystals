@@ -25,6 +25,8 @@ Happy coding and cpvping!
 | What You Have | What to get                         |
 |:--------------|:------------------------------------|
 | higher..      | how is that even possible?          |
+| 1.20.6        | 1.20.6-(latestVersion) *recommended |
+| 1.20.5        | not supported                       |
 | 1.20.4        | 1.20.4-(latestVersion) *recommended |
 | 1.20.3        | 1.20.4-(latestVersion) *recommended |
 | 1.20.2        | 1.20.2-(latestVersion)              |
