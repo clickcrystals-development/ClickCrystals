@@ -25,9 +25,12 @@ public final class FileValidationUtils {
         }
 
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
             bw.write(string);
+            bw.flush();
             bw.close();
+            fw.close();
             return true;
         }
         catch (Exception ex) {
@@ -37,9 +40,11 @@ public final class FileValidationUtils {
 
     public static String quickRead(File file) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
             String read = String.join(" ", br.lines().toArray(String[]::new));
             br.close();
+            fr.close();
             return read;
         }
         catch (Exception ex) {

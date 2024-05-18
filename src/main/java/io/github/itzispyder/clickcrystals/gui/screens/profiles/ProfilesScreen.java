@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.screens.settings;
+package io.github.itzispyder.clickcrystals.gui.screens.profiles;
 
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElement;
@@ -20,6 +20,7 @@ public class ProfilesScreen extends DefaultBase {
         super("Configuration Profiles Screen");
 
         GridOrganizer grid = new GridOrganizer(contentX, contentY + 21, contentWidth, 15, 1, 0);
+        grid.addEntry(new ProfileDownload(0, 0));
         grid.addEntry(new ProfileCreateNew(0, 0));
         grid.addEntry(new ProfileSelect(null, "Main Config", 0, 0));
 
@@ -164,6 +165,29 @@ public class ProfilesScreen extends DefaultBase {
                 textField.setDefaultText("§c*Enter profile name*");
                 screen.selected = textField;
             }
+        }
+    }
+
+    private static class ProfileDownload extends ModuleElement {
+
+        public ProfileDownload(int x, int y) {
+            super(null, x, y);
+            this.setTooltip("§7Click to browse profiles that you can download.");
+        }
+
+        @Override
+        public void onRender(DrawContext context, int mouseX, int mouseY) {
+            if (isHovered(mouseX, mouseY)) {
+                RenderUtils.fillRect(context, x, y, width, height, 0x6000B7FF);
+            }
+
+            String text = "Need pre-made profiles? §bDownload here ->";
+            RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
+        }
+
+        @Override
+        public void onClick(double mouseX, double mouseY, int button) {
+            mc.setScreen(new DownloadProfileScreen());
         }
     }
 }

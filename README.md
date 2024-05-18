@@ -35,25 +35,20 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Version: 1.2.3
+Version: 1.2.4
 
-# I'M BACK FROM BREAK!
+Add:
+  - online config, you can now download preset configs!
+  - module ElytraSwitch # credit: I-No-One
+  - setting for only commands to MessageResend # credit: I-No-One
+  - setting for NoGUIBackground # credit: I-No-One
+
+Patch:
+  - hud horizontal hitboxes being weird inside hud edit screen
 
 Tweaks:
-  - Added render tweaks to the GUI, hope you like it!
-
-Optimizations:
-  - now rendering round rectangles with a single draw call instead of 7, more optimized
-  - replaced schedulers and atomic integers with Animator.java that's way more optimized and efficient
-
-Modules:
-  - added module HealthTags -> this is in beta
-  
-Hotfixes and Patches:
-  - Fixed PlayerUtils kick screen permanently - cause was handling packets didn't have a player null check
-  - Fixed enabled Scripts not unregistering events - discovered by obvWolf, reported by Ceptea
-  - Memory leak being able to register the same Listener to the EventBus multiple times
-  - Fixed resource hud's hitbox being weird inside of Hud Edit Screen - reported multiple times
+  - update README.md to have the latest home screen screenshot
+  - updated ArrayListHud (formerly known as ModuleListHud) # credit: I-No-One
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)

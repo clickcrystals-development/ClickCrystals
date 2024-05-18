@@ -17,8 +17,11 @@ public class LoadingIconElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
+        int x = this.x - this.width / 2;
+        int y = this.y - this.height / 2;
+
         context.getMatrices().push();
-        context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360 * (float)animator.getProgress()), x + width / 2.0F, y + height / 2.0F, 0);
+        context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360 * (float)animator.getProgress()), this.x, this.y, 0);
         RenderUtils.drawTexture(context, Tex.Icons.LOADING, x, y, width, height);
         context.getMatrices().pop();
     }

@@ -181,4 +181,12 @@ public class Config implements JsonSerializable<Config>, Global {
     public void setOverviewMode(boolean overviewMode) {
         this.overviewMode = overviewMode;
     }
+
+    public String getCustomPath() {
+        return customPath;
+    }
+
+    public void setCustomPath(String customPath) {
+        this.customPath = customPath;
+    }
 }

@@ -18,6 +18,7 @@ public final class Tex implements Global {
         public static final Identifier SETTINGS = new Identifier(modId, "textures/display/icons/settings.png");
         public static final Identifier LOADING = new Identifier(modId, "textures/display/icons/loading.png");
         public static final Identifier RESET = new Identifier(modId, "textures/display/icons/reset.png");
+        public static final Identifier DOWNLOAD = new Identifier(modId, "textures/display/icons/download.png");
     }
 
     public static class Models {

@@ -10,7 +10,12 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.*;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
-import io.github.itzispyder.clickcrystals.gui.screens.settings.*;
+import io.github.itzispyder.clickcrystals.gui.screens.profiles.DownloadProfileScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.profiles.ProfilesScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.settings.AdvancedSettingScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.settings.InfoScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.settings.KeybindScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.settings.SettingScreen;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
@@ -44,7 +49,8 @@ public class UserInputListener implements Listener {
             AdvancedSettingScreen.class, AdvancedSettingScreen.class,
             KeybindScreen.class, KeybindScreen.class,
             InfoScreen.class, InfoScreen.class,
-            ProfilesScreen.class, ProfilesScreen.class
+            ProfilesScreen.class, ProfilesScreen.class,
+            DownloadProfileScreen.class, DownloadProfileScreen.class
     );
     private static Class<? extends GuiScreen> previousScreen = null;
 
