@@ -17,6 +17,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
 public record ProfileInfo(Info... configs) implements Global {
+
     private static final AtomicReference<ProfileInfo> current = new AtomicReference<>(null);
     public static final String URL = "https://clickcrystals.xyz/configs/configs.json";
 

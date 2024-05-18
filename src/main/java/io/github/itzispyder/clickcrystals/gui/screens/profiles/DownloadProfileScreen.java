@@ -93,7 +93,6 @@ public class DownloadProfileScreen extends GuiScreen {
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
         RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, 0xFF00B7FF, 0xFF00B7FF);
         RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, 0x8000B7FF, 0x0000B7FF);
-        RenderUtils.fillRoundTabTop(context, 110, 10, 300, 230, 10, Shades.TRANS_DARK_GRAY);
 
         int margin = 15;
         int caret = 10;
