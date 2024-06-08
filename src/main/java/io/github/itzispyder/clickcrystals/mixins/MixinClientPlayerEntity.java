@@ -27,7 +27,9 @@ public class MixinClientPlayerEntity implements Global {
         var p = PlayerUtils.player();
         if (!p.isOnGround() && !p.isFallFlying() && !p.isTouchingWater() && !p.hasStatusEffect(StatusEffects.LEVITATION)) {
             HotbarUtils.search(ELYTRA);
-            InteractionUtils.inputUse();
+            if (HotbarUtils.isHolding(ELYTRA)) {
+                InteractionUtils.inputUse();
+            }
         }
     }
 }

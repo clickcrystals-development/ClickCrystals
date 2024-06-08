@@ -34,7 +34,7 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
     private boolean fallFlying;
 
     public ElytraSwitch() {
-        super("Elytra Switch", Categories.CRYSTAL, "Swap to elytra from your hotbar whenever you are double jumping");
+        super("Elytra Switch", Categories.CRYSTAL, "Swap to elytra from your hotbar when ever you are double jumping");
     }
 
     @Override
@@ -68,19 +68,19 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
     public void onTouchDown() {
         if (chestplateSwitch.getVal()) {
             HotbarUtils.search(this::isChestplate);
-            InteractionUtils.inputUse();
+            if (HotbarUtils.isHoldingEitherHand(this::isChestplate)) {
+                InteractionUtils.inputUse();
+            }
         }
     }
 
     public void onDeparture() {
         if (rocketSwitch.getVal()) {
-            HotbarUtils.search(this::isRocket);
+            HotbarUtils.search(Items.FIREWORK_ROCKET);
+            HotbarUtils.isHolding(Items.FIREWORK_ROCKET);{
             InteractionUtils.inputUse();
+            }
         }
-    }
-
-    public boolean isRocket(ItemStack stack) {
-        return stack.getItem() == Items.FIREWORK_ROCKET;
     }
 
     public boolean isChestplate(ItemStack stack) {
