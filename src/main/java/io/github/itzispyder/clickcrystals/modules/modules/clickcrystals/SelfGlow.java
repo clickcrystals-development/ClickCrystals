@@ -6,15 +6,15 @@ import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 
 public class SelfGlow extends DummyModule {
-
     public SelfGlow() {
-        super("self-glow", Categories.CLIENT, "Give you glowing self effect");
+        super("self-glow", Categories.CLIENT, "Makes You Glow.");
     }
+
 
     private final SettingSection scGeneral = getGeneralSection();
     public final ModuleSetting<Color> selfGlowColor = scGeneral.add(createEnumSetting(Color.class)
             .name("self-glow-color")
-            .description("Set the color of the self-glow effect.")
+            .description("Set the color of the glowing effect.")
             .def(Color.NONE)
             .build()
     );
