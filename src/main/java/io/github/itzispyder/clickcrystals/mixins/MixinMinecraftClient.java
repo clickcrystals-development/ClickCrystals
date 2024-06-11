@@ -4,21 +4,31 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.interfaces.MinecraftClientAccessor;
+import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SelfGlow;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.Entity;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MinecraftClient.class)
 public abstract class MixinMinecraftClient implements MinecraftClientAccessor, Global {
 
-    @Shadow public abstract void setScreen(@Nullable Screen screen);
-    @Shadow protected abstract boolean doAttack();
-    @Shadow protected abstract void doItemUse();
+    @Shadow
+    public abstract void setScreen(@Nullable Screen screen);
+
+    @Shadow
+    protected abstract boolean doAttack();
+
+    @Shadow
+    protected abstract void doItemUse();
 
     @Inject(method = "setScreen", at = @At("HEAD"), cancellable = true)
     public void set(Screen screen, CallbackInfo ci) {
@@ -50,5 +60,18 @@ public abstract class MixinMinecraftClient implements MinecraftClientAccessor, G
     @Override
     public void inputUse() {
         this.doItemUse();
+    }
+
+    @Inject(method = "hasOutline", at = @At("HEAD"), cancellable = true)
+    private void outlineEntities(Entity entity, CallbackInfoReturnable<Boolean> ci) {
+        if (entity instanceof ClientPlayerEntity) {
+            SelfGlow selfGlow = Module.get(SelfGlow.class);
+            if (selfGlow.isEnabled()) {
+                SelfGlow.Color glowColor = selfGlow.selfGlowColor.getVal();
+                if (glowColor != SelfGlow.Color.NONE) {
+                    ci.setReturnValue(true);
+                }
+            }
+        }
     }
 }

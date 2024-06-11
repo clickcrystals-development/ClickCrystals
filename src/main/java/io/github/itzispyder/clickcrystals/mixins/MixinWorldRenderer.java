@@ -1,11 +1,19 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SelfGlow;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.BlockOutline;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.OutlineVertexConsumerProvider;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(WorldRenderer.class)
@@ -26,6 +34,20 @@ public class MixinWorldRenderer {
             args.set(6, rf);
             args.set(7, gf);
             args.set(8, bf);
+        }
+    }
+
+    @Inject(method = "renderEntity", at = @At("HEAD"))
+    private void onRenderEntity(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
+        if (entity instanceof ClientPlayerEntity && vertexConsumers instanceof OutlineVertexConsumerProvider) {
+            SelfGlow selfGlow = Module.get(SelfGlow.class);
+
+            if (selfGlow.isEnabled()) {
+                SelfGlow.Color glowColor = selfGlow.selfGlowColor.getVal();
+                int[] rgba = glowColor.getRGBA();
+                OutlineVertexConsumerProvider outlineVertexConsumers = (OutlineVertexConsumerProvider) vertexConsumers;
+                outlineVertexConsumers.setColor(rgba[0], rgba[1], rgba[2], rgba[3]);
+            }
         }
     }
 }

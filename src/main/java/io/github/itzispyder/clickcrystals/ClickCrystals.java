@@ -47,7 +47,7 @@ import org.lwjgl.glfw.GLFW;
  * TODO: (1) Update mod version down in "Global.java"
  * TODO: (2) Update mod "gradle.properties"
  * TODO: (4) Update "README.md"
- * Publishing checklist
+ * TODO: (5) Publishing checklist
  * TODO: (6) GitHub Release
  * TODO: (7) PlanetMC Release
  * TODO: (7) CurseForge Release
@@ -236,6 +236,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new BowSwap());
 
         // client
+        system.addModule(new SelfGlow());
         system.addModule(new GuiBorders());
         system.addModule(new InGameHuds());
         system.addModule(new SilkTouch());
