@@ -31,7 +31,7 @@ public class CameraClip extends DummyModule {
         return enableCameraClip.getVal();
     }
 
-    public double getClipDistanceSetting() {
+    public Double getClipDistanceSetting() {
         return clipDistance.getVal();
     }
 }
