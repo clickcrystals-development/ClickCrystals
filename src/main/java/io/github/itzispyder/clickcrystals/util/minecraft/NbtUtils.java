@@ -8,6 +8,9 @@ import net.minecraft.registry.entry.RegistryEntry;
 public final class NbtUtils {
 
     public static int getEnchantLvL(ItemStack stack, RegistryKey<Enchantment> enchant) {
-        return stack.getEnchantments().getLevel((RegistryEntry<Enchantment>) enchant);
+        for (RegistryEntry<Enchantment> entry : stack.getEnchantments().getEnchantments())
+            if (entry.getKey().isPresent() && entry.getKey().get() == enchant)
+                return stack.getEnchantments().getLevel(entry);
+        return 0;
     }
 }

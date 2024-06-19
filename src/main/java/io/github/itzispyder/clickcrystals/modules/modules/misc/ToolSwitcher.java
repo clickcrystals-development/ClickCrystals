@@ -104,7 +104,7 @@ public class ToolSwitcher extends Module implements Listener {
     private float calcWantedLvl(ItemStack item, BlockState state) {
         float lvl = 0;
         lvl += item.getMiningSpeedMultiplier(state);
-        lvl += NbtUtils.getEnchantLvL(item,Enchantments.EFFICIENCY);
+        lvl += NbtUtils.getEnchantLvL(item, Enchantments.EFFICIENCY);
         return lvl;
     }
 

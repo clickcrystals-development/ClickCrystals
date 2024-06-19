@@ -21,14 +21,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(MinecraftClient.class)
 public abstract class MixinMinecraftClient implements MinecraftClientAccessor, Global {
 
-    @Shadow
-    public abstract void setScreen(@Nullable Screen screen);
-
-    @Shadow
-    protected abstract boolean doAttack();
-
-    @Shadow
-    protected abstract void doItemUse();
+    @Shadow public abstract void setScreen(@Nullable Screen screen);
+    @Shadow protected abstract boolean doAttack();
+    @Shadow protected abstract void doItemUse();
 
     @Inject(method = "setScreen", at = @At("HEAD"), cancellable = true)
     public void set(Screen screen, CallbackInfo ci) {
@@ -45,7 +40,6 @@ public abstract class MixinMinecraftClient implements MinecraftClientAccessor, G
     public void stop(CallbackInfo ci) {
         system.onClientStopping();
     }
-
 
     @Inject(method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;)V", at = @At("HEAD"))
     public void disconnect(Screen screen, CallbackInfo ci) {
@@ -64,14 +58,11 @@ public abstract class MixinMinecraftClient implements MinecraftClientAccessor, G
 
     @Inject(method = "hasOutline", at = @At("HEAD"), cancellable = true)
     private void outlineEntities(Entity entity, CallbackInfoReturnable<Boolean> ci) {
-        if (entity instanceof ClientPlayerEntity) {
-            SelfGlow selfGlow = Module.get(SelfGlow.class);
-            if (selfGlow.isEnabled()) {
-                SelfGlow.Color glowColor = selfGlow.selfGlowColor.getVal();
-                if (glowColor != SelfGlow.Color.NONE) {
-                    ci.setReturnValue(true);
-                }
-            }
-        }
+        if (!(entity instanceof ClientPlayerEntity))
+            return;
+
+        SelfGlow selfGlow = Module.get(SelfGlow.class);
+        if (selfGlow.isEnabled() && selfGlow.selfGlowColor.getVal() != SelfGlow.Color.NONE)
+            ci.setReturnValue(true);
     }
 }

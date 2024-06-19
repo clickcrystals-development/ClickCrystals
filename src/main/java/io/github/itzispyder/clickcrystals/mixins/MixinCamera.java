@@ -43,7 +43,8 @@ public abstract class MixinCamera {
 
         if (clip.enableCameraClip.getVal()) {
             cir.setReturnValue(clip.clipDistance.getVal().floatValue());
-        } else if (clip.clipDistance.getVal() > 0.0) {
+        }
+        else if (clip.clipDistance.getVal() > 0.0) {
             bypassCameraClip = true;
             cir.setReturnValue(clipToSpace(clip.clipDistance.getVal().floatValue()));
         }

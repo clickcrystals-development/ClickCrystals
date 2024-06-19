@@ -1,17 +1,16 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.BufferRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -45,26 +44,44 @@ public abstract class MixinSplashOverlay implements Global {
         args.set(2, b);
         args.set(3, a);
     }
-//
-//    @Inject(method = "renderProgressBar", at = @At("TAIL"))
-//    public void renderProgressBar(DrawContext context, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
-//        Tessellator tessellator = Tessellator.getInstance();
-//        DrawContext drawContext = new DrawContext(mc, VertexConsumerProvider.immediate(tessellator.begin().texture()));
-//        MatrixStack matrixStack = drawContext.getMatrices();
-//        int i = MathHelper.ceil((float)(maxX - minX - 2) * this.progress);
-//        int width = 50;
-//        int halfWidth = width / 2;
-//        int x = MathUtils.clamp(minX + i, minX, maxX - halfWidth);
-//        int y = maxY - 50;
-//
-//        matrixStack.push();
-//        matrixStack.translate(x + halfWidth, y + halfWidth, 0);
-//        matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360 * progress));
-//        matrixStack.scale(opacity, opacity, opacity);
-//        matrixStack.translate(-(x + halfWidth), -(y + halfWidth), 0);
-//        drawContext.drawTexture(Tex.ICON, x, y, 0, 0, width, width, width, width);
-//        matrixStack.pop();
-//
-//        BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
-//    }
+
+    @Inject(method = "renderProgressBar", at = @At("TAIL"))
+    public void renderProgressBar(DrawContext context, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
+        Tessellator tes = Tessellator.getInstance();
+        BufferBuilder buf = tes.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+        MatrixStack matrices = context.getMatrices();
+
+        int i = MathHelper.ceil((float)(maxX - minX - 2) * this.progress);
+        int size = 50;
+        int halfSize = size / 2;
+        int x = MathUtils.clamp(minX + i, minX, maxX - halfSize);
+        int y = maxY - 50;
+
+        matrices.push();
+        matrices.translate(x + halfSize, y + halfSize, 0);
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360 * progress));
+        matrices.scale(opacity, opacity, opacity);
+        matrices.translate(-(x + halfSize), -(y + halfSize), 0);
+
+        Matrix4f mat = matrices.peek().getPositionMatrix();
+
+        buf.vertex(mat, x, y, 0).texture(0, 0);
+        buf.vertex(mat, x, y + size, 0).texture(0, 1);
+        buf.vertex(mat, x + size, y + size, 0).texture(1, 1);
+        buf.vertex(mat, x + size, y, 0).texture(1, 0);
+
+        RenderSystem.disableCull();
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+        RenderSystem.setShaderTexture(0, Tex.ICON);
+
+        BufferRenderer.drawWithGlobalProgram(buf.end());
+
+        RenderSystem.enableCull();
+        RenderSystem.disableBlend();
+
+        matrices.pop();
+    }
 }

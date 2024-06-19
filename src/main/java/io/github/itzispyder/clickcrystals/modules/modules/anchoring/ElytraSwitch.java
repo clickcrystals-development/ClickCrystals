@@ -9,10 +9,10 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.Hand;
 
 public class ElytraSwitch extends DummyModule implements Listener, Global {
 
@@ -64,26 +64,35 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
             onTouchDown();
         }
     }
-
     public void onTouchDown() {
-        if (chestplateSwitch.getVal()) {
-            HotbarUtils.search(this::isChestplate);
-            if (HotbarUtils.isHoldingEitherHand(this::isChestplate)) {
-                InteractionUtils.inputUse();
-            }
-        }
+        if (!chestplateSwitch.getVal())
+            return;
+
+        HotbarUtils.search(this::isChestplate);
+        use();
+
+        if (HotbarUtils.isHoldingEitherHand(this::isChestplate))
+            use();
     }
 
     public void onDeparture() {
         if (rocketSwitch.getVal()) {
+            HotbarUtils.search(this::isRocket);
             HotbarUtils.search(Items.FIREWORK_ROCKET);
-            HotbarUtils.isHolding(Items.FIREWORK_ROCKET);{
-            InteractionUtils.inputUse();
-            }
+            HotbarUtils.isHolding(Items.FIREWORK_ROCKET);
+            use();
         }
+    }
+
+    public boolean isRocket(ItemStack stack) {
+        return stack.getItem() == Items.FIREWORK_ROCKET;
     }
 
     public boolean isChestplate(ItemStack stack) {
         return stack.getItem().getTranslationKey().toLowerCase().contains("chestplate");
+    }
+
+    private void use() {
+        PlayerUtils.getInteractions().interactItem(PlayerUtils.player(), Hand.MAIN_HAND);
     }
 }

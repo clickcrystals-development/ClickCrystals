@@ -75,7 +75,7 @@ public class HealthTags extends DummyModule {
         matrices.push();
         matrices.translate(0.0F, height, 0.0F);
         matrices.multiply(dispatcher.getRotation());
-        matrices.scale(-scale, -scale, scale);
+        matrices.scale(scale, -scale, scale);
 
         render(matrices, entity, vertexConsumers, text, x, y, width);
 
