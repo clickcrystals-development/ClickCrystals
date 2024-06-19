@@ -16,7 +16,7 @@ public final class RenderUtils implements Global {
     // fill
 
     public static void fillRect(DrawContext context, int x, int y, int w, int h, int color) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
         buf.vertex(mat, (float)x, (float)y, 0).color(color);
@@ -30,7 +30,7 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillArc(DrawContext context, int cX, int cY, int radius, int start, int end, int color) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
         buf.vertex(mat, (float)cX, (float)cY, 0).color(color);
@@ -52,14 +52,14 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillRoundRect(DrawContext context, int x, int y, int w, int h, int r, int color) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
         buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(color);
 
         int[][] corners = {
                 { x + w - r, y + r },
-                { x + w - r, y + h - r},
+                { x + w - r, y + h - r },
                 { x + r, y + h - r },
                 { x + r, y + r }
         };
@@ -83,13 +83,13 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillRoundShadow(DrawContext context, int x, int y, int w, int h, int r, int thickness, int innerColor, int outerColor) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
 
         int[][] corners = {
                 { x + w - r, y + r },
-                { x + w - r, y + h - r},
+                { x + w - r, y + h - r },
                 { x + r, y + h - r },
                 { x + r, y + r }
         };
@@ -117,7 +117,7 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillRoundTabTop(DrawContext context, int x, int y, int w, int h, int r, int color) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
         buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(color);
@@ -148,14 +148,14 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillRoundRectGradient(DrawContext context, int x, int y, int w, int h, int r, int color1, int color2, int color3, int color4, int colorCenter) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
         buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(colorCenter);
 
         int[][] corners = {
                 { x + w - r, y + r },
-                { x + w - r, y + h - r},
+                { x + w - r, y + h - r },
                 { x + r, y + h - r },
                 { x + r, y + r }
         };
@@ -180,13 +180,13 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillRoundTabBottom(DrawContext context, int x, int y, int w, int h, int r, int color) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
         buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(color);
 
         int[][] corners = {
-                { x + w - r, y + h - r},
+                { x + w - r, y + h - r },
                 { x + r, y + h - r }
         };
 
@@ -236,7 +236,7 @@ public final class RenderUtils implements Global {
     }
 
     public static void drawLine(DrawContext context, int x1, int y1, int x2, int y2, int color) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION_COLOR);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
         buf.vertex(mat, (float)x1, (float)y1, 0).color(color);
@@ -248,7 +248,7 @@ public final class RenderUtils implements Global {
     }
 
     public static void drawArc(DrawContext context, int cX, int cY, int radius, int start, int end, int color) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
         for (int i = start - 90; i <= end - 90; i++) {
@@ -268,13 +268,12 @@ public final class RenderUtils implements Global {
     }
 
     public static void drawRoundRect(DrawContext context, int x, int y, int w, int h, int r, int color) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
-
 
         int[][] corners = {
                 { x + w - r, y + r },
-                { x + w - r, y + h - r},
+                { x + w - r, y + h - r },
                 { x + r, y + h - r },
                 { x + r, y + r }
         };
@@ -411,7 +410,7 @@ public final class RenderUtils implements Global {
     // misc
 
     public static void drawTexture(DrawContext context, Identifier texture, int x, int y, int w, int h) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
         buf.vertex(mat, x, y, 0).texture(0, 0);
@@ -424,20 +423,20 @@ public final class RenderUtils implements Global {
         setShaderTexture(0, texture);
         setShaderColor(1, 1, 1, 1);
 
-        BufferRenderer.drawWithGlobalProgram(buf.end());
+        drawBuffer(buf);
 
         enableCull();
     }
 
     public static void drawRoundTexture(DrawContext context, Identifier texture, int x, int y, int w, int h, int r) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
         buf.vertex(mat, x + w / 2F, y + h / 2F, 0).texture(0.5F, 0.5F);
 
         int[][] corners = {
                 { x + w - r, y + r },
-                { x + w - r, y + h - r},
+                { x + w - r, y + h - r },
                 { x + r, y + h - r },
                 { x + r, y + r }
         };
@@ -462,7 +461,7 @@ public final class RenderUtils implements Global {
         setShaderTexture(0, texture);
         setShaderColor(1, 1, 1, 1);
 
-        BufferRenderer.drawWithGlobalProgram(buf.end());
+        drawBuffer(buf);
 
         enableCull();
     }
@@ -521,8 +520,8 @@ public final class RenderUtils implements Global {
         BufferRenderer.drawWithGlobalProgram(buf.end());
     }
 
-    public static Tessellator getTessellator() {
-        return Tessellator.getInstance();
+    public static BufferBuilder getBuffer(VertexFormat.DrawMode mode, VertexFormat format) {
+        return Tessellator.getInstance().begin(mode, format);
     }
 
     public static int width() {

@@ -18,7 +18,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import org.joml.Matrix4f;
+import org.lwjgl.opengl.GL11;
 
+import static com.mojang.blaze3d.systems.RenderSystem.*;
 import static io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils.*;
 
 public class HealthTags extends DummyModule {
@@ -169,36 +171,45 @@ public class HealthTags extends DummyModule {
         drawRect(matrices, x, y, width, height, 0xAA000000); // border
     }
 
-    private void fillRoundRect(MatrixStack matrices, float x, float y, float w, float h, float borderRadius, int color) {
-        fillArc(matrices, x + borderRadius, y + borderRadius, borderRadius, 270, 360, color);
-        fillArc(matrices, x + w - borderRadius, y + borderRadius, borderRadius, 0, 90, color);
-        fillArc(matrices, x + w - borderRadius, y + h - borderRadius, borderRadius, 90, 180, color);
-        fillArc(matrices, x + borderRadius, y + h - borderRadius, borderRadius, 180, 270, color);
-        fillRect(matrices, x + borderRadius, y, w - borderRadius - borderRadius, h, color);
-        fillRect(matrices, x, y + borderRadius, borderRadius, h - borderRadius - borderRadius, color);
-        fillRect(matrices, x + w - borderRadius, y + borderRadius, borderRadius, h - borderRadius - borderRadius, color);
-    }
-
-    private void fillArc(MatrixStack matrices, float cX, float cY, float radius, int start, int end, int color) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+    public static void fillRoundRect(MatrixStack matrices, float x, float y, float w, float h, float r, int color) {
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
         Matrix4f mat = matrices.peek().getPositionMatrix();
 
-        buf.vertex(mat, cX, cY, 0).color(color);
+        buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(color);
 
-        for (int i = start - 90; i <= end - 90; i ++) {
-            double angle = Math.toRadians(i);
-            float x = (float)(Math.cos(angle) * radius) + cX;
-            float y = (float)(Math.sin(angle) * radius) + cY;
-            buf.vertex(mat, x, y, 0).color(color);
+        float[][] corners = {
+                { x + w - r, y + r },
+                { x + w - r, y + h - r},
+                { x + r, y + h - r },
+                { x + r, y + r }
+        };
+
+        for (int corner = 0; corner < 4; corner++) {
+            int cornerStart = (corner - 1) * 90;
+            int cornerEnd = cornerStart + 90;
+            for (int i = cornerStart; i <= cornerEnd; i += 10) {
+                float angle = (float)Math.toRadians(i);
+                float rx = corners[corner][0] + (float)(Math.cos(angle) * r);
+                float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
+                buf.vertex(mat, rx, ry, 0).color(color);
+            }
         }
 
+        buf.vertex(mat, corners[0][0], y, 0).color(color); // connect last to first vertex
+
         beginRendering();
+        enableDepthTest();
+        depthFunc(GL11.GL_ALWAYS);
+        
         drawBuffer(buf);
+
+        depthFunc(GL11.GL_LEQUAL);
+        disableDepthTest();
         finishRendering();
     }
 
     private void fillRect(MatrixStack matrices, float x, float y, float w, float h, int color) {
-        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
         Matrix4f mat = matrices.peek().getPositionMatrix();
 
         buf.vertex(mat, x, y, 0).color(color);
@@ -207,7 +218,13 @@ public class HealthTags extends DummyModule {
         buf.vertex(mat, x, y + h, 0).color(color);
 
         beginRendering();
+        enableDepthTest();
+        depthFunc(GL11.GL_ALWAYS);
+        
         drawBuffer(buf);
+        
+        depthFunc(GL11.GL_LEQUAL);
+        disableDepthTest();
         finishRendering();
     }
 
