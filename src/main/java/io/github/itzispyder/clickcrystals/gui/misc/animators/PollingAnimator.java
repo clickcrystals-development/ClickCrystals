@@ -7,13 +7,17 @@ public class PollingAnimator extends Animator {
     private final BooleanSupplier poll;
     private boolean pollSuccess;
 
-    public PollingAnimator(int length, BooleanSupplier poll) {
-        super(length);
+    public PollingAnimator(int length, BooleanSupplier poll, Animations.AnimationController animationController) {
+        super(length, animationController);
         this.poll = poll;
 
         boolean bool = poll.getAsBoolean();
         this.pollSuccess = bool;
         this.setReversed(!bool);
+    }
+
+    public PollingAnimator(int length, BooleanSupplier poll) {
+        this(length, poll, Animations.LINEAR);
     }
 
     @Override

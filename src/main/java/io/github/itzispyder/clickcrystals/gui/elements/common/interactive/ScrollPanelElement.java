@@ -2,6 +2,9 @@ package io.github.itzispyder.clickcrystals.gui.elements.common.interactive;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
+import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
@@ -12,10 +15,15 @@ public class ScrollPanelElement extends GuiElement {
     private int remainingUp, remainingDown, limitTop, limitBottom, scrollbarY, scrollbarHeight, prevDrag;
     private boolean scrolling;
 
+    private final Animator interpolation;
+    private int interpolationLength;
+
     public ScrollPanelElement(GuiScreen parentScreen, int x, int y, int width, int height) {
         super(x, y, width, height);
         super.setContainer(true);
         this.parentScreen = parentScreen;
+        this.interpolation = new Animator(100);
+
         remainingUp = remainingDown = 0;
         limitTop = y;
         limitBottom = y + height;
@@ -93,25 +101,46 @@ public class ScrollPanelElement extends GuiElement {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY) {
+        boolean bl = canRender();
+
+        float interpolatedDelta = (float)(interpolationLength * interpolation.getProgressClampedReversed());
         context.enableScissor(x, y, x + width, y + height);
-        super.render(context, mouseX, mouseY);
+        context.getMatrices().push();
+        context.getMatrices().translate(0, -interpolatedDelta, 0);
+
+        if (bl)
+            onRender(context, mouseX, mouseY);
+        for (GuiElement child : this.getChildren())
+            child.render(context, mouseX, mouseY);
+
+        context.getMatrices().pop();
         context.disableScissor();
+
+        if (Module.isEnabled(GuiBorders.class))
+            RenderUtils.drawRect(context, x, y, width, height, 0xFFFFFFFF);
+        if (bl)
+            postRender(context, mouseX, mouseY);
     }
 
     @Override
     public void postRender(DrawContext context, int mouseX, int mouseY) {
-        if (!canScroll() || !canRender()) return;
-        if (scrolling) {
-            int deltaY = mouseY - prevDrag;
-            scrollWithMultiplier(-deltaY, 3);
+        if (!canScroll() || !canRender())
+            return;
+
+        double fullDoc = remainingUp + remainingDown + this.height;
+        double drawStartRatio = remainingUp / fullDoc;
+        double ratio = this.height / fullDoc;
+
+        if (scrolling && mouseY != prevDrag) {
+            double deltaY = mouseY - prevDrag;
+            double multiplier = Math.abs(deltaY) / this.height * fullDoc;
+
+            scrollWithMultiplier(deltaY > 0 ? -1 : 1, (int)multiplier);
             prevDrag = mouseY;
         }
 
         RenderUtils.fillRect(context, x + width - 6, y, 6, height, 0xFF1F1F1F);
 
-        double fullDoc = remainingUp + remainingDown + this.height;
-        double drawStartRatio = remainingUp / fullDoc;
-        double ratio = this.height / fullDoc;
         int drawStart = (int)(this.height * drawStartRatio);
         int drawLength = (int)(this.height * ratio);
 
@@ -121,11 +150,6 @@ public class ScrollPanelElement extends GuiElement {
 
         scrollbarY = this.y + drawStart;
         scrollbarHeight = drawLength;
-    }
-
-    @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-
     }
 
     @Override
@@ -152,23 +176,28 @@ public class ScrollPanelElement extends GuiElement {
     }
 
     public void onScroll(double amount) {
-        scrollWithMultiplier(amount, SCROLL_MULTIPLIER);
+        interpolationLength = scrollWithMultiplier(amount, SCROLL_MULTIPLIER);
+        interpolation.reset();
     }
 
-    private void scrollWithMultiplier(double amount, int multiplier) {
+    private int scrollWithMultiplier(double amount, int multiplier) {
+        int total = 0;
         for (int i = 0; i < multiplier; i++) {
-            scrollWithoutMultiplier(amount);
+            total += scrollWithoutMultiplier(amount);
         }
+        return total;
     }
 
-    private void scrollWithoutMultiplier(double amount) {
-        if (canScrollInDirection((int)amount)) {
-            for (GuiElement child : getChildren()) {
-                child.scrollOnPanel(this, (int)amount);
-            }
+    private int scrollWithoutMultiplier(double amount) {
+        int a = (int)amount;
+        if (!canScrollInDirection(a))
+            return 0;
 
-            remainingDown += amount;
-            remainingUp -= amount;
-        }
+        for (GuiElement child : getChildren())
+            child.scrollOnPanel(this, a);
+
+        remainingDown += a;
+        remainingUp -= a;
+        return a;
     }
 }

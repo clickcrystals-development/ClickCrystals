@@ -5,6 +5,8 @@ import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.CategoryElem
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.SettingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
@@ -12,11 +14,15 @@ import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DefaultBase extends GuiScreen {
+
+    public boolean open;
+    public final PollingAnimator animator = new PollingAnimator(300, () -> open, Animations.POP_BULGE);
 
     public final int windowWidth = MinecraftClient.getInstance().getWindow().getScaledWidth();
     public final int windowHeight = MinecraftClient.getInstance().getWindow().getScaledHeight();
@@ -100,6 +106,22 @@ public abstract class DefaultBase extends GuiScreen {
         this.addChild(buttonSettings);
     }
 
+    @Override
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        MatrixStack matrices = context.getMatrices();
+        float scale = (float) animator.getAnimation();
+        double scaleX = baseX / scale - baseX;
+        double scaleY = baseY / scale - baseY;
+
+        matrices.push();
+        matrices.scale(scale, scale, scale);
+        matrices.translate(scaleX, scaleY, 0);
+
+        super.render(context, mouseX, mouseY, delta);
+
+        matrices.pop();
+    }
+
     public void renderDefaultBase(DrawContext context) {
         renderOpaqueBackground(context);
 
@@ -158,5 +180,19 @@ public abstract class DefaultBase extends GuiScreen {
         RenderUtils.drawText(context, "§bobvWolf §8(owner) ", 15, caret, 0.65F, false);
 
         context.getMatrices().pop();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        open = true;
+    }
+
+    @Override
+    public void close() {
+        if (!open)
+            return;
+        open = false;
+        system.scheduler.runDelayedTask(() -> mc.execute(super::close), animator.getLength());
     }
 }
