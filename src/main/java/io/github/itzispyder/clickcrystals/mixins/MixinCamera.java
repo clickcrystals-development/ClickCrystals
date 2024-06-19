@@ -3,8 +3,8 @@ package io.github.itzispyder.clickcrystals.mixins;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.CameraClip;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoOverlay;
+import net.minecraft.block.enums.CameraSubmersionType;
 import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.CameraSubmersionType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -19,9 +19,7 @@ public abstract class MixinCamera {
     private boolean bypassCameraClip;
 
     @Shadow
-    private double clipToSpace(double desiredCameraDistance) {
-        return 0;
-    }
+    protected abstract float clipToSpace(float desiredCameraDistance);
 
     @Inject(method = "getSubmersionType", at = @At("RETURN"), cancellable = true)
     public void getSubmersionType(CallbackInfoReturnable<CameraSubmersionType> cir) {
@@ -31,7 +29,7 @@ public abstract class MixinCamera {
     }
 
     @Inject(method = "clipToSpace", at = @At("HEAD"), cancellable = true)
-    private void onClipToSpace(double desiredCameraDistance, CallbackInfoReturnable<Double> info) {
+    private void onClipToSpace(float f, CallbackInfoReturnable<Float> cir) {
         if (bypassCameraClip) {
             bypassCameraClip = false;
             return;
@@ -43,12 +41,11 @@ public abstract class MixinCamera {
             return;
         }
 
-        if (clip.getEnableCameraClipSetting()) {
-            info.setReturnValue(clip.getClipDistanceSetting());
-        }
-        else if (clip.getClipDistanceSetting() > 0.0) {
+        if (clip.enableCameraClip.getVal()) {
+            cir.setReturnValue(clip.clipDistance.getVal().floatValue());
+        } else if (clip.clipDistance.getVal() > 0.0) {
             bypassCameraClip = true;
-            info.setReturnValue(clipToSpace(clip.getClipDistanceSetting()));
+            cir.setReturnValue(clipToSpace(clip.clipDistance.getVal().floatValue()));
         }
     }
 }

@@ -18,7 +18,7 @@ public abstract class Categories {
             SCRIPTED         = register("Custom Made", "clickcrystals:textures/display/categories/scripted.png");
 
     private static Category register(String name, String texPath) {
-        Category c = new Category(name, new Identifier(texPath));
+        Category c = new Category(name, Identifier.of(texPath));
         categories.put(name, c);
         return c;
     }

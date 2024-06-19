@@ -218,7 +218,7 @@ public class ScriptParser {
                 list.add(item -> item.getItem().getTranslationKey().contains(section.substring(1)));
             }
             else if (section.startsWith(":")) {
-                Identifier id = new Identifier("minecraft", section.substring(1));
+                Identifier id = Identifier.of("minecraft", section.substring(1));
                 list.add(item -> item.getItem() == Registries.ITEM.get(id));
             }
             else {
@@ -243,7 +243,7 @@ public class ScriptParser {
                     return defaultedBlockPredicates.get(subArg);
                 }
 
-                Identifier id = new Identifier("minecraft", subArg);
+                Identifier id = Identifier.of("minecraft", subArg);
                 return block -> block.getBlock() == Registries.BLOCK.get(id);
             }
             else {
@@ -262,7 +262,7 @@ public class ScriptParser {
                 list.add(ent -> ent.getType().getTranslationKey().contains(section.substring(1)));
             }
             else if (section.startsWith(":")) {
-                Identifier id = new Identifier("minecraft", section.substring(1));
+                Identifier id = Identifier.of("minecraft", section.substring(1));
                 list.add(ent -> ent.getType() == Registries.ENTITY_TYPE.get(id));
             }
             else {
@@ -288,7 +288,7 @@ public class ScriptParser {
             return result == null ? null : Registries.SOUND_EVENT.get(result);
         }
         else if (arg.startsWith(":")) {
-            Identifier id = new Identifier("minecraft", arg.substring(1));
+            Identifier id = Identifier.of("minecraft", arg.substring(1));
             return Registries.SOUND_EVENT.get(id);
         }
         return null;
@@ -310,7 +310,7 @@ public class ScriptParser {
             return result == null ? null : Registries.STATUS_EFFECT.get(result);
         }
         else if (arg.startsWith(":")) {
-            Identifier id = new Identifier("minecraft", arg.substring(1));
+            Identifier id = Identifier.of("minecraft", arg.substring(1));
             return Registries.STATUS_EFFECT.get(id);
         }
         return null;
