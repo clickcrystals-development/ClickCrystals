@@ -180,17 +180,16 @@ public class HealthTags extends DummyModule {
     }
 
     private void fillArc(MatrixStack matrices, float cX, float cY, float radius, int start, int end, int color) {
-        BufferBuilder buf = getBuffer();
+        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
         Matrix4f mat = matrices.peek().getPositionMatrix();
 
-        buf.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
-        buf.vertex(mat, cX, cY, 0).color(color).next();
+        buf.vertex(mat, cX, cY, 0).color(color);
 
         for (int i = start - 90; i <= end - 90; i ++) {
             double angle = Math.toRadians(i);
             float x = (float)(Math.cos(angle) * radius) + cX;
             float y = (float)(Math.sin(angle) * radius) + cY;
-            buf.vertex(mat, x, y, 0).color(color).next();
+            buf.vertex(mat, x, y, 0).color(color);
         }
 
         beginRendering();
@@ -199,14 +198,13 @@ public class HealthTags extends DummyModule {
     }
 
     private void fillRect(MatrixStack matrices, float x, float y, float w, float h, int color) {
-        BufferBuilder buf = getBuffer();
+        BufferBuilder buf = getTessellator().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
         Matrix4f mat = matrices.peek().getPositionMatrix();
 
-        buf.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-        buf.vertex(mat, x, y, 0).color(color).next();
-        buf.vertex(mat, x + w, y, 0).color(color).next();
-        buf.vertex(mat, x + w, y + h, 0).color(color).next();
-        buf.vertex(mat, x, y + h, 0).color(color).next();
+        buf.vertex(mat, x, y, 0).color(color);
+        buf.vertex(mat, x + w, y, 0).color(color);
+        buf.vertex(mat, x + w, y + h, 0).color(color);
+        buf.vertex(mat, x, y + h, 0).color(color);
 
         beginRendering();
         drawBuffer(buf);

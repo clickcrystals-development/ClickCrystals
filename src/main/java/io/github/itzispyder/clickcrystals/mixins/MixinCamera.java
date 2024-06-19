@@ -41,11 +41,11 @@ public abstract class MixinCamera {
             return;
         }
 
-        if (clip.getEnableCameraClipSetting()) {
-            cir.setReturnValue(clip.getClipDistanceSetting().floatValue());
-        } else if (clip.getClipDistanceSetting() > 0.0) {
+        if (clip.enableCameraClip.getVal()) {
+            cir.setReturnValue(clip.clipDistance.getVal().floatValue());
+        } else if (clip.clipDistance.getVal() > 0.0) {
             bypassCameraClip = true;
-            cir.setReturnValue(clipToSpace(clip.getClipDistanceSetting().floatValue()));
+            cir.setReturnValue(clipToSpace(clip.clipDistance.getVal().floatValue()));
         }
     }
 }

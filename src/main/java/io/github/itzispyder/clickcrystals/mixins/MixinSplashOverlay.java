@@ -5,6 +5,8 @@ import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.SplashOverlay;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
@@ -43,20 +45,26 @@ public abstract class MixinSplashOverlay implements Global {
         args.set(2, b);
         args.set(3, a);
     }
-
-    @Inject(method = "renderProgressBar", at = @At("TAIL"))
-    public void renderProgressBar(DrawContext context, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
-        Tessellator tess = Tessellator.getInstance();
-        DrawContext c = new DrawContext(mc, VertexConsumerProvider.immediate(tess.getBuffer()));
-        MatrixStack m = c.getMatrices();
-        int i = MathHelper.ceil((float)(maxX - minX - 2) * this.progress);
-        int w = 50;
-        int s = w / 2;
-        int x = MathUtils.clamp(minX + i, minX, maxX - s);
-        int y = maxY - 50;
-
-        m.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360 * progress), x + s, y + s, 1);
-        m.scale(opacity, opacity, opacity);
-        c.drawTexture(Tex.ICON, x, y, 0, 0, w, w, w, w);
-    }
+//
+//    @Inject(method = "renderProgressBar", at = @At("TAIL"))
+//    public void renderProgressBar(DrawContext context, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
+//        Tessellator tessellator = Tessellator.getInstance();
+//        DrawContext drawContext = new DrawContext(mc, VertexConsumerProvider.immediate(tessellator.begin().texture()));
+//        MatrixStack matrixStack = drawContext.getMatrices();
+//        int i = MathHelper.ceil((float)(maxX - minX - 2) * this.progress);
+//        int width = 50;
+//        int halfWidth = width / 2;
+//        int x = MathUtils.clamp(minX + i, minX, maxX - halfWidth);
+//        int y = maxY - 50;
+//
+//        matrixStack.push();
+//        matrixStack.translate(x + halfWidth, y + halfWidth, 0);
+//        matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360 * progress));
+//        matrixStack.scale(opacity, opacity, opacity);
+//        matrixStack.translate(-(x + halfWidth), -(y + halfWidth), 0);
+//        drawContext.drawTexture(Tex.ICON, x, y, 0, 0, width, width, width, width);
+//        matrixStack.pop();
+//
+//        BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
+//    }
 }
