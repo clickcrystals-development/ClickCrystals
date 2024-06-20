@@ -2,6 +2,8 @@ package io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module;
 
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -9,6 +11,7 @@ import net.minecraft.client.gui.DrawContext;
 
 public class DoubleSettingElement extends SettingElement<DoubleSetting> {
 
+    private final Animator animator = new Animator(300, Animations.FADE_IN_AND_OUT);
     private boolean settingRenderUpdates;
     private int fillEnd;
 
@@ -47,7 +50,7 @@ public class DoubleSettingElement extends SettingElement<DoubleSetting> {
         }
 
         RenderUtils.fillRoundHoriLine(context, drawX, drawY, width / 4, 10, Shades.GRAY);
-        RenderUtils.fillRoundHoriLine(context, drawX, drawY, len, 10, Shades.GENERIC);
+        RenderUtils.fillRoundHoriLine(context, drawX, drawY, (int)(len * animator.getAnimation()), 10, Shades.GENERIC);
         RenderUtils.drawRightText(context, "" + setting.getVal(), fillEnd, drawY - 6, 0.7F, false);
         this.fillEnd = drawX + len;
     }

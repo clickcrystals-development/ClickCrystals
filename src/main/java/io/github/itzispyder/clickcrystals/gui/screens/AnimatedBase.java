@@ -4,21 +4,14 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.MinecraftClient;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 
 public abstract class AnimatedBase extends GuiScreen {
 
-    private final int windowWidth = MinecraftClient.getInstance().getWindow().getScaledWidth();
-    private final int windowHeight = MinecraftClient.getInstance().getWindow().getScaledHeight();
-    private final int baseWidth = 420;
-    private final int baseHeight = 240;
-    private final int baseX = (int)(windowWidth / 2.0 - baseWidth / 2.0);
-    private final int baseY = (int)(windowHeight / 2.0 - baseHeight / 2.0);
-
     private boolean open, playOpenAnimation, playCloseAnimation;
-    private final PollingAnimator animator = new PollingAnimator(300, () -> open, Animations.POP_BULGE);
+    private final PollingAnimator animator = new PollingAnimator(300, () -> open, Animations.UPWARDS_BOUNCE);
 
     public AnimatedBase(String title) {
         super(title);
@@ -33,8 +26,10 @@ public abstract class AnimatedBase extends GuiScreen {
         float scale = (float) animator.getAnimation();
 
         if (canAnimate) {
-            double scaleX = baseX / scale - baseX;
-            double scaleY = baseY / scale - baseY;
+            int x = RenderUtils.width() / 2;
+            int y = RenderUtils.height() / 2;
+            double scaleX = x / scale - x;
+            double scaleY = y / scale - y;
 
             matrices.push();
             matrices.scale(scale, scale, scale);

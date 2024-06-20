@@ -22,6 +22,8 @@ public class Animator {
     }
 
     private double getAnimation(double x) {
+        if (x <= 0 || x >= 1)
+            return x;
         return animationController.f(x); // lmao the f(x) math pun
     }
 

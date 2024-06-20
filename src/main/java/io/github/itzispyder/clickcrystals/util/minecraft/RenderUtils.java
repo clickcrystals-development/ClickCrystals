@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.util.MathUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
@@ -52,6 +53,8 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillRoundRect(DrawContext context, int x, int y, int w, int h, int r, int color) {
+        r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
+
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
@@ -83,6 +86,8 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillRoundShadow(DrawContext context, int x, int y, int w, int h, int r, int thickness, int innerColor, int outerColor) {
+        r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
+
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
@@ -117,6 +122,8 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillRoundTabTop(DrawContext context, int x, int y, int w, int h, int r, int color) {
+        r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
+
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
@@ -148,6 +155,8 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillRoundRectGradient(DrawContext context, int x, int y, int w, int h, int r, int color1, int color2, int color3, int color4, int colorCenter) {
+        r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
+
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
@@ -180,6 +189,8 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillRoundTabBottom(DrawContext context, int x, int y, int w, int h, int r, int color) {
+        r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
+
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
@@ -268,6 +279,8 @@ public final class RenderUtils implements Global {
     }
 
     public static void drawRoundRect(DrawContext context, int x, int y, int w, int h, int r, int color) {
+        r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
+
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
@@ -429,6 +442,8 @@ public final class RenderUtils implements Global {
     }
 
     public static void drawRoundTexture(DrawContext context, Identifier texture, int x, int y, int w, int h, int r) {
+        r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
+
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 

@@ -1,11 +1,16 @@
 package io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module;
 
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class BooleanSettingElement extends SettingElement<BooleanSetting> {
+
+    private final Animator animator = new PollingAnimator(300, this.getSetting()::getVal, Animations.ELASTIC_BOUNCE);
 
     public BooleanSettingElement(BooleanSetting setting, int x, int y) {
         super(setting, x, y);
@@ -16,16 +21,13 @@ public class BooleanSettingElement extends SettingElement<BooleanSetting> {
         this.renderSettingDetails(context);
         int drawY = y + height / 2;
         int drawX = x + width - 20 - 5;
+        double ani = animator.getAnimation();
+        boolean on = setting.getVal();
 
         // custom
-        if (setting.getVal()) {
-            RenderUtils.fillRoundHoriLine(context, drawX, drawY, 20, 6, Shades.GENERIC_LOW);
-            RenderUtils.fillCircle(context, drawX + 17, drawY + 3, 5, Shades.GENERIC);
-        }
-        else {
-            RenderUtils.fillRoundHoriLine(context, drawX, drawY, 20, 6, Shades.GRAY);
-            RenderUtils.fillCircle(context, drawX + 3, drawY + 3, 5, Shades.LIGHT_GRAY);
-        }
+        RenderUtils.fillRoundHoriLine(context, drawX, drawY, 20, 6, Shades.GRAY);
+        RenderUtils.fillRoundHoriLine(context, drawX, drawY, (int)(20 * ani), 6, Shades.GENERIC_LOW);
+        RenderUtils.fillCircle(context, drawX + 3 + (int)(14 * ani), drawY + 3, 5, on ? Shades.GENERIC : Shades.LIGHT_GRAY);
     }
 
     @Override
