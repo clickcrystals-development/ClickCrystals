@@ -13,6 +13,9 @@ public class WaitCmd extends ScriptCommand implements Global, ThenChainable {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        system.scheduler.runDelayedTask(() -> executeWithThen(args, 1), (long)(args.get(0).toDouble() * 1000L));
+        if (args.getSize() == 1)
+            throw new IllegalArgumentException("You need to specify what to do after the wait time! example: \"wait 0.05 input attack\"");
+        long delay = (long)(args.get(0).toDouble() * 1000L);
+        system.scheduler.runDelayedTask(() -> executeWithThen(args, 1), delay);
     }
 }

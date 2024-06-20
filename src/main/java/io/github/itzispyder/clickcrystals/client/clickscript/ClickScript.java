@@ -11,6 +11,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
@@ -51,6 +52,7 @@ public class ClickScript implements Global {
     private final Map<String, String> functions;
     private final String path;
     private final File file;
+    private final AtomicLong pause = new AtomicLong(0L);
 
     private ClickScript(File file, String path) {
         this.file = file;
