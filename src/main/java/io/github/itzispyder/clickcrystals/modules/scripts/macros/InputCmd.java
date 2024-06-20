@@ -3,13 +3,14 @@ package io.github.itzispyder.clickcrystals.modules.scripts.macros;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
+import io.github.itzispyder.clickcrystals.modules.scripts.ThenChainable;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 
 import java.util.function.BooleanSupplier;
 
-public class InputCmd extends ScriptCommand implements Global {
+public class InputCmd extends ScriptCommand implements Global, ThenChainable {
 
     public InputCmd() {
         super("input");
@@ -17,10 +18,14 @@ public class InputCmd extends ScriptCommand implements Global {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        args.get(0).toEnum(Action.class, null).run();
-
-        if (args.match(1, "then")) {
-            args.executeAll(2);
+        Action a = args.get(0).toEnum(Action.class, null);
+        if (a != Action.KEY) {
+            a.run();
+            executeWithThen(args, 1);
+        }
+        else {
+            InteractionUtils.pressKeyExtendedName(args.get(1).toString());
+            executeWithThen(args, 2);
         }
     }
 
@@ -39,7 +44,8 @@ public class InputCmd extends ScriptCommand implements Global {
         LEFT(InteractionUtils::leftClick, mc.mouse::wasLeftButtonClicked),
         RIGHT(InteractionUtils::rightClick, mc.mouse::wasRightButtonClicked),
         MIDDLE(InteractionUtils::middleClick, mc.mouse::wasMiddleButtonClicked),
-        INVENTORY(InteractionUtils::inputInventory, () -> mc.currentScreen instanceof HandledScreen<?>);
+        INVENTORY(InteractionUtils::inputInventory, () -> mc.currentScreen instanceof HandledScreen<?>),
+        KEY(null, null);
 
         private final Runnable action;
         private final BooleanSupplier isActive;
@@ -50,11 +56,15 @@ public class InputCmd extends ScriptCommand implements Global {
         }
 
         public boolean isActive() {
-            return isActive.getAsBoolean();
+            return !isDummy() && isActive.getAsBoolean();
+        }
+
+        public boolean isDummy() {
+            return action == null || isActive == null;
         }
 
         public void run() {
-            if (mc != null && mc.options != null) {
+            if (!isDummy() && mc != null && mc.options != null) {
                 action.run();
             }
         }

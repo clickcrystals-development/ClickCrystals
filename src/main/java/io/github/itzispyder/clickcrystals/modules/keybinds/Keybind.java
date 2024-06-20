@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
 import org.lwjgl.glfw.GLFW;
 
+import java.awt.event.KeyEvent;
 import java.util.Map;
 
 public class Keybind implements Global {
@@ -102,6 +103,18 @@ public class Keybind implements Global {
             name = EXTENDED_NAMES.get(key);
         }
         return name;
+    }
+
+    public static int fromExtendedKeyName(String name) {
+        for (var entry : EXTENDED_NAMES.entrySet())
+            if (entry.getValue().equalsIgnoreCase(name))
+                return entry.getKey();
+
+        if (name.length() == 1) {
+            int key = KeyEvent.getExtendedKeyCodeForChar(name.charAt(0));
+            return key != 0 ? key : -1;
+        }
+        return -1;
     }
 
     public void setKey(int key) {

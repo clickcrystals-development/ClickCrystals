@@ -18,7 +18,6 @@ public abstract class MixinMouse implements Global, MouseAccessor {
 
     @Shadow private double cursorDeltaY;
     @Shadow private double cursorDeltaX;
-
     @Shadow protected abstract void onMouseButton(long window, int button, int action, int mods);
 
     @Inject(method = "onMouseButton", at = @At("HEAD"), cancellable = true)

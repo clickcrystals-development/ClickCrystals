@@ -5,11 +5,9 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.scripts.ThenChainable;
 import io.github.itzispyder.clickcrystals.modules.scripts.macros.InputCmd;
-import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
+import io.github.itzispyder.clickcrystals.util.minecraft.*;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -24,7 +22,7 @@ import net.minecraft.world.dimension.DimensionTypes;
 
 import java.util.function.Predicate;
 
-public class IfCmd extends ScriptCommand implements Global {
+public class IfCmd extends ScriptCommand implements Global, ThenChainable {
 
     public IfCmd() {
         super("if");
@@ -36,7 +34,7 @@ public class IfCmd extends ScriptCommand implements Global {
         var condition = parseCondition(args, beginIndex);
 
         if (condition.left) {
-            OnEventCmd.executeWithThen(args, condition.right);
+            executeWithThen(args, condition.right);
         }
     }
 
@@ -83,7 +81,11 @@ public class IfCmd extends ScriptCommand implements Global {
                 return pair(HotbarUtils.has(ScriptParser.parseItemPredicate(args.get(i + 1).toString())), i + 2);
             }
             case INPUT_ACTIVE -> {
-                return pair(args.get(i + 1).toEnum(InputCmd.Action.class, null).isActive(), i + 2);
+                InputCmd.Action a = args.get(i + 1).toEnum(InputCmd.Action.class, null);
+                if (a != InputCmd.Action.KEY)
+                    return pair(a.isActive(), i + 2);
+                else
+                    return pair(InteractionUtils.isKeyExtendedNamePressed(args.get(i + 2).toString()), i + 3);
             }
             case BLOCK_IN_RANGE -> {
                 Predicate<BlockState> filter = args.match(i + 1, "any_block") ? state -> true : ScriptParser.parseBlockPredicate(args.get(i + 1).toString());

@@ -3,8 +3,10 @@ package io.github.itzispyder.clickcrystals.util.minecraft;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
+import io.github.itzispyder.clickcrystals.interfaces.KeyboardAccessor;
 import io.github.itzispyder.clickcrystals.interfaces.MinecraftClientAccessor;
 import io.github.itzispyder.clickcrystals.interfaces.MouseAccessor;
+import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.GuiCursor;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -127,5 +129,23 @@ public final class InteractionUtils implements Global {
 
     public static void middleClick() {
         ((MouseAccessor) mc.mouse).middleClick();
+    }
+
+    public static void pressKey(int key, int scan) {
+        ((KeyboardAccessor) mc.keyboard).pressKey(key, scan);
+    }
+
+    public static void pressKeyExtendedName(String name) {
+        int key = Keybind.fromExtendedKeyName(name);
+        if (key != -1)
+            pressKey(key, 42);
+    }
+
+    public static boolean isKeyPressed(int key) {
+        return UserInputListener.isKeyPressed(key);
+    }
+
+    public static boolean isKeyExtendedNamePressed(String name) {
+        return isKeyPressed(Keybind.fromExtendedKeyName(name));
     }
 }

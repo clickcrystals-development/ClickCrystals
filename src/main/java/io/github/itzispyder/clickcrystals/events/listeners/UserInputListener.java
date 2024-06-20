@@ -53,6 +53,7 @@ public class UserInputListener implements Listener {
             DownloadProfileScreen.class, DownloadProfileScreen.class
     );
     private static Class<? extends GuiScreen> previousScreen = null;
+    private static final Set<Integer> pressedKeys = new HashSet<>();
 
     @SuppressWarnings("deprecation")
     public static void openPreviousScreen() {
@@ -97,6 +98,7 @@ public class UserInputListener implements Listener {
     @EventHandler
     public void onKeyPress(KeyPressEvent e) {
         try {
+            this.handleRecordKeys(e);
             this.handleKeybindings(e);
         }
         catch (Exception ignore) {}
@@ -152,6 +154,18 @@ public class UserInputListener implements Listener {
             }
         }
     }
+
+    private void handleRecordKeys(KeyPressEvent e) {
+        switch (e.getAction()) {
+            case CLICK -> pressedKeys.add(e.getKeycode());
+            case RELEASE -> pressedKeys.remove(e.getKeycode());
+        }
+    }
+
+    public static boolean isKeyPressed(int key) {
+        return pressedKeys.contains(key);
+    }
+
 
     private static class QueuedGuiItemSearchListener {
         private long sequence;

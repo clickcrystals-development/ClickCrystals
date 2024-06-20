@@ -2,12 +2,13 @@ package io.github.itzispyder.clickcrystals.modules.scripts.syntax;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
+import io.github.itzispyder.clickcrystals.modules.scripts.ThenChainable;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class WhileCmd extends ScriptCommand {
+public class WhileCmd extends ScriptCommand implements ThenChainable {
 
     public WhileCmd() {
         super("while");
@@ -43,7 +44,7 @@ public class WhileCmd extends ScriptCommand {
     }
 
     private void executeOnClient(ScriptArgs args, int beginIndex) {
-        mc.execute(() -> OnEventCmd.executeWithThen(args, beginIndex));
+        mc.execute(() -> executeWithThen(args, beginIndex));
     }
 }
 

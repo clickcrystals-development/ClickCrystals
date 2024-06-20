@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
+import io.github.itzispyder.clickcrystals.modules.scripts.ThenChainable;
 import io.github.itzispyder.clickcrystals.modules.scripts.client.ModuleCmd;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class OnEventCmd extends ScriptCommand {
+public class OnEventCmd extends ScriptCommand implements ThenChainable {
 
     private static final Map<String, Predicate<BlockState>> defaultedBlockPredicates = new HashMap<>() {{
         this.put("uncharged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) < 1);
@@ -263,10 +264,6 @@ public class OnEventCmd extends ScriptCommand {
             return Registries.STATUS_EFFECT.get(id);
         }
         return null;
-    }
-
-    public static void executeWithThen(ScriptArgs args, int begin) {
-        args.executeAll(args.match(begin, "then") ? begin + 1 : begin);
     }
 
     public enum EventType {
