@@ -2,13 +2,13 @@ package io.github.itzispyder.clickcrystals.gui.screens.profiles;
 
 import io.github.itzispyder.clickcrystals.data.announce.BulletinBoard;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
+import io.github.itzispyder.clickcrystals.gui.screens.AnimatedBase;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils.*;
 
-public class DownloadProfileScreen extends GuiScreen {
+public class DownloadProfileScreen extends AnimatedBase {
 
     private final int winWidth = RenderUtils.width();
     private final int winHeight = RenderUtils.height();

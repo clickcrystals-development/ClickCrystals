@@ -58,19 +58,18 @@ public class UserInputListener implements Listener {
     public static void openPreviousScreen() {
         config.markPlayedBefore();
         if (previousScreen == null || !(screenTracker.containsKey(previousScreen) || moduleScreenRoot.contains(previousScreen))) {
-            mc.setScreen(new HomeScreen());
+            scheduleOpenScreen(new HomeScreen());
             return;
         }
         if (moduleScreenRoot.contains(previousScreen)) {
-            openModulesScreen();
-            return;
+            scheduleOpenScreen(PlayerUtils.valid() && config.isOverviewMode() ? new OverviewScreen() : new HomeScreen());
         }
 
         try {
-            mc.setScreen(previousScreen.newInstance());
+            scheduleOpenScreen(previousScreen.newInstance());
         }
         catch (Exception e) {
-            mc.setScreen(new HomeScreen());
+            scheduleOpenScreen(new HomeScreen());
         }
     }
 
@@ -84,6 +83,15 @@ public class UserInputListener implements Listener {
             return;
         }
         mc.setScreen(new BrowsingScreen());
+    }
+
+    public static void scheduleOpenScreen(GuiScreen screen) {
+        if (screen instanceof AnimatedBase base) {
+            boolean bl = PlayerUtils.valid();
+            base.setPlayOpenAnimation(bl);
+            base.setPlayCloseAnimation(bl);
+        }
+        mc.execute(() -> mc.setScreen(screen));
     }
 
     @EventHandler

@@ -2,7 +2,6 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
-import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchResultsElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SuggestionElement;
@@ -19,7 +18,7 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeScreen extends GuiScreen {
+public class HomeScreen extends AnimatedBase {
 
     public static boolean OPENED_BEFORE = false;
     public final int windowWidth = MinecraftClient.getInstance().getWindow().getScaledWidth();
