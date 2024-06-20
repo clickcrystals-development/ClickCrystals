@@ -173,6 +173,9 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
             case PLAYING -> {
                 return pair(PlayerUtils.valid() && mc.currentScreen == null, i + 1);
             }
+            case IN_SCREEN -> {
+                return pair(PlayerUtils.valid() && mc.currentScreen != null, i + 1);
+            }
             case CHANCE_OF -> {
                 return pair(Math.random() * 100 < args.get(i + 1).toDouble(), i + 2);
             }
@@ -212,7 +215,8 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
         EFFECT_AMPLIFIER,
         IN_GAME,
         PLAYING,
-        CHANCE_OF
+        CHANCE_OF,
+        IN_SCREEN
     }
 
     /**

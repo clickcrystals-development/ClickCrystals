@@ -3,7 +3,6 @@ package io.github.itzispyder.clickcrystals.modules.scripts.macros.inventory;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
-import io.github.itzispyder.clickcrystals.modules.scripts.macros.InputCmd;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import net.minecraft.item.ItemStack;
@@ -21,7 +20,7 @@ public class GuiDropCmd extends ScriptCommand {
         Predicate<ItemStack> item = ScriptParser.parseItemPredicate(args.get(0).toString());
         int slot = InvUtils.search(item);
 
-        if (InputCmd.Action.INVENTORY.isActive() && slot != -1) {
+        if (slot != -1) {
             if (args.match(1, "all")) {
                 InvUtils.dropSlot(slot, true);
             }

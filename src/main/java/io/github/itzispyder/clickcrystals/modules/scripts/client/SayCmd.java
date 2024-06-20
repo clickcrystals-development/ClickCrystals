@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 public class SayCmd extends ScriptCommand {
 
     public SayCmd() {
-        super("say");
+        super("say", "chat");
     }
 
     @Override

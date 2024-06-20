@@ -168,7 +168,6 @@ public class UserInputListener implements Listener {
 
 
     private static class QueuedGuiItemSearchListener {
-        private long sequence;
         private Predicate<ItemStack> item;
 
         public QueuedGuiItemSearchListener(Predicate<ItemStack> item) {
@@ -176,17 +175,12 @@ public class UserInputListener implements Listener {
         }
 
         public void accept(RenderInventorySlotEvent e) {
-            if (item.test(e.getItem())) {
-                InteractionUtils.setCursor(e.getX() + 8, e.getY() + 8);
-                sequence = 0;
-                item = null;
-                guiItemSearchQueue.remove(this);
+            if (!item.test(e.getItem()))
                 return;
-            }
 
-            if (sequence++ >= 45) { // all inv slots
-                guiItemSearchQueue.remove(this);
-            }
+            InteractionUtils.setCursor(e.getX() + 8, e.getY() + 8);
+            item = null;
+            guiItemSearchQueue.remove(this);
         }
     }
 }
