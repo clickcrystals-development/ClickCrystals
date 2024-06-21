@@ -12,6 +12,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScree
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.profiles.DownloadProfileScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.profiles.ProfilesScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.scripts.ClickScriptIDE;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.AdvancedSettingScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.InfoScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.KeybindScreen;

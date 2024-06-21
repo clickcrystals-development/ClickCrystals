@@ -7,8 +7,8 @@ import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
@@ -78,7 +78,7 @@ public class ModuleEditScreen extends DefaultBase {
     }
 
     private void renderDescription(DrawContext context, int mouseX, int mouseY) {
-        List<String> lines = StringUtils.wrapLines(module.getDescription(), 60, true);
+        List<String> lines = TextUtils.wordWrap(module.getDescription(), 250 - 2 - 2, 0.7F);
         int height = lines.size() * 8;
         int caret = mouseY - height + 1;
         int margin = mouseX + 2;

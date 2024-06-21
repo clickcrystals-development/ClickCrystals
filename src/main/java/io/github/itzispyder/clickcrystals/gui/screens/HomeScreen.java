@@ -9,8 +9,8 @@ import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
-import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
@@ -97,7 +97,7 @@ public class HomeScreen extends AnimatedBase {
     }
 
     public void renderMotd(DrawContext context) {
-        List<String> lines = StringUtils.wrapLines(ClickCrystals.info.getMotd(), 55, true);
+        List<String> lines = TextUtils.wordWrap(ClickCrystals.info.getMotd(), 300 - 5 - 5, 0.9F);
         int i = 3;
         int x = baseX + baseWidth / 2 - 150;
         int y = baseY + 20;

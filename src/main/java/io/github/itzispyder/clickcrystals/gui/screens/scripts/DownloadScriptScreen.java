@@ -1,5 +1,6 @@
-package io.github.itzispyder.clickcrystals.gui.screens.profiles;
+package io.github.itzispyder.clickcrystals.gui.screens.scripts;
 
+import io.github.itzispyder.clickcrystals.commands.commands.ReloadCommand;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
@@ -8,6 +9,8 @@ import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.AnimatedBase;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -16,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils.*;
 
-public class DownloadProfileScreen extends AnimatedBase {
+public class DownloadScriptScreen extends AnimatedBase {
 
     private final int winWidth = RenderUtils.width();
     private final int winHeight = RenderUtils.height();
@@ -24,12 +27,12 @@ public class DownloadProfileScreen extends AnimatedBase {
     private final int baseHeight = 240;
     private final int baseX = (winWidth - baseWidth) / 2;
     private final int baseY = (winHeight - baseHeight) / 2;
-    private ProfileInfo info;
+    private ScriptInfo info;
     private final SearchBarElement searchbar;
     private final GridOrganizer panel;
 
-    public DownloadProfileScreen() {
-        super("Download Profile Screen");
+    public DownloadScriptScreen() {
+        super("Download Scripts Screen");
 
         LoadingIconElement loadingIcon = new LoadingIconElement(baseX + baseWidth / 2, baseY + baseHeight / 2, 20);
         this.addChild(loadingIcon);
@@ -49,27 +52,30 @@ public class DownloadProfileScreen extends AnimatedBase {
                     fillRoundRect(context, b.x, b.y, b.width, b.height, r, c1);
                     drawCenteredText(context, "<- Go Back", b.x + b.width / 2, b.y + (b.height - 7) / 2, false);
                 })
-                .onPress(button -> mc.execute(() -> mc.setScreen(new ProfilesScreen())))
+                .onPress(button -> mc.execute(() -> {
+                    BrowsingScreen.currentCategory = Categories.SCRIPTED;
+                    mc.setScreen(new BrowsingScreen());
+                }))
                 .build()
         );
 
-        CompletableFuture<Void> f = ProfileInfo.request();
-        this.panel = new GridOrganizer(baseX + 15, baseY + 60, 120, 120, 3, 10);
+        CompletableFuture<Void> f = ScriptInfo.request();
+        this.panel = new GridOrganizer(baseX + 15, baseY + 60, 120, 100, 3, 10);
         int panelWidth = baseWidth - 15;
         int panelHeight = baseHeight - 60;
 
         f.thenRun(() -> {
-            if (f.isDone() && ProfileInfo.hasCurrent()) {
-                this.info = ProfileInfo.getCurrent();
+            if (f.isDone() && ScriptInfo.hasCurrent()) {
+                this.info = ScriptInfo.getCurrent();
             }
             else {
-                this.info = ProfileInfo.createNull();
+                this.info = ScriptInfo.createNull();
             }
-            if (info.configs().length == 0) {
+            if (info.scripts().length == 0) {
                 return;
             }
 
-            for (ProfileInfo.Info profile : info.configs()) {
+            for (ScriptInfo.Info profile : info.scripts()) {
                 panel.addEntry(new ProfileElement(profile, 0, 0));
             }
 
@@ -98,8 +104,7 @@ public class DownloadProfileScreen extends AnimatedBase {
         drawTexture(context, Tex.Icons.SETTINGS, margin, caret, 20, 20);
         margin += 25;
         caret += 6;
-        drawText(context, "Online Configuration Profiles", margin, caret, 1.3F, false);
-
+        drawText(context, "Online Scripts </>", margin, caret, 1.3F, false);
 
         context.getMatrices().pop();
     }
@@ -109,7 +114,7 @@ public class DownloadProfileScreen extends AnimatedBase {
         panel.clear();
 
         String query = searchbar.getLowercaseQuery();
-        for (ProfileInfo.Info profile : info.configs()) {
+        for (ScriptInfo.Info profile : info.scripts()) {
             String pq = "%s:%s:%s".formatted(profile.name(), profile.desc(), profile.contents()).toLowerCase();
             if (pq.contains(query))
                 panel.addEntry(new ProfileElement(profile, 0, 0));
@@ -121,11 +126,11 @@ public class DownloadProfileScreen extends AnimatedBase {
 
     private class ProfileElement extends GuiElement {
         private final LoadingIconElement loading;
-        private final ProfileInfo.Info profile;
+        private final ScriptInfo.Info profile;
         private boolean owned;
 
-        public ProfileElement(ProfileInfo.Info profile, int x, int y) {
-            super(x, y, 120, 120);
+        public ProfileElement(ScriptInfo.Info profile, int x, int y) {
+            super(x, y, 120, 100);
             this.profile = profile;
             this.owned = info.alreadyOwns(profile);
             this.loading = new LoadingIconElement(0, 0, 20);
@@ -152,7 +157,7 @@ public class DownloadProfileScreen extends AnimatedBase {
                 caret += 10;
             }
             caret += 5;
-            for (String line : TextUtils.wordWrap(profile.desc(), width - 5 - 5, 0.8F)) {
+            for (String line : TextUtils.wordWrap("§7§oby %s\n\n§7%s".formatted(profile.author(), profile.desc()), width - 5 - 5, 0.8F)) {
                 drawText(context, "§7" + line, margin, caret, 0.8F, false);
                 caret += 8;
             }
@@ -177,6 +182,7 @@ public class DownloadProfileScreen extends AnimatedBase {
                 loading.setY(y + height / 2);
                 loading.setRendering(true);
                 info.download(profile);
+                ReloadCommand.reload();
             }).thenRun(() -> {
                 loading.setRendering(false);
                 owned = true;

@@ -2,7 +2,10 @@ package io.github.itzispyder.clickcrystals.util;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 import java.util.function.BiPredicate;
 
 public final class StringUtils {
@@ -107,56 +110,6 @@ public final class StringUtils {
         return sb.toString().trim();
     }
 
-    public static char nextChar(String s, int index) {
-        index ++;
-        if (index >= s.length()) return ' ';
-        return s.charAt(index);
-    }
-
-    public static List<String> wrapLines(String s, int maxLen) {
-        return wrapLines(s, maxLen, false);
-    }
-
-    public static List<String> wrapLines(String s, int maxLen, boolean wordWrap) {
-        final List<String> lines = new ArrayList<>();
-
-        if (s.length() <= maxLen) {
-            splitAdd(lines, s);
-            return lines;
-        }
-
-        while (s.length() >= maxLen) {
-            if (wordWrap) {
-                int wrapAt = maxLen - 1;
-                while (nextChar(s, wrapAt) != ' ') {
-                    wrapAt ++;
-                }
-                splitAdd(lines, s.substring(0, wrapAt + 1).trim());
-                s = s.substring(wrapAt + 1);
-            }
-            else {
-                splitAdd(lines, s.substring(0, maxLen).trim());
-                s = s.substring(maxLen);
-            }
-        }
-        if (s.length() > 0) {
-            lines.add(s.trim());
-        }
-
-        return lines;
-    }
-
-    public static void splitAdd(Collection<String> c, String s) {
-        if (s == null || c == null) return;
-
-        if (s.contains("<n>")) {
-            c.addAll(Arrays.asList(s.split("<n>")));
-        }
-        else {
-            c.add(s);
-        }
-    }
-
     public static String keyPressWithShift(String s) {
         if (s.length() != 1) return s;
         return Character.toString(toUpperCase(s.charAt(0)));
@@ -168,6 +121,13 @@ public final class StringUtils {
         String min = min2placeDigit(now.getMinute());
         String sec = min2placeDigit(now.getSecond());
         return "%s:%s:%s".formatted(hr, min, sec);
+    }
+
+    public static List<String> lines(String str) {
+        List<String> lines = new ArrayList<>();
+        for (String line : str.split("<n>"))
+            Collections.addAll(lines, line.lines().toArray(String[]::new));
+        return lines;
     }
 
     public static String min2placeDigit(int digit) {

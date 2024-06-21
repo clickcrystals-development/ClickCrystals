@@ -1,3 +1,24 @@
+
+
+/*
+ * THIS PROGRAM ACCESSES THE FOLLOWING WEBLINKS EITHER FROM PERIODIC LOOPS OR USER INPUT EVENTS
+ * - https://itzispyder.github.io/clickcrystals/info
+ * - https://itzispyder.github.io/clickcrystals/bulletin
+ * - https://clickcrystals.xyz
+ * - https://clickcrystals.xyz/configs/configs.json
+ * - https://clickcrystals.xyz/configs/configs/*
+ * - https://clickcrystals.xyz/scripts/scripts.json
+ * - https://clickcrystals.xyz/scripts/scripts/*
+ * - https://bit.ly/ccs-wiki
+ * - https://discord.gg/tMaShNzNtP
+ * - https://discord.gg/fmRadnST5G
+ * - https://www.curseforge.com/minecraft/mc-mods/clickcrystals
+ * - https://planetminecraft.com/mod/clickcrystal
+ *
+ * BY USING THIS SOFTWARE, YOU ARE CONSENTING TO VISITING THESE WEBSITES
+ */
+
+
 package io.github.itzispyder.clickcrystals;
 
 import com.google.gson.Gson;

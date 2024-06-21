@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.screens;
+package io.github.itzispyder.clickcrystals.gui.screens.scripts;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.commands.commands.ReloadCommand;
@@ -10,6 +10,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.TextFi
 import io.github.itzispyder.clickcrystals.gui.misc.ChatColor;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
+import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;

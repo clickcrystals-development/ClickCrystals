@@ -7,8 +7,9 @@ import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElemen
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
-import io.github.itzispyder.clickcrystals.gui.screens.ClickScriptIDE;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
+import io.github.itzispyder.clickcrystals.gui.screens.scripts.ClickScriptIDE;
+import io.github.itzispyder.clickcrystals.gui.screens.scripts.DownloadScriptScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -58,6 +59,8 @@ public class BrowsingScreen extends DefaultBase {
 
         if (category == Categories.SCRIPTED) {
             grid.addEntry(new ScriptDetails(0, 0));
+            grid.addEntry(new ScriptDownload(0, 0));
+            grid.addEntry(new ScriptDocumentation(0, 0));
             grid.addEntry(new ScriptCreateNew(0, 0));
         }
         for (Module module : list) {
@@ -73,6 +76,49 @@ public class BrowsingScreen extends DefaultBase {
         client.setScreen(new BrowsingScreen());
     }
 
+    private static class ScriptDownload extends ModuleElement {
+        public ScriptDownload(int x, int y) {
+            super(null, x, y);
+            this.setTooltip("§7Click to browse pre-made that you can download.");
+        }
+
+        @Override
+        public void onRender(DrawContext context, int mouseX, int mouseY) {
+            if (isHovered(mouseX, mouseY)) {
+                RenderUtils.fillRect(context, x, y, width, height, 0x6000B7FF);
+            }
+
+            String text = "Need pre-made scripts? §bDownload here ->";
+            RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
+        }
+
+        @Override
+        public void onClick(double mouseX, double mouseY, int button) {
+            mc.setScreen(new DownloadScriptScreen());
+        }
+    }
+
+    private static class ScriptDocumentation extends ModuleElement {
+        public ScriptDocumentation(int x, int y) {
+            super(null, x, y);
+            this.setTooltip("§7Click to view scripting documentation.");
+        }
+
+        @Override
+        public void onRender(DrawContext context, int mouseX, int mouseY) {
+            if (isHovered(mouseX, mouseY)) {
+                RenderUtils.fillRect(context, x, y, width, height, 0x6000B7FF);
+            }
+
+            String text = "§7Read the full Scripting Documentation and Wiki §bHere ->";
+            RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
+        }
+
+        @Override
+        public void onClick(double mouseX, double mouseY, int button) {
+            system.openUrl("https://bit.ly/ccs-wiki");
+        }
+    }
 
     private static class ScriptDetails extends ModuleElement {
         public ScriptDetails(int x, int y) {

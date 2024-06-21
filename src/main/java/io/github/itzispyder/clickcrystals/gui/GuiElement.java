@@ -5,8 +5,8 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.Scroll
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
-import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public abstract class GuiElement implements Positionable, Global {
      * Should always call hasTooltip() before calling this method
      */
     public void renderTooltip(DrawContext context, int x, int y) {
-        List<String> lines = StringUtils.wrapLines(getTooltip(), 33, true);
+        List<String> lines = TextUtils.wordWrap(getTooltip(), 150 - 6 - 6, 0.7F);
         int height = lines.size() * 8;
         int caret = y + 2;
         int margin = x + 6;

@@ -5,8 +5,8 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
-import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElement {
@@ -23,7 +23,7 @@ public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElem
     public void renderSettingDetails(DrawContext context) {
         int caret = y + 5;
         RenderUtils.drawText(context, setting.getName(), x + 5, caret, 0.6F, false);
-        for (String line : StringUtils.wrapLines(setting.getDescription(), 55, true)) {
+        for (String line : TextUtils.wordWrap(setting.getDescription(), width - 5 - 5, 0.6F)) {
             caret += 8;
             RenderUtils.drawText(context, "§7" + line, x + 5, caret, 0.6F, false);
         }

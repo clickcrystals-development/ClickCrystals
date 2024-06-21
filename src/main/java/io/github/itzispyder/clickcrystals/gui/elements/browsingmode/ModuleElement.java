@@ -1,8 +1,8 @@
 package io.github.itzispyder.clickcrystals.gui.elements.browsingmode;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
-import io.github.itzispyder.clickcrystals.gui.screens.ClickScriptIDE;
 import io.github.itzispyder.clickcrystals.gui.screens.ModuleEditScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.scripts.ClickScriptIDE;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
