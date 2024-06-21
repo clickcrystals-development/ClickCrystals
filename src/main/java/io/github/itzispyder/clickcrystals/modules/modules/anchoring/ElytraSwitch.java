@@ -34,7 +34,7 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
     private boolean fallFlying;
 
     public ElytraSwitch() {
-        super("Elytra Switch", Categories.CRYSTAL, "Swap to elytra from your hotbar when ever you are double jumping");
+        super("elytra-switch", Categories.CRYSTAL, "Swap to elytra from your hotbar when ever you are double jumping");
     }
 
     @Override
