@@ -11,7 +11,7 @@ import net.minecraft.client.gui.DrawContext;
 
 public class DoubleSettingElement extends SettingElement<DoubleSetting> {
 
-    private final Animator animator = new Animator(300, Animations.FADE_IN_AND_OUT);
+    private final Animator animator = new Animator(500, Animations.FADE_IN_AND_OUT);
     private boolean settingRenderUpdates;
     private int fillEnd;
 

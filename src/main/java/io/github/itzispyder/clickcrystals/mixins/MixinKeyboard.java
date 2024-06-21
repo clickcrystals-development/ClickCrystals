@@ -30,6 +30,8 @@ public abstract class MixinKeyboard implements Global, KeyboardAccessor {
     @Override
     public void pressKey(int key, int scan) {
         onKey(mc.getWindow().getHandle(), key, scan, 1, 0);
-        system.scheduler.runDelayedTask(() -> onKey(mc.getWindow().getHandle(), key, scan, 0, 0), 50);
+        system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+            onKey(mc.getWindow().getHandle(), key, scan, 0, 0);
+        }), 50);
     }
 }

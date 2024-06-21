@@ -44,18 +44,24 @@ public abstract class MixinMouse implements Global, MouseAccessor {
     @Override
     public void leftClick() {
         onMouseButton(mc.getWindow().getHandle(), 0, 1, 0);
-        system.scheduler.runDelayedTask(() -> onMouseButton(mc.getWindow().getHandle(), 0, 0, 0), 50);
+        system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+            onMouseButton(mc.getWindow().getHandle(), 0, 0, 0);
+        }), 50);
     }
 
     @Override
     public void rightClick() {
         onMouseButton(mc.getWindow().getHandle(), 1, 1, 0);
-        system.scheduler.runDelayedTask(() -> onMouseButton(mc.getWindow().getHandle(), 1, 0, 0), 50);
+        system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+            onMouseButton(mc.getWindow().getHandle(), 1, 0, 0);
+        }), 50);
     }
 
     @Override
     public void middleClick() {
         onMouseButton(mc.getWindow().getHandle(), 2, 1, 0);
-        system.scheduler.runDelayedTask(() -> onMouseButton(mc.getWindow().getHandle(), 2, 0, 0), 50);
+        system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+            onMouseButton(mc.getWindow().getHandle(), 2, 0, 0);
+        }), 50);
     }
 }

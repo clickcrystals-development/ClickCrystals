@@ -37,20 +37,25 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Version: 1.2.4
+Version: 1.2.5
 
-Add:
-  - online config, you can now download preset configs!
-  - module ElytraSwitch # credit: I-No-One
-  - setting for only commands to MessageResend # credit: I-No-One
-  - setting for NoGUIBackground # credit: I-No-One
+Update:
+  - 1.21 SUPPORT # credit: I-No-One
 
-Patch:
-  - hud horizontal hitboxes being weird inside hud edit screen
+Patched:
+  - health tags module rendering weirdly when near water or translucent blocks
+  - dragging the scroll bar being very slow or unbalanced
 
-Tweaks:
-  - update README.md to have the latest home screen screenshot
-  - updated ArrayListHud (formerly known as ModuleListHud) # credit: I-No-One
+Added:
+  - online script downloader, download pre-made scripts!
+  - GUI opening and closing animations
+  - GUI widgets (sliders, toggles, etc.) have opening and toggle animations
+  - script command condition # if input_active k (key_name) ex. if input active key k
+  - script command input # input key (key_name) ex. input key left_shift
+  - script command gui_quickmove updated # now supports swapping to hotbar! ex. gui_quickmove #totem 7
+
+Tweaked:
+  - made wait script command spit an error when people use it wrongly cuz too many people uses it wrongly
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)
