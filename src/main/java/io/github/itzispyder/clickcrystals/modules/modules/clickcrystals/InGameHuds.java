@@ -50,6 +50,12 @@ public class InGameHuds extends Module implements Listener {
             .def(ColorHelper.Argb.getAlpha(Hud.DEFAULT_ARGB))
             .build()
     );
+    public final ModuleSetting<ResourceHudMode> hudResourceMode = scGeneral.add(createEnumSetting(ResourceHudMode.class)
+            .name("resource-hud-mode")
+            .description("The shape of the resource hud.")
+            .def(ResourceHudMode.RECTANGLE)
+            .build()
+    );
     public final ModuleSetting<Boolean> hudIcon = scHudVisibility.add(BooleanSetting.create()
             .name("render-icon-hud")
             .description("Renders the icon hud.")
@@ -172,6 +178,11 @@ public class InGameHuds extends Module implements Listener {
         int g = colorGreen.getVal();
         int b = colorBlue.getVal();
         return ColorHelper.Argb.getArgb(a, r, g, b);
+    }
+
+    public enum ResourceHudMode {
+        SQUARE,
+        RECTANGLE
     }
 
     public enum ClockDisplay {
