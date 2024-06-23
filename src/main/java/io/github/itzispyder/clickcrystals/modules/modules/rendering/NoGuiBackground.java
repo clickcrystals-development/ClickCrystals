@@ -1,12 +1,11 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering;
 
-import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 
-public class NoGuiBackground extends DummyModule implements Global {
+public class NoGuiBackground extends DummyModule {
 
     private final SettingSection scGeneral = getGeneralSection();
     public final ModuleSetting<Boolean> noOverlay = scGeneral.add(createBoolSetting()
