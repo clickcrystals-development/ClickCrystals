@@ -10,8 +10,10 @@ import io.github.itzispyder.clickcrystals.modules.scripts.macros.InputCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.*;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Hand;
@@ -76,6 +78,9 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
             }
             case INVENTORY_HAS -> {
                 return pair(InvUtils.has(ScriptParser.parseItemPredicate(args.get(i + 1).toString())), i + 2);
+            }
+            case EQUIPMENT_HAS -> {
+                return pair(InvUtils.hasEquipment(ScriptParser.parseItemPredicate(args.get(i + 1).toString())), i + 2);
             }
             case HOTBAR_HAS -> {
                 return pair(HotbarUtils.has(ScriptParser.parseItemPredicate(args.get(i + 1).toString())), i + 2);
@@ -179,6 +184,26 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
             case CHANCE_OF -> {
                 return pair(Math.random() * 100 < args.get(i + 1).toDouble(), i + 2);
             }
+            case COLLIDING -> {
+                return pair(PlayerUtils.isColliding(), i + 1);
+            }
+            case COLLIDING_HORIZONTALLY -> {
+                return pair(PlayerUtils.isCollidingHorizontally(), i + 1);
+            }
+            case COLLIDING_VERTICALLY -> {
+                return pair(PlayerUtils.isCollidingVertically(), i + 1);
+            }
+            case MOVING -> {
+                return pair(PlayerUtils.isMoving(), i + 1);
+            }
+            case CURSOR_ITEM -> {
+                ClientPlayerEntity p = PlayerUtils.player();
+                Predicate<ItemStack> item = ScriptParser.parseItemPredicate(args.get(i + 1).toString());
+                if (p == null || p.currentScreenHandler == null)
+                    return pair(false, i + 2);
+                ItemStack stack = p.currentScreenHandler.getCursorStack();
+                return pair(stack != null && item.test(stack), i + 2);
+            }
         }
         return pair(false, 0);
     }
@@ -194,6 +219,7 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
         OFF_HOLDING,
         INVENTORY_HAS,
         HOTBAR_HAS,
+        EQUIPMENT_HAS,
         TARGET_BLOCK,
         TARGET_ENTITY,
         TARGETING_BLOCK,
@@ -216,7 +242,12 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
         IN_GAME,
         PLAYING,
         CHANCE_OF,
-        IN_SCREEN
+        IN_SCREEN,
+        COLLIDING,
+        COLLIDING_HORIZONTALLY,
+        COLLIDING_VERTICALLY,
+        MOVING,
+        CURSOR_ITEM
     }
 
     /**

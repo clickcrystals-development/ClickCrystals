@@ -136,6 +136,12 @@ public final class InvUtils implements Global {
         return false;
     }
 
+    public static boolean hasEquipment(Predicate<ItemStack> item) {
+        if (item != null)
+            return inv().armor.stream().filter(i -> i != null && !i.isEmpty()).anyMatch(item);
+        return false;
+    }
+
     public static boolean sendSlotPacket(int slot, int button, SlotActionType action) {
         ItemStack stack = inv().getStack(slot);
 

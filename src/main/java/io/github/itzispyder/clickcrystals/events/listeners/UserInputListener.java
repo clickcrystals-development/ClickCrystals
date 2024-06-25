@@ -40,7 +40,6 @@ public class UserInputListener implements Listener {
     private static final Set<Class<? extends GuiScreen>> moduleScreenRoot = new HashSet<>() {{
         add(BrowsingScreen.class);
         add(OverviewScreen.class);
-        add(ModuleEditScreen.class);
         add(ClickScriptIDE.class);
     }};
     private static final Map<Class<? extends GuiScreen>, Class<? extends GuiScreen>> screenTracker = ManualMap.fromItems(
@@ -53,7 +52,8 @@ public class UserInputListener implements Listener {
             InfoScreen.class, InfoScreen.class,
             ProfilesScreen.class, ProfilesScreen.class,
             DownloadProfileScreen.class, DownloadProfileScreen.class,
-            DownloadScriptScreen.class, DownloadScriptScreen.class
+            DownloadScriptScreen.class, DownloadScriptScreen.class,
+            ModuleEditScreen.class, ModuleEditScreen.class
     );
     private static Class<? extends GuiScreen> previousScreen = null;
     private static final Set<Integer> pressedKeys = new HashSet<>();
@@ -66,7 +66,8 @@ public class UserInputListener implements Listener {
             return;
         }
         if (moduleScreenRoot.contains(previousScreen)) {
-            scheduleOpenScreen(PlayerUtils.valid() && config.isOverviewMode() ? new OverviewScreen() : new HomeScreen());
+            scheduleOpenScreen(PlayerUtils.valid() && config.isOverviewMode() ? new OverviewScreen() : new BrowsingScreen());
+            return;
         }
 
         try {

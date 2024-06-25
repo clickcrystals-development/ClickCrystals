@@ -101,10 +101,35 @@ public final class PlayerUtils implements Global {
     }
 
     public static boolean isMoving() {
-        if (invalid()) return false;
-        ClientPlayerEntity p = player();
+        if (invalid())
+            return false;
 
+        ClientPlayerEntity p = player();
         return p.sidewaysSpeed != 0 || p.forwardSpeed != 0;
+    }
+
+    public static boolean isColliding() {
+        if (invalid())
+            return false;
+
+        ClientPlayerEntity p = player();
+        return p.horizontalCollision || p.verticalCollision;
+    }
+
+    public static boolean isCollidingHorizontally() {
+        if (invalid())
+            return false;
+
+        ClientPlayerEntity p = player();
+        return p.horizontalCollision;
+    }
+
+    public static boolean isCollidingVertically() {
+        if (invalid())
+            return false;
+
+        ClientPlayerEntity p = player();
+        return p.verticalCollision;
     }
 
     public static void boxIterator(World world, Box box, BiConsumer<BlockPos, BlockState> function) {

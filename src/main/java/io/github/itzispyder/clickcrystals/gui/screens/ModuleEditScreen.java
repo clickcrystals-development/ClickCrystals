@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.Scroll
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.crystalling.ClickCrystal;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
@@ -16,11 +17,13 @@ import java.util.List;
 
 public class ModuleEditScreen extends DefaultBase {
 
+    private static Module previousOpened = Module.get(ClickCrystal.class);
     private final Module module;
 
     public ModuleEditScreen(Module module) {
         super("Editing Module " + module.getName());
         this.module = module;
+        previousOpened = module;
 
         ScrollPanelElement panel = new ScrollPanelElement(this, contentX + 5, contentY + 21, contentWidth - 5, contentHeight - 21);
         int caret = contentY + 25;
@@ -34,6 +37,10 @@ public class ModuleEditScreen extends DefaultBase {
             caret += sse.height + 5;
         }
         this.addChild(panel);
+    }
+
+    public ModuleEditScreen() {
+        this(previousOpened);
     }
 
     @Override
