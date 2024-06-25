@@ -89,11 +89,9 @@ public class Version implements Global {
         return isSameAs(version);
     }
 
-    static String fullVersionString = FabricLoader.getInstance().getModContainer(modId).get().getMetadata().getVersion().getFriendlyString();
-
-    static String getVersionPart(String fullVersionString) {
-        String[] parts = fullVersionString.split("-");
+    public static String getModVersion() {
+        String VersionString = FabricLoader.getInstance().getModContainer(modId).get().getMetadata().getVersion().getFriendlyString();
+        String[] parts = VersionString.split("-");
         return parts[1];
     }
-    public static String versionString = getVersionPart(fullVersionString);
 }

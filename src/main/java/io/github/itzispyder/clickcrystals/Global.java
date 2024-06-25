@@ -12,5 +12,5 @@ public interface Global {
     String prefix = "[ClickCrystals] ";
     String starter = "§7[§bClick§3Crystals§7] §r";
     String modId = "clickcrystals";
-    Version version = Version.ofString(Version.versionString);
+    Version version = Version.ofString(Version.getModVersion());
 }
