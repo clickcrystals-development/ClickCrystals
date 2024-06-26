@@ -9,6 +9,7 @@ import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.LongConsumer;
 
 public class InputCmd extends ScriptCommand implements Global, ThenChainable {
 
@@ -30,29 +31,31 @@ public class InputCmd extends ScriptCommand implements Global, ThenChainable {
     }
 
     public enum Action {
-        ATTACK(InteractionUtils::inputAttack, mc.options.attackKey::isPressed),
-        USE(InteractionUtils::inputUse, mc.options.useKey::isPressed),
-        FORWARD(InteractionUtils::inputForward, mc.options.forwardKey::isPressed),
-        BACKWARD(InteractionUtils::inputBackward, mc.options.backKey::isPressed),
-        STRAFE_LEFT(InteractionUtils::inputStrafeLeft, mc.options.leftKey::isPressed),
-        STRAFE_RIGHT(InteractionUtils::inputStrafeRight, mc.options.rightKey::isPressed),
-        JUMP(InteractionUtils::inputJump, mc.options.jumpKey::isPressed),
-        SPRINT(InteractionUtils::inputToggleSprint, mc.options.sprintKey::isPressed),
-        SNEAK(InteractionUtils::inputSneak, mc.options.sneakKey::isPressed),
-        LOCK_CURSOR(CameraRotator::lockCursor, CameraRotator::isCursorLocked),
-        UNLOCK_CURSOR(CameraRotator::unlockCursor, () -> !CameraRotator.isCursorLocked()),
-        LEFT(InteractionUtils::leftClick, mc.mouse::wasLeftButtonClicked),
-        RIGHT(InteractionUtils::rightClick, mc.mouse::wasRightButtonClicked),
-        MIDDLE(InteractionUtils::middleClick, mc.mouse::wasMiddleButtonClicked),
-        INVENTORY(InteractionUtils::inputInventory, () -> mc.currentScreen instanceof HandledScreen<?>),
-        KEY(null, null);
+        ATTACK(InteractionUtils::inputAttack, InteractionUtils::inputAttack, mc.options.attackKey::isPressed),
+        USE(InteractionUtils::inputUse, InteractionUtils::inputUse, mc.options.useKey::isPressed),
+        FORWARD(InteractionUtils::inputForward, InteractionUtils::inputForward, mc.options.forwardKey::isPressed),
+        BACKWARD(InteractionUtils::inputBackward, InteractionUtils::inputBackward, mc.options.backKey::isPressed),
+        STRAFE_LEFT(InteractionUtils::inputStrafeLeft, InteractionUtils::inputStrafeLeft, mc.options.leftKey::isPressed),
+        STRAFE_RIGHT(InteractionUtils::inputStrafeRight, InteractionUtils::inputStrafeRight, mc.options.rightKey::isPressed),
+        JUMP(InteractionUtils::inputJump, InteractionUtils::inputJump, mc.options.jumpKey::isPressed),
+        SPRINT(InteractionUtils::inputToggleSprint, null, mc.options.sprintKey::isPressed),
+        SNEAK(InteractionUtils::inputSneak, null, mc.options.sneakKey::isPressed),
+        LOCK_CURSOR(CameraRotator::lockCursor, null, CameraRotator::isCursorLocked),
+        UNLOCK_CURSOR(CameraRotator::unlockCursor, null, () -> !CameraRotator.isCursorLocked()),
+        LEFT(InteractionUtils::leftClick, null, mc.mouse::wasLeftButtonClicked),
+        RIGHT(InteractionUtils::rightClick, null, mc.mouse::wasRightButtonClicked),
+        MIDDLE(InteractionUtils::middleClick, null, mc.mouse::wasMiddleButtonClicked),
+        INVENTORY(InteractionUtils::inputInventory, null, () -> mc.currentScreen instanceof HandledScreen<?>),
+        KEY(null, null, null);
 
         private final Runnable action;
+        private final LongConsumer holdAction;
         private final BooleanSupplier isActive;
 
-        Action(Runnable action, BooleanSupplier isActive) {
+        Action(Runnable action, LongConsumer holdAction, BooleanSupplier isActive) {
             this.action = action;
             this.isActive = isActive;
+            this.holdAction = holdAction;
         }
 
         public boolean isActive() {
@@ -66,6 +69,15 @@ public class InputCmd extends ScriptCommand implements Global, ThenChainable {
         public void run() {
             if (!isDummy() && mc != null && mc.options != null) {
                 action.run();
+            }
+        }
+
+        public void runFor(long ms) {
+            if (!isDummy() && mc != null && mc.options != null) {
+                if (holdAction != null)
+                    holdAction.accept(ms);
+                else
+                    run();
             }
         }
     }

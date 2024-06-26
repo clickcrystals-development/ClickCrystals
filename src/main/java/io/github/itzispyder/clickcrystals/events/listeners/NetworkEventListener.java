@@ -73,6 +73,7 @@ public class NetworkEventListener implements Listener {
         if (e.getPacket() instanceof PlayerListS2CPacket packet) {
             if (packet.getActions().stream().anyMatch(a -> a == PlayerListS2CPacket.Action.ADD_PLAYER)) {
                 CameraRotator.cancelCurrentRotator(); // stops current rotator
+                TickEventListener.cancelTickInputs(); // stops tick inputs
 
                 // broadcasting joins
                 for (PlayerListS2CPacket.Entry entry : packet.getPlayerAdditionEntries()) {

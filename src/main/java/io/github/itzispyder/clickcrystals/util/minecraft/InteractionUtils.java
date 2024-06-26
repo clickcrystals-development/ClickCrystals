@@ -22,32 +22,64 @@ public final class InteractionUtils implements Global {
         ((MinecraftClientAccessor) mc).inputAttack();
     }
 
+    public static void inputAttack(long ms) {
+        TickEventListener.attack(ms);
+    }
+
     public static void inputUse() {
         ((MinecraftClientAccessor) mc).inputUse();
+    }
+
+    public static void inputUse(long ms) {
+        TickEventListener.use(ms);
     }
 
     public static void inputJump() {
         TickEventListener.jump(100);
     }
 
+    public static void inputJump(long ms) {
+        TickEventListener.jump(ms);
+    }
+
     public static void inputForward() {
         TickEventListener.forward(500);
+    }
+
+    public static void inputForward(long ms) {
+        TickEventListener.forward(ms);
     }
 
     public static void inputBackward() {
         TickEventListener.backward(500);
     }
 
+    public static void inputBackward(long ms) {
+        TickEventListener.backward(ms);
+    }
+
     public static void inputStrafeLeft() {
         TickEventListener.strafeLeft(500);
+    }
+
+    public static void inputStrafeLeft(long ms) {
+        TickEventListener.strafeLeft(ms);
     }
 
     public static void inputStrafeRight() {
         TickEventListener.strafeRight(500);
     }
 
+    public static void inputStrafeRight(long ms) {
+        TickEventListener.strafeRight(ms);
+    }
+
     public static void inputSneak() {
         TickEventListener.sneak(500);
+    }
+
+    public static void inputSneak(long ms) {
+        TickEventListener.sneak(ms);
     }
 
     public static void inputSwap() {

@@ -9,6 +9,7 @@ import io.github.itzispyder.clickcrystals.events.events.world.ClientTickStartEve
 public class TickEventListener implements Listener, Global {
 
     public static boolean shouldForward, shouldBackward, shouldStrafeLeft, shouldStrafeRight, shouldSneak, shouldJump;
+    public static boolean shouldAttack, shouldUse;
 
     @EventHandler
     public void onTickStart(ClientTickStartEvent e) {
@@ -23,63 +24,88 @@ public class TickEventListener implements Listener, Global {
 
     }
 
+    public static void cancelTickInputs() {
+        shouldForward = shouldBackward = shouldStrafeLeft = shouldStrafeRight =
+                shouldSneak = shouldJump = shouldAttack = shouldUse = false;
+    }
+
     public static void forward(long millis) {
         if (!shouldForward) {
             shouldForward = true;
-            system.scheduler.runDelayedTask(() -> {
+            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldForward = false;
                 mc.options.forwardKey.setPressed(false);
-            }, millis);
+            }), millis);
         }
     }
 
     public static void backward(long millis) {
         if (!shouldBackward) {
             shouldBackward = true;
-            system.scheduler.runDelayedTask(() -> {
+            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldBackward = false;
                 mc.options.backKey.setPressed(false);
-            }, millis);
+            }), millis);
         }
     }
 
     public static void strafeLeft(long millis) {
         if (!shouldStrafeLeft) {
             shouldStrafeLeft = true;
-            system.scheduler.runDelayedTask(() -> {
+            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldStrafeLeft = false;
                 mc.options.leftKey.setPressed(false);
-            }, millis);
+            }), millis);
         }
     }
 
     public static void strafeRight(long millis) {
         if (!shouldStrafeRight) {
             shouldStrafeRight = true;
-            system.scheduler.runDelayedTask(() -> {
+            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldStrafeRight = false;
                 mc.options.rightKey.setPressed(false);
-            }, millis);
+            }), millis);
         }
     }
 
     public static void sneak(long millis) {
         if (!shouldSneak) {
             shouldSneak = true;
-            system.scheduler.runDelayedTask(() -> {
+            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldSneak = false;
                 mc.options.sneakKey.setPressed(false);
-            }, millis);
+            }), millis);
         }
     }
 
     public static void jump(long millis) {
         if (!shouldJump) {
             shouldJump = true;
-            system.scheduler.runDelayedTask(() -> {
+            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldJump = false;
                 mc.options.jumpKey.setPressed(false);
-            }, millis);
+            }), millis);
+        }
+    }
+
+    public static void attack(long millis) {
+        if (!shouldAttack) {
+            shouldAttack = true;
+            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+                shouldAttack = false;
+                mc.options.attackKey.setPressed(false);
+            }), millis);
+        }
+    }
+
+    public static void use(long millis) {
+        if (!shouldUse) {
+            shouldUse = true;
+            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+                shouldUse = false;
+                mc.options.useKey.setPressed(false);
+            }), millis);
         }
     }
 
@@ -101,6 +127,12 @@ public class TickEventListener implements Listener, Global {
         }
         if (shouldJump) {
             mc.options.jumpKey.setPressed(true);
+        }
+        if (shouldAttack) {
+            mc.options.attackKey.setPressed(true);
+        }
+        if (shouldUse) {
+            mc.options.useKey.setPressed(true);
         }
     }
 }
