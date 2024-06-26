@@ -15,13 +15,6 @@ public class NoGuiBackground extends DummyModule {
             .build()
     );
 
-    public final ModuleSetting<Boolean> noBlur = scGeneral.add(createBoolSetting()
-            .name("disable-blur-effect.")
-            .description("Disable the blur effect in the GUI.")
-            .def(true)
-            .build()
-    );
-
     public NoGuiBackground() {
         super("no-gui-background", Categories.RENDER, "disable the black effect when opening the GUI");
     }

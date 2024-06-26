@@ -62,7 +62,7 @@ public abstract class MixinMinecraftClient implements MinecraftClientAccessor, G
             return;
 
         SelfGlow selfGlow = Module.get(SelfGlow.class);
-        if (selfGlow.isEnabled() && selfGlow.selfGlowColor.getVal() != SelfGlow.Color.NONE)
+        if (selfGlow.isEnabled())
             ci.setReturnValue(true);
     }
 }

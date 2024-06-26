@@ -1,6 +1,9 @@
 package io.github.itzispyder.clickcrystals.client.system;
 
-public class Version {
+import io.github.itzispyder.clickcrystals.Global;
+import net.fabricmc.loader.api.FabricLoader;
+
+public class Version implements Global {
 
     private final int[] digits;
 
@@ -84,5 +87,11 @@ public class Version {
             return false;
         }
         return isSameAs(version);
+    }
+
+    public static String getModVersion() {
+        String VersionString = FabricLoader.getInstance().getModContainer(modId).get().getMetadata().getVersion().getFriendlyString();
+        String[] parts = VersionString.split("-");
+        return parts[1];
     }
 }

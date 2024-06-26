@@ -43,7 +43,7 @@ public class MixinWorldRenderer {
             SelfGlow selfGlow = Module.get(SelfGlow.class);
 
             if (selfGlow.isEnabled()) {
-                SelfGlow.Color glowColor = selfGlow.selfGlowColor.getVal();
+                SelfGlow.Color glowColor = selfGlow.glowColor.getVal();
                 int[] rgba = glowColor.getRGBA();
                 OutlineVertexConsumerProvider outlineVertexConsumers = (OutlineVertexConsumerProvider) vertexConsumers;
                 outlineVertexConsumers.setColor(rgba[0], rgba[1], rgba[2], rgba[3]);
