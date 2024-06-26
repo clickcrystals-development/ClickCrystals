@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts.macros;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
+import io.github.itzispyder.clickcrystals.modules.scripts.InputType;
 import io.github.itzispyder.clickcrystals.modules.scripts.ThenChainable;
 
 public class HoldInputCmd extends ScriptCommand implements ThenChainable {
@@ -18,7 +19,7 @@ public class HoldInputCmd extends ScriptCommand implements ThenChainable {
             return;
         }
 
-        InputCmd.Action a = args.get(0).toEnum(InputCmd.Action.class, null);
+        InputType a = args.get(0).toEnum(InputType.class, null);
         long holdTime = (long)(args.get(1).toDouble() * 1000L);
 
         if (a.isDummy())

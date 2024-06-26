@@ -4,7 +4,6 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.scripts.macros.InputCmd;
 import io.github.itzispyder.clickcrystals.modules.scripts.syntax.AsCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.*;
 import io.github.itzispyder.clickcrystals.util.misc.Dimensions;
@@ -74,8 +73,8 @@ public class Conditionals implements Global {
     });
     public static final Conditional INPUT_ACTIVE = register("input_active", (ref, args, i) -> {
         assertClientPlayer();
-        InputCmd.Action a = args.get(i + 1).toEnum(InputCmd.Action.class, null);
-        if (a != InputCmd.Action.KEY)
+        InputType a = args.get(i + 1).toEnum(InputType.class, null);
+        if (a != InputType.KEY)
             return pair(a.isActive(), i + 2);
         else
             return pair(InteractionUtils.isKeyExtendedNamePressed(args.get(i + 2).toString()), i + 3);

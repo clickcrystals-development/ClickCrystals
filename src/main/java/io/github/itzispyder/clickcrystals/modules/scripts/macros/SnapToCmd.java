@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts.macros;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
+import io.github.itzispyder.clickcrystals.modules.scripts.TargetType;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.block.BlockState;
@@ -27,7 +28,7 @@ public class SnapToCmd extends ScriptCommand {
         // ex.      turn_to nearest_entity :creeper then say Yo
         Vec3d eyes = PlayerUtils.player().getEyePos();
 
-        switch (args.get(0).toEnum(TurnToCmd.Mode.class, null)) {
+        switch (args.get(0).toEnum(TargetType.class, null)) {
             case NEAREST_BLOCK -> {
                 Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(args.get(1).toString());
                 PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> specifiedSnap(pos.toCenterPos(), eyes, args));

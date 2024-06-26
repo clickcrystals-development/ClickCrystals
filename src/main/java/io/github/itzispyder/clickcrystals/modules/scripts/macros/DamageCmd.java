@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts.macros;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
+import io.github.itzispyder.clickcrystals.modules.scripts.TargetType;
 import io.github.itzispyder.clickcrystals.modules.scripts.ThenChainable;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.entity.Entity;
@@ -24,7 +25,7 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
             return;
         }
 
-        switch (args.get(0).toEnum(Mode.class, null)) {
+        switch (args.get(0).toEnum(TargetType.class, null)) {
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(args.get(1).toString());
                 PlayerUtils.runOnNearestEntity(32, filter, entity -> mc.interactionManager.attackEntity(mc.player, entity));
@@ -34,11 +35,7 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
                 PlayerUtils.runOnNearestEntity(32, ENTITY_EXISTS, entity -> mc.interactionManager.attackEntity(mc.player, entity));
                 executeWithThen(args, 1);
             }
+            default -> throw new IllegalArgumentException("unsupported operation");
         }
-    }
-
-    public enum Mode {
-        NEAREST_ENTITY,
-        ANY_ENTITY
     }
 }
