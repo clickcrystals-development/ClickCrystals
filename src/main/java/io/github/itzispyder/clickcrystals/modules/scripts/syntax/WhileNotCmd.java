@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts.syntax;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
+import io.github.itzispyder.clickcrystals.modules.scripts.Conditionals;
 import io.github.itzispyder.clickcrystals.modules.scripts.ThenChainable;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
@@ -33,9 +34,9 @@ public class WhileNotCmd extends ScriptCommand implements ThenChainable {
         AtomicReference<Scheduler.Task> task = new AtomicReference<>();
         task.set(system.scheduler.runRepeatingTask(() -> {
             try {
-                var condition = IfCmd.parseCondition(ref, args, beginIndex);
-                if (!condition.left) {
-                    executeOnClient(args, condition.right);
+                var condition = Conditionals.parseCondition(ref, args, beginIndex);
+                if (!condition.value()) {
+                    executeOnClient(args, condition.nextIndex());
                 }
                 else if (task.get() != null) {
                     task.get().cancel();

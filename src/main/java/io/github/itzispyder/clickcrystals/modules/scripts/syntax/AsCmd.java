@@ -44,6 +44,14 @@ public class AsCmd extends ScriptCommand implements ThenChainable {
         return currentReference;
     }
 
+    public static Entity getCurrentReferenceEntityDirect() {
+        return currentReference;
+    }
+
+    public static boolean hasCurrentReferenceEntity() {
+        return currentReference != null;
+    }
+
     public static void resetReferenceEntity() {
         currentReference = null;
     }
