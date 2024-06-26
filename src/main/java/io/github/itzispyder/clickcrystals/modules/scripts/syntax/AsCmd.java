@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 public class AsCmd extends ScriptCommand implements ThenChainable {
 
     private static Entity currentReference;
+    private static boolean referencing = false;
 
     public AsCmd() {
         super("as");
@@ -27,19 +28,23 @@ public class AsCmd extends ScriptCommand implements ThenChainable {
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(args.get(1).toString());
                 PlayerUtils.runOnNearestEntity(32, filter, entity -> currentReference = entity);
+                referencing = true;
                 executeWithThen(args, 2);
             }
             case ANY_ENTITY -> {
                 PlayerUtils.runOnNearestEntity(32, DamageCmd.ENTITY_EXISTS, entity -> currentReference = entity);
+                referencing = true;
                 executeWithThen(args, 1);
             }
             case CLIENT -> {
-                currentReference = PlayerUtils.player();
+                currentReference = null;
+                referencing = false;
                 executeWithThen(args, 1);
             }
             case TARGET_ENTITY -> {
                 if (mc.crosshairTarget instanceof EntityHitResult hit)
                     currentReference = hit.getEntity();
+                referencing = true;
                 executeWithThen(args, 1);
             }
             default -> throw new IllegalArgumentException("unsupported operation");
@@ -57,10 +62,11 @@ public class AsCmd extends ScriptCommand implements ThenChainable {
     }
 
     public static boolean hasCurrentReferenceEntity() {
-        return currentReference != null;
+        return currentReference != null || !referencing;
     }
 
     public static void resetReferenceEntity() {
         currentReference = null;
+        referencing = false;
     }
 }

@@ -35,11 +35,11 @@ public class DiscordInviteScreen extends GuiScreen {
                 }).build();
 
         inviteYSB = AbstractElement.create().dimensions(baseWidth / 4, 12)
-                .onPress(button -> system.openUrl("https://discord.gg/fmRadnST5G"))
+                .onPress(button -> system.openUrl("https://discord.gg/YcQzv9c3AX"))
                 .onRender((context, mouseX, mouseY, button) -> {
                     int fill = button.isHovered(mouseX, mouseY) ? Shades.GENERIC_LOW : Shades.GENERIC;
                     fillRoundHoriLine(context, button.x, button.y, baseWidth / 4, 12, fill);
-                    drawText(context, "Join YessirBox", button.x + 7, button.y + button.height / 3, 0.7F, false);
+                    drawText(context, "Join VoxD4pe", button.x + 7, button.y + button.height / 3, 0.7F, false);
                 }).build();
 
         decline = AbstractElement.create().dimensions(baseWidth / 4, 12)

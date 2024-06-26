@@ -12,6 +12,7 @@
  * - https://bit.ly/ccs-wiki
  * - https://discord.gg/tMaShNzNtP
  * - https://discord.gg/fmRadnST5G
+ * - https://discord.gg/YcQzv9c3AX
  * - https://www.curseforge.com/minecraft/mc-mods/clickcrystals
  * - https://planetminecraft.com/mod/clickcrystal
  *
