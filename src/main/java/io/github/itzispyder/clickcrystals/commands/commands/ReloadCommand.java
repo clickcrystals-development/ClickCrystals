@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.data.announce.BulletinBoard;
 import io.github.itzispyder.clickcrystals.data.pixelart.PixelArtGenerator;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
+import io.github.itzispyder.clickcrystals.modules.scripts.syntax.AsCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
@@ -48,6 +49,7 @@ public class ReloadCommand extends Command {
         system.println("-> stopping clickcrystals tasks");
         CameraRotator.cancelCurrentRotator();
         TickEventListener.cancelTickInputs();
+        AsCmd.resetReferenceEntity();
         PixelArtGenerator.cancel();
         Notification.clearNotifications();
         system.scheduler.cancelAllTasks();

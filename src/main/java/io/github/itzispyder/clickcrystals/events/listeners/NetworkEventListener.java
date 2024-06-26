@@ -12,6 +12,7 @@ import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEven
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.scripts.syntax.AsCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.network.packet.Packet;
@@ -53,6 +54,9 @@ public class NetworkEventListener implements Listener {
     @EventHandler
     public void onGameJoin(GameJoinEvent e) {
         try {
+            TickEventListener.cancelTickInputs(); // stops tick inputs
+            AsCmd.resetReferenceEntity();
+
             this.handleCheckUpdates();
             BulletinBoard.request();
             Module.disableAllGameJoinDisabled();
@@ -73,7 +77,6 @@ public class NetworkEventListener implements Listener {
         if (e.getPacket() instanceof PlayerListS2CPacket packet) {
             if (packet.getActions().stream().anyMatch(a -> a == PlayerListS2CPacket.Action.ADD_PLAYER)) {
                 CameraRotator.cancelCurrentRotator(); // stops current rotator
-                TickEventListener.cancelTickInputs(); // stops tick inputs
 
                 // broadcasting joins
                 for (PlayerListS2CPacket.Entry entry : packet.getPlayerAdditionEntries()) {

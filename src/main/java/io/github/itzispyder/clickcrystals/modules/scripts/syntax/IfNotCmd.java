@@ -13,7 +13,7 @@ public class IfNotCmd extends ScriptCommand implements Global, ThenChainable {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        var condition = IfCmd.parseCondition(args, 0);
+        var condition = IfCmd.parseCondition(AsCmd.getCurrentReferenceEntity(), args, 0);
         if (!condition.left) {
             executeWithThen(args, condition.right);
         }

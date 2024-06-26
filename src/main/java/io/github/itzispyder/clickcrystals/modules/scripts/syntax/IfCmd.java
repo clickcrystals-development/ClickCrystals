@@ -12,11 +12,10 @@ import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.dimension.DimensionType;
@@ -32,12 +31,14 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        int beginIndex = 0;
-        var condition = parseCondition(args, beginIndex);
-
+        var condition = parseCondition(AsCmd.getCurrentReferenceEntity(), args, 0);
         if (condition.left) {
             executeWithThen(args, condition.right);
         }
+    }
+
+    public static Pair<Boolean, Integer> parseCondition(ScriptArgs args, int beginIndex) {
+        return parseCondition(PlayerUtils.player(), args, beginIndex);
     }
 
     /**
@@ -46,9 +47,10 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
      * @param beginIndex begin index
      * @return pair(yourCondition, theNextBeginIndex)
      */
-    public static Pair<Boolean, Integer> parseCondition(ScriptArgs args, int beginIndex) {
+    public static Pair<Boolean, Integer> parseCondition(Entity ref, ScriptArgs args, int beginIndex) {
         ConditionType type = args.get(beginIndex).toEnum(ConditionType.class, null);
         int i = beginIndex;
+
         switch (type) {
             case TRUE -> {
                 return pair(true, i + 1);
@@ -57,35 +59,39 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
                 return pair(false, i + 1);
             }
             case HOLDING -> {
-                return pair(ScriptParser.parseItemPredicate(args.get(i + 1).toString()).test(HotbarUtils.getHand()), i + 2);
+                return pair(EntityUtils.isHolding(ref, ScriptParser.parseItemPredicate(args.get(i + 1).toString())), i + 2);
             }
             case OFF_HOLDING -> {
-                return pair(ScriptParser.parseItemPredicate(args.get(i + 1).toString()).test(HotbarUtils.getHand(Hand.OFF_HAND)), i + 2);
+                return pair(EntityUtils.isOffHolding(ref, ScriptParser.parseItemPredicate(args.get(i + 1).toString())), i + 2);
             }
             case TARGET_BLOCK -> {
-                boolean bl = mc.crosshairTarget instanceof BlockHitResult hit && ScriptParser.parseBlockPredicate(args.get(i + 1).toString()).test(PlayerUtils.getWorld().getBlockState(hit.getBlockPos()));
+                boolean bl = EntityUtils.getTarget(ref) instanceof BlockHitResult hit && ScriptParser.parseBlockPredicate(args.get(i + 1).toString()).test(PlayerUtils.getWorld().getBlockState(hit.getBlockPos()));
                 return pair(bl, i + 2);
             }
             case TARGET_ENTITY -> {
-                boolean bl = mc.crosshairTarget instanceof EntityHitResult hit && ScriptParser.parseEntityPredicate(args.get(i + 1).toString()).test(hit.getEntity());
+                boolean bl = EntityUtils.getTarget(ref) instanceof EntityHitResult hit && ScriptParser.parseEntityPredicate(args.get(i + 1).toString()).test(hit.getEntity());
                 return pair(bl, i + 2);
             }
             case TARGETING_BLOCK -> {
-                return pair(mc.crosshairTarget instanceof BlockHitResult hit && !PlayerUtils.getWorld().getBlockState(hit.getBlockPos()).isAir(), i + 1);
+                return pair(EntityUtils.getTarget(ref) instanceof BlockHitResult hit && !PlayerUtils.getWorld().getBlockState(hit.getBlockPos()).isAir(), i + 1);
             }
             case TARGETING_ENTITY -> {
-                return pair(mc.crosshairTarget instanceof EntityHitResult hit && hit.getEntity().isAlive(), i + 1);
+                return pair(EntityUtils.getTarget(ref) instanceof EntityHitResult hit && hit.getEntity().isAlive(), i + 1);
             }
             case INVENTORY_HAS -> {
+                assertClientPlayer();
                 return pair(InvUtils.has(ScriptParser.parseItemPredicate(args.get(i + 1).toString())), i + 2);
             }
             case EQUIPMENT_HAS -> {
-                return pair(InvUtils.hasEquipment(ScriptParser.parseItemPredicate(args.get(i + 1).toString())), i + 2);
+                return pair(EntityUtils.hasEquipment(ref, ScriptParser.parseItemPredicate(args.get(i + 1).toString())), i + 2);
             }
             case HOTBAR_HAS -> {
+                assertClientPlayer();
                 return pair(HotbarUtils.has(ScriptParser.parseItemPredicate(args.get(i + 1).toString())), i + 2);
             }
             case INPUT_ACTIVE -> {
+                assertClientPlayer();
+
                 InputCmd.Action a = args.get(i + 1).toEnum(InputCmd.Action.class, null);
                 if (a != InputCmd.Action.KEY)
                     return pair(a.isActive(), i + 2);
@@ -96,7 +102,7 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
                 Predicate<BlockState> filter = args.match(i + 1, "any_block") ? state -> true : ScriptParser.parseBlockPredicate(args.get(i + 1).toString());
                 double range = args.get(i + 2).toDouble();
                 boolean[] bl = { false };
-                PlayerUtils.runOnNearestBlock(range, filter, (pos, state) -> {
+                EntityUtils.runOnNearestBlock(ref, range, filter, (pos, state) -> {
                     bl[0] = pos.toCenterPos().distanceTo(PlayerUtils.getPos()) <= range;
                 });
                 return pair(bl[0], i + 3);
@@ -105,34 +111,39 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
                 Predicate<Entity> filter = args.match(i + 1, "any_entity") ? entity -> true : ScriptParser.parseEntityPredicate(args.get(i + 1).toString());
                 double range = args.get(i + 2).toDouble();
                 boolean[] bl = { false };
-                PlayerUtils.runOnNearestEntity(range, filter, entity -> {
+                EntityUtils.runOnNearestEntity(ref, range, filter, entity -> {
                     bl[0] = entity.distanceTo(PlayerUtils.player()) <= range;
                 });
                 return pair(bl[0], i + 3);
             }
             case ATTACK_PROGRESS -> {
+                assertClientPlayer();
                 return pair(evalIntegers(PlayerUtils.player().getAttackCooldownProgress(1.0F), args.get(i + 1).toString()), i + 2);
             }
             case HEALTH -> {
-                return pair(evalIntegers((int)PlayerUtils.player().getHealth(), args.get(i + 1).toString()), i + 2);
+                return pair(ref instanceof LivingEntity liv && evalIntegers((int)liv.getHealth(), args.get(i + 1).toString()), i + 2);
             }
             case ARMOR -> {
-                return pair(evalIntegers(PlayerUtils.player().getArmor(), args.get(i + 1).toString()), i + 2);
+                return pair(ref instanceof LivingEntity liv && evalIntegers(liv.getArmor(), args.get(i + 1).toString()), i + 2);
             }
             case POS_X -> {
-                return pair(evalIntegers((int)PlayerUtils.getPos().getX(), args.get(i + 1).toString()), i + 2);
+                return pair(evalIntegers((int)ref.getX(), args.get(i + 1).toString()), i + 2);
             }
             case POS_Y -> {
-                return pair(evalIntegers((int)PlayerUtils.getPos().getY(), args.get(i + 1).toString()), i + 2);
+                return pair(evalIntegers((int)ref.getY(), args.get(i + 1).toString()), i + 2);
             }
             case POS_Z -> {
-                return pair(evalIntegers((int)PlayerUtils.getPos().getZ(), args.get(i + 1).toString()), i + 2);
+                return pair(evalIntegers((int)ref.getZ(), args.get(i + 1).toString()), i + 2);
             }
             case MODULE_ENABLED -> {
+                assertClientPlayer();
+
                 Module m = system.getModuleById(args.get(i + 1).toString());
                 return pair(m != null && m.isEnabled(), i + 2);
             }
             case MODULE_DISABLED -> {
+                assertClientPlayer();
+
                 Module m = system.getModuleById(args.get(i + 1).toString());
                 return pair(m != null && !m.isEnabled(), i + 2);
             }
@@ -141,7 +152,7 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
                         args.get(i + 1).toString(),
                         args.get(i + 2).toString(),
                         args.get(i + 3).toString(),
-                        PlayerUtils.player()
+                        ref
                 );
                 Predicate<BlockState> pre = ScriptParser.parseBlockPredicate(args.get(i + 4).toString());
                 return pair(pre.test(loc.getBlock(PlayerUtils.getWorld())), i + 5);
@@ -156,47 +167,46 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
                 return pair(bl, i + 2);
             }
             case EFFECT_AMPLIFIER -> {
-                var statusEffect = Registries.STATUS_EFFECT.getEntry(ScriptParser.parseStatusEffect(args.get(i + 1).toString()));
-                StatusEffectInstance effect = PlayerUtils.player().getStatusEffect(statusEffect);
-
-                if (effect == null) {
-                    effect = new StatusEffectInstance(statusEffect);
-                }
+                StatusEffectInstance effect = EntityUtils.getEffect(ref, ScriptParser.parseStatusEffect(args.get(i + 1).toString()));
                 return pair(evalIntegers(effect.getAmplifier(), args.get(i + 2).toString()), i + 3);
             }
             case EFFECT_DURATION -> {
-                var statusEffect = Registries.STATUS_EFFECT.getEntry(ScriptParser.parseStatusEffect(args.get(i + 1).toString()));
-                StatusEffectInstance effect = PlayerUtils.player().getStatusEffect(statusEffect);
-                if (effect == null) {
-                    effect = new StatusEffectInstance(statusEffect);
-                }
+                StatusEffectInstance effect = EntityUtils.getEffect(ref, ScriptParser.parseStatusEffect(args.get(i + 1).toString()));
                 return pair(evalIntegers(effect.getDuration(), args.get(i + 2).toString()), i + 3);
             }
             case IN_GAME -> {
+                assertClientPlayer();
                 return pair(PlayerUtils.valid(), i + 1);
             }
             case PLAYING -> {
+                assertClientPlayer();
                 return pair(PlayerUtils.valid() && mc.currentScreen == null, i + 1);
             }
             case IN_SCREEN -> {
+                assertClientPlayer();
                 return pair(PlayerUtils.valid() && mc.currentScreen != null, i + 1);
             }
             case CHANCE_OF -> {
                 return pair(Math.random() * 100 < args.get(i + 1).toDouble(), i + 2);
             }
             case COLLIDING -> {
-                return pair(PlayerUtils.isColliding(), i + 1);
+                return pair(EntityUtils.isColliding(ref), i + 1);
             }
             case COLLIDING_HORIZONTALLY -> {
-                return pair(PlayerUtils.isCollidingHorizontally(), i + 1);
+                return pair(EntityUtils.isCollidingHorizontally(ref), i + 1);
             }
             case COLLIDING_VERTICALLY -> {
-                return pair(PlayerUtils.isCollidingVertically(), i + 1);
+                return pair(EntityUtils.isCollidingVertically(ref), i + 1);
             }
             case MOVING -> {
-                return pair(PlayerUtils.isMoving(), i + 1);
+                return pair(EntityUtils.isMoving(ref), i + 1);
+            }
+            case BLOCKING -> {
+                return pair(EntityUtils.isBlocking(ref), i + 1);
             }
             case CURSOR_ITEM -> {
+                assertClientPlayer();
+
                 ClientPlayerEntity p = PlayerUtils.player();
                 Predicate<ItemStack> item = ScriptParser.parseItemPredicate(args.get(i + 1).toString());
                 if (p == null || p.currentScreenHandler == null)
@@ -204,11 +214,24 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
                 ItemStack stack = p.currentScreenHandler.getCursorStack();
                 return pair(stack != null && item.test(stack), i + 2);
             }
+            case REFERENCE_ENTITY -> {
+                if (args.match(i + 1, "client")) {
+                    return pair(ref == PlayerUtils.player(), i + 2);
+                }
+                Predicate<Entity> filter = args.match(i + 1, "any_entity") ? entity -> true : ScriptParser.parseEntityPredicate(args.get(i + 1).toString());
+                return pair(filter.test(ref), i + 2);
+            }
         }
         return pair(false, 0);
     }
 
+    public static void assertClientPlayer() {
+        if (AsCmd.getCurrentReferenceEntity() != PlayerUtils.player())
+            throw new IllegalArgumentException("unsupported action on non-client player or entity; did you unintentionally use the 'as' command?");
+    }
+
     private static <L, R> Pair<L, R> pair(L left, R right) {
+        AsCmd.resetReferenceEntity();
         return Pair.of(left, right);
     }
 
@@ -247,7 +270,9 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
         COLLIDING_HORIZONTALLY,
         COLLIDING_VERTICALLY,
         MOVING,
-        CURSOR_ITEM
+        CURSOR_ITEM,
+        REFERENCE_ENTITY,
+        BLOCKING
     }
 
     /**
