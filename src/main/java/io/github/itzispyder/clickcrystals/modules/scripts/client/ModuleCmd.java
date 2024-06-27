@@ -30,10 +30,15 @@ public class ModuleCmd extends ScriptCommand implements Global {
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
         switch (args.get(0).toEnum(Action.class, null)) {
             case CREATE -> {
-                if (ClickScript.currentFile.get() == null) {
+                if (ClickScript.currentFile.get() == null)
                     throw new IllegalStateException("Module cannot be created: current file pointer is null!");
-                }
-                currentScriptModule = new ScriptedModule(args.get(1).toString(), "", ClickScript.currentFile.get());
+
+                ScriptedModule created = new ScriptedModule(args.get(1).toString(), "", ClickScript.currentFile.get());
+
+                if (system.getModuleById(created.getId()) != null)
+                    throw new IllegalStateException("Cannot create module '%s' because one with the same name already exists!".formatted(created.getId()));
+
+                currentScriptModule = created;
                 system.addModule(currentScriptModule);
                 ClickScript.currentFile.set(null);
             }

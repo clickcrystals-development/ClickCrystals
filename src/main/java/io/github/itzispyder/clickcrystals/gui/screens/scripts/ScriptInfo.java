@@ -93,7 +93,7 @@ public record ScriptInfo(Info... scripts) implements Global {
         }
 
         public String toLocalPath() {
-            return Config.PATH_SCRIPTS + toFileName() + ".ccs";
+            return Config.PATH_SCRIPTS + "downloads/" + toFileName() + ".ccs";
         }
 
         public String toFileName() {

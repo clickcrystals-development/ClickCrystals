@@ -37,26 +37,32 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Version: 1.2.5
+Version: 1.2.6
 
-Update:
-  - 1.21 SUPPORT # credit: I-No-One
+Add:
+  - as command # as nearest_entity :player if holding :diamond_sword
+  - if on_ground
+  - if on_fire
+  - if frozen
+  - if has_equiptment
+  - if blocking
+  - if in_singleplayer
+  - if hurt_time
+  - if cursor_item
+  - if moving
+  - if colliding
+  - if colliding_horizontally
+  - if colliding_vertically
+  - if reference_entity
+  - execute_period # execute_period 0.05 {} to wait 0.05 seconds between each execution inside of the brackets
+  - hold_input # hold_input attack 100
+  - hold_input cancel
 
-Patched:
-  - health tags module rendering weirdly when near water or translucent blocks
-  - dragging the scroll bar being very slow or unbalanced
+Patches:
+  - link module edit screen to module browsing screen
 
-Added:
-  - online script downloader, download pre-made scripts!
-  - GUI opening and closing animations
-  - GUI widgets (sliders, toggles, etc.) have opening and toggle animations
-  - script command condition # if input_active k (key_name) ex. if input active key k
-  - script command input # input key (key_name) ex. input key left_shift
-  - script command gui_quickmove updated # now supports swapping to hotbar! ex. gui_quickmove #totem 7
-  - module SelfGlow # credit: I-No-One
-
-Tweaked:
-  - made wait script command spit an error when people use it wrongly cuz too many people uses it wrongly
+Pulls:
+  - accept PR https://github.com/ItziSpyder/ClickCrystals/pull/70
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)
