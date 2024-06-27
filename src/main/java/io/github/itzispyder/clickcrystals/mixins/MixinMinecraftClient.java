@@ -58,11 +58,7 @@ public abstract class MixinMinecraftClient implements MinecraftClientAccessor, G
 
     @Inject(method = "hasOutline", at = @At("HEAD"), cancellable = true)
     private void outlineEntities(Entity entity, CallbackInfoReturnable<Boolean> ci) {
-        if (!(entity instanceof ClientPlayerEntity))
-            return;
-
-        SelfGlow selfGlow = Module.get(SelfGlow.class);
-        if (selfGlow.isEnabled())
+        if (entity instanceof ClientPlayerEntity && Module.isEnabled(SelfGlow.class))
             ci.setReturnValue(true);
     }
 }

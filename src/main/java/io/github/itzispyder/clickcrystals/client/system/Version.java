@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.client.system;
 
 import io.github.itzispyder.clickcrystals.Global;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 
 public class Version implements Global {
 
@@ -83,15 +84,16 @@ public class Version implements Global {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Version version)) {
+        if (!(obj instanceof Version v)) {
             return false;
         }
-        return isSameAs(version);
+        return isSameAs(v);
     }
 
     public static String getModVersion() {
-        String VersionString = FabricLoader.getInstance().getModContainer(modId).get().getMetadata().getVersion().getFriendlyString();
-        String[] parts = VersionString.split("-");
-        return parts[1];
+        ModContainer mod = FabricLoader.getInstance().getModContainer(modId)
+                .orElseThrow(() -> new IllegalArgumentException("ClickCrystals has not been loaded"));
+        String ver = mod.getMetadata().getVersion().getFriendlyString();
+        return ver.replaceFirst("((\\d\\.?)+-)+", "");
     }
 }

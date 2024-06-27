@@ -29,7 +29,7 @@ public class CpsRelativeHud extends TextHud implements Listener {
 
     @Override
     public String getText() {
-        return clickSpeeds.left + " §8|§f " + clickSpeeds.right;
+        return clickSpeeds.left + " • " + clickSpeeds.right;
     }
 
     @EventHandler
@@ -88,7 +88,7 @@ public class CpsRelativeHud extends TextHud implements Listener {
         return bl;
     }
 
-    private class ClickQueue extends ArrayList<Integer> {
+    static class ClickQueue extends ArrayList<Integer> {
         public void pop() {
             if (!isEmpty()) {
                 remove(size() - 1);

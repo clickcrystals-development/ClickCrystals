@@ -19,14 +19,6 @@ public class ResourceRelativeHud extends Hud {
     public void render(DrawContext context) {
         renderBackdrop(context);
 
-        if (Module.get(InGameHuds.class).hudResourceMode.getVal() == InGameHuds.ResourceHudMode.RECTANGLE) {
-            renderRectangleMode(context);
-        } else {
-            renderSquareMode(context);
-        }
-    }
-
-    private void renderRectangleMode(DrawContext context) {
         int y = getY();
         int g = 2;
         int next = 16 + g;
@@ -45,30 +37,6 @@ public class ResourceRelativeHud extends Hud {
                 InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) + "");
         caret += next + g;
         setHeight(caret - y);
-    }
-//    there a problem with moving the hud when it's on renderSquareMode.
-    private void renderSquareMode(DrawContext context) {
-        int y = getY();
-        int g = 2;
-        int size = 16;
-        int startX = getX() + g;
-        int startY = y + g;
-        int caretX = startX;
-        int caretY = startY;
-
-        drawItem(context, Items.TOTEM_OF_UNDYING, caretX, caretY);
-        caretX += size + g;
-        drawItem(context, Items.END_CRYSTAL, caretX, caretY);
-        caretX += size + g;
-        drawItem(context, Items.OBSIDIAN, caretX, caretY);
-        caretX = startX;
-        caretY += size + g;
-        drawItem(context, Items.EXPERIENCE_BOTTLE, caretX, caretY);
-        caretX += size + g;
-        RenderUtils.drawItem(context, Items.ARROW.getDefaultStack(), caretX, caretY, 1.0F,
-                InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) + "");
-
-        setHeight((caretY + size + g) - y);
     }
 
     private void drawItem(DrawContext context, Item item, int x, int y) {

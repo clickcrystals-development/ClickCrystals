@@ -39,15 +39,15 @@ public class MixinWorldRenderer {
 
     @Inject(method = "renderEntity", at = @At("HEAD"))
     private void onRenderEntity(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
-        if (entity instanceof ClientPlayerEntity && vertexConsumers instanceof OutlineVertexConsumerProvider) {
-            SelfGlow selfGlow = Module.get(SelfGlow.class);
+        if (!(entity instanceof ClientPlayerEntity && vertexConsumers instanceof OutlineVertexConsumerProvider outlineConsumers))
+            return;
 
-            if (selfGlow.isEnabled()) {
-                SelfGlow.Color glowColor = selfGlow.glowColor.getVal();
-                int[] rgba = glowColor.getRGBA();
-                OutlineVertexConsumerProvider outlineVertexConsumers = (OutlineVertexConsumerProvider) vertexConsumers;
-                outlineVertexConsumers.setColor(rgba[0], rgba[1], rgba[2], rgba[3]);
-            }
+        SelfGlow selfGlow = Module.get(SelfGlow.class);
+
+        if (selfGlow.isEnabled()) {
+            SelfGlow.Color glowColor = selfGlow.glowColor.getVal();
+            int[] rgba = glowColor.getRGBA();
+            outlineConsumers.setColor(rgba[0], rgba[1], rgba[2], rgba[3]);
         }
     }
 }
