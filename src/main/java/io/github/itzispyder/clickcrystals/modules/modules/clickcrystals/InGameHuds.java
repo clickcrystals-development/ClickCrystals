@@ -50,6 +50,12 @@ public class InGameHuds extends Module implements Listener {
             .def(ColorHelper.Argb.getAlpha(Hud.DEFAULT_ARGB))
             .build()
     );
+    public final ModuleSetting<Boolean> hudArmor = scHudVisibility.add(BooleanSetting.create()
+            .name("render-armor-hud")
+            .description("Renders the armor hud.")
+            .def(true)
+            .build()
+            );
     public final ModuleSetting<Boolean> hudIcon = scHudVisibility.add(BooleanSetting.create()
             .name("render-icon-hud")
             .description("Renders the icon hud.")

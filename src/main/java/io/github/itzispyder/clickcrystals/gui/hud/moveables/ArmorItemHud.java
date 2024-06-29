@@ -2,22 +2,21 @@ package io.github.itzispyder.clickcrystals.gui.hud.moveables;
 
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.misc.ArmorHud;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
 
 public class ArmorItemHud extends Hud {
-    ArmorHud armorHud = Module.get(ArmorHud.class);
 
     public ArmorItemHud() {
-        super("armor-hud", 340, 228, 80 , 20);
+        super("armor-hud", 387, 222, 80 , 20);
     }
 
     @Override
     public void render(DrawContext context) {
-        if (armorHud.isEnabled() && PlayerUtils.player() != null) {
+        if (PlayerUtils.player() != null) {
             renderBackdrop(context);
 
             int x = getX();
@@ -46,11 +45,11 @@ public class ArmorItemHud extends Hud {
 
     @Override
     public boolean canRender() {
-        return super.canRender() && armorHud.isEnabled();
+        return super.canRender() && Module.getFrom(InGameHuds.class, m -> m.hudArmor.getVal());
     }
 
     @Override
     public int getArgb() {
-        return armorHud.getArgb();
+        return Module.getFrom(InGameHuds.class, InGameHuds::getArgb);
     }
 }
