@@ -4,14 +4,15 @@ import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
 
-public class ArmorItemHud extends Hud {
+public class ArmorRelativeHud extends Hud {
 
-    public ArmorItemHud() {
-        super("armor-hud", 387, 222, 80 , 20);
+    public ArmorRelativeHud() {
+        super("armor-hud", 387, 222, 80, 20);
     }
 
     @Override
@@ -30,17 +31,18 @@ public class ArmorItemHud extends Hud {
         if (PlayerUtils.invalid()) return;
 
         ClientPlayerEntity player = PlayerUtils.player();
+        int slotHeight = 20;
         int slotWidth = 20;
+        int armorCount = 4;
+        int totalWidth = slotWidth * armorCount;
+
+        int startX = x + (getWidth() - totalWidth) / 2;
+        int startY = y + (getHeight() - slotHeight) / 2 + 1;
 
         for (ItemStack armorItem : player.getArmorItems()) {
-            renderItem(context, armorItem, x, y);
-            x += slotWidth;
+            RenderUtils.drawItem(context, armorItem, startX, startY);
+            startX += slotWidth;
         }
-    }
-
-    private void renderItem(DrawContext context, ItemStack item, int x, int y) {
-        context.drawItem(item, x, y);
-        context.drawItemInSlot(mc.textRenderer, item, x, y);
     }
 
     @Override

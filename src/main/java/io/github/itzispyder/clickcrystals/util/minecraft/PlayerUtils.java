@@ -8,6 +8,7 @@ import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAttachmentType;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.util.math.BlockPos;
@@ -15,6 +16,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -72,7 +74,7 @@ public final class PlayerUtils implements Global {
     public static float getEntityNameLabelHeight(Entity entity, float tickDelta) {
         float yaw = entity.getYaw(tickDelta);
         Vec3d vec = entity.getAttachments().getPointNullable(EntityAttachmentType.NAME_TAG, 0, yaw);
-        return (float)(vec == null ? 0.5 : vec.y + 0.5);
+        return (float) (vec == null ? 0.5 : vec.y + 0.5);
     }
 
     public static void sendPacket(Packet<?> packet) {
@@ -136,7 +138,7 @@ public final class PlayerUtils implements Global {
         for (double x = box.minX; x <= box.maxX; x++) {
             for (double y = box.minY; y <= box.maxY; y++) {
                 for (double z = box.minZ; z <= box.maxZ; z++) {
-                    BlockPos pos = new BlockPos((int)Math.floor(x), (int)Math.floor(y), (int)Math.floor(z));
+                    BlockPos pos = new BlockPos((int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
                     BlockState state = world.getBlockState(pos);
 
                     if (state == null || state.isAir()) {
@@ -157,6 +159,15 @@ public final class PlayerUtils implements Global {
             return null;
         }
         return candidates.get(0);
+    }
+
+    public static boolean isEffected() {
+        ClientPlayerEntity p = PlayerUtils.player();
+        if (p != null) {
+            Collection<StatusEffectInstance> effects = p.getStatusEffects();
+            return !effects.isEmpty();
+        }
+        return false;
     }
 
     public static Entity getNearestEntity(double range, Predicate<Entity> filter) {

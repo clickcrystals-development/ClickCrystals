@@ -15,6 +15,7 @@ import net.minecraft.util.math.ColorHelper;
 public class InGameHuds extends Module implements Listener {
 
     private final SettingSection scGeneral = getGeneralSection();
+    private final SettingSection scHudPotion = createSettingSection("potion-hud-settings");
     private final SettingSection scHudVisibility = createSettingSection("hud-visibility");
     private final SettingSection scHudTarget = createSettingSection("target-hud-settings");
     private final SettingSection scHudClock = createSettingSection("clock-hud-settings");
@@ -48,6 +49,12 @@ public class InGameHuds extends Module implements Listener {
             .name("color-alpha")
             .description("Hud backdrop color value (alpha or transparency)")
             .def(ColorHelper.Argb.getAlpha(Hud.DEFAULT_ARGB))
+            .build()
+    );
+    public final ModuleSetting<Boolean> hudPotion = scHudVisibility.add(BooleanSetting.create()
+            .name("render-potion-hud")
+            .description("Renders the potion hud.")
+            .def(false)
             .build()
     );
     public final ModuleSetting<Boolean> hudArmor = scHudVisibility.add(BooleanSetting.create()
@@ -148,6 +155,21 @@ public class InGameHuds extends Module implements Listener {
             .name("clock-hud-hour-display")
             .description("Clock hour display.")
             .def(ClockDisplay.HOUR_12)
+            .build()
+    );
+    public final ModuleSetting<Double> high = scHudPotion.add(createDoubleSetting()
+            .name("potion-hud-high")
+            .description("real 2.")
+            .def(5.0)
+            .max(100.0)
+            .min(0.0)            .build()
+    );
+    public final ModuleSetting<Double> real = scHudPotion.add(createDoubleSetting()
+            .name("potion-hud-wide")
+            .description("real.")
+            .def(5.0)
+            .max(100.0)
+            .min(0.0)
             .build()
     );
 

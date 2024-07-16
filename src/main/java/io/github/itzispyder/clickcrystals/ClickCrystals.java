@@ -243,8 +243,9 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addHud(new ColorOverlayHud());
         system.addHud(new ModuleListTextHud());
         system.addHud(new CrystSpeedHud());
-        system.addHud(new ArmorItemHud());
+        system.addHud(new ArmorRelativeHud());
         system.addHud(new NotificationHud());
+        system.addHud(new PotionRelativeHud());
         system.addHud(new EntityIndicatorHud());
     }
 
@@ -302,6 +303,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new TimeChanger());
 
         // rendering
+        system.addModule(new FreeLook());
         system.addModule(new BlockOutline());
         system.addModule(new CameraClip());
         system.addModule(new NoGuiBackground());
