@@ -8,7 +8,6 @@ import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAttachmentType;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.util.math.BlockPos;
@@ -16,7 +15,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -161,11 +159,10 @@ public final class PlayerUtils implements Global {
         return candidates.get(0);
     }
 
-    public static boolean isEffected() {
+    public static boolean hasEffects() {
         ClientPlayerEntity p = PlayerUtils.player();
         if (p != null) {
-            Collection<StatusEffectInstance> effects = p.getStatusEffects();
-            return !effects.isEmpty();
+            return !p.getStatusEffects().isEmpty();
         }
         return false;
     }
@@ -223,5 +220,29 @@ public final class PlayerUtils implements Global {
             return true;
         }
         return false;
+    }
+
+    public static BlockPos getNearestBlock(double range, Predicate<BlockState> filter) {
+        if (invalid()) {
+            return null;
+        }
+
+        AtomicReference<Double> nearestDist = new AtomicReference<>(range);
+        AtomicReference<BlockPos> nearestPos = new AtomicReference<>();
+        Box box = player().getBoundingBox().expand(range);
+        Vec3d playerPos = player().getPos();
+        World world = getWorld();
+
+        boxIterator(world, box, (pos, state) -> {
+            if (filter.test(state) && pos.isWithinDistance(playerPos, nearestDist.get())) {
+                double distance = Math.sqrt(pos.getSquaredDistance(playerPos));
+                if (distance < nearestDist.get()) {
+                    nearestDist.set(distance);
+                    nearestPos.set(pos);
+                }
+            }
+        });
+
+        return nearestPos.get();
     }
 }

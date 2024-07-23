@@ -59,7 +59,7 @@ public class PotionRelativeHud extends Hud {
 
     @Override
     public boolean canRender() {
-        return super.canRender() && Module.getFrom(InGameHuds.class, m -> m.hudPotion.getVal() && PlayerUtils.isEffected());
+        return super.canRender() && Module.getFrom(InGameHuds.class, m -> m.hudPotion.getVal() && PlayerUtils.hasEffects());
     }
 
     @Override
