@@ -104,7 +104,7 @@ public class ScriptedModule extends ListenerModule {
     }
 
     @EventHandler
-    public void onTick(ClientTickEndEvent e) {
+    public void onTick(ClientTickStartEvent e) {
         for (TickListener l : tickListeners) {
             l.pass(e);
         }
@@ -225,7 +225,7 @@ public class ScriptedModule extends ListenerModule {
 
     @FunctionalInterface
     public interface TickListener {
-        void pass(ClientTickEndEvent e);
+        void pass(ClientTickStartEvent e);
     }
 
     @FunctionalInterface

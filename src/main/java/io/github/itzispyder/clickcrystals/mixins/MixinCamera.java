@@ -18,15 +18,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Camera.class)
 public abstract class MixinCamera implements Global {
 
-    @Unique
-    private boolean bypassCameraClip;
-
-    @Shadow
-    protected abstract float clipToSpace(float desiredCameraDistance);
-
-    @Shadow
-    protected abstract void setRotation(float y, float p);
-
+    @Unique private boolean bypassCameraClip;
+    @Shadow protected abstract float clipToSpace(float desiredCameraDistance);
+    @Shadow protected abstract void setRotation(float y, float p);
 
     @Inject(method = "getSubmersionType", at = @At("RETURN"), cancellable = true)
     public void getSubmersionType(CallbackInfoReturnable<CameraSubmersionType> cir) {
