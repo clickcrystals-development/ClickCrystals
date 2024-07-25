@@ -160,9 +160,8 @@ public final class PlayerUtils implements Global {
     }
 
     public static boolean hasEffects() {
-        ClientPlayerEntity p = PlayerUtils.player();
-        if (p != null) {
-            return !p.getStatusEffects().isEmpty();
+        if (valid()) {
+            return !player().getStatusEffects().isEmpty();
         }
         return false;
     }
