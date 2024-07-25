@@ -42,7 +42,6 @@
     "MixinLivingEntity",
     "MixinMinecraftClient",
     "MixinPlayerEntity",
-    "MixinPlayerInventory",
-    "MixinServerPlayerEntity"
+    "MixinPlayerInventory"
   ]
 }

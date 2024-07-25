@@ -27,7 +27,6 @@ public final class Tex implements Global {
     }
 
     public static class Defaults {
-        public static final Identifier ITEM_WIDGET = Identifier.of(modId, "textures/gui/item_widget.png");
         public static final Identifier OPTIONS_BACKGROUND = Identifier.of(modId, "textures/gui/options_background.png");
         public static final Identifier NO_TOTEMS_MEME = Identifier.of(modId, "textures/overlays/no_totem.png");
         public static final Identifier NO_TOTEMS_ICON = Identifier.of(modId, "textures/overlays/totemless_icon.png");
@@ -35,7 +34,6 @@ public final class Tex implements Global {
 
     public static class Socials {
         public static final Identifier DISCORD = Identifier.of(modId, "textures/display/socials/discord.png");
-        public static final Identifier MODRINTH = Identifier.of(modId, "textures/display/socials/modrinth.png");
         public static final Identifier CURSEFORGE = Identifier.of(modId, "textures/display/socials/curseforge.png");
         public static final Identifier YOUTUBE = Identifier.of(modId, "textures/display/socials/youtube.png");
         public static final Identifier PLANETMC = Identifier.of(modId, "textures/display/socials/planetmc.png");

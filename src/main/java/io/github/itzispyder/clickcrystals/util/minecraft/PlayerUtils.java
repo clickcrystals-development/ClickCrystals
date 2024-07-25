@@ -72,7 +72,7 @@ public final class PlayerUtils implements Global {
     public static float getEntityNameLabelHeight(Entity entity, float tickDelta) {
         float yaw = entity.getYaw(tickDelta);
         Vec3d vec = entity.getAttachments().getPointNullable(EntityAttachmentType.NAME_TAG, 0, yaw);
-        return (float)(vec == null ? 0.5 : vec.y + 0.5);
+        return (float) (vec == null ? 0.5 : vec.y + 0.5);
     }
 
     public static void sendPacket(Packet<?> packet) {
@@ -136,7 +136,7 @@ public final class PlayerUtils implements Global {
         for (double x = box.minX; x <= box.maxX; x++) {
             for (double y = box.minY; y <= box.maxY; y++) {
                 for (double z = box.minZ; z <= box.maxZ; z++) {
-                    BlockPos pos = new BlockPos((int)Math.floor(x), (int)Math.floor(y), (int)Math.floor(z));
+                    BlockPos pos = new BlockPos((int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
                     BlockState state = world.getBlockState(pos);
 
                     if (state == null || state.isAir()) {
@@ -157,6 +157,14 @@ public final class PlayerUtils implements Global {
             return null;
         }
         return candidates.get(0);
+    }
+
+    public static boolean hasEffects() {
+        ClientPlayerEntity p = PlayerUtils.player();
+        if (p != null) {
+            return !p.getStatusEffects().isEmpty();
+        }
+        return false;
     }
 
     public static Entity getNearestEntity(double range, Predicate<Entity> filter) {
@@ -212,5 +220,29 @@ public final class PlayerUtils implements Global {
             return true;
         }
         return false;
+    }
+
+    public static BlockPos getNearestBlock(double range, Predicate<BlockState> filter) {
+        if (invalid()) {
+            return null;
+        }
+
+        AtomicReference<Double> nearestDist = new AtomicReference<>(range);
+        AtomicReference<BlockPos> nearestPos = new AtomicReference<>();
+        Box box = player().getBoundingBox().expand(range);
+        Vec3d playerPos = player().getPos();
+        World world = getWorld();
+
+        boxIterator(world, box, (pos, state) -> {
+            if (filter.test(state) && pos.isWithinDistance(playerPos, nearestDist.get())) {
+                double distance = Math.sqrt(pos.getSquaredDistance(playerPos));
+                if (distance < nearestDist.get()) {
+                    nearestDist.set(distance);
+                    nearestPos.set(pos);
+                }
+            }
+        });
+
+        return nearestPos.get();
     }
 }
