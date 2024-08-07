@@ -28,11 +28,11 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
         switch (args.get(0).toEnum(TargetType.class, null)) {
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(args.get(1).toString());
-                PlayerUtils.runOnNearestEntity(32, filter, entity -> mc.interactionManager.attackEntity(mc.player, entity));
+                PlayerUtils.runOnNearestEntity(128, filter, entity -> mc.interactionManager.attackEntity(mc.player, entity));
                 executeWithThen(args, 2);
             }
             case ANY_ENTITY -> {
-                PlayerUtils.runOnNearestEntity(32, ENTITY_EXISTS, entity -> mc.interactionManager.attackEntity(mc.player, entity));
+                PlayerUtils.runOnNearestEntity(128, ENTITY_EXISTS, entity -> mc.interactionManager.attackEntity(mc.player, entity));
                 executeWithThen(args, 1);
             }
             default -> throw new IllegalArgumentException("unsupported operation");

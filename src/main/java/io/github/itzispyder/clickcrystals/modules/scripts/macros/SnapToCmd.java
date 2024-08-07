@@ -35,11 +35,11 @@ public class SnapToCmd extends ScriptCommand {
             }
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(args.get(1).toString());
-                PlayerUtils.runOnNearestEntity(32, filter, entity -> specifiedSnap(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args));
+                PlayerUtils.runOnNearestEntity(128, filter, entity -> specifiedSnap(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args));
             }
 
             case ANY_BLOCK -> PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> singleSnap(pos.toCenterPos(), eyes, args));
-            case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(32, Entity::isAlive, entity -> {
+            case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(128, Entity::isAlive, entity -> {
                 singleSnap(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
             });
         }
