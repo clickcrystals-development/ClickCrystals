@@ -16,6 +16,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -165,5 +166,20 @@ public class EntityUtils implements Global {
 
         if (ent != null)
             function.accept(ent);
+    }
+
+    public static List<Entity> getEntitiesAt(BlockPos pos) {
+        if (PlayerUtils.invalid())
+            return new ArrayList<>();
+
+        List<Entity> list = new ArrayList<>();
+        for (Entity ent : PlayerUtils.player().clientWorld.getEntities())
+            if (ent != null && ent.isAlive() && pos.equals(ent.getBlockPos()))
+                list.add(ent);
+        return list;
+    }
+
+    public static boolean checkEntityAt(BlockPos pos, Predicate<Entity> filter) {
+        return getEntitiesAt(pos).stream().anyMatch(filter);
     }
 }

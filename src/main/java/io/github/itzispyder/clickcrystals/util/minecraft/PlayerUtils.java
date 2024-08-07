@@ -160,10 +160,7 @@ public final class PlayerUtils implements Global {
     }
 
     public static boolean hasEffects() {
-        if (valid()) {
-            return !player().getStatusEffects().isEmpty();
-        }
-        return false;
+        return valid() && !player().getStatusEffects().isEmpty();
     }
 
     public static Entity getNearestEntity(double range, Predicate<Entity> filter) {
