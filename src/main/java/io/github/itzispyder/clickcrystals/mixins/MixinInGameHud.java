@@ -3,7 +3,6 @@ package io.github.itzispyder.clickcrystals.mixins;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.HealthAsBar;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoOverlay;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoScoreboard;
@@ -95,13 +94,6 @@ public abstract class MixinInGameHud implements Global {
             if (hud.canRender()) {
                 hud.render(context);
             }
-        }
-    }
-
-    @Inject(method = "renderStatusEffectOverlay", at = @At("HEAD"), cancellable = true)
-    private void onRenderStatusEffectOverlay(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        if (Module.get(InGameHuds.class).hudPotion.getVal() && Module.get(InGameHuds.class).isEnabled()) {
-            ci.cancel();
         }
     }
 }

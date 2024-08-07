@@ -11,11 +11,11 @@
 
 ## Scripting Now Has a Wiki!
 
-Want to script custom modules but don't know how to script? 
+Want to script custom modules but don't know how to script?
 Don't worry, there's a full guide on how to create your own custom scripts and modules!
 
 ClickCrystals script is an interrupted scripting language that allows you to scripts and macros
-without any knowledge of coding. It contains no variables and mostly are just command lines that 
+without any knowledge of coding. It contains no variables and mostly are just command lines that
 are very similar to Minecraft.
 
 The full documentation can be found [here](https://bit.ly/ccs-wiki)
