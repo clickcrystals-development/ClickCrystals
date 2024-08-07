@@ -125,7 +125,7 @@ public class EntityUtils implements Global {
     public static Entity getNearestEntity(Entity ref, double range, Predicate<Entity> filter) {
         Vec3d at = ref.getPos();
         List<Entity> candidates = ref.getWorld()
-                .getOtherEntities(PlayerUtils.player(), Box.from(at).expand(range), ent -> ent != ref && filter.test(ref)).stream()
+                .getOtherEntities(PlayerUtils.player(), Box.from(at).expand(range), ent -> ent != ref && filter.test(ent)).stream()
                 .sorted(Comparator.comparing(entity -> entity.getPos().distanceTo(at)))
                 .toList();
 

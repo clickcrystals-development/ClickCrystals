@@ -238,13 +238,13 @@ public class ScriptParser {
             }
             else if (section.startsWith(":")) {
                 String subArg = section.substring(1);
-
                 if (defaultedBlockPredicates.containsKey(subArg)) {
-                    return defaultedBlockPredicates.get(subArg);
+                    list.add(defaultedBlockPredicates.get(subArg));
+                    continue;
                 }
 
                 Identifier id = Identifier.of("minecraft", subArg);
-                return block -> block.getBlock() == Registries.BLOCK.get(id);
+                list.add(block -> block.getBlock() == Registries.BLOCK.get(id));
             }
             else {
                 list.add(block -> false);

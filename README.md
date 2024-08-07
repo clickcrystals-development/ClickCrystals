@@ -47,15 +47,23 @@ Version: 1.2.7
 
 Tweaks:
   - change clickcrystals script on tick to pretick so it doesnt flag post
-  - rewrite potion hud # i no one
+  - rewrite armor hud # i no one
 
 Add:
   - pull and merge PR from I-No-One
-  - Teams module # i no one
+  - added Teams module # i no one
+  - added FreeLook Module # i no one
+  - added AutoDisconnect Module # i no one
 
 Scripting:
   - add script command if entity pos
   - increased the range for entity selection from 32 to 128
+  - add on post_tick
+  - add on pre_tick
+
+Patches:
+  - entity_in_range not working
+  - block ID selections with commas not working properly
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)

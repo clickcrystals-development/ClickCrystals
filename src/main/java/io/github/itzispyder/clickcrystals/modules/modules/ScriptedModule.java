@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
 import io.github.itzispyder.clickcrystals.data.Config;
+import io.github.itzispyder.clickcrystals.events.Event;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.client.*;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameJoinEvent;
@@ -33,7 +34,9 @@ public class ScriptedModule extends ListenerModule {
     public final List<ClickListener> clickListeners = new ArrayList<>();
     public final List<KeyListener> keyListeners = new ArrayList<>();
     public final List<MoveListener> moveListeners = new ArrayList<>();
+    public final List<TickListener> preTickListeners = new ArrayList<>();
     public final List<TickListener> tickListeners = new ArrayList<>();
+    public final List<TickListener> postTickListeners = new ArrayList<>();
     public final List<BlockPlaceListener> blockPlaceListeners = new ArrayList<>();
     public final List<BlockBreakListener> blockBreakListeners = new ArrayList<>();
     public final List<BlockPunchListener> blockPunchListeners = new ArrayList<>();
@@ -74,7 +77,9 @@ public class ScriptedModule extends ListenerModule {
         clickListeners.clear();
         keyListeners.clear();
         moveListeners.clear();
+        preTickListeners.clear();
         tickListeners.clear();
+        postTickListeners.clear();
 
         totemPopListeners.clear();
         moduleEnableListeners.clear();
@@ -105,7 +110,17 @@ public class ScriptedModule extends ListenerModule {
 
     @EventHandler
     public void onTick(ClientTickStartEvent e) {
+        for (TickListener l : preTickListeners) {
+            l.pass(e);
+        }
         for (TickListener l : tickListeners) {
+            l.pass(e);
+        }
+    }
+
+    @EventHandler
+    public void onPostTick(ClientTickEndEvent e) {
+        for (TickListener l : postTickListeners) {
             l.pass(e);
         }
     }
@@ -225,7 +240,7 @@ public class ScriptedModule extends ListenerModule {
 
     @FunctionalInterface
     public interface TickListener {
-        void pass(ClientTickStartEvent e);
+        void pass(Event e);
     }
 
     @FunctionalInterface

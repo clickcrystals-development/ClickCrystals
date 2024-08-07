@@ -45,7 +45,9 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
             case MOVE_LOOK, MOVE_POS -> passMove(args, type);
             case CHAT_SEND, CHAT_RECEIVE -> passChat(args, type);
 
+            case PRE_TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.preTickListeners.add(event -> exc(args, 1)));
             case TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.tickListeners.add(event -> exc(args, 1)));
+            case POST_TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.postTickListeners.add(event -> exc(args, 1)));
             case ITEM_USE -> ModuleCmd.runOnCurrentScriptModule(m -> m.itemUseListeners.add(event -> exc(args, 1)));
             case ITEM_CONSUME -> ModuleCmd.runOnCurrentScriptModule(m -> m.itemConsumeListeners.add(event -> exc(args, 1)));
             case MODULE_ENABLE -> ModuleCmd.runOnCurrentScriptModule(m -> m.moduleEnableListeners.add(() -> exc(args, 1)));
@@ -277,7 +279,9 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         BREAK_BLOCK,
         PUNCH_BLOCK,
         INTERACT_BLOCK,
+        PRE_TICK,
         TICK,
+        POST_TICK,
         ITEM_USE,
         ITEM_CONSUME,
         TOTEM_POP,
