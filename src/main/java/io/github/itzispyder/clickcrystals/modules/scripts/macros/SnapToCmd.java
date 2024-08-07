@@ -4,11 +4,13 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
 import io.github.itzispyder.clickcrystals.modules.scripts.TargetType;
+import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.function.Predicate;
@@ -33,14 +35,21 @@ public class SnapToCmd extends ScriptCommand {
                 Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(args.get(1).toString());
                 PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> specifiedSnap(pos.toCenterPos(), eyes, args));
             }
+
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(args.get(1).toString());
-                PlayerUtils.runOnNearestEntity(32, filter, entity -> specifiedSnap(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args));
+                PlayerUtils.runOnNearestEntity(32, filter, entity -> {
+                    if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate((PlayerEntity) entity)) {
+                        specifiedSnap(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
+                    }
+                });
             }
 
             case ANY_BLOCK -> PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> singleSnap(pos.toCenterPos(), eyes, args));
             case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(32, Entity::isAlive, entity -> {
-                singleSnap(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
+                if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate(((PlayerEntity) entity))) {
+                    singleSnap(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
+                }
             });
         }
     }
