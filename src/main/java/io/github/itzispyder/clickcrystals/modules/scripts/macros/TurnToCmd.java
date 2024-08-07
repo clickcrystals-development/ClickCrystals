@@ -46,9 +46,8 @@ public class TurnToCmd extends ScriptCommand {
 
             case ANY_BLOCK -> PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> singleTurn(pos.toCenterPos(), eyes, args));
             case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(128, Entity::isAlive, entity -> {
-                if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate(((PlayerEntity) entity))) {
+                if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate(((PlayerEntity) entity)))
                     singleTurn(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
-                }
             });
 
             default -> throw new IllegalArgumentException("unsupported operation");

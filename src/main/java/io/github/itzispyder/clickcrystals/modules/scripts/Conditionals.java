@@ -125,6 +125,16 @@ public class Conditionals implements Global {
         Predicate<BlockState> pre = ScriptParser.parseBlockPredicate(args.get(i + 4).toString());
         return pair(true, pre.test(loc.getBlock(PlayerUtils.getWorld())), i + 5);
     });
+    public static final Conditional ENTITY = register("entity", (ref, args, i) -> {
+        VectorParser loc = new VectorParser(
+                args.get(i + 1).toString(),
+                args.get(i + 2).toString(),
+                args.get(i + 3).toString(),
+                ref
+        );
+        Predicate<Entity> pre = ScriptParser.parseEntityPredicate(args.get(i + 4).toString());
+        return pair(true, EntityUtils.checkEntityAt(loc.getBlockPos(), pre), i + 5);
+    });
     public static final Conditional DIMENSION = register("dimension", (ref, args, i) -> {
         boolean bl = false;
         switch (args.get(i + 1).toEnum(Dimensions.class, null)) {

@@ -21,6 +21,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -178,13 +179,15 @@ public class EntityUtils implements Global {
         if (teamDetector.isEnabled() && teamDetector.cancelCcs.getVal()) {
             if (teamDetector.teamFindingMethod.getVal() == TeamDetector.TeamsMethod.SCOREBOARD) {
                 return isSameScoreboardTeam(target);
-            } else if (teamDetector.teamFindingMethod.getVal() == TeamDetector.TeamsMethod.COLOR_NAME) {
+            } 
+            else if (teamDetector.teamFindingMethod.getVal() == TeamDetector.TeamsMethod.COLOR_NAME) {
                 return isSameColorNameTeam(target);
             }
             return false;
         }
         return false;
     }
+  
     public static boolean isSameScoreboardTeam(PlayerEntity player) {
         Scoreboard scoreboard = mc.world.getScoreboard();
         Team playerTeam = scoreboard.getTeam(PlayerUtils.player().getName().getString());

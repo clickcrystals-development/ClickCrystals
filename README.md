@@ -47,6 +47,8 @@ Version: 1.2.7
 
 Tweaks:
   - change clickcrystals script on tick to pretick so it doesnt flag post
+  - rewrite potion hud # i no one
+
 Add:
   - pull and merge PR from I-No-One
   - Teams module # i no one
