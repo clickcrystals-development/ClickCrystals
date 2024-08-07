@@ -176,20 +176,18 @@ public class EntityUtils implements Global {
 
     public static boolean isTeammate(PlayerEntity target) {
         TeamDetector teamDetector = Module.get(TeamDetector.class);
-        if (teamDetector.isEnabled() && teamDetector.cancelCcs.getVal()) {
-            if (teamDetector.teamFindingMethod.getVal() == TeamDetector.TeamsMethod.SCOREBOARD) {
-                return isSameScoreboardTeam(target);
-            } 
-            else if (teamDetector.teamFindingMethod.getVal() == TeamDetector.TeamsMethod.COLOR_NAME) {
-                return isSameColorNameTeam(target);
-            }
+        if (!teamDetector.isEnabled() || !teamDetector.cancelCcs.getVal())
             return false;
-        }
+
+        if (teamDetector.teamFindingMethod.getVal() == TeamDetector.TeamsMethod.SCOREBOARD)
+            return isSameScoreboardTeam(target);
+        else if (teamDetector.teamFindingMethod.getVal() == TeamDetector.TeamsMethod.COLOR_NAME)
+            return isSameColorNameTeam(target);
         return false;
     }
   
     public static boolean isSameScoreboardTeam(PlayerEntity player) {
-        Scoreboard scoreboard = mc.world.getScoreboard();
+        Scoreboard scoreboard = PlayerUtils.getWorld().getScoreboard();
         Team playerTeam = scoreboard.getTeam(PlayerUtils.player().getName().getString());
         Team otherPlayerTeam = scoreboard.getTeam(player.getName().getString());
         return playerTeam != null && playerTeam.equals(otherPlayerTeam);
@@ -199,5 +197,20 @@ public class EntityUtils implements Global {
         String playerColorName = String.valueOf(PlayerUtils.player().getTeamColorValue());
         String targetColorName = String.valueOf(player.getTeamColorValue());
         return Objects.equals(playerColorName, targetColorName);
+    }
+
+    public static List<Entity> getEntitiesAt(BlockPos pos) {
+        if (PlayerUtils.invalid())
+            return new ArrayList<>();
+
+        List<Entity> list = new ArrayList<>();
+        for (Entity ent : PlayerUtils.player().clientWorld.getEntities())
+            if (ent != null && ent.isAlive() && pos.equals(ent.getBlockPos()))
+                list.add(ent);
+        return list;
+    }
+
+    public static boolean checkEntityAt(BlockPos pos, Predicate<Entity> filter) {
+        return getEntitiesAt(pos).stream().anyMatch(filter);
     }
 }

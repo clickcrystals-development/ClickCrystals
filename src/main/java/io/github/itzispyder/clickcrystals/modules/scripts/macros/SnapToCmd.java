@@ -39,9 +39,8 @@ public class SnapToCmd extends ScriptCommand {
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(args.get(1).toString());
                 PlayerUtils.runOnNearestEntity(128, filter, entity -> {
-                    if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate((PlayerEntity) entity)) {
+                    if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate((PlayerEntity) entity))
                         specifiedSnap(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
-                    }
                 });
             }
 

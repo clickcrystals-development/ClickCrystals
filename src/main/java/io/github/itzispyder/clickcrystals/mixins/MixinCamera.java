@@ -38,7 +38,8 @@ public abstract class MixinCamera implements Global {
         }
         if (clip.isEnabled() && clip.enableCameraClip.getVal()) {
             cir.setReturnValue(clip.clipDistance.getVal().floatValue());
-        } else if (clip.isEnabled() && clip.clipDistance.getVal() > 0.0) {
+        }
+        else if (clip.isEnabled() && clip.clipDistance.getVal() > 0.0) {
             bypassCameraClip = true;
             cir.setReturnValue(clipToSpace(clip.clipDistance.getVal().floatValue()));
         }
@@ -47,9 +48,8 @@ public abstract class MixinCamera implements Global {
     @Redirect(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;setRotation(FF)V"))
     private void redirectSetRotation(Camera camera, float yaw, float pitch) {
         FreeLook freeLook = Module.get(FreeLook.class);
-        if (freeLook.isEnabled() && mc.options.getPerspective() == freeLook.PerspectivePoint.getVal().getPerspective()) {
+        if (freeLook.isEnabled() && mc.options.getPerspective() == freeLook.PerspectivePoint.getVal().getPerspective())
             return;
-        }
         this.setRotation(yaw, pitch);
     }
 }
