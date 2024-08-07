@@ -11,11 +11,11 @@
 
 ## Scripting Now Has a Wiki!
 
-Want to script custom modules but don't know how to script? 
+Want to script custom modules but don't know how to script?
 Don't worry, there's a full guide on how to create your own custom scripts and modules!
 
 ClickCrystals script is an interrupted scripting language that allows you to scripts and macros
-without any knowledge of coding. It contains no variables and mostly are just command lines that 
+without any knowledge of coding. It contains no variables and mostly are just command lines that
 are very similar to Minecraft.
 
 The full documentation can be found [here](https://bit.ly/ccs-wiki)
@@ -43,32 +43,17 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Version: 1.2.6
+Version: 1.2.7
 
+Tweaks:
+  - change clickcrystals script on tick to pretick so it doesnt flag post
 Add:
-  - as command # as nearest_entity :player if holding :diamond_sword
-  - if on_ground
-  - if on_fire
-  - if frozen
-  - if has_equiptment
-  - if blocking
-  - if in_singleplayer
-  - if hurt_time
-  - if cursor_item
-  - if moving
-  - if colliding
-  - if colliding_horizontally
-  - if colliding_vertically
-  - if reference_entity
-  - execute_period # execute_period 0.05 {} to wait 0.05 seconds between each execution inside of the brackets
-  - hold_input # hold_input attack 100
-  - hold_input cancel
+  - pull and merge PR from I-No-One
+  - Teams module # i no one
 
-Patches:
-  - link module edit screen to module browsing screen
-
-Pulls:
-  - accept PR https://github.com/ItziSpyder/ClickCrystals/pull/70
+Scripting:
+  - add script command if entity pos
+  - increased the range for entity selection from 32 to 128
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)
