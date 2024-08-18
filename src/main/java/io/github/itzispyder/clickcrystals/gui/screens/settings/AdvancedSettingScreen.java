@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.Scroll
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -13,6 +14,44 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
 public class AdvancedSettingScreen extends DefaultBase {
+
+    private final SettingSection scGui = new SettingSection("gui-interface");
+    public final ModuleSetting<Boolean> overviewMode = scGui.add(scGui.createBoolSetting()
+            .name("overview-mode")
+            .description("Change to overview mode when viewing modules. ONLY WORKS IN-GAME")
+            .def(ClickCrystals.config.isOverviewMode())
+            .onSettingChange(setting -> {
+                ClickCrystals.config.setOverviewMode(setting.getVal());
+                ClickCrystals.config.save();
+
+                system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+                    if (setting.getVal() && PlayerUtils.valid()) {
+                        mc.setScreen(new OverviewScreen());
+                    }
+                }), 200);
+            })
+            .build()
+    );
+    public final ModuleSetting<Boolean> disableCustomLoading = scGui.add(scGui.createBoolSetting()
+            .name("disable-custom-loading-screen")
+            .description("Disable the custom ClickCrystals resource loading screen!")
+            .def(ClickCrystals.config.isDisableCustomLoading())
+            .onSettingChange(setting -> {
+                ClickCrystals.config.setDisableCustomLoading(setting.getVal());
+                ClickCrystals.config.save();
+            })
+            .build()
+    );
+    public final ModuleSetting<Boolean> disableModuleToggleBroadcast = scGui.add(scGui.createBoolSetting()
+            .name("disable-module-toggle-broadcast")
+            .description("Disable chat broadcasts when you toggle a ClickCrystals feature/module")
+            .def(ClickCrystals.config.isDisableModuleToggleBroadcast())
+            .onSettingChange(setting -> {
+                ClickCrystals.config.setDisableModuleToggleBroadcast(setting.getVal());
+                ClickCrystals.config.save();
+            })
+            .build()
+    );
 
     public AdvancedSettingScreen() {
         super("Advanced Settings Screen");
@@ -23,24 +62,7 @@ public class AdvancedSettingScreen extends DefaultBase {
 
         // setting groups
         // gui group
-        SettingSection guiSection = new SettingSection("gui-interface");
-        guiSection.add(guiSection.createBoolSetting()
-                .name("Overview mode")
-                .description("Change to overview mode when viewing modules. ONLY WORKS IN-GAME")
-                .def(ClickCrystals.config.isOverviewMode())
-                .onSettingChange(setting -> {
-                    ClickCrystals.config.setOverviewMode(setting.getVal());
-                    ClickCrystals.config.save();
-
-                    system.scheduler.runDelayedTask(() -> mc.execute(() -> {
-                        if (setting.getVal() && PlayerUtils.valid()) {
-                            mc.setScreen(new OverviewScreen());
-                        }
-                    }), 200);
-                })
-                .build()
-        );
-        SettingSectionElement guiElement = new SettingSectionElement(guiSection, margin, caret);
+        SettingSectionElement guiElement = new SettingSectionElement(scGui, margin, caret);
 
         // add groups to screen
         panel.addChild(guiElement);

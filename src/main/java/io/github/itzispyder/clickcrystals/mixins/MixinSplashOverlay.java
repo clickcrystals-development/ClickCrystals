@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
@@ -28,11 +29,17 @@ public abstract class MixinSplashOverlay implements Global {
 
     @ModifyArgs(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;fill(Lnet/minecraft/client/render/RenderLayer;IIIII)V"))
     public void renderLoading(Args args) {
+        if (ClickCrystals.config.isDisableCustomLoading())
+            return;
+
         args.set(5, 0xFF075E74);
     }
 
     @ModifyArgs(method = "render", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GlStateManager;_clearColor(FFFF)V"))
     public void renderInitializing(Args args) {
+        if (ClickCrystals.config.isDisableCustomLoading())
+            return;
+
         Color color = new Color(0xFF075E74, true);
         float r = color.getRed() / 255.0F;
         float g = color.getGreen() / 255.0F;
@@ -47,6 +54,9 @@ public abstract class MixinSplashOverlay implements Global {
 
     @Inject(method = "renderProgressBar", at = @At("TAIL"))
     public void renderProgressBar(DrawContext context, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
+        if (ClickCrystals.config.isDisableCustomLoading())
+            return;
+
         Tessellator tes = Tessellator.getInstance();
         BufferBuilder buf = tes.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
         MatrixStack matrices = context.getMatrices();
