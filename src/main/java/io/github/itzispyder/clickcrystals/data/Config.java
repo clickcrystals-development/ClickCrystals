@@ -27,7 +27,7 @@ public class Config implements JsonSerializable<Config>, Global {
     public static final String PATH_CONFIG_PROFILE = PATH + "profiles.json";
     public static final String PATH_CONFIG = PATH + "config.json";
     public static final String PATH_LOG = PATH + "current.log";
-    private boolean hasPlayedBefore, overviewMode, disableCustomLoading, disableModuleToggleBroadcast;
+    private boolean hasPlayedBefore, overviewMode, disableCustomLoading, disableModuleToggleBroadcast, modMenuIntegration;
     private final Map<String, Integer> keybindEntries;
     private final Map<String, Positionable.Dimension> positionEntries;
     private final Map<String, Pair<Positionable.Dimension, Boolean>> overviewScreenEntries;
@@ -188,6 +188,13 @@ public class Config implements JsonSerializable<Config>, Global {
 
     public void setDisableCustomLoading(boolean disableCustomLoading) {
         this.disableCustomLoading = disableCustomLoading;
+    }
+    public void setDisableModMenuIntegration(boolean modMenuIntegration) {
+        this.modMenuIntegration = modMenuIntegration;
+    }
+
+    public boolean isDisableModMenuIntegration() {
+        return modMenuIntegration;
     }
 
     public boolean isDisableModuleToggleBroadcast() {

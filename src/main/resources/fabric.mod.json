@@ -19,9 +19,13 @@
     ],
     "main": [
       "io.github.itzispyder.clickcrystals.ClickCrystals"
+    ],
+    "modmenu":
+    [
+      "io.github.itzispyder.clickcrystals.client.client.ModMenuIntegration"
     ]
   },
-  "depends": {
+"depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": ">=${minecraft_version}"

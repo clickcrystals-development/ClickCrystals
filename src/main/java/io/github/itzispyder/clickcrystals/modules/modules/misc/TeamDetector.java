@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
+import io.github.itzispyder.clickcrystals.events.events.client.HandSwingEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
@@ -29,7 +30,7 @@ public class TeamDetector extends ListenerModule {
     public final ModuleSetting<Boolean> cancelCcs = scGeneral.add(createBoolSetting()
             .name("cancel-ccs")
             .description("disable ccs snapping and attacking.")
-            .def(false)
+            .def(true)
             .build()
     );
 
@@ -45,9 +46,11 @@ public class TeamDetector extends ListenerModule {
     }
 
     @EventHandler
-    private void onPlayerAttackEntityEvent(PlayerAttackEntityEvent e) {
-        if (e.getEntity() instanceof PlayerEntity player && EntityUtils.isTeammate(player))
-            e.setCancelled(true);
+    private void onPlayerAttackEntityEvent(PlayerAttackEntityEvent e1, HandSwingEvent e2) {
+        if (e1.getEntity() instanceof PlayerEntity player && EntityUtils.isTeammate(player)){
+            e1.setCancelled(true);
+            e2.setCancelled(true);
+    }
         else if (autoDisable.getVal())
             this.setEnabled(false);
     }
