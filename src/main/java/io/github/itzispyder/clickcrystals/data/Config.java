@@ -189,6 +189,7 @@ public class Config implements JsonSerializable<Config>, Global {
     public void setDisableCustomLoading(boolean disableCustomLoading) {
         this.disableCustomLoading = disableCustomLoading;
     }
+
     public void setDisableModMenuIntegration(boolean modMenuIntegration) {
         this.modMenuIntegration = modMenuIntegration;
     }

@@ -34,7 +34,7 @@ public class AdvancedSettingScreen extends DefaultBase {
     );
     public final ModuleSetting<Boolean> modMenu = scGui.add(scGui.createBoolSetting()
             .name("disable-mod-menu-integration")
-            .description("Access the ClickCrystals gui using mod menu (the button won't appear after re-launch)")
+            .description("Disable accessing the ClickCrystals GUI using Mod Menu (the button won't appear after re-launch)")
             .def(ClickCrystals.config.isDisableModMenuIntegration())
             .onSettingChange(setting -> {
                 ClickCrystals.config.setDisableModMenuIntegration(setting.getVal());

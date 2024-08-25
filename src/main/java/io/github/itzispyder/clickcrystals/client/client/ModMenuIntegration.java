@@ -9,9 +9,7 @@ public class ModMenuIntegration implements ModMenuApi {
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        if (!ClickCrystals.config.isDisableModMenuIntegration()) {
-            return parent -> new HomeScreen();
-        }
-        return null;
+        if (ClickCrystals.config.isDisableModMenuIntegration()) return null;
+        return  parent -> new HomeScreen();
     }
 }

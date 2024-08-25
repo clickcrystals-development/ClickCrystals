@@ -2,7 +2,6 @@ package io.github.itzispyder.clickcrystals.mixins;
 
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.events.events.client.HandSwingEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.ElytraSwitch;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.NoInteractions;
@@ -12,7 +11,6 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -42,10 +40,5 @@ public class MixinClientPlayerEntity implements Global {
         if (noInteractions.isEnabled() && !noInteractions.allowSign.getVal()) {
             ci.cancel();
         }
-    }
-    @Inject(method = "swingHand", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/AbstractClientPlayerEntity;swingHand(Lnet/minecraft/util/Hand;)V"), cancellable = true)
-    private void swingHand(Hand hand, CallbackInfo ci){
-        HandSwingEvent event = new HandSwingEvent(hand);
-        system.eventBus.passWithCallbackInfo(ci,event);
     }
 }
