@@ -10,7 +10,9 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -61,6 +63,12 @@ public class AutoDisconnect extends DummyModule implements Global, Listener {
             .def(true)
             .build()
     );
+    public final ModuleSetting<Boolean> checkAnchorsWithGlowstone = scGeneral.add(createBoolSetting()
+            .name("Check Loaded Anchors")
+            .description("Disconnect if a loaded respawn anchor is found within the specified range.")
+            .def(true)
+            .build()
+    );
     public final ModuleSetting<Boolean> checkCrystals = scGeneral.add(createBoolSetting()
             .name("Check Crystals")
             .description("Disconnect if an end crystal is found within the specified range.")
@@ -101,6 +109,7 @@ public class AutoDisconnect extends DummyModule implements Global, Listener {
         MutableText text = Text.literal("§3Auto-Disconnect was triggered§r");
         text = text.append(Text.literal("\n\n" + reason).withColor(Colors.RED));
         mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(text));
+        setAutoDisable();
     }
 
     private List<Integer> getRangeList(double maxRange) {
@@ -120,17 +129,26 @@ public class AutoDisconnect extends DummyModule implements Global, Listener {
             double playerHealthPercentage = (mc.player.getHealth() / mc.player.getMaxHealth()) * 100;
             if (checkPlayerHealth.getVal() && playerHealthPercentage < selfPlayerHealth.getVal()) {
                 disconnectPlayer("player health is below " + selfPlayerHealth.getVal() + "%");
-                setAutoDisable();
                 return;
             }
         }
 
         if (checkAnchors.getVal()) {
             for (Integer r : rangeList) {
-                BlockPos anchorPos = PlayerUtils.getNearestBlock(r, state -> state.getBlock() == Blocks.RESPAWN_ANCHOR);
+                BlockPos anchorPos = PlayerUtils.getNearestBlock(r, state -> {
+                    if (state.getBlock() == Blocks.RESPAWN_ANCHOR) {
+                        if (checkAnchorsWithGlowstone.getVal()) {
+                            BlockState blockState = state.getBlock().getStateWithProperties(state);
+                            int charges = blockState.get(RespawnAnchorBlock.CHARGES);
+                            return charges > 0;
+                        } else {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
                 if (anchorPos != null) {
                     disconnectPlayer("Respawn Anchor is in range");
-                    setAutoDisable();
                     return;
                 }
             }
@@ -141,16 +159,14 @@ public class AutoDisconnect extends DummyModule implements Global, Listener {
                 Entity crystal = PlayerUtils.getNearestEntity(r, entity -> entity instanceof EndCrystalEntity);
                 if (crystal != null) {
                     disconnectPlayer("End Crystal is in range");
-                    setAutoDisable();
                     return;
                 }
             }
         }
         if (checkNewPlayers.getVal()) {
             for (PlayerEntity player : mc.world.getPlayers()) {
-                if (player != mc.player && mc.player.squaredDistanceTo(player) <= mc.options.getViewDistance().getValue() * mc.options.getViewDistance().getValue()) {
+                if (player != mc.player && mc.player.squaredDistanceTo(player) <= mc.options.getViewDistance().getValue() * 16 * mc.options.getViewDistance().getValue() * 16) {
                     disconnectPlayer("new player detected within render distance");
-                    setAutoDisable();
                 }
                 return;
             }

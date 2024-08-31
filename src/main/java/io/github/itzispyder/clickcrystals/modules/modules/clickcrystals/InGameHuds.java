@@ -16,6 +16,7 @@ public class InGameHuds extends Module implements Listener {
 
     private final SettingSection scGeneral = getGeneralSection();
     private final SettingSection scHudVisibility = createSettingSection("hud-visibility");
+    private final SettingSection scHudPosition = createSettingSection("position-hud-settings");
     private final SettingSection scHudTarget = createSettingSection("target-hud-settings");
     private final SettingSection scHudClock = createSettingSection("clock-hud-settings");
     public final ModuleSetting<Integer> colorRed = scGeneral.add(IntegerSetting.create()
@@ -138,6 +139,12 @@ public class InGameHuds extends Module implements Listener {
             .def(10.0)
             .build()
     );
+    public final ModuleSetting<Boolean> showNetherCoords = scHudPosition.add(createBoolSetting()
+            .name("show-nether-coords-in-overworld")
+            .description("Show nether coords when in overworld")
+            .def(true)
+            .build()
+        );
     public final ModuleSetting<Boolean> hudTargetDisableWhenNoCombat = scHudTarget.add(createBoolSetting()
             .name("target-hud-no-combat-disable")
             .description("Disables rendering of the target hud when not in combat.")

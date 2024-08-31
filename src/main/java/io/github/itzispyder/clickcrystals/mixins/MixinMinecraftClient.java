@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.interfaces.MinecraftClientAccessor;
@@ -24,6 +25,7 @@ public abstract class MixinMinecraftClient implements MinecraftClientAccessor, G
     @Shadow public abstract void setScreen(@Nullable Screen screen);
     @Shadow protected abstract boolean doAttack();
     @Shadow protected abstract void doItemUse();
+    @Shadow @Nullable public Entity targetedEntity;
 
     @Inject(method = "setScreen", at = @At("HEAD"), cancellable = true)
     public void set(Screen screen, CallbackInfo ci) {
@@ -35,6 +37,12 @@ public abstract class MixinMinecraftClient implements MinecraftClientAccessor, G
             setScreen(null);
         }
     }
+
+    @Inject(method = "doAttack", at = @At("HEAD") ,cancellable = true)
+    private void attack(CallbackInfoReturnable<Boolean> cir){
+    PlayerAttackEntityEvent event = new PlayerAttackEntityEvent(mc.player, targetedEntity, mc.crosshairTarget);
+        system.eventBus.passWithCallbackInfo(cir, event);
+}
 
     @Inject(method = "stop", at = @At("HEAD"))
     public void stop(CallbackInfo ci) {

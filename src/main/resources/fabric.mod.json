@@ -8,7 +8,7 @@
     "ImproperIssues"
   ],
   "contact": {
-    "website": "https://itzispyder.github.io/"
+    "website": "https://ClickCrystals.xyz"
   },
   "license": "MIT",
   "icon": "assets/clickcrystals/icon.png",
@@ -19,9 +19,13 @@
     ],
     "main": [
       "io.github.itzispyder.clickcrystals.ClickCrystals"
+    ],
+    "modmenu":
+    [
+      "io.github.itzispyder.clickcrystals.client.client.ModMenuIntegration"
     ]
   },
-  "depends": {
+"depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": ">=${minecraft_version}"

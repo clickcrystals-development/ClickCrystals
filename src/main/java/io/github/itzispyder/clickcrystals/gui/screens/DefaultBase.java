@@ -155,6 +155,8 @@ public abstract class DefaultBase extends AnimatedBase {
         RenderUtils.drawText(context, "§bImproperIssues §8(owner), ", 15, caret, 0.65F, false);
         caret += 8;
         RenderUtils.drawText(context, "§bobvWolf §8(owner) ", 15, caret, 0.65F, false);
+        caret += 8;
+        RenderUtils.drawText(context, "§bI-No-oNe §8(dev) ", 15, caret, 0.65F, false);
 
         context.getMatrices().pop();
     }

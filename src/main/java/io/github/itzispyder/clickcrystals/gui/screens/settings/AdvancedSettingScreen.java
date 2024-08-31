@@ -32,6 +32,16 @@ public class AdvancedSettingScreen extends DefaultBase {
             })
             .build()
     );
+    public final ModuleSetting<Boolean> modMenu = scGui.add(scGui.createBoolSetting()
+            .name("disable-mod-menu-integration")
+            .description("Disable accessing the ClickCrystals GUI using Mod Menu (the button won't appear after re-launch)")
+            .def(ClickCrystals.config.isDisableModMenuIntegration())
+            .onSettingChange(setting -> {
+                ClickCrystals.config.setDisableModMenuIntegration(setting.getVal());
+                ClickCrystals.config.save();
+            })
+            .build()
+    );
     public final ModuleSetting<Boolean> disableCustomLoading = scGui.add(scGui.createBoolSetting()
             .name("disable-custom-loading-screen")
             .description("Disable the custom ClickCrystals resource loading screen!")
