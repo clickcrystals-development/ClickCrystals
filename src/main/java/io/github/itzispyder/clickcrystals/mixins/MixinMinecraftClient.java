@@ -39,10 +39,9 @@ public abstract class MixinMinecraftClient implements MinecraftClientAccessor, G
     }
 
     @Inject(method = "doAttack", at = @At("HEAD") ,cancellable = true)
-    private void attack(CallbackInfoReturnable<Boolean> cir){
-    PlayerAttackEntityEvent event = new PlayerAttackEntityEvent(mc.player, targetedEntity, mc.crosshairTarget);
-        system.eventBus.passWithCallbackInfo(cir, event);
-}
+    private void attack(CallbackInfoReturnable<Boolean> cir) {
+        system.eventBus.passWithCallbackInfo(cir, new PlayerAttackEntityEvent(mc.player, targetedEntity, mc.crosshairTarget));
+    }
 
     @Inject(method = "stop", at = @At("HEAD"))
     public void stop(CallbackInfo ci) {

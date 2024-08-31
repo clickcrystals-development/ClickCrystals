@@ -27,7 +27,12 @@ public class Config implements JsonSerializable<Config>, Global {
     public static final String PATH_CONFIG_PROFILE = PATH + "profiles.json";
     public static final String PATH_CONFIG = PATH + "config.json";
     public static final String PATH_LOG = PATH + "current.log";
-    private boolean hasPlayedBefore, overviewMode, disableCustomLoading, disableModuleToggleBroadcast, modMenuIntegration;
+
+    private boolean hasPlayedBefore;
+    private boolean overviewMode;
+    private boolean disableCustomLoading;
+    private boolean disableModuleToggleBroadcast;
+    private boolean modMenuIntegration;
     private final Map<String, Integer> keybindEntries;
     private final Map<String, Positionable.Dimension> positionEntries;
     private final Map<String, Pair<Positionable.Dimension, Boolean>> overviewScreenEntries;

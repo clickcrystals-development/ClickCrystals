@@ -1,35 +1,30 @@
 package io.github.itzispyder.clickcrystals.modules.modules.clickcrystals;
 
-import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
-import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
-import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
+import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RespawnAnchorBlock;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.common.DisconnectS2CPacket;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.util.Colors;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class AutoDisconnect extends DummyModule implements Global, Listener {
-    public AutoDisconnect() {
-        super("auto-disconnect", Categories.CLIENT, "disconnect you from the world when a certain condition is met");
-    }
+public class AutoDisconnect extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();
     private final SettingSection playerHealth = createSettingSection("player-health-check-settings");
@@ -88,15 +83,8 @@ public class AutoDisconnect extends DummyModule implements Global, Listener {
             .build()
     );
 
-
-    @Override
-    protected void onEnable() {
-        system.addListener(this);
-    }
-
-    @Override
-    protected void onDisable() {
-        system.removeListener(this);
+    public AutoDisconnect() {
+        super("auto-disconnect", Categories.CLIENT, "Disconnect you from the world when a certain condition is met");
     }
 
     private void setAutoDisable() {
@@ -106,9 +94,8 @@ public class AutoDisconnect extends DummyModule implements Global, Listener {
     }
 
     private void disconnectPlayer(String reason) {
-        MutableText text = Text.literal("§3Auto-Disconnect was triggered§r");
-        text = text.append(Text.literal("\n\n" + reason).withColor(Colors.RED));
-        mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(text));
+        Text text = Text.literal("§3Auto-Disconnect was triggered§r\n\n§c" + reason);
+        PlayerUtils.player().networkHandler.onDisconnect(new DisconnectS2CPacket(text));
         setAutoDisable();
     }
 
@@ -120,15 +107,18 @@ public class AutoDisconnect extends DummyModule implements Global, Listener {
 
     @EventHandler
     public void onTick(ClientTickEndEvent e) {
-        if (PlayerUtils.invalid()) return;
+        if (PlayerUtils.invalid())
+            return;
 
+        ClientPlayerEntity p = PlayerUtils.player();
+        World w = PlayerUtils.getWorld();
         double maxRange = range.getVal();
         List<Integer> rangeList = getRangeList(maxRange);
 
         if (Module.get(AutoDisconnect.class).isEnabled()) {
-            double playerHealthPercentage = (mc.player.getHealth() / mc.player.getMaxHealth()) * 100;
+            double playerHealthPercentage = (p.getHealth() / p.getMaxHealth()) * 100;
             if (checkPlayerHealth.getVal() && playerHealthPercentage < selfPlayerHealth.getVal()) {
-                disconnectPlayer("player health is below " + selfPlayerHealth.getVal() + "%");
+                disconnectPlayer("Player health is below " + selfPlayerHealth.getVal() + "%");
                 return;
             }
         }
@@ -164,9 +154,9 @@ public class AutoDisconnect extends DummyModule implements Global, Listener {
             }
         }
         if (checkNewPlayers.getVal()) {
-            for (PlayerEntity player : mc.world.getPlayers()) {
-                if (player != mc.player && mc.player.squaredDistanceTo(player) <= mc.options.getViewDistance().getValue() * 16 * mc.options.getViewDistance().getValue() * 16) {
-                    disconnectPlayer("new player detected within render distance");
+            for (PlayerEntity player : w.getPlayers()) {
+                if (player != p && p.squaredDistanceTo(player) <= mc.options.getViewDistance().getValue() * 16 * mc.options.getViewDistance().getValue() * 16) {
+                    disconnectPlayer("New player detected within render distance");
                 }
                 return;
             }
