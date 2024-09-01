@@ -1,8 +1,11 @@
 package io.github.itzispyder.clickcrystals.gui.screens.scripts;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptFormatter;
+import io.github.itzispyder.clickcrystals.commands.commands.ReloadCommand;
+import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
+import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ButtonElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Color;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
@@ -11,14 +14,18 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.AnimatedBase;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
+import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.RotationAxis;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
@@ -69,6 +76,9 @@ public class DownloadScriptScreen extends AnimatedBase {
         this.cache = new ArrayList<>();
         this.addChild(this.grid.getPanel());
         this.filterQuery(true);
+
+        ButtonElement backButton = new ButtonElement("< Back", baseX + baseWidth - 50 - 10, baseY + 10, 50, 15, ButtonElement.OPEN_SCREEN.apply(BrowsingScreen::new));
+        this.addChild(backButton);
     }
 
     @Override
@@ -138,6 +148,11 @@ public class DownloadScriptScreen extends AnimatedBase {
             grid.getPanel().recalculatePositions();
             loading.setRendering(false);
         });
+    }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        client.setScreen(new DownloadScriptScreen());
     }
 
     public class FilterButton extends GuiElement {
@@ -267,6 +282,28 @@ public class DownloadScriptScreen extends AnimatedBase {
             return (name + author + desc).toLowerCase();
         }
 
+        public String toLocalPath() {
+            return Config.PATH_SCRIPTS + "downloads/" + toFileName() + ".ccs";
+        }
+
+        public String toFileName() {
+            return name.toLowerCase().replace(' ', '-');
+        }
+
+        public void download() {
+            try {
+                File file = new File(toLocalPath());
+                FileValidationUtils.quickWrite(file, contents);
+            }
+            catch (Exception ex) {
+                system.printErrF("An error occurred while trying to download script '%s': %s", toLocalPath(), ex.getMessage());
+            }
+        }
+
+        public boolean alreadyOwned() {
+            return new File(toLocalPath()).exists();
+        }
+
         public String getName() {
             return name;
         }
@@ -304,21 +341,35 @@ public class DownloadScriptScreen extends AnimatedBase {
         private final ScriptObject script;
         private final Animator animator = new PollingAnimator(300, () -> {
             var c = InteractionUtils.getCursor();
-            return isHovered(c.x, c.y) && this.getParent().isHovered(c.x, c.y);
+            return isHovered(c.x, c.y) && this.getParent().isMouseOver(c.x, c.y);
         });
+        private final LoadingIconElement downloadStatus;
+        private boolean owned;
 
         public ScriptDisplay(int x, int y, ScriptObject script) {
             super(x, y, 120, 120);
             this.script = script;
+            this.owned = script.alreadyOwned();
+
+            this.downloadStatus = new LoadingIconElement(x + width / 2, y + height / 2, 20);
+            this.downloadStatus.setRendering(false);
+            this.addChild(downloadStatus);
         }
 
         @Override
         public void onRender(DrawContext context, int mouseX, int mouseY) {
             int caret = y;
             int margin = x;
-            int shadow = (int)(3 * animator.getAnimation());
-            RenderUtils.fillRoundShadow(context, margin, caret, width, height, 5, shadow, 0xFFFFFFFF, 0x00FFFFFF);
-            RenderUtils.fillRoundRect(context, margin, caret, width, height, 5, 0xFF323232);
+            double hoverDelta = owned ? 0.0 : animator.getAnimation();
+            int shade1 = Color.lerp(0xFF323232, Shades.GENERIC, hoverDelta);
+            int shade2 = Color.lerp(0xFF323232, Shades.GENERIC_LOW, hoverDelta);
+            RenderUtils.fillRoundRectGradient(context, margin, caret, width, height, 5,
+                    0xFF323232,
+                    shade1,
+                    0xFF323232,
+                    0xFF323232,
+                    shade2
+            );
 
             // title and author
             caret += 10;
@@ -354,6 +405,37 @@ public class DownloadScriptScreen extends AnimatedBase {
             RenderUtils.fillVerticalGradient(context, x, y + height - 5 - 20, width, 20, 0x00323232, 0xFF323232);
 
             context.disableScissor();
+
+            // status
+            this.renderStatus(context);
+        }
+
+        @Override
+        public void onClick(double mouseX, double mouseY, int button) {
+            super.onClick(mouseX, mouseY, button);
+
+            if (button != 0 || downloadStatus.isRendering() || owned)
+                return;
+
+            CompletableFuture.runAsync(() -> {
+                downloadStatus.setX(x + width / 2);
+                downloadStatus.setY(y + height / 2);
+                downloadStatus.setRendering(true);
+                script.download();
+                ReloadCommand.reload();
+            }).thenRun(() -> {
+                downloadStatus.setRendering(false);
+                owned = true;
+            });
+        }
+
+        public void renderStatus(DrawContext context) {
+            int caret = y + height - 15;
+            int margin = x + width - 15;
+            var tex = owned ? Tex.Icons.RESET : Tex.Icons.DOWNLOAD;
+            String text = owned ? "§7Already owned" : "§bDownload";
+            RenderUtils.drawTexture(context, tex, margin, caret, 10, 10);
+            RenderUtils.drawRightText(context, text, margin - 2, caret + 2, 0.8F, false);
         }
     }
 }
