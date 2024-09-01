@@ -4,6 +4,8 @@ import io.github.itzispyder.clickcrystals.gui.hud.TextHud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.misc.Dimensions;
+import net.minecraft.util.math.BlockPos;
 
 public class PosRelativeHud extends TextHud {
 
@@ -13,7 +15,10 @@ public class PosRelativeHud extends TextHud {
 
     @Override
     public String getText() {
-        return PlayerUtils.player().getBlockPos().toShortString();
+        BlockPos p = PlayerUtils.player().getBlockPos();
+        if (Module.get(InGameHuds.class).showNetherCoords.getVal() && !Dimensions.isNether() && Dimensions.isOverworld())
+            return "%s /§c %s, %s".formatted(p.toShortString(), p.getX() / 8, p.getZ() / 8);
+        return p.toShortString();
     }
 
     @Override

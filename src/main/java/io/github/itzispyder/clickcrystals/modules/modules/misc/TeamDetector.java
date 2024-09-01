@@ -7,7 +7,6 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.EnumSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -20,16 +19,10 @@ public class TeamDetector extends ListenerModule {
             .def(TeamsMethod.COLOR_NAME)
             .build()
     );
-    public final ModuleSetting<Boolean> autoDisable = scGeneral.add(createBoolSetting()
-            .name("auto-disable")
-            .description("disable the module if failed to find a similar team.")
-            .def(false)
-            .build()
-    );
     public final ModuleSetting<Boolean> cancelCcs = scGeneral.add(createBoolSetting()
             .name("cancel-ccs")
             .description("disable ccs snapping and attacking.")
-            .def(false)
+            .def(true)
             .build()
     );
 
@@ -37,19 +30,11 @@ public class TeamDetector extends ListenerModule {
         super("team-detector", Categories.MISC, "Finding teams and disable attacking your own team");
     }
 
-    @Override
-    protected void onDisable() {
-        super.onDisable();
-        if (autoDisable.getVal())
-            ChatUtils.sendPrefixMessage("Didn't find any teams, toggling off");
-    }
-
     @EventHandler
     private void onPlayerAttackEntityEvent(PlayerAttackEntityEvent e) {
-        if (e.getEntity() instanceof PlayerEntity player && EntityUtils.isTeammate(player))
-            e.setCancelled(true);
-        else if (autoDisable.getVal())
-            this.setEnabled(false);
+        if (e.getEntity() instanceof PlayerEntity player && EntityUtils.isTeammate(player)) {
+            e.cancel();
+        }
     }
 
     public enum TeamsMethod {

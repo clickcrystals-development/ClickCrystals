@@ -23,28 +23,28 @@ import java.util.Map;
 public class TotemPops extends Module implements Listener {
 
     public final SettingSection general = getGeneralSection();
-    public final ModuleSetting<String> enemyPop = general.add(StringSetting.create()
+    public final ModuleSetting<String> enemyPops = general.add(StringSetting.create()
             .name("enemy-pop-message")
-            .description("Message sent when enemy pops, %pops% for count, %player% for their name")
-            .def("&7&n%player% &8&o popped &7&o(&e%pops%&7&o) &8totems!")
+            .description("Message sent when enemy pops, %pops% for count, %enemy% for their name")
+            .def("&8&oThe player &4%enemy%&8&o popped &7&o(&e%pops%&7&o) &8totems!")
             .build()
     );
     public final ModuleSetting<String> enemyDeath = general.add(StringSetting.create()
             .name("enemy-death-message")
-            .description("Message sent when enemy pops, %pops% for count, %player% for their name")
-            .def("&7&n%player% &8&o died after popping &7&o(&e%pops%&7&o) &8totems!")
+            .description("Message sent when enemy pops, %pops% for count, %enemy% for their name")
+            .def("&8&oThe player &7&n%enemy% &8&o died after popping &7&o(&e%pops%&7&o) &8totems!")
             .build()
     );
-    public final ModuleSetting<Boolean> hightlightOwn = general.add(BooleanSetting.create()
+    public final ModuleSetting<Boolean> highlightOwn = general.add(BooleanSetting.create()
             .name("show-own")
             .description("Toggle showing your own pops in chat")
             .def(true)
             .build()
     );
-    public final ModuleSetting<String> ownText = general.add(StringSetting.create()
+    public final ModuleSetting<String> ownName = general.add(StringSetting.create()
             .name("own-pop-name")
-            .description("Want to replace your name with in pop messages?")
-            .def("&6&nYou")
+            .description("Want to replace your name with in pop messages? (%player% for own name)")
+            .def("&6&n%player%")
             .build()
     );
 
@@ -80,8 +80,8 @@ public class TotemPops extends Module implements Listener {
 
             String name = ent.getDisplayName().getString();
             if (name.equals(p.getDisplayName().getString())) {
-                if (hightlightOwn.getVal()) {
-                    name = StringUtils.color(ownText.getVal());
+                if (highlightOwn.getVal()) {
+                    name = StringUtils.color(ownName.getVal());
                 } else {
                     return;
                 }
@@ -91,7 +91,7 @@ public class TotemPops extends Module implements Listener {
                 setPops(ent,getPops(ent) + 1);
 
                 if (isEnabled()) {
-                    ChatUtils.sendPrefixMessage(compilePopMsg(ent, name, enemyPop.getVal()));
+                    ChatUtils.sendPrefixMessage(compilePopMsg(ent, name, enemyPops.getVal()));
                 }
             }
             else if (status == EntityStatusType.DEATH) {
@@ -107,7 +107,8 @@ public class TotemPops extends Module implements Listener {
     private String compilePopMsg(Entity ent, String entName, String msg) {
         return StringUtils.color(msg)
                 .replaceAll("%pops%", "" + getPops(ent))
-                .replaceAll("%player%", entName);
+                .replaceAll("%enemy%", entName)
+                .replaceAll("%player%",mc.getSession().getUsername());
     }
 
     public int getPops(Entity ent) {
