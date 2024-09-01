@@ -94,6 +94,7 @@ public class BrowsingScreen extends DefaultBase {
 
         @Override
         public void onClick(double mouseX, double mouseY, int button) {
+//            mc.setScreen(new DownloadScriptScreenOld());
             mc.setScreen(new DownloadScriptScreen());
         }
     }

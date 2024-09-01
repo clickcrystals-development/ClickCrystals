@@ -111,7 +111,8 @@ public class ScrollPanelElement extends GuiElement {
         if (bl)
             onRender(context, mouseX, mouseY);
         for (GuiElement child : this.getChildren())
-            child.render(context, mouseX, mouseY);
+            if (child.y + child.height > this.y || child.y < this.y + this.height)
+                child.render(context, mouseX, mouseY);
 
         context.getMatrices().pop();
         context.disableScissor();
