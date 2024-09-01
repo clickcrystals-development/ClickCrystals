@@ -387,7 +387,6 @@ public class DownloadScriptScreen extends AnimatedBase {
             }
 
             // content
-            context.enableScissor(margin, caret, margin + width - 10, y + height - 5);
 
             caret += 5;
             RenderUtils.fillRoundRect(context, margin, caret, width - 10, height - (caret - y) - 5, 5, 0xFF555555);
@@ -396,15 +395,18 @@ public class DownloadScriptScreen extends AnimatedBase {
             margin += 5;
             List<String> lines = TextUtils.wordWrap(script.contents, width - 20, 0.5F);
             int max = Math.min(lines.size(), 50);
+
+            context.getMatrices().push();
+            context.enableScissor(margin, caret, margin + width - 10, y + height - 5);
             for (int i = 0; i < max; i++) {
                 String line = lines.get(i);
                 RenderUtils.drawText(context, line, margin, caret, 0.4F, false);
                 caret = (int)(caret + mc.textRenderer.fontHeight * 0.4F);
             }
+            context.disableScissor();
+            context.getMatrices().pop();
 
             RenderUtils.fillVerticalGradient(context, x, y + height - 5 - 20, width, 20, 0x00323232, 0xFF323232);
-
-            context.disableScissor();
 
             // status
             this.renderStatus(context);
