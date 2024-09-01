@@ -12,6 +12,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -27,11 +28,11 @@ public class Conditionals implements Global {
     private static final Map<String, Conditional> registry = new HashMap<>();
 
     public static Result parseCondition(Entity ref, ScriptArgs args, int beginIndex) {
-        String arg = args.get(0).toString();
+        String arg = args.get(beginIndex).toString();
         Conditional condition = registry.get(arg.toLowerCase());
 
         if (condition == null)
-            throw new IllegalArgumentException("cannot recognize conditional [%s]".formatted(args));
+            throw new IllegalArgumentException("cannot recognize conditional [%s]".formatted(arg));
 
         Result result = condition.test(ref, args, beginIndex);
         if (!AsCmd.hasCurrentReferenceEntity() && result.requiresDirectReference())
@@ -102,6 +103,7 @@ public class Conditionals implements Global {
         return pair(evalIntegers(PlayerUtils.player().getAttackCooldownProgress(1.0F), args.get(i + 1).toString()), i + 2);
     });
     public static final Conditional HEALTH = register("health", (ref, args, i) -> pair(true, ref instanceof LivingEntity liv && evalIntegers((int) liv.getHealth(), args.get(i + 1).toString()), i + 2));
+    public static final Conditional HUNGER = register("hunger", (ref, args, i) -> pair(true, ref instanceof PlayerEntity liv && evalIntegers(liv.getHungerManager().getFoodLevel(), args.get(i + 1).toString()), i + 2));
     public static final Conditional HURT_TIME = register("hurt_time", (ref, args, i) -> pair(true, ref instanceof LivingEntity liv && evalIntegers(liv.hurtTime, args.get(i + 1).toString()), i + 2));
     public static final Conditional ARMOR = register("armor", (ref, args, i) -> pair(true, ref instanceof LivingEntity liv && evalIntegers(liv.getArmor(), args.get(i + 1).toString()), i + 2));
     public static final Conditional POS_X = register("pos_x", (ref, args, i) -> pair(true, evalIntegers((int) ref.getX(), args.get(i + 1).toString()), i + 2));
@@ -160,6 +162,7 @@ public class Conditionals implements Global {
     public static final Conditional COLLIDING = register("colliding", (ref, args, i) -> pair(true, EntityUtils.isColliding(ref), i + 1));
     public static final Conditional COLLIDING_HORIZONTALLY = register("colliding_horizontally", (ref, args, i) -> pair(true, EntityUtils.isCollidingHorizontally(ref), i + 1));
     public static final Conditional COLLIDING_VERTICALLY = register("colliding_vertically", (ref, args, i) -> pair(true, EntityUtils.isCollidingVertically(ref), i + 1));
+    public static final Conditional JUMPING = register("jumping", (ref, args, i) -> pair(true, PlayerUtils.valid() && mc.player.input.jumping && !mc.player.isInsideWaterOrBubbleColumn(), i + 1));
     public static final Conditional MOVING = register("moving", (ref, args, i) -> pair(true, EntityUtils.isMoving(ref), i + 1));
     public static final Conditional BLOCKING = register("blocking", (ref, args, i) -> pair(true, EntityUtils.isBlocking(ref), i + 1));
     public static final Conditional ON_GROUND = register("on_ground", (ref, args, i) -> pair(true, ref.isOnGround(), i + 1));
