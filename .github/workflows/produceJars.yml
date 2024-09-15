@@ -41,6 +41,9 @@ jobs:
                   distribution: 'temurin'
                   java-version: '21'
 
+            - name: Set JAVA_HOME
+              run: echo "JAVA_HOME=${{ runner.tool_cache }}/java/21" >> $GITHUB_ENV
+
             - name: Grant execute permission for gradlew
               run: chmod +x ./gradlew
 
