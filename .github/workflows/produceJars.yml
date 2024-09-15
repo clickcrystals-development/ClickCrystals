@@ -91,7 +91,7 @@ jobs:
                   echo "yarn_mappings=${{ matrix.yarn_mappings }}" >> gradle.properties
                   echo "loader_version=${{ matrix.loader_version }}" >> gradle.properties
                   echo "fabric_version=${{ matrix.fabric_version }}" >> gradle.properties
-                  cat gradle.properites
+                  cat gradle.properties
 
             - name: Migrate Mappings
               run: ./gradlew migrateMappings --mappings "${{ matrix.version-config.yarn_mappings }}"
