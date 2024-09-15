@@ -14,17 +14,32 @@ jobs:
 
         strategy:
             matrix:
-                minecraft-version: [ "1.19.3+build.5", "1.20+build.1", "1.21+build.2" ]
+                minecraft-version: [
+                    "1.19+build.4",
+                    "1.19.1+build.6",
+                    "1.19.2+build.28",
+                    "1.19.3+build.5",
+                    "1.19.4+build.2",
+                    "1.20+build.1",
+                    "1.20.1+build.10",
+                    "1.20.2+build.4",
+                    "1.20.3+build.1",
+                    "1.20.4+build.3",
+                    "1.20.5+build.1",
+                    "1.20.6+build.3",
+                    "1.21+build.9",
+                    "1.21.1+build.3"
+                ]
 
         steps:
             - name: Checkout code
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Set up JDK
-              uses: actions/setup-java@v3
+              uses: actions/setup-java@v4
               with:
                   distribution: 'temurin'
-                  java-version: 21
+                  java-version: '21'
 
             - name: Grant execute permission for gradlew
               run: chmod +x ./gradlew
@@ -35,8 +50,10 @@ jobs:
             - name: Build Mod
               run: ./gradlew build
 
+            - name: Rename and Upload JAR Artifact
+              run: mv build/libs/*.jar build/libs/ClickCrystals-${{ matrix.minecraft-version }}.jar
             - name: Upload JAR Artifact
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
-                  name: mod-jar-${{ matrix.minecraft-version }}
-                  path: build/libs/*.jar
+                  name: ClickCrystals-${{ matrix.minecraft-version }}.jar
+                  path: build/libs/ClickCrystals-${{ matrix.minecraft-version }}.jar
