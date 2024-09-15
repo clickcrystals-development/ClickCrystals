@@ -87,10 +87,10 @@ jobs:
 
             - name: Update Gradle Properties
               run: |
-                  echo "minecraft_version=${{ matrix.minecraft_version }}" >> gradle.properties
-                  echo "yarn_mappings=${{ matrix.yarn_mappings }}" >> gradle.properties
-                  echo "loader_version=${{ matrix.loader_version }}" >> gradle.properties
-                  echo "fabric_version=${{ matrix.fabric_version }}" >> gradle.properties
+                  sed -i "s/^minecraft_version=.*/minecraft_version=${{ matrix.version-config.minecraft_version }}/" gradle.properties
+                  sed -i "s/^yarn_mappings=.*/yarn_mappings=${{ matrix.version-config.yarn_mappings }}/" gradle.properties
+                  sed -i "s/^loader_version=.*/loader_version=${{ matrix.version-config.loader_version }}/" gradle.properties
+                  sed -i "s/^fabric_version=.*/fabric_version=${{ matrix.version-config.fabric_version }}/" gradle.properties
                   cat gradle.properties
 
             - name: Migrate Mappings
