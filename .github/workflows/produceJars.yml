@@ -14,22 +14,63 @@ jobs:
 
         strategy:
             matrix:
-                minecraft-version: [
-                    "1.19+build.4",
-                    "1.19.1+build.6",
-                    "1.19.2+build.28",
-                    "1.19.3+build.5",
-                    "1.19.4+build.2",
-                    "1.20+build.1",
-                    "1.20.1+build.10",
-                    "1.20.2+build.4",
-                    "1.20.3+build.1",
-                    "1.20.4+build.3",
-                    "1.20.5+build.1",
-                    "1.20.6+build.3",
-                    "1.21+build.9",
-                    "1.21.1+build.3"
-                ]
+                version-config:
+                    - minecraft_version: "1.19"
+                      yarn_mappings: "1.19+build.4"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.58.0+1.19"
+                    - minecraft_version: "1.19.1"
+                      yarn_mappings: "1.19.1+build.6"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.58.5+1.19.1"
+                    - minecraft_version: "1.19.2"
+                      yarn_mappings: "1.19.2+build.28"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.77.0+1.19.2"
+                    - minecraft_version: "1.19.3"
+                      yarn_mappings: "1.19.3+build.5"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.76.1+1.19.3"
+                    - minecraft_version: "1.19.4"
+                      yarn_mappings: "1.19.4+build.2"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.87.2+1.19.4"
+                    - minecraft_version: "1.20"
+                      yarn_mappings: "1.20+build.1"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.83.0+1.20"
+                    - minecraft_version: "1.20.1"
+                      yarn_mappings: "1.20.1+build.10"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.92.2+1.20.1"
+                    - minecraft_version: "1.20.2"
+                      yarn_mappings: "1.20.2+build.4"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.91.6+1.20.2"
+                    - minecraft_version: "1.20.3"
+                      yarn_mappings: "1.20.3+build.1"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.91.1+1.20.3"
+                    - minecraft_version: "1.20.4"
+                      yarn_mappings: "1.20.4+build.3"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.97.2+1.20.4"
+                    - minecraft_version: "1.20.5"
+                      yarn_mappings: "1.20.5+build.1"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.97.8+1.20.5"
+                    - minecraft_version: "1.20.6"
+                      yarn_mappings: "1.20.6+build.3"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.100.8+1.20.6"
+                    - minecraft_version: "1.21"
+                      yarn_mappings: "1.21+build.9"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.102.0+1.21"
+                    - minecraft_version: "1.21.1"
+                      yarn_mappings: "1.21.1+build.3"
+                      loader_version: "0.16.5"
+                      fabric_version: "0.104.0+1.21.1"
 
         steps:
             - name: Checkout code
@@ -44,8 +85,15 @@ jobs:
             - name: Grant execute permission for gradlew
               run: chmod +x ./gradlew
 
+            - name: Update Gradle Properties
+              run: |
+                  echo "minecraft_version=${{ matrix.version-config.minecraft_version }}" > gradle.properties
+                  echo "yarn_mappings=${{ matrix.version-config.yarn_mappings }}" >> gradle.properties
+                  echo "loader_version=${{ matrix.version-config.loader_version }}" >> gradle.properties
+                  echo "fabric_version=${{ matrix.version-config.fabric_version }}" >> gradle.properties
+
             - name: Migrate Mappings
-              run: ./gradlew migrateMappings --mappings "${{ matrix.minecraft-version }}"
+              run: ./gradlew migrateMappings --mappings "${{ matrix.version-config.yarn_mappings }}"
 
             - name: Build Mod
               run: ./gradlew build
@@ -54,11 +102,11 @@ jobs:
               run: |
                   mkdir -p build/libs/renamed
                   for file in build/libs/*.jar; do
-                    mv "$file" "build/libs/renamed/ClickCrystals-${{ matrix.minecraft-version }}.jar"
+                    mv "$file" "build/libs/renamed/ClickCrystals-${{ matrix.version-config.minecraft_version }}.jar"
                   done
 
             - name: Upload JAR Artifact
               uses: actions/upload-artifact@v4
               with:
-                  name: ClickCrystals-${{ matrix.minecraft-version }}
-                  path: build/libs/renamed/ClickCrystals-${{ matrix.minecraft-version }}.jar
+                  name: ClickCrystals-${{ matrix.version-config.minecraft_version }}
+                  path: build/libs/renamed/ClickCrystals-${{ matrix.version-config.minecraft_version }}.jar
