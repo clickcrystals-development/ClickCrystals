@@ -50,10 +50,15 @@ jobs:
             - name: Build Mod
               run: ./gradlew build
 
-            - name: Rename and Upload JAR Artifact
-              run: mv build/libs/*.jar build/libs/ClickCrystals-${{ matrix.minecraft-version }}.jar
+            - name: Rename JAR Artifact
+              run: |
+                  mkdir -p build/libs/renamed
+                  for file in build/libs/*.jar; do
+                    mv "$file" "build/libs/renamed/ClickCrystals-${{ matrix.minecraft-version }}.jar"
+                  done
+
             - name: Upload JAR Artifact
               uses: actions/upload-artifact@v4
               with:
-                  name: ClickCrystals-${{ matrix.minecraft-version }}.jar
-                  path: build/libs/ClickCrystals-${{ matrix.minecraft-version }}.jar
+                  name: ClickCrystals-${{ matrix.minecraft-version }}
+                  path: build/libs/renamed/ClickCrystals-${{ matrix.minecraft-version }}.jar
