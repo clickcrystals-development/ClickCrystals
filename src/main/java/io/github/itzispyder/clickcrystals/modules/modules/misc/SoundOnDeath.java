@@ -2,24 +2,23 @@ package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
 import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
-import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
-import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
+import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 
-public class SoundOnDeath extends Module implements Listener {
+public class SoundOnDeath extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();
     public final ModuleSetting<Double> distance = scGeneral.add(DoubleSetting.create()
@@ -54,16 +53,6 @@ public class SoundOnDeath extends Module implements Listener {
 
     public SoundOnDeath() {
         super("sound-on-death", Categories.MISC, "Plays a sound upon killing a player");
-    }
-
-    @Override
-    protected void onEnable() {
-        system.addListener(this);
-    }
-
-    @Override
-    protected void onDisable() {
-        system.removeListener(this);
     }
 
     @EventHandler
