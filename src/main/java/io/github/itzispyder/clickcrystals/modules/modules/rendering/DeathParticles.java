@@ -33,14 +33,14 @@ public class DeathParticles extends ListenerModule {
     public final ModuleSetting<Particles> particlesType = scGeneral.add(EnumSetting.create(Particles.class)
             .name("particle-type")
             .description("Choose the particle effect shown when the entity dies.")
-            .def(Particles.TOTEM)
+            .def(Particles.BIG_EXPLOSION)
             .build()
     );
 
     public final ModuleSetting<Double> particleVelocity = scGeneral.add(DoubleSetting.create()
             .name("particles-velocity")
             .description("set the amount of the particles.")
-            .def(0.1)
+            .def(1.0)
             .min(1.0)
             .max(6.0)
             .build()

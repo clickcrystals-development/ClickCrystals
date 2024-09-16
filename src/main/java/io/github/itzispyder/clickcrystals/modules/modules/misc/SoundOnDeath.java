@@ -57,7 +57,7 @@ public class SoundOnDeath extends ListenerModule {
 
     @EventHandler
     private void onReceivePacket(PacketReceiveEvent e) {
-        if (e.getPacket() instanceof EntityStatusS2CPacket packet && !PlayerUtils.invalid()) {
+        if (e.getPacket() instanceof EntityStatusS2CPacket packet && PlayerUtils.valid()) {
             ClientPlayerEntity p = PlayerUtils.player();
             Entity ent = packet.getEntity(p.getWorld());
             int status = packet.getStatus();
