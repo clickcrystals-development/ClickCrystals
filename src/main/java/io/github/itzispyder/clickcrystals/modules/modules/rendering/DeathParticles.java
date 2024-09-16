@@ -10,13 +10,16 @@ import io.github.itzispyder.clickcrystals.modules.settings.EnumSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.particle.ParticleUtil;
 
 public class DeathParticles extends ListenerModule {
 
@@ -33,13 +36,13 @@ public class DeathParticles extends ListenerModule {
     public final ModuleSetting<Particles> particlesType = scGeneral.add(EnumSetting.create(Particles.class)
             .name("particle-type")
             .description("Choose the particle effect shown when the entity dies.")
-            .def(Particles.BIG_EXPLOSION)
+            .def(Particles.FLASH)
             .build()
     );
 
     public final ModuleSetting<Double> particleVelocity = scGeneral.add(DoubleSetting.create()
             .name("particles-velocity")
-            .description("set the amount of the particles.")
+            .description("Set the speed of the particles.")
             .def(1.0)
             .min(1.0)
             .max(6.0)
@@ -51,18 +54,20 @@ public class DeathParticles extends ListenerModule {
         if (e.getPacket() instanceof EntityStatusS2CPacket packet) {
             if (packet.getStatus() == 3) {
                 Entity entity = packet.getEntity(mc.player.getWorld());
-                if (entity instanceof LivingEntity livingEntity) {
-                    World world = livingEntity.getEntityWorld();
-                    if (shouldApplyEffect(entity)) {
-                        ParticleType<? extends ParticleEffect> particle = particlesType.getVal().particleType;
-                        double velocity = randomizer.getRandomDouble(particleVelocity.getVal());
-                        for (int i = 0; i < randomizer.getRandomInt(5, 10); i++) {
-                            world.addParticle((ParticleEffect) particle,
-                                    entity.getX(), entity.getY(), entity.getZ(),
-                                    randomizer.getRandomDouble(-velocity, velocity),
-                                    randomizer.getRandomDouble(velocity * 0.5),
-                                    randomizer.getRandomDouble(-velocity, velocity));
-                        }
+                if (shouldApplyEffect(entity)) {
+                    ParticleType<? extends ParticleEffect> particle = particlesType.getVal().particleType;
+                    double velocity = randomizer.getRandomDouble(particleVelocity.getVal());
+                    BlockPos entityPos = entity.getBlockPos();
+                    World world = entity.getEntityWorld();
+                    for (int i = 0; i < randomizer.getRandomInt(5, 10); i++) {
+                        Direction direction = Direction.byId(randomizer.getRandomInt(0, 5));
+                        Vec3d velocityVec = new Vec3d(
+                                randomizer.getRandomDouble(-velocity, velocity),
+                                randomizer.getRandomDouble(velocity * 0.5),
+                                randomizer.getRandomDouble(-velocity, velocity)
+                        );
+
+                        ParticleUtil.spawnParticle(world, entityPos, direction, (ParticleEffect) particle, velocityVec, 0.55);
                     }
                 }
             }
