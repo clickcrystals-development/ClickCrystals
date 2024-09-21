@@ -202,7 +202,7 @@ public class DownloadScriptScreen extends AnimatedBase {
         TOTEM;
 
         public String getURL() {
-            return "https://itzispyder.github.io/scripts/content/%s.category".formatted(this.name().toLowerCase());
+            return "https://itzispyder.github.io/clickcrystals/scripts/content/%s.category".formatted(this.name().toLowerCase());
         }
     }
 

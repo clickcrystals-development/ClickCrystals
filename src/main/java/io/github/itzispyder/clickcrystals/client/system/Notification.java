@@ -113,7 +113,8 @@ public class Notification implements Global {
     }
 
     public void ping(boolean in) {
-        mc.getSoundManager().play(PositionedSoundInstance.master(in ? SoundEvents.UI_TOAST_IN : SoundEvents.UI_TOAST_OUT, 1, 10));
+        PositionedSoundInstance sound = PositionedSoundInstance.master(in ? SoundEvents.UI_TOAST_IN : SoundEvents.UI_TOAST_OUT, 1, 10);
+        mc.execute(() -> mc.getSoundManager().play(sound));
     }
 
     public String getName() {

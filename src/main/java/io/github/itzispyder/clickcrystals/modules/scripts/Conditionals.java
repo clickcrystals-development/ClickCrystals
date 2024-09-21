@@ -168,6 +168,7 @@ public class Conditionals implements Global {
     public static final Conditional ON_GROUND = register("on_ground", (ref, args, i) -> pair(true, ref.isOnGround(), i + 1));
     public static final Conditional ON_FIRE = register("on_fire", (ref, args, i) -> pair(true, ref.isOnFire(), i + 1));
     public static final Conditional FROZEN = register("frozen", (ref, args, i) -> pair(true, ref.isFrozen(), i + 1));
+    public static final Conditional DEAD = register("dead", (ref, args, i) -> pair(true, ref instanceof LivingEntity liv && liv.isDead(), i + 1));
     public static final Conditional CURSOR_ITEM = register("cursor_item", (ref, args, i) -> {
         ClientPlayerEntity p = PlayerUtils.player();
         Predicate<ItemStack> item = ScriptParser.parseItemPredicate(args.get(i + 1).toString());

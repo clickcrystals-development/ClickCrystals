@@ -60,6 +60,6 @@ public final class ChatUtils implements Global {
         SoundManager sm = mc.getSoundManager();
         SoundEvent event = SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP;
         SoundInstance sound = PositionedSoundInstance.master(event, 0.1F, 10.0F);
-        sm.play(sound);
+        mc.execute(() -> sm.play(sound));
     }
 }

@@ -52,7 +52,7 @@ public class AsCmd extends ScriptCommand implements ThenChainable {
     }
 
     public static Entity getCurrentReferenceEntity() {
-        if (currentReference == null || !currentReference.isAlive() || currentReference.isSpectator())
+        if (currentReference == null /*|| !currentReference.isAlive()*/ || currentReference.isSpectator())
             return PlayerUtils.player();
         return currentReference;
     }
