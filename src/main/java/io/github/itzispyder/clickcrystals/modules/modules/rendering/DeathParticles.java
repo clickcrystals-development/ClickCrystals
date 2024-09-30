@@ -51,26 +51,28 @@ public class DeathParticles extends ListenerModule {
 
     @EventHandler
     private void onReceivePacket(PacketReceiveEvent e) {
-        if (e.getPacket() instanceof EntityStatusS2CPacket packet) {
-            if (packet.getStatus() == 3) {
-                Entity entity = packet.getEntity(mc.player.getWorld());
-                if (shouldApplyEffect(entity)) {
-                    ParticleType<? extends ParticleEffect> particle = particlesType.getVal().particleType;
-                    double velocity = randomizer.getRandomDouble(particleVelocity.getVal());
-                    BlockPos entityPos = entity.getBlockPos();
-                    World world = entity.getEntityWorld();
-                    for (int i = 0; i < randomizer.getRandomInt(5, 10); i++) {
-                        Direction direction = Direction.byId(randomizer.getRandomInt(0, 5));
-                        Vec3d velocityVec = new Vec3d(
-                                randomizer.getRandomDouble(-velocity, velocity),
-                                randomizer.getRandomDouble(velocity * 0.5),
-                                randomizer.getRandomDouble(-velocity, velocity)
-                        );
+        if (!(e.getPacket() instanceof EntityStatusS2CPacket packet))
+            return;
+        if (packet.getStatus() != 3)
+            return;
 
-                        ParticleUtil.spawnParticle(world, entityPos, direction, (ParticleEffect) particle, velocityVec, 0.55);
-                    }
-                }
-            }
+        Entity entity = packet.getEntity(mc.player.getWorld());
+        if (!shouldApplyEffect(entity))
+            return;
+
+        ParticleType<? extends ParticleEffect> particle = particlesType.getVal().particleType;
+        double velocity = randomizer.getRandomDouble(particleVelocity.getVal());
+        BlockPos entityPos = entity.getBlockPos();
+        World world = entity.getEntityWorld();
+
+        for (int i = 0; i < randomizer.getRandomInt(5, 10); i++) {
+            Direction direction = Direction.byId(randomizer.getRandomInt(0, 5));
+            Vec3d velocityVec = new Vec3d(
+                    randomizer.getRandomDouble(-velocity, velocity),
+                    randomizer.getRandomDouble(velocity * 0.5),
+                    randomizer.getRandomDouble(-velocity, velocity)
+            );
+            ParticleUtil.spawnParticle(world, entityPos, direction, (ParticleEffect) particle, velocityVec, 0.55);
         }
     }
 
