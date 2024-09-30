@@ -142,7 +142,7 @@ public class InGameHuds extends Module implements Listener {
     public final ModuleSetting<Boolean> showNetherCoords = scHudPosition.add(createBoolSetting()
             .name("show-nether-coords-in-overworld")
             .description("Show nether coords when in overworld")
-            .def(true)
+            .def(false)
             .build()
         );
     public final ModuleSetting<Boolean> hudTargetDisableWhenNoCombat = scHudTarget.add(createBoolSetting()
