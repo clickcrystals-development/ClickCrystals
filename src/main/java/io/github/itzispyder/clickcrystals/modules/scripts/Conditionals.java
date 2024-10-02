@@ -3,20 +3,24 @@ package io.github.itzispyder.clickcrystals.modules.scripts;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
+import io.github.itzispyder.clickcrystals.interfaces.HandledScreenAccessor;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.scripts.syntax.AsCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.*;
 import io.github.itzispyder.clickcrystals.util.misc.Dimensions;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -176,6 +180,25 @@ public class Conditionals implements Global {
             return pair(false, i + 2);
         ItemStack stack = p.currentScreenHandler.getCursorStack();
         return pair(stack != null && item.test(stack), i + 2);
+    });
+    public static final Conditional HOVERING_OVER = register("hovering_over", (ref, args, i) -> {
+        ClientPlayerEntity p = PlayerUtils.player();
+        Predicate<ItemStack> item = ScriptParser.parseItemPredicate(args.get(i + 1).toString());
+        if (p == null || p.currentScreenHandler == null || !(mc.currentScreen instanceof HandledScreen<?> handle))
+            return pair(false, i + 2);
+
+        HandledScreenAccessor screen = (HandledScreenAccessor) handle;
+        Point cursor = InteractionUtils.getCursor();
+
+        for (Slot slot: p.currentScreenHandler.slots) {
+            if (!screen.isHovered(slot, cursor.x, cursor.y))
+                continue;
+            ItemStack stack = slot.getStack();
+            if (stack == null || !item.test(stack))
+                continue;
+            return pair(true, i + 2);
+        }
+        return pair(false, i + 2);
     });
     public static final Conditional REFERENCE_ENTITY = register("reference_entity", (ref, args, i) -> {
         if (args.match(i + 1, "client")) {

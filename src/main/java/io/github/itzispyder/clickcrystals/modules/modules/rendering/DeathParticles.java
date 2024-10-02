@@ -8,22 +8,20 @@ import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.EnumSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.particle.ParticleUtil;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.particle.ParticleUtil;
 
 public class DeathParticles extends ListenerModule {
 
-    Randomizer randomizer = new Randomizer();
     private final SettingSection scGeneral = getGeneralSection();
 
     public final ModuleSetting<Entities> entitySelection = scGeneral.add(EnumSetting.create(Entities.class)
@@ -61,16 +59,16 @@ public class DeathParticles extends ListenerModule {
             return;
 
         ParticleType<? extends ParticleEffect> particle = particlesType.getVal().particleType;
-        double velocity = randomizer.getRandomDouble(particleVelocity.getVal());
+        double velocity = system.random.getRandomDouble(particleVelocity.getVal());
         BlockPos entityPos = entity.getBlockPos();
         World world = entity.getEntityWorld();
 
-        for (int i = 0; i < randomizer.getRandomInt(5, 10); i++) {
-            Direction direction = Direction.byId(randomizer.getRandomInt(0, 5));
+        for (int i = 0; i < system.random.getRandomInt(5, 10); i++) {
+            Direction direction = Direction.byId(system.random.getRandomInt(0, 5));
             Vec3d velocityVec = new Vec3d(
-                    randomizer.getRandomDouble(-velocity, velocity),
-                    randomizer.getRandomDouble(velocity * 0.5),
-                    randomizer.getRandomDouble(-velocity, velocity)
+                    system.random.getRandomDouble(-velocity, velocity),
+                    system.random.getRandomDouble(velocity * 0.5),
+                    system.random.getRandomDouble(-velocity, velocity)
             );
             ParticleUtil.spawnParticle(world, entityPos, direction, (ParticleEffect) particle, velocityVec, 0.55);
         }
