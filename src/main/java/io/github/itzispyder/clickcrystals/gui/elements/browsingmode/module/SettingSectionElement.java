@@ -2,6 +2,8 @@ package io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -10,10 +12,12 @@ import net.minecraft.client.gui.DrawContext;
 public class SettingSectionElement extends GuiElement {
 
     private final SettingSection settingSection;
+    private Animator animator;
 
     public SettingSectionElement(SettingSection settingSection, int x, int y) {
         super(x, y, 285, 20);
         this.settingSection = settingSection;
+        this.animator = new Animator(400, Animations.FADE_IN_AND_OUT);
 
         int caret = y + 25;
         for (int i = 0; i < settingSection.getSettings().size(); i++) {
@@ -27,6 +31,25 @@ public class SettingSectionElement extends GuiElement {
         }
 
         height = caret - y;
+    }
+
+    @Override
+    public void render(DrawContext context, int mouseX, int mouseY) {
+        boolean isAnimating = animator != null && !animator.isFinished();
+        if (isAnimating) {
+            context.getMatrices().push();
+            context.getMatrices().translate(-(float)(width * 0.5 * animator.getAnimationReversed()), 0, 0);
+        }
+        else {
+            animator = null;
+        }
+
+        super.render(context, mouseX, mouseY);
+
+
+        if (isAnimating) {
+            context.getMatrices().pop();
+        }
     }
 
     @Override
