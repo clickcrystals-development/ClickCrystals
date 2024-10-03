@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.data.announce.BulletinBoard;
 import io.github.itzispyder.clickcrystals.data.pixelart.PixelArtGenerator;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
+import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.modules.scripts.syntax.AsCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
@@ -23,6 +24,7 @@ public class ReloadCommand extends Command {
     public ReloadCommand() {
         super("reload", "Reloads config, scripts, the entire ClickCrystals Client.", ",reload");
     }
+
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(cxt -> {
@@ -55,13 +57,14 @@ public class ReloadCommand extends Command {
         system.scheduler.cancelAllTasks();
 
         // script reload
-        Map<String, Boolean> scriptCache = new HashMap<>();
-        system.scriptedModules().values().forEach(m -> scriptCache.put(m.getId(), m.isEnabled()));
+        ScriptCache scriptCache = new ScriptCache();
+        system.scriptedModules().values().forEach(scriptCache::cache);
         system.reloadScripts(false);
-        system.scriptedModules().values().forEach(m -> m.setEnabled(scriptCache.getOrDefault(m.getId(), false), false));
 
         // config load
         config.loadEntireConfig();
+        system.scriptedModules().values().forEach(scriptCache::restore);
+        scriptCache.clear();
         system.println("<- config loaded [bulk action completed]");
 
         // info request
@@ -71,5 +74,34 @@ public class ReloadCommand extends Command {
         String result = "Reloaded ClickCrystals client! (%s)".formatted(timer.end().getStampPrecise());
         system.println(result);
         ChatUtils.sendPrefixMessage(result);
+    }
+
+    private static class ScriptCache {
+        private final Map<String, CacheData> scriptCache;
+
+        public ScriptCache() {
+            this.scriptCache = new HashMap<>();
+        }
+
+        public void cache(ScriptedModule m) {
+            CacheData data = new CacheData(m.isEnabled(), m.getData().getBind().getKey());
+            scriptCache.put(m.getId(), data);
+        }
+
+        public void restore(ScriptedModule m) {
+            CacheData data = scriptCache.get(m.getId());
+            if (data == null)
+                return;
+            m.setEnabled(data.enabled, false);
+            m.getData().getBind().setKey(data.bind);
+        }
+
+        public void clear() {
+            scriptCache.clear();
+        }
+
+        public record CacheData(boolean enabled, int bind) {
+
+        }
     }
 }
