@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.Search
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SuggestionElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
@@ -29,7 +30,7 @@ public class HomeScreen extends AnimatedBase {
     public final int baseY = (int)(windowHeight / 2.0 - baseHeight / 2.0);
     public final SearchBarElement searchBar = new SearchBarElement(0, 0, 300);
     public final SearchResultsElement searchResults = new SearchResultsElement(searchBar);
-    protected final Animator animator = new Animator(200);
+    protected final Animator animator = new Animator(200, Animations.FADE_IN_AND_OUT);
     public final List<SuggestionElement> suggestions = new ArrayList<>();
 
     public HomeScreen() {

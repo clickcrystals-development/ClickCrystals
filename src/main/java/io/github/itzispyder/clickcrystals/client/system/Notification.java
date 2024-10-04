@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals.client.system;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.gui.misc.Color;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
@@ -51,13 +50,10 @@ public class Notification implements Global {
         int h = DISPLAY_HEIGHT;
         int x = win.getScaledWidth() / 2 - w / 2;
         int y = 10 + translation.get();
-        Color color = new Color(backgroundColor);
-        int c1 = color.getHexCustomAlpha(0.75);
-        int c2 = color.brighter(2).getHexCustomAlpha(0.5);
 
-        RenderUtils.fillRoundRectGradient(context, x, y, w, h, 5, c1, c2, c1, c2, c1);
+        RenderUtils.fillRoundShadow(context, x, y, w, h, 5, 10, 0x80000000);
+        RenderUtils.fillRoundRect(context, x, y, w, h, 5, backgroundColor);
         RenderUtils.drawRoundRect(context, x, y, w, h, 5, borderColor);
-        RenderUtils.fillRoundShadow(context, x, y, w, h, 5, 3, 0x80FFFFFF);
 
 //        w -= 4;
 //        h -= 4;

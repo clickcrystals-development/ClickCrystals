@@ -17,7 +17,11 @@ public abstract class ScriptCommand implements Global {
     public void dispatch(ClickScript script, String label, String cmd) {
         try {
             if (cmd != null && !cmd.isEmpty() && cmd.startsWith(label)) {
-                String[] args = cmd.replaceFirst(label, "").trim().split(" ");
+                String[] args = cmd
+                        .replaceFirst(label, "")
+                        .replaceAll("([<>=!]*)\\s*(\\d+)", "$1$2")
+                        .replaceAll("\s{2,}", " ")
+                        .trim().split(" ");
                 onCommand(this, cmd, new ScriptArgs(script, args));
             }
         }

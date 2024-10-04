@@ -40,7 +40,7 @@ public final class Tex implements Global {
     }
 
     public static class Backdrops {
-        public static final Identifier BACKDROP_HOME = Identifier.of(modId, "textures/gui/backdrop/backdrop_3.png");
+        public static final Identifier BACKDROP_HOME = Identifier.of(modId, "textures/gui/backdrop/backdrop_4.png");
         public static final Identifier BACKDROP_INV = Identifier.of(modId, "textures/gui/backdrop/backdrop_0.png");
     }
 

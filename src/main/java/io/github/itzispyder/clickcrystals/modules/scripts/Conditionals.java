@@ -207,8 +207,14 @@ public class Conditionals implements Global {
         Predicate<Entity> filter = args.match(i + 1, "any_entity") ? entity -> true : ScriptParser.parseEntityPredicate(args.get(i + 1).toString());
         return pair(filter.test(ref), i + 2);
     });
-
-
+    public static final Conditional ITEM_COUNT = register("item_count", (ref, args, i) -> {
+        ItemStack item = ScriptParser.parseItemStack(args.get(i + 1).toString());
+        return pair(item != null && evalIntegers(item.getCount(), args.get(i + 2).toString()), i + 3);
+    });
+    public static final Conditional ITEM_DURABILITY = register("item_durability", (ref, args, i) -> {
+        ItemStack item = ScriptParser.parseItemStack(args.get(i + 1).toString());
+        return pair(item != null && evalIntegers(1 - item.getDamage() / (double) item.getMaxDamage(), args.get(i + 2).toString()), i + 3);
+    });
 
     // helper methods
 
