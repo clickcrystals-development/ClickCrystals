@@ -44,30 +44,35 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Version: 1.2.8
+Version: 1.2.9
 
 Scripting:
-  - if hunger
-  - if jumping
-
-Patches:
-  - fix while cmd not working when scheduled under wait cmd
-  - fix online scripts and online configs downtime
-  - fix hand swing on team detector module # i no one
-  - fix auto disconnect players in render distance check # i no one
-
-GUI:
-  - new online scripts screen
+  - if hovering_over (ID)
+  - if dead # will need to remove the original check for entity selection loop
+  - switch **n
+  - if item_count #ID
+  - if item_count holding
+  - if item_count off_holding
+  - if item_durability #ID
+  - if item_durability holding
+  - if item_durability off_holding
+  - removed the need for needing to specifically format >,<,>=,<=, etc.. without spaces. (>= 3 is now possible, you wont be required to use >=3 without spaces anymore)
+  - prevented adding insane amount of whitespaces in script strings
 
 Add:
-  - setting to disable loading screen
-  - setting to disable modules from printing in chat
-  - mod menu integration and an option to disable it in advanced settings # i no one
+  - command to toggle on or all for all modules
+  - add more animations to the configuration screens
+  - add module auto replenish
 
 Tweaks:
-  - tweak the look of clickcrystals notifications
-  - delete unused discord link in the invite screen
-  - tweaked thelook of clickcrystals home page
+  - merge roles owner and dev, give i-no-one and josh (if pr passes) dev broadcasts
+
+Patches:
+  - fix online configs downtime
+  - fix online scripts
+  - fix possible bug with notification toast sound where it throws ConcurrentModificationException
+  - fix client side particles spawnin # i-no-one
+  - fix reloading custom scripted modules resetting their keybinds
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)
@@ -105,6 +110,7 @@ Tweaks:
 |     SelfGlow     |                                                 Am I Glowing?                                                 |
 |    SilkTouch     |                               "Is there a silk touch module?" - I_Got_You_Dead                                |
 |   AnchorSwitch   |             Whenever you place an anchor, switch to glowstone then back after it has been charged             |
+|  AutoReplenish   |                     Automatically replenishes items from your inventory into your hotbar                      |
 |   ClickCrystal   |                                     Binds end crystal place to left click                                     |
 |  ClientCrystals  |                            Removes crystals client-side the moment you punch them                             |
 |  CrystalAnchor   |                    Right click the ground with a crystal to switch to your respawn anchor                     |
@@ -122,6 +128,7 @@ Tweaks:
 |    NextBlock     |              Targets next same block that you're mining. (for farming, not pvp, useless in pvp)               |
 |   NoBreakDelay   |                                    No block break delay [flags-anticheat]                                     |
 |  NoInteractions  |                           Prevents opening certain containers(e-chests,chests,etc)                            |
+|   SoundOnDeath   |                                      Plays a sound upon killing a player                                      |
 |   TeamDetector   |                               Finding teams and disable attacking your own team                               |
 |   ToolSwitcher   |                                 Switches to the right tool for mining a block                                 |
 |    TotemPops     |                                 Send messages when a player pops their totem                                  |
@@ -135,6 +142,7 @@ Tweaks:
 |   BlockOutline   |                                     Change the color of the block outline                                     |
 |    CameraClip    |                    Change the camera distance and the camera behavior when encounter walls                    |
 |   CrystalSpeed   |                                          Crystals per second counter                                          |
+|  DeathParticles  |                                      Spawn particles upon entity death.                                       |
 | EntityIndicator  |                              Indicates entities around you. Players are excluded                              |
 |     FreeLook     |                                         lock your camera perspective                                          |
 |    GhostTotem    |               Renders a totem in your hand upon dying. Will not work if AutoRespawn is enabled!               |

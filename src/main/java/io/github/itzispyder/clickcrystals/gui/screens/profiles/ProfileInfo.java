@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public record ProfileInfo(Info... configs) implements Global {
 
     private static final AtomicReference<ProfileInfo> current = new AtomicReference<>(null);
-    public static final String URL = "https://clickcrystals.xyz/configs/configs.json";
+    public static final String URL = "https://itzispyder.github.io/clickcrystals/configs/configs.json";
 
     public static ProfileInfo getCurrent() {
         return current.get();
@@ -92,7 +92,7 @@ public record ProfileInfo(Info... configs) implements Global {
 
     public record Info(String name, String desc, String contents) {
         public String toURL() {
-            return "https://clickcrystals.xyz/configs/" + contents;
+            return "https://itzispyder.github.io/clickcrystals/configs/" + contents;
         }
 
         public String toLocalPath() {
