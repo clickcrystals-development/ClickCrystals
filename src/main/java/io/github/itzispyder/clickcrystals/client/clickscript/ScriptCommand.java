@@ -19,7 +19,7 @@ public abstract class ScriptCommand implements Global {
             if (cmd != null && !cmd.isEmpty() && cmd.startsWith(label)) {
                 String[] args = cmd
                         .replaceFirst(label, "")
-                        .replaceAll("([<>=!]*)\\s*(\\d+)", "$1$2")
+                        .replaceAll("(\\s+[><=!]*)\\s*(\\d+)", "$1$2")
                         .replaceAll("\s{2,}", " ")
                         .trim().split(" ");
                 onCommand(this, cmd, new ScriptArgs(script, args));
