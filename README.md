@@ -62,7 +62,7 @@ Scripting:
   - if item_durability #ID
   - if item_durability holding
   - if item_durability off_holding
-  - removed the need for needing to specifically format >,<,>=,<=, etc.. without spaces. (>= 3 is now possible, you wont be required to use >=3 without spaces anymore)
+  - removed the need to specifically format >,<,>=,<=, etc.. without spaces. (>= 3 is now possible, you wont be required to use >=3 without spaces anymore)
   - prevented adding insane amount of whitespaces in script strings
 
 Add:
