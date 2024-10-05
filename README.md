@@ -69,6 +69,7 @@ Add:
   - command to toggle on or all for all modules
   - add more animations to the configuration screens
   - add module auto replenish
+  - add module death particles # i-no-one
 
 Tweaks:
   - merge roles owner and dev, give i-no-one and josh (if pr passes) dev broadcasts
