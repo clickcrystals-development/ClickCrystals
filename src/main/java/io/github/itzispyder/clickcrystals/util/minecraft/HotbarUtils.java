@@ -86,6 +86,16 @@ public final class HotbarUtils implements Global {
         return false;
     }
 
+    public static boolean hasButNotHolding(Predicate<ItemStack> item) {
+        if (PlayerUtils.invalid())
+            return false;
+
+        for (int i = 0; i <= 8; i++)
+            if (item.test(InvUtils.inv().getStack(i)) && i != InvUtils.selected())
+                return true;
+        return false;
+    }
+
     public static boolean isHolding(Item item) {
         return isHolding(item,Hand.MAIN_HAND);
     }
