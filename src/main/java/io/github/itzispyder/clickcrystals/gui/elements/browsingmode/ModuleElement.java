@@ -1,6 +1,8 @@
 package io.github.itzispyder.clickcrystals.gui.elements.browsingmode;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.screens.ModuleEditScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.scripts.ClickScriptIDE;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -11,11 +13,13 @@ import net.minecraft.client.gui.DrawContext;
 public class ModuleElement extends GuiElement {
 
     private final Module module;
+    private Animator animator;
 
     public ModuleElement(Module module, int x, int y) {
         super(x, y, 300, 15);
         super.setTooltip("§eLEFT-CLICK§7 to toggle, §eRIGHT-CLICK§7 to edit");
         this.module = module;
+        this.animator = new Animator(400, Animations.FADE_IN_AND_OUT);
 
         if (module instanceof ScriptedModule) {
             setTooltip(getTooltip().concat(", §6MIDDLE-CLICK§7 to open IDE"));
@@ -24,6 +28,15 @@ public class ModuleElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
+        boolean isAnimating = animator != null && !animator.isFinished();
+        if (isAnimating) {
+            context.getMatrices().push();
+            context.getMatrices().translate(-(float)(width * 0.5 * animator.getAnimationReversed()), 0, 0);
+        }
+        else {
+            animator = null;
+        }
+
         if (isHovered(mouseX, mouseY)) {
             RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
         }
@@ -36,6 +49,10 @@ public class ModuleElement extends GuiElement {
         RenderUtils.drawText(context, text, x + 20, y + height / 3, 0.7F, false);
         text = "§7- %s".formatted(module.getDescriptionLimited());
         RenderUtils.drawText(context, text, x + width / 3, y + height / 3, 0.7F, false);
+
+        if (isAnimating) {
+            context.getMatrices().pop();
+        }
     }
 
     @Override

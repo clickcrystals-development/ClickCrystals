@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.rendering.DeathParticles;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoOverlay;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.SlowSwing;
 import net.minecraft.entity.LivingEntity;
@@ -12,6 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collection;
@@ -45,5 +47,10 @@ public abstract class MixinLivingEntity {
                 cir.setReturnValue(false);
             }
         }
+    }
+    @Inject(method = "addDeathParticles",at = @At("HEAD"), cancellable = true)
+    private void disableAddDeathParticles(CallbackInfo ci){
+        if (Module.get(DeathParticles.class).isEnabled())
+            ci.cancel();
     }
 }
