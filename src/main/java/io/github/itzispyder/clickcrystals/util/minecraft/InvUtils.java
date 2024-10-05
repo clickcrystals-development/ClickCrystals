@@ -65,6 +65,25 @@ public final class InvUtils implements Global {
         return -1;
     }
 
+    public static int searchInsideOnly(Item item) {
+        return searchInsideOnly(stack -> stack.isOf(item));
+    }
+
+    public static int searchInsideOnly(Predicate<ItemStack> item) {
+        if (item == null)
+            return -1;
+
+        for (int i = 9; i < 36; i++) {
+            ItemStack stack = inv().getStack(i);
+            if (stack == null || stack.isEmpty())
+                continue;
+            if (item.test(stack))
+                return i;
+        }
+
+        return -1;
+    }
+
     public static int count(Item item) {
         return count(stack -> stack.isOf(item));
     }

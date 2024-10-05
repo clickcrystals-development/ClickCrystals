@@ -21,8 +21,18 @@ public class SwitchCmd extends ScriptCommand {
             return;
         }
 
-        lastSlot = InvUtils.selected();
-        HotbarUtils.search(ScriptParser.parseItemPredicate(args.get(0).toString()));
+        ScriptArgs.Arg first = args.get(0);
+
+        if (first.toString().matches("\\d+")) {
+            int slot = first.toInt() - 1;
+            if (slot < 0 || slot > 8)
+                throw new IllegalArgumentException(first + " is not a valid hotbar slot.");
+            InvUtils.select(slot);
+        }
+        else {
+            lastSlot = InvUtils.selected();
+            HotbarUtils.search(ScriptParser.parseItemPredicate(first.toString()));
+        }
 
         if (args.match(1, "then")) {
             args.executeAll(2);

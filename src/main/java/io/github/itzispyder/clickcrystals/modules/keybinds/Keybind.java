@@ -46,7 +46,8 @@ public class Keybind implements Global {
             GLFW.GLFW_KEY_END, "end",
             GLFW.GLFW_KEY_TAB, "tab",
             GLFW.GLFW_KEY_CAPS_LOCK, "capslock",
-            GLFW.GLFW_KEY_SPACE, "space"
+            GLFW.GLFW_KEY_SPACE, "space",
+            GLFW.GLFW_KEY_ENTER, "enter"
     );
     private final String name, id;
     private int key, defaultKey;

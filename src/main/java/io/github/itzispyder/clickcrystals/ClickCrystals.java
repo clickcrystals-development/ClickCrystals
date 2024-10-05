@@ -196,6 +196,8 @@ public final class ClickCrystals implements ModInitializer, Global {
         ClickScript.register(new ExecutePeriodCmd());
         ClickScript.register(new HoldInputCmd());
         ClickScript.register(new AsCmd());
+        ClickScript.register(new CancelPacketCmd());
+        ClickScript.register(new UncancelPacketCmd());
         ScriptedModule.runModuleScripts();
     }
 
@@ -278,6 +280,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new ObiSwitch());
         system.addModule(new PearlSwitch());
         system.addModule(new GuiCursor());
+        system.addModule(new AutoReplenish());
 
         // misc
         system.addModule(new TeamDetector());
@@ -293,6 +296,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new AutoWalk());
         system.addModule(new NoBreakDelay());
         system.addModule(new MouseTaper());
+        system.addModule(new SoundOnDeath());
 
         // optimization
         system.addModule(new AntiCrash());
@@ -304,6 +308,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new TimeChanger());
 
         // rendering
+        system.addModule(new DeathParticles());
         system.addModule(new FreeLook());
         system.addModule(new BlockOutline());
         system.addModule(new CameraClip());
