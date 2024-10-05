@@ -1,6 +1,8 @@
 package io.github.itzispyder.clickcrystals.client.clickscript;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.components.CommandLine;
+import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -10,6 +12,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 
 import java.io.BufferedReader;
@@ -208,6 +211,20 @@ public class ScriptParser {
         this.put("uncharged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) < 1);
         this.put("charged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) > 0);
     }};
+
+    public static ItemStack parseItemStack(String arg) {
+        if ("holding".equals(arg)) {
+            return HotbarUtils.getHand(Hand.MAIN_HAND);
+        }
+        else if ("off_holding".equals(arg)) {
+            return HotbarUtils.getHand(Hand.OFF_HAND);
+        }
+        else if (arg.matches("^[:#].*$")) {
+            int slot = HotbarUtils.searchSlot(parseItemPredicate(arg));
+            return InvUtils.inv().getStack(slot);
+        }
+        return null;
+    }
 
     public static Predicate<ItemStack> parseItemPredicate(String arg) {
         Predicate<String> filter = s -> s != null && s.trim().length() > 1;

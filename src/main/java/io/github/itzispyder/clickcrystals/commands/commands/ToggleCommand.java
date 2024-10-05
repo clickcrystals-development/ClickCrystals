@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.ModuleArgumentType;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
 import net.minecraft.command.CommandSource;
 
 public class ToggleCommand extends Command {
@@ -21,6 +22,29 @@ public class ToggleCommand extends Command {
                     }, 5 * 50);
                     return SINGLE_SUCCESS;
                 })
+                .then(literal("#ALL")
+                        .then(literal("on")
+                                .executes(context -> {
+                                    for (Module m: system.collectModules())
+                                        if (m.getClass() != SilkTouch.class)
+                                            m.setEnabled(true, false);
+                                    info("&bToggled all modules on");
+                                    return SINGLE_SUCCESS;
+                                }))
+                        .then(literal("off")
+                                .executes(context -> {
+                                    for (Module m: system.collectModules())
+                                        m.setEnabled(false, false);
+                                    info("&7Toggled all modules off");
+                                    return SINGLE_SUCCESS;
+                                }))
+                        .executes(context -> {
+                            for (Module m: system.collectModules())
+                                if (m.getClass() != SilkTouch.class)
+                                    m.setEnabled(!m.isEnabled(), false);
+                            info("&bToggled all modules (on -> off, off -> on)");
+                            return SINGLE_SUCCESS;
+                        }))
                 .then(argument("module", ModuleArgumentType.create())
                         .executes(context -> {
                             Module module = context.getArgument("module", Module.class);
