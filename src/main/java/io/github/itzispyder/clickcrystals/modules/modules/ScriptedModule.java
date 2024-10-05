@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.modules;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
+import io.github.itzispyder.clickcrystals.client.networking.PacketMapper;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.Event;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
@@ -27,7 +28,9 @@ import net.minecraft.util.math.Direction;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ScriptedModule extends ListenerModule {
 
@@ -53,7 +56,12 @@ public class ScriptedModule extends ListenerModule {
     public final List<Runnable> deathListeners = new ArrayList<>();
     public final List<Runnable> gameJoinListeners = new ArrayList<>();
     public final List<Runnable> gameLeaveListeners = new ArrayList<>();
+
+
     public final String filepath, filename;
+    public final Set<PacketMapper.Info> packetSendCancelQueue = new HashSet<>();
+    public final Set<PacketMapper.Info> packetReadCancelQueue = new HashSet<>();
+
 
     public ScriptedModule(String name, String description, File file) {
         super(name, Categories.SCRIPTED, description);
@@ -99,6 +107,10 @@ public class ScriptedModule extends ListenerModule {
         itemConsumeListeners.clear();
         chatReceiveListeners.clear();
         chatSendListeners.clear();
+
+
+        packetSendCancelQueue.clear();
+        packetReadCancelQueue.clear();
     }
 
     @EventHandler
@@ -169,6 +181,20 @@ public class ScriptedModule extends ListenerModule {
 
     @EventHandler
     public void onPacketSend(PacketSendEvent e) {
+        if (PlayerUtils.invalid())
+            return;
+
+        if (!packetSendCancelQueue.isEmpty()) {
+            var target = e.getPacket().getClass();
+            for (PacketMapper.Info info: new ArrayList<>(packetSendCancelQueue)) {
+                if (info != PacketMapper.C2S.get(target))
+                    continue;
+                e.setCancelled(true);
+                packetSendCancelQueue.remove(info);
+                break;
+            }
+        }
+
         if (e.getPacket() instanceof PlayerInteractBlockC2SPacket packet) {
             for (BlockInteractListener l : blockInteractListeners) {
                 l.pass(packet.getBlockHitResult(), packet.getHand());
@@ -190,8 +216,26 @@ public class ScriptedModule extends ListenerModule {
 
     @EventHandler
     public void onPacketReceive(PacketReceiveEvent e) {
-        if (PlayerUtils.invalid()) {
+        if (PlayerUtils.invalid())
             return;
+
+        if (!packetReadCancelQueue.isEmpty()) {
+            var target = e.getPacket().getClass();
+            for (PacketMapper.Info info: new ArrayList<>(packetReadCancelQueue)) {
+                if (info != PacketMapper.S2C.get(target))
+                    continue;
+                e.setCancelled(true);
+                packetReadCancelQueue.remove(info);
+                break;
+            }
+        }
+
+        var target = e.getPacket().getClass();
+        for (PacketMapper.Info info: new ArrayList<>(packetReadCancelQueue)) {
+            if (info == PacketMapper.S2C.get(target)) {
+                e.setCancelled(true);
+                packetReadCancelQueue.remove(info);
+            }
         }
 
         if (e.getPacket() instanceof EntityStatusS2CPacket packet) {

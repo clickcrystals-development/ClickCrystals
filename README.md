@@ -46,6 +46,12 @@ Happy coding and cpvping!
 ```yml
 Version: 1.2.9
 
+Scripted With Packets:
+  - cancel_packet c2s <packetName>
+  - cancel_packet s2c <packetName>
+  - uncancel_packet c2s <packetName>
+  - uncancel_packet s2c <packetName>
+
 Scripting:
   - if hovering_over (ID)
   - if dead # will need to remove the original check for entity selection loop
@@ -71,7 +77,7 @@ Patches:
   - fix online configs downtime
   - fix online scripts
   - fix possible bug with notification toast sound where it throws ConcurrentModificationException
-  - fix client side particles spawnin # i-no-one
+  - fix client side particles spawning # i-no-one
   - fix reloading custom scripted modules resetting their keybinds
 ```
 
