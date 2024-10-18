@@ -108,7 +108,7 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
     }
 
     public void sendUpdateInfo() {
-        if (!ClickCrystals.config.isDisableModuleToggleBroadcast() || ToggleCommand.used)
+        if (!ClickCrystals.config.isDisableModuleToggleBroadcast() || !ToggleCommand.used)
             ChatUtils.sendPrefixMessage("§b" + name + " §3is now toggled " + getOnOrOff());
     }
 

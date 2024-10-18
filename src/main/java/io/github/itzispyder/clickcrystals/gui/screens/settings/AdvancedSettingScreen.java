@@ -64,7 +64,7 @@ public class AdvancedSettingScreen extends DefaultBase {
     );
     public final ModuleSetting<Boolean> debugMode = scGui.add(scGui.createBoolSetting()
             .name("debug-mode")
-            .description("Useful while developing, for dev only ;)")
+            .description("Useful while developing, for devs only ;)")
             .def(ClickCrystals.config.isDev())
             .onSettingChange(setting -> {
                 ClickCrystals.config.setDevMode(setting.getVal());
@@ -72,7 +72,6 @@ public class AdvancedSettingScreen extends DefaultBase {
             })
             .build()
     );
-
 
     public AdvancedSettingScreen() {
         super("Advanced Settings Screen");
