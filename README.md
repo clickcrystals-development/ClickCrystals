@@ -78,7 +78,6 @@ Patches:
   - fix online configs downtime
   - fix online scripts
   - fix possible bug with notification toast sound where it throws ConcurrentModificationException
-  - fix client side particles spawning # i-no-one
   - fix reloading custom scripted modules resetting their keybinds
 ```
 
@@ -149,7 +148,7 @@ Patches:
 |   BlockOutline   |                                     Change the color of the block outline                                     |
 |    CameraClip    |                    Change the camera distance and the camera behavior when encounter walls                    |
 |   CrystalSpeed   |                                          Crystals per second counter                                          |
-|  DeathParticles  |                                      Spawn particles upon entity death.                                       |
+|  DeathParticles  |                                       Spawn particles upon entity death                                       |
 | EntityIndicator  |                              Indicates entities around you. Players are excluded                              |
 |     FreeLook     |                                         lock your camera perspective                                          |
 |    GhostTotem    |               Renders a totem in your hand upon dying. Will not work if AutoRespawn is enabled!               |

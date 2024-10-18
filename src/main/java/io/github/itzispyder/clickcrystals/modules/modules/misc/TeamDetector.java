@@ -10,6 +10,8 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import net.minecraft.entity.player.PlayerEntity;
 
+import java.util.Arrays;
+
 public class TeamDetector extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();
@@ -17,6 +19,12 @@ public class TeamDetector extends ListenerModule {
             .name("team-detection-mode")
             .description("TeamsMethod for team detection.")
             .def(TeamsMethod.COLOR_NAME)
+            .build()
+    );
+    public final ModuleSetting<String> playerNames = scGeneral.add(createStringSetting()
+            .name("manual-team-players")
+            .description("Add players by their usernames. Use commas to separate names.")
+            .def("")
             .build()
     );
     public final ModuleSetting<Boolean> cancelCcs = scGeneral.add(createBoolSetting()
@@ -32,10 +40,15 @@ public class TeamDetector extends ListenerModule {
 
     @EventHandler
     private void onPlayerAttackEntityEvent(PlayerAttackEntityEvent e) {
-        if (e.getEntity() instanceof PlayerEntity player && EntityUtils.isTeammate(player)) {
-            e.cancel();
+        if (e.getEntity() instanceof PlayerEntity player) {
+            boolean isTeammate = EntityUtils.isTeammate(player);
+            boolean isInManualList = Arrays.stream(playerNames.getVal().split(",")).toList().contains(player.getName().toString());
+            if (isTeammate || isInManualList) {
+                e.cancel();
+            }
         }
     }
+
 
     public enum TeamsMethod {
         SCOREBOARD,
