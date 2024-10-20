@@ -24,9 +24,6 @@ public abstract class DefaultBase extends AnimatedBase {
     public final int baseX = (int)(windowWidth / 2.0 - baseWidth / 2.0);
     public final int baseY = (int)(windowHeight / 2.0 - baseHeight / 2.0);
     public final int navWidth = 90;
-    public final int navHeight = 230;
-    public final int navX = baseX + 10;
-    public final int navY = baseY + 10;
     public final int contentWidth = 300;
     public final int contentHeight = 230;
     public final int contentX = baseX + 110;

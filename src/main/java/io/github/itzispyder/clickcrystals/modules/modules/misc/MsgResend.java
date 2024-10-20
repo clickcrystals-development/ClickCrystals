@@ -12,12 +12,15 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MsgResend extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();
     public final ModuleSetting<Boolean> resendCommandOnly = scGeneral.add(createBoolSetting()
             .name("resend-only-commands")
-            .description("Make the module to resend only the commands that you written.")
+            .description("Resend the last command that you have typed.")
             .def(false)
             .build()
     );
@@ -31,32 +34,34 @@ public class MsgResend extends ListenerModule {
     );
 
     private String lastMessage;
-    private boolean wasCommand;
+    private String lastCommand;
+    private final Map<String, String> commandCacheSaver = new HashMap<>();
 
     public MsgResend() {
-        super("message-resend", Categories.MISC, "Press up arrow key to resend your last message");
+        super("message-resend", Categories.MISC, "Press up arrow key to resend your last message or command.");
         this.lastMessage = null;
+        this.lastCommand = null;
     }
 
     @EventHandler
     private void onChatSend(ChatSendEvent e) {
         this.lastMessage = e.getMessage();
-        this.wasCommand = lastMessage.startsWith("/");
     }
 
     @EventHandler
     private void onCommand(ChatCommandEvent e) {
-        this.lastMessage = e.getCommandLine();
-        this.wasCommand = true;
+        this.lastCommand = e.getCommandLine();
+        commandCacheSaver.put("lastCommand", lastCommand);
     }
 
     public void resendMessage() {
-        if (lastMessage == null || lastMessage.trim().isEmpty())
-            return;
-
-        if (resendCommandOnly.getVal() && wasCommand)
-            ChatUtils.sendChatCommand(lastMessage);
-        else if (!resendCommandOnly.getVal() && !wasCommand)
+        if (resendCommandOnly.getVal()) {
+            String savedCommand = commandCacheSaver.get("lastCommand");
+            if (savedCommand != null && !savedCommand.trim().isEmpty()) {
+                ChatUtils.sendChatCommand(savedCommand);
+            }
+        } else if (lastMessage != null && !lastMessage.trim().isEmpty()) {
             ChatUtils.sendChatMessage(lastMessage);
+        }
     }
 }

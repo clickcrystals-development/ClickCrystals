@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -196,7 +197,10 @@ public class EntityUtils implements Global {
     public static boolean isSameColorNameTeam(PlayerEntity player) {
         String playerColorName = String.valueOf(PlayerUtils.player().getTeamColorValue());
         String targetColorName = String.valueOf(player.getTeamColorValue());
-        return Objects.equals(playerColorName, targetColorName);
+        if ((Formatting.WHITE.getColorValue() == player.getTeamColorValue()) || Formatting.WHITE.getColorValue() == PlayerUtils.player().getTeamColorValue()) {
+            return false;
+        }
+            return Objects.equals(playerColorName, targetColorName);
     }
 
     public static List<Entity> getEntitiesAt(BlockPos pos) {

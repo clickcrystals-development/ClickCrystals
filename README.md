@@ -78,7 +78,6 @@ Patches:
   - fix online configs downtime
   - fix online scripts
   - fix possible bug with notification toast sound where it throws ConcurrentModificationException
-  - fix client side particles spawning # i-no-one
   - fix reloading custom scripted modules resetting their keybinds
 ```
 
@@ -131,7 +130,7 @@ Patches:
 |    ChatPrefix    |                                      Chat tweaks and additional features                                      |
 |    GuiCursor     |                            What to do with your cursor when you open inventory gui                            |
 |    MouseTaper    | "I taped a piece of tape on my mouse button, now I cannot use that button anymore but it is still taped down" |
-|  MessageResend   |                                Press up arrow key to resend your last message                                 |
+|  MessageResend   |                                Press up arrow key to resend your last message or command.                     |
 |    NextBlock     |              Targets next same block that you're mining. (for farming, not pvp, useless in pvp)               |
 |   NoBreakDelay   |                                    No block break delay [flags-anticheat]                                     |
 |  NoInteractions  |                           Prevents opening certain containers(e-chests,chests,etc)                            |
@@ -149,9 +148,9 @@ Patches:
 |   BlockOutline   |                                     Change the color of the block outline                                     |
 |    CameraClip    |                    Change the camera distance and the camera behavior when encounter walls                    |
 |   CrystalSpeed   |                                          Crystals per second counter                                          |
-|  DeathParticles  |                                      Spawn particles upon entity death.                                       |
+|  DeathParticles  |                                       Spawn particles upon entity death                                       |
 | EntityIndicator  |                              Indicates entities around you. Players are excluded                              |
-|     FreeLook     |                                         lock your camera perspective                                          |
+|     FreeLook     |                            lock your camera perspective and let you move around it                            |
 |    GhostTotem    |               Renders a totem in your hand upon dying. Will not work if AutoRespawn is enabled!               |
 | GlowingEntities  |                                  Having trouble seeing entities in the dark?                                  |
 |   HealthAsBar    |               Renders your health bar as a singular bar to prevent lag. Recommended for NBT pvp               |
