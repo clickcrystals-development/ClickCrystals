@@ -26,6 +26,12 @@ public class DeathEffects extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();
     private final SettingSection rocketColors = createSettingSection("rocket-colors");
+        public final ModuleSetting<Entities> entitySelection = scGeneral.add(EnumSetting.create(Entities.class)
+            .name("entity-selection")
+            .description("Choose which entity will have this effect.")
+            .def(Entities.BOTH)
+            .build()
+    );
     public final ModuleSetting<Boolean> spawnR = scGeneral.add(createBoolSetting()
             .name("rocket-particle")
             .description("spawn rocket particles on entity death pos.")
@@ -92,6 +98,10 @@ public class DeathEffects extends ListenerModule {
         }
 
         Entity entity = packet.getEntity(mc.player.getWorld());
+
+        if (!shouldApplyEffect(entity))
+            return;
+
         if (spawnR.getVal()) {
             spawnFirework(entity);
         } else {
@@ -141,5 +151,19 @@ public class DeathEffects extends ListenerModule {
                 iterator.remove();
             }
         }
+
+    public boolean shouldApplyEffect(Entity entity) {
+        return switch (entitySelection.getVal()) {
+            case PLAYERS -> entity instanceof PlayerEntity;
+            case ENTITIES -> !(entity instanceof PlayerEntity);
+            case BOTH -> true;
+        };
+    }
+
+    }
+        public enum Entities {
+        PLAYERS,
+        ENTITIES,
+        BOTH
     }
 }

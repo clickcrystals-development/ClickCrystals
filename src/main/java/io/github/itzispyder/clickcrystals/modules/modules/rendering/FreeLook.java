@@ -14,10 +14,10 @@ import net.minecraft.util.math.MathHelper;
 public class FreeLook extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();
-    public final ModuleSetting<POV> perspectivePoint = scGeneral.add(EnumSetting.create(POV.class)
+    public final ModuleSetting<Perspective> perspectivePoint = scGeneral.add(EnumSetting.create(Perspective.class)
             .name("camera-perspective")
             .description("The perspective which lock the camera.")
-            .def(POV.THIRD_PERSON_FOV)
+            .def(Perspective.THIRD_PERSON_FRONT)
             .build()
     );
     public final ModuleSetting<Integer> freeLookPerspective = scGeneral.add(createIntSetting()
@@ -60,21 +60,5 @@ public class FreeLook extends ListenerModule {
     private void onTick(ClientTickEndEvent e) {
         PlayerUtils.player().setPitch(MathHelper.clamp(PlayerUtils.player().getPitch(), freeLookPerspective.getVal() - 180, freeLookPerspective.getVal()));
         cP = MathHelper.clamp(cP, freeLookPerspective.getVal() - 180, freeLookPerspective.getVal());
-    }
-
-    public enum POV {
-        FIRST_PERSON_FOV(Perspective.FIRST_PERSON),
-        SECOND_PERSON_FOV(Perspective.THIRD_PERSON_BACK),
-        THIRD_PERSON_FOV(Perspective.THIRD_PERSON_FRONT);
-
-        private final Perspective perspective;
-
-        POV(Perspective perspective) {
-            this.perspective = perspective;
-        }
-
-        public Perspective getPerspective() {
-            return perspective;
-        }
     }
 }
