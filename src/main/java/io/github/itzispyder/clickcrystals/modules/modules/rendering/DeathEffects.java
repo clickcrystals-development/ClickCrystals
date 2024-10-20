@@ -9,12 +9,14 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.EnumSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.component.type.FireworkExplosionComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 
 import java.util.Collections;
@@ -97,7 +99,7 @@ public class DeathEffects extends ListenerModule {
             return;
         }
 
-        Entity entity = packet.getEntity(mc.player.getWorld());
+        Entity entity = packet.getEntity(PlayerUtils.getWorld());
 
         if (!shouldApplyEffect(entity))
             return;
@@ -151,6 +153,7 @@ public class DeathEffects extends ListenerModule {
                 iterator.remove();
             }
         }
+    }
 
     public boolean shouldApplyEffect(Entity entity) {
         return switch (entitySelection.getVal()) {
@@ -160,7 +163,6 @@ public class DeathEffects extends ListenerModule {
         };
     }
 
-    }
         public enum Entities {
         PLAYERS,
         ENTITIES,

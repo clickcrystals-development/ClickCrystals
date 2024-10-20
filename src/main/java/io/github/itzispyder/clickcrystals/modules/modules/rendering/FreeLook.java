@@ -46,7 +46,7 @@ public class FreeLook extends ListenerModule {
         if (PlayerUtils.invalid()) return;
         cY = mc.player.getYaw();
         cP = mc.player.getPitch();
-        if (changeToPov.getVal()) mc.options.setPerspective(perspectivePoint.getVal().getPerspective());
+        if (changeToPov.getVal()) mc.options.setPerspective(perspectivePoint.getVal());
     }
 
     @Override
