@@ -32,7 +32,7 @@ public class TotemPops extends Module implements Listener {
     public final ModuleSetting<String> enemyDeath = general.add(StringSetting.create()
             .name("enemy-death-message")
             .description("Message sent when enemy pops, %pops% for count, %enemy% for their name")
-            .def("&8&oThe player &7&n%enemy% &8&o died after popping &7&o(&e%pops%&7&o) &8totems!")
+            .def("&8&oThe player &4&n%enemy% &8&o died after popping &7&o(&e%pops%&7&o) &8totems!")
             .build()
     );
     public final ModuleSetting<Boolean> highlightOwn = general.add(BooleanSetting.create()

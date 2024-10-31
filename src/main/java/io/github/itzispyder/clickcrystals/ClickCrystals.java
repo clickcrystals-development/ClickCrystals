@@ -283,6 +283,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new AutoReplenish());
 
         // misc
+        system.addModule(new NoScrolling());
         system.addModule(new TeamDetector());
         system.addModule(new NoInteractions());
         system.addModule(new AutoGG());
