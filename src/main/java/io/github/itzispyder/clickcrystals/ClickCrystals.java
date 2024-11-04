@@ -309,6 +309,8 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new TimeChanger());
 
         // rendering
+        system.addModule(new PearlCustomizer());
+        system.addModule(new TotemPopColor());
         system.addModule(new DeathEffects());
         system.addModule(new FreeLook());
         system.addModule(new BlockOutline());

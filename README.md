@@ -130,10 +130,11 @@ Patches:
 |    ChatPrefix    |                                      Chat tweaks and additional features                                      |
 |    GuiCursor     |                            What to do with your cursor when you open inventory gui                            |
 |    MouseTaper    | "I taped a piece of tape on my mouse button, now I cannot use that button anymore but it is still taped down" |
-|  MessageResend   |                                Press up arrow key to resend your last message or command.                     |
+|  MessageResend   |                          Press up arrow key to resend your last message or command.                           |
 |    NextBlock     |              Targets next same block that you're mining. (for farming, not pvp, useless in pvp)               |
 |   NoBreakDelay   |                                    No block break delay [flags-anticheat]                                     |
 |  NoInteractions  |                           Prevents opening certain containers(e-chests,chests,etc)                            |
+|   NoScrolling    |                                           Disable hotbar scrolling                                            |
 |   SoundOnDeath   |                                      Plays a sound upon killing a player                                      |
 |   TeamDetector   |                               Finding teams and disable attacking your own team                               |
 |   ToolSwitcher   |                                 Switches to the right tool for mining a block                                 |
@@ -148,7 +149,7 @@ Patches:
 |   BlockOutline   |                                     Change the color of the block outline                                     |
 |    CameraClip    |                    Change the camera distance and the camera behavior when encounter walls                    |
 |   CrystalSpeed   |                                          Crystals per second counter                                          |
-|  DeathParticles  |                                       Spawn particles upon entity death                                       |
+|   DeathEffects   |                                Spawn lightning/rocket particle on entity death                                |
 | EntityIndicator  |                              Indicates entities around you. Players are excluded                              |
 |     FreeLook     |                            lock your camera perspective and let you move around it                            |
 |    GhostTotem    |               Renders a totem in your hand upon dying. Will not work if AutoRespawn is enabled!               |
@@ -160,10 +161,12 @@ Patches:
 |  NoGameOverlay   |                                     Stops various overlays from rendering                                     |
 |   NoScoreboard   |                                Disables the scoreboard sidebar display render                                 |
 |    NoViewBob     |                                              Turns off view bob                                               |
+| PearlCustomizer  |                           Customize appearance and sound settings for ender pearls                            |
 |  RenderOwnName   |                                             Renders your own name                                             |
 |  SlowHandSwing   |                              Makes your hand swing as if you had mining fatigue                               |
 |  SpectatorSight  |      Renders invisible entities the way you see them in spectator mode. Never get sneak attacked again!       |
 |   TotemOverlay   |                                  Renders red overlay when not holding totem                                   |
+|    TotemColor    |                                       Change totem pop particles color                                        |
 |    TotemScale    |                                      Changes the scale of the totem pop                                       |
 |    ViewModel     |                            Changes your view model in your first person hand view                             |
 |       Zoom       |                                               Changes your FOV                                                |
