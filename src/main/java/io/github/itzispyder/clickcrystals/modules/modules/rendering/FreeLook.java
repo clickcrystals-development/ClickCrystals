@@ -14,7 +14,7 @@ import net.minecraft.util.math.MathHelper;
 public class FreeLook extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();
-    public final ModuleSetting<Perspective> perspectivePoint = scGeneral.add(EnumSetting.create(Perspective.class)
+    public final ModuleSetting<Perspective> perspective = scGeneral.add(EnumSetting.create(Perspective.class)
             .name("camera-perspective")
             .description("The perspective which lock the camera.")
             .def(Perspective.THIRD_PERSON_FRONT)
@@ -44,9 +44,9 @@ public class FreeLook extends ListenerModule {
     @Override
     public void onEnable() {
         if (PlayerUtils.invalid()) return;
-        cY = mc.player.getYaw();
-        cP = mc.player.getPitch();
-        if (changeToPov.getVal()) mc.options.setPerspective(perspectivePoint.getVal());
+        cY = PlayerUtils.player().getYaw();
+        cP = PlayerUtils.player().getPitch();
+        if (changeToPov.getVal()) mc.options.setPerspective(perspective.getVal());
     }
 
     @Override

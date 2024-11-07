@@ -47,7 +47,7 @@ public abstract class MixinCamera implements Global {
     @ModifyArgs(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;setRotation(FF)V"))
     private void onUpdateSetRotationArgs(Args args) {
         FreeLook freeLook = Module.get(FreeLook.class);
-        if (freeLook.isEnabled() && mc.options.getPerspective() == freeLook.perspectivePoint.getVal()) {
+        if (freeLook.isEnabled() && mc.options.getPerspective() == freeLook.perspective.getVal()) {
             args.set(0, freeLook.cY);
             args.set(1, freeLook.cP);
         }
