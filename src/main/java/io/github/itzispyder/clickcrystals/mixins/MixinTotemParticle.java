@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
+import io.github.itzispyder.clickcrystals.interfaces.ParticleAccessor;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.TotemPopColor;
 import net.minecraft.client.particle.SpriteProvider;
@@ -13,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.awt.*;
 
 @Mixin(TotemParticle.class)
-public abstract class MixinTotemParticle extends MixinParticle {
+public abstract class MixinTotemParticle implements ParticleAccessor {
 
 
     @Inject(method = "<init>", at = @At("TAIL"))
