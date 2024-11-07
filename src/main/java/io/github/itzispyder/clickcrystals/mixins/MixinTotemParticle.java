@@ -21,7 +21,7 @@ public abstract class MixinTotemParticle implements ParticleAccessor {
     private void onRender(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, SpriteProvider spriteProvider, CallbackInfo ci){
         TotemPopColor t = Module.get(TotemPopColor.class);
         Color c = t.getColor();
-        setColor(c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f);
-        setAlpha(c.getAlpha() / 255f);
+        setParticleColor(c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f);
+        setParticleAlpha(c.getAlpha() / 255f);
     }
 }

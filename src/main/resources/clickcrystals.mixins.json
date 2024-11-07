@@ -26,6 +26,7 @@
     "MixinLivingEntityRenderer",
     "MixinMobEntityRenderer",
     "MixinMouse",
+    "MixinParticle",
     "MixinParticleManager",
     "MixinPlayerEntityRenderer",
     "MixinScreen",
