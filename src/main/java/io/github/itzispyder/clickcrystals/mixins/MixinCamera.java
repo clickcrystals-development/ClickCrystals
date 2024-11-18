@@ -12,15 +12,15 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(Camera.class)
 public abstract class MixinCamera implements Global {
 
     @Unique private boolean bypassCameraClip;
     @Shadow protected abstract float clipToSpace(float desiredCameraDistance);
-    @Shadow protected abstract void setRotation(float y, float p);
 
     @Inject(method = "getSubmersionType", at = @At("RETURN"), cancellable = true)
     public void getSubmersionType(CallbackInfoReturnable<CameraSubmersionType> cir) {
@@ -38,18 +38,18 @@ public abstract class MixinCamera implements Global {
         }
         if (clip.isEnabled() && clip.enableCameraClip.getVal()) {
             cir.setReturnValue(clip.clipDistance.getVal().floatValue());
-        }
-        else if (clip.isEnabled() && clip.clipDistance.getVal() > 0.0) {
+        } else if (clip.isEnabled() && clip.clipDistance.getVal() > 0.0) {
             bypassCameraClip = true;
             cir.setReturnValue(clipToSpace(clip.clipDistance.getVal().floatValue()));
         }
     }
 
-    @Redirect(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;setRotation(FF)V"))
-    private void redirectSetRotation(Camera camera, float yaw, float pitch) {
+    @ModifyArgs(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;setRotation(FF)V"))
+    private void onUpdateSetRotationArgs(Args args) {
         FreeLook freeLook = Module.get(FreeLook.class);
-        if (freeLook.isEnabled() && mc.options.getPerspective() == freeLook.PerspectivePoint.getVal().getPerspective())
-            return;
-        this.setRotation(yaw, pitch);
+        if (freeLook.isEnabled() && mc.options.getPerspective() == freeLook.perspective.getVal()) {
+            args.set(0, freeLook.cY);
+            args.set(1, freeLook.cP);
+        }
     }
 }

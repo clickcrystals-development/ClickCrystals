@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.modules;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.commands.commands.ToggleCommand;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingContainer;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
@@ -107,7 +108,7 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
     }
 
     public void sendUpdateInfo() {
-        if (!ClickCrystals.config.isDisableModuleToggleBroadcast())
+        if (!ClickCrystals.config.isDisableModuleToggleBroadcast() || !ToggleCommand.used)
             ChatUtils.sendPrefixMessage("§b" + name + " §3is now toggled " + getOnOrOff());
     }
 

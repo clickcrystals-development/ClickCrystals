@@ -283,6 +283,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new AutoReplenish());
 
         // misc
+        system.addModule(new NoScrolling());
         system.addModule(new TeamDetector());
         system.addModule(new NoInteractions());
         system.addModule(new AutoGG());
@@ -308,7 +309,9 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new TimeChanger());
 
         // rendering
-        system.addModule(new DeathParticles());
+        system.addModule(new PearlCustomizer());
+        system.addModule(new TotemPopColor());
+        system.addModule(new DeathEffects());
         system.addModule(new FreeLook());
         system.addModule(new BlockOutline());
         system.addModule(new CameraClip());

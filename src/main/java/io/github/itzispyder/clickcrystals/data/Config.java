@@ -33,6 +33,7 @@ public class Config implements JsonSerializable<Config>, Global {
     private boolean disableCustomLoading;
     private boolean disableModuleToggleBroadcast;
     private boolean modMenuIntegration;
+    private boolean devMode;
     private final Map<String, Integer> keybindEntries;
     private final Map<String, Positionable.Dimension> positionEntries;
     private final Map<String, Pair<Positionable.Dimension, Boolean>> overviewScreenEntries;
@@ -106,6 +107,14 @@ public class Config implements JsonSerializable<Config>, Global {
             h.setX(d.x);
             h.setY(d.y);
         }
+    }
+
+    public void setDevMode(boolean devMode) {
+        this.devMode = devMode;
+    }
+
+    public boolean isDev() {
+        return devMode;
     }
 
     public void loadModules() {
