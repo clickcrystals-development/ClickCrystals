@@ -14,10 +14,10 @@ import net.minecraft.util.math.MathHelper;
 public class FreeLook extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();
-    public final ModuleSetting<Perspective> perspective = scGeneral.add(EnumSetting.create(Perspective.class)
+    public final ModuleSetting<POV> perspective = scGeneral.add(EnumSetting.create(POV.class)
             .name("camera-perspective")
             .description("The perspective which lock the camera.")
-            .def(Perspective.THIRD_PERSON_FRONT)
+            .def(POV.THIRD_PERSON_FOV)
             .build()
     );
     public final ModuleSetting<Integer> freeLookPerspective = scGeneral.add(createIntSetting()
@@ -34,6 +34,7 @@ public class FreeLook extends ListenerModule {
             .def(false)
             .build()
     );
+
     public FreeLook() {
         super("free-look", Categories.RENDER, "lock your camera perspective and let you move around it");
     }
@@ -46,11 +47,11 @@ public class FreeLook extends ListenerModule {
         if (PlayerUtils.invalid()) return;
         cY = PlayerUtils.player().getYaw();
         cP = PlayerUtils.player().getPitch();
-        if (changeToPov.getVal()) mc.options.setPerspective(perspective.getVal());
+        if (changeToPov.getVal()) mc.options.setPerspective(perspective.getVal().getPerspective());
     }
 
     @Override
-    public void onDisable(){
+    public void onDisable() {
         if (PlayerUtils.invalid()) return;
         if (changeToPov.getVal()) mc.options.setPerspective(Perspective.FIRST_PERSON);
     }
@@ -60,5 +61,21 @@ public class FreeLook extends ListenerModule {
     private void onTick(ClientTickEndEvent e) {
         PlayerUtils.player().setPitch(MathHelper.clamp(PlayerUtils.player().getPitch(), freeLookPerspective.getVal() - 180, freeLookPerspective.getVal()));
         cP = MathHelper.clamp(cP, freeLookPerspective.getVal() - 180, freeLookPerspective.getVal());
+    }
+
+    public enum POV {
+        FIRST_PERSON_FOV(Perspective.FIRST_PERSON),
+        SECOND_PERSON_FOV(Perspective.THIRD_PERSON_BACK),
+        THIRD_PERSON_FOV(Perspective.THIRD_PERSON_FRONT);
+
+        private final Perspective perspective;
+
+        POV(Perspective perspective) {
+            this.perspective = perspective;
+        }
+
+        public Perspective getPerspective() {
+            return perspective;
+        }
     }
 }
