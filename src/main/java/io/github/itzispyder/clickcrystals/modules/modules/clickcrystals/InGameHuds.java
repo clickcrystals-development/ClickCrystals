@@ -9,8 +9,9 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.*;
+import io.github.itzispyder.clickcrystals.util.ColorHelper;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.ColorHelper;
+
 
 public class InGameHuds extends Module implements Listener {
 

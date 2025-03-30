@@ -3,8 +3,10 @@ package io.github.itzispyder.clickcrystals.mixins;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.HealthTags;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.GlowingEntities;
+import io.github.itzispyder.clickcrystals.util.minecraft.EntityRenderStateUtils;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -30,9 +32,9 @@ public abstract class MixinEntityRenderer {
     }
 
     @Inject(method = "renderLabelIfPresent", at = @At("HEAD"), cancellable = true)
-    public <T extends Entity> void renderLabelIfPresent(T entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float tickDelta, CallbackInfo ci) {
+    public <T extends Entity> void renderLabelIfPresent(EntityRenderState state, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
         var health = HealthTags.get(HealthTags.class);
-
+        var entity = EntityRenderStateUtils.get(state);
         if (health.isEnabled() && entity instanceof LivingEntity liv) {
             ci.cancel();
             health.render(matrices, liv, vertexConsumers);
@@ -40,7 +42,7 @@ public abstract class MixinEntityRenderer {
     }
 
     @Inject(method = "hasLabel", at = @At("RETURN"), cancellable = true)
-    public <T extends Entity> void hasLabel(T entity, CallbackInfoReturnable<Boolean> cir) {
+    public <T extends Entity> void hasLabel(T entity, double squaredDistanceToCamera, CallbackInfoReturnable<Boolean> cir) {
         var health = HealthTags.get(HealthTags.class);
 
         if (health.isEnabled() && entity instanceof LivingEntity) {

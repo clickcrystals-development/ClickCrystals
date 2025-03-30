@@ -16,10 +16,12 @@ import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
+import java.awt.*;
+
 @Mixin(WorldRenderer.class)
 public class MixinWorldRenderer {
 
-    @ModifyArgs(method = "drawBlockOutline", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;drawCuboidShapeOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/util/shape/VoxelShape;DDDFFFF)V"))
+    @ModifyArgs(method = "drawBlockOutline", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexRendering;drawOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/util/shape/VoxelShape;DDDI)V"))
     public void setOutlineColor(Args args) {
         BlockOutline bo = Module.get(BlockOutline.class);
 
@@ -31,9 +33,7 @@ public class MixinWorldRenderer {
             float gf = (float)(g / 255.0);
             float bf = (float)(b / 255.0);
 
-            args.set(6, rf);
-            args.set(7, gf);
-            args.set(8, bf);
+            args.set(7, new Color((int) r, (int) g, (int) b).getRGB());
         }
     }
 

@@ -15,8 +15,8 @@ public abstract class MixinClientWorld {
 
     @Shadow @Final private ClientWorld.Properties clientWorldProperties;
 
-    @Inject(method = "setTimeOfDay", at = @At("TAIL"), cancellable = true)
-    public void getTimeOfDay(long timeOfDay, CallbackInfo ci) {
+    @Inject(method = "setTime", at = @At("TAIL"), cancellable = true)
+    public void getTimeOfDay(long time, long timeOfDay, boolean shouldTickTimeOfDay, CallbackInfo ci) {
         TimeChanger tc = Module.get(TimeChanger.class);
 
         if (tc.isEnabled()) {

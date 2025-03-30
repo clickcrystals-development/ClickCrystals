@@ -1,10 +1,13 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Color;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
+import io.github.itzispyder.clickcrystals.util.ColorHelper;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
+import net.minecraft.client.gl.ShaderProgramKeys;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.SkinTextures;
@@ -13,7 +16,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
@@ -647,7 +649,7 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, x + w, y, 0).texture(1, 0);
 
         disableCull();
-        setShader(GameRenderer::getPositionTexProgram);
+        RenderSystem.setShader(ShaderProgramKeys.POSITION_TEX);
         setShaderTexture(0, texture);
         setShaderColor(1, 1, 1, 1);
 
@@ -687,7 +689,8 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, corners[0][0], y, 0).texture(((float)corners[0][0] - x) / w, 0); // connect last to first vertex
 
         disableCull();
-        setShader(GameRenderer::getPositionTexProgram);
+
+        setShader(ShaderProgramKeys.POSITION_TEX);
         setShaderTexture(0, texture);
         setShaderColor(1, 1, 1, 1);
 
@@ -715,7 +718,7 @@ public final class RenderUtils implements Global {
         disableCull();
         enableBlend();
         defaultBlendFunc();
-        setShader(GameRenderer::getPositionTexProgram);
+        setShader(ShaderProgramKeys.POSITION_TEX_COLOR);
         setShaderColor(1, 1, 1, 1);
         setShaderTexture(0, texture);
 
@@ -746,7 +749,7 @@ public final class RenderUtils implements Global {
         disableCull();
         enableBlend();
         defaultBlendFunc();
-        setShader(GameRenderer::getPositionTexProgram);
+        setShader(ShaderProgramKeys.POSITION_TEX);
         setShaderColor(1, 1, 1, 1);
         setShaderTexture(0, texture.texture());
 
@@ -769,7 +772,7 @@ public final class RenderUtils implements Global {
         disableCull();
         enableBlend();
         defaultBlendFunc();
-        setShader(GameRenderer::getPositionTexProgram);
+        setShader(ShaderProgramKeys.POSITION_TEX);
         setShaderColor(1, 1, 1, 1);
         setShaderTexture(0, texture.texture());
 
@@ -812,7 +815,7 @@ public final class RenderUtils implements Global {
         disableCull();
         enableBlend();
         defaultBlendFunc();
-        setShader(GameRenderer::getPositionTexProgram);
+        setShader(ShaderProgramKeys.POSITION_TEX);
         setShaderColor(1, 1, 1, 1);
         setShaderTexture(0, texture.texture());
 
@@ -840,7 +843,7 @@ public final class RenderUtils implements Global {
         disableCull();
         enableBlend();
         defaultBlendFunc();
-        setShader(GameRenderer::getPositionTexProgram);
+        setShader(ShaderProgramKeys.POSITION_TEX);
         setShaderColor(1, 1, 1, 1);
         setShaderTexture(0, texture.texture());
 
@@ -856,7 +859,7 @@ public final class RenderUtils implements Global {
         context.getMatrices().push();
         context.getMatrices().scale(scale, scale, scale);
         context.drawItem(item, x, y);
-        context.drawItemInSlot(mc.textRenderer, item, x, y);
+//        context.draw(mc.textRenderer, item, x, y);
         context.getMatrices().pop();
     }
 
@@ -866,7 +869,7 @@ public final class RenderUtils implements Global {
         context.getMatrices().push();
         context.getMatrices().scale(scale, scale, scale);
         context.drawItem(item, x, y);
-        context.drawItemInSlot(mc.textRenderer, item, x, y, text);
+//        context.drawItemInSlot(mc.textRenderer, item, x, y, text);
         context.getMatrices().pop();
     }
 
@@ -884,14 +887,14 @@ public final class RenderUtils implements Global {
         disableCull();
         enableBlend();
         defaultBlendFunc();
-        setShader(GameRenderer::getPositionColorProgram);
+        setShader(ShaderProgramKeys.POSITION_COLOR);
         setShaderColor(1, 1, 1, 1);
     }
 
     public static void finishRendering() {
         enableCull();
         disableBlend();
-        setShader(GameRenderer::getPositionTexProgram);
+        setShader(ShaderProgramKeys.POSITION_TEX);
     }
 
     public static void check(boolean check, String msg) {

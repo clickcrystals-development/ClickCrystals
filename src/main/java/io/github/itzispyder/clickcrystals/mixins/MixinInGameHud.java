@@ -25,17 +25,17 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(InGameHud.class)
 public abstract class MixinInGameHud implements Global {
 
-    @ModifyArgs(method = "Lnet/minecraft/client/gui/hud/InGameHud;renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V", ordinal = 0))
+    @ModifyArgs(method = "Lnet/minecraft/client/gui/hud/InGameHud;renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderArmor(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/entity/player/PlayerEntity;IIII)V", ordinal = 0))
     public void renderArmor0(Args args) {
         if (Module.isEnabled(HealthAsBar.class))
             args.set(2, MinecraftClient.getInstance().getWindow().getScaledHeight() - 50);
     }
 
-    @ModifyArgs(method = "Lnet/minecraft/client/gui/hud/InGameHud;renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V", ordinal = 1))
-    public void renderArmor1(Args args) {
-        if (Module.isEnabled(HealthAsBar.class))
-            args.set(2, MinecraftClient.getInstance().getWindow().getScaledHeight() - 50);
-    }
+//    @ModifyArgs(method = "Lnet/minecraft/client/gui/hud/InGameHud;renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "", ordinal = 1))
+//    public void renderArmor1(Args args) {
+//        if (Module.isEnabled(HealthAsBar.class))
+//            args.set(2, MinecraftClient.getInstance().getWindow().getScaledHeight() - 50);
+//    }
 
     @Inject(method = "renderHealthBar", at = @At("HEAD"), cancellable = true)
     public void renderHealthBar(DrawContext context, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci) {

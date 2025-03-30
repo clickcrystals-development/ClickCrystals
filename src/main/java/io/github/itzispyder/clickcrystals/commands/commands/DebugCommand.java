@@ -147,7 +147,7 @@ public class DebugCommand extends Command {
             HoverEvent hover = new HoverEvent(HoverEvent.Action.SHOW_ITEM, content);
 
             msg.fillStyle(style.withHoverEvent(hover));
-            PlayerUtils.player().sendMessage(msg);
+            PlayerUtils.player().sendMessage(msg,false);
         }
     }
 }

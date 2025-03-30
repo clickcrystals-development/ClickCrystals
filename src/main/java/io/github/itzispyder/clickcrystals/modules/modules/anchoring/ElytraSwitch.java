@@ -54,7 +54,7 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
         if (PlayerUtils.invalid())
             return;
 
-        boolean bl = PlayerUtils.player().isFallFlying();
+        boolean bl = PlayerUtils.player().isGliding();
         if (bl && !fallFlying) {
             fallFlying = true;
             onDeparture();

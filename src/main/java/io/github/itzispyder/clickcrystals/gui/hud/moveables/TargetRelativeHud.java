@@ -90,7 +90,7 @@ public class TargetRelativeHud extends Hud {
             context.getMatrices().push();
             context.getMatrices().scale(scale, scale, scale);
             context.drawItem(totem, tx, ty);
-            context.drawItemInSlot(mc.textRenderer, totem, tx, ty, pops);
+            context.drawStackOverlay(mc.textRenderer, totem, tx, ty, pops);
             context.getMatrices().pop();
 
             // end

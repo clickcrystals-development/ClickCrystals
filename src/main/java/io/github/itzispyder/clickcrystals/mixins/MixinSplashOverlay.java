@@ -5,6 +5,9 @@ import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import net.minecraft.client.gl.ShaderProgram;
+import net.minecraft.client.gl.ShaderProgramKeys;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.render.*;
@@ -58,7 +61,6 @@ public abstract class MixinSplashOverlay implements Global {
             return;
 
         Tessellator tes = Tessellator.getInstance();
-        BufferBuilder buf = tes.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
         MatrixStack matrices = context.getMatrices();
 
         int i = MathHelper.ceil((float)(maxX - minX - 2) * this.progress);
@@ -73,24 +75,8 @@ public abstract class MixinSplashOverlay implements Global {
         matrices.scale(opacity, opacity, opacity);
         matrices.translate(-(x + halfSize), -(y + halfSize), 0);
 
-        Matrix4f mat = matrices.peek().getPositionMatrix();
 
-        buf.vertex(mat, x, y, 0).texture(0, 0);
-        buf.vertex(mat, x, y + size, 0).texture(0, 1);
-        buf.vertex(mat, x + size, y + size, 0).texture(1, 1);
-        buf.vertex(mat, x + size, y, 0).texture(1, 0);
-
-        RenderSystem.disableCull();
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, Tex.ICON);
-
-        BufferRenderer.drawWithGlobalProgram(buf.end());
-
-        RenderSystem.enableCull();
-        RenderSystem.disableBlend();
+//        RenderUtils.drawTexture(context,Tex.ICON,x,y,size,size);
 
         matrices.pop();
     }
