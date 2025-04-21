@@ -26,14 +26,11 @@ public class MixinWorldRenderer {
         BlockOutline bo = Module.get(BlockOutline.class);
 
         if (bo != null && bo.isEnabled()) {
-            double r = bo.red.getVal();
-            double g = bo.green.getVal();
-            double b = bo.blue.getVal();
-            float rf = (float)(r / 255.0);
-            float gf = (float)(g / 255.0);
-            float bf = (float)(b / 255.0);
+            int r = bo.red.getVal().intValue();
+            int g = bo.green.getVal().intValue();
+            int b = bo.blue.getVal().intValue();
 
-            args.set(7, new Color((int) r, (int) g, (int) b).getRGB());
+            args.set(7, new Color( r, g, b).getRGB());
         }
     }
 

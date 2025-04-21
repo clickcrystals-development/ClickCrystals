@@ -12,6 +12,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
@@ -108,7 +109,7 @@ public abstract class GuiScreen extends Screen implements Global {
     public void renderOpaqueBackground(DrawContext context) {
         if (PlayerUtils.invalid()) {
             renderPanoramaBackground(context,mc.getRenderTickCounter().getTickDelta(true));
-//            context.drawTexture(Tex.Defaults.OPTIONS_BACKGROUND, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
+            context.drawTexture(RenderLayer::getGuiTextured,Tex.Defaults.OPTIONS_BACKGROUND, 0, 0, 0, 0.0F, 0, this.width, this.height, 32, 32);
         }
     }
 

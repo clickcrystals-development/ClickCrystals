@@ -31,6 +31,7 @@ public class IconRelativeHud extends Hud {
 
         context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-10.0F), cx, cy, 0);
         RenderUtils.drawTexture(context,Tex.ICON, x, y, w, h);
+
         context.getMatrices().pop();
 
         setWidth(ogw);

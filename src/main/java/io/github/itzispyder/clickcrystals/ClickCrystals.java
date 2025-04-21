@@ -15,6 +15,7 @@
  * - https://discord.gg/YcQzv9c3AX
  * - https://www.curseforge.com/minecraft/mc-mods/clickcrystals
  * - https://planetminecraft.com/mod/clickcrystal
+ * - https://raw.githubusercontent.com/clickcrystals-development/ClickCrystals-Plus-Pack/refs/heads/main/assets/minecraft/texts/splashes.txt
  *
  * BY USING THIS SOFTWARE, YOU ARE CONSENTING TO VISITING THESE WEBSITES
  */
