@@ -2,8 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.misc.animators;
 
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 
-import static io.github.itzispyder.clickcrystals.util.ColorHelper.Argb.*;
-
+import static net.minecraft.util.math.ColorHelper.*;
 
 public class Animator {
 

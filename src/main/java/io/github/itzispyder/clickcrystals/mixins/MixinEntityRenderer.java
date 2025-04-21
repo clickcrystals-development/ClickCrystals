@@ -19,10 +19,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityRenderer.class)
-public abstract class MixinEntityRenderer {
+public abstract class MixinEntityRenderer<T extends Entity> {
 
     @Inject(method = "getBlockLight", at = @At("RETURN"), cancellable = true)
-    public <T extends Entity> void getLight(T entity, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
+    public void getLight(T entity, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
         GlowingEntities ge = Module.get(GlowingEntities.class);
 
         if (ge.isEnabled()) {
@@ -32,8 +32,8 @@ public abstract class MixinEntityRenderer {
     }
 
     @Inject(method = "renderLabelIfPresent", at = @At("HEAD"), cancellable = true)
-    public <T extends Entity> void renderLabelIfPresent(EntityRenderState state, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
-        var health = HealthTags.get(HealthTags.class);
+    public void renderLabelIfPresent(EntityRenderState state, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
+        var health = Module.get(HealthTags.class);
         var entity = EntityRenderStateUtils.get(state);
         if (health.isEnabled() && entity instanceof LivingEntity liv) {
             ci.cancel();
@@ -42,11 +42,10 @@ public abstract class MixinEntityRenderer {
     }
 
     @Inject(method = "hasLabel", at = @At("RETURN"), cancellable = true)
-    public <T extends Entity> void hasLabel(T entity, double squaredDistanceToCamera, CallbackInfoReturnable<Boolean> cir) {
-        var health = HealthTags.get(HealthTags.class);
+    public void hasLabel(T entity, double squaredDistanceToCamera, CallbackInfoReturnable<Boolean> cir) {
+        var health = Module.get(HealthTags.class);
 
-        if (health.isEnabled() && entity instanceof LivingEntity) {
+        if (health.isEnabled() && entity instanceof LivingEntity)
             cir.setReturnValue(true);
-        }
     }
 }

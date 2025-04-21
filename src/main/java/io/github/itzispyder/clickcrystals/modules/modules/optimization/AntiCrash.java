@@ -104,8 +104,6 @@ public class AntiCrash extends Module implements Listener {
 
             double speed = Math.abs(pX) + Math.abs(pY) + Math.abs(pZ);
             double maxSpeed = maxExplosionsPlayerVelocity.getVal();
-            double maxSize = maxExplosionsAffectedBlocks.getVal();
-            double maxRadius = maxExplosionsRadius.getVal();
 
             if (speed > maxSpeed) {
                 e.cancel();

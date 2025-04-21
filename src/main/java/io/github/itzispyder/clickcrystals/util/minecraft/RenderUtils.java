@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Color;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
-import io.github.itzispyder.clickcrystals.util.ColorHelper;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import net.minecraft.client.gl.ShaderProgramKeys;
 import net.minecraft.client.gui.DrawContext;
@@ -21,6 +20,7 @@ import org.lwjgl.opengl.GL11;
 
 import static com.mojang.blaze3d.systems.RenderSystem.*;
 import static java.lang.Math.*;
+import static net.minecraft.util.math.ColorHelper.getArgb;
 
 public final class RenderUtils implements Global {
 
@@ -859,7 +859,7 @@ public final class RenderUtils implements Global {
         context.getMatrices().push();
         context.getMatrices().scale(scale, scale, scale);
         context.drawItem(item, x, y);
-//        context.draw(mc.textRenderer, item, x, y);
+        context.drawStackOverlay(mc.textRenderer, item, x, y);
         context.getMatrices().pop();
     }
 
@@ -921,7 +921,7 @@ public final class RenderUtils implements Global {
 
     public static int getPixel(int x, int y) {
         int[] color = getPixelRgbaInt(x, y);
-        return ColorHelper.Argb.getArgb(color[3], color[0], color[1], color[2]);
+        return getArgb(color[3], color[0], color[1], color[2]);
     }
 
     public static int[] getPixelRgbaInt(int x, int y) {
