@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(MobEntityRenderer.class)
 public abstract class MixinMobEntityRenderer {
 
-    @Inject(method = "hasLabel(Lnet/minecraft/entity/mob/MobEntity;)Z", at = @At("RETURN"), cancellable = true)
-    public <T extends MobEntity> void hasLabel(T entity, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "hasLabel(Lnet/minecraft/entity/mob/MobEntity;D)Z", at = @At("RETURN"), cancellable = true)
+    public <T extends MobEntity> void hasLabel(T mobEntity, double d, CallbackInfoReturnable<Boolean> cir) {
         var health = HealthTags.get(HealthTags.class);
 
         if (health.isEnabled()) {

@@ -36,7 +36,7 @@ public class BanScreen extends GuiScreen {
         if (PlayerUtils.invalid()) {
             this.renderPanoramaBackground(context, delta);
         }
-        this.applyBlur(delta);
+        this.applyBlur();
         this.renderDarkening(context);
         //RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA0000000, 0xA0FF4538);
 

@@ -130,7 +130,7 @@ public final class HotbarUtils implements Global {
         }
 
         ItemStack item = PlayerUtils.player().getStackInHand(hand);
-        return item != null && item.getTranslationKey().toLowerCase().contains(contains.toLowerCase());
+        return item != null && item.getItem().getTranslationKey().toLowerCase().contains(contains.toLowerCase());
     }
 
     public static void forEachItem(Consumer<ItemStack> run) {

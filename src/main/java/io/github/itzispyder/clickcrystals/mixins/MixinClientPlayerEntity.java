@@ -21,13 +21,13 @@ import static net.minecraft.item.Items.ELYTRA;
 @Mixin(ClientPlayerEntity.class)
 public class MixinClientPlayerEntity implements Global {
 
-    @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getEquippedStack(Lnet/minecraft/entity/EquipmentSlot;)Lnet/minecraft/item/ItemStack;", shift = At.Shift.BEFORE))
+    @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;checkGliding()Z", shift = At.Shift.BEFORE))
     public void swapToElytra(CallbackInfo callbackInfo) {
         if (PlayerUtils.invalid() || !Module.isEnabled(ElytraSwitch.class))
             return;
 
         var p = PlayerUtils.player();
-        if (!p.isOnGround() && !p.isFallFlying() && !p.isTouchingWater() && !p.hasStatusEffect(StatusEffects.LEVITATION)) {
+        if (!p.isOnGround() && !p.isGliding() && !p.isTouchingWater() && !p.hasStatusEffect(StatusEffects.LEVITATION)) {
             HotbarUtils.search(ELYTRA);
             if (HotbarUtils.isHolding(ELYTRA)) {
                 InteractionUtils.inputUse();

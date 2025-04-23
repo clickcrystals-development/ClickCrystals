@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.misc.brushes;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.Entity;
@@ -95,7 +96,7 @@ public class MobHeadBrush implements Global {
     public static void drawHead(DrawContext context, Class<? extends Entity> entity, int x, int y, int size) {
         Identifier tex = getIdentifier(entity);
         if (tex != null) {
-            context.drawTexture(tex, x, y, 0, 0, size, size, size, size);
+            RenderUtils.drawTexture(context,tex, x, y, size, size);
         }
     }
 

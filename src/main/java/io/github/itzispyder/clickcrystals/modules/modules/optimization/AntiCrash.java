@@ -88,32 +88,26 @@ public class AntiCrash extends Module implements Listener {
             }
         }
         else if (e.getPacket() instanceof ExplosionS2CPacket packet) {
-            double x = packet.getX();
-            double y = packet.getY();
-            double z = packet.getZ();
-            float pX = packet.getPlayerVelocityX();
-            float pY = packet.getPlayerVelocityY();
-            float pZ = packet.getPlayerVelocityZ();
+            double x = packet.center().getX();
+            double y = packet.center().getY();
+            double z = packet.center().getZ();
+            double pX = 0;
+            double pY = 0;
+            double pZ = 0;
+            if (packet.playerKnockback().isPresent()) {
+                pX = packet.playerKnockback().get().x;
+                pY = packet.playerKnockback().get().y;
+                pZ = packet.playerKnockback().get().z;
+            }
+
             int oob = OUT_OF_BOUNDS;
 
-            float radius = packet.getRadius();
-            int size = packet.getAffectedBlocks().size();
             double speed = Math.abs(pX) + Math.abs(pY) + Math.abs(pZ);
             double maxSpeed = maxExplosionsPlayerVelocity.getVal();
-            double maxSize = maxExplosionsAffectedBlocks.getVal();
-            double maxRadius = maxExplosionsRadius.getVal();
 
             if (speed > maxSpeed) {
                 e.cancel();
                 flag("§bLAG DETECTED: Explosion spawned with player-speed §7" + speed + "§b, max §7" + maxSpeed + "§b!");
-            }
-            if (size > maxSize) {
-                e.cancel();
-                flag("§bLAG DETECTED: Explosion spawned with size §7" + size + "§b, max §7" + maxSize + "§b!");
-            }
-            if (radius > maxRadius) {
-                e.cancel();
-                flag("§bLAG DETECTED: Explosion spawned with radius §7" + radius + "§b, max §7" + maxRadius + "§b!");
             }
             if (Math.abs(x) >= oob || Math.abs(y) >= oob || Math.abs(z) >= oob) {
                 e.cancel();

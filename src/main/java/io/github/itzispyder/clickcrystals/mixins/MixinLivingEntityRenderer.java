@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntityRenderer.class)
 public abstract class MixinLivingEntityRenderer implements Global {
 
-    @Inject(method = "hasLabel(Lnet/minecraft/entity/LivingEntity;)Z", at = @At("RETURN"), cancellable = true)
-    public void hasLabel(LivingEntity ent, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "hasLabel(Lnet/minecraft/entity/LivingEntity;D)Z", at = @At("RETURN"), cancellable = true)
+    public void hasLabel(LivingEntity ent, double d, CallbackInfoReturnable<Boolean> cir) {
         if (Module.isEnabled(RenderOwnName.class) && mc.getCameraEntity() == ent) {
             cir.setReturnValue(MinecraftClient.isHudEnabled());
         }

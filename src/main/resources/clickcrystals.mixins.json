@@ -30,6 +30,7 @@
     "MixinPlayerEntityRenderer",
     "MixinScreen",
     "MixinSplashOverlay",
+    "MixinSplashTextResourceSupplier",
     "MixinTotemParticle",
     "MixinWorldRenderer"
   ],

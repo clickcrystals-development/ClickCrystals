@@ -34,7 +34,7 @@ public class ResourceRelativeHud extends Hud {
         drawItem(context, Items.EXPERIENCE_BOTTLE, margin, caret);
         caret += next;
         RenderUtils.drawItem(context, Items.ARROW.getDefaultStack(), margin, caret, 1.0F,
-                InvUtils.count(stack -> stack.getTranslationKey().contains("arrow")) + "");
+                InvUtils.count(stack -> stack.getItem().getTranslationKey().contains("arrow")) + "");
         caret += next + g;
         setHeight(caret - y);
     }

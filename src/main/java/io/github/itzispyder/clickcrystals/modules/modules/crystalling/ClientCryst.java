@@ -36,7 +36,6 @@ public class ClientCryst extends Module implements Listener {
         if (!InteractionUtils.canBreakCrystals()) return;
 
         if (ent instanceof EndCrystalEntity crystal) {
-            crystal.kill();
             crystal.remove(Entity.RemovalReason.KILLED);
             crystal.onRemoved();
         }

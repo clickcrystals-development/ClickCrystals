@@ -37,7 +37,7 @@ public class HudEditScreen extends GuiScreen {
                 .pos(mc.getWindow().getScaledWidth() - 30, 11)
                 .dimensions(20, 20)
                 .onRender((context, mouseX, mouseY, button) -> {
-                    context.drawTexture(Tex.Icons.SETTINGS, button.x, button.y, 0, 0, button.width, button.height, button.width, button.height);
+                    RenderUtils.drawTexture(context,Tex.Icons.SETTINGS, button.x, button.y,button.width, button.height);
                 })
                 .onPress(button -> {
                     mc.setScreenAndRender(new ModuleEditScreen(Module.get(InGameHuds.class)));

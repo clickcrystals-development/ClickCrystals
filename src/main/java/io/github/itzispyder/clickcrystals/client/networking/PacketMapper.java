@@ -29,7 +29,6 @@ public class PacketMapper {
         this.put(HandSwingC2SPacket.class, new Info("handSwing", "HandSwingC2SPacket"));
         this.put(JigsawGeneratingC2SPacket.class, new Info("jigsawGenerating", "JigsawGeneratingC2SPacket"));
         this.put(MessageAcknowledgmentC2SPacket.class, new Info("messageAcknowledgment", "MessageAcknowledgmentC2SPacket"));
-        this.put(PickFromInventoryC2SPacket.class, new Info("pickFromInventory", "PickFromInventoryC2SPacket"));
         this.put(PlayerActionC2SPacket.class, new Info("playerAction", "PlayerActionC2SPacket"));
         this.put(PlayerInputC2SPacket.class, new Info("playerInput", "PlayerInputC2SPacket"));
         this.put(PlayerInteractBlockC2SPacket.class, new Info("playerInteractBlock", "PlayerInteractBlockC2SPacket"));
@@ -69,7 +68,6 @@ public class PacketMapper {
         this.put(BossBarS2CPacket.class, new Info("bossBar", "BossBarS2CPacket"));
         this.put(BundleDelimiterS2CPacket.class, new Info("bundleDelimiter", "BundleDelimiterS2CPacket"));
         this.put(BundleS2CPacket.class, new Info("bundle", "BundleS2CPacket"));
-        this.put(ChangeUnlockedRecipesS2CPacket.class, new Info("changeUnlockedRecipes", "ChangeUnlockedRecipesS2CPacket"));
         this.put(ChatMessageS2CPacket.class, new Info("chatMessage", "ChatMessageS2CPacket"));
         this.put(ChatSuggestionsS2CPacket.class, new Info("chatSuggestions", "ChatSuggestionsS2CPacket"));
         this.put(ChunkBiomeDataS2CPacket.class, new Info("chunkBiomeData", "ChunkBiomeDataS2CPacket"));

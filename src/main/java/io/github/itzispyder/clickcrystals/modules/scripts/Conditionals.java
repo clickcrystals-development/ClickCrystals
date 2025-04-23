@@ -166,7 +166,7 @@ public class Conditionals implements Global {
     public static final Conditional COLLIDING = register("colliding", (ref, args, i) -> pair(true, EntityUtils.isColliding(ref), i + 1));
     public static final Conditional COLLIDING_HORIZONTALLY = register("colliding_horizontally", (ref, args, i) -> pair(true, EntityUtils.isCollidingHorizontally(ref), i + 1));
     public static final Conditional COLLIDING_VERTICALLY = register("colliding_vertically", (ref, args, i) -> pair(true, EntityUtils.isCollidingVertically(ref), i + 1));
-    public static final Conditional JUMPING = register("jumping", (ref, args, i) -> pair(true, PlayerUtils.valid() && mc.player.input.jumping && !mc.player.isInsideWaterOrBubbleColumn(), i + 1));
+    public static final Conditional JUMPING = register("jumping", (ref, args, i) -> pair(true, PlayerUtils.valid() && mc.player.input.playerInput.jump() && !mc.player.isInsideWaterOrBubbleColumn(), i + 1));
     public static final Conditional MOVING = register("moving", (ref, args, i) -> pair(true, EntityUtils.isMoving(ref), i + 1));
     public static final Conditional BLOCKING = register("blocking", (ref, args, i) -> pair(true, EntityUtils.isBlocking(ref), i + 1));
     public static final Conditional ON_GROUND = register("on_ground", (ref, args, i) -> pair(true, ref.isOnGround(), i + 1));

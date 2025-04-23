@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,10 +22,10 @@ public abstract class MixinItem implements Global {
 
     private long itemUseCooldown = 0L;
     private long itemConsumeCooldown = 0L;
-    @Shadow public abstract TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand);
+    @Shadow public abstract ActionResult use(World world, PlayerEntity user, Hand hand);
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
-    public void use(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
+    public void use(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         if (isItemUseOnCooldown()) {
             return;
         }

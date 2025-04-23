@@ -12,7 +12,7 @@ public final class ChatUtils implements Global {
 
     public static void sendMessage(String message) {
         if (message != null && PlayerUtils.valid()) {
-            PlayerUtils.player().sendMessage(Text.literal(message));
+            PlayerUtils.player().sendMessage(Text.literal(message),false);
         }
     }
 
@@ -26,7 +26,7 @@ public final class ChatUtils implements Global {
 
     public static void sendRawText(Text text) {
         if (PlayerUtils.valid() && text != null) {
-            PlayerUtils.player().sendMessage(text);
+            PlayerUtils.player().sendMessage(text,false);
         }
     }
 
