@@ -2,7 +2,6 @@ package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.HealthTags;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityRenderStateUtils;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;

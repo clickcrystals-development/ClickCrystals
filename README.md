@@ -31,6 +31,9 @@ Happy coding and cpvping!
 | What You Have | What to get                       |
 |:--------------|:----------------------------------|
 | higher..      | how is that even possible?        |
+| 1.21.4        | 1.21.4 *recommended               |
+| 1.21.3        | not supported                     |
+| 1.21.2        | not supported                     |
 | 1.21.1        | 1.21-(latestVersion) *recommended |
 | 1.21          | 1.21-(latestVersion) *recommended |
 | 1.20.6        | 1.20.6-(latestVersion)            |
@@ -44,41 +47,33 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Version: 1.2.9
-
-Scripted With Packets:
-  - cancel_packet c2s <packetName>
-  - cancel_packet s2c <packetName>
-  - uncancel_packet c2s <packetName>
-  - uncancel_packet s2c <packetName>
+Version: 1.3.0
 
 Scripting:
-  - if hovering_over (ID)
-  - if dead # will need to remove the original check for entity selection loop
-  - switch **n
-  - if item_count #ID
-  - if item_count holding
-  - if item_count off_holding
-  - if item_durability #ID
-  - if item_durability holding
-  - if item_durability off_holding
-  - removed the need to specifically format >,<,>=,<=, etc.. without spaces. (>= 3 is now possible, you wont be required to use >=3 without spaces anymore)
-  - prevented adding insane amount of whitespaces in script strings
+  - on packet_receive
+  - on packet_send
+  - on mouse1
+  - on mouse2
+  - on mouse3
+  - on mouse4
+  - on mouse5
 
-Add:
-  - command to toggle on or all for all modules
-  - add more animations to the configuration screens
-  - add module auto replenish
-  - add module death particles # i-no-one
+Added by I-No-One:
+Modules:
+  - Rewritten DeathParticles Module, now called DeathEffects Module with improved functionality.
+  - Rewritten FreeLook Module, fixing Lunar Client crashing while using CC.
+  - Added NoScrolling Module.
+  - Added PearlCustomizer Module.
+  - Added TotemPopColor Module.
+  - Fixed AutoDisconnect Module.
+  - Fixed TotemPops' enemy death text.
+  - Fixed old behavior of resend-only-commands in MsgResend Module.
+  - Fixed BlockOutline Module RGB Order Settings.
+  - Fixed all modules spamming when using ,toggle #ALL.
 
-Tweaks:
-  - merge roles owner and dev, give i-no-one and josh (if pr passes) dev broadcasts
-
-Patches:
-  - fix online configs downtime
-  - fix online scripts
-  - fix possible bug with notification toast sound where it throws ConcurrentModificationException
-  - fix reloading custom scripted modules resetting their keybinds
+New Additions:
+  - Added new debug mode.
+  - Added new options to TeamDetector Module.
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)

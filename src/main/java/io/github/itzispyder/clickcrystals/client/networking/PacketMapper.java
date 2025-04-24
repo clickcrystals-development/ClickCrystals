@@ -15,12 +15,14 @@ public class PacketMapper {
         this.put(AdvancementTabC2SPacket.class, new Info("advancementTab", "AdvancementTabC2SPacket"));
         this.put(BoatPaddleStateC2SPacket.class, new Info("boatPaddleState", "BoatPaddleStateC2SPacket"));
         this.put(BookUpdateC2SPacket.class, new Info("bookUpdate", "BookUpdateC2SPacket"));
+        this.put(BundleItemSelectedC2SPacket.class, new Info("bundleItemSelected", "BundleItemSelectedC2SPacket"));
         this.put(ButtonClickC2SPacket.class, new Info("buttonClick", "ButtonClickC2SPacket"));
         this.put(ChatCommandSignedC2SPacket.class, new Info("chatCommandSigned", "ChatCommandSignedC2SPacket"));
         this.put(ChatMessageC2SPacket.class, new Info("chatMessage", "ChatMessageC2SPacket"));
         this.put(ClickSlotC2SPacket.class, new Info("clickSlot", "ClickSlotC2SPacket"));
         this.put(ClientCommandC2SPacket.class, new Info("clientCommand", "ClientCommandC2SPacket"));
         this.put(ClientStatusC2SPacket.class, new Info("clientStatus", "ClientStatusC2SPacket"));
+        this.put(ClientTickEndC2SPacket.class, new Info("clientTickEnd", "ClientTickEndC2SPacket"));
         this.put(CloseHandledScreenC2SPacket.class, new Info("closeHandledScreen", "CloseHandledScreenC2SPacket"));
         this.put(CommandExecutionC2SPacket.class, new Info("commandExecution", "CommandExecutionC2SPacket"));
         this.put(CraftRequestC2SPacket.class, new Info("craftRequest", "CraftRequestC2SPacket"));
@@ -29,11 +31,14 @@ public class PacketMapper {
         this.put(HandSwingC2SPacket.class, new Info("handSwing", "HandSwingC2SPacket"));
         this.put(JigsawGeneratingC2SPacket.class, new Info("jigsawGenerating", "JigsawGeneratingC2SPacket"));
         this.put(MessageAcknowledgmentC2SPacket.class, new Info("messageAcknowledgment", "MessageAcknowledgmentC2SPacket"));
+        this.put(PickItemFromBlockC2SPacket.class, new Info("pickItemFromBlock", "PickItemFromBlockC2SPacket"));
+        this.put(PickItemFromEntityC2SPacket.class, new Info("pickItemFromEntity", "PickItemFromEntityC2SPacket"));
         this.put(PlayerActionC2SPacket.class, new Info("playerAction", "PlayerActionC2SPacket"));
         this.put(PlayerInputC2SPacket.class, new Info("playerInput", "PlayerInputC2SPacket"));
         this.put(PlayerInteractBlockC2SPacket.class, new Info("playerInteractBlock", "PlayerInteractBlockC2SPacket"));
         this.put(PlayerInteractEntityC2SPacket.class, new Info("playerInteractEntity", "PlayerInteractEntityC2SPacket"));
         this.put(PlayerInteractItemC2SPacket.class, new Info("playerInteractItem", "PlayerInteractItemC2SPacket"));
+        this.put(PlayerLoadedC2SPacket.class, new Info("playerLoaded", "PlayerLoadedC2SPacket"));
         this.put(PlayerMoveC2SPacket.class, new Info("playerMove", "PlayerMoveC2SPacket"));
         this.put(PlayerSessionC2SPacket.class, new Info("playerSession", "PlayerSessionC2SPacket"));
         this.put(QueryBlockNbtC2SPacket.class, new Info("queryBlockNbt", "QueryBlockNbtC2SPacket"));
@@ -97,6 +102,7 @@ public class PacketMapper {
         this.put(EntityEquipmentUpdateS2CPacket.class, new Info("entityEquipmentUpdate", "EntityEquipmentUpdateS2CPacket"));
         this.put(EntityPassengersSetS2CPacket.class, new Info("entityPassengersSet", "EntityPassengersSetS2CPacket"));
         this.put(EntityPositionS2CPacket.class, new Info("entityPosition", "EntityPositionS2CPacket"));
+        this.put(EntityPositionSyncS2CPacket.class, new Info("entityPositionSync", "EntityPositionSyncS2CPacket"));
         this.put(EntityS2CPacket.class, new Info("entity", "EntityS2CPacket"));
         this.put(EntitySetHeadYawS2CPacket.class, new Info("entitySetHeadYaw", "EntitySetHeadYawS2CPacket"));
         this.put(EntitySpawnS2CPacket.class, new Info("entitySpawn", "EntitySpawnS2CPacket"));
@@ -116,6 +122,7 @@ public class PacketMapper {
         this.put(LightUpdateS2CPacket.class, new Info("lightUpdate", "LightUpdateS2CPacket"));
         this.put(LookAtS2CPacket.class, new Info("lookAt", "LookAtS2CPacket"));
         this.put(MapUpdateS2CPacket.class, new Info("mapUpdate", "MapUpdateS2CPacket"));
+        this.put(MoveMinecartAlongTrackS2CPacket.class, new Info("moveMinecartAlongTrack", "MoveMinecartAlongTrackS2CPacket"));
         this.put(NbtQueryResponseS2CPacket.class, new Info("nbtQueryResponse", "NbtQueryResponseS2CPacket"));
         this.put(OpenHorseScreenS2CPacket.class, new Info("openHorseScreen", "OpenHorseScreenS2CPacket"));
         this.put(OpenScreenS2CPacket.class, new Info("openScreen", "OpenScreenS2CPacket"));
@@ -134,6 +141,9 @@ public class PacketMapper {
         this.put(PlaySoundS2CPacket.class, new Info("playSound", "PlaySoundS2CPacket"));
         this.put(ProfilelessChatMessageS2CPacket.class, new Info("profilelessChatMessage", "ProfilelessChatMessageS2CPacket"));
         this.put(ProjectilePowerS2CPacket.class, new Info("projectilePower", "ProjectilePowerS2CPacket"));
+        this.put(RecipeBookAddS2CPacket.class, new Info("recipeBookAdd", "RecipeBookAddS2CPacket"));
+        this.put(RecipeBookRemoveS2CPacket.class, new Info("recipeBookRemove", "RecipeBookRemoveS2CPacket"));
+        this.put(RecipeBookSettingsS2CPacket.class, new Info("recipeBookSettings", "RecipeBookSettingsS2CPacket"));
         this.put(RemoveEntityStatusEffectS2CPacket.class, new Info("removeEntityStatusEffect", "RemoveEntityStatusEffectS2CPacket"));
         this.put(RemoveMessageS2CPacket.class, new Info("removeMessage", "RemoveMessageS2CPacket"));
         this.put(ScoreboardDisplayS2CPacket.class, new Info("scoreboardDisplay", "ScoreboardDisplayS2CPacket"));
@@ -145,6 +155,8 @@ public class PacketMapper {
         this.put(SelectAdvancementTabS2CPacket.class, new Info("selectAdvancementTab", "SelectAdvancementTabS2CPacket"));
         this.put(ServerMetadataS2CPacket.class, new Info("serverMetadata", "ServerMetadataS2CPacket"));
         this.put(SetCameraEntityS2CPacket.class, new Info("setCameraEntity", "SetCameraEntityS2CPacket"));
+        this.put(SetCursorItemS2CPacket.class, new Info("setCursorItem", "SetCursorItemS2CPacket"));
+        this.put(SetPlayerInventoryS2CPacket.class, new Info("setPlayerInventory", "SetPlayerInventoryS2CPacket"));
         this.put(SetTradeOffersS2CPacket.class, new Info("setTradeOffers", "SetTradeOffersS2CPacket"));
         this.put(SignEditorOpenS2CPacket.class, new Info("signEditorOpen", "SignEditorOpenS2CPacket"));
         this.put(SimulationDistanceS2CPacket.class, new Info("simulationDistance", "SimulationDistanceS2CPacket"));
