@@ -126,7 +126,7 @@ public final class ClickCrystals implements ModInitializer, Global {
     @Override
     public void onInitialize() {
         // Mod initialization
-        system.println("Loading ClickCrystals by ImproperIssues");
+        system.println("Loading Vortex by Revex");
         System.setProperty("java.awt.headless", "false");
 
         system.println("-> loading scripts...");
@@ -145,7 +145,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         ClickCrystals.checkUpdates();
 
         system.println("-> clicking crystals!");
-        system.println("ClickCrystals had loaded successfully!");
+        system.println("Vortex had loaded successfully!");
         system.println(new Gson().toJson(info));
     }
 
@@ -347,7 +347,7 @@ public final class ClickCrystals implements ModInitializer, Global {
 
     public static void checkUpdates() {
         if (!matchLatestVersion()) {
-            system.println("WARNING: You are running an outdated version of ClickCrystals, please update!");
+            system.println("WARNING: You are running an outdated version of Vortex, please update!");
             system.println("VERSIONS: Current=%s, Newest=%s".formatted(version, getLatestVersion()));
         }
         else {

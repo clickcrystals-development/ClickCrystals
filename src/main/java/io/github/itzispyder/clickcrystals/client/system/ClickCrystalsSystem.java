@@ -216,8 +216,8 @@ public class ClickCrystalsSystem implements Serializable {
             Notification.create()
                     .ccsIcon()
                     .stayTime(1000)
-                    .id("clickscript-triggered-notification")
-                    .title("ClickCrystals System")
+                    .id("Vortexscript-triggered-notification")
+                    .title("Vortex System")
                     .text("%s scripts reloaded!".formatted(total))
                     .build()
                     .sendToClient();

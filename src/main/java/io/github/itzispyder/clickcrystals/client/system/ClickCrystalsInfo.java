@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class ClickCrystalsInfo implements Global {
 
-    public static final String URL = "https://itzispyder.github.io/clickcrystals/info";
+    public static final String URL = "";
     private final String latest;
     private final String motd;
     private final User[] owners;
