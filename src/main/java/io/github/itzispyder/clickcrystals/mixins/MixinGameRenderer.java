@@ -34,7 +34,7 @@ public abstract class MixinGameRenderer {
     }
 
     @Inject(method = "getFov", at = @At("RETURN"), cancellable = true)
-    public void getFov(Camera camera, float tickDelta, boolean changingFov, CallbackInfoReturnable<Double> cir) {
+    public void getFov(Camera camera, float tickDelta, boolean changingFov, CallbackInfoReturnable<Float> cir) {
         Zoom zoom = Module.get(Zoom.class);
 
         if (zoom.isEnabled() && zoom.isZooming()) {

@@ -5,10 +5,11 @@ import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderConstants;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
@@ -59,7 +60,7 @@ public abstract class MixinSplashOverlay implements Global {
             return;
 
         Tessellator tes = Tessellator.getInstance();
-        BufferBuilder buf = tes.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+        BufferBuilder buf = tes.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
         MatrixStack matrices = context.getMatrices();
 
         int i = MathHelper.ceil((float)(maxX - minX - 2) * this.progress);
@@ -76,12 +77,12 @@ public abstract class MixinSplashOverlay implements Global {
 
         Matrix4f mat = matrices.peek().getPositionMatrix();
 
-        buf.vertex(mat, x, y, 0).texture(0, 0);
-        buf.vertex(mat, x, y + size, 0).texture(0, 1);
-        buf.vertex(mat, x + size, y + size, 0).texture(1, 1);
-        buf.vertex(mat, x + size, y, 0).texture(1, 0);
+        buf.vertex(mat, x, y, 0).texture(0, 0).color(-1);
+        buf.vertex(mat, x, y + size, 0).texture(0, 1).color(-1);
+        buf.vertex(mat, x + size, y + size, 0).texture(1, 1).color(-1);
+        buf.vertex(mat, x + size, y, 0).texture(1, 0).color(-1);
 
-        RenderLayer.getGuiTextured(Tex.ICON).draw(buf.end());
+        RenderUtils.drawBuffer(buf, RenderConstants.TEX_QUADS.apply(Tex.ICON));
         matrices.pop();
     }
 }

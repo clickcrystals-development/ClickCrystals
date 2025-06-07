@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.world.GameMode;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -214,6 +215,10 @@ public class Conditionals implements Global {
     public static final Conditional ITEM_DURABILITY = register("item_durability", (ref, args, i) -> {
         ItemStack item = ScriptParser.parseItemStack(args.get(i + 1).toString());
         return pair(item != null && evalIntegers(1 - item.getDamage() / (double) item.getMaxDamage(), args.get(i + 2).toString()), i + 3);
+    });
+    public static final Conditional GAMEMODE = register("gamemode", (ref, args, i) -> {
+        GameMode gm = args.get(i + 1).toEnum(GameMode.class);
+        return pair(ref instanceof PlayerEntity p && p.getGameMode() == gm, i + 2);
     });
 
     // helper methods

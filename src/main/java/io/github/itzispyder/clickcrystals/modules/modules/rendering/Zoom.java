@@ -78,8 +78,8 @@ public class Zoom extends Module implements Listener {
         }
     }
 
-    public double getZoomMultiplierValue(double initValue) {
-        return multiplier.getVal() * initValue + modifier;
+    public float getZoomMultiplierValue(double initValue) {
+        return (float)(multiplier.getVal() * initValue + modifier);
     }
 
     public boolean isZooming() {

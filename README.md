@@ -28,35 +28,33 @@ Happy coding and cpvping!
 
 ## What Version Should I Get?
 
-| What You Have | What to get                       |
-|:--------------|:----------------------------------|
-| higher..      | how is that even possible?        |
-| 1.21.4        | 1.21.4 *recommended               |
-| 1.21.3        | not supported                     |
-| 1.21.2        | not supported                     |
-| 1.21.1        | 1.21-(latestVersion) *recommended |
-| 1.21          | 1.21-(latestVersion) *recommended |
-| 1.20.6        | 1.20.6-(latestVersion)            |
-| 1.20.5        | not supported                     |
-| 1.20.4        | 1.20.4-(latestVersion)            |
-| 1.20.3        | 1.20.4-(latestVersion)            |
-| 1.20.2        | 1.20.2-(latestVersion)            |
-| 1.20.1        | 1.20.1-(latestVersion)            |
-| 1.20          | 1.20.1-(latestVersion)            |
-| ..lower       | cry                               |
+| What You Have | What to get                         |
+|:--------------|:------------------------------------|
+| higher..      | how is that even possible?          |
+| 1.21.5        | 1.21.5-(latestVersion) *recommended |
+| 1.21.4        | not supported                       |
+| 1.21.3        | not supported                       |
+| 1.21.2        | not supported                       |
+| 1.21.1        | 1.21-(latestVersion) *recommended   |
+| 1.21          | 1.21-(latestVersion) *recommended   |
+| 1.20.6        | 1.20.6-(latestVersion)              |
+| 1.20.5        | not supported                       |
+| 1.20.4        | 1.20.4-(latestVersion)              |
+| 1.20.3        | 1.20.4-(latestVersion)              |
+| 1.20.2        | 1.20.2-(latestVersion)              |
+| 1.20.1        | 1.20.1-(latestVersion)              |
+| 1.20          | 1.20.1-(latestVersion)              |
+| ..lower       | cry                                 |
 
 ## Newest Changes
 ```yml
 Version: 1.3.0
 
+Major Updates:
+  - updated client to 1.21.5
+
 Scripting:
-  - on packet_receive
-  - on packet_send
-  - on mouse1
-  - on mouse2
-  - on mouse3
-  - on mouse4
-  - on mouse5
+  - if gamemode
 
 Added by I-No-One:
 Modules:
