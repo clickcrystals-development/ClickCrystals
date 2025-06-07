@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.misc.brushes;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.Entity;

@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.ModuleEditScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.scripts.ClickScriptIDE;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class ModuleElement extends GuiElement {

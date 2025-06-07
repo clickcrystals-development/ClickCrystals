@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.Window;

@@ -30,7 +30,7 @@ public class MixinWorldRenderer {
             int g = bo.green.getVal().intValue();
             int b = bo.blue.getVal().intValue();
 
-            args.set(7, new Color( r, g, b).getRGB());
+            args.set(6, new Color(r, g, b).getRGB());
         }
     }
 

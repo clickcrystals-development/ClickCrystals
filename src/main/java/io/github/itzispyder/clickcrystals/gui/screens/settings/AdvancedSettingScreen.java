@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScree
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 

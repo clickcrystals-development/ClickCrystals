@@ -3,8 +3,9 @@ package io.github.itzispyder.clickcrystals.gui.hud.moveables;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
+import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -39,7 +40,7 @@ public class ArmorRelativeHud extends Hud {
         int startX = x + (getWidth() - totalWidth) / 2;
         int startY = y + (getHeight() - slotHeight) / 2 + 1;
 
-        for (ItemStack armorItem : player.getArmorItems()) {
+        for (ItemStack armorItem : EntityUtils.getArmorItems(player)) {
             RenderUtils.drawItem(context, armorItem, startX, startY);
             startX += slotWidth;
         }

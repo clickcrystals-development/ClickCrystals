@@ -1,27 +1,28 @@
 package io.github.itzispyder.clickcrystals.modules.modules.clickcrystals;
 
 import com.mojang.authlib.GameProfile;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderConstants;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import org.joml.Matrix4f;
-import org.lwjgl.opengl.GL11;
 
-import static com.mojang.blaze3d.systems.RenderSystem.*;
-import static io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils.*;
+import static io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils.drawBuffer;
+import static io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils.getBuffer;
 
 public class HealthTags extends DummyModule {
 
@@ -94,7 +95,7 @@ public class HealthTags extends DummyModule {
 
         int maxDamage = 0;
         int damage = 0;
-        for (var item : entity.getArmorItems()) {
+        for (var item : EntityUtils.getArmorItems(entity)) {
             maxDamage += item.getMaxDamage();
             damage += (item.getMaxDamage() - item.getDamage());
         }
@@ -197,15 +198,7 @@ public class HealthTags extends DummyModule {
 
         buf.vertex(mat, corners[0][0], y, 0).color(color); // connect last to first vertex
 
-        beginRendering();
-        enableDepthTest();
-        depthFunc(GL11.GL_ALWAYS);
-        
-        drawBuffer(buf);
-
-        depthFunc(GL11.GL_LEQUAL);
-        disableDepthTest();
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_FAN);
     }
 
     private void fillRect(MatrixStack matrices, float x, float y, float w, float h, int color) {
@@ -217,15 +210,7 @@ public class HealthTags extends DummyModule {
         buf.vertex(mat, x + w, y + h, 0).color(color);
         buf.vertex(mat, x, y + h, 0).color(color);
 
-        beginRendering();
-        enableDepthTest();
-        depthFunc(GL11.GL_ALWAYS);
-        
-        drawBuffer(buf);
-        
-        depthFunc(GL11.GL_LEQUAL);
-        disableDepthTest();
-        finishRendering();
+        drawBuffer(buf, RenderConstants.QUADS);
     }
 
     private void drawRect(MatrixStack matrices, float x, float y, float w, float h, int color) {

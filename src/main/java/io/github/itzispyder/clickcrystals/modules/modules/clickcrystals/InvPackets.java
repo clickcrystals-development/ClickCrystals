@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.modules.modules.clickcrystals;
 
-import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
@@ -11,7 +10,6 @@ import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 
 public class InvPackets extends ListenerModule {
 
-    private final Gson gson = new Gson();
     private long sequence;
 
     public InvPackets() {
@@ -32,6 +30,6 @@ public class InvPackets extends ListenerModule {
                     &7actionType:&f %s
                     &7itemStack:&f %s
                     &7modifiedItems:&f %s
-                """.formatted(++sequence, packet.getSyncId(), packet.getRevision(), packet.getSlot(), packet.getButton(), packet.getActionType(), packet.getStack(), packet.getModifiedStacks())));
+                """.formatted(++sequence, packet.syncId(), packet.revision(), packet.slot(), packet.button(), packet.actionType(), packet.cursor(), packet.modifiedStacks())));
     }
 }

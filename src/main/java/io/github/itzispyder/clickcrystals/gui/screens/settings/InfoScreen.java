@@ -10,7 +10,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.Scroll
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 

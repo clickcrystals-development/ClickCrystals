@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.TeamDetector;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -80,11 +81,38 @@ public class EntityUtils implements Global {
         return stack != null && item.test(stack);
     }
 
+    public static List<ItemStack> getArmorItems(LivingEntity ent) {
+        List<ItemStack> items = new ArrayList<>();
+        for (EquipmentSlot slot: EquipmentSlot.values()) {
+            if (slot.name().contains("HAND"))
+                continue;
+
+            ItemStack item = ent.getEquippedStack(slot);
+            if (item != null && !item.isEmpty())
+                items.add(item);
+            else
+                items.add(ItemStack.EMPTY);
+        }
+        return items;
+    }
+
+    public static List<ItemStack> getHandItems(LivingEntity ent) {
+        List<ItemStack> items = new ArrayList<>();
+        for (Hand slot: Hand.values()) {
+            ItemStack item = ent.getStackInHand(slot);
+            if (item != null && !item.isEmpty())
+                items.add(item);
+            else
+                items.add(ItemStack.EMPTY);
+        }
+        return items;
+    }
+
     public static boolean hasEquipment(Entity ref, Predicate<ItemStack> item) {
         if (!(ref instanceof LivingEntity liv))
             return false;
-        for (ItemStack armor : liv.getArmorItems())
-            if (armor != null && !armor.isEmpty() && item.test(armor))
+        for (ItemStack armor : getArmorItems(liv))
+            if (item.test(armor))
                 return true;
         return false;
     }

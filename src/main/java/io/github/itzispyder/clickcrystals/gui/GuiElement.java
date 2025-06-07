@@ -5,8 +5,8 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.Scroll
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;

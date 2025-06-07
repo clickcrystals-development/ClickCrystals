@@ -48,9 +48,11 @@ public class PacketMapper {
         this.put(RenameItemC2SPacket.class, new Info("renameItem", "RenameItemC2SPacket"));
         this.put(RequestCommandCompletionsC2SPacket.class, new Info("requestCommandCompletions", "RequestCommandCompletionsC2SPacket"));
         this.put(SelectMerchantTradeC2SPacket.class, new Info("selectMerchantTrade", "SelectMerchantTradeC2SPacket"));
+        this.put(SetTestBlockC2SPacket.class, new Info("setTestBlock", "SetTestBlockC2SPacket"));
         this.put(SlotChangedStateC2SPacket.class, new Info("slotChangedState", "SlotChangedStateC2SPacket"));
         this.put(SpectatorTeleportC2SPacket.class, new Info("spectatorTeleport", "SpectatorTeleportC2SPacket"));
         this.put(TeleportConfirmC2SPacket.class, new Info("teleportConfirm", "TeleportConfirmC2SPacket"));
+        this.put(TestInstanceBlockActionC2SPacket.class, new Info("testInstanceBlockAction", "TestInstanceBlockActionC2SPacket"));
         this.put(UpdateBeaconC2SPacket.class, new Info("updateBeacon", "UpdateBeaconC2SPacket"));
         this.put(UpdateCommandBlockC2SPacket.class, new Info("updateCommandBlock", "UpdateCommandBlockC2SPacket"));
         this.put(UpdateCommandBlockMinecartC2SPacket.class, new Info("updateCommandBlockMinecart", "UpdateCommandBlockMinecartC2SPacket"));
@@ -111,7 +113,6 @@ public class PacketMapper {
         this.put(EntityTrackerUpdateS2CPacket.class, new Info("entityTrackerUpdate", "EntityTrackerUpdateS2CPacket"));
         this.put(EntityVelocityUpdateS2CPacket.class, new Info("entityVelocityUpdate", "EntityVelocityUpdateS2CPacket"));
         this.put(ExperienceBarUpdateS2CPacket.class, new Info("experienceBarUpdate", "ExperienceBarUpdateS2CPacket"));
-        this.put(ExperienceOrbSpawnS2CPacket.class, new Info("experienceOrbSpawn", "ExperienceOrbSpawnS2CPacket"));
         this.put(ExplosionS2CPacket.class, new Info("explosion", "ExplosionS2CPacket"));
         this.put(GameJoinS2CPacket.class, new Info("gameJoin", "GameJoinS2CPacket"));
         this.put(GameMessageS2CPacket.class, new Info("gameMessage", "GameMessageS2CPacket"));
@@ -136,6 +137,7 @@ public class PacketMapper {
         this.put(PlayerPositionLookS2CPacket.class, new Info("playerPositionLook", "PlayerPositionLookS2CPacket"));
         this.put(PlayerRemoveS2CPacket.class, new Info("playerRemove", "PlayerRemoveS2CPacket"));
         this.put(PlayerRespawnS2CPacket.class, new Info("playerRespawn", "PlayerRespawnS2CPacket"));
+        this.put(PlayerRotationS2CPacket.class, new Info("playerRotation", "PlayerRotationS2CPacket"));
         this.put(PlayerSpawnPositionS2CPacket.class, new Info("playerSpawnPosition", "PlayerSpawnPositionS2CPacket"));
         this.put(PlaySoundFromEntityS2CPacket.class, new Info("playSoundFromEntity", "PlaySoundFromEntityS2CPacket"));
         this.put(PlaySoundS2CPacket.class, new Info("playSound", "PlaySoundS2CPacket"));
@@ -166,6 +168,7 @@ public class PacketMapper {
         this.put(SubtitleS2CPacket.class, new Info("subtitle", "SubtitleS2CPacket"));
         this.put(SynchronizeRecipesS2CPacket.class, new Info("synchronizeRecipes", "SynchronizeRecipesS2CPacket"));
         this.put(TeamS2CPacket.class, new Info("team", "TeamS2CPacket"));
+        this.put(TestInstanceBlockStatusS2CPacket.class, new Info("testInstanceBlockStatus", "TestInstanceBlockStatusS2CPacket"));
         this.put(TickStepS2CPacket.class, new Info("tickStep", "TickStepS2CPacket"));
         this.put(TitleFadeS2CPacket.class, new Info("titleFade", "TitleFadeS2CPacket"));
         this.put(TitleS2CPacket.class, new Info("title", "TitleS2CPacket"));

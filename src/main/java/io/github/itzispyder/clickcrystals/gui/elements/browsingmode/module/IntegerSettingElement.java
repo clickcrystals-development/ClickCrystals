@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.modules.settings.IntegerSetting;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class IntegerSettingElement extends SettingElement<IntegerSetting> {

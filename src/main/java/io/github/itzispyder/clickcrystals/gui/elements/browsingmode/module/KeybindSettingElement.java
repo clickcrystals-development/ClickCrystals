@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.Typeable;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
 

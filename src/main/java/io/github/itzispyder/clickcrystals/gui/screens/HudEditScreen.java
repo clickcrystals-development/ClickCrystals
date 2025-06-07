@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 

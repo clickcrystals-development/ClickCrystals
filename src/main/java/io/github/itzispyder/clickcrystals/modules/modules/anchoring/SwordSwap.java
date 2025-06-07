@@ -8,7 +8,6 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ShieldItem;
-import net.minecraft.item.SwordItem;
 
 public class SwordSwap extends Module implements Listener {
 
@@ -29,8 +28,8 @@ public class SwordSwap extends Module implements Listener {
     @EventHandler
     private void onAttack(PlayerAttackEntityEvent e) {
         if (e.getEntity() instanceof PlayerEntity p && !p.isBlocking() && isHoldingShield(p)) {
-            if (HotbarUtils.nameContains("axe") && HotbarUtils.has(item -> item.getItem() instanceof SwordItem)) {
-                HotbarUtils.search(item -> item.getItem() instanceof SwordItem);
+            if (HotbarUtils.nameContains("axe") && HotbarUtils.has(item -> item.getItem().getTranslationKey().contains("sword"))) {
+                HotbarUtils.search(item -> item.getItem().getTranslationKey().contains("sword"));
             }
         }
     }

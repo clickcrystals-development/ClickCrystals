@@ -5,8 +5,8 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElement {

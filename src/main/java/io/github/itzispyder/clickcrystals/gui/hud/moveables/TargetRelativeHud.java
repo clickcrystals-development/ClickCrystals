@@ -8,12 +8,14 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHu
 import io.github.itzispyder.clickcrystals.modules.modules.misc.TotemPops;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.HealthAsBar;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.PlayerSkinDrawer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -63,7 +65,8 @@ public class TargetRelativeHud extends Hud {
             // target armor
             caret += (int)(10 * animator.getProgressClampedReversed());
             if (!isTargetNaked()) {
-                for (ItemStack item : target.getInventory().armor) {
+                for (EquipmentSlot slot: EquipmentSlot.values()) {
+                    ItemStack item = target.getEquippedStack(slot);
                     RenderUtils.drawItem(context, item, margin, caret - 1, 13);
                     margin += 13;
                 }
@@ -136,11 +139,9 @@ public class TargetRelativeHud extends Hud {
         if (!target.getMainHandStack().isEmpty() || !target.getOffHandStack().isEmpty()) {
             return false;
         }
-        for (ItemStack item : target.getArmorItems()) {
-            if (!item.isEmpty()) {
+        for (ItemStack item : EntityUtils.getArmorItems(target))
+            if (!item.isEmpty())
                 return false;
-            }
-        }
         return true;
     }
 }

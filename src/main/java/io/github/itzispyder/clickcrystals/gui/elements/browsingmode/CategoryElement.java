@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Category;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class CategoryElement extends GuiElement {

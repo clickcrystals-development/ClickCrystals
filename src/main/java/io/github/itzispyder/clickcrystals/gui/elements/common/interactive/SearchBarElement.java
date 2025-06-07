@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.common.Typeable;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.callbacks.KeyPressCallback;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;

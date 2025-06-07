@@ -25,7 +25,7 @@ public final class HotbarUtils implements Global {
 
         for (int i = 0; i <= 8; i ++) {
             if (inv.getStack(i).isOf(item)) {
-                inv.selectedSlot = i;
+                inv.setSelectedSlot(i);
                 return true;
             }
         }
@@ -41,7 +41,7 @@ public final class HotbarUtils implements Global {
 
         for (int i = 0; i <= 8; i ++) {
             if (item.test(inv.getStack(i))) {
-                inv.selectedSlot = i;
+                inv.setSelectedSlot(i);
                 return true;
             }
         }

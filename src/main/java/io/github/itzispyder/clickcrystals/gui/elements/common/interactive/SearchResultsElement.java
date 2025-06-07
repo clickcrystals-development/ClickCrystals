@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.ModuleEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;

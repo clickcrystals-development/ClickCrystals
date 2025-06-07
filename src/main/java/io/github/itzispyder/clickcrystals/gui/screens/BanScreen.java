@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.HyperLinkElement;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;

@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.Announcement
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 

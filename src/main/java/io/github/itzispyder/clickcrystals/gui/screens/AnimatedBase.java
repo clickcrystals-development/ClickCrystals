@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 

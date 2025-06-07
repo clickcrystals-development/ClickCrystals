@@ -96,7 +96,7 @@ public class ToolSwitcher extends Module implements Listener {
                         .max(Comparator.comparing(entries::get))
                         .get();
 
-                if (entries.get(slot) != 1) mc.player.getInventory().selectedSlot = slot;
+                if (entries.get(slot) != 1) mc.player.getInventory().setSelectedSlot(slot);
             }
         }
     }

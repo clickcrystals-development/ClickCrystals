@@ -18,8 +18,8 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScree
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;

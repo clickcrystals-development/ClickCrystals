@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.CrystPerSec;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
 import net.minecraft.item.Items;

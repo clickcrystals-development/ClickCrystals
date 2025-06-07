@@ -9,6 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
@@ -122,9 +123,9 @@ public class DebugCommand extends Command {
         infoRaw("   &3Latency: &7" + entry.getLatency() + " ms");
         infoRaw("   &3UUID: &7" + entry.getProfile().getId());
         infoRaw("   &3Armor:");
-        ArrayUtils.reverseForEach(player.getArmorItems(), this::printItem);
+        ArrayUtils.reverseForEach(EntityUtils.getArmorItems(player), this::printItem);
         infoRaw("   &3Hand:");
-        ArrayUtils.reverseForEach(player.getHandItems(), this::printItem);
+        ArrayUtils.reverseForEach(EntityUtils.getHandItems(player), this::printItem);
         infoRaw("");
     }
 
@@ -143,10 +144,9 @@ public class DebugCommand extends Command {
             Text text = Text.literal("      §7- " + pre + StringUtils.capitalizeWords(secs[secs.length - 1]));
             MutableText msg = text.copy();
             Style style = text.getStyle();
-            HoverEvent.ItemStackContent content = new HoverEvent.ItemStackContent(stack);
-            HoverEvent hover = new HoverEvent(HoverEvent.Action.SHOW_ITEM, content);
+            HoverEvent.ShowItem content = new HoverEvent.ShowItem(stack);
 
-            msg.fillStyle(style.withHoverEvent(hover));
+            msg.fillStyle(style.withHoverEvent(content));
             info(msg.toString());
         }
     }

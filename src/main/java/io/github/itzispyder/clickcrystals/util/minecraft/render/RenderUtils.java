@@ -1,15 +1,16 @@
-package io.github.itzispyder.clickcrystals.util.minecraft;
+package io.github.itzispyder.clickcrystals.util.minecraft.render;
 
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Color;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
-import net.minecraft.client.gl.ShaderProgramKeys;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.*;
-import net.minecraft.client.util.SkinTextures;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
@@ -18,7 +19,6 @@ import net.minecraft.util.Identifier;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
-import static com.mojang.blaze3d.systems.RenderSystem.*;
 import static java.lang.Math.*;
 import static net.minecraft.util.math.ColorHelper.getArgb;
 
@@ -37,9 +37,7 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, (float)(x + w), (float)(y + h), 0).color(color);
         buf.vertex(mat, (float)x, (float)(y + h), 0).color(color);
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.QUADS);
     }
 
     public static void fillRadialGradient(DrawContext context, int cX, int cY, int radius, int innerColor, int outerColor) {
@@ -55,9 +53,7 @@ public final class RenderUtils implements Global {
             buf.vertex(mat, x, y, 0).color(outerColor);
         }
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_FAN);
     }
 
     public static void fillSidewaysGradient(DrawContext context, int x, int y, int w, int h, int colorLeft, int colorRight) {
@@ -69,9 +65,7 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, x + w, y + h, 0).color(colorRight);
         buf.vertex(mat, x + w, y, 0).color(colorRight);
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.QUADS);
     }
 
     public static void fillSidewaysGradient(DrawContext context, int x, int y, int w, int h, int... colors) {
@@ -101,9 +95,7 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, x + w, y, 0).color(colors[amount - 1]);
         buf.vertex(mat, x + w, y + h, 0).color(colors[amount - 1]);
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_STRIP);
     }
 
     public static void fillVerticalGradient(DrawContext context, int x, int y, int w, int h, int colorTop, int colorBottom) {
@@ -115,9 +107,7 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, x + w, y + h, 0).color(colorBottom);
         buf.vertex(mat, x, y + h, 0).color(colorBottom);
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.QUADS);
     }
 
     public static void fillVerticalGradient(DrawContext context, int x, int y, int w, int h, int... colors) {
@@ -147,9 +137,7 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, x, y + h, 0).color(colors[amount - 1]);
         buf.vertex(mat, x + w, y + h, 0).color(colors[amount - 1]);
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_STRIP);
     }
 
     public static void fillAnnulusArcGradient(DrawContext context, int cx, int cy, int radius, int start, int end, int thickness, int innerColor, int outerColor) {
@@ -168,9 +156,7 @@ public final class RenderUtils implements Global {
             buf.vertex(mat, x2, y2, 0).color(outerColor);
         }
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_STRIP);
     }
 
     public static void fillArc(DrawContext context, int cX, int cY, int radius, int start, int end, int color) {
@@ -186,9 +172,7 @@ public final class RenderUtils implements Global {
             buf.vertex(mat, x, y, 0).color(color);
         }
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_FAN);
     }
 
     public static void fillCircle(DrawContext context, int cX, int cY, int radius, int color) {
@@ -211,9 +195,7 @@ public final class RenderUtils implements Global {
             buf.vertex(mat, x2, y2, 0).color(color);
         }
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_STRIP);
     }
 
     public static void fillAnnulus(DrawContext context, int cx, int cy, int radius, int thickness, int color) {
@@ -248,10 +230,7 @@ public final class RenderUtils implements Global {
 
         buf.vertex(mat, corners[0][0], y, 0).color(color); // connect last to first vertex
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
-
+        drawBuffer(buf, RenderConstants.TRI_FAN);
     }
 
     public static void fillRoundRectGradient(DrawContext context, int x, int y, int w, int h, int r, int color1, int color2, int color3, int color4, int colorCenter) {
@@ -283,9 +262,7 @@ public final class RenderUtils implements Global {
 
         buf.vertex(mat, corners[0][0], y, 0).color(colors[0]); // connect last to first vertex
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_FAN);
     }
 
     public static void fillRoundShadow(DrawContext context, int x, int y, int w, int h, int r, int thickness, int innerColor, int outerColor) {
@@ -318,9 +295,7 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, corners[0][0], y, 0).color(innerColor); // connect last to first vertex
         buf.vertex(mat, corners[0][0], y - thickness, 0).color(outerColor); // connect last to first vertex
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_STRIP);
     }
 
     public static void fillRoundShadowGradient(DrawContext context, int x, int y, int w, int h, int r, int thickness,
@@ -360,9 +335,7 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, corners[0][0], y, 0).color(colors[0][0]); // connect last to first vertex
         buf.vertex(mat, corners[0][0], y - thickness, 0).color(colors[0][1]); // connect last to first vertex
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_FAN);
     }
 
     public static void fillRoundShadow(DrawContext context, int x, int y, int w, int h, int r, int thickness, int color) {
@@ -395,9 +368,7 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, x, y + h, 0).color(color);
         buf.vertex(mat, x, corners[0][1], 0).color(color); // connect last to first vertex
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_FAN);
     }
 
     public static void fillRoundTabBottom(DrawContext context, int x, int y, int w, int h, int r, int color) {
@@ -426,9 +397,7 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, x + w, y, 0).color(color);
         buf.vertex(mat, x + w, corners[0][1], 0).color(color); // connect last to first vertex
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_FAN);
     }
 
     public static void fillRoundHoriLine(DrawContext context, int x, int y, int length, int thickness, int color) {
@@ -470,9 +439,7 @@ public final class RenderUtils implements Global {
         buf.vertex(mat, (float)x1, (float)y1, 0).color(color);
         buf.vertex(mat, (float)x2, (float)y2, 0).color(color);
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.LINES);
     }
 
     public static void drawArc(DrawContext context, int cX, int cY, int radius, int start, int end, int color) {
@@ -486,9 +453,7 @@ public final class RenderUtils implements Global {
             buf.vertex(mat, x, y, 0).color(color);
         }
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.LINES_STRIP);
     }
 
     public static void drawCircle(DrawContext context, int cX, int cY, int radius, int color) {
@@ -521,9 +486,7 @@ public final class RenderUtils implements Global {
 
         buf.vertex(mat, corners[0][0], y, 0).color(color); // connect last to first vertex
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.LINES_STRIP);
     }
 
     public static void drawRoundHoriLine(DrawContext context, int x, int y, int length, int thickness, int color) {
@@ -640,22 +603,16 @@ public final class RenderUtils implements Global {
     // misc
 
     public static void drawTexture(DrawContext context, Identifier texture, int x, int y, int w, int h) {
-        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
-
-        buf.vertex(mat, x, y, 0).texture(0, 0);
-        buf.vertex(mat, x, y + h, 0).texture(0, 1);
-        buf.vertex(mat, x + w, y + h, 0).texture(1, 1);
-        buf.vertex(mat, x + w, y, 0).texture(1, 0);
-
-        disableCull();
-        RenderSystem.setShader(ShaderProgramKeys.POSITION_TEX);
-        setShaderTexture(0, texture);
-        setShaderColor(1, 1, 1, 1);
-
-        drawBuffer(buf);
-
-        enableCull();
+//        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+//        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+//
+//        buf.vertex(mat, x, y, 0).texture(0, 0);
+//        buf.vertex(mat, x, y + h, 0).texture(0, 1);
+//        buf.vertex(mat, x + w, y + h, 0).texture(1, 1);
+//        buf.vertex(mat, x + w, y, 0).texture(1, 0);
+//
+//        drawBuffer(buf, RenderConstants.TEX_QUADS.apply(texture));
+        context.drawTexture(RenderLayer::getGuiTextured, texture, x, y, 0, 0, w, h, w, h);
     }
 
     public static void drawRoundTexture(DrawContext context, Identifier texture, int x, int y, int w, int h, int r) {
@@ -688,169 +645,7 @@ public final class RenderUtils implements Global {
 
         buf.vertex(mat, corners[0][0], y, 0).texture(((float)corners[0][0] - x) / w, 0); // connect last to first vertex
 
-        disableCull();
-
-        setShader(ShaderProgramKeys.POSITION_TEX);
-        setShaderTexture(0, texture);
-        setShaderColor(1, 1, 1, 1);
-
-        drawBuffer(buf);
-
-        enableCull();
-    }
-
-    public static void drawCircleTexture(DrawContext context, Identifier texture, int x, int y, int size) {
-        int radius = size / 2;
-
-        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
-
-        buf.vertex(mat, x, y, 0).texture(0.5F, 0.5F);
-        for (int i = 0; i <= 360; i += 10) {
-            float angle = (float) Math.toRadians(i);
-            float cos = (float) Math.cos(angle) * radius + x;
-            float sin = (float) Math.sin(angle) * radius + y;
-            float tu = (cos - x + radius) / size;
-            float tv = (sin - y + radius) / size;
-            buf.vertex(mat, cos, sin, 0).texture(tu, tv);
-        }
-
-        disableCull();
-        enableBlend();
-        defaultBlendFunc();
-        setShader(ShaderProgramKeys.POSITION_TEX_COLOR);
-        setShaderColor(1, 1, 1, 1);
-        setShaderTexture(0, texture);
-
-        drawBuffer(buf);
-
-        enableCull();
-        disableBlend();
-    }
-
-    public static void drawCirclePlayerHead(DrawContext context, SkinTextures texture, int x, int y, int size) {
-        int radius = size / 2;
-        float u = 1 / 8F;
-        float v = 1 / 8F;
-
-        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
-
-        buf.vertex(mat, x, y, 0).texture(0.5F * u + u, 0.5F * v + v);
-        for (int i = 0; i <= 360; i += 10) {
-            float angle = (float) Math.toRadians(i);
-            float cos = (float) Math.cos(angle) * radius + x;
-            float sin = (float) Math.sin(angle) * radius + y;
-            float tu = (cos - x + radius) / size;
-            float tv = (sin - y + radius) / size;
-            buf.vertex(mat, cos, sin, 0).texture(tu * u + u, tv * v + v);
-        }
-
-        disableCull();
-        enableBlend();
-        defaultBlendFunc();
-        setShader(ShaderProgramKeys.POSITION_TEX);
-        setShaderColor(1, 1, 1, 1);
-        setShaderTexture(0, texture.texture());
-
-        drawBuffer(buf);
-
-        enableCull();
-        disableBlend();
-
-        buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE);
-        buf.vertex(mat, x, y, 0.0069420F).texture(0.5F * u + u * 5, 0.5F * v + v);
-        for (int i = 0; i <= 360; i += 10) {
-            float angle = (float) Math.toRadians(i);
-            float cos = (float) Math.cos(angle) * radius + x;
-            float sin = (float) Math.sin(angle) * radius + y;
-            float tu = (cos - x + radius) / size;
-            float tv = (sin - y + radius) / size;
-            buf.vertex(mat, cos, sin, 0.0069420F).texture(tu * u + u * 5, tv * v + v);
-        }
-
-        disableCull();
-        enableBlend();
-        defaultBlendFunc();
-        setShader(ShaderProgramKeys.POSITION_TEX);
-        setShaderColor(1, 1, 1, 1);
-        setShaderTexture(0, texture.texture());
-
-        drawBuffer(buf);
-
-        enableCull();
-        disableBlend();
-    }
-
-    public static void drawRoundedPlayerHead(DrawContext context, SkinTextures texture, int x, int y, int size, int r) {
-        r = MathUtils.clamp(r, 0, size / 2);
-
-        float u = 1 / 8F;
-        float v = 1 / 8F;
-        int[][] corners = {
-                { x + size - r, y + r },
-                { x + size - r, y + size - r},
-                { x + r, y + size - r },
-                { x + r, y + r }
-        };
-
-        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
-
-        buf.vertex(mat, x + size / 2F, y + size / 2F, 0).texture(0.5F * u + u, 0.5F * v + v);
-        for (int corner = 0; corner < 4; corner++) {
-            int cornerStart = (corner - 1) * 90;
-            int cornerEnd = cornerStart + 90;
-            for (int i = cornerStart; i <= cornerEnd; i += 10) {
-                float angle = (float)Math.toRadians(i);
-                float rx = corners[corner][0] + (float)(Math.cos(angle) * r);
-                float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
-                float tu = (rx - x) / size * u + u;
-                float tv = (ry - y) / size * v + v;
-                buf.vertex(mat, rx, ry, 0).texture(tu, tv);
-            }
-        }
-        buf.vertex(mat, corners[0][0], y, 0).texture(((float)corners[0][0] - x) / size * u + u, 0 * v + v); // connect last to first vertex
-
-        disableCull();
-        enableBlend();
-        defaultBlendFunc();
-        setShader(ShaderProgramKeys.POSITION_TEX);
-        setShaderColor(1, 1, 1, 1);
-        setShaderTexture(0, texture.texture());
-
-        drawBuffer(buf);
-
-        enableCull();
-        disableBlend();
-
-        buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE);
-        buf.vertex(mat, x + size / 2F, y + size / 2F, 0).texture(0.5F * u + u * 5, 0.5F * v + v);
-        for (int corner = 0; corner < 4; corner++) {
-            int cornerStart = (corner - 1) * 90;
-            int cornerEnd = cornerStart + 90;
-            for (int i = cornerStart; i <= cornerEnd; i += 10) {
-                float angle = (float)Math.toRadians(i);
-                float rx = corners[corner][0] + (float)(Math.cos(angle) * r);
-                float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
-                float tu = (rx - x) / size * u + u * 5;
-                float tv = (ry - y) / size * v + v;
-                buf.vertex(mat, rx, ry, 0).texture(tu, tv);
-            }
-        }
-        buf.vertex(mat, corners[0][0], y, 0).texture(((float)corners[0][0] - x) / size * u + u * 5, 0 * v + v); // connect last to first vertex
-
-        disableCull();
-        enableBlend();
-        defaultBlendFunc();
-        setShader(ShaderProgramKeys.POSITION_TEX);
-        setShaderColor(1, 1, 1, 1);
-        setShaderTexture(0, texture.texture());
-
-        drawBuffer(buf);
-
-        enableCull();
-        disableBlend();
+        RenderLayer.getGuiTextured(texture).draw(buf.end());
     }
 
     public static void drawItem(DrawContext context, ItemStack item, int x, int y, float scale) {
@@ -883,28 +678,14 @@ public final class RenderUtils implements Global {
 
     // util
 
-    public static void beginRendering() {
-        disableCull();
-        enableBlend();
-        defaultBlendFunc();
-        setShader(ShaderProgramKeys.POSITION_COLOR);
-        setShaderColor(1, 1, 1, 1);
-    }
-
-    public static void finishRendering() {
-        enableCull();
-        disableBlend();
-        setShader(ShaderProgramKeys.POSITION_TEX);
-    }
-
     public static void check(boolean check, String msg) {
         if (!check) {
             throw new IllegalArgumentException(msg);
         }
     }
 
-    public static void drawBuffer(BufferBuilder buf) {
-        BufferRenderer.drawWithGlobalProgram(buf.end());
+    public static void drawBuffer(BufferBuilder buf, RenderLayer layer) {
+        layer.draw(buf.end());
     }
 
     public static BufferBuilder getBuffer(VertexFormat.DrawMode drawMode, VertexFormat format) {
@@ -961,8 +742,6 @@ public final class RenderUtils implements Global {
             buf.vertex(mat, waveX, y + height, 0).color(colorFade);
         }
 
-        beginRendering();
-        drawBuffer(buf);
-        finishRendering();
+        drawBuffer(buf, RenderConstants.TRI_STRIP);
     }
 }

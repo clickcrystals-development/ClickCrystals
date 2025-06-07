@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScree
 import io.github.itzispyder.clickcrystals.gui.screens.settings.SettingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 

@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.hit.BlockHitResult;

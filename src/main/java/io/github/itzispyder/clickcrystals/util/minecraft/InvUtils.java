@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.screen.sync.ItemStackHash;
 import net.minecraft.util.Hand;
 
 import java.util.function.Predicate;
@@ -18,11 +19,11 @@ public final class InvUtils implements Global {
     }
 
     public static int selected() {
-        return inv().selectedSlot;
+        return inv().getSelectedSlot();
     }
 
     public static void select(int slot) {
-        inv().selectedSlot = slot;
+        inv().setSelectedSlot(slot);
     }
 
     public static ItemStack selectedStack() {
@@ -56,7 +57,7 @@ public final class InvUtils implements Global {
     public static int search(Predicate<ItemStack> item) {
         if (item == null) return -1;
 
-        for (int i = 0; i < inv().main.size(); i++) {
+        for (int i = 0; i < inv().getMainStacks().size(); i++) {
             ItemStack stack = inv().getStack(i);
             if (stack == null || stack.isEmpty()) continue;
             if (item.test(stack)) return i;
@@ -95,7 +96,7 @@ public final class InvUtils implements Global {
             return count;
         }
 
-        for (int i = 0; i < inv().main.size(); i++) {
+        for (int i = 0; i < inv().getMainStacks().size(); i++) {
             ItemStack stack = inv().getStack(i);
             if (stack == null || stack.isEmpty()) continue;
             if (item.test(stack)) count += stack.getCount();
@@ -116,16 +117,10 @@ public final class InvUtils implements Global {
             return count;
         }
 
-        for (int i = 0; i < other.main.size(); i++) {
+        for (int i = 0; i < other.size(); i++) {
             ItemStack stack = other.getStack(i);
             if (stack == null || stack.isEmpty()) continue;
             if (stack.isOf(item)) count += stack.getCount();
-        }
-
-        for (ItemStack off : other.offHand) {
-            if (off.isOf(item)) {
-                count += off.getCount();
-            }
         }
 
         return count;
@@ -134,7 +129,7 @@ public final class InvUtils implements Global {
     public static boolean has(Item item) {
         if (item == null) return false;
 
-        for (int i = 0; i < inv().main.size(); i++) {
+        for (int i = 0; i < inv().getMainStacks().size(); i++) {
             ItemStack stack = inv().getStack(i);
             if (stack == null || stack.isEmpty()) continue;
             if (stack.isOf(item)) return true;
@@ -146,18 +141,12 @@ public final class InvUtils implements Global {
     public static boolean has(Predicate<ItemStack> item) {
         if (item == null) return false;
 
-        for (int i = 0; i < inv().main.size(); i++) {
+        for (int i = 0; i < inv().getMainStacks().size(); i++) {
             ItemStack stack = inv().getStack(i);
             if (stack == null || stack.isEmpty()) continue;
             if (item.test(stack)) return true;
         }
 
-        return false;
-    }
-
-    public static boolean hasEquipment(Predicate<ItemStack> item) {
-        if (item != null)
-            return inv().armor.stream().filter(i -> i != null && !i.isEmpty()).anyMatch(item);
         return false;
     }
 
@@ -170,7 +159,9 @@ public final class InvUtils implements Global {
 
         if (stack == null || PlayerUtils.invalid()) return false;
 
-        ClickSlotC2SPacket swap = new ClickSlotC2SPacket(0, 1, slot, button, action, stack, Int2ObjectMaps.singleton(slot, stack));
+        int hashSlot = slot;
+        ItemStackHash hash = ItemStackHash.fromItemStack(stack, component -> hashSlot);
+        ClickSlotC2SPacket swap = new ClickSlotC2SPacket(0, 1, (short) slot, (byte) button, action, Int2ObjectMaps.singleton(slot, hash), hash);
         PlayerUtils.sendPacket(swap);
         return true;
     }

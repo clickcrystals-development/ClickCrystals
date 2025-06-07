@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 public class CategoryElement extends GuiElement {

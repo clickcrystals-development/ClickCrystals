@@ -6,11 +6,11 @@ import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
-import static io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils.*;
+import static io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils.*;
 
 public class DiscordInviteScreen extends GuiScreen {
 

@@ -24,7 +24,7 @@ import io.github.itzispyder.clickcrystals.modules.scripts.syntax.OnEventCmd;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Dimensions;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
 import net.minecraft.client.MinecraftClient;
@@ -35,7 +35,7 @@ import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
-import static io.github.itzispyder.clickcrystals.util.minecraft.RenderUtils.*;
+import static io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils.*;
 
 public class ClickScriptIDE extends DefaultBase {
 

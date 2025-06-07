@@ -26,6 +26,7 @@ import net.minecraft.text.ClickEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
+import java.net.URI;
 import java.util.UUID;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.commandPrefix;
@@ -144,12 +145,14 @@ public class NetworkEventListener implements Listener {
                         ChatUtils.sendWarningMessage("§bClickCrystals is §e§nNOT UP TO DATE§b! Get the newest version now!");
                         ChatUtils.sendPrefixMessage("§bYour Version=§7" + version + "§b, §oNewest Version=§7" + ClickCrystals.getLatestVersion());
 
-                        Text literal = Text.literal(starter + "§a§o§n https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
-                        ClickEvent event = new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
-                        MutableText text = literal.copy();
-
-                        ChatUtils.sendRawText(text.fillStyle(text.getStyle().withClickEvent(event)));
-                        ChatUtils.sendBlank();
+                        try {
+                            Text literal = Text.literal(starter + "§a§o§n https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
+                            ClickEvent event = new ClickEvent.OpenUrl(new URI("https://www.curseforge.com/minecraft/mc-mods/clickcrystals"));
+                            MutableText text = literal.copy();
+                            ChatUtils.sendRawText(text.fillStyle(text.getStyle().withClickEvent(event)));
+                            ChatUtils.sendBlank();
+                        }
+                        catch (Exception ignore) {}
                     }))
                     .thenRepeat(ChatUtils::pingPlayer, 10 * 50, 3)
                     .thenWait(2 * 1000)
