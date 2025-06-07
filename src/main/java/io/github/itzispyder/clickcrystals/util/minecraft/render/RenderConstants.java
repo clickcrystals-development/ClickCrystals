@@ -60,7 +60,7 @@ public class RenderConstants {
             .build();
 
     public static final RenderPipeline PIPELINE_TEX_QUADS = RenderPipeline.builder(RenderPipelines.POSITION_TEX_COLOR_SNIPPET)
-            .withLocation("pipeline/global_fill_pipeline")
+            .withLocation("pipeline/gui_textured")
             .withVertexFormat(VertexFormats.POSITION_TEXTURE_COLOR, VertexFormat.DrawMode.QUADS)
             .withBlend(BlendFunction.TRANSLUCENT)
             .withCull(false)
@@ -69,8 +69,8 @@ public class RenderConstants {
             .build();
 
     public static final RenderPipeline PIPELINE_TEX_TRI_FAN = RenderPipeline.builder(RenderPipelines.POSITION_TEX_COLOR_SNIPPET)
-            .withLocation("pipeline/global_fill_pipeline")
-            .withVertexFormat(VertexFormats.POSITION_TEXTURE_COLOR, VertexFormat.DrawMode.TRIANGLE_STRIP)
+            .withLocation("pipeline/gui_textured")
+            .withVertexFormat(VertexFormats.POSITION_TEXTURE_COLOR, VertexFormat.DrawMode.TRIANGLE_FAN)
             .withBlend(BlendFunction.TRANSLUCENT)
             .withCull(false)
             .withDepthWrite(false)

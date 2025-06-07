@@ -603,25 +603,24 @@ public final class RenderUtils implements Global {
     // misc
 
     public static void drawTexture(DrawContext context, Identifier texture, int x, int y, int w, int h) {
-//        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
-//        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
-//
-//        buf.vertex(mat, x, y, 0).texture(0, 0);
-//        buf.vertex(mat, x, y + h, 0).texture(0, 1);
-//        buf.vertex(mat, x + w, y + h, 0).texture(1, 1);
-//        buf.vertex(mat, x + w, y, 0).texture(1, 0);
-//
-//        drawBuffer(buf, RenderConstants.TEX_QUADS.apply(texture));
-        context.drawTexture(RenderLayer::getGuiTextured, texture, x, y, 0, 0, w, h, w, h);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
+        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+
+        buf.vertex(mat, x, y, 0).texture(0, 0).color(-1);
+        buf.vertex(mat, x, y + h, 0).texture(0, 1).color(-1);
+        buf.vertex(mat, x + w, y + h, 0).texture(1, 1).color(-1);
+        buf.vertex(mat, x + w, y, 0).texture(1, 0).color(-1);
+
+        drawBuffer(buf, RenderConstants.TEX_QUADS.apply(texture));
     }
 
     public static void drawRoundTexture(DrawContext context, Identifier texture, int x, int y, int w, int h, int r) {
         r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
 
-        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE);
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE_COLOR);
         Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 
-        buf.vertex(mat, x + w / 2F, y + h / 2F, 0).texture(0.5F, 0.5F);
+        buf.vertex(mat, x + w / 2F, y + h / 2F, 0).texture(0.5F, 0.5F).color(-1);
 
         int[][] corners = {
                 { x + w - r, y + r },
@@ -639,13 +638,13 @@ public final class RenderUtils implements Global {
                 float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
                 float u = (rx - x) / w;
                 float v = (ry - y) / h;
-                buf.vertex(mat, rx, ry, 0).texture(u, v);
+                buf.vertex(mat, rx, ry, 0).texture(u, v).color(-1);
             }
         }
 
-        buf.vertex(mat, corners[0][0], y, 0).texture(((float)corners[0][0] - x) / w, 0); // connect last to first vertex
+        buf.vertex(mat, corners[0][0], y, 0).texture(((float)corners[0][0] - x) / w, 0).color(-1); // connect last to first vertex
 
-        RenderLayer.getGuiTextured(texture).draw(buf.end());
+        drawBuffer(buf, RenderConstants.TEX_TRI_FAN.apply(texture));
     }
 
     public static void drawItem(DrawContext context, ItemStack item, int x, int y, float scale) {
