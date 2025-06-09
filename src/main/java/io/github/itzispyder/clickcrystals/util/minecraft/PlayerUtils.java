@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAttachmentType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -55,6 +56,10 @@ public final class PlayerUtils implements Global {
 
     public static World getWorld() {
         return player().getWorld();
+    }
+
+    public static ClientWorld getClientWorld() {
+        return player().clientWorld;
     }
 
     public static Vec3d getPos() {

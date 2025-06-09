@@ -15,15 +15,16 @@ import java.util.function.Function;
 
 public class RenderConstants {
 
-    public static final RenderPipeline PIPELINE_LINES = RenderPipeline.builder(RenderPipelines.RENDERTYPE_LINES_SNIPPET)
+    public static final RenderPipeline PIPELINE_LINES = RenderPipeline.builder(RenderPipelines.POSITION_COLOR_SNIPPET)
             .withLocation("pipeline/global_lines_pipeline")
+            .withVertexFormat(VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.DEBUG_LINES)
             .withBlend(BlendFunction.TRANSLUCENT)
             .withCull(false)
             .withDepthWrite(false)
             .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
             .build();
 
-    public static final RenderPipeline PIPELINE_LINES_STRIP = RenderPipeline.builder(RenderPipelines.RENDERTYPE_LINES_SNIPPET)
+    public static final RenderPipeline PIPELINE_LINES_STRIP = RenderPipeline.builder(RenderPipelines.POSITION_COLOR_SNIPPET)
             .withLocation("pipeline/global_lines_pipeline")
             .withVertexFormat(VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.DEBUG_LINE_STRIP)
             .withBlend(BlendFunction.TRANSLUCENT)

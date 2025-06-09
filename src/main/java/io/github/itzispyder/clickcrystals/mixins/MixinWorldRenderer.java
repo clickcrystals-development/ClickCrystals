@@ -1,14 +1,16 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
+import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.events.events.world.RenderWorldEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SelfGlow;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.BlockOutline;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.OutlineVertexConsumerProvider;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.render.*;
+import net.minecraft.client.util.ObjectAllocator;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import java.awt.*;
 
 @Mixin(WorldRenderer.class)
-public class MixinWorldRenderer {
+public class MixinWorldRenderer implements Global {
 
     @ModifyArgs(method = "drawBlockOutline", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexRendering;drawOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/util/shape/VoxelShape;DDDI)V"))
     public void setOutlineColor(Args args) {
@@ -46,5 +48,11 @@ public class MixinWorldRenderer {
             int[] rgba = glowColor.getRGBA();
             outlineConsumers.setColor(rgba[0], rgba[1], rgba[2], rgba[3]);
         }
+    }
+
+    @Inject(method = "render", at = @At("TAIL"))
+    public void render(ObjectAllocator allocator, RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, Matrix4f positionMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
+        RenderWorldEvent event = new RenderWorldEvent(gameRenderer, positionMatrix, projectionMatrix, tickCounter);
+        system.eventBus.pass(event);
     }
 }

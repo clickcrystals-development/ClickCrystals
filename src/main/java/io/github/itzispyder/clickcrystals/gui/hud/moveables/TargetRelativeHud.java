@@ -15,7 +15,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.PlayerSkinDrawer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -65,8 +64,7 @@ public class TargetRelativeHud extends Hud {
             // target armor
             caret += (int)(10 * animator.getProgressClampedReversed());
             if (!isTargetNaked()) {
-                for (EquipmentSlot slot: EquipmentSlot.values()) {
-                    ItemStack item = target.getEquippedStack(slot);
+                for (ItemStack item: EntityUtils.getArmorItems(target)) {
                     RenderUtils.drawItem(context, item, margin, caret - 1, 13);
                     margin += 13;
                 }
