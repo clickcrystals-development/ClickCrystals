@@ -36,7 +36,7 @@ public final class MathUtils {
     }
 
     public static double lerp(double a, double b, double delta) {
-        return a + (a - b) * delta;
+        return a + (b - a) * delta;
     }
 
     public static Vec3d forward(Vec3d pos, Vec3d dir, double dist) {

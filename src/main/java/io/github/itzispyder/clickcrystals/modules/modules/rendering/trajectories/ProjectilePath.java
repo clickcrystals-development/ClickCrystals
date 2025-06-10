@@ -134,9 +134,10 @@ public class ProjectilePath implements Global {
             if (vertices.size() >= 2) {
                 for (int i = 0; i < vertices.size() - 1; i++) {
                     boolean player = (int)vertices.get(i).y == (int)p.getY();
+                    boolean hitEnt = hit.getType() == HitResult.Type.ENTITY;
                     Vec3d v1 = e.getOffsetPos(vertices.get(i).add(offset));
                     Vec3d v2 = e.getOffsetPos(vertices.get(i + 1).add(offset));
-                    RenderUtils3d.drawFlatLine(matrices, v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, 0.05, player ? 0xFFFF4040 : 0xFFFFFFFF);
+                    RenderUtils3d.drawFlatLine(matrices, v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, 0.05, player || hitEnt ? 0xFFFF4040 : 0xFFFFFFFF);
                 }
             }
 

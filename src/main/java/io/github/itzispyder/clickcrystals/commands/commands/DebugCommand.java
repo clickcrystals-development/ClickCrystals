@@ -147,7 +147,7 @@ public class DebugCommand extends Command {
             HoverEvent.ShowItem content = new HoverEvent.ShowItem(stack);
 
             msg.fillStyle(style.withHoverEvent(content));
-            info(msg.toString());
+            PlayerUtils.player().sendMessage(msg, false);
         }
     }
 }

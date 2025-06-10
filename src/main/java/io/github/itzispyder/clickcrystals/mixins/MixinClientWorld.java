@@ -21,7 +21,7 @@ public abstract class MixinClientWorld {
 
         if (tc.isEnabled()) {
             ci.cancel();
-            this.clientWorldProperties.setTimeOfDay(tc.timeMode.getVal().getTime());
+            this.clientWorldProperties.setTimeOfDay(tc.getTime());
         }
     }
 }

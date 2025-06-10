@@ -71,7 +71,10 @@ public class ModuleFile {
             v.setVal(stringEntries.getOrDefault(id, v.getDef()));
         }
         else if (setting instanceof EnumSetting<?> v) {
-            v.setVal(Enum.valueOf(v.getDef().getClass(), stringEntries.getOrDefault(id, v.getDef().name())));
+            String val = stringEntries.getOrDefault(id, v.getDef().name());
+            for (Enum cons : v.getDef().getClass().getEnumConstants())
+                if (cons.name().endsWith(val))
+                    v.setVal(cons);
         }
         else {
             setting.setVal(objectEntries.getOrDefault(id, setting.getDef()));
