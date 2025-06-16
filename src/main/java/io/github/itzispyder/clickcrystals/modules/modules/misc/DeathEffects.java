@@ -83,7 +83,7 @@ public class DeathEffects extends ListenerModule {
     );
 
     public DeathEffects() {
-        super("death-effects", Categories.RENDER, "Spawn lightning/rocket particle on entity death");
+        super("death-effects", Categories.MISC, "Spawn lightning/rocket particle on entity death");
     }
 
     private static final Map<Entity, Long> lightningRender = new ConcurrentHashMap<>();
