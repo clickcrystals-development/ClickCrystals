@@ -43,6 +43,7 @@ public final class ArrayUtils {
         return "§7[§e" + String.join("§7, §e", ArrayUtils.toNewList(list, Object::toString)) + "§7]";
     }
 
+    @SafeVarargs
     public static <T> List<T> bind(Iterable<T> tList, T... ts) {
         List<T> list = Arrays.asList(ts);
         tList.forEach(list::add);
@@ -62,5 +63,10 @@ public final class ArrayUtils {
 
     public static <T> void reverseForEach(Iterable<T> input, Consumer<T> action) {
         reversed(input).forEach(action);
+    }
+
+    @SafeVarargs
+    public static <T> List<T> toList(T... items) {
+        return new ArrayList<>(Arrays.asList(items));
     }
 }

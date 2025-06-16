@@ -24,10 +24,9 @@ public class Randomizer {
     }
 
     private <T> int getRandomIndex(int listSize) {
-        if (listSize < 0) {
+        if (listSize <= 0)
             listSize = 0;
-        }
-        return (int)(Math.ceil(Math.random() * listSize) - 1);
+        return (int)(Math.random() * listSize);
     }
 
     public int getRandomInt(int min, int max) {
