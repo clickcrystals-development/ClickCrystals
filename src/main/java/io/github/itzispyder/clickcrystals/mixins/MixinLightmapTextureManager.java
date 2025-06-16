@@ -1,21 +1,32 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
+import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.textures.GpuTexture;
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.FullBright;
 import net.minecraft.client.render.LightmapTextureManager;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.util.math.ColorHelper;
+import net.minecraft.util.profiler.Profiler;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LightmapTextureManager.class)
-public abstract class MixinLightmapTextureManager {
+public abstract class MixinLightmapTextureManager implements Global {
 
-    @Inject(method = "getBrightness*", at = @At("RETURN"), cancellable = true)
-    private static void getBrightness(DimensionType type, int lightLevel, CallbackInfoReturnable<Float> cir) {
-        if (Module.isEnabled(FullBright.class)) {
-            cir.setReturnValue(1.0F);
+    @Shadow @Final private GpuTexture glTexture;
+
+    @Inject(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;push(Ljava/lang/String;)V", shift = At.Shift.AFTER), cancellable = true)
+    private void onUpdate(float tickProgress, CallbackInfo ci, @Local Profiler profiler) {
+        if (Module.get(FullBright.class).isEnabled()) {
+            RenderSystem.getDevice().createCommandEncoder().clearColorTexture(this.glTexture, ColorHelper.getArgb(255, 255, 255, 255));
+            profiler.pop();
+            ci.cancel();
         }
     }
 }

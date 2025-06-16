@@ -158,9 +158,30 @@ public class Config implements JsonSerializable<Config>, Global {
     public void loadEntireConfig() {
         this.loadKeybinds();
         this.loadHuds();
+        this.sanitizeModuleConfig();
         this.loadModules();
+
     }
 
+    public void sanitizeModuleConfig() {
+        moduleEntries.forEach((id, file) -> {
+            Module module = system.getModuleById(id);
+            if (module == null) return;
+
+            module.getData().getSettingSections().forEach(section ->
+                    section.getSettings().forEach(setting -> {
+                        var val = file.getAllEntries().get(setting.getName());
+                        var def = setting.getDef();
+                        if (val == null || !(def instanceof Enum<?> defEnum)) return;
+                        try {
+                            Enum.valueOf(defEnum.getDeclaringClass(), val.toString());
+                        } catch (IllegalArgumentException e) {
+                            file.getAllEntries().put(setting.getName(), defEnum.name());
+                        }
+                    })
+            );
+        });
+    }
     public Map<String, Integer> getKeybindEntries() {
         return keybindEntries;
     }
@@ -172,6 +193,8 @@ public class Config implements JsonSerializable<Config>, Global {
     public Map<String, Pair<Positionable.Dimension, Boolean>> getOverviewScreenEntries() {
         return overviewScreenEntries;
     }
+
+
 
     public Map<String, ModuleFile> getModuleEntries() {
         return moduleEntries;
