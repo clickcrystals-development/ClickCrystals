@@ -155,32 +155,9 @@ public class Config implements JsonSerializable<Config>, Global {
         }
     }
 
-    public void sanitizeModuleConfig() {
-        moduleEntries.forEach((id, file) -> {
-            Module module = system.getModuleById(id);
-            if (module == null) return;
-
-            module.getData().getSettingSections().forEach(section ->
-                    section.getSettings().forEach(setting -> {
-                        var val = file.getAllEntries().get(setting.getName());
-                        var def = setting.getDef();
-                        if (val == null || !(def instanceof Enum<?> defEnum)) return;
-                        try {
-                            Enum.valueOf(defEnum.getDeclaringClass(), val.toString());
-                            system.printf("Valid enum value for '%s.%s': %s%n", id, setting.getName(), val);
-                        } catch (IllegalArgumentException e) {
-                            file.getAllEntries().put(setting.getName(), defEnum.name());
-                            system.printf("Invalid enum value for '%s.%s': '%s' → reset to default '%s'%n", id, setting.getName(), val, defEnum.name());
-                        }
-                    })
-            );
-        });
-    }
-
     public void loadEntireConfig() {
         this.loadKeybinds();
         this.loadHuds();
-        this.sanitizeModuleConfig();
         this.loadModules();
     }
 
