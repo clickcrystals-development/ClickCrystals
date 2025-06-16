@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.rendering;
+package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
 import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
@@ -28,16 +28,16 @@ public class DeathEffects extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();
     private final SettingSection rocketColors = createSettingSection("rocket-colors");
-        public final ModuleSetting<Entities> entitySelection = scGeneral.add(EnumSetting.create(Entities.class)
+    public final ModuleSetting<EffectType> effectType = scGeneral.add(createEnumSetting(EffectType.class)
+            .name("effect-type")
+            .description("spawn selected effect on entity death position.")
+            .def(EffectType.THUNDERBOLT)
+            .build()
+    );
+    public final ModuleSetting<Entities> entitySelection = scGeneral.add(EnumSetting.create(Entities.class)
             .name("entity-selection")
             .description("Choose which entity will have this effect.")
             .def(Entities.BOTH)
-            .build()
-    );
-    public final ModuleSetting<Boolean> spawnR = scGeneral.add(createBoolSetting()
-            .name("rocket-particle")
-            .description("spawn rocket particles on entity death pos.")
-            .def(false)
             .build()
     );
     public final ModuleSetting<FireworkExplosionComponent.Type> shape = scGeneral.add(EnumSetting.create(FireworkExplosionComponent.Type.class)
@@ -101,14 +101,11 @@ public class DeathEffects extends ListenerModule {
 
         Entity entity = packet.getEntity(PlayerUtils.getWorld());
 
-        if (!shouldApplyEffect(entity))
+        if (entity == null || !shouldApplyEffect(entity))
             return;
 
-        if (spawnR.getVal()) {
-            spawnFirework(entity);
-        } else {
-            spawnLightning(entity);
-        }
+        if (effectType.getVal().isRocket()) spawnFirework(entity);
+        else spawnLightning(entity);
     }
 
     public int rocketColor() {
@@ -162,6 +159,16 @@ public class DeathEffects extends ListenerModule {
             case BOTH -> true;
         };
     }
+
+    public enum EffectType {
+        ROCKET,
+        THUNDERBOLT;
+
+        boolean isRocket() {
+            return this != THUNDERBOLT;
+        }
+    }
+
 
         public enum Entities {
         PLAYERS,

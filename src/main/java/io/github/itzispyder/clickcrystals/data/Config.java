@@ -167,8 +167,10 @@ public class Config implements JsonSerializable<Config>, Global {
                         if (val == null || !(def instanceof Enum<?> defEnum)) return;
                         try {
                             Enum.valueOf(defEnum.getDeclaringClass(), val.toString());
+                            system.printf("Valid enum value for '%s.%s': %s%n", id, setting.getName(), val);
                         } catch (IllegalArgumentException e) {
                             file.getAllEntries().put(setting.getName(), defEnum.name());
+                            system.printf("Invalid enum value for '%s.%s': '%s' → reset to default '%s'%n", id, setting.getName(), val, defEnum.name());
                         }
                     })
             );
