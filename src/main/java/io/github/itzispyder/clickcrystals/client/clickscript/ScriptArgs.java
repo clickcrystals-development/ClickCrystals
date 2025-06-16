@@ -34,6 +34,24 @@ public class ScriptArgs {
         return new Arg(str.trim());
     }
 
+    /**
+     * Deletes all parameters before this index position
+     * leaving only this index position and after.
+     * <br>
+     * After calling this method, get(0) will return the previous
+     * value of get(position).
+     */
+    public void zeroCursor(int position) {
+        if (position < 0 || position > args.length) // if == args.length then awaiting next arg
+            throw new IllegalArgumentException("position %s is out of bounds".formatted(position));
+        if (position == 0)
+            return;
+
+        String[] newArgs = new String[args.length - position];
+        System.arraycopy(args, position, newArgs, 0, newArgs.length);
+        args = newArgs;
+    }
+
     public Arg get(int index) {
         if (args.length == 0)
             throw new IllegalArgumentException("not enough arguments: arguments are empty");

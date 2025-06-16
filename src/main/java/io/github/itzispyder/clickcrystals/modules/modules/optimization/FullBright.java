@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.modules.optimization;
 
 import io.github.itzispyder.clickcrystals.modules.Categories;
-import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 
 public class FullBright extends DummyModule {

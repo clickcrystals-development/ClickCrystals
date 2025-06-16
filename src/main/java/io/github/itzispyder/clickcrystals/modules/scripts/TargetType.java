@@ -8,5 +8,7 @@ public enum TargetType {
     ANY_BLOCK,
     CLIENT,
     TARGET_ENTITY,
-    TARGET_BLOCK
+    TARGET_BLOCK,
+    POLAR,
+    POSITION
 }

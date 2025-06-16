@@ -14,9 +14,9 @@ public class VectorParser {
 
     private static final String REGEX_DECIMAL = "[^0-9 .-]";
     private static final String REGEX_RELATIVE = "[^0-9 ^~.-]";
-    private static final Function<String, String> toNumber = s -> s.replaceAll(REGEX_DECIMAL, "").trim();
-    private static final Function<String, String> toRelation = s -> s.replaceAll(REGEX_RELATIVE, "").trim();
-    private static final Predicate<String> isRelative = s -> s.startsWith("~") || s.startsWith("^");
+    protected static final Function<String, String> toNumber = s -> s.replaceAll(REGEX_DECIMAL, "").trim();
+    protected static final Function<String, String> toRelation = s -> s.replaceAll(REGEX_RELATIVE, "").trim();
+    protected static final Predicate<String> isRelative = s -> s.startsWith("~") || s.startsWith("^");
     private final double x, y, z;
 
     public VectorParser(String arg1, String arg2, String arg3) {
