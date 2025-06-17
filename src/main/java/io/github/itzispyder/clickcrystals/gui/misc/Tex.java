@@ -18,6 +18,7 @@ public final class Tex implements Global {
         public static final Identifier LOADING = Identifier.of(modId, "textures/display/icons/loading.png");
         public static final Identifier RESET = Identifier.of(modId, "textures/display/icons/reset.png");
         public static final Identifier DOWNLOAD = Identifier.of(modId, "textures/display/icons/download.png");
+        public static final Identifier FOLDER = Identifier.of(modId, "textures/display/icons/folder.png");
     }
 
     public static class Models {

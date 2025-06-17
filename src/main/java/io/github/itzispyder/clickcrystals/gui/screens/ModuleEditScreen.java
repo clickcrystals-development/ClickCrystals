@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module.SettingSectionElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
@@ -70,7 +71,7 @@ public class ModuleEditScreen extends DefaultBase {
 
         if (isCategoryHovered(mouseX, mouseY)) {
             BrowsingScreen.currentCategory = module.getCategory();
-            mc.setScreen(new BrowsingScreen());
+            UserInputListener.openModulesScreen();
         }
 
         return true;

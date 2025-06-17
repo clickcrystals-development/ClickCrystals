@@ -76,4 +76,12 @@ public class ModuleElement extends GuiElement {
     public Module getModule() {
         return module;
     }
+
+    public Animator getAnimator() {
+        return animator;
+    }
+
+    public void setAnimator(Animator animator) {
+        this.animator = animator;
+    }
 }

@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
+import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
@@ -160,6 +161,8 @@ public class ScrollPanelElement extends GuiElement {
         }
 
         for (int i = getChildren().size() - 1; i >= 0; i--) {
+            if (MathUtils.oob(i, 0, getChildren().size() - 1))
+                break;
             GuiElement child = getChildren().get(i);
             child.mouseClicked(mouseX, mouseY, button);
         }

@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.screens.scripts;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptFormatter;
 import io.github.itzispyder.clickcrystals.commands.commands.ReloadCommand;
 import io.github.itzispyder.clickcrystals.data.Config;
+import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ButtonElement;
@@ -14,7 +15,6 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.AnimatedBase;
-import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
@@ -77,7 +77,7 @@ public class DownloadScriptScreen extends AnimatedBase {
         this.addChild(this.grid.getPanel());
         this.filterQuery(true);
 
-        ButtonElement backButton = new ButtonElement("< Back", baseX + baseWidth - 50 - 10, baseY + 10, 50, 15, ButtonElement.OPEN_SCREEN.apply(BrowsingScreen::new));
+        ButtonElement backButton = new ButtonElement("< Back", baseX + baseWidth - 50 - 10, baseY + 10, 50, 15, (mx, my, self) -> UserInputListener.openModulesScreen());
         this.addChild(backButton);
     }
 

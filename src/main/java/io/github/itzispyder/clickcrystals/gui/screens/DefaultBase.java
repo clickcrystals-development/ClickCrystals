@@ -1,10 +1,10 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
+import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.CategoryElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
-import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.SettingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
@@ -61,7 +61,7 @@ public abstract class DefaultBase extends AnimatedBase {
                 }).build();
         buttonModules = AbstractElement.create().dimensions(navWidth, 10)
                 .tooltip("Browse modules")
-                .onPress(button -> mc.setScreen(new BrowsingScreen()))
+                .onPress(button -> UserInputListener.openModulesScreen())
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
                         RenderUtils.fillRoundHoriLine(context, button.x, button.y, navWidth, 10, Shades.LIGHT_GRAY);

@@ -39,6 +39,10 @@ public final class MathUtils {
         return a + (b - a) * delta;
     }
 
+    public static boolean oob(double val, double min, double max) {
+        return val < min || val > max;
+    }
+
     public static Vec3d forward(Vec3d pos, Vec3d dir, double dist) {
         return pos.add(dir.normalize().multiply(dist));
     }

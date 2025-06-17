@@ -58,7 +58,7 @@ public class ScriptedModule extends ListenerModule {
     public final List<Runnable> gameLeaveListeners = new ArrayList<>();
 
 
-    public final String filepath, filename;
+    public final String filepath, filename, parentFolder;
     public final Set<PacketMapper.Info> packetSendCancelQueue = new HashSet<>();
     public final Set<PacketMapper.Info> packetReadCancelQueue = new HashSet<>();
 
@@ -67,6 +67,9 @@ public class ScriptedModule extends ListenerModule {
         super(name, Categories.SCRIPTED, description);
         this.filepath = file.getPath();
         this.filename = file.getName();
+
+        File parent = file.getParentFile();
+        this.parentFolder = parent == null ? null : parent.getPath();
     }
 
     @Override

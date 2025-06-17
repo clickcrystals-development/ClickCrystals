@@ -108,7 +108,7 @@ public class ClickScriptIDE extends DefaultBase {
                 }).build();
         saveAndCloseButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Save contents then close IDE")
-                .onPress(button -> saveContents().accept(f -> f.thenRun(() -> mc.execute(() -> mc.setScreen(new BrowsingScreen())))))
+                .onPress(button -> saveContents().accept(f -> f.thenRun(UserInputListener::openModulesScreen)))
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
                         fillRoundHoriLine(context, button.x, button.y, navWidth, button.height, Shades.LIGHT_GRAY);
@@ -117,7 +117,7 @@ public class ClickScriptIDE extends DefaultBase {
                 }).build();
         closeButton = AbstractElement.create().dimensions(navWidth, 12)
                 .tooltip("Close without saving")
-                .onPress(button -> mc.setScreen(new BrowsingScreen()))
+                .onPress(button -> UserInputListener.openModulesScreen())
                 .onRender((context, mouseX, mouseY, button) -> {
                     if (button.isHovered(mouseX, mouseY)) {
                         fillRoundHoriLine(context, button.x, button.y, navWidth, button.height, Shades.GENERIC_LOW);
@@ -321,7 +321,7 @@ public class ClickScriptIDE extends DefaultBase {
         }
 
         BrowsingScreen.currentCategory = Categories.SCRIPTED;
-        mc.execute(() -> mc.setScreen(new BrowsingScreen()));
+        UserInputListener.openModulesScreen();
     }
 
     @Override

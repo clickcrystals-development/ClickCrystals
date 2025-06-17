@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.elements.browsingmode;
 
+import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
@@ -33,7 +34,7 @@ public class CategoryElement extends GuiElement {
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
         BrowsingScreen.currentCategory = category;
-        mc.setScreen(new BrowsingScreen());
+        UserInputListener.openModulesScreen();
     }
 
     public Category getCategory() {

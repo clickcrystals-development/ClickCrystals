@@ -10,6 +10,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.*;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.ScriptsBrowsingScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.profiles.DownloadProfileScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.profiles.ProfilesScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.scripts.ClickScriptIDE;
@@ -18,6 +19,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.settings.AdvancedSettingSc
 import io.github.itzispyder.clickcrystals.gui.screens.settings.InfoScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.KeybindScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.SettingScreen;
+import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
@@ -41,6 +43,7 @@ public class UserInputListener implements Listener {
         add(BrowsingScreen.class);
         add(OverviewScreen.class);
         add(ClickScriptIDE.class);
+        add(ScriptsBrowsingScreen.class);
     }};
     private static final Map<Class<? extends GuiScreen>, Class<? extends GuiScreen>> screenTracker = ManualMap.fromItems(
             SearchScreen.class, SearchScreen.class,
@@ -66,7 +69,7 @@ public class UserInputListener implements Listener {
             return;
         }
         if (moduleScreenRoot.contains(previousScreen)) {
-            scheduleOpenScreen(PlayerUtils.valid() && config.isOverviewMode() ? new OverviewScreen() : new BrowsingScreen());
+            openModulesScreen();
             return;
         }
 
@@ -84,10 +87,14 @@ public class UserInputListener implements Listener {
 
     public static void openModulesScreen() {
         if (PlayerUtils.valid() && config.isOverviewMode()) {
-            mc.setScreen(new OverviewScreen());
+            mc.execute(() -> mc.setScreen(new OverviewScreen()));
             return;
         }
-        mc.setScreen(new BrowsingScreen());
+        if (BrowsingScreen.currentCategory == Categories.SCRIPTED) {
+            mc.execute(() -> mc.setScreen(new ScriptsBrowsingScreen()));
+            return;
+        }
+        mc.execute(() -> mc.setScreen(new BrowsingScreen()));
     }
 
     public static void scheduleOpenScreen(GuiScreen screen) {
