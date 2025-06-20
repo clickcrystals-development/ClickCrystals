@@ -177,6 +177,11 @@ public class PixelArtGenerator {
                 Blocks.DIRT_PATH,
                 Blocks.MYCELIUM
         );
+        public static final List<String> BLACKLIST_KEYS = List.of(
+                "cherry",
+                "leaves",
+                "glass"
+        );
 
         public synchronized Block getBlock(BlockView view, BlockPos pos, Facing facing) {
             Block mostSimilar = Blocks.AIR;
@@ -201,7 +206,7 @@ public class PixelArtGenerator {
         private boolean isValid(Block b, BlockView v, BlockPos p) {
             boolean full = b.getDefaultState().isFullCube(v, p);
             boolean type = !BLACKLIST.contains(b);
-            boolean keys = !b.getTranslationKey().contains("cherry") && !b.getTranslationKey().contains("leaves");
+            boolean keys = !BLACKLIST_KEYS.contains(b.getTranslationKey());
             return full && type && keys;
         }
 

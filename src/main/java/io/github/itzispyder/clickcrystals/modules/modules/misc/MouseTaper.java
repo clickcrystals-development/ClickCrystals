@@ -71,6 +71,8 @@ public class MouseTaper extends ListenerModule {
     @Override
     protected void onEnable() {
         super.onEnable();
+        if (mc.currentScreen != null)
+            mc.currentScreen.close();
 
         // checks (disable module if fail)
         Mode mode = this.mode.getVal();
