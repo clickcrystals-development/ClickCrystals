@@ -35,10 +35,21 @@ public class Tunnel3x3 extends ListenerModule {
             .def(true)
             .build()
     );
+    public final ModuleSetting<Boolean> miningMode = scGeneral.add(createBoolSetting()
+            .name("miner-mode")
+            .description("Prioritize stone, deepslate, and netherrack only")
+            .def(true)
+            .build()
+    );
 
     public static final List<Block> BLACKLIST = List.of(
             Blocks.BEDROCK,
             Blocks.OBSIDIAN
+    );
+    public static final List<Block> MINER_BLOCKS = List.of(
+            Blocks.STONE,
+            Blocks.NETHERRACK,
+            Blocks.DEEPSLATE
     );
 
     private Direction dir;
@@ -98,46 +109,64 @@ public class Tunnel3x3 extends ListenerModule {
         int px = playerPos.getX();
         int py = playerPos.getY();
         int pz = playerPos.getZ();
+        boolean invHorizontal = false;
+        boolean invVertical = false;
 
         switch (dir) {
             case NORTH -> {
                 for (int z = -1; z >= -5; z--) {
                     for (int y = 0; y <= 2; y++) {
+                        int ty = invVertical ? 2 - y : y;
                         for (int x = -1; x <= 1; x++) {
-                            BlockPos target = new BlockPos(px + x, py + y, pz + z);
+                            int tx = invHorizontal ? -x : x;
+                            BlockPos target = new BlockPos(px + tx, py + ty, pz + z);
                             targets.add(target);
                         }
+                        invHorizontal = !invHorizontal;
                     }
+                    invVertical = !invVertical;
                 }
             }
             case SOUTH -> {
                 for (int z = 1; z <= 5; z++) {
                     for (int y = 0; y <= 2; y++) {
+                        int ty = invVertical ? 2 - y : y;
                         for (int x = -1; x <= 1; x++) {
-                            BlockPos target = new BlockPos(px + x, py + y, pz + z);
+                            int tx = invHorizontal ? -x : x;
+                            BlockPos target = new BlockPos(px + tx, py + ty, pz + z);
                             targets.add(target);
                         }
+                        invHorizontal = !invHorizontal;
                     }
+                    invVertical = !invVertical;
                 }
             }
             case EAST -> {
                 for (int x = 1; x <= 5; x++) {
                     for (int y = 0; y <= 2; y++) {
+                        int ty = invVertical ? 2 - y : y;
                         for (int z = -1; z <= 1; z++) {
-                            BlockPos target = new BlockPos(px + x, py + y, pz + z);
+                            int tz = invHorizontal ? -z : z;
+                            BlockPos target = new BlockPos(px + x, py + ty, pz + tz);
                             targets.add(target);
                         }
+                        invHorizontal = !invHorizontal;
                     }
+                    invVertical = !invVertical;
                 }
             }
             case WEST -> {
                 for (int x = -1; x >= -5; x--) {
                     for (int y = 0; y <= 2; y++) {
+                        int ty = invVertical ? 2 - y : y;
                         for (int z = -1; z <= 1; z++) {
-                            BlockPos target = new BlockPos(px + x, py + y, pz + z);
+                            int tz = invHorizontal ? -z : z;
+                            BlockPos target = new BlockPos(px + x, py + ty, pz + tz);
                             targets.add(target);
                         }
+                        invHorizontal = !invHorizontal;
                     }
+                    invVertical = !invVertical;
                 }
             }
         }
@@ -155,6 +184,9 @@ public class Tunnel3x3 extends ListenerModule {
         World w = PlayerUtils.getWorld();
         BlockPos pos = targets.get(targetIndex);
         BlockState block = w.getBlockState(pos);
+
+        if (miningMode.getVal() && !MINER_BLOCKS.contains(block.getBlock()))
+            return false;
         return block.isFullCube(w, pos) && !BLACKLIST.contains(block.getBlock());
     }
 
@@ -201,7 +233,10 @@ public class Tunnel3x3 extends ListenerModule {
         CameraRotator.create()
                 .addGoal(new CameraRotator.Goal(target))
                 .enableCursorLock()
-                .onFinish((pitch, yaw, rotator) -> mc.execute(() -> mc.options.attackKey.setPressed(true)))
+                .onFinish((pitch, yaw, rotator) -> {
+                    if (this.isEnabled())
+                        mc.execute(() -> mc.options.attackKey.setPressed(true));
+                })
                 .build()
                 .start();
     }
