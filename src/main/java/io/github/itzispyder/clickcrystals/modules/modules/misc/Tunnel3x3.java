@@ -41,6 +41,19 @@ public class Tunnel3x3 extends ListenerModule {
             .def(true)
             .build()
     );
+    public final ModuleSetting<Boolean> centerRotationWhenDone = scGeneral.add(createBoolSetting()
+            .name("recenter-rotation-when-finished")
+            .description("Look back straight when finished mining")
+            .def(true)
+            .build()
+    );
+    private final SettingSection scRender = createSettingSection("render");
+    public final ModuleSetting<Boolean> renderBlocks = scRender.add(createBoolSetting()
+            .name("render-blocks")
+            .description("Highlight blocks that are queued for mining")
+            .def(true)
+            .build()
+    );
 
     public static final List<Block> BLACKLIST = List.of(
             Blocks.BEDROCK,
@@ -192,14 +205,28 @@ public class Tunnel3x3 extends ListenerModule {
 
     @EventHandler
     public void render(RenderWorldEvent e) {
+        if (!renderBlocks.getVal())
+            return;
+
         for (int i = targets.size() - 1; i >= index + 1; i--)
-            RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3d.of(targets.get(i))), 0x10FFFFFF);
-        RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3d.of(targets.get(index))), 0x10FF2020);
+            RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3d.of(targets.get(i))), 0x05FFFFFF);
+        RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3d.of(targets.get(index))), 0x05FF2020);
     }
 
     @EventHandler
     private void onTick(ClientTickEndEvent e) {
-        if (PlayerUtils.invalid() || index >= targets.size()) {
+        if (PlayerUtils.invalid()) {
+            this.setEnabled(false, true);
+            return;
+        }
+        if (index >= targets.size()) {
+            CameraRotator.cancelCurrentRotator();
+            if (centerRotationWhenDone.getVal())
+                CameraRotator.create()
+                        .addGoal(new CameraRotator.Goal(dir.getDoubleVector()))
+                        .enableCursorLock()
+                        .build()
+                        .start();
             this.setEnabled(false, true);
             return;
         }

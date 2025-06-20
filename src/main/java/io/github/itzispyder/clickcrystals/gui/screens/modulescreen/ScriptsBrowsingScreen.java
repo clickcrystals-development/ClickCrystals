@@ -59,7 +59,8 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         String titleName = currentCategory.name();
         if (!isRootFolder())
             titleName += parentFolder.replace('\\', '/')
-                    .replaceAll(PATH_SCRIPTS.replace('\\', '/'), "");
+                    .replaceAll(PATH_SCRIPTS.replace('\\', '/'), "")
+                    .replaceAll("/", " §7\\\\§f ");
 
         // content
         int caret = contentY + 10;
@@ -129,12 +130,42 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
     protected class FolderElement extends ModuleElement {
 
-        private final String name, path;
+        private final String name, path, details;
 
         public FolderElement(String path, int x, int y) {
             super(null, x, y);
             this.name = "§f" + path.replaceAll("\\\\?(.*\\\\)+", "");
             this.path = path;
+            
+            this.details = details();
+        }
+        
+        private String details() {
+            File thisFolder = new File(path);
+            File[] children = thisFolder.listFiles();
+            int childrenDir = 0;
+            int childrenFiles = 0;
+
+            if (children == null)
+                return "Empty";
+            for (File child: children) {
+                if (child.isDirectory())
+                    childrenDir++;
+                else if (child.getPath().endsWith(".ccs") || child.getPath().endsWith(".txt"))
+                    childrenFiles++;
+            }
+
+            String detailsDir = childrenDir + " Folder" + (childrenDir > 1 ? "s" : "");
+            String detailsFiles = childrenFiles + " Script" + (childrenFiles > 1 ? "s" : "");
+
+            if (childrenDir > 0 && childrenFiles > 0)
+                return detailsDir + ", " + detailsFiles;
+            else if (childrenDir == 0 && childrenFiles > 0)
+                return detailsFiles;
+            else if (childrenDir > 0 && childrenFiles == 0)
+                return detailsDir;
+            else
+                return "Empty";
         }
 
         @Override
@@ -152,7 +183,8 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
             if (isHovered(mouseX, mouseY))
                 RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
             RenderUtils.drawTexture(context, Tex.Icons.FOLDER, x + 15, y + 2, 10, 10);
-            RenderUtils.drawText(context, name, x + 35, y + height / 3, 0.7F, false);
+            RenderUtils.drawText(context, name, x + 30, y + height / 3, 0.7F, false);
+            RenderUtils.drawRightText(context, "§7" + this.details, x + width - 20, y + height / 3, 0.7F, false);
 
             if (isAnimating) {
                 context.getMatrices().pop();

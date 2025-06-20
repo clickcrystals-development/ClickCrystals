@@ -87,18 +87,18 @@ public class UserInputListener implements Listener {
 
     public static void openModulesScreen() {
         if (PlayerUtils.valid() && config.isOverviewMode()) {
-            mc.execute(() -> mc.setScreen(new OverviewScreen()));
+            scheduleOpenScreen(new OverviewScreen());
             return;
         }
         if (BrowsingScreen.currentCategory == Categories.SCRIPTED) {
-            mc.execute(() -> mc.setScreen(new ScriptsBrowsingScreen()));
+            scheduleOpenScreen(new ScriptsBrowsingScreen());
             return;
         }
-        mc.execute(() -> mc.setScreen(new BrowsingScreen()));
+        scheduleOpenScreen(new BrowsingScreen());
     }
 
     public static void scheduleOpenScreen(GuiScreen screen) {
-        if (screen instanceof AnimatedBase base) {
+        if (screen instanceof AnimatedBase base && mc.currentScreen == null) {
             boolean bl = PlayerUtils.valid();
             base.setPlayOpenAnimation(bl);
             base.setPlayCloseAnimation(bl);
