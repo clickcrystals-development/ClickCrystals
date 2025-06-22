@@ -15,6 +15,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
+import io.github.itzispyder.clickcrystals.util.misc.TickScheduler;
 import net.minecraft.util.Util;
 
 import java.io.File;
@@ -38,6 +39,7 @@ public class ClickCrystalsSystem implements Serializable {
     public final CapeManager capeManager = new CapeManager();
     public final Randomizer random = new Randomizer();
     public final Scheduler scheduler = new Scheduler();
+    public final TickScheduler tickScheduler = new TickScheduler();
     public final ClickCrystalsLogger logger = new ClickCrystalsLogger(new File(Config.PATH_LOG));
     public final ProfileManager profiles = new ProfileManager();
     private final Map<Class<? extends Module>, Module> modules;

@@ -69,4 +69,11 @@ public final class ArrayUtils {
     public static <T> List<T> toList(T... items) {
         return new ArrayList<>(Arrays.asList(items));
     }
+
+    public static <T> List<T> subList(List<T> list, int beginIndex, int endIndex) {
+        List<T> result = new ArrayList<>();
+        for (int i = beginIndex; i < endIndex; i++)
+            result.add(list.get(i));
+        return result;
+    }
 }

@@ -68,7 +68,8 @@ public class DebugCommand extends Command {
                             ChatUtils.sendBlank(2);
                             ChatUtils.sendPrefixMessage("Scheduler Info");
                             ChatUtils.sendBlank(1);
-                            ChatUtils.sendMessage("Active Tasks (" + system.scheduler.count() + ")");
+                            ChatUtils.sendMessage("System Scheduler Active Tasks (" + system.scheduler.count() + ")");
+                            ChatUtils.sendMessage("Tick Scheduler Active Tasks (" + system.tickScheduler.count() + ")");
                             ChatUtils.sendBlank(2);
                             return SINGLE_SUCCESS;
                         }))

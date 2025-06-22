@@ -57,6 +57,7 @@ import io.github.itzispyder.clickcrystals.modules.scripts.macros.inventory.GuiSw
 import io.github.itzispyder.clickcrystals.modules.scripts.macros.inventory.GuiSwitchCmd;
 import io.github.itzispyder.clickcrystals.modules.scripts.syntax.*;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.misc.TickScheduler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.gui.screen.ChatScreen;
@@ -158,6 +159,7 @@ public final class ClickCrystals implements ModInitializer, Global {
             system.eventBus.pass(event);
         });
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            TickScheduler.tickAll();
             ClientTickEndEvent event = new ClientTickEndEvent();
             system.eventBus.pass(event);
         });

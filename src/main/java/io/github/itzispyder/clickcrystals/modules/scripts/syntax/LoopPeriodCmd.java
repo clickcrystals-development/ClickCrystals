@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
 public class LoopPeriodCmd extends ScriptCommand implements Global {
 
     public LoopPeriodCmd() {
-        super("loop_period");
+        super("loop_period", "repeat_period");
     }
 
     @Override

@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.ScriptNo
 import io.github.itzispyder.clickcrystals.client.clickscript.exceptions.UnknownCommandException;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.data.Config;
+import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 
@@ -39,7 +40,7 @@ public class ClickScript implements Global {
             for (int i = 0; i < times; i++) {
                 args.executeAll(1);
             }
-        }));
+        }, "repeat"));
         ScriptCommand cmd = ScriptCommand.create("function", (command, line, args) -> {
             ClickScript exe = args.getExecutor();
             String name = args.get(0).toString();
@@ -84,7 +85,24 @@ public class ClickScript implements Global {
     }
 
     public static void executeDynamic(ClickScript executor, String commandLine) {
-        for (CommandLine line : ScriptParser.parse(ScriptParser.condenseLines(commandLine))) {
+        List<CommandLine> lines = ScriptParser.parse(ScriptParser.condenseLines(commandLine));
+        dynamicExecutionHelper(executor, lines);
+    }
+
+    private static void dynamicExecutionHelper(ClickScript executor, List<CommandLine> lines) {
+        for (int i = 0; i < lines.size(); i++) {
+            CommandLine line = lines.get(i);
+            CommandLine.WaitingState state = line.getWaitingState();
+
+            if (state.waiting()) {
+                int from = i + 1;
+                int to = lines.size();
+                system.tickScheduler.schedule(state.seconds(), () -> {
+                    dynamicExecutionHelper(executor, ArrayUtils.subList(lines, from, to));
+                });
+                return;
+            }
+
             if (line.isDeep()) {
                 line.executeDynamic(executor);
             }

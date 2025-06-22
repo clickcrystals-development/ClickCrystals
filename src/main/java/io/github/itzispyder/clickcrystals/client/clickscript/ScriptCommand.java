@@ -38,8 +38,8 @@ public abstract class ScriptCommand implements Global {
         return aliases;
     }
 
-    public static ScriptCommand create(String name, Execution execution) {
-        return new ScriptCommand(name) {
+    public static ScriptCommand create(String name, Execution execution, String... aliases) {
+        return new ScriptCommand(name, aliases) {
             @Override
             public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
                 execution.execute(command, line, args);
