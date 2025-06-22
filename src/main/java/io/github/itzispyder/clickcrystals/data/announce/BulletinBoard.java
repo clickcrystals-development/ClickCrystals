@@ -12,12 +12,17 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Try not to instantiate this class, parse it from json!
- * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/bulletin</a>
+ * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin.json">https://itzispyder.github.io/clickcrystals/bulletin.json</a>
  */
 public record BulletinBoard(Announcement... announcements) implements Global {
 
+    public BulletinBoard(Announcement... announcements) {
+        this.announcements = announcements;
+        this.sort();
+    }
+
     private static final AtomicReference<BulletinBoard> current = new AtomicReference<>(null);
-    public static final String URL = "https://itzispyder.github.io/clickcrystals/bulletin";
+    public static final String URL = "https://itzispyder.github.io/clickcrystals/bulletin.json";
 
     public int size() {
         return announcements.length;
@@ -33,6 +38,19 @@ public record BulletinBoard(Announcement... announcements) implements Global {
 
     public static boolean isCurrentValid() {
         return hasCurrent() && !getCurrent().isEmpty();
+    }
+
+    public void sort() {
+        for (int i = 0; i < announcements.length; i++) {
+            int first = i;
+            for (int j = i + 1; j < announcements.length; j++)
+                if (announcements[j].order() > announcements[first].order())
+                    first = j;
+
+            Announcement temp = announcements[i];
+            announcements[i] = announcements[first];
+            announcements[first] = temp;
+        }
     }
 
     /**

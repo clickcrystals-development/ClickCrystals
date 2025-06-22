@@ -41,10 +41,9 @@ public class BulletinScreen extends DefaultBase {
             int caret = contentY + 21;
             int margin = contentX + 5;
 
-            for (int i = bulletin.announcements().length - 1; i >= 0; i--) {
-                Announcement announcement = bulletin.announcements()[i];
+            for (Announcement ann : bulletin.announcements()) {
                 caret += 5;
-                AnnouncementElement ae = new AnnouncementElement(announcement, margin, caret);
+                AnnouncementElement ae = new AnnouncementElement(ann, margin, caret);
                 panel.addChild(ae);
                 caret += ae.height;
             }

@@ -12,11 +12,11 @@ import java.util.*;
 
 /**
  * Try not to instantiate this class, parse it from json!
- * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/info</a>
+ * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin.json">https://itzispyder.github.io/clickcrystals/info.json</a>
  */
 public class ClickCrystalsInfo implements Global {
 
-    public static final String URL = "https://itzispyder.github.io/clickcrystals/info";
+    public static final String URL = "https://itzispyder.github.io/clickcrystals/info.json";
     private final String latest;
     private final String motd;
     private final User[] owners;
@@ -163,7 +163,7 @@ public class ClickCrystalsInfo implements Global {
 
     /**
      * Try not to instantiate this class, parse it from json!
-     * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/info</a>
+     * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin.json">https://itzispyder.github.io/clickcrystals/info.json</a>
      */
     public record User(String name, UUID id) {
         @Override
@@ -174,7 +174,7 @@ public class ClickCrystalsInfo implements Global {
 
     /**
      * Try not to instantiate this class, parse it from json!
-     * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/info</a>
+     * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin.json">https://itzispyder.github.io/clickcrystals/info.json</a>
      */
     public record Ban(String reason, User user) {
         @Override

@@ -2,8 +2,8 @@
 
 /*
  * THIS PROGRAM ACCESSES THE FOLLOWING WEBLINKS EITHER FROM PERIODIC LOOPS OR USER INPUT EVENTS
- * - https://itzispyder.github.io/clickcrystals/info
- * - https://itzispyder.github.io/clickcrystals/bulletin
+ * - https://itzispyder.github.io/clickcrystals/info.json
+ * - https://itzispyder.github.io/clickcrystals/bulletin.json
  * - https://clickcrystals.xyz
  * - https://clickcrystals.xyz/configs/configs.json
  * - https://clickcrystals.xyz/configs/configs/*
@@ -74,7 +74,7 @@ import org.lwjgl.glfw.GLFW;
  * TODO: (4) GitHub Release
  * TODO: (5) PlanetMC Release
  * TODO: (6) CurseForge Release
- * TODO: (7) Update <a href="https://itzispyder.github.io/clickcrystals/info">...</a>
+ * TODO: (7) Update <a href="https://itzispyder.github.io/clickcrystals/info.json">...</a>
  * TODO: (8) Discord Announcement
  */
 public final class ClickCrystals implements ModInitializer, Global {

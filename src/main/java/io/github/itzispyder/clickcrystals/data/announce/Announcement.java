@@ -4,9 +4,13 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 /**
  * Try not to instantiate this class, parse it from json!
- * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin">https://itzispyder.github.io/clickcrystals/bulletin</a>
+ * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin.json">https://itzispyder.github.io/clickcrystals/bulletin.json</a>
  */
-public record Announcement(String title, String desc, Field... fields) {
+public record Announcement(int order, String title, String desc, Field... fields) {
+
+    public Announcement(String title, String desc, Field... fields) {
+        this(0, title, desc, fields);
+    }
 
     @Override
     public String title() {
