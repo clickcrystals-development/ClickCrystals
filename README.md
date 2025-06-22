@@ -28,50 +28,55 @@ Happy coding and cpvping!
 
 ## What Version Should I Get?
 
-| What You Have | What to get                         |
-|:--------------|:------------------------------------|
-| higher..      | how is that even possible?          |
-| 1.21.5        | 1.21.5-(latestVersion) *recommended |
-| 1.21.4        | not supported                       |
-| 1.21.3        | not supported                       |
-| 1.21.2        | not supported                       |
-| 1.21.1        | 1.21-(latestVersion) *recommended   |
-| 1.21          | 1.21-(latestVersion) *recommended   |
-| 1.20.6        | 1.20.6-(latestVersion)              |
-| 1.20.5        | not supported                       |
-| 1.20.4        | 1.20.4-(latestVersion)              |
-| 1.20.3        | 1.20.4-(latestVersion)              |
-| 1.20.2        | 1.20.2-(latestVersion)              |
-| 1.20.1        | 1.20.1-(latestVersion)              |
-| 1.20          | 1.20.1-(latestVersion)              |
-| ..lower       | cry                                 |
+| What You Have | What to get                                                                                                                   |
+|:--------------|:------------------------------------------------------------------------------------------------------------------------------|
+| higher..      | how is that even possible?                                                                                                    |
+| 1.21.6        | not supported                                                                                                                 |
+| 1.21.5        | [ClickCrystals-1.21.5-1.3.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.0) *recommended |
+| 1.21.4        | not supported                                                                                                                 |
+| 1.21.3        | not supported                                                                                                                 |
+| 1.21.2        | not supported                                                                                                                 |
+| 1.21.1        | [ClickCrystals-1.21.5-1.3.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.0) *recommended |
+| 1.21          | [ClickCrystals-1.21.5-1.3.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.0) *recommended |
+| 1.20.6        | [ClickCrystals-1.20.6-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
+| 1.20.5        | not supported                                                                                                                 |
+| 1.20.4        | [ClickCrystals-1.20.4-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
+| 1.20.3        | [ClickCrystals-1.20.4-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
+| 1.20.2        | [ClickCrystals-1.20.2-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
+| 1.20.1        | [ClickCrystals-1.20-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
+| 1.20          | [ClickCrystals-1.20-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
+| ..lower       | cry                                                                                                                           |
+
 
 ## Newest Changes
 ```yml
-Version: 1.3.0
+Version: 1.3.1
 
-Major Updates:
-  - updated client to 1.21.5
+GUI:
+  - you can now sort your scripts in folders!
 
 Scripting:
-  - if gamemode
+  - turn_to polar
+  - turn_to position
+  - snap_to polar
+  - snap_to position
+  - made wait command work as a 'script pauser', working as most users expect it
+  - on mouse_click (button)
+  - on mouse_release (button)
 
-Added by I-No-One:
 Modules:
-  - Rewritten DeathParticles Module, now called DeathEffects Module with improved functionality.
-  - Rewritten FreeLook Module, fixing Lunar Client crashing while using CC.
-  - Added NoScrolling Module.
-  - Added PearlCustomizer Module.
-  - Added TotemPopColor Module.
-  - Fixed AutoDisconnect Module.
-  - Fixed TotemPops' enemy death text.
-  - Fixed old behavior of resend-only-commands in MsgResend Module.
-  - Fixed BlockOutline Module RGB Order Settings.
-  - Fixed all modules spamming when using ,toggle #ALL.
+  - add Trajectories module
+  - made TimeChanger a slider
+  - moved DeathEffects to `MISC` and added a new enum setting # i-no-one
+  - Tunnel 3x3
 
-New Additions:
-  - Added new debug mode.
-  - Added new options to TeamDetector Module.
+Patches:
+  - enum config setting crashing client
+  - fullBright isn't working # i-no-one
+  - changed java version in gradle & `clickcrystals.mixins.json` # i-no-one
+  - fixed splash texts load logic # i-no-one
+  - pixel art generator spawning glass
+  - fixed announcements sorted out of order
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)
@@ -121,6 +126,7 @@ New Additions:
 |   AutoRespawn    |                                       Clicks the respawn button for you                                       |
 |     AutoWalk     |                            Presses the walk key for you (only useful in survival)                             |
 |    ChatPrefix    |                                      Chat tweaks and additional features                                      |
+|   DeathEffects   |                                Spawn lightning/rocket particle on entity death                                |
 |    GuiCursor     |                            What to do with your cursor when you open inventory gui                            |
 |    MouseTaper    | "I taped a piece of tape on my mouse button, now I cannot use that button anymore but it is still taped down" |
 |  MessageResend   |                          Press up arrow key to resend your last message or command.                           |
@@ -132,6 +138,7 @@ New Additions:
 |   TeamDetector   |                               Finding teams and disable attacking your own team                               |
 |   ToolSwitcher   |                                 Switches to the right tool for mining a block                                 |
 |    TotemPops     |                                 Send messages when a player pops their totem                                  |
+|    Tunnel3x3     |                               Enable to tunnel a 3x3x5 tunnel in your direction                               |
 |    AntiCrash     | Prevents various ways servers can crash your client. Be sure to report new crashes to us so we can add more!  |
 | ExplodeParticles |                            Turns off explosion particles for smoother crystal pvp!                            |
 |    FullBright    |                             Increases your gamma so you can actually see in caves                             |
@@ -142,7 +149,6 @@ New Additions:
 |   BlockOutline   |                                     Change the color of the block outline                                     |
 |    CameraClip    |                    Change the camera distance and the camera behavior when encounter walls                    |
 |   CrystalSpeed   |                                          Crystals per second counter                                          |
-|   DeathEffects   |                                Spawn lightning/rocket particle on entity death                                |
 | EntityIndicator  |                              Indicates entities around you. Players are excluded                              |
 |     FreeLook     |                            lock your camera perspective and let you move around it                            |
 |    GhostTotem    |               Renders a totem in your hand upon dying. Will not work if AutoRespawn is enabled!               |
@@ -161,8 +167,6 @@ New Additions:
 |   TotemOverlay   |                                  Renders red overlay when not holding totem                                   |
 |    TotemColor    |                                       Change totem pop particles color                                        |
 |    TotemScale    |                                      Changes the scale of the totem pop                                       |
-|    ViewModel     |                            Changes your view model in your first person hand view                             |
-|       Zoom       |                                               Changes your FOV                                                |
 
 
 ## But isn't this cheating?

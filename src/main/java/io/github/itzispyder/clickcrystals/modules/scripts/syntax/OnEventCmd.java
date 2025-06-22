@@ -39,7 +39,7 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         EventType type = args.get(0).toEnum(EventType.class, null);
 
         switch (type) {
-            case LEFT_CLICK, RIGHT_CLICK, MIDDLE_CLICK, LEFT_RELEASE, RIGHT_RELEASE, MIDDLE_RELEASE -> passClick(args, type);
+            case LEFT_CLICK, RIGHT_CLICK, MIDDLE_CLICK, LEFT_RELEASE, RIGHT_RELEASE, MIDDLE_RELEASE, MOUSE_CLICK, MOUSE_RELEASE -> passClick(args, type);
             case PLACE_BLOCK, BREAK_BLOCK, INTERACT_BLOCK, PUNCH_BLOCK -> passBlock(args, type);
             case KEY_PRESS, KEY_RELEASE -> passKey(args, type);
             case MOVE_LOOK, MOVE_POS -> passMove(args, type);
@@ -91,6 +91,17 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
 
     public void passClick(ScriptArgs args, EventType eventType) {
         ModuleCmd.runOnCurrentScriptModule(m -> m.clickListeners.add(event -> {
+            if (eventType == EventType.MOUSE_CLICK && event.getAction().isDown()) {
+                int button = args.get(1).toInt();
+                if (button == event.getButton())
+                    exc(args, 2);
+            }
+            else if (eventType == EventType.MOUSE_RELEASE && event.getAction().isRelease()) {
+                int button = args.get(1).toInt();
+                if (button == event.getButton())
+                    exc(args, 2);
+            }
+
             if (matchMouseClick(eventType, event)) {
                 exc(args, 1);
             }
@@ -272,9 +283,11 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         RIGHT_CLICK,
         LEFT_CLICK,
         MIDDLE_CLICK,
+        MOUSE_CLICK,
         RIGHT_RELEASE,
         LEFT_RELEASE,
         MIDDLE_RELEASE,
+        MOUSE_RELEASE,
         PLACE_BLOCK,
         BREAK_BLOCK,
         PUNCH_BLOCK,
