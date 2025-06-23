@@ -338,6 +338,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new ViewModel());
         system.addModule(new GhostTotem());
         system.addModule(new EntityIndicator());
+        system.addModule(new ItemHighlight());
     }
 
     @SuppressWarnings("all")

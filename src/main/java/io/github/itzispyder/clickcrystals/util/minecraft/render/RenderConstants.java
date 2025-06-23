@@ -78,6 +78,15 @@ public class RenderConstants {
             .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
             .build();
 
+    public static final RenderPipeline PIPELINE_TRI_STRIP_CULL = RenderPipeline.builder(RenderPipelines.POSITION_COLOR_SNIPPET)
+            .withLocation("pipeline/global_fill_pipeline")
+            .withVertexFormat(VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.TRIANGLE_STRIP)
+            .withBlend(BlendFunction.TRANSLUCENT)
+            .withCull(true)
+            .withDepthWrite(true)
+            .withDepthTestFunction(DepthTestFunction.LEQUAL_DEPTH_TEST)
+            .build();
+
 
     private static RenderLayer.MultiPhaseParameters emptyParams() {
         return RenderLayer.MultiPhaseParameters.builder().build(false);
@@ -96,5 +105,7 @@ public class RenderConstants {
     public static final RenderLayer TRI_STRIP = RenderLayer.of("cc_layer_tri_strip", 256, PIPELINE_TRI_STRIP, emptyParams());
     public static final Function<Identifier, RenderLayer> TEX_QUADS = id -> RenderLayer.of("cc_layer_tex_quad", 256, PIPELINE_TEX_QUADS, textureParams(id));
     public static final Function<Identifier, RenderLayer> TEX_TRI_FAN = id -> RenderLayer.of("cc_layer_tex_tri_fan", 256, PIPELINE_TEX_TRI_FAN, textureParams(id));
+
+    public static final RenderLayer TRI_STRIP_CULL = RenderLayer.of("cc_layer_tri_strip_cull", 256, PIPELINE_TRI_STRIP_CULL, emptyParams());
 
 }

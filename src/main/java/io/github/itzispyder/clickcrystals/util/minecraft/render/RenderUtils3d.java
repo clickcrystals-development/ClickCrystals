@@ -142,6 +142,36 @@ public class RenderUtils3d {
         drawBuffer(buf, RenderConstants.QUADS);
     }
 
+    public static void fillCyl(MatrixStack matrices, double x, double y, double z, double radius, double height, int color) {
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
+        Matrix4f mat = matrices.peek().getPositionMatrix();
+
+        for (int i = 0; i <= 360; i += 24) {
+            float angle = (float)Math.toRadians(i);
+            float cx = (float)(x + Math.cos(angle) * radius);
+            float cz = (float)(z + Math.sin(angle) * radius);
+            buf.vertex(mat, cx, (float)y, cz).color(color);
+            buf.vertex(mat, cx, (float)(y + height), cz).color(color);
+        }
+
+        drawBuffer(buf, RenderConstants.TRI_STRIP);
+    }
+
+    public static void fillCylGradient(MatrixStack matrices, double x, double y, double z, double radius, double height, int colorBottom, int colorTop) {
+        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
+        Matrix4f mat = matrices.peek().getPositionMatrix();
+
+        for (int i = 0; i <= 360; i += 30) {
+            float angle = (float)Math.toRadians(i);
+            float cx = (float)(x + Math.cos(angle) * radius);
+            float cz = (float)(z + Math.sin(angle) * radius);
+            buf.vertex(mat, cx, (float)y, cz).color(colorBottom);
+            buf.vertex(mat, cx, (float)(y + height), cz).color(colorTop);
+        }
+
+        drawBuffer(buf, RenderConstants.TRI_STRIP_CULL);
+    }
+
     public static void drawCube(MatrixStack matrices, double x, double y, double z, int color) {
         Matrix4f mat = matrices.peek().getPositionMatrix();
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION_COLOR);
