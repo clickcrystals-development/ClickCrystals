@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.WitherEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.util.Identifier;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class MobHeadBrush implements Global {
 
     public static final Map<Class<? extends Entity>, Identifier> REGISTRY = new HashMap<>() {{
+        this.put(EnderDragonEntity.class, Identifier.of(modId, "textures/display/icons/entities/enderdragon.png"));
         this.put(WitherEntity.class, Identifier.of(modId, "textures/display/icons/entities/wither.png"));
         this.put(AmbientEntity.class, Identifier.of(modId, "textures/display/icons/entities/ambient.png"));
         this.put(BlazeEntity.class, Identifier.of(modId, "textures/display/icons/entities/blaze.png"));
