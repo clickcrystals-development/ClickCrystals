@@ -167,6 +167,10 @@ Patches:
 |   TotemOverlay   |                                  Renders red overlay when not holding totem                                   |
 |    TotemColor    |                                       Change totem pop particles color                                        |
 |    TotemScale    |                                      Changes the scale of the totem pop                                       |
+|   Trajectories   |                                Simulates arrow trajectories and draws a line!                                 |
+|    ViewModel     |                            Changes your view model in your first person hand view                             |
+|       Zoom       |                                               Changes your FOV                                                |
+
 
 
 ## But isn't this cheating?
