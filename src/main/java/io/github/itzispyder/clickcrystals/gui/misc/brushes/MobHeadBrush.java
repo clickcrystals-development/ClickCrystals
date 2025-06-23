@@ -16,7 +16,7 @@ import java.util.Map;
 public class MobHeadBrush implements Global {
 
     public static final Map<Class<? extends Entity>, Identifier> REGISTRY = new HashMap<>() {{
-        this.put(EnderDragonEntity.class, Identifier.of(modId, "textures/display/icons/entities/enderdragon.png"));
+        this.put(EnderDragonEntity.class, Identifier.of(modId, "textures/display/icons/entities/ender_dragon.png"));
         this.put(WitherEntity.class, Identifier.of(modId, "textures/display/icons/entities/wither.png"));
         this.put(AmbientEntity.class, Identifier.of(modId, "textures/display/icons/entities/ambient.png"));
         this.put(BlazeEntity.class, Identifier.of(modId, "textures/display/icons/entities/blaze.png"));
