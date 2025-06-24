@@ -663,7 +663,7 @@ public final class RenderUtils implements Global {
         context.getMatrices().push();
         context.getMatrices().scale(scale, scale, scale);
         context.drawItem(item, x, y);
-//        context.drawItemInSlot(mc.textRenderer, item, x, y, text);
+        context.drawStackOverlay(mc.textRenderer, item, x, y, text);
         context.getMatrices().pop();
     }
 

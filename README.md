@@ -32,12 +32,12 @@ Happy coding and cpvping!
 |:--------------|:------------------------------------------------------------------------------------------------------------------------------|
 | higher..      | how is that even possible?                                                                                                    |
 | 1.21.6        | not supported                                                                                                                 |
-| 1.21.5        | [ClickCrystals-1.21.5-1.3.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.0) *recommended |
+| 1.21.5        | [ClickCrystals-1.21.5-1.3.1.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.1) *recommended |
 | 1.21.4        | not supported                                                                                                                 |
 | 1.21.3        | not supported                                                                                                                 |
 | 1.21.2        | not supported                                                                                                                 |
-| 1.21.1        | [ClickCrystals-1.21.5-1.3.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.0) *recommended |
-| 1.21          | [ClickCrystals-1.21.5-1.3.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.0) *recommended |
+| 1.21.1        | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
+| 1.21          | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
 | 1.20.6        | [ClickCrystals-1.20.6-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
 | 1.20.5        | not supported                                                                                                                 |
 | 1.20.4        | [ClickCrystals-1.20.4-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
@@ -45,7 +45,8 @@ Happy coding and cpvping!
 | 1.20.2        | [ClickCrystals-1.20.2-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
 | 1.20.1        | [ClickCrystals-1.20-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
 | 1.20          | [ClickCrystals-1.20-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
-| ..lower       | cry                                                                                                                           |
+| ..lower       | cry                                                                                                                           |                                                                                                                     |
+
 
 
 ## Newest Changes
@@ -108,7 +109,6 @@ Patches:
 |  AutoDisconnect  |                         Disconnect you from the world when a certain condition is met                         |
 |  EntityStatuses  |                               DEBUG: Sends received EntityStatusPackets in chat                               |
 |    GuiBorders    |                         DEBUG: Renders borders around all ClickCrystals GUI elements                          |
-|    HealthTags    |                               Renders a health tag card above selected entities                               |
 |    InGameHuds    |                               Manager of all custom ClickCrystals in-game huds                                |
 | InvPacketSniffer |                            Observe inventory packets you are sending to the server                            |
 |     SelfGlow     |                                                 Am I Glowing?                                                 |
@@ -154,6 +154,7 @@ Patches:
 |    GhostTotem    |               Renders a totem in your hand upon dying. Will not work if AutoRespawn is enabled!               |
 | GlowingEntities  |                                  Having trouble seeing entities in the dark?                                  |
 |   HealthAsBar    |               Renders your health bar as a singular bar to prevent lag. Recommended for NBT pvp               |
+|  ItemHighlight   |                      Renders a highlight around dropped items to make them more visible                       |
 |  NoArmorRender   |                        Make armor invisible,try to use the enemy hud with this module!                        |
 | NoGuiBackground  |                                 disable the black effect when opening the GUI                                 |
 |    NoHurtCam     |                            Removes the annoying screen shake when you take damage                             |
