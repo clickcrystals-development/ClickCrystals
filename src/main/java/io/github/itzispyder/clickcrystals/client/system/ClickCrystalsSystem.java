@@ -63,7 +63,8 @@ public class ClickCrystalsSystem implements Serializable {
     public void openUrl(String url) {
         try {
             Util.getOperatingSystem().open(new URI(url));
-        } catch (URISyntaxException ex) {
+        } 
+        catch (URISyntaxException ex) {
             system.printErr("Failed to open url " + url);
             system.printErr(ex.getMessage());
         }
@@ -72,18 +73,22 @@ public class ClickCrystalsSystem implements Serializable {
     public void openFile(String path) {
         try {
             Util.getOperatingSystem().open(new File(path));
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) {
             system.printErr("Failed to open file " + path);
             system.printErr(ex.getMessage());
         }
     }
 
     public void copy(String text) {
-        if (text == null || text.isEmpty()) return;
+        if (text == null || text.isEmpty()) 
+            return;
+            
         try {
             StringSelection selection = new StringSelection(text);
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) {
             system.printErr("Failed to copy text to clipboard: " + text);
             system.printErr(ex.getMessage());
         }
@@ -100,7 +105,8 @@ public class ClickCrystalsSystem implements Serializable {
         if (module == null) return;
         if (module instanceof ScriptedModule scripted) {
             scriptedModules.put(scripted.getId(), scripted);
-        } else {
+        } 
+        else {
             modules.put(module.getClass(), module);
         }
     }
@@ -189,7 +195,8 @@ public class ClickCrystalsSystem implements Serializable {
         if (module instanceof ScriptedModule scripted) {
             scripted.clearListeners();
             scriptedModules.remove(scripted.getId());
-        } else {
+        } 
+        else {
             modules.remove(module.getClass());
         }
 
