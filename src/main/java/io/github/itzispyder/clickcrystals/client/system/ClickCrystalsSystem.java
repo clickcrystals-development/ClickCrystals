@@ -18,11 +18,14 @@ import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
 import io.github.itzispyder.clickcrystals.util.misc.TickScheduler;
 import net.minecraft.util.Util;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
@@ -30,6 +33,7 @@ import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 public class ClickCrystalsSystem implements Serializable {
 
     private static final ClickCrystalsSystem system = new ClickCrystalsSystem();
+
     public static ClickCrystalsSystem getInstance() {
         return system;
     }
@@ -59,8 +63,7 @@ public class ClickCrystalsSystem implements Serializable {
     public void openUrl(String url) {
         try {
             Util.getOperatingSystem().open(new URI(url));
-        }
-        catch (URISyntaxException ex) {
+        } catch (URISyntaxException ex) {
             system.printErr("Failed to open url " + url);
             system.printErr(ex.getMessage());
         }
@@ -69,12 +72,23 @@ public class ClickCrystalsSystem implements Serializable {
     public void openFile(String path) {
         try {
             Util.getOperatingSystem().open(new File(path));
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             system.printErr("Failed to open file " + path);
             system.printErr(ex.getMessage());
         }
     }
+
+    public void copy(String text) {
+        if (text == null || text.isEmpty()) return;
+        try {
+            StringSelection selection = new StringSelection(text);
+            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
+        } catch (Exception ex) {
+            system.printErr("Failed to copy text to clipboard: " + text);
+            system.printErr(ex.getMessage());
+        }
+    }
+
 
     public void addCommand(Command command) {
         if (command == null) return;
@@ -86,9 +100,8 @@ public class ClickCrystalsSystem implements Serializable {
         if (module == null) return;
         if (module instanceof ScriptedModule scripted) {
             scriptedModules.put(scripted.getId(), scripted);
-        }
-        else {
-            modules.put(module.getClass(),module);
+        } else {
+            modules.put(module.getClass(), module);
         }
     }
 
@@ -176,8 +189,7 @@ public class ClickCrystalsSystem implements Serializable {
         if (module instanceof ScriptedModule scripted) {
             scripted.clearListeners();
             scriptedModules.remove(scripted.getId());
-        }
-        else {
+        } else {
             modules.remove(module.getClass());
         }
 

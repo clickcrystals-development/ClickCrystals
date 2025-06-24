@@ -227,6 +227,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addCommand(new KeybindsCommand());
         system.addCommand(new RotateCommand());
         system.addCommand(new LookCommand());
+        system.addCommand(new TableGenerator());
         system.addCommand(new ScriptCommand());
         system.addCommand(new ReloadCommand());
         system.addCommand(new FolderCommand());

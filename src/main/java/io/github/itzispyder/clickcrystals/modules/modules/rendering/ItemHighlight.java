@@ -66,7 +66,7 @@ public class ItemHighlight extends ListenerModule {
 
     @EventHandler
     public void onDrawSlot(DrawSlotEvent e) {
-        if (!isEnabled() && !renderType.getVal().renderGui() && !e.getSlot().hasStack()) return;
+        if (!isEnabled() || !renderType.getVal().renderGui() && !e.getSlot().hasStack()) return;
 
         if (e.getSlot().getStack().getRarity().ordinal() < rarityFilter.getVal().ordinal()) return;
 
