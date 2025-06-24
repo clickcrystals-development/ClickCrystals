@@ -17,7 +17,7 @@ public class CrystSpeedHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(DrawContext context, float tickDelta) {
         Module cpsHud = Module.get(CrystPerSec.class);
         if (!cpsHud.isEnabled()) return;
         String text = "§f" + CrystPerSec.getCrystalPerSecond() + " §7c/s";

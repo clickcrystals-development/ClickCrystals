@@ -16,7 +16,7 @@ public class NotificationHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(DrawContext context, float tickDelta) {
         if (readingNotification && notification.isPresent() && !notification.get().isDead()) {
             notification.accept(n -> {
                 n.render(context);

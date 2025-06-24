@@ -17,7 +17,7 @@ public class ArmorRelativeHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(DrawContext context, float tickDelta) {
         if (PlayerUtils.player() != null) {
             renderBackdrop(context);
 

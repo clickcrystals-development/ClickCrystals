@@ -18,7 +18,7 @@ public class RelativeHudElement extends GuiElement {
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         hud.setX(x);
         hud.setY(y);
-        hud.render(context);
+        hud.render(context, 1.0F);
         this.setHeight(hud.getHeight());
         this.setWidth(hud.getWidth());
     }

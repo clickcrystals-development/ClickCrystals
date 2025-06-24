@@ -15,7 +15,7 @@ public class IconRelativeHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(DrawContext context, float tickDelta) {
         renderBackdrop(context);
 
         int ogw = getWidth();

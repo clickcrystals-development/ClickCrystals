@@ -73,6 +73,6 @@ public abstract class MixinInGameHud implements Global {
         if (PlayerUtils.invalid()) return;
 
         for (Hud hud : system.huds().values())
-            if (hud.canRender()) hud.render(context);
+            if (hud.canRender()) hud.render(context, tickCounter.getTickProgress(true));
     }
 }

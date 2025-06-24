@@ -19,7 +19,7 @@ public class ColorOverlayHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(DrawContext context, float tickDelta) {
         TotemOverlay totemOverlay = Module.get(TotemOverlay.class);
         Window win = mc.getWindow();
 

@@ -19,7 +19,7 @@ public class CrosshairTargetRelativeHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(DrawContext context, float tickDelta) {
         renderBackdrop(context);
 
         if (mc.crosshairTarget instanceof EntityHitResult hit) {

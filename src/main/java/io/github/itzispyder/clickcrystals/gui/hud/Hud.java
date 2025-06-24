@@ -48,7 +48,7 @@ public abstract class Hud implements Positionable, Global {
         this(id, new Dimension());
     }
 
-    public abstract void render(DrawContext context);
+    public abstract void render(DrawContext context, float tickDelta);
 
     public void renderBackdrop(DrawContext context) {
         RenderUtils.fillRoundRect(context, getX(), getY(), getWidth(), getHeight(), 5, getArgb());

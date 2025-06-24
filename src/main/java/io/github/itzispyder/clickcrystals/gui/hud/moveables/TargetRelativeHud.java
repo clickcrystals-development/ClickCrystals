@@ -30,7 +30,7 @@ public class TargetRelativeHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(DrawContext context, float tickDelta) {
         renderBackdrop(context);
 
         if (target != null && !target.isDead() && timer > System.currentTimeMillis()) {

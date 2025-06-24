@@ -25,7 +25,7 @@ public class ModuleListTextHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context) {
+    public void render(DrawContext context, float tickDelta) {
         if (!Module.isEnabled(ArrayListHud.class))
             return;
 
