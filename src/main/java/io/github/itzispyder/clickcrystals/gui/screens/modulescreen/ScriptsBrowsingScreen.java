@@ -21,14 +21,16 @@ import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class ScriptsBrowsingScreen extends BrowsingScreen {
 
     public static final String PATH_SCRIPTS = Config.PATH_SCRIPTS
-            .replaceFirst("/$", "")
-            .replace('/', '\\');
+            .replaceFirst(File.separator + "$", "")
+            .replace('/', File.separatorChar);
 
     public static String parentFolder = PATH_SCRIPTS;
     private final ButtonElement backButton;
@@ -43,7 +45,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
         this.backButton = new ButtonElement("< Back", baseX + baseWidth - 50 - 10, baseY + 10, 50, 15, (mx, my, self) -> {
             File parent = new File(parentFolder).getParentFile();
-            parentFolder = parent.getPath();
+            parentFolder = parent.toPath().toString();
             mc.execute(() -> mc.setScreen(new ScriptsBrowsingScreen()));
             this.removeChild(self);
         });
@@ -58,9 +60,9 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         // title
         String titleName = currentCategory.name();
         if (!isRootFolder())
-            titleName += parentFolder.replace('\\', '/')
-                    .replaceAll(PATH_SCRIPTS.replace('\\', '/'), "")
-                    .replaceAll("/", " §7\\\\§f ");
+            titleName += Path.of(parentFolder).normalize().toString()
+                    .replaceAll(Pattern.quote(PATH_SCRIPTS),"")
+                    .replaceAll(Pattern.quote(File.separator), "§7 / §f");
 
         // content
         int caret = contentY + 10;
@@ -134,12 +136,12 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
         public FolderElement(String path, int x, int y) {
             super(null, x, y);
-            this.name = "§f" + path.replaceAll("\\\\?(.*\\\\)+", "");
+            this.name = "§f" + new File(path).getName();
             this.path = path;
-            
+
             this.details = details();
         }
-        
+
         private String details() {
             File thisFolder = new File(path);
             File[] children = thisFolder.listFiles();
@@ -303,7 +305,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
                         .replaceAll("[^a-zA-Z0-9_-]", "")
                         .toLowerCase();
 
-                File file = new File(parentFolder + "/" + name + ".ccs");
+                File file = new File(parentFolder + File.separator + name + ".ccs");
                 if (!file.exists()) {
                     String preText = newModule.formatted(name);
                     FileValidationUtils.quickWrite(file, preText);
