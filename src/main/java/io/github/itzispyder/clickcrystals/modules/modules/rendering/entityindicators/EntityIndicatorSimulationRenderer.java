@@ -31,6 +31,8 @@ public class EntityIndicatorSimulationRenderer {
 
     public void render(MatrixStack matrices, int x, int y, int hudSize, Quaternionf rotation, int color) {
         float radius = (int)(hudSize * transitionAnimation.getAnimation());
+        if (radius <= 0)
+            return;
 
         BufferBuilder buf = RenderUtils.getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
         Matrix4f mat = matrices.peek().getPositionMatrix();
@@ -87,8 +89,7 @@ public class EntityIndicatorSimulationRenderer {
 
         RenderUtils.drawBuffer(buf, RenderConstants.LINES);
 
-        if (radius > 0)
-            this.renderEntities(matrices, x, y, radius, rotation);
+        this.renderEntities(matrices, x, y, radius, rotation);
     }
 
     private void renderEntities(MatrixStack matrices, int cx, int cy, float radius, Quaternionf rotation) {
