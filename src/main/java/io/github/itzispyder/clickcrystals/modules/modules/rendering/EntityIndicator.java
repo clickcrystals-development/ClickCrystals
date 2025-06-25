@@ -35,9 +35,9 @@ public class EntityIndicator extends ListenerModule {
     public final ModuleSetting<Integer> hudSize = scRender.add(createIntSetting()
             .name("hud-size")
             .description("Sprite display size.")
-            .max(45)
+            .max(50)
             .min(10)
-            .def(25)
+            .def(50)
             .build()
     );
     public final ModuleSetting<Integer> spriteSize = scRender.add(createIntSetting()

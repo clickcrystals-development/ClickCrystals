@@ -273,6 +273,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new SilkTouch());
         system.addModule(new EntityStatuses());
         system.addModule(new InvPackets());
+        system.addModule(new McpeBlockPlacement());
 
         // crystalling
         system.addModule(new CrystAnchor());
