@@ -71,7 +71,7 @@ public class McpeBlockPlacement extends ListenerModule {
         if (!raycastHit(p.getEyePos(), p.getRotationVecClient(), target, 2, 0.1))
             return null;
 
-        return new BlockHitResult(target.toCenterPos(), dir, target, true);
+        return new BlockHitResult(target.toCenterPos(), dir.getOpposite(), target, false);
     }
 
     private boolean raycastHit(Vec3d start, Vec3d dir, BlockPos target, double len, double step) {
