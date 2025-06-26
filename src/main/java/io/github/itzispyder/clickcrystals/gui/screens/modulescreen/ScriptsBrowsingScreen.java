@@ -21,18 +21,25 @@ import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class ScriptsBrowsingScreen extends BrowsingScreen {
 
-    public static final String PATH_SCRIPTS = Config.PATH_SCRIPTS
-            .replaceFirst(File.separator + "$", "")
-            .replace('/', File.separatorChar);
+    public static final String PATH_SCRIPTS;
+    public static String parentFolder;
 
-    public static String parentFolder = PATH_SCRIPTS;
+    static {
+        String pathScripts = Config.PATH_SCRIPTS;
+        pathScripts = pathScripts.replace('/', File.separatorChar);
+        if (pathScripts.endsWith(File.separator))
+            pathScripts = pathScripts.substring(0, pathScripts.length() - 1);
+
+        PATH_SCRIPTS = pathScripts;
+        parentFolder = PATH_SCRIPTS;
+    }
+
+
     private final ButtonElement backButton;
 
     public static boolean isRootFolder() {
@@ -45,7 +52,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
         this.backButton = new ButtonElement("< Back", baseX + baseWidth - 50 - 10, baseY + 10, 50, 15, (mx, my, self) -> {
             File parent = new File(parentFolder).getParentFile();
-            parentFolder = parent.toPath().toString();
+            parentFolder = parent.getPath();
             mc.execute(() -> mc.setScreen(new ScriptsBrowsingScreen()));
             this.removeChild(self);
         });
@@ -60,9 +67,8 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         // title
         String titleName = currentCategory.name();
         if (!isRootFolder())
-            titleName += Path.of(parentFolder).normalize().toString()
-                    .replaceAll(Pattern.quote(PATH_SCRIPTS),"")
-                    .replaceAll(Pattern.quote(File.separator), "§7 / §f");
+            titleName += parentFolder.replace(PATH_SCRIPTS, "")
+                    .replace(File.separator, " §7\\§f ");
 
         // content
         int caret = contentY + 10;
@@ -136,9 +142,8 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
         public FolderElement(String path, int x, int y) {
             super(null, x, y);
-            this.name = "§f" + new File(path).getName();
             this.path = path;
-
+            this.name = new File(path).getName();
             this.details = details();
         }
 
