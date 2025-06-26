@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.hud.moveables;
+package io.github.itzispyder.clickcrystals.gui.hud.positionable;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -12,7 +12,7 @@ import io.github.itzispyder.clickcrystals.util.misc.Pair;
 
 import java.util.ArrayList;
 
-public class CpsRelativeHud extends TextHud implements Listener {
+public class CpsPositionableHud extends TextHud implements Listener {
 
     private final Pair<Integer, Integer> clicks;
     private final Pair<ClickQueue, ClickQueue> clickQueues;
@@ -20,7 +20,7 @@ public class CpsRelativeHud extends TextHud implements Listener {
     private int ticks;
     private boolean enabled;
 
-    public CpsRelativeHud() {
+    public CpsPositionableHud() {
         super("cps-hud", 10, 60, 50, 16);
         this.clicks = Pair.of(0, 0);
         this.clickQueues = Pair.of(new ClickQueue(), new ClickQueue());

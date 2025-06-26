@@ -38,7 +38,7 @@ import io.github.itzispyder.clickcrystals.events.listeners.NetworkEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.hud.fixed.*;
-import io.github.itzispyder.clickcrystals.gui.hud.moveables.*;
+import io.github.itzispyder.clickcrystals.gui.hud.positionable.*;
 import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
@@ -234,22 +234,22 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addCommand(new ProfileCommand());
 
         // Hud
-        system.addHud(new CpsRelativeHud());
-        system.addHud(new IconRelativeHud());
-        system.addHud(new PingRelativeHud());
-        system.addHud(new FpsRelativeHud());
-        system.addHud(new ClockRelativeHud());
-        system.addHud(new TargetRelativeHud());
-        system.addHud(new PosRelativeHud());
-        system.addHud(new BiomeRelativeHud());
-        system.addHud(new DirectionRelativeHud());
-        system.addHud(new CrosshairTargetRelativeHud());
-        system.addHud(new RotationRelativeHud());
-        system.addHud(new ResourceRelativeHud());
+        system.addHud(new CpsPositionableHud());
+        system.addHud(new IconPositionableHud());
+        system.addHud(new PingPositionableHud());
+        system.addHud(new FpsPositionableHud());
+        system.addHud(new ClockPositionableHud());
+        system.addHud(new TargetPositionableHud());
+        system.addHud(new PosPositionableHud());
+        system.addHud(new BiomePositionableHud());
+        system.addHud(new DirectionPositionableHud());
+        system.addHud(new CrosshairPositionableHud());
+        system.addHud(new RotationPositionableHud());
+        system.addHud(new ResourcePositionableHud());
         system.addHud(new ColorOverlayHud());
         system.addHud(new ModuleListTextHud());
         system.addHud(new CrystSpeedHud());
-        system.addHud(new ArmorRelativeHud());
+        system.addHud(new ArmorPositionableHud());
         system.addHud(new NotificationHud());
         system.addHud(new EntityIndicatorHud());
     }

@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
-import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.RelativeHudElement;
+import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.PositionableHudElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -15,14 +15,14 @@ import java.util.List;
 
 public class HudEditScreen extends GuiScreen {
 
-    private final List<RelativeHudElement> huds;
+    private final List<PositionableHudElement> huds;
 
     public HudEditScreen() {
         super("Edit Hud Screen");
 
         this.huds = system.huds().values().stream()
                 .filter(h -> !h.isFixed())
-                .map(RelativeHudElement::new)
+                .map(PositionableHudElement::new)
                 .toList();
 
         huds.forEach(this::addChild);
@@ -66,7 +66,7 @@ public class HudEditScreen extends GuiScreen {
         }
     }
 
-    public List<RelativeHudElement> getHuds() {
+    public List<PositionableHudElement> getHuds() {
         return huds;
     }
 

@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.hud.moveables;
+package io.github.itzispyder.clickcrystals.gui.hud.positionable;
 
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
@@ -19,13 +19,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-public class TargetRelativeHud extends Hud {
+public class TargetPositionableHud extends Hud {
 
     private static PlayerEntity target;
     private static long timer;
     private final Animator animator = new PollingAnimator(200, this::isTargetNaked);
 
-    public TargetRelativeHud() {
+    public TargetPositionableHud() {
         super("target-hud", 150, 30, 120, 16);
     }
 
@@ -112,7 +112,7 @@ public class TargetRelativeHud extends Hud {
     }
 
     public static void setTarget(PlayerEntity target) {
-        TargetRelativeHud.target = target;
+        TargetPositionableHud.target = target;
         double stay = Module.getFrom(InGameHuds.class, m -> m.hudTargetStayTime.getVal());
         timer = System.currentTimeMillis() + (long)(stay * 1000);
     }

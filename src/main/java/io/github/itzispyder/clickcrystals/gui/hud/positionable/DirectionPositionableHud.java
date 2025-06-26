@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.hud.moveables;
+package io.github.itzispyder.clickcrystals.gui.hud.positionable;
 
 import io.github.itzispyder.clickcrystals.gui.hud.TextHud;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -6,9 +6,9 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHu
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 
-public class DirectionRelativeHud extends TextHud {
+public class DirectionPositionableHud extends TextHud {
 
-    public DirectionRelativeHud() {
+    public DirectionPositionableHud() {
         super("direction-hud", 10, 150, 120, 16);
     }
 

@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.PearlCustomizer;
-import io.github.itzispyder.clickcrystals.util.minecraft.EntityRenderStateUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.state.FlyingItemEntityRenderState;
@@ -24,23 +24,23 @@ import java.util.Set;
 public class MixinFlyingItemEntityRenderer<T extends Entity> implements Global {
 
     @Mutable @Shadow @Final private float scale;
-
     @Unique private final Set<Entity> notifiedEntities = new HashSet<>();
 
     @Inject(method = "render(Lnet/minecraft/client/render/entity/state/FlyingItemEntityRenderState;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("TAIL"))
     public void renderUpdated(FlyingItemEntityRenderState state, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
-        var entity = EntityRenderStateUtils.get(state);
-        if (entity instanceof EnderPearlEntity pearlEntity) {
+        Entity entity = EntityUtils.getRenderStateOwner(state);
+        if (entity instanceof EnderPearlEntity pearl) {
             PearlCustomizer pc = Module.get(PearlCustomizer.class);
 
             if (pc.pearlSize.getVal() != 0)
                 this.scale = pc.pearlSize.getVal().floatValue() * 2;
 
-            if (pearlEntity.age <= 2 && notifiedEntities.add(pearlEntity)) {
+            if (pearl.age <= 2 && notifiedEntities.add(pearl)) {
                 SoundEvent soundEvent = pc.pearlSound.getVal() ? SoundEvents.EVENT_MOB_EFFECT_RAID_OMEN : SoundEvents.ENTITY_ENDERMAN_TELEPORT;
                 mc.player.playSound(soundEvent, 1.0F, 1.0F);
             }
-        } else {
+        }
+        else {
             this.scale = 1.0f;
         }
     }

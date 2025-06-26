@@ -24,8 +24,8 @@ import java.io.File;
 import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.config;

@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.hud.moveables;
+package io.github.itzispyder.clickcrystals.gui.hud.positionable;
 
 import io.github.itzispyder.clickcrystals.gui.hud.TextHud;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -7,9 +7,9 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Dimensions;
 import net.minecraft.util.math.BlockPos;
 
-public class PosRelativeHud extends TextHud {
+public class PosPositionableHud extends TextHud {
 
-    public PosRelativeHud() {
+    public PosPositionableHud() {
         super("pos-hud", 10, 120, 120, 16);
     }
 

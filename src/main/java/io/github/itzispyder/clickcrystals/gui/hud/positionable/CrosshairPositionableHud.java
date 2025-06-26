@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.hud.moveables;
+package io.github.itzispyder.clickcrystals.gui.hud.positionable;
 
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -12,9 +12,9 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 
-public class CrosshairTargetRelativeHud extends Hud {
+public class CrosshairPositionableHud extends Hud {
 
-    public CrosshairTargetRelativeHud() {
+    public CrosshairPositionableHud() {
         super("crosshair-hud", 10, 165, 120, 16);
     }
 

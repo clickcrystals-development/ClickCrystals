@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
-import io.github.itzispyder.clickcrystals.gui.hud.moveables.TargetRelativeHud;
+import io.github.itzispyder.clickcrystals.gui.hud.positionable.TargetPositionableHud;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
@@ -178,7 +178,7 @@ public class InGameHuds extends Module implements Listener {
     @EventHandler
     private void onAttack(PlayerAttackEntityEvent e) {
         if (e.getEntity() instanceof PlayerEntity player && hudTarget.getVal()) {
-            TargetRelativeHud.setTarget(player);
+            TargetPositionableHud.setTarget(player);
         }
     }
 

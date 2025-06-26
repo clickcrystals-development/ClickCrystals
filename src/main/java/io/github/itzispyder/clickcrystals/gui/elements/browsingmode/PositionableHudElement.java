@@ -4,11 +4,11 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import net.minecraft.client.gui.DrawContext;
 
-public class RelativeHudElement extends GuiElement {
+public class PositionableHudElement extends GuiElement {
 
     private final Hud hud;
 
-    public RelativeHudElement(Hud hud) {
+    public PositionableHudElement(Hud hud) {
         super(hud.getX(), hud.getY(), hud.getWidth(), hud.getHeight());
         this.hud = hud;
         this.setDraggable(true);

@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.hud.moveables;
+package io.github.itzispyder.clickcrystals.gui.hud.positionable;
 
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -9,9 +9,9 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
-public class ResourceRelativeHud extends Hud {
+public class ResourcePositionableHud extends Hud {
 
-    public ResourceRelativeHud() {
+    public ResourcePositionableHud() {
         super("resource-hud", 200, 30, 20, 20);
     }
 

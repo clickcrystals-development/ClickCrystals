@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.TeamDetector;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -83,28 +84,17 @@ public class EntityUtils implements Global {
 
     public static List<ItemStack> getArmorItems(LivingEntity ent) {
         List<ItemStack> items = new ArrayList<>();
-        for (EquipmentSlot slot: EquipmentSlot.values()) {
-            if (slot.name().contains("HAND"))
-                continue;
-
-            ItemStack item = ent.getEquippedStack(slot);
-            if (item != null && !item.isEmpty())
-                items.add(item);
-            else
-                items.add(ItemStack.EMPTY);
-        }
+        items.add(ent.getEquippedStack(EquipmentSlot.HEAD));
+        items.add(ent.getEquippedStack(EquipmentSlot.CHEST));
+        items.add(ent.getEquippedStack(EquipmentSlot.LEGS));
+        items.add(ent.getEquippedStack(EquipmentSlot.FEET));
         return items;
     }
 
     public static List<ItemStack> getHandItems(LivingEntity ent) {
         List<ItemStack> items = new ArrayList<>();
-        for (Hand slot: Hand.values()) {
-            ItemStack item = ent.getStackInHand(slot);
-            if (item != null && !item.isEmpty())
-                items.add(item);
-            else
-                items.add(ItemStack.EMPTY);
-        }
+        items.add(ent.getEquippedStack(EquipmentSlot.MAINHAND));
+        items.add(ent.getEquippedStack(EquipmentSlot.OFFHAND));
         return items;
     }
 
@@ -115,6 +105,15 @@ public class EntityUtils implements Global {
             if (item.test(armor))
                 return true;
         return false;
+    }
+
+    public static Entity getRenderStateOwner(EntityRenderState state) {
+        if (PlayerUtils.invalid())
+            return null;
+        for (Entity entity: PlayerUtils.getClientWorld().getEntities())
+            if (state.squaredDistanceToCamera == entity.squaredDistanceTo(mc.gameRenderer.getCamera().getPos()))
+                return entity;
+        return null;
     }
 
     public static HitResult getTarget(Entity ref) {

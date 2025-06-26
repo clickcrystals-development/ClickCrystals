@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.hud.moveables;
+package io.github.itzispyder.clickcrystals.gui.hud.positionable;
 
 import io.github.itzispyder.clickcrystals.gui.hud.TextHud;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -7,9 +7,9 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.client.network.ClientPlayerEntity;
 
-public class RotationRelativeHud extends TextHud {
+public class RotationPositionableHud extends TextHud {
 
-    public RotationRelativeHud() {
+    public RotationPositionableHud() {
         super("rotation-hud", 10, 180, 120, 16);
     }
 

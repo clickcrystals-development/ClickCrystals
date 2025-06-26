@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.hud.moveables;
+package io.github.itzispyder.clickcrystals.gui.hud.positionable;
 
 import io.github.itzispyder.clickcrystals.gui.hud.TextHud;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -6,9 +6,9 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHu
 
 import java.time.LocalDateTime;
 
-public class ClockRelativeHud extends TextHud {
+public class ClockPositionableHud extends TextHud {
 
-    public ClockRelativeHud() {
+    public ClockPositionableHud() {
         super("clock-hud", 10, 105, 50, 16);
     }
 

@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.gui.hud.moveables;
+package io.github.itzispyder.clickcrystals.gui.hud.positionable;
 
 import io.github.itzispyder.clickcrystals.gui.hud.TextHud;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -13,9 +13,9 @@ import net.minecraft.world.biome.Biome;
 
 import java.util.Optional;
 
-public class BiomeRelativeHud extends TextHud {
+public class BiomePositionableHud extends TextHud {
 
-    public BiomeRelativeHud() {
+    public BiomePositionableHud() {
         super("biome-hud", 10, 135, 120, 16);
     }
 
