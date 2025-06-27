@@ -18,7 +18,6 @@
     "MixinFlyingItemEntityRenderer",
     "MixinGameRenderer",
     "MixinHandledScreen",
-    "MixinHandledScreens",
     "MixinHeldItemRenderer",
     "MixinInGameHud",
     "MixinInGameOverlay",

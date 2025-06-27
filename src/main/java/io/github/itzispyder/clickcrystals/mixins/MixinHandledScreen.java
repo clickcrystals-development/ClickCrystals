@@ -22,7 +22,7 @@ public abstract class MixinHandledScreen implements Global, HandledScreenAccesso
 
     @Inject(method = "drawSlot", at = @At("HEAD"))
     public void drawItemInSlot(DrawContext context, Slot slot, CallbackInfo ci) {
-        system.eventBus.pass(new RenderInventorySlotEvent(slot.getStack(), slot.x + x, slot.y + y));
+        system.eventBus.pass(new RenderInventorySlotEvent(context, slot.getStack(), slot.x + x, slot.y + y, slot.x, slot.y));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
-import io.github.itzispyder.clickcrystals.events.events.world.DrawSlotEvent;
+import io.github.itzispyder.clickcrystals.events.events.client.RenderInventorySlotEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.RenderWorldEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
@@ -9,6 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils3d;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
@@ -26,16 +27,14 @@ public class ItemHighlight extends ListenerModule {
         super("item-highlight", Categories.RENDER, "Renders a highlight around dropped items to make them more visible");
     }
 
-    public final SettingSection general = getGeneralSection();
-
-    ModuleSetting<RenderType> renderType = general.add(createEnumSetting(RenderType.class)
+    private final SettingSection scGeneral = getGeneralSection();
+    public final ModuleSetting<RenderType> renderType = scGeneral.add(createEnumSetting(RenderType.class)
             .name("Render Type")
             .description("Where to render the highlight")
             .def(RenderType.BOTH)
             .build()
     );
-
-    ModuleSetting<Rarity> rarityFilter = general.add(createEnumSetting(Rarity.class)
+    public final ModuleSetting<Rarity> rarityFilter = scGeneral.add(createEnumSetting(Rarity.class)
             .name("Rarity Filter")
             .description("Only render items of this rarity or higher")
             .def(Rarity.COMMON)
@@ -65,17 +64,19 @@ public class ItemHighlight extends ListenerModule {
     }
 
     @EventHandler
-    public void onDrawSlot(DrawSlotEvent e) {
-        if (!isEnabled() || !renderType.getVal().renderGui() && !e.getSlot().hasStack()) return;
+    public void onDrawSlot(RenderInventorySlotEvent e) {
+        ItemStack item = e.getItem();
 
-        if (e.getSlot().getStack().getRarity().ordinal() < rarityFilter.getVal().ordinal()) return;
+        if (!renderType.getVal().renderGui() || item.isEmpty())
+            return;
+        if (item.getRarity().ordinal() < rarityFilter.getVal().ordinal())
+            return;
 
-
-        int color = getRarityColor(e.getSlot().getStack().getRarity());
-        int x = e.getSlot().x;
-        int y = e.getSlot().y;
-
-        e.getContext().fill(x, y, x + 16, y + 16, color);
+        RenderUtils.fillRect(
+                e.getDrawContext(),
+                e.getSlotX(), e.getSlotY(), 16, 16,
+                getRarityColor(item.getRarity())
+        );
     }
 
     public List<ItemEntity> getItemEntities() {
@@ -106,16 +107,16 @@ public class ItemHighlight extends ListenerModule {
         }
     }
 
-    enum RenderType {
+    public enum RenderType {
         GUI,
         WORLD,
         BOTH;
 
-        boolean renderGui() {
+        public boolean renderGui() {
             return this == GUI || this == BOTH;
         }
 
-        boolean renderWorld() {
+        public boolean renderWorld() {
             return this == WORLD || this == BOTH;
         }
     }
