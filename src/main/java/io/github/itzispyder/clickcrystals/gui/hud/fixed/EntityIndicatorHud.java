@@ -1,7 +1,10 @@
 package io.github.itzispyder.clickcrystals.gui.hud.fixed;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
+import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.MobHeadBrush;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.EntityIndicator;
@@ -19,6 +22,9 @@ import org.joml.Quaternionf;
 
 public class EntityIndicatorHud extends Hud {
 
+    private boolean shouldFade;
+    private final Animator FADE_ANIMATION = new PollingAnimator(300, () -> shouldFade);
+
     public EntityIndicatorHud() {
         super("entity-indicator-hud");
         this.setFixed(true);
@@ -35,14 +41,21 @@ public class EntityIndicatorHud extends Hud {
         int cx = context.getScaledWindowWidth() / 2;
         int cy = context.getScaledWindowHeight() / 2;
         int radius = m.hudSize.getVal();
+        this.shouldFade = m.fadeWhenMoving.getVal() && PlayerUtils.isMoving();
 
         EntityIndicatorSimulation sim = m.getSimulation();
         Voidable<SimulationEntry> nearest = sim.getNearestEntity();
+
+        float fadeAnimation = (float)FADE_ANIMATION.getProgressClampedReversed();
+        float shaderAlpha = 0.3F + 0.7F * fadeAnimation;
+        RenderSystem.setShaderColor(1, 1, 1, shaderAlpha);
 
         if (m.isRendering2D())
             this.render2D(context, m, cx, cy, radius, nearest); // render 2d
         else
             this.render3D(context, m, cx, cy, radius, tickDelta); // render 3d
+
+        RenderSystem.setShaderColor(1, 1, 1, 1);
     }
 
     private void render3D(DrawContext context, EntityIndicator module, int cx, int cy, int radius, float tickDelta) {
