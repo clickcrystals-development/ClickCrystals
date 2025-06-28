@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts.syntax;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
+import io.github.itzispyder.clickcrystals.client.networking.PacketMapper;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
@@ -12,12 +13,6 @@ import io.github.itzispyder.clickcrystals.modules.scripts.client.ModuleCmd;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RespawnAnchorBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +39,7 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
             case KEY_PRESS, KEY_RELEASE -> passKey(args, type);
             case MOVE_LOOK, MOVE_POS -> passMove(args, type);
             case CHAT_SEND, CHAT_RECEIVE -> passChat(args, type);
+            case PACKET_SEND, PACKET_RECEIVE -> passPacket(args, type);
 
             case PRE_TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.preTickListeners.add(event -> exc(args, 1)));
             case TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.tickListeners.add(event -> exc(args, 1)));
@@ -61,26 +57,43 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         }
     }
 
-    public void passChat(ScriptArgs args, EventType type) {
+    private void passPacket(ScriptArgs args, EventType type) {
+        String targetPacketName = args.get(1).toString();
+
+        switch (type) {
+            case PACKET_RECEIVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.packetReceiveListeners.add(packet -> {
+                PacketMapper.Info info = PacketMapper.S2C.get(packet.getClass());
+                if (targetPacketName.equals(info.id()))
+                    exc(args, 2);
+            }));
+            case PACKET_SEND -> ModuleCmd.runOnCurrentScriptModule(m -> m.packetSendListeners.add(packet -> {
+                PacketMapper.Info info = PacketMapper.C2S.get(packet.getClass());
+                if (targetPacketName.equals(info.id()))
+                    exc(args, 2);
+            }));
+        }
+    }
+
+    private void passChat(ScriptArgs args, EventType type) {
         ClickScript dispatcher = args.getExecutorOrDef();
         String msg = args.getQuoteAndRemove(1);
         String rest = args.getAll().toString();
 
         switch (type) {
             case CHAT_RECEIVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatReceiveListeners.add(event -> {
-                if (event.getMessage().contains(msg)) {
+                if (event.getMessage().contains(msg) || event.getMessage().matches(msg)) {
                     ClickScript.executeDynamic(dispatcher, rest);
                 }
             }));
             case CHAT_SEND -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatSendListeners.add(event -> {
-                if (event.getMessage().contains(msg)) {
+                if (event.getMessage().contains(msg) || event.getMessage().matches(msg)) {
                     ClickScript.executeDynamic(dispatcher, rest);
                 }
             }));
         }
     }
 
-    public void passBlock(ScriptArgs args, EventType eventType) {
+    private void passBlock(ScriptArgs args, EventType eventType) {
         switch (eventType) {
             case BREAK_BLOCK -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockBreakListeners.add(event -> exc(args, 1)));
             case PLACE_BLOCK -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockPlaceListeners.add(event -> exc(args, 1)));
@@ -89,7 +102,7 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         }
     }
 
-    public void passClick(ScriptArgs args, EventType eventType) {
+    private void passClick(ScriptArgs args, EventType eventType) {
         ModuleCmd.runOnCurrentScriptModule(m -> m.clickListeners.add(event -> {
             if (eventType == EventType.MOUSE_CLICK && event.getAction().isDown()) {
                 int button = args.get(1).toInt();
@@ -108,7 +121,7 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         }));
     }
 
-    public void passKey(ScriptArgs args, EventType eventType) {
+    private void passKey(ScriptArgs args, EventType eventType) {
         ModuleCmd.runOnCurrentScriptModule(m -> m.keyListeners.add(event -> {
             if (matchKeyPress(eventType, event, args.get(1).toString())) {
                 exc(args, 2);
@@ -116,7 +129,7 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         }));
     }
 
-    public void passMove(ScriptArgs args, EventType eventType) {
+    private void passMove(ScriptArgs args, EventType eventType) {
         ModuleCmd.runOnCurrentScriptModule(m -> m.moveListeners.add(event -> {
             switch (eventType) {
                 case MOVE_LOOK -> {
@@ -133,7 +146,7 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         }));
     }
 
-    public void exc(ScriptArgs args, int begin) {
+    private void exc(ScriptArgs args, int begin) {
         executeWithThen(args, begin);
     }
 
@@ -187,98 +200,6 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         return false;
     }
 
-    public static Predicate<ItemStack> parseItemPredicate(String arg) {
-        if (arg == null || arg.length() <= 1) {
-            return item -> false;
-        }
-        else if (arg.startsWith("#")) {
-            return item -> item.getItem().getTranslationKey().contains(arg.substring(1));
-        }
-        else if (arg.startsWith(":")) {
-            Identifier id = Identifier.of("minecraft", arg.substring(1));
-            return item -> item.getItem() == Registries.ITEM.get(id);
-        }
-        return item -> false;
-    }
-
-    public static Predicate<BlockState> parseBlockPredicate(String arg) {
-        if (arg == null || arg.length() <= 1) {
-            return block -> false;
-        }
-        else if (arg.startsWith("#")) {
-            return block -> block.getBlock().getTranslationKey().contains(arg.substring(1));
-        }
-        else if (arg.startsWith(":")) {
-            String subArg = arg.substring(1);
-
-            if (defaultedBlockPredicates.containsKey(subArg)) {
-                return defaultedBlockPredicates.get(subArg);
-            }
-
-            Identifier id = Identifier.of("minecraft", subArg);
-            return block -> block.getBlock() == Registries.BLOCK.get(id);
-        }
-        return block -> false;
-    }
-
-    public static Predicate<Entity> parseEntityPredicate(String arg) {
-        if (arg == null || arg.length() <= 1) {
-            return ent -> false;
-        }
-        else if (arg.startsWith("#")) {
-            return ent -> ent.getType().getTranslationKey().contains(arg.substring(1));
-        }
-        else if (arg.startsWith(":")) {
-            Identifier id = Identifier.of("minecraft", arg.substring(1));
-            return ent -> ent.getType() == Registries.ENTITY_TYPE.get(id);
-        }
-        return ent -> false;
-    }
-
-    public static SoundEvent parseSoundEvent(String arg) {
-        if (arg == null || arg.length() <= 1) {
-            return null;
-        }
-        else if (arg.startsWith("#")) {
-            String subArg = arg.substring(1);
-            Identifier result = null;
-            for (Identifier id : Registries.SOUND_EVENT.getIds()) {
-                if (id.getPath().contains(subArg)) {
-                    result = id;
-                    break;
-                }
-            }
-            return result == null ? null : Registries.SOUND_EVENT.get(result);
-        }
-        else if (arg.startsWith(":")) {
-            Identifier id = Identifier.of("minecraft", arg.substring(1));
-            return Registries.SOUND_EVENT.get(id);
-        }
-        return null;
-    }
-
-    public static StatusEffect parseStatusEffect(String arg) {
-        if (arg == null || arg.length() <= 1) {
-            return null;
-        }
-        else if (arg.startsWith("#")) {
-            String subArg = arg.substring(1);
-            Identifier result = null;
-            for (Identifier id : Registries.STATUS_EFFECT.getIds()) {
-                if (id.getPath().contains(subArg)) {
-                    result = id;
-                    break;
-                }
-            }
-            return result == null ? null : Registries.STATUS_EFFECT.get(result);
-        }
-        else if (arg.startsWith(":")) {
-            Identifier id = Identifier.of("minecraft", arg.substring(1));
-            return Registries.STATUS_EFFECT.get(id);
-        }
-        return null;
-    }
-
     public enum EventType {
         RIGHT_CLICK,
         LEFT_CLICK,
@@ -310,6 +231,8 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         GAME_JOIN,
         GAME_LEAVE,
         CHAT_SEND,
-        CHAT_RECEIVE
+        CHAT_RECEIVE,
+        PACKET_SEND,
+        PACKET_RECEIVE
     }
 }

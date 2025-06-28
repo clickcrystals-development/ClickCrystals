@@ -4,7 +4,6 @@ import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
 import io.github.itzispyder.clickcrystals.client.networking.PacketMapper;
 import io.github.itzispyder.clickcrystals.data.Config;
-import io.github.itzispyder.clickcrystals.events.Event;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.client.*;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameJoinEvent;
@@ -13,6 +12,7 @@ import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceive
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.*;
 import io.github.itzispyder.clickcrystals.modules.Categories;
+import io.github.itzispyder.clickcrystals.modules.scripts.listeners.*;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,10 +21,6 @@ import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerRespawnS2CPacket;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,6 +44,8 @@ public class ScriptedModule extends ListenerModule {
     public final List<ItemConsumeListener> itemConsumeListeners = new ArrayList<>();
     public final List<ChatReceiveListener> chatReceiveListeners = new ArrayList<>();
     public final List<ChatSendListener> chatSendListeners = new ArrayList<>();
+    public final List<PacketListener> packetReceiveListeners = new ArrayList<>();
+    public final List<PacketListener> packetSendListeners = new ArrayList<>();
     public final List<Runnable> totemPopListeners = new ArrayList<>();
     public final List<Runnable> moduleEnableListeners = new ArrayList<>();
     public final List<Runnable> moduleDisableListeners = new ArrayList<>();
@@ -110,10 +108,11 @@ public class ScriptedModule extends ListenerModule {
         itemConsumeListeners.clear();
         chatReceiveListeners.clear();
         chatSendListeners.clear();
-
-
+        
         packetSendCancelQueue.clear();
         packetReadCancelQueue.clear();
+        packetReceiveListeners.clear();
+        packetSendListeners.clear();
     }
 
     @EventHandler
@@ -198,6 +197,12 @@ public class ScriptedModule extends ListenerModule {
             }
         }
 
+        if (e.getPacket() != null) {
+            for (PacketListener l : packetSendListeners) {
+                l.pass(e.getPacket());
+            }
+        }
+
         if (e.getPacket() instanceof PlayerInteractBlockC2SPacket packet) {
             for (BlockInteractListener l : blockInteractListeners) {
                 l.pass(packet.getBlockHitResult(), packet.getHand());
@@ -230,6 +235,12 @@ public class ScriptedModule extends ListenerModule {
                 e.setCancelled(true);
                 packetReadCancelQueue.remove(info);
                 break;
+            }
+        }
+
+        if (e.getPacket() != null) {
+            for (PacketListener l : packetReceiveListeners) {
+                l.pass(e.getPacket());
             }
         }
 
@@ -280,65 +291,6 @@ public class ScriptedModule extends ListenerModule {
         gameLeaveListeners.forEach(Runnable::run);
     }
 
-    @FunctionalInterface
-    public interface ClickListener {
-        void pass(MouseClickEvent e);
-    }
-
-    @FunctionalInterface
-    public interface TickListener {
-        void pass(Event e);
-    }
-
-    @FunctionalInterface
-    public interface BlockBreakListener {
-        void pass(BlockBreakEvent e);
-    }
-
-    @FunctionalInterface
-    public interface BlockPlaceListener {
-        void pass(BlockPlaceEvent e);
-    }
-
-    @FunctionalInterface
-    public interface BlockPunchListener {
-        void pass(BlockPos pos, Direction dir);
-    }
-
-    @FunctionalInterface
-    public interface BlockInteractListener {
-        void pass(BlockHitResult hit, Hand hand);
-    }
-
-    @FunctionalInterface
-    public interface ItemUseListener {
-        void pass(ItemUseEvent e);
-    }
-
-    @FunctionalInterface
-    public interface ItemConsumeListener {
-        void pass(ItemConsumeEvent e);
-    }
-
-    @FunctionalInterface
-    public interface KeyListener {
-        void pass(KeyPressEvent e);
-    }
-
-    @FunctionalInterface
-    public interface MoveListener {
-        void pass(PlayerMoveC2SPacket e);
-    }
-
-    @FunctionalInterface
-    public interface ChatReceiveListener {
-        void pass(ChatReceiveEvent e);
-    }
-
-    @FunctionalInterface
-    public interface ChatSendListener {
-        void pass(ChatSendEvent e);
-    }
 
     public static int runModuleScripts() {
         File parentFolder = new File(Config.PATH_SCRIPTS);
