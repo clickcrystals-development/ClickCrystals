@@ -17,12 +17,6 @@ public class EntityIndicator extends ListenerModule {
             .def(true)
             .build()
     );
-    public final ModuleSetting<Boolean> fadeWhenMoving = scGeneral.add(createBoolSetting()
-            .name("fade-when-moving")
-            .description("Does not render the hud at full opacity when the client is moving")
-            .def(true)
-            .build()
-    );
     private final SettingSection scRender = createSettingSection("render");
     public final ModuleSetting<Boolean> updatePerRender = scRender.add(createBoolSetting()
             .name("update-per-render")
