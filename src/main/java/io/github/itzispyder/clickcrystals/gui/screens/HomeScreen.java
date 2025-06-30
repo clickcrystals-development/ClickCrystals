@@ -75,6 +75,7 @@ public class HomeScreen extends AnimatedBase {
 
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
         RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, 0xFF00B7FF, 0xFF00B7FF);
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, 0x8000B7FF, 0x0000B7FF);
         RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, 0x8000B7FF, 0x0000B7FF);
         RenderUtils.fillRoundTabBottom(context, 15, baseHeight / 2 - 10, baseWidth - 30, baseHeight / 2, 10, Shades.TRANS_BLACK);
         RenderUtils.drawRoundTexture(context, Tex.Backdrops.BACKDROP_HOME, 10, 10, baseWidth - 20, baseHeight / 2 + 40, 5);
