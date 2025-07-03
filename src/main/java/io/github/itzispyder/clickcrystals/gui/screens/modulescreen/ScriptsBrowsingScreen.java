@@ -180,8 +180,8 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
             Animator animator = this.getAnimator();
             boolean isAnimating = animator != null && !animator.isFinished();
             if (isAnimating) {
-                context.getMatrices().push();
-                context.getMatrices().translate(-(float)(width * 0.5 * animator.getAnimationReversed()), 0, 0);
+                context.getMatrices().pushMatrix();
+                context.getMatrices().translate(-(float)(width * 0.5 * animator.getAnimationReversed()), 0);
             }
             else {
                 this.setAnimator(null);
@@ -194,7 +194,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
             RenderUtils.drawRightText(context, "§7" + this.details, x + width - 20, y + height / 3, 0.7F, false);
 
             if (isAnimating) {
-                context.getMatrices().pop();
+                context.getMatrices().popMatrix();
             }
         }
 

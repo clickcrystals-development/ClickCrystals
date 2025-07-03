@@ -36,8 +36,8 @@ public class SearchScreen extends DefaultBase {
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
         //RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA03873A9, 0xA0000000);
 
-        context.getMatrices().push();
-        context.getMatrices().translate(baseX, baseY, 0);
+        context.getMatrices().pushMatrix();
+        context.getMatrices().translate(baseX, baseY);
 
         // backdrop
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
@@ -72,7 +72,7 @@ public class SearchScreen extends DefaultBase {
         buttonSettings.x = baseX + 10;
         buttonSettings.y = baseY + caret - translation;
 
-        context.getMatrices().pop();
+        context.getMatrices().popMatrix();
 
         // content
         caret = contentY + 10;

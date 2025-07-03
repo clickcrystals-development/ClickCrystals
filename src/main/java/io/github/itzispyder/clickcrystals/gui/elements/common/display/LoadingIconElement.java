@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.util.math.RotationAxis;
 
 public class LoadingIconElement extends GuiElement {
 
@@ -20,10 +19,11 @@ public class LoadingIconElement extends GuiElement {
         int x = this.x - this.width / 2;
         int y = this.y - this.height / 2;
 
-        context.getMatrices().push();
-        context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360 * (float)animator.getProgress()), this.x, this.y, 0);
+        context.getMatrices().pushMatrix();
+//        context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360 * (float)animator.getProgress()), this.x, this.y, 0);
+        context.getMatrices().rotateAbout(360 * (float)animator.getProgress(), this.x, this.y);
         RenderUtils.drawTexture(context, Tex.Icons.LOADING, x, y, width, height);
-        context.getMatrices().pop();
+        context.getMatrices().popMatrix();
     }
 
     @Override

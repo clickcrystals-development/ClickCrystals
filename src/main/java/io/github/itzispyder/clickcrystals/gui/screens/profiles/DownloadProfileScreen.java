@@ -85,8 +85,8 @@ public class DownloadProfileScreen extends AnimatedBase {
     public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
         renderOpaqueBackground(context);
 
-        context.getMatrices().push();
-        context.getMatrices().translate(baseX, baseY, 0);
+        context.getMatrices().pushMatrix();
+        context.getMatrices().translate(baseX, baseY);
 
         // backdrop
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
@@ -102,7 +102,7 @@ public class DownloadProfileScreen extends AnimatedBase {
         drawText(context, "Online Configuration Profiles", margin, caret, 1.3F, false);
 
 
-        context.getMatrices().pop();
+        context.getMatrices().popMatrix();
     }
 
     private void filterQuery() {

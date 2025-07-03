@@ -22,8 +22,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.RotationAxis;
+import org.joml.Matrix3x2f;
 
 import java.io.File;
 import java.io.InputStream;
@@ -107,12 +106,11 @@ public class DownloadScriptScreen extends AnimatedBase {
         int textW = mc.textRenderer.getWidth(titleText) + 20;
         int textX = baseX + (baseWidth - textW) / 2;
 
-        MatrixStack matrices = context.getMatrices();
-
-        matrices.push();
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-12), textX, caret, 0);
+        Matrix3x2f matrices = context.getMatrices().pushMatrix();
+//        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-12), textX, caret, 0);
+        matrices.rotateAbout((float)Math.toRadians(-12), textX, caret);
         RenderUtils.drawTexture(context, Tex.ICON, textX - 12, caret - 7, 20, 20);
-        matrices.pop();
+        context.getMatrices().popMatrix();
 
         RenderUtils.drawText(context, titleText, textX + 10, caret, false);
     }
@@ -396,7 +394,7 @@ public class DownloadScriptScreen extends AnimatedBase {
             List<String> lines = TextUtils.wordWrap(script.contents, width - 20, 0.5F);
             int max = Math.min(lines.size(), 50);
 
-            context.getMatrices().push();
+            context.getMatrices().pushMatrix();
             context.enableScissor(margin, caret, margin + width - 10, y + height - 5);
             for (int i = 0; i < max; i++) {
                 String line = lines.get(i);
@@ -404,7 +402,7 @@ public class DownloadScriptScreen extends AnimatedBase {
                 caret = (int)(caret + mc.textRenderer.fontHeight * 0.4F);
             }
             context.disableScissor();
-            context.getMatrices().pop();
+            context.getMatrices().popMatrix();
 
             RenderUtils.fillVerticalGradient(context, x, y + height - 5 - 20, width, 20, 0x00323232, 0xFF323232);
 

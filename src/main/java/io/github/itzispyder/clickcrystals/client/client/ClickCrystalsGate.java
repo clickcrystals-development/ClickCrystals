@@ -56,7 +56,7 @@ public class ClickCrystalsGate implements Global {
     public void banishCurrentSession() {
         try {
             MinecraftClient mc = MinecraftClient.getInstance();
-            mc.execute(() -> mc.disconnect(new BanScreen()));
+            mc.execute(() -> mc.disconnect(new BanScreen(), false));
         }
         catch (Exception ex) {
             system.printErr("Logging ClickCrystals user out: user is banned!");

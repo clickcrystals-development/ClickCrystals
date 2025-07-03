@@ -37,8 +37,8 @@ public class SettingSectionElement extends GuiElement {
     public void render(DrawContext context, int mouseX, int mouseY) {
         boolean isAnimating = animator != null && !animator.isFinished();
         if (isAnimating) {
-            context.getMatrices().push();
-            context.getMatrices().translate(0, -(float)(width * 0.5 * animator.getAnimationReversed()), 0);
+            context.getMatrices().pushMatrix();
+            context.getMatrices().translate(0, -(float)(width * 0.5 * animator.getAnimationReversed()));
         }
         else {
             animator = null;
@@ -48,7 +48,7 @@ public class SettingSectionElement extends GuiElement {
 
 
         if (isAnimating) {
-            context.getMatrices().pop();
+            context.getMatrices().popMatrix();
         }
     }
 

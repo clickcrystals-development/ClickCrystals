@@ -17,6 +17,7 @@ public class PacketMapper {
         this.put(BookUpdateC2SPacket.class, new Info("bookUpdate", "BookUpdateC2SPacket"));
         this.put(BundleItemSelectedC2SPacket.class, new Info("bundleItemSelected", "BundleItemSelectedC2SPacket"));
         this.put(ButtonClickC2SPacket.class, new Info("buttonClick", "ButtonClickC2SPacket"));
+        this.put(ChangeGameModeC2SPacket.class, new Info("changeGameMode", "ChangeGameModeC2SPacket"));
         this.put(ChatCommandSignedC2SPacket.class, new Info("chatCommandSigned", "ChatCommandSignedC2SPacket"));
         this.put(ChatMessageC2SPacket.class, new Info("chatMessage", "ChatMessageC2SPacket"));
         this.put(ClickSlotC2SPacket.class, new Info("clickSlot", "ClickSlotC2SPacket"));
@@ -176,6 +177,7 @@ public class PacketMapper {
         this.put(UpdateSelectedSlotS2CPacket.class, new Info("updateSelectedSlot", "UpdateSelectedSlotS2CPacket"));
         this.put(UpdateTickRateS2CPacket.class, new Info("updateTickRate", "UpdateTickRateS2CPacket"));
         this.put(VehicleMoveS2CPacket.class, new Info("vehicleMove", "VehicleMoveS2CPacket"));
+        this.put(WaypointS2CPacket.class, new Info("waypoint", "WaypointS2CPacket"));
         this.put(WorldBorderCenterChangedS2CPacket.class, new Info("worldBorderCenterChanged", "WorldBorderCenterChangedS2CPacket"));
         this.put(WorldBorderInitializeS2CPacket.class, new Info("worldBorderInitialize", "WorldBorderInitializeS2CPacket"));
         this.put(WorldBorderInterpolateSizeS2CPacket.class, new Info("worldBorderInterpolateSize", "WorldBorderInterpolateSizeS2CPacket"));

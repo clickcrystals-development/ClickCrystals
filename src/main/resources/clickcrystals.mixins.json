@@ -21,6 +21,7 @@
     "MixinHeldItemRenderer",
     "MixinInGameHud",
     "MixinInGameOverlay",
+    "MixinInGameOverlayRenderer",
     "MixinKeyboard",
     "MixinLightmapTextureManager",
     "MixinMouse",

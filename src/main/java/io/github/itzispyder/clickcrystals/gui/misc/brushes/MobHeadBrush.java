@@ -31,7 +31,6 @@ public class MobHeadBrush implements Global {
         this.put(EndermiteEntity.class, Identifier.of(modId, "textures/display/icons/entities/endermite.png"));
         this.put(EvokerEntity.class, Identifier.of(modId, "textures/display/icons/entities/evoker.png"));
         this.put(EvokerFangsEntity.class, Identifier.of(modId, "textures/display/icons/entities/evoker_fangs.png"));
-        this.put(FlyingEntity.class, Identifier.of(modId, "textures/display/icons/entities/flying.png"));
         this.put(GhastEntity.class, Identifier.of(modId, "textures/display/icons/entities/ghast.png"));
         this.put(GiantEntity.class, Identifier.of(modId, "textures/display/icons/entities/giant.png"));
         this.put(GuardianEntity.class, Identifier.of(modId, "textures/display/icons/entities/guardian.png"));
@@ -86,6 +85,7 @@ public class MobHeadBrush implements Global {
         this.put(GlowSquidEntity.class, Identifier.of(modId, "textures/display/icons/entities/glow_squid.png"));
         this.put(GoatEntity.class, Identifier.of(modId, "textures/display/icons/entities/goat.png"));
         this.put(GolemEntity.class, Identifier.of(modId, "textures/display/icons/entities/golem.png"));
+        this.put(HappyGhastEntity.class, Identifier.of(modId, "textures/display/icons/entities/happy_ghast.png"));
         this.put(HorseEntity.class, Identifier.of(modId, "textures/display/icons/entities/horse.png"));
         this.put(IronGolemEntity.class, Identifier.of(modId, "textures/display/icons/entities/iron_golem.png"));
         this.put(LlamaEntity.class, Identifier.of(modId, "textures/display/icons/entities/llama.png"));

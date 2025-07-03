@@ -48,10 +48,10 @@ public class CrosshairPositionableHud extends Hud {
             float scale = 0.8F;
             x = (int)((getX() + getWidth() * 0.75) / scale);
             y = (int)(getY() / scale);
-            context.getMatrices().push();
-            context.getMatrices().scale(scale, scale, scale);
+            context.getMatrices().pushMatrix();
+            context.getMatrices().scale(scale);
             context.drawItem(state.getBlock().asItem().getDefaultStack(), x, y);
-            context.getMatrices().pop();
+            context.getMatrices().popMatrix();
         }
     }
 

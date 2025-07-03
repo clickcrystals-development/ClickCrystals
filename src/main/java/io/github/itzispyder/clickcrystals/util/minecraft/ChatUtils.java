@@ -36,7 +36,7 @@ public final class ChatUtils implements Global {
 
     public static void sendChatCommand(String cmd) {
         if (PlayerUtils.valid()) {
-            PlayerUtils.player().networkHandler.sendCommand(cmd);
+            PlayerUtils.player().networkHandler.sendChatCommand(cmd);
         }
     }
 

@@ -106,8 +106,8 @@ public class ScrollPanelElement extends GuiElement {
 
         float interpolatedDelta = (float)(interpolationLength * interpolation.getProgressClampedReversed());
         context.enableScissor(x, y, x + width, y + height);
-        context.getMatrices().push();
-        context.getMatrices().translate(0, -interpolatedDelta, 0);
+        context.getMatrices().pushMatrix();
+        context.getMatrices().translate(0, -interpolatedDelta);
 
         if (bl)
             onRender(context, mouseX, mouseY);
@@ -115,7 +115,7 @@ public class ScrollPanelElement extends GuiElement {
             if (child.y + child.height > this.y || child.y < this.y + this.height)
                 child.render(context, mouseX, mouseY);
 
-        context.getMatrices().pop();
+        context.getMatrices().popMatrix();
         context.disableScissor();
 
         if (Module.isEnabled(GuiBorders.class))

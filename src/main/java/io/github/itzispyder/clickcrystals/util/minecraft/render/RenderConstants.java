@@ -9,7 +9,6 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderPhase;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.TriState;
 
 import java.util.function.Function;
 
@@ -94,7 +93,7 @@ public class RenderConstants {
 
     private static RenderLayer.MultiPhaseParameters textureParams(Identifier id) {
         return RenderLayer.MultiPhaseParameters.builder()
-                .texture(new RenderPhase.Texture(id, TriState.FALSE, false))
+                .texture(new RenderPhase.Texture(id, false))
                 .build(false);
     }
 

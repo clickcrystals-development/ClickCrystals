@@ -8,12 +8,10 @@ import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderConstants;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-import org.joml.Vector3d;
-import org.joml.Vector3f;
+import org.joml.*;
+
+import java.lang.Math;
 
 public class EntityIndicatorSimulationRenderer {
 
@@ -29,13 +27,13 @@ public class EntityIndicatorSimulationRenderer {
         this.transitionAnimation = new PollingAnimator(300, this.simulation::notEmpty, Animations.FADE_IN_AND_OUT);
     }
 
-    public void render(MatrixStack matrices, int x, int y, int hudSize, Quaternionf rotation, int color) {
+    public void render(Matrix3x2fStack matrices, int x, int y, int hudSize, Quaternionf rotation, int color) {
         float radius = (int)(hudSize * transitionAnimation.getAnimation());
         if (radius <= 0)
             return;
 
         BufferBuilder buf = RenderUtils.getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = matrices.peek().getPositionMatrix();
+        Matrix3x2f mat = matrices.pushMatrix();
 
         for (int pitch = 0; pitch < 360; pitch += deltaTheta) {
             for (int yaw = 0; yaw < 180; yaw += deltaTheta) {
@@ -57,9 +55,10 @@ public class EntityIndicatorSimulationRenderer {
         }
 
         RenderUtils.drawBuffer(buf, RenderConstants.QUADS);
+		matrices.popMatrix();
 
         buf = RenderUtils.getBuffer(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
-        mat = matrices.peek().getPositionMatrix();
+        mat = matrices.pushMatrix();
         color = (0x20000000) | (0x00FFFFFF & color);
 
         for (int pitch = 0; pitch < 360; pitch += deltaTheta) {
@@ -88,11 +87,12 @@ public class EntityIndicatorSimulationRenderer {
         }
 
         RenderUtils.drawBuffer(buf, RenderConstants.LINES);
+		matrices.popMatrix();
 
         this.renderEntities(matrices, x, y, radius, rotation);
     }
 
-    private void renderEntities(MatrixStack matrices, int cx, int cy, float radius, Quaternionf rotation) {
+    private void renderEntities(Matrix3x2fStack matrices, int cx, int cy, float radius, Quaternionf rotation) {
         float spriteSize = 8.0F;
         for (SimulationEntry entity : simulation.getEntities()) {
             Vector3f vecDifference = entity.getVecDifference().multiply(radius).toVector3f();
@@ -113,26 +113,22 @@ public class EntityIndicatorSimulationRenderer {
         });
     }
 
-    private void drawLine(MatrixStack matrices, float x1, float y1, float x2, float y2, int color) {
+    private void drawLine(Matrix3x2fStack matrices, float x1, float y1, float x2, float y2, int color) {
         BufferBuilder buf = RenderUtils.getBuffer(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = matrices.peek().getPositionMatrix();
-
-        buf.vertex(mat, x1, y1, 0).color(color);
-        buf.vertex(mat, x2, y2, 0).color(color);
-
-        RenderUtils.drawBuffer(buf, RenderConstants.LINES);
+        buf.vertex(matrices, x1, y1, 0).color(color);
+        buf.vertex(matrices, x2, y2, 0).color(color);
     }
 
-    private void drawSprite(MatrixStack matrices, Identifier texture, float cx, float cy, float size, boolean highlight) {
+    private void drawSprite(Matrix3x2fStack matrices, Identifier texture, float cx, float cy, float size, boolean highlight) {
         BufferBuilder buf;
-        Matrix4f mat;
+        Matrix3x2f mat;
 
         float x = cx - size / 2;
         float y = cy - size / 2;
 
         if (highlight) {
             buf = RenderUtils.getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-            mat = matrices.peek().getPositionMatrix();
+            mat = matrices.pushMatrix();
 
             x--;
             y--;
@@ -148,10 +144,11 @@ public class EntityIndicatorSimulationRenderer {
             size -= 2;
 
             RenderUtils.drawBuffer(buf, RenderConstants.QUADS);
+		    matrices.popMatrix();
         }
 
         buf = RenderUtils.getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
-        mat = matrices.peek().getPositionMatrix();
+        mat = matrices.pushMatrix();
 
         buf.vertex(mat, x, y, 0).texture(0, 0).color(-1);
         buf.vertex(mat, x, y + size, 0).texture(0, 1).color(-1);
@@ -159,6 +156,7 @@ public class EntityIndicatorSimulationRenderer {
         buf.vertex(mat, x + size, y, 0).texture(1, 0).color(-1);
 
         RenderUtils.drawBuffer(buf, RenderConstants.TEX_QUADS.apply(texture));
+		matrices.popMatrix();
     }
 
     private Vector3d polar2vector(float pitch, float yaw, float radius) {

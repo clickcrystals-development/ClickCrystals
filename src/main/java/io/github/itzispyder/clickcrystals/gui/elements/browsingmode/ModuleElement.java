@@ -30,8 +30,8 @@ public class ModuleElement extends GuiElement {
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         boolean isAnimating = animator != null && !animator.isFinished();
         if (isAnimating) {
-            context.getMatrices().push();
-            context.getMatrices().translate(-(float)(width * 0.5 * animator.getAnimationReversed()), 0, 0);
+            context.getMatrices().pushMatrix();
+            context.getMatrices().translate(-(float)(width * 0.5 * animator.getAnimationReversed()), 0);
         }
         else {
             animator = null;
@@ -51,7 +51,7 @@ public class ModuleElement extends GuiElement {
         RenderUtils.drawText(context, text, x + width / 3, y + height / 3, 0.7F, false);
 
         if (isAnimating) {
-            context.getMatrices().pop();
+            context.getMatrices().popMatrix();
         }
     }
 

@@ -48,8 +48,8 @@ public abstract class MixinMinecraftClient implements MinecraftClientAccessor, G
         system.onClientStopping();
     }
 
-    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;)V", at = @At("HEAD"))
-    public void disconnect(Screen screen, CallbackInfo ci) {
+    @Inject(method = "disconnect", at = @At("HEAD"))
+    public void disconnect(Screen disconnectionScreen, boolean transferring, CallbackInfo ci) {
         system.eventBus.pass(new GameLeaveEvent());
     }
 

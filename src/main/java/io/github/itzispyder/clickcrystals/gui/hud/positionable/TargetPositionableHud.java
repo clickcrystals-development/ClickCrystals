@@ -88,11 +88,11 @@ public class TargetPositionableHud extends Hud {
             float scale = 1.8F;
             int tx = (int) ((margin + 80 + g) / scale - 1);
             int ty = (int) (y / scale + 5);
-            context.getMatrices().push();
-            context.getMatrices().scale(scale, scale, scale);
+            context.getMatrices().pushMatrix();
+            context.getMatrices().scale(scale);
             context.drawItem(totem, tx, ty);
             context.drawStackOverlay(mc.textRenderer, totem, tx, ty, pops);
-            context.getMatrices().pop();
+            context.getMatrices().popMatrix();
 
             // end
             caret += g + 8;

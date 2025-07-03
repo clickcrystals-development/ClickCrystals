@@ -48,7 +48,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        context.getMatrices().push();
+        context.getMatrices().pushMatrix();
         context.enableScissor(x, y, x + width, y + height);
 
         RenderUtils.fillRect(context, x, y, width, height, backgroundColor.getHex());
@@ -83,7 +83,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
         }
 
         context.disableScissor();
-        context.getMatrices().pop();
+        context.getMatrices().popMatrix();
     }
 
     @Override

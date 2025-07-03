@@ -12,14 +12,13 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.Window;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.joml.Matrix4f;
+import org.joml.Matrix3x2f;
+import org.joml.Matrix3x2fStack;
 import org.lwjgl.opengl.GL11;
 
-import static java.lang.Math.*;
 import static net.minecraft.util.math.ColorHelper.getArgb;
 
 public final class RenderUtils implements Global {
@@ -30,7 +29,7 @@ public final class RenderUtils implements Global {
 
     public static void fillRect(DrawContext context, int x, int y, int w, int h, int color) {
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         buf.vertex(mat, (float)x, (float)y, 0).color(color);
         buf.vertex(mat, (float)(x + w), (float)y, 0).color(color);
@@ -42,7 +41,7 @@ public final class RenderUtils implements Global {
 
     public static void fillRadialGradient(DrawContext context, int cX, int cY, int radius, int innerColor, int outerColor) {
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         buf.vertex(mat, (float)cX, (float)cY, 0).color(innerColor);
 
@@ -58,7 +57,7 @@ public final class RenderUtils implements Global {
 
     public static void fillSidewaysGradient(DrawContext context, int x, int y, int w, int h, int colorLeft, int colorRight) {
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         buf.vertex(mat, x, y, 0).color(colorLeft);
         buf.vertex(mat, x, y + h, 0).color(colorLeft);
@@ -81,7 +80,7 @@ public final class RenderUtils implements Global {
             return;
         }
 
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
         int sectionLen = w / (amount - 1);
 
@@ -100,7 +99,7 @@ public final class RenderUtils implements Global {
 
     public static void fillVerticalGradient(DrawContext context, int x, int y, int w, int h, int colorTop, int colorBottom) {
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         buf.vertex(mat, x, y, 0).color(colorTop);
         buf.vertex(mat, x + w, y, 0).color(colorTop);
@@ -123,7 +122,7 @@ public final class RenderUtils implements Global {
             return;
         }
 
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
         int sectionLen = h / (amount - 1);
 
@@ -142,7 +141,7 @@ public final class RenderUtils implements Global {
 
     public static void fillAnnulusArcGradient(DrawContext context, int cx, int cy, int radius, int start, int end, int thickness, int innerColor, int outerColor) {
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         for (int i = start - 90; i <= end - 90; i ++) {
             float angle = (float)Math.toRadians(i);
@@ -161,7 +160,7 @@ public final class RenderUtils implements Global {
 
     public static void fillArc(DrawContext context, int cX, int cY, int radius, int start, int end, int color) {
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         buf.vertex(mat, (float)cX, (float)cY, 0).color(color);
 
@@ -181,7 +180,7 @@ public final class RenderUtils implements Global {
 
     public static void fillAnnulusArc(DrawContext context, int cx, int cy, int radius, int start, int end, int thickness, int color) {
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         for (int i = start - 90; i <= end - 90; i ++) {
             float angle = (float)Math.toRadians(i);
@@ -206,7 +205,7 @@ public final class RenderUtils implements Global {
         r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
 
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(color);
 
@@ -237,7 +236,7 @@ public final class RenderUtils implements Global {
         r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
 
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(colorCenter);
 
@@ -269,7 +268,7 @@ public final class RenderUtils implements Global {
         r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
 
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         int[][] corners = {
                 { x + w - r, y + r },
@@ -303,7 +302,7 @@ public final class RenderUtils implements Global {
         r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
 
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         int[][] corners = {
                 { x + w - r, y + r },
@@ -344,7 +343,7 @@ public final class RenderUtils implements Global {
 
     public static void fillRoundTabTop(DrawContext context, int x, int y, int w, int h, int r, int color) {
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(color);
 
@@ -373,7 +372,7 @@ public final class RenderUtils implements Global {
 
     public static void fillRoundTabBottom(DrawContext context, int x, int y, int w, int h, int r, int color) {
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(color);
 
@@ -434,7 +433,7 @@ public final class RenderUtils implements Global {
 
     public static void drawLine(DrawContext context, int x1, int y1, int x2, int y2, int color) {
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         buf.vertex(mat, (float)x1, (float)y1, 0).color(color);
         buf.vertex(mat, (float)x2, (float)y2, 0).color(color);
@@ -444,7 +443,7 @@ public final class RenderUtils implements Global {
 
     public static void drawArc(DrawContext context, int cX, int cY, int radius, int start, int end, int color) {
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         for (int i = start - 90; i <= end - 90; i++) {
             double angle = Math.toRadians(i);
@@ -464,7 +463,7 @@ public final class RenderUtils implements Global {
         r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
 
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         int[][] corners = {
                 { x + w - r, y + r },
@@ -500,20 +499,20 @@ public final class RenderUtils implements Global {
     // default text
 
     public static void drawDefaultScaledText(DrawContext context, Text text, int x, int y, float scale, boolean shadow, int color) {
-        MatrixStack m = context.getMatrices();
-        m.scale(scale, scale, scale);
+        Matrix3x2fStack m = context.getMatrices().pushMatrix();
+        m.scale(scale);
 
         float rescale = 1 / scale;
         x = (int)(x * rescale);
         y = (int)(y * rescale);
 
         drawDefaultText(context, text, x, y, shadow, color);
-        m.scale(rescale, rescale, rescale);
+        context.getMatrices().popMatrix();
     }
 
     public static void drawDefaultCenteredScaledText(DrawContext context, Text text, int centerX, int y, float scale, boolean shadow, int color) {
-        MatrixStack m = context.getMatrices();
-        m.scale(scale, scale, scale);
+        Matrix3x2fStack m = context.getMatrices().pushMatrix();
+        m.scale(scale);
 
         float rescale = 1 / scale;
         centerX = (int)(centerX * rescale);
@@ -521,12 +520,12 @@ public final class RenderUtils implements Global {
         y = (int)(y * rescale);
 
         drawDefaultText(context, text, centerX, y, shadow, color);
-        m.scale(rescale, rescale, rescale);
+        context.getMatrices().popMatrix();
     }
 
     public static void drawDefaultRightScaledText(DrawContext context, Text text, int rightX, int y, float scale, boolean shadow, int color) {
-        MatrixStack m = context.getMatrices();
-        m.scale(scale, scale, scale);
+        Matrix3x2fStack m = context.getMatrices().pushMatrix();
+        m.scale(scale);
 
         float rescale = 1 / scale;
         rightX = (int)(rightX * rescale);
@@ -534,7 +533,7 @@ public final class RenderUtils implements Global {
         y = (int)(y * rescale);
 
         drawDefaultText(context, text, rightX, y, shadow, color);
-        m.scale(rescale, rescale, rescale);
+        context.getMatrices().popMatrix();
     }
 
     public static void drawDefaultScaledText(DrawContext context, Text text, int x, int y, float scale, boolean shadow) {
@@ -604,7 +603,7 @@ public final class RenderUtils implements Global {
 
     public static void drawTexture(DrawContext context, Identifier texture, int x, int y, int w, int h) {
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         buf.vertex(mat, x, y, 0).texture(0, 0).color(-1);
         buf.vertex(mat, x, y + h, 0).texture(0, 1).color(-1);
@@ -618,7 +617,7 @@ public final class RenderUtils implements Global {
         r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
 
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE_COLOR);
-        Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
+        Matrix3x2f mat = context.getMatrices();
 
         buf.vertex(mat, x + w / 2F, y + h / 2F, 0).texture(0.5F, 0.5F).color(-1);
 
@@ -650,21 +649,21 @@ public final class RenderUtils implements Global {
     public static void drawItem(DrawContext context, ItemStack item, int x, int y, float scale) {
         x = (int)(x / scale);
         y = (int)(y / scale);
-        context.getMatrices().push();
-        context.getMatrices().scale(scale, scale, scale);
+        context.getMatrices().pushMatrix();
+        context.getMatrices().scale(scale);
         context.drawItem(item, x, y);
         context.drawStackOverlay(mc.textRenderer, item, x, y);
-        context.getMatrices().pop();
+        context.getMatrices().popMatrix();
     }
 
     public static void drawItem(DrawContext context, ItemStack item, int x, int y, float scale, String text) {
         x = (int)(x / scale);
         y = (int)(y / scale);
-        context.getMatrices().push();
-        context.getMatrices().scale(scale, scale, scale);
+        context.getMatrices().pushMatrix();
+        context.getMatrices().scale(scale);
         context.drawItem(item, x, y);
         context.drawStackOverlay(mc.textRenderer, item, x, y, text);
-        context.getMatrices().pop();
+        context.getMatrices().popMatrix();
     }
 
     public static void drawItem(DrawContext context, ItemStack item, int x, int y, int size) {
@@ -721,26 +720,5 @@ public final class RenderUtils implements Global {
         float[] color = new float[4];
         GL11.glReadPixels((int)(x / ratW), h1 - (int)(y / ratH), 1, 1, GL11.GL_RGBA, GL11.GL_FLOAT, color);
         return color;
-    }
-
-    public static void fillWave(MatrixStack matrices, float x, float y, float width, float height, float horizontalStretch, float verticalStretch, int color, double offsetX, boolean horizontalFlip) {
-        int colorFade = new Color(color).getHexCustomAlpha(0.0);
-        Matrix4f mat = matrices.peek().getPositionMatrix();
-        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR);
-        int sections = (int)Math.ceil(width / 10);
-
-        float v = verticalStretch;
-        float h = horizontalStretch;
-        float breeze = (float) waveBreezeAnimation.getAnimationController().f(horizontalFlip ? waveBreezeAnimation.getProgressReversed() : waveBreezeAnimation.getProgress());
-
-        for (int i = 0; i <= sections; i++) {
-            float waveX = x + i * 10;
-            float theta = (float) (waveX + offsetX);
-            float waveY = y + (float) (v * (cos(h * theta) + pow(sin(h * theta), 2) - sin(breeze * h * waveX)));
-            buf.vertex(mat, waveX, waveY, 0).color(color);
-            buf.vertex(mat, waveX, y + height, 0).color(colorFade);
-        }
-
-        drawBuffer(buf, RenderConstants.TRI_STRIP);
     }
 }

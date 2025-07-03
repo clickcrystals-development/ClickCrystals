@@ -70,8 +70,8 @@ public class HomeScreen extends AnimatedBase {
         renderOpaqueBackground(context);
 
         // title card
-        context.getMatrices().push();
-        context.getMatrices().translate(baseX, baseY, 0);
+        context.getMatrices().pushMatrix();
+        context.getMatrices().translate(baseX, baseY);
 
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
         RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, 0xFF00B7FF, 0xFF00B7FF);
@@ -81,7 +81,7 @@ public class HomeScreen extends AnimatedBase {
         RenderUtils.drawRoundTexture(context, Tex.Backdrops.BACKDROP_HOME, 10, 10, baseWidth - 20, baseHeight / 2 + 40, 5);
         RenderUtils.fillRoundShadow(context,10, 10, baseWidth - 20, baseHeight / 2 + 40, 5, 5, 0xFF000000, 0x00000000);
 
-        context.getMatrices().pop();
+        context.getMatrices().popMatrix();
 
         // content
         if (!ClickCrystals.info.getMotd().trim().isEmpty()) {

@@ -25,7 +25,7 @@ public abstract class Command implements Global {
     public static final RegistryWrapper.WrapperLookup WRAPPER = BuiltinRegistries.createWrapperLookup();
     public static final CommandRegistryAccess REGISTRY = CommandManager.createRegistryAccess(WRAPPER);
     public static final CommandDispatcher<CommandSource> DISPATCHER = new CommandDispatcher<>();
-    public static final CommandSource SOURCE = new ClientCommandSource(null, mc);
+    public static final CommandSource SOURCE = new ClientCommandSource(null, mc, false);
 
     private final String name, description, usage;
     private final String[] aliases;
