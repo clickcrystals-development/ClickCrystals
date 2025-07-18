@@ -6,7 +6,6 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
-import org.joml.Matrix3x2fStack;
 
 public abstract class AnimatedBase extends GuiScreen {
 
@@ -21,7 +20,6 @@ public abstract class AnimatedBase extends GuiScreen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        Matrix3x2fStack matrices = context.getMatrices();
         boolean canAnimate = open ? canPlayOpenAnimation() : canPlayCloseAnimation();
         float scale = (float) animator.getAnimation();
 
@@ -31,14 +29,14 @@ public abstract class AnimatedBase extends GuiScreen {
 //            double scaleX = x / scale - x;
 //            double scaleY = y / scale - y;
 
-            matrices.pushMatrix();
-            matrices.scaleAround(scale, x, y);
+            context.getMatrices().pushMatrix();
+            context.getMatrices().scaleAround(scale, x, y);
         }
 
         super.render(context, mouseX, mouseY, delta);
 
         if (canAnimate)
-            matrices.popMatrix();
+            context.getMatrices().popMatrix();
     }
 
     @Override

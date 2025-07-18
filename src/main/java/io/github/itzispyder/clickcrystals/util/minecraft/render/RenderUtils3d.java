@@ -23,7 +23,7 @@ public class RenderUtils3d {
         buf.vertex(mat, (float)x1, (float)y1, (float)z1).color(color);
         buf.vertex(mat, (float)x2, (float)y2, (float)z2).color(color);
 
-        drawBuffer(buf, RenderConstants.LINES);
+        drawBuffer(buf, ClickCrystalsRenderLayers.LINES);
     }
 
     public static void drawFlatLine(MatrixStack matrices, double x1, double y1, double z1, double x2, double y2, double z2, double width, int color) {
@@ -50,7 +50,7 @@ public class RenderUtils3d {
         buf.vertex(mat, (float)v3.x, (float)v3.y, (float)v3.z).color(colorQuat);
         buf.vertex(mat, (float)v4.x, (float)v4.y, (float)v4.z).color(colorQuat);
 
-        drawBuffer(buf, RenderConstants.QUADS);
+        drawBuffer(buf, ClickCrystalsRenderLayers.QUADS);
 
         // lines
         drawLine(matrices, v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, colorFull);
@@ -95,7 +95,7 @@ public class RenderUtils3d {
         buf.vertex(mat, (float)(x + 1) + diff, (float)(y + 1), (float)(z + 1)).color(color);
         buf.vertex(mat, (float)(x + 1) + diff, (float)(y + 0), (float)(z + 1)).color(color);
 
-        drawBuffer(buf, RenderConstants.QUADS);
+        drawBuffer(buf, ClickCrystalsRenderLayers.QUADS);
     }
 
     public static void fillBox(MatrixStack matrices, Box box, int color) {
@@ -139,7 +139,7 @@ public class RenderUtils3d {
         buf.vertex(mat, x2, y2, z2).color(color);
         buf.vertex(mat, x2, y1, z2).color(color);
 
-        drawBuffer(buf, RenderConstants.QUADS);
+        drawBuffer(buf, ClickCrystalsRenderLayers.QUADS);
     }
 
     public static void fillCyl(MatrixStack matrices, double x, double y, double z, double radius, double height, int color) {
@@ -154,7 +154,7 @@ public class RenderUtils3d {
             buf.vertex(mat, cx, (float)(y + height), cz).color(color);
         }
 
-        drawBuffer(buf, RenderConstants.TRI_STRIP);
+        drawBuffer(buf, ClickCrystalsRenderLayers.TRI_STRIP);
     }
 
     public static void fillCylGradient(MatrixStack matrices, double x, double y, double z, double radius, double height, int colorBottom, int colorTop) {
@@ -169,7 +169,7 @@ public class RenderUtils3d {
             buf.vertex(mat, cx, (float)(y + height), cz).color(colorTop);
         }
 
-        drawBuffer(buf, RenderConstants.TRI_STRIP_CULL);
+        drawBuffer(buf, ClickCrystalsRenderLayers.TRI_STRIP_CULL);
     }
 
     public static void drawCube(MatrixStack matrices, double x, double y, double z, int color) {
@@ -203,7 +203,7 @@ public class RenderUtils3d {
         buf.vertex(mat, (float)(x + 0), (float)(y + 0), (float)(z + 1)).color(color);
         buf.vertex(mat, (float)(x + 0), (float)(y + 1), (float)(z + 1)).color(color);
 
-        drawBuffer(buf, RenderConstants.LINES);
+        drawBuffer(buf, ClickCrystalsRenderLayers.LINES);
     }
 
     public static void renderBlock(MatrixStack matrices, Vec3d block, int color) {
@@ -251,7 +251,7 @@ public class RenderUtils3d {
         buf.vertex(mat, (float)x1, (float)y1, (float)z2).color(color);
         buf.vertex(mat, (float)x1, (float)y2, (float)z2).color(color);
 
-        drawBuffer(buf, RenderConstants.LINES);
+        drawBuffer(buf, ClickCrystalsRenderLayers.LINES);
     }
 
     public static void renderPlayerThingy(MatrixStack matrices, double x, double y, double z, float pitch, float yaw, int color) {

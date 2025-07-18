@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
-import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderConstants;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderLayers;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.VertexFormats;
@@ -54,7 +54,7 @@ public class EntityIndicatorSimulationRenderer {
             }
         }
 
-        RenderUtils.drawBuffer(buf, RenderConstants.QUADS);
+        RenderUtils.drawBuffer(buf, ClickCrystalsRenderLayers.QUADS);
 		matrices.popMatrix();
 
         buf = RenderUtils.getBuffer(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
@@ -86,7 +86,7 @@ public class EntityIndicatorSimulationRenderer {
             }
         }
 
-        RenderUtils.drawBuffer(buf, RenderConstants.LINES);
+        RenderUtils.drawBuffer(buf, ClickCrystalsRenderLayers.LINES);
 		matrices.popMatrix();
 
         this.renderEntities(matrices, x, y, radius, rotation);
@@ -143,7 +143,7 @@ public class EntityIndicatorSimulationRenderer {
             y++;
             size -= 2;
 
-            RenderUtils.drawBuffer(buf, RenderConstants.QUADS);
+            RenderUtils.drawBuffer(buf, ClickCrystalsRenderLayers.QUADS);
 		    matrices.popMatrix();
         }
 
@@ -155,7 +155,7 @@ public class EntityIndicatorSimulationRenderer {
         buf.vertex(mat, x + size, y + size, 0).texture(1, 1).color(-1);
         buf.vertex(mat, x + size, y, 0).texture(1, 0).color(-1);
 
-        RenderUtils.drawBuffer(buf, RenderConstants.TEX_QUADS.apply(texture));
+        RenderUtils.drawBuffer(buf, ClickCrystalsRenderLayers.TEX_QUADS.apply(texture));
 		matrices.popMatrix();
     }
 

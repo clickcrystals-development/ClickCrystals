@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderConstants;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderLayers;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.SplashOverlay;
@@ -81,7 +81,7 @@ public abstract class MixinSplashOverlay implements Global {
         buf.vertex(mat, x + size, y + size, 0).texture(1, 1).color(-1);
         buf.vertex(mat, x + size, y, 0).texture(1, 0).color(-1);
 
-        RenderUtils.drawBuffer(buf, RenderConstants.TEX_QUADS.apply(Tex.ICON));
+        RenderUtils.drawBuffer(buf, ClickCrystalsRenderLayers.TEX_QUADS.apply(Tex.ICON));
         matrices.popMatrix();
     }
 }
