@@ -51,28 +51,16 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Version: 1.3.2
+Version: 1.3.3
 
 Scripting:
-  - on packet_send (packet)
-  - on packet_receive (packet)
-  - on chat_send (message) # old
-  - on chat_receive (message) # old
-  - on chat_send (regex) # new
-  - on chat_receive (regex) # new
-  - if alive
+  - if falling
 
-Modules:
-  - remove HealthTags module
-  - add 3d option for EntityIndicator module
-  - add ItemHighlight
-
-Patches:
-  - entity indicator hud not showing all entiities (some where white squares/missing textures)
-  - file separater issue causing script folders to not work on linux
-
-Tweaks:
-  - fix positioning of rendering itemstacks in huds
+Major Changes:
+  - rewrote rendering system to be compatible with the new Vibrant Visuals changes ;-;
+  - support for 1.21.6
+  - support for 1.21.7
+  - support for 1.21.8
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)

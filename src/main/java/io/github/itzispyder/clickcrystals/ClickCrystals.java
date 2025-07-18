@@ -69,13 +69,14 @@ import org.lwjgl.glfw.GLFW;
 /**
  * ClickCrystals main
  * TODO: (1) Update mod "gradle.properties"
- * TODO: (2) Update "README.md"
- * TODO: (3) Publishing checklist
- * TODO: (4) GitHub Release
- * TODO: (5) PlanetMC Release
- * TODO: (6) CurseForge Release
- * TODO: (7) Update <a href="https://itzispyder.github.io/clickcrystals/info.json">...</a>
- * TODO: (8) Discord Announcement
+ * TODO: (2) Update background texture (optional)
+ * TODO: (3) Update "README.md"
+ * TODO: (4) Publishing checklist
+ * TODO: (5) GitHub Release
+ * TODO: (6) PlanetMC Release
+ * TODO: (7) CurseForge Release
+ * TODO: (8) Update <a href="https://itzispyder.github.io/clickcrystals/info.json">...</a>
+ * TODO: (9) Discord Announcement
  */
 public final class ClickCrystals implements ModInitializer, Global {
 
