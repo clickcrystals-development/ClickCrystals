@@ -31,8 +31,10 @@ Happy coding and cpvping!
 | What You Have | What to get                                                                                                                   |
 |:--------------|:------------------------------------------------------------------------------------------------------------------------------|
 | higher..      | how is that even possible?                                                                                                    |
-| 1.21.6        | not supported                                                                                                                 |
-| 1.21.5        | [ClickCrystals-1.21.5-1.3.1.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.1) *recommended |
+| 1.21.8        | [ClickCrystals-1.21.6-1.3.3.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.3) *recommended |
+| 1.21.7        | [ClickCrystals-1.21.6-1.3.3.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.3) *recommended |
+| 1.21.6        | [ClickCrystals-1.21.6-1.3.3.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.3) *recommended |
+| 1.21.5        | [ClickCrystals-1.21.5-1.3.2.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.2)              |
 | 1.21.4        | not supported                                                                                                                 |
 | 1.21.3        | not supported                                                                                                                 |
 | 1.21.2        | not supported                                                                                                                 |
@@ -45,7 +47,7 @@ Happy coding and cpvping!
 | 1.20.2        | [ClickCrystals-1.20.2-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
 | 1.20.1        | [ClickCrystals-1.20-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
 | 1.20          | [ClickCrystals-1.20-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
-| ..lower       | cry                                                                                                                           |                                                                                                                     |
+| ..lower       | cry                                                                                                                           |                                                                                                                       |                                                                                                                     |
 
 
 
