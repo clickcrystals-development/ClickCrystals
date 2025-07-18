@@ -3,20 +3,18 @@ package io.github.itzispyder.clickcrystals.util.minecraft.render;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Color;
-import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.states.ClickCrystalsQuadState;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.states.ClickCrystalsRoundRectState;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.states.ClickCrystalsRoundRectTexState;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.states.ClickCrystalsRoundRectWireframeState;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.joml.Matrix3x2f;
 import org.joml.Matrix3x2fStack;
 
 public final class RenderUtils implements Global {
@@ -56,61 +54,15 @@ public final class RenderUtils implements Global {
     }
 
     public static void fillRoundTabTop(DrawContext context, int x, int y, int w, int h, int r, int color) {
-        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
-        Matrix3x2f mat = context.getMatrices();
-
-        buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(color);
-
-        int[][] corners = {
-                { x + r, y + r },
-                { x + w - r, y + r }
-        };
-
-        for (int corner = 0; corner < 2; corner++) {
-            int cornerStart = (corner - 2) * 90;
-            int cornerEnd = cornerStart + 90;
-            for (int i = cornerStart; i <= cornerEnd; i += 10) {
-                float angle = (float)Math.toRadians(i);
-                float rx = corners[corner][0] + (float)(Math.cos(angle) * r);
-                float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
-                buf.vertex(mat, rx, ry, 0).color(color);
-            }
-        }
-
-        buf.vertex(mat, x + w, y + h, 0).color(color);
-        buf.vertex(mat, x, y + h, 0).color(color);
-        buf.vertex(mat, x, corners[0][1], 0).color(color); // connect last to first vertex
-
-        drawBuffer(buf, ClickCrystalsRenderLayers.TRI_FAN);
+        context.enableScissor(x, y, x + w, y + h);
+        fillRoundRect(context, x, y, w, h + r, r, color);
+        context.disableScissor();
     }
 
     public static void fillRoundTabBottom(DrawContext context, int x, int y, int w, int h, int r, int color) {
-        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
-        Matrix3x2f mat = context.getMatrices();
-
-        buf.vertex(mat, x + w / 2F, y + h / 2F, 0).color(color);
-
-        int[][] corners = {
-                { x + w - r, y + h - r},
-                { x + r, y + h - r }
-        };
-
-        for (int corner = 0; corner < 2; corner++) {
-            int cornerStart = corner * 90;
-            int cornerEnd = cornerStart + 90;
-            for (int i = cornerStart; i <= cornerEnd; i += 10) {
-                float angle = (float)Math.toRadians(i);
-                float rx = corners[corner][0] + (float)(Math.cos(angle) * r);
-                float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
-                buf.vertex(mat, rx, ry, 0).color(color);
-            }
-        }
-
-        buf.vertex(mat, x, y, 0).color(color);
-        buf.vertex(mat, x + w, y, 0).color(color);
-        buf.vertex(mat, x + w, corners[0][1], 0).color(color); // connect last to first vertex
-
-        drawBuffer(buf, ClickCrystalsRenderLayers.TRI_FAN);
+        context.enableScissor(x, y, x + w, y + h);
+        fillRoundRect(context, x, y - r, w, h + r, r, color);
+        context.disableScissor();
     }
 
     public static void fillRoundHoriLine(DrawContext context, int x, int y, int length, int thickness, int color) {
@@ -252,36 +204,7 @@ public final class RenderUtils implements Global {
     }
 
     public static void drawRoundTexture(DrawContext context, Identifier texture, int x, int y, int w, int h, int r) {
-        r = MathUtils.clamp(r, 0, Math.min(w, h) / 2);
-
-        BufferBuilder buf = getBuffer(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_TEXTURE_COLOR);
-        Matrix3x2f mat = context.getMatrices();
-
-        buf.vertex(mat, x + w / 2F, y + h / 2F, 0).texture(0.5F, 0.5F).color(-1);
-
-        int[][] corners = {
-                { x + w - r, y + r },
-                { x + w - r, y + h - r},
-                { x + r, y + h - r },
-                { x + r, y + r }
-        };
-
-        for (int corner = 0; corner < 4; corner++) {
-            int cornerStart = (corner - 1) * 90;
-            int cornerEnd = cornerStart + 90;
-            for (int i = cornerStart; i <= cornerEnd; i += 10) {
-                float angle = (float)Math.toRadians(i);
-                float rx = corners[corner][0] + (float)(Math.cos(angle) * r);
-                float ry = corners[corner][1] + (float)(Math.sin(angle) * r);
-                float u = (rx - x) / w;
-                float v = (ry - y) / h;
-                buf.vertex(mat, rx, ry, 0).texture(u, v).color(-1);
-            }
-        }
-
-        buf.vertex(mat, corners[0][0], y, 0).texture(((float)corners[0][0] - x) / w, 0).color(-1); // connect last to first vertex
-
-        drawBuffer(buf, ClickCrystalsRenderLayers.TEX_TRI_FAN.apply(texture));
+        context.state.addSimpleElement(new ClickCrystalsRoundRectTexState(context, texture, x, y, w, h, r));
     }
 
     public static void drawItem(DrawContext context, ItemStack item, int x, int y, float scale) {

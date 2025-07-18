@@ -13,7 +13,6 @@ import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
-import org.joml.Matrix3x2fStack;
 import org.joml.Quaternionf;
 
 public class EntityIndicatorHud extends Hud {
@@ -45,7 +44,6 @@ public class EntityIndicatorHud extends Hud {
     }
 
     private void render3D(DrawContext context, EntityIndicator module, int cx, int cy, int radius, float tickDelta) {
-        Matrix3x2fStack matrices = context.getMatrices();
         EntityIndicatorSimulationRenderer renderer = module.getSimulation().getRenderer();
         ClientPlayerEntity client = PlayerUtils.player();
 
@@ -56,7 +54,7 @@ public class EntityIndicatorHud extends Hud {
         Quaternionf qYaw = new Quaternionf().rotationY(yaw);
         Quaternionf rotation = qPitch.mul(qYaw);
 
-        renderer.render(matrices, cx, cy, radius, rotation, 0x06FFFFFF);
+        renderer.render(context, cx, cy, radius, rotation, 0x06FFFFFF);
         renderer.setFocalLen(100);
     }
 
@@ -65,7 +63,6 @@ public class EntityIndicatorHud extends Hud {
 
         nearest.accept(display -> {
             context.getMatrices().pushMatrix();
-//            context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(display.getYawDifference()), cx, cy, 0);
             context.getMatrices().rotateAbout((float)Math.toRadians(display.getYawDifference()), cx, cy);
             RenderUtils.drawTexture(context, Tex.Overlays.DIRECTION, cx - radius, cy - radius, radius * 2, radius * 2);
             context.getMatrices().popMatrix();

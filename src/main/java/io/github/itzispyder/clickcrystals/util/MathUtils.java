@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Quaternionf;
+import org.joml.Vector3d;
 import org.joml.Vector3f;
 
 import java.util.Arrays;
@@ -127,6 +128,34 @@ public final class MathUtils {
             return Math.abs(deg2 - deg1);
         }
         return Math.abs(wrapDegrees(diff));
+    }
+
+    public static Vector3d toVector(float pitch, float yaw, float radius) {
+        pitch = (float) Math.toRadians(pitch);
+        yaw = (float) Math.toRadians(yaw);
+        double x = radius * Math.cos(yaw) * Math.cos(pitch);
+        double y = radius * Math.sin(pitch);
+        double z = radius * Math.sin(yaw) * Math.cos(pitch);
+        return new Vector3d(x, y, z);
+    }
+
+    public static float[] projectVertex(double x, double y, double z, float focalLen) {
+        double depth = -(focalLen + z);
+        if (depth >= 0)
+            depth = -0.00000000001;
+        float pixelX = (float) ((focalLen * x) / depth);
+        float pixelY = (float) ((focalLen * y) / depth);
+        return new float[] { pixelX, pixelY };
+    }
+
+    public static float[] projectVertex(Vector3d vector, Quaternionf rotation, float focalLen) {
+        vector = rotation.transform(vector);
+        return projectVertex(vector.x, vector.y, vector.z, focalLen);
+    }
+
+    public static float[] projectVertex(Vector3f vector, Quaternionf rotation, float focalLen) {
+        vector = rotation.transform(vector);
+        return projectVertex(vector.x, vector.y, vector.z, focalLen);
     }
 
     public static Vec3d rotate(Vec3d vec, Vec3d og, float pitch, float yaw) {

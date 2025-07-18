@@ -1,17 +1,18 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering.entityindicators;
 
-import com.mojang.blaze3d.vertex.VertexFormat;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
-import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderLayers;
-import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.VertexFormats;
+import io.github.itzispyder.clickcrystals.util.MathUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.states.SphereFillRenderState;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.states.SphereState;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.states.SphereWireframeRenderState;
+import net.minecraft.client.gl.RenderPipelines;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
-import org.joml.*;
-
-import java.lang.Math;
+import org.joml.Quaternionf;
+import org.joml.Vector3d;
+import org.joml.Vector3f;
 
 public class EntityIndicatorSimulationRenderer {
 
@@ -27,136 +28,60 @@ public class EntityIndicatorSimulationRenderer {
         this.transitionAnimation = new PollingAnimator(300, this.simulation::notEmpty, Animations.FADE_IN_AND_OUT);
     }
 
-    public void render(Matrix3x2fStack matrices, int x, int y, int hudSize, Quaternionf rotation, int color) {
+    public void render(DrawContext context, int x, int y, int hudSize, Quaternionf rotation, int color) {
         float radius = (int)(hudSize * transitionAnimation.getAnimation());
         if (radius <= 0)
             return;
 
-        BufferBuilder buf = RenderUtils.getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-        Matrix3x2f mat = matrices.pushMatrix();
+        SphereState sphere = new SphereState(context, rotation, x, y, radius, focalLen, deltaTheta, color, simulation);
+        context.state.addSimpleElement(new SphereFillRenderState(sphere));
+        sphere.color = 0x20000000 | (sphere.color & 0x00FFFFFF); // change color opacity to make lines stand out
+        context.state.addSimpleElement(new SphereWireframeRenderState(sphere));
 
-        for (int pitch = 0; pitch < 360; pitch += deltaTheta) {
-            for (int yaw = 0; yaw < 180; yaw += deltaTheta) {
-                Vector3d vec1 = this.polar2vector(pitch, yaw, radius);
-                Vector3d vec2 = this.polar2vector(pitch + deltaTheta, yaw, radius);
-                Vector3d vec3 = this.polar2vector(pitch + deltaTheta, yaw + deltaTheta, radius);
-                Vector3d vec4 = this.polar2vector(pitch, yaw + deltaTheta, radius);
-
-                float[] vtx1 = this.projectVertex(vec1, rotation);
-                float[] vtx2 = this.projectVertex(vec2, rotation);
-                float[] vtx3 = this.projectVertex(vec3, rotation);
-                float[] vtx4 = this.projectVertex(vec4, rotation);
-
-                buf.vertex(mat, x + vtx1[0], y + vtx1[1], 0).color(color);
-                buf.vertex(mat, x + vtx2[0], y + vtx2[1], 0).color(color);
-                buf.vertex(mat, x + vtx3[0], y + vtx3[1], 0).color(color);
-                buf.vertex(mat, x + vtx4[0], y + vtx4[1], 0).color(color);
-            }
-        }
-
-        RenderUtils.drawBuffer(buf, ClickCrystalsRenderLayers.QUADS);
-		matrices.popMatrix();
-
-        buf = RenderUtils.getBuffer(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
-        mat = matrices.pushMatrix();
-        color = (0x20000000) | (0x00FFFFFF & color);
-
-        for (int pitch = 0; pitch < 360; pitch += deltaTheta) {
-            for (int yaw = 0; yaw < 180; yaw += deltaTheta) {
-                Vector3d vec1 = this.polar2vector(pitch, yaw, radius);
-                Vector3d vec2 = this.polar2vector(pitch, yaw + deltaTheta, radius);
-
-                float[] vtx1 = this.projectVertex(vec1, rotation);
-                float[] vtx2 = this.projectVertex(vec2, rotation);
-
-                buf.vertex(mat, x + vtx1[0], y + vtx1[1], 0).color(color);
-                buf.vertex(mat, x + vtx2[0], y + vtx2[1], 0).color(color);
-            }
-        }
-        for (int yaw = 0; yaw < 180; yaw += deltaTheta) {
-            for (int pitch = 0; pitch < 360; pitch += deltaTheta) {
-                Vector3d vec1 = this.polar2vector(pitch, yaw, radius);
-                Vector3d vec2 = this.polar2vector(pitch + deltaTheta, yaw, radius);
-
-                float[] vtx1 = this.projectVertex(vec1, rotation);
-                float[] vtx2 = this.projectVertex(vec2, rotation);
-
-                buf.vertex(mat, x + vtx1[0], y + vtx1[1], 0).color(color);
-                buf.vertex(mat, x + vtx2[0], y + vtx2[1], 0).color(color);
-            }
-        }
-
-        RenderUtils.drawBuffer(buf, ClickCrystalsRenderLayers.LINES);
-		matrices.popMatrix();
-
-        this.renderEntities(matrices, x, y, radius, rotation);
+        this.renderEntities(context, x, y, radius, rotation);
     }
 
-    private void renderEntities(Matrix3x2fStack matrices, int cx, int cy, float radius, Quaternionf rotation) {
-        float spriteSize = 8.0F;
+    private void renderEntities(DrawContext context, int cx, int cy, float radius, Quaternionf rotation) {
+        int spriteSize = 8;
         for (SimulationEntry entity : simulation.getEntities()) {
             Vector3f vecDifference = entity.getVecDifference().multiply(radius).toVector3f();
-            float[] vertex = this.projectVertex(vecDifference, rotation);
+            float[] vertex = MathUtils.projectVertex(vecDifference, rotation, focalLen);
 
             entity.getTexture().accept(texture -> {
-                drawSprite(matrices, texture, cx + vertex[0], cy + vertex[1], spriteSize, false);
+                int x = (int) (cx + vertex[0]);
+                int y = (int) (cy + vertex[1]);
+                drawSprite(context, texture, x, y, spriteSize, false);
             });
         }
         simulation.getNearestEntity().accept(entity -> {
             Vector3f vecDifference = entity.getVecDifference().multiply(radius).toVector3f();
-            float[] vertex = this.projectVertex(vecDifference, rotation);
+            float[] vertex = MathUtils.projectVertex(vecDifference, rotation, focalLen);
 
             entity.getTexture().accept(texture -> {
-                drawLine(matrices, cx, cy, cx + vertex[0], cy + vertex[1], 0xFFFFFFFF);
-                drawSprite(matrices, texture, cx + vertex[0], cy + vertex[1], spriteSize + 2, true);
+                int x = (int) (cx + vertex[0]);
+                int y = (int) (cy + vertex[1]);
+                drawSprite(context, texture, x, y, spriteSize + 2, true);
             });
         });
     }
 
-    private void drawLine(Matrix3x2fStack matrices, float x1, float y1, float x2, float y2, int color) {
-        BufferBuilder buf = RenderUtils.getBuffer(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
-        buf.vertex(matrices, x1, y1, 0).color(color);
-        buf.vertex(matrices, x2, y2, 0).color(color);
-    }
-
-    private void drawSprite(Matrix3x2fStack matrices, Identifier texture, float cx, float cy, float size, boolean highlight) {
-        BufferBuilder buf;
-        Matrix3x2f mat;
-
-        float x = cx - size / 2;
-        float y = cy - size / 2;
+    private void drawSprite(DrawContext context, Identifier texture, int cx, int cy, int size, boolean highlight) {
+        int x = cx - size / 2;
+        int y = cy - size / 2;
 
         if (highlight) {
-            buf = RenderUtils.getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-            mat = matrices.pushMatrix();
-
             x--;
             y--;
             size += 2;
 
-            buf.vertex(mat, x, y, 0).color(-1);
-            buf.vertex(mat, x, y + size, 0).color(-1);
-            buf.vertex(mat, x + size, y + size, 0).color(-1);
-            buf.vertex(mat, x + size, y, 0).color(-1);
+            context.fill(x, y, x + size, y + size, -1);
 
             x++;
             y++;
             size -= 2;
-
-            RenderUtils.drawBuffer(buf, ClickCrystalsRenderLayers.QUADS);
-		    matrices.popMatrix();
         }
 
-        buf = RenderUtils.getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
-        mat = matrices.pushMatrix();
-
-        buf.vertex(mat, x, y, 0).texture(0, 0).color(-1);
-        buf.vertex(mat, x, y + size, 0).texture(0, 1).color(-1);
-        buf.vertex(mat, x + size, y + size, 0).texture(1, 1).color(-1);
-        buf.vertex(mat, x + size, y, 0).texture(1, 0).color(-1);
-
-        RenderUtils.drawBuffer(buf, ClickCrystalsRenderLayers.TEX_QUADS.apply(texture));
-		matrices.popMatrix();
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, texture, x, y, 0, 0, size, size, size, size);
     }
 
     private Vector3d polar2vector(float pitch, float yaw, float radius) {
