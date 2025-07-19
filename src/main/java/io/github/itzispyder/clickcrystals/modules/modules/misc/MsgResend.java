@@ -10,10 +10,8 @@ import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.misc.Voidable;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MsgResend extends ListenerModule {
 
@@ -33,35 +31,36 @@ public class MsgResend extends ListenerModule {
             .build()
     );
 
-    private String lastMessage;
-    private String lastCommand;
-    private final Map<String, String> commandCacheSaver = new HashMap<>();
+    private final Voidable<String> lastMessage, lastCommand;
+    private boolean wasCommand;
 
     public MsgResend() {
         super("message-resend", Categories.MISC, "Press up arrow key to resend your last message or command.");
-        this.lastMessage = null;
-        this.lastCommand = null;
+        this.lastMessage = Voidable.empty();
+        this.lastCommand = Voidable.empty();
     }
 
     @EventHandler
     private void onChatSend(ChatSendEvent e) {
-        this.lastMessage = e.getMessage();
+        this.lastMessage.set(e.getMessage());
+        this.wasCommand = false;
     }
 
     @EventHandler
     private void onCommand(ChatCommandEvent e) {
-        this.lastCommand = e.getCommandLine();
-        commandCacheSaver.put("lastCommand", lastCommand);
+        this.lastCommand.set(e.getCommandLine());
+        this.wasCommand = true;
     }
 
     public void resendMessage() {
-        if (resendCommandOnly.getVal()) {
-            String savedCommand = commandCacheSaver.get("lastCommand");
-            if (savedCommand != null && !savedCommand.trim().isEmpty()) {
-                ChatUtils.sendChatCommand(savedCommand);
-            }
-        } else if (lastMessage != null && !lastMessage.trim().isEmpty()) {
-            ChatUtils.sendChatMessage(lastMessage);
+        if (!wasCommand && resendCommandOnly.getVal()) {
+            lastCommand.accept(ChatUtils::sendChatCommand);
+            return;
         }
+
+        if (wasCommand || resendCommandOnly.getVal())
+            lastCommand.accept(ChatUtils::sendChatCommand);
+        else
+            lastMessage.accept(ChatUtils::sendChatMessage);
     }
 }

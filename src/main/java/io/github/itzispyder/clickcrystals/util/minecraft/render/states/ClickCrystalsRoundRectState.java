@@ -67,7 +67,7 @@ public class ClickCrystalsRoundRectState implements SimpleGuiElementRenderState 
                 { x + r,      y + r     },
                 { x + w - r,  y + r     }
         };
-        int[] colors = { color1, color2, color3, color4 };
+        int[] colors = { color3, color4, color1, color2 };
 
         float x1 = x + w / 2F;
         float y1 = y + h / 2F;
@@ -93,22 +93,22 @@ public class ClickCrystalsRoundRectState implements SimpleGuiElementRenderState 
         buf.vertex(pose, x1, y1, depth).color(colorCenter);
         buf.vertex(pose, x1, y1, depth).color(colorCenter);
         buf.vertex(pose, x + w - r, y + h, depth).color(colors[0]);
-        buf.vertex(pose, x + r, y + h, depth).color(colors[0]);
+        buf.vertex(pose, x + r, y + h, depth).color(colors[1]);
 
         buf.vertex(pose, x1, y1, depth).color(colorCenter);
         buf.vertex(pose, x1, y1, depth).color(colorCenter);
         buf.vertex(pose, x, y + h - r, depth).color(colors[1]);
-        buf.vertex(pose, x, y + r, depth).color(colors[1]);
+        buf.vertex(pose, x, y + r, depth).color(colors[2]);
 
         buf.vertex(pose, x1, y1, depth).color(colorCenter);
         buf.vertex(pose, x1, y1, depth).color(colorCenter);
         buf.vertex(pose, x + r, y, depth).color(colors[2]);
-        buf.vertex(pose, x + w - r, y, depth).color(colors[2]);
+        buf.vertex(pose, x + w - r, y, depth).color(colors[3]);
 
         buf.vertex(pose, x1, y1, depth).color(colorCenter);
         buf.vertex(pose, x1, y1, depth).color(colorCenter);
         buf.vertex(pose, x + w, y + r, depth).color(colors[3]);
-        buf.vertex(pose, x + w, y + h - r, depth).color(colors[3]);
+        buf.vertex(pose, x + w, y + h - r, depth).color(colors[0]);
     }
 
     @Override
