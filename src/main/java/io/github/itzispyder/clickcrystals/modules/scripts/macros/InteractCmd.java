@@ -9,19 +9,18 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.function.Predicate;
 
-public class DamageCmd extends ScriptCommand implements ThenChainable {
+public class InteractCmd extends ScriptCommand implements ThenChainable {
 
-    public static final Predicate<Entity> ENTITY_EXISTS = ent -> ent instanceof LivingEntity && ent.isAlive();
-  
-    public DamageCmd() {
-        super("damage");
+    public InteractCmd() {
+        super("interact");
     }
 
     @Override
@@ -33,11 +32,11 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
         switch (args.get(0).toEnum(TargetType.class, null)) {
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(args.get(1).toString());
-                PlayerUtils.runOnNearestEntity(128, filter, entity -> mc.interactionManager.attackEntity(mc.player, entity));
+                PlayerUtils.runOnNearestEntity(128, filter, entity -> mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND));
                 executeWithThen(args, 2);
             }
             case ANY_ENTITY -> {
-                PlayerUtils.runOnNearestEntity(128, ENTITY_EXISTS, entity -> mc.interactionManager.attackEntity(mc.player, entity));
+                PlayerUtils.runOnNearestEntity(128, DamageCmd.ENTITY_EXISTS, entity -> mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND));
                 executeWithThen(args, 1);
             }
             case NEAREST_BLOCK -> {
@@ -45,7 +44,8 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
                 PlayerUtils.runOnNearestBlock(128, filter, (pos, state) -> {
                     Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
                     Direction face = Direction.getFacing(vector);
-                    mc.interactionManager.attackBlock(pos, face);
+                    BlockHitResult hit = new BlockHitResult(pos.toCenterPos(), face, pos, false);
+                    mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
                 });
                 executeWithThen(args, 2);
             }
@@ -53,7 +53,8 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
                 PlayerUtils.runOnNearestBlock(128, (pos, state) -> true, (pos, state) -> {
                     Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
                     Direction face = Direction.getFacing(vector);
-                    mc.interactionManager.attackBlock(pos, face);
+                    BlockHitResult hit = new BlockHitResult(pos.toCenterPos(), face, pos, false);
+                    mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
                 });
                 executeWithThen(args, 1);
             }
@@ -67,7 +68,8 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
                 BlockPos pos = BlockPos.ofFloored(parser.getVector());
                 Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
                 Direction face = Direction.getFacing(vector);
-                mc.interactionManager.attackBlock(pos, face);
+                BlockHitResult hit = new BlockHitResult(pos.toCenterPos(), face, pos, false);
+                mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
                 executeWithThen(args, 4);
             }
             default -> throw new IllegalArgumentException("unsupported operation");
