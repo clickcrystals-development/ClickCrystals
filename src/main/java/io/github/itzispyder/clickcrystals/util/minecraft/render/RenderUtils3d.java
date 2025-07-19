@@ -99,13 +99,10 @@ public class RenderUtils3d {
     }
 
     public static void fillBox(MatrixStack matrices, Box box, int color) {
-        float x1 = (float)box.minX;
-        float y1 = (float)box.minY;
-        float z1 = (float)box.minZ;
-        float x2 = (float)box.maxX;
-        float y2 = (float)box.maxY;
-        float z2 = (float)box.maxZ;
+        fillRectPrism(matrices, (float)box.minX, (float)box.minY, (float)box.minZ, (float)box.maxX, (float)box.maxY, (float)box.maxZ, color);
+    }
 
+    public static void fillRectPrism(MatrixStack matrices, float x1, float y1, float z1, float x2, float y2, float z2, int color) {
         Matrix4f mat = matrices.peek().getPositionMatrix();
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 

@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.rendering;
+package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
@@ -36,7 +36,7 @@ public class FreeLook extends ListenerModule {
     );
 
     public FreeLook() {
-        super("free-look", Categories.RENDER, "lock your camera perspective and let you move around it");
+        super("free-look", Categories.MISC, "lock your camera perspective and let you move around it");
     }
 
     public float cY;

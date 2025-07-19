@@ -305,6 +305,9 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new MouseTaper());
         system.addModule(new SoundOnDeath());
         system.addModule(new Tunnel3x3());
+        system.addModule(new CameraClip());
+        system.addModule(new FreeLook());
+        system.addModule(new Zoom());
 
         // optimization
         system.addModule(new AntiCrash());
@@ -320,9 +323,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new PearlCustomizer());
         system.addModule(new TotemPopColor());
         system.addModule(new DeathEffects());
-        system.addModule(new FreeLook());
         system.addModule(new BlockOutline());
-        system.addModule(new CameraClip());
         system.addModule(new NoGuiBackground());
         system.addModule(new CrystPerSec());
         system.addModule(new TotemPopScale());
@@ -337,11 +338,11 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new GlowingEntities());
         system.addModule(new NoScoreboard());
         system.addModule(new HealthAsBar());
-        system.addModule(new Zoom());
         system.addModule(new ViewModel());
         system.addModule(new GhostTotem());
         system.addModule(new EntityIndicator());
         system.addModule(new ItemHighlight());
+        system.addModule(new TotemChams());
     }
 
     @SuppressWarnings("all")

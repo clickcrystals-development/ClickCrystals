@@ -1,9 +1,9 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.misc.Zoom;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoHurtCam;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoViewBob;
-import io.github.itzispyder.clickcrystals.modules.modules.rendering.Zoom;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;

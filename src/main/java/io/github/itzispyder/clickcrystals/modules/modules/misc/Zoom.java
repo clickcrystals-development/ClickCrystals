@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.rendering;
+package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
@@ -41,7 +41,7 @@ public class Zoom extends Module implements Listener {
     private int modifier;
 
     public Zoom() {
-        super("zoom", Categories.RENDER, "Changes your FOV");
+        super("zoom", Categories.MISC, "Changes your FOV");
     }
 
     @Override

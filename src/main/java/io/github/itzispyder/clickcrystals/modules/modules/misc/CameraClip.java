@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.modules.modules.rendering;
+package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
@@ -24,6 +24,6 @@ public class CameraClip extends DummyModule {
     );
 
     public CameraClip() {
-        super("camera-clip", Categories.RENDER, "Change the camera distance and the camera behavior when encounter walls");
+        super("camera-clip", Categories.MISC, "Change the camera distance and the camera behavior when encounter walls");
     }
 }

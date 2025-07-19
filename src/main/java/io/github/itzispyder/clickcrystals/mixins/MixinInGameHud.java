@@ -28,7 +28,7 @@ public abstract class MixinInGameHud implements Global {
     @ModifyArgs(method = "renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderArmor(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/entity/player/PlayerEntity;IIII)V", ordinal = 0))
     public void renderArmor0(Args args) {
         if (Module.isEnabled(HealthAsBar.class))
-            args.set(2, MinecraftClient.getInstance().getWindow().getScaledHeight() - 50);
+            args.set(3, MinecraftClient.getInstance().getWindow().getScaledHeight() - 50);
     }
 
     @Inject(method = "renderHealthBar", at = @At("HEAD"), cancellable = true)
