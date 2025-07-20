@@ -8,18 +8,21 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class RagDoll implements Global {
+public class ChamRagDoll implements Global {
 
     private final Map<String, Cuboid> parts;
     private final double x, y, z;
+    private final float yaw, pitch;
+    private float glidingProgress;
     private final int maxAge;
     private int age;
 
-    public RagDoll(PlayerEntity player, int maxAge) {
+    public ChamRagDoll(PlayerEntity player, int maxAge) {
         this.maxAge = maxAge;
         this.parts = new HashMap<>();
 
@@ -27,6 +30,12 @@ public class RagDoll implements Global {
         this.x = state.x;
         this.y = state.y;
         this.z = state.z;
+        this.yaw = player.getYaw();
+        this.pitch = player.getPitch();
+        this.glidingProgress = state.getGlidingProgress();
+
+        if (state.isSwimming)
+            glidingProgress = 1F;
 
         float pixelsToBlocks = 0.05625F; // I used a calculator for this (1.8 / 32) or (player height blocks / player height pixels)
         float b12 = 12 * pixelsToBlocks;
@@ -35,7 +44,10 @@ public class RagDoll implements Global {
         float b8 = 8 * pixelsToBlocks;
         float b0 = 0 * pixelsToBlocks;
 
-        parts.put("head", new Cuboid(-b4, b12 + b12, -b4, b4, b12 + b12 + b8, b4));
+        Cuboid head = new Cuboid(-b4, b12 + b12, -b4, b4, b12 + b12 + b8, b4);
+        head.pitch = player.getPitch();
+
+        parts.put("head", head);
         parts.put("bod", new Cuboid(-b4, b12, -b2, b4, b12 + b12, b2));
         parts.put("leftArm", new Cuboid(-b8, b12, -b2, -b4, b12 + b12, b2));
         parts.put("rightArm", new Cuboid(b8, b12, -b2, b4, b12 + b12, b2));
@@ -43,20 +55,18 @@ public class RagDoll implements Global {
         parts.put("rightLeg", new Cuboid(b4, b0, -b2, b0, b12, b2));
     }
 
-    public void tick() {
+    public void tick(float maxVelocity, float gravity) {
         for (Cuboid part: parts.values()) {
-            if (age == 1) { // shoot up
-                part.velX = (float)(Math.random() * 0.1) * randomSign();
-                part.velY = (float)(1 + Math.random() * 0.3);
-                part.velZ = (float)(Math.random() * 0.1) * randomSign();
-            }
             if (age == 5) { // explode
-                part.velX += (float)(0.2 + Math.random() * 0.3) * randomSign();
-                part.velZ += (float)(0.2 + Math.random() * 0.3) * randomSign();
-                part.velPitch += (float)(Math.random() * 0.3) * randomSign();
-                part.velYaw += (float)(Math.random() * 0.3) * randomSign();
+                part.velX += (float)(0.1 + Math.random() * maxVelocity) * randomSign();
+                part.velY += (float)(0.1 + Math.random() * maxVelocity);
+                part.velZ += (float)(0.1 + Math.random() * maxVelocity) * randomSign();
+
+                float[] dir = MathUtils.toPolar(part.velX, part.velY, part.velZ);
+                part.velPitch = 0.2F;
+                part.yaw = -dir[1];
             }
-            part.tick();
+            part.tick(gravity);
         }
         age++;
     }
@@ -66,46 +76,46 @@ public class RagDoll implements Global {
     }
 
     public void render(MatrixStack matrices, int color, float tickDelta) {
-        Vec3d c = mc.gameRenderer.getCamera().getCameraPos();
-        double life = 1 - age / (double) maxAge;
-        color = ((int)(0x40 * life) << 24) | (color & 0x00FFFFFF);
+        Vector3f c = new Vec3d(x, y, z).subtract(mc.gameRenderer.getCamera().getCameraPos()).toVector3f();
+        Quaternionf pitch = new Quaternionf()
+                .rotationX((float)Math.toRadians(glidingProgress == 1 ? this.pitch + 90 : glidingProgress * 90));
+        Quaternionf yaw = new Quaternionf()
+                .rotationY((float)Math.toRadians(-this.yaw));
 
         matrices.push();
-        matrices.translate(x - c.x, y - c.y, z - c.z);
+        matrices.multiply(yaw.mul(pitch), c.x, c.y, c.z);
+        matrices.translate(c.x, c.y, c.z);
 
-        for (Cuboid part: parts.values())
+        double life = 1 - (age / (double) maxAge);
+        int alpha = (int) ((color >> 24 & 0xFF) * life);
+        color = (alpha << 24) | (color & 0x00FFFFFF);
+
+        for (Cuboid part : parts.values())
             part.render(matrices, color, tickDelta);
 
         matrices.pop();
     }
 
     public boolean isAlive() {
-        if (age < maxAge)
-            return true;
-
-        for (Cuboid part: parts.values())
-            if (part.isMoving())
-                return true;
-        return false;
+        return age < maxAge;
     }
 
     private static class Cuboid {
-        public float x1, y1, z1, x2, y2, z2;
+        public float minX, minY, minZ, maxX, maxY, maxZ;
         public float x, y, z, prevX, prevY, prevZ, velX, velY, velZ;
         public float pitch, yaw, prevPitch, prevYaw, velPitch, velYaw;
 
-        public Cuboid(float x1, float y1, float z1, float x2, float y2, float z2) {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.z1 = z1;
-            this.x2 = x2;
-            this.y2 = y2;
-            this.z2 = z2;
+        public Cuboid(float minX, float minY, float minZ, float maxX, float maxY, float maxZ) {
+            this.minX = minX;
+            this.minY = minY;
+            this.minZ = minZ;
+            this.maxX = maxX;
+            this.maxY = maxY;
+            this.maxZ = maxZ;
         }
 
-        public void tick() {
-            float gravity = 0.05F;
-            float airDrag = 0.8F;
+        public void tick(float gravity) {
+            float airDrag = 0.99F;
 
             // position
 
@@ -153,17 +163,19 @@ public class RagDoll implements Global {
             float y = (float)MathUtils.lerp(prevY, this.y, tickDelta);
             float z = (float)MathUtils.lerp(prevZ, this.z, tickDelta);
 
-            float cx = x + (x2 - x1) / 2;
-            float cy = y + (y2 - y1) / 2;
-            float cz = z + (z2 - z1) / 2;
+            float cx = minX + x + (maxX - minX) / 2;
+            float cy = minY + y + (maxY - minY) / 2;
+            float cz = minZ + z + (maxZ - minZ) / 2;
 
             matrices.push();
             matrices.multiply(getRotation(tickDelta), cx, cy, cz);
             matrices.translate(x, y, z);
 
-            RenderUtils3d.fillRectPrism(matrices, x1, y1, z1, x2, y2, z2, color);
-            color = 0xFF000000 | (0x00FFFFFF & color);
-            RenderUtils3d.drawRectPrism(matrices, x1, y1, z1, x2, y2, z2, color);
+            RenderUtils3d.fillRectPrism(matrices, minX, minY, minZ, maxX, maxY, maxZ, color, true);
+
+            int alpha = Math.min((color >> 24 & 0xFF) * 5, 0xFF);
+            color = (alpha << 24) | (color & 0x00FFFFFF);
+            RenderUtils3d.drawRectPrism(matrices, minX, minY, minZ, maxX, maxY, maxZ, color, true);
 
             matrices.pop();
         }

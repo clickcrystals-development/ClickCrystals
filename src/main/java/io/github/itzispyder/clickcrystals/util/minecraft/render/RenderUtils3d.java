@@ -102,7 +102,7 @@ public class RenderUtils3d {
         fillRectPrism(matrices, (float)box.minX, (float)box.minY, (float)box.minZ, (float)box.maxX, (float)box.maxY, (float)box.maxZ, color);
     }
 
-    public static void fillRectPrism(MatrixStack matrices, float x1, float y1, float z1, float x2, float y2, float z2, int color) {
+    public static void fillRectPrism(MatrixStack matrices, float x1, float y1, float z1, float x2, float y2, float z2, int color, boolean cull) {
         Matrix4f mat = matrices.peek().getPositionMatrix();
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 
@@ -136,7 +136,11 @@ public class RenderUtils3d {
         buf.vertex(mat, x2, y2, z2).color(color);
         buf.vertex(mat, x2, y1, z2).color(color);
 
-        drawBuffer(buf, ClickCrystalsRenderLayers.QUADS);
+        drawBuffer(buf, cull ? ClickCrystalsRenderLayers.QUADS_CULL : ClickCrystalsRenderLayers.QUADS);
+    }
+
+    public static void fillRectPrism(MatrixStack matrices, float x1, float y1, float z1, float x2, float y2, float z2, int color) {
+        fillRectPrism(matrices, x1, y1, z1, x2, y2, z2, color, false);
     }
 
     public static void fillCyl(MatrixStack matrices, double x, double y, double z, double radius, double height, int color) {
@@ -209,7 +213,7 @@ public class RenderUtils3d {
         drawCube(matrices, block.getX(), block.getY(), block.getZ(), c.getHexOpaque());
     }
 
-    public static void drawRectPrism(MatrixStack matrices, double x1, double y1, double z1, double x2, double y2, double z2, int color) {
+    public static void drawRectPrism(MatrixStack matrices, double x1, double y1, double z1, double x2, double y2, double z2, int color, boolean cull) {
         Matrix4f mat = matrices.peek().getPositionMatrix();
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION_COLOR);
         Box box = new Box(x1, y1, z1, x2, y2, z2);
@@ -248,7 +252,11 @@ public class RenderUtils3d {
         buf.vertex(mat, (float)x1, (float)y1, (float)z2).color(color);
         buf.vertex(mat, (float)x1, (float)y2, (float)z2).color(color);
 
-        drawBuffer(buf, ClickCrystalsRenderLayers.LINES);
+        drawBuffer(buf, cull ? ClickCrystalsRenderLayers.LINES_CULL : ClickCrystalsRenderLayers.LINES);
+    }
+
+    public static void drawRectPrism(MatrixStack matrices, double x1, double y1, double z1, double x2, double y2, double z2, int color) {
+        drawRectPrism(matrices, x1, y1, z1, x2, y2, z2, color, false);
     }
 
     public static void renderPlayerThingy(MatrixStack matrices, double x, double y, double z, float pitch, float yaw, int color) {

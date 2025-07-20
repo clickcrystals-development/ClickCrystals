@@ -25,8 +25,8 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(InGameHud.class)
 public abstract class MixinInGameHud implements Global {
 
-    @ModifyArgs(method = "renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderArmor(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/entity/player/PlayerEntity;IIII)V", ordinal = 0))
-    public void renderArmor0(Args args) {
+    @ModifyArgs(method = "renderArmor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/util/Identifier;IIII)V"))
+    private static void renderArmor(Args args) {
         if (Module.isEnabled(HealthAsBar.class))
             args.set(3, MinecraftClient.getInstance().getWindow().getScaledHeight() - 50);
     }

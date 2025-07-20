@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.rendering.TotemChams;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.TotemPopColor;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.SpriteProvider;
@@ -22,13 +21,7 @@ public abstract class MixinTotemParticle extends Particle {
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void onRender(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, SpriteProvider spriteProvider, CallbackInfo ci){
-        if (Module.isEnabled(TotemChams.class)) {
-            setColor(1, 1, 1);
-            setAlpha(0);
-            return;
-        }
-
+    private void onRender(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, SpriteProvider spriteProvider, CallbackInfo ci) {
         TotemPopColor t = Module.get(TotemPopColor.class);
         if (t.isEnabled()) {
             Color c = t.getColor();
