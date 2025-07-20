@@ -53,16 +53,39 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Version: 1.3.3
+Version: 1.3.4
 
 Scripting:
-  - if falling
+  - damage nearest_entity (id)
+  - damage any_entity
+  - damage nearest_block (id)
+  - damage any_block
+  - damage position (x) (y) (z)
+  - interact nearest_entity (id)
+  - interact any_entity
+  - interact nearest_block (id)
+  - interact any_block
+  - interact position (x) (y) (z) # air place AND opening chests through walls possible
+  - if vel_x
+  - if vel_y
+  - if vel_z
 
-Major Changes:
-  - rewrote rendering system to be compatible with the new Vibrant Visuals changes ;-;
-  - support for 1.21.6
-  - support for 1.21.7
-  - support for 1.21.8
+Modules:
+  - new module TotemChams
+  - new module AutoClicker
+  - Zoom (RENDERING -> MISC)
+  - FreeLook(RENDERING -> MISC)
+  - CameraClip (RENDERING -> MISC)
+
+Patches:
+  - gui rendering glitches with download screens
+  - message resend module not working properly
+  - totem particles being white when module isnt even enabled
+  - armor bar position offset when HealthAsBar is enabled
+
+Tweaks:
+  - renamed ,ccs compile to ,ccs run
+  - added paste script button in scripts tab
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)
@@ -100,6 +123,7 @@ Major Changes:
 |      SelfGlow      |                                                 Am I Glowing?                                                 |
 |     SilkTouch      |                               "Is there a silk touch module?" - I_Got_You_Dead                                |
 |    AnchorSwitch    |             Whenever you place an anchor, switch to glowstone then back after it has been charged             |
+|    AutoClicker     |                                               Auto clicker duh                                                |
 |   AutoReplenish    |                     Automatically replenishes items from your inventory into your hotbar                      |
 |    ClickCrystal    |                                     Binds end crystal place to left click                                     |
 |   ClientCrystals   |                            Removes crystals client-side the moment you punch them                             |
@@ -111,8 +135,10 @@ Major Changes:
 |       AutoGg       |                                     Sends a message upon killing a player                                     |
 |    AutoRespawn     |                                       Clicks the respawn button for you                                       |
 |      AutoWalk      |                            Presses the walk key for you (only useful in survival)                             |
+|     CameraClip     |                    Change the camera distance and the camera behavior when encounter walls                    |
 |     ChatPrefix     |                                      Chat tweaks and additional features                                      |
 |    DeathEffects    |                                Spawn lightning/rocket particle on entity death                                |
+|      FreeLook      |                            lock your camera perspective and let you move around it                            |
 |     GuiCursor      |                            What to do with your cursor when you open inventory gui                            |
 |     MouseTaper     | "I taped a piece of tape on my mouse button, now I cannot use that button anymore but it is still taped down" |
 |   MessageResend    |                          Press up arrow key to resend your last message or command.                           |
@@ -125,6 +151,7 @@ Major Changes:
 |    ToolSwitcher    |                                 Switches to the right tool for mining a block                                 |
 |     TotemPops      |                                 Send messages when a player pops their totem                                  |
 |     Tunnel3x3      |                               Enable to tunnel a 3x3x5 tunnel in your direction                               |
+|        Zoom        |                                               Changes your FOV                                                |
 |     AntiCrash      | Prevents various ways servers can crash your client. Be sure to report new crashes to us so we can add more!  |
 |  ExplodeParticles  |                            Turns off explosion particles for smoother crystal pvp!                            |
 |     FullBright     |                             Increases your gamma so you can actually see in caves                             |
@@ -133,10 +160,8 @@ Major Changes:
 |   NoServerPacks    |                     Prevents servers from forcing you to download their bad resource pack                     |
 |    TimeChanger     |                                           Changes client world time                                           |
 |    BlockOutline    |                                     Change the color of the block outline                                     |
-|     CameraClip     |                    Change the camera distance and the camera behavior when encounter walls                    |
 |    CrystalSpeed    |                                          Crystals per second counter                                          |
 |  EntityIndicator   |                              Indicates entities around you. Players are excluded                              |
-|      FreeLook      |                            lock your camera perspective and let you move around it                            |
 |     GhostTotem     |               Renders a totem in your hand upon dying. Will not work if AutoRespawn is enabled!               |
 |  GlowingEntities   |                                  Having trouble seeing entities in the dark?                                  |
 |    HealthAsBar     |               Renders your health bar as a singular bar to prevent lag. Recommended for NBT pvp               |
@@ -151,12 +176,12 @@ Major Changes:
 |   RenderOwnName    |                                             Renders your own name                                             |
 |   SlowHandSwing    |                              Makes your hand swing as if you had mining fatigue                               |
 |   SpectatorSight   |      Renders invisible entities the way you see them in spectator mode. Never get sneak attacked again!       |
+|     TotemChams     |                             Renders a nice visual whenever a player's totem pops                              |
 |    TotemOverlay    |                                  Renders red overlay when not holding totem                                   |
 |     TotemColor     |                                       Change totem pop particles color                                        |
 |     TotemScale     |                                      Changes the scale of the totem pop                                       |
 |    Trajectories    |                                Simulates arrow trajectories and draws a line!                                 |
 |     ViewModel      |                            Changes your view model in your first person hand view                             |
-|        Zoom        |                                               Changes your FOV                                                |
 
 
 

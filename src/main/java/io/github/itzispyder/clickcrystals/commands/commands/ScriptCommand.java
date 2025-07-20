@@ -31,7 +31,7 @@ public class ScriptCommand extends Command {
                     }, 5 * 50);
                     return SINGLE_SUCCESS;
                 })
-                .then(literal("compile")
+                .then(literal("run")
                         .then(argument("commandline", StringArgumentType.greedyString())
                                 .executes(cxt -> {
                                     String cmd = cxt.getArgument("commandline", String.class);
