@@ -84,6 +84,9 @@ public class Conditionals implements Global {
     public static final Conditional POS_X;
     public static final Conditional POS_Y;
     public static final Conditional POS_Z;
+    public static final Conditional VEL_X;
+    public static final Conditional VEL_Y;
+    public static final Conditional VEL_Z;
     public static final Conditional MODULE_ENABLED;
     public static final Conditional MODULE_DISABLED;
     public static final Conditional BLOCK;
@@ -177,6 +180,9 @@ public class Conditionals implements Global {
         POS_X = register("pos_x", (ref, args, i) -> pair(true, evalIntegers((int) ref.getX(), args.get(i + 1).toString()), i + 2));
         POS_Y = register("pos_y", (ref, args, i) -> pair(true, evalIntegers((int) ref.getY(), args.get(i + 1).toString()), i + 2));
         POS_Z = register("pos_z", (ref, args, i) -> pair(true, evalIntegers((int) ref.getZ(), args.get(i + 1).toString()), i + 2));
+        VEL_X = register("vel_x", (ref, args, i) -> pair(true, evalIntegers((int) ref.getVelocity().getX(), args.get(i + 1).toString()), i + 2));
+        VEL_Y = register("vel_y", (ref, args, i) -> pair(true, evalIntegers((int) ref.getVelocity().getY(), args.get(i + 1).toString()), i + 2));
+        VEL_Z = register("vel_z", (ref, args, i) -> pair(true, evalIntegers((int) ref.getVelocity().getZ(), args.get(i + 1).toString()), i + 2));
         MODULE_ENABLED = register("module_enabled", (ref, args, i) -> {
             Module m = system.getModuleById(args.get(i + 1).toString());
             return pair(m != null && m.isEnabled(), i + 2);

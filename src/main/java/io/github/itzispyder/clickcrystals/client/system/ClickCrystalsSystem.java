@@ -18,17 +18,15 @@ import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
 import io.github.itzispyder.clickcrystals.util.misc.TickScheduler;
 import net.minecraft.util.Util;
 
-import java.awt.*;
-import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.*;
 import java.util.function.Consumer;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
+import static io.github.itzispyder.clickcrystals.Global.mc;
 
 public class ClickCrystalsSystem implements Serializable {
 
@@ -80,20 +78,10 @@ public class ClickCrystalsSystem implements Serializable {
         }
     }
 
-    public void copy(String text) {
-        if (text == null || text.isEmpty()) 
-            return;
-            
-        try {
-            StringSelection selection = new StringSelection(text);
-            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
-        } 
-        catch (Exception ex) {
-            system.printErr("Failed to copy text to clipboard: " + text);
-            system.printErr(ex.getMessage());
-        }
+    public void closeCurrentScreen() {
+        if (mc.currentScreen != null)
+            mc.currentScreen.close();
     }
-
 
     public void addCommand(Command command) {
         if (command == null) return;

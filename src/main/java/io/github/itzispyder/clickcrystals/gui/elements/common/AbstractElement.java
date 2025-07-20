@@ -1,9 +1,22 @@
 package io.github.itzispyder.clickcrystals.gui.elements.common;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 public class AbstractElement extends GuiElement {
+
+    public static final Function<Supplier<String>, RenderAction<AbstractElement>> RENDER_BUTTON = (stringSupplier) -> (context, mouseX, mouseY, button) -> {
+        RenderUtils.fillRoundRect(context, button.x, button.y, button.width, button.height, 3, button.isMouseOver(mouseX, mouseY) ? 0x40FFFFFF : 0x00000000);
+        RenderUtils.drawRoundRect(context, button.x, button.y, button.width, button.height, 3, 0xFFFFFFFF);
+
+        int textY = button.y + (int)(button.height - mc.textRenderer.fontHeight * 0.9);
+        RenderUtils.drawCenteredText(context, stringSupplier.get(), button.x + button.width / 2, textY, 0.9F, false);
+    };
+
 
     private final RenderAction<AbstractElement> onRender;
     private final PressAction<AbstractElement> onPress;

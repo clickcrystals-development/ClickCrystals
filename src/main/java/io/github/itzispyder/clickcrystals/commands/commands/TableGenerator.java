@@ -50,7 +50,7 @@ public class TableGenerator extends Command {
                 %s
                 """.formatted(moduleChart, commandChart);
 
-        system.copy(chart);
+        mc.keyboard.setClipboard(chart);
 
         info("Modules and commands chart has been copied to your clipboard!");
     }

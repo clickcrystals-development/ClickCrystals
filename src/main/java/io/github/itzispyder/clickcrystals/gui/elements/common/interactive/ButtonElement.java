@@ -23,6 +23,7 @@ public class ButtonElement extends GuiElement {
     private String text;
     private int borderRadius;
     private int fillColor, hoverColor;
+    private boolean mouseDown;
     private final Animator animator = new PollingAnimator(300, () -> {
         var c = InteractionUtils.getCursor();
         return this.isHovered(c.x, c.y);
@@ -48,7 +49,8 @@ public class ButtonElement extends GuiElement {
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         int color = Color.lerp(fillColor, hoverColor, animator.getAnimation());
-        RenderUtils.fillRoundRect(context, x, y, width, height, borderRadius, color);
+        int clickColor = new Color(hoverColor).darker(2).getHex();
+        RenderUtils.fillRoundRect(context, x, y, width, height, borderRadius, mouseDown ? clickColor : color);
         RenderUtils.drawCenteredText(context, text, x + width / 2, y + (height - mc.textRenderer.fontHeight) / 2, false);
     }
 
@@ -56,6 +58,13 @@ public class ButtonElement extends GuiElement {
     public void onClick(double mouseX, double mouseY, int button) {
         super.onClick(mouseX, mouseY, button);
         clickCallback.onClick((int)mouseX, (int)mouseY, this);
+        mouseDown = true;
+    }
+
+    @Override
+    public void onRelease(double mouseX, double mouseY, int button) {
+        super.onRelease(mouseX, mouseY, button);
+        mouseDown = false;
     }
 
     public int getFillColor() {

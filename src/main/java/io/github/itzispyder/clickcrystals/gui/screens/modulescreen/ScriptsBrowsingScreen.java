@@ -1,9 +1,11 @@
 package io.github.itzispyder.clickcrystals.gui.screens.modulescreen;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
+import io.github.itzispyder.clickcrystals.client.system.Notification;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElement;
+import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ButtonElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
@@ -15,6 +17,8 @@ import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -23,6 +27,8 @@ import org.lwjgl.glfw.GLFW;
 import java.io.File;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ScriptsBrowsingScreen extends BrowsingScreen {
 
@@ -272,8 +278,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
     }
 
     private static class ScriptCreateNew extends ModuleElement {
-        private final SearchBarElement textField = new SearchBarElement(0, 0) {
-            private static final String newModule = """
+        private static final String newModule = """
                     def module %s
                     def desc "Custom Scripted Module"
                     
@@ -286,6 +291,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
                     }
                     """;
 
+        private final SearchBarElement textField = new SearchBarElement(0, 0) {
             {
                 this.setDefaultText("§7Enter module name");
             }
@@ -310,19 +316,69 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
                         .replaceAll("[^a-zA-Z0-9_-]", "")
                         .toLowerCase();
 
-                File file = new File(parentFolder + File.separator + name + ".ccs");
-                if (!file.exists()) {
-                    String preText = newModule.formatted(name);
-                    FileValidationUtils.quickWrite(file, preText);
-                }
-                mc.setScreen(new ClickScriptIDE(file));
+                createScript(name);
             }
         };
+        private final AbstractElement pasteScriptButton;
 
         public ScriptCreateNew(int x, int y) {
             super(null, x, y);
             this.setTooltip("§7Type the file name then hit §eENTER§7!");
+            this.pasteScriptButton = AbstractElement.create().pos(0, 0).dimensions(40, textField.height)
+                    .onRender(AbstractElement.RENDER_BUTTON.apply(() -> "Paste"))
+                    .onPress(self -> {
+                        String script = mc.keyboard.getClipboard();
+                        Notification notification = Notification.create()
+                                .ccsIcon()
+                                .id("invalid-clipboard-script")
+                                .title("Invalid Clipboard Script")
+                                .text("§eYour clipboard was invalid. Please copy a script first!")
+                                .stayTime(1000 * 3)
+                                .build();
+
+                        if (script == null || script.isBlank()) {
+                            if (PlayerUtils.valid()) {
+                                system.closeCurrentScreen();
+                                notification.sendToClient();
+                            }
+                            return;
+                        }
+
+                        Pattern pattern = Pattern.compile(".*(def module|module create) (\\S*).*", Pattern.DOTALL);
+                        Matcher matcher = pattern.matcher(script);
+
+                        if (!matcher.matches()) {
+                            if (PlayerUtils.valid()) {
+                                ChatUtils.sendMessage(script);
+                                system.closeCurrentScreen();
+                                notification.sendToClient();
+                            }
+                            return;
+                        }
+
+                        String name = matcher.group(2);
+                        ScriptCreateNew.createScriptWithPretext(name, script);
+                    })
+                    .build();
+            this.pasteScriptButton.setTooltip("Paste script from clipboard");
+            this.addChild(pasteScriptButton);
             this.addChild(textField);
+        }
+
+        public static void createScript(String moduleId) {
+            File file = new File(parentFolder + File.separator + moduleId + ".ccs");
+            if (!file.exists()) {
+                String preText = newModule.formatted(moduleId);
+                FileValidationUtils.quickWrite(file, preText);
+            }
+            mc.setScreen(new ClickScriptIDE(file));
+        }
+
+        public static void createScriptWithPretext(String moduleId, String pretext) {
+            File file = new File(parentFolder + File.separator + moduleId + ".ccs");
+            if (!file.exists())
+                FileValidationUtils.quickWrite(file, pretext);
+            mc.setScreen(new ClickScriptIDE(file));
         }
 
         @Override
@@ -334,8 +390,14 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
             String text = "§7Create new with ClickScript IDE - §eBETA";
             RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
 
+            int margin = (int)(x + 20 + (mc.textRenderer.getWidth(text) * 0.7));
+
             textField.y = y + height / 2 - textField.height / 2;
-            textField.x = (int)(x + 30 + (mc.textRenderer.getWidth(text) * 0.7));
+            textField.x = margin;
+            margin += textField.width + 5;
+
+            pasteScriptButton.x = margin;
+            pasteScriptButton.y = textField.y;
         }
 
         @Override
