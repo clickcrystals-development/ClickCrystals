@@ -17,6 +17,10 @@ public class EntityDamageEvent extends Event {
         this.entity = world.getEntityById(packet.entityId());
     }
 
+    public Entity getEntity() {
+        return entity;
+    }
+
     public boolean isSelf() {
         return PlayerUtils.valid() && entity.getId() == PlayerUtils.player().getId();
     }

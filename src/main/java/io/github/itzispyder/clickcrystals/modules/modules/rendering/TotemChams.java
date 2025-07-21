@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
+import io.github.itzispyder.clickcrystals.events.events.client.EntityDamageEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.RenderWorldEvent;
@@ -13,6 +14,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 
@@ -77,6 +79,13 @@ public class TotemChams extends ListenerModule {
             .def(125)
             .build()
     );
+    private final SettingSection scExtra = createSettingSection("extra");
+    public final ModuleSetting<Boolean> chamOnDamage = scExtra.add(createBoolSetting()
+            .name("cham-on-damage")
+            .description("Also display cham visuals on player damage")
+            .def(false)
+            .build()
+    );
 
     private final ConcurrentLinkedQueue<ChamRagDoll> dolls = new ConcurrentLinkedQueue<>();
 
@@ -98,6 +107,23 @@ public class TotemChams extends ListenerModule {
             if (player == mc.player && !showSelf.getVal())
                 return;
 
+            int maxAge = (int)(this.maxAge.getVal() * 20);
+            ChamRagDoll doll = new ChamRagDoll(player, maxAge);
+            dolls.add(doll);
+        }
+    }
+
+    @EventHandler
+    private void onEntityDamage(EntityDamageEvent e) {
+        if (PlayerUtils.invalid())
+            return;
+        if (!chamOnDamage.getVal())
+            return;
+
+        DamageSource source = e.getSource();
+        Entity entity = e.getEntity();
+
+        if (!e.isSelf() && source.getAttacker() == PlayerUtils.player() && entity instanceof PlayerEntity player) {
             int maxAge = (int)(this.maxAge.getVal() * 20);
             ChamRagDoll doll = new ChamRagDoll(player, maxAge);
             dolls.add(doll);
