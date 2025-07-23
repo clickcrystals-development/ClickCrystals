@@ -42,7 +42,7 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
             }
             case NEAREST_BLOCK -> {
                 Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(args.get(1).toString());
-                PlayerUtils.runOnNearestBlock(128, filter, (pos, state) -> {
+                PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> {
                     Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
                     Direction face = Direction.getFacing(vector);
                     mc.interactionManager.attackBlock(pos, face);
@@ -50,7 +50,7 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
                 executeWithThen(args, 2);
             }
             case ANY_BLOCK -> {
-                PlayerUtils.runOnNearestBlock(128, (pos, state) -> true, (pos, state) -> {
+                PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> {
                     Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
                     Direction face = Direction.getFacing(vector);
                     mc.interactionManager.attackBlock(pos, face);

@@ -17,7 +17,6 @@ import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
@@ -344,12 +343,11 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
                             return;
                         }
 
-                        Pattern pattern = Pattern.compile(".*(def module|module create) (\\S*).*", Pattern.DOTALL);
+                        Pattern pattern = Pattern.compile(".*(define module|def module|module create) (\\S*).*", Pattern.DOTALL);
                         Matcher matcher = pattern.matcher(script);
 
                         if (!matcher.matches()) {
                             if (PlayerUtils.valid()) {
-                                ChatUtils.sendMessage(script);
                                 system.closeCurrentScreen();
                                 notification.sendToClient();
                             }
