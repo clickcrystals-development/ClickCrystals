@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.LivingEntity;
@@ -175,12 +176,17 @@ public class PixelArtGenerator {
                 Blocks.WARPED_NYLIUM,
                 Blocks.PODZOL,
                 Blocks.DIRT_PATH,
-                Blocks.MYCELIUM
+                Blocks.MYCELIUM,
+                Blocks.BARRIER,
+                Blocks.TEST_BLOCK,
+                Blocks.TEST_INSTANCE_BLOCK,
+                Blocks.STRUCTURE_BLOCK
         );
         public static final List<String> BLACKLIST_KEYS = List.of(
                 "cherry",
                 "leaves",
-                "glass"
+                "glass",
+                "command"
         );
 
         public synchronized Block getBlock(BlockView view, BlockPos pos, Facing facing) {
@@ -204,9 +210,10 @@ public class PixelArtGenerator {
         }
 
         private boolean isValid(Block b, BlockView v, BlockPos p) {
-            boolean full = b.getDefaultState().isFullCube(v, p);
+            BlockState state = b.getDefaultState();
+            boolean full = !state.isTransparent() && state.isFullCube(v, p);
             boolean type = !BLACKLIST.contains(b);
-            boolean keys = !BLACKLIST_KEYS.contains(b.getTranslationKey());
+            boolean keys = BLACKLIST_KEYS.stream().noneMatch(b.getTranslationKey()::contains);
             return full && type && keys;
         }
 
