@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.p
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class FadingChamRagDoll extends ChanRagDoll<FadingChamPart> {
+public class FadingChamRagDoll extends ChamRagDoll<FadingChamPart> {
 
     public FadingChamRagDoll(PlayerEntity player, int maxAge) {
         super(player, maxAge);

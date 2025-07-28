@@ -12,7 +12,7 @@ import org.joml.Vector3f;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class ChanRagDoll<P extends ChamPart> implements Global {
+public abstract class ChamRagDoll<P extends ChamPart> implements Global {
 
     protected final Map<String, P> parts;
     protected final double x, y, z;
@@ -21,7 +21,7 @@ public abstract class ChanRagDoll<P extends ChamPart> implements Global {
     protected final int maxAge;
     protected int age;
 
-    public ChanRagDoll(PlayerEntity player, int maxAge) {
+    public ChamRagDoll(PlayerEntity player, int maxAge) {
         this.maxAge = maxAge;
         this.parts = new HashMap<>();
 
