@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.hud;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.Positionable;
+import io.github.itzispyder.clickcrystals.gui.misc.Color;
 import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
@@ -15,7 +16,7 @@ import net.minecraft.client.util.Window;
 @Environment(EnvType.CLIENT)
 public abstract class Hud implements Positionable, Global {
 
-    public static final int DEFAULT_ARGB = 0x4007CDDF;
+    public static final Color DEFAULT_COLOR = new Color(0x4007CDDF);
     private final Dimension defaultDimension;
     private int x, y, width, height, argb;
     private boolean fixed;
@@ -33,7 +34,7 @@ public abstract class Hud implements Positionable, Global {
     }
 
     public Hud(String id, int x, int y, int width, int height) {
-        this(id, x, y, width, height, new Dimension(x, y, width, height), DEFAULT_ARGB, true);
+        this(id, x, y, width, height, new Dimension(x, y, width, height), DEFAULT_COLOR.getHex(), true);
     }
 
     public Hud(String id, Dimension dim) {
@@ -41,7 +42,7 @@ public abstract class Hud implements Positionable, Global {
     }
 
     public Hud(String id, Dimension dim, Dimension def) {
-        this(id, dim.x, dim.y, dim.width, dim.height, def, DEFAULT_ARGB, true);
+        this(id, dim.x, dim.y, dim.width, dim.height, def, DEFAULT_COLOR.getHex(), true);
     }
 
     public Hud(String id) {

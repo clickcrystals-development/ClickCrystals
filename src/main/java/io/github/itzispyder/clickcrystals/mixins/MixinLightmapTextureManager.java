@@ -7,7 +7,6 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.FullBright;
 import net.minecraft.client.render.LightmapTextureManager;
-import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.profiler.Profiler;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,7 +23,7 @@ public abstract class MixinLightmapTextureManager implements Global {
     @Inject(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;push(Ljava/lang/String;)V", shift = At.Shift.AFTER), cancellable = true)
     private void onUpdate(float tickProgress, CallbackInfo ci, @Local Profiler profiler) {
         if (Module.get(FullBright.class).isEnabled()) {
-            RenderSystem.getDevice().createCommandEncoder().clearColorTexture(this.glTexture, ColorHelper.getArgb(255, 255, 255, 255));
+            RenderSystem.getDevice().createCommandEncoder().clearColorTexture(this.glTexture, 0xFFFFFFFF);
             profiler.pop();
             ci.cancel();
         }

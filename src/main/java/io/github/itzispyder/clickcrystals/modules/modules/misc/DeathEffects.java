@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
-import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
@@ -14,6 +13,7 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.component.type.FireworkExplosionComponent;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -95,7 +95,7 @@ public class DeathEffects extends ListenerModule {
             return;
         }
 
-        if (packet.getStatus() != EntityStatusType.DEATH) {
+        if (packet.getStatus() != EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
             return;
         }
 

@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
-import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
@@ -14,6 +13,7 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 
@@ -87,14 +87,14 @@ public class TotemPops extends Module implements Listener {
                 }
             }
 
-            if (status == EntityStatusType.TOTEM_POP) {
+            if (status == EntityStatuses.USE_TOTEM_OF_UNDYING) {
                 setPops(ent,getPops(ent) + 1);
 
                 if (isEnabled()) {
                     ChatUtils.sendPrefixMessage(compilePopMsg(ent, name, enemyPops.getVal()));
                 }
             }
-            else if (status == EntityStatusType.DEATH) {
+            else if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
                 if (isEnabled()) {
                     ChatUtils.sendPrefixMessage(compilePopMsg(ent, name, enemyDeath.getVal()));
                 }

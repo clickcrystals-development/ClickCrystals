@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.modules;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
-import io.github.itzispyder.clickcrystals.client.networking.EntityStatusType;
 import io.github.itzispyder.clickcrystals.client.networking.PacketMapper;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
@@ -15,6 +14,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.scripts.listeners.*;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
@@ -254,10 +254,10 @@ public class ScriptedModule extends ListenerModule {
 
         if (e.getPacket() instanceof EntityStatusS2CPacket packet) {
             if (packet.getEntity(PlayerUtils.getWorld()) instanceof PlayerEntity p && p.getId() == PlayerUtils.player().getId()) {
-                if (packet.getStatus() == EntityStatusType.TOTEM_POP) {
+                if (packet.getStatus() == EntityStatuses.USE_TOTEM_OF_UNDYING) {
                     totemPopListeners.forEach(Runnable::run);
                 }
-                else if (packet.getStatus() == EntityStatusType.DEATH) {
+                else if (packet.getStatus() == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
                     deathListeners.forEach(Runnable::run);
                 }
             }

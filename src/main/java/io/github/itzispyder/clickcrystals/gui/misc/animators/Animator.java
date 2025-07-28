@@ -1,8 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.misc.animators;
 
+import io.github.itzispyder.clickcrystals.gui.misc.Color;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
-
-import static net.minecraft.util.math.ColorHelper.*;
 
 public class Animator {
 
@@ -88,7 +87,7 @@ public class Animator {
     }
 
     public static int transformColorOpacity(Animator animator, int hex) {
-        return getArgb((int)(255 * animator.getProgressClamped()), getRed(hex), getGreen(hex), getBlue(hex));
+        return new Color(hex).getHexCustomAlpha(animator.getProgressClamped());
     }
 
     public long getLength() {

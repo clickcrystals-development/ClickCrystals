@@ -10,10 +10,6 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.ColorHelper;
-
-import static net.minecraft.util.math.ColorHelper.*;
-
 
 public class InGameHuds extends Module implements Listener {
 
@@ -27,7 +23,7 @@ public class InGameHuds extends Module implements Listener {
             .min(0)
             .name("color-red")
             .description("Hud backdrop color value (red)")
-            .def(getRed(Hud.DEFAULT_ARGB))
+            .def(Hud.DEFAULT_COLOR.getRed())
             .build()
     );
     public final ModuleSetting<Integer> colorGreen = scGeneral.add(IntegerSetting.create()
@@ -35,7 +31,7 @@ public class InGameHuds extends Module implements Listener {
             .min(0)
             .name("color-green")
             .description("Hud backdrop color value (green)")
-            .def(getGreen(Hud.DEFAULT_ARGB))
+            .def(Hud.DEFAULT_COLOR.getGreen())
             .build()
     );
     public final ModuleSetting<Integer> colorBlue = scGeneral.add(IntegerSetting.create()
@@ -43,7 +39,7 @@ public class InGameHuds extends Module implements Listener {
             .min(0)
             .name("color-blue")
             .description("Hud backdrop color value (blue)")
-            .def(getBlue(Hud.DEFAULT_ARGB))
+            .def(Hud.DEFAULT_COLOR.getBlue())
             .build()
     );
     public final ModuleSetting<Integer> colorAlpha = scGeneral.add(IntegerSetting.create()
@@ -51,7 +47,7 @@ public class InGameHuds extends Module implements Listener {
             .min(0)
             .name("color-alpha")
             .description("Hud backdrop color value (alpha or transparency)")
-            .def(getAlpha(Hud.DEFAULT_ARGB))
+            .def(Hud.DEFAULT_COLOR.getAlpha())
             .build()
     );
     public final ModuleSetting<Boolean> hudArmor = scHudVisibility.add(BooleanSetting.create()
@@ -187,7 +183,7 @@ public class InGameHuds extends Module implements Listener {
         int r = colorRed.getVal();
         int g = colorGreen.getVal();
         int b = colorBlue.getVal();
-        return ColorHelper.getArgb(a, r, g, b);
+        return a << 24 | r << 16 | g << 8 | b;
     }
 
     public enum ClockDisplay {
