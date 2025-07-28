@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.parts.ChamPart;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,16 +12,16 @@ import org.joml.Vector3f;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class BaseChamRagDoll<T> implements Global {
+public abstract class ChanRagDoll<P extends ChamPart> implements Global {
 
-    protected final Map<String, T> parts;
+    protected final Map<String, P> parts;
     protected final double x, y, z;
     protected final float yaw, pitch;
     protected float glidingProgress;
     protected final int maxAge;
     protected int age;
 
-    public BaseChamRagDoll(PlayerEntity player, int maxAge) {
+    public ChanRagDoll(PlayerEntity player, int maxAge) {
         this.maxAge = maxAge;
         this.parts = new HashMap<>();
 
@@ -36,9 +37,9 @@ public abstract class BaseChamRagDoll<T> implements Global {
 
     protected abstract void initializeParts(PlayerEntity player);
 
-    public abstract void tick(float... params);
+    public abstract void tick(float gravity, float maxVelocity);
 
-    protected abstract void renderPart(T part, MatrixStack matrices, int color, float tickDelta);
+    protected abstract void renderPart(P part, MatrixStack matrices, int color, float tickDelta);
 
     public void render(MatrixStack matrices, int color, float tickDelta) {
         Vector3f c = new Vec3d(x, y, z).subtract(mc.gameRenderer.getCamera().getCameraPos()).toVector3f();
@@ -53,7 +54,7 @@ public abstract class BaseChamRagDoll<T> implements Global {
         int alpha = (int) ((color >> 24 & 0xFF) * life);
         color = (alpha << 24) | (color & 0x00FFFFFF);
 
-        for (T part : parts.values())
+        for (P part : parts.values())
             renderPart(part, matrices, color, tickDelta);
 
         matrices.pop();
@@ -63,12 +64,7 @@ public abstract class BaseChamRagDoll<T> implements Global {
         return age < maxAge;
     }
 
-    protected static class BodyPartDimensions {
-        public static final float PIXELS_TO_BLOCKS = 0.05625F; // 1.8 / 32
-        public static final float B0 = 0 * PIXELS_TO_BLOCKS;
-        public static final float B2 = 2 * PIXELS_TO_BLOCKS;
-        public static final float B4 = 4 * PIXELS_TO_BLOCKS;
-        public static final float B8 = 8 * PIXELS_TO_BLOCKS;
-        public static final float B12 = 12 * PIXELS_TO_BLOCKS;
+    public float getAgeDelta() {
+        return age / (float)maxAge;
     }
 }

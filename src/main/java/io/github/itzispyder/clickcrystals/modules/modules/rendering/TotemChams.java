@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
-import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.BaseChamRagDoll;
+import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.ChanRagDoll;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.ExplodingChamRagDoll;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.FadingChamRagDoll;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
@@ -100,7 +100,7 @@ public class TotemChams extends ListenerModule {
             .build()
     );
 
-    private final ConcurrentLinkedQueue<BaseChamRagDoll<?>> ragDolls = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<ChanRagDoll<?>> ragDolls = new ConcurrentLinkedQueue<>();
 
     public TotemChams() {
         super("totem-chams", Categories.RENDER, "Renders a nice visual whenever a player's totem pops");
@@ -116,30 +116,28 @@ public class TotemChams extends ListenerModule {
             return;
 
         Entity entity = packet.getEntity(PlayerUtils.getWorld());
-        if (entity instanceof PlayerEntity player) {
-            if (player == mc.player && !showSelf.getVal())
-                return;
-
-            ragDolls.add(ragDollState.getVal().get(player));
-        }
+        if (entity instanceof PlayerEntity player)
+            if (player != mc.player || showSelf.getVal())
+                ragDolls.add(ragDollState.getVal().get(player));
     }
 
     @EventHandler
     private void onEntityDamage(EntityDamageEvent e) {
-        if (PlayerUtils.invalid()) return;
-        if (!chamOnDamage.getVal()) return;
+        if (PlayerUtils.invalid() || !chamOnDamage.getVal())
+            return;
 
         DamageSource source = e.getSource();
         Entity entity = e.getEntity();
 
-        if (!e.isSelf() && source.getAttacker() == PlayerUtils.player() && entity instanceof PlayerEntity player) {
+        if (!e.isSelf() && source.getAttacker() == PlayerUtils.player() && entity instanceof PlayerEntity player)
             ragDolls.add(ragDollState.getVal().get(player));
-        }
     }
 
     @EventHandler
     private void onTick(ClientTickEndEvent e) {
-        if (remove) scGeneral.remove(maxVelocity);
+        if (remove) {
+            scGeneral.remove(maxVelocity);
+        }
         else {
             boolean exists = false;
             for (int i = 0; i < scGeneral.getSettings().size(); i++) {
@@ -148,21 +146,18 @@ public class TotemChams extends ListenerModule {
                     break;
                 }
             }
-            if (!exists) scGeneral.getSettings().add(2, maxVelocity);
+            if (!exists)
+                scGeneral.getSettings().add(2, maxVelocity);
         }
 
         if (PlayerUtils.invalid())
             return;
 
-        for (BaseChamRagDoll<?> doll : ragDolls) {
-            if (doll.isAlive()) {
-                if (doll instanceof ExplodingChamRagDoll explodingDoll)
-                    explodingDoll.tick(maxVelocity.getVal().floatValue(), gravity.getVal().floatValue());
-                else if (doll instanceof FadingChamRagDoll fadeDoll)
-                    fadeDoll.tick(gravity.getVal().floatValue());
-            } else {
+        for (ChanRagDoll<?> doll : ragDolls) {
+            if (doll.isAlive())
+                doll.tick(gravity.getVal().floatValue(), maxVelocity.getVal().floatValue());
+            else
                 ragDolls.remove(doll);
-            }
         }
     }
 
@@ -174,7 +169,7 @@ public class TotemChams extends ListenerModule {
         MatrixStack matrices = e.getMatrices();
         float tickDelta = e.getTickCounter().getTickProgress(true);
 
-        for (BaseChamRagDoll<?> doll : ragDolls)
+        for (ChanRagDoll<?> doll : ragDolls)
             doll.render(matrices, getColor(), tickDelta);
     }
 
@@ -183,21 +178,21 @@ public class TotemChams extends ListenerModule {
     }
 
     public enum RagDoll {
-
         EXPLODING(ExplodingChamRagDoll.class),
         FADING(FadingChamRagDoll.class);
 
-        private final Class<? extends BaseChamRagDoll<?>> clazz;
+        private final Class<? extends ChanRagDoll<?>> clazz;
 
-        RagDoll(Class<? extends BaseChamRagDoll<?>> clazz) {
+        RagDoll(Class<? extends ChanRagDoll<?>> clazz) {
             this.clazz = clazz;
         }
 
-        public BaseChamRagDoll<?> get(PlayerEntity player) {
+        public ChanRagDoll<?> get(PlayerEntity player) {
             try {
                 int maxAge = Module.get(TotemChams.class).maxAge.getVal().intValue() * 20;
                 return clazz.getConstructor(PlayerEntity.class, int.class).newInstance(player, maxAge);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 return null;
             }
         }
