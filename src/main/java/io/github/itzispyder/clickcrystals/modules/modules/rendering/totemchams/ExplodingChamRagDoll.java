@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.util.MathUtils;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class ExplodingChamRagDoll extends ChanRagDoll<ExplodingChamPart> {
+public class ExplodingChamRagDoll extends ChamRagDoll<ExplodingChamPart> {
 
     public ExplodingChamRagDoll(PlayerEntity player, int maxAge) {
         super(player, maxAge);
