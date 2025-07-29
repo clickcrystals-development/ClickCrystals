@@ -30,7 +30,6 @@ import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.HashSet;
 import java.util.Map;
