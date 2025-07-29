@@ -8,10 +8,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
@@ -83,7 +80,7 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
         if (PlayerUtils.invalid() || !infiniteDurability.getVal() || !PlayerUtils.player().isGliding() || PlayerUtils.player().isSwimming())
             return;
         onGlide = true;
-        if (EntityUtils.hasEquipment(mc.player, item -> item.isOf(Items.ELYTRA))) {
+        if (InvUtils.isWearing(Items.ELYTRA)) {
             HotbarUtils.search(this::isChestplate);
             if (HotbarUtils.isHoldingEitherHand(this::isChestplate))
                 InteractionUtils.inputUse(system.random.getRandomInt(800, 999));
