@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import io.github.itzispyder.clickcrystals.Global;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -124,6 +125,21 @@ public final class InvUtils implements Global {
         }
 
         return count;
+    }
+
+    public static ItemStack getEquipmentSlot(EquipmentSlot equipmentSlot){
+        if (equipmentSlot == null) return ItemStack.EMPTY;
+        return inv().player.getEquippedStack(equipmentSlot).getItem().getDefaultStack();
+    }
+
+    public static boolean isWearing(Item item) {
+        if (item == null) return false;
+
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (getEquipmentSlot(slot).isOf(item))
+             return true;
+        }
+        return false;
     }
 
     public static boolean has(Item item) {
