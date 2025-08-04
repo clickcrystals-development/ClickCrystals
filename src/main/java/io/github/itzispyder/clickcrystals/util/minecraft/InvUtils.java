@@ -142,6 +142,18 @@ public final class InvUtils implements Global {
         return false;
     }
 
+    public static boolean isWearing(Predicate<ItemStack> item) {
+        if (item == null) return false;
+
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            ItemStack stack = getEquipmentSlot(slot);
+            if (stack == null || stack.isEmpty()) continue;
+            if (item.test(stack)) return true;
+        }
+
+        return false;
+    }
+
     public static boolean has(Item item) {
         if (item == null) return false;
 
