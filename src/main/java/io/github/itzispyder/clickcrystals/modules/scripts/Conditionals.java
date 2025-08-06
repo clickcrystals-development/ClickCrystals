@@ -117,6 +117,7 @@ public class Conditionals implements Global {
     public static final Conditional ITEM_COUNT;
     public static final Conditional ITEM_DURABILITY;
     public static final Conditional GAMEMODE;
+    public static final Conditional LINE_OF_SIGHT;
 
 
     static {
@@ -291,6 +292,7 @@ public class Conditionals implements Global {
             GameMode gm = args.get(i + 1).toEnum(GameMode.class);
             return pair(ref instanceof PlayerEntity p && p.getGameMode() == gm, i + 2);
         });
+        LINE_OF_SIGHT = register("line_of_sight", (ref, args, i) -> pair(PlayerUtils.valid() && ref != PlayerUtils.player() && PlayerUtils.player().canSee(ref), i + 1));
     }
 
 

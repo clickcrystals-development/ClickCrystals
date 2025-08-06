@@ -46,6 +46,7 @@ public class ScriptedModule extends ListenerModule {
     public final List<ChatSendListener> chatSendListeners = new ArrayList<>();
     public final List<PacketListener> packetReceiveListeners = new ArrayList<>();
     public final List<PacketListener> packetSendListeners = new ArrayList<>();
+    public final List<SoundPlayListener> soundPlayListeners = new ArrayList<>();
     public final List<Runnable> totemPopListeners = new ArrayList<>();
     public final List<Runnable> moduleEnableListeners = new ArrayList<>();
     public final List<Runnable> moduleDisableListeners = new ArrayList<>();
@@ -113,6 +114,8 @@ public class ScriptedModule extends ListenerModule {
         packetReadCancelQueue.clear();
         packetReceiveListeners.clear();
         packetSendListeners.clear();
+
+        soundPlayListeners.clear();
     }
 
     @EventHandler
@@ -177,6 +180,13 @@ public class ScriptedModule extends ListenerModule {
     @EventHandler
     public void onChatSend(ChatSendEvent e) {
         for (ChatSendListener l : chatSendListeners) {
+            l.pass(e);
+        }
+    }
+
+    @EventHandler
+    public void onSoundPlay(SoundPlayEvent e) {
+        for (SoundPlayListener l : soundPlayListeners) {
             l.pass(e);
         }
     }

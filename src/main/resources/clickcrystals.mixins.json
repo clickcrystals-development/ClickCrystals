@@ -27,6 +27,7 @@
     "MixinMouse",
     "MixinParticleManager",
     "MixinScreen",
+    "MixinSoundSystem",
     "MixinSplashOverlay",
     "MixinSplashTextResourceSupplier",
     "MixinTotemParticle",

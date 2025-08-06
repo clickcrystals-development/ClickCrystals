@@ -1,12 +1,15 @@
 package io.github.itzispyder.clickcrystals.client.clickscript;
 
 import io.github.itzispyder.clickcrystals.client.clickscript.components.CommandLine;
+import io.github.itzispyder.clickcrystals.client.clickscript.components.IdentifierSelection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.NbtUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RespawnAnchorBlock;
+import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ItemStack;
@@ -17,7 +20,10 @@ import net.minecraft.util.Identifier;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class ScriptParser {
@@ -210,6 +216,8 @@ public class ScriptParser {
     private static final Map<String, Predicate<BlockState>> defaultedBlockPredicates = new HashMap<>() {{
         this.put("uncharged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) < 1);
         this.put("charged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) > 0);
+        this.put("water_source", state -> state.isOf(Blocks.WATER) && state.getFluidState().getLevel() == 8);
+        this.put("lava_source", state -> state.isOf(Blocks.LAVA) && state.getFluidState().getLevel() == 8);
     }};
 
     public static ItemStack parseItemStack(String arg) {
@@ -227,108 +235,69 @@ public class ScriptParser {
     }
 
     public static Predicate<ItemStack> parseItemPredicate(String arg) {
-        Predicate<String> filter = s -> s != null && s.trim().length() > 1;
-        List<Predicate<ItemStack>> list = new ArrayList<>();
-
-        for (String section : Arrays.stream(arg.split(",")).filter(filter).toArray(String[]::new)) {
-            if (section.startsWith("#")) {
-                list.add(item -> item.getItem().getTranslationKey().contains(section.substring(1)));
-            }
-            else if (section.startsWith(":")) {
-                Identifier id = Identifier.of("minecraft", section.substring(1));
-                list.add(item -> item.getItem() == Registries.ITEM.get(id));
-            }
-            else {
-                list.add(item -> false);
-            }
-        }
-        return item -> list.stream().anyMatch(pre -> pre.test(item));
+        IdentifierSelection<ItemStack> selection = IdentifierSelection.parse(arg, ItemStack.class);
+        selection.setContainsStrategy(node -> item -> item.getItem().getTranslationKey().contains(node.name));
+        selection.setEqualsStrategy(node -> item -> item.getItem() == Registries.ITEM.get(Identifier.ofVanilla(node.name)));
+        selection.setNodeTagsStrategy(node -> item -> node.tags.stream().allMatch(tag -> NbtUtils.hasEnchant(item, tag)));
+        return selection.getIdentifierPredicate();
     }
 
     public static Predicate<BlockState> parseBlockPredicate(String arg) {
-        Predicate<String> filter = s -> s != null && s.trim().length() > 1;
-        List<Predicate<BlockState>> list = new ArrayList<>();
-
-        for (String section : Arrays.stream(arg.split(",")).filter(filter).toArray(String[]::new)) {
-            if (section.startsWith("#")) {
-                list.add(block -> block.getBlock().getTranslationKey().contains(section.substring(1)));
-            }
-            else if (section.startsWith(":")) {
-                String subArg = section.substring(1);
-                if (defaultedBlockPredicates.containsKey(subArg)) {
-                    list.add(defaultedBlockPredicates.get(subArg));
-                    continue;
-                }
-
-                Identifier id = Identifier.of("minecraft", subArg);
-                list.add(block -> block.getBlock() == Registries.BLOCK.get(id));
-            }
-            else {
-                list.add(block -> false);
-            }
-        }
-        return block -> list.stream().anyMatch(pre -> pre.test(block));
+        IdentifierSelection<BlockState> selection = IdentifierSelection.parse(arg, BlockState.class);
+        selection.setContainsStrategy(node -> state -> state.getBlock().getTranslationKey().contains(node.name));
+        selection.setEqualsStrategy(node -> {
+            if (defaultedBlockPredicates.containsKey(node.name))
+                return defaultedBlockPredicates.get(node.name);
+            else
+                return state -> state.getBlock() == Registries.BLOCK.get(Identifier.ofVanilla(node.name));
+        });
+        return selection.getIdentifierPredicate();
     }
 
     public static Predicate<Entity> parseEntityPredicate(String arg) {
-        Predicate<String> filter = s -> s != null && s.trim().length() > 1;
-        List<Predicate<Entity>> list = new ArrayList<>();
+        IdentifierSelection<Entity> selection = IdentifierSelection.parse(arg, Entity.class);
+        selection.setContainsStrategy(node -> ent -> ent.getType().getTranslationKey().contains(node.name));
+        selection.setEqualsStrategy(node -> ent -> ent.getType() == Registries.ENTITY_TYPE.get(Identifier.ofVanilla(node.name)));
+        return selection.getIdentifierPredicate();
+    }
 
-        for (String section : Arrays.stream(arg.split(",")).filter(filter).toArray(String[]::new)) {
-            if (section.startsWith("#")) {
-                list.add(ent -> ent.getType().getTranslationKey().contains(section.substring(1)));
-            }
-            else if (section.startsWith(":")) {
-                Identifier id = Identifier.of("minecraft", section.substring(1));
-                list.add(ent -> ent.getType() == Registries.ENTITY_TYPE.get(id));
-            }
-            else {
-                list.add(item -> false);
-            }
-        }
-        return item -> list.stream().anyMatch(pre -> pre.test(item));
+    public static Predicate<SoundInstance> parseSoundInstancePredicate(String arg) {
+        IdentifierSelection<SoundInstance> selection = IdentifierSelection.parse(arg, SoundInstance.class);
+        selection.setContainsStrategy(node -> sound -> sound.getId().toTranslationKey().replace('.', '_').contains(node.name));
+        selection.setEqualsStrategy(node -> sound -> sound.getId().equals(Identifier.ofVanilla(node.name)));
+        return selection.getIdentifierPredicate();
     }
 
     public static SoundEvent parseSoundEvent(String arg) {
-        if (arg == null || arg.length() <= 1) {
-            return null;
-        }
-        else if (arg.startsWith("#")) {
-            String subArg = arg.substring(1);
-            Identifier result = null;
-            for (Identifier id : Registries.SOUND_EVENT.getIds()) {
-                if (id.getPath().contains(subArg)) {
+        for (IdentifierSelection.Node node : IdentifierSelection.parse(arg, SoundEvent.class)) switch (node.type) {
+            case CONTAINS -> {
+                Identifier result = null;
+                for (Identifier id : Registries.SOUND_EVENT.getIds()) if (id.getPath().contains(node.name)) {
                     result = id;
                     break;
                 }
+                return result == null ? null : Registries.SOUND_EVENT.get(result);
             }
-            return result == null ? null : Registries.SOUND_EVENT.get(result);
-        }
-        else if (arg.startsWith(":")) {
-            Identifier id = Identifier.of("minecraft", arg.substring(1));
-            return Registries.SOUND_EVENT.get(id);
+            case EQUALS -> {
+                return Registries.SOUND_EVENT.get(Identifier.ofVanilla(node.name));
+            }
         }
         return null;
     }
 
     public static StatusEffect parseStatusEffect(String arg) {
-        if (arg == null || arg.length() <= 1) {
-            return null;
-        }
-        else if (arg.startsWith("#")) {
-            String subArg = arg.substring(1);
-            Identifier result = null;
-            for (Identifier id : Registries.STATUS_EFFECT.getIds()) {
-                if (id.getPath().contains(subArg)) {
+        for (IdentifierSelection.Node node : IdentifierSelection.parse(arg, StatusEffect.class)) switch (node.type) {
+            case CONTAINS -> {
+                Identifier result = null;
+                for (Identifier id : Registries.STATUS_EFFECT.getIds()) if (id.getPath().contains(node.name)) {
                     result = id;
                     break;
                 }
+                return result == null ? null : Registries.STATUS_EFFECT.get(result);
             }
-            return result == null ? null : Registries.STATUS_EFFECT.get(result);
-        }
-        else if (arg.startsWith(":")) {
-            Identifier id = Identifier.of("minecraft", arg.substring(1));
-            return Registries.STATUS_EFFECT.get(id);
+            case EQUALS -> {
+                return Registries.STATUS_EFFECT.get(Identifier.ofVanilla(node.name));
+            }
         }
         return null;
     }

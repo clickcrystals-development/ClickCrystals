@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.scripts.syntax;
 import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptArgs;
 import io.github.itzispyder.clickcrystals.client.clickscript.ScriptCommand;
+import io.github.itzispyder.clickcrystals.client.clickscript.ScriptParser;
 import io.github.itzispyder.clickcrystals.client.networking.PacketMapper;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
@@ -10,20 +11,12 @@ import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.scripts.ThenChainable;
 import io.github.itzispyder.clickcrystals.modules.scripts.client.ModuleCmd;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RespawnAnchorBlock;
+import io.github.itzispyder.clickcrystals.modules.scripts.listeners.TickListener;
+import net.minecraft.client.sound.SoundInstance;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Predicate;
 
 public class OnEventCmd extends ScriptCommand implements ThenChainable {
-
-    private static final Map<String, Predicate<BlockState>> defaultedBlockPredicates = new HashMap<>() {{
-        this.put("uncharged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) < 1);
-        this.put("charged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) > 0);
-    }};
 
     public OnEventCmd() {
         super("on");
@@ -40,10 +33,12 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
             case MOVE_LOOK, MOVE_POS -> passMove(args, type);
             case CHAT_SEND, CHAT_RECEIVE -> passChat(args, type);
             case PACKET_SEND, PACKET_RECEIVE -> passPacket(args, type);
+            case SOUND_PLAY -> passSound(args);
 
-            case PRE_TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.preTickListeners.add(event -> exc(args, 1)));
-            case TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.tickListeners.add(event -> exc(args, 1)));
-            case POST_TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.postTickListeners.add(event -> exc(args, 1)));
+            case PRE_TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.preTickListeners.add(TickListener.fromScript(args, this)));
+            case TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.tickListeners.add(TickListener.fromScript(args, this)));
+            case POST_TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.postTickListeners.add(TickListener.fromScript(args, this)));
+
             case ITEM_USE -> ModuleCmd.runOnCurrentScriptModule(m -> m.itemUseListeners.add(event -> exc(args, 1)));
             case ITEM_CONSUME -> ModuleCmd.runOnCurrentScriptModule(m -> m.itemConsumeListeners.add(event -> exc(args, 1)));
             case MODULE_ENABLE -> ModuleCmd.runOnCurrentScriptModule(m -> m.moduleEnableListeners.add(() -> exc(args, 1)));
@@ -55,6 +50,14 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
             case GAME_JOIN -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameJoinListeners.add(() -> exc(args, 1)));
             case GAME_LEAVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameLeaveListeners.add(() -> exc(args, 1)));
         }
+    }
+
+    private void passSound(ScriptArgs args) {
+        Predicate<SoundInstance> soundPredicate = ScriptParser.parseSoundInstancePredicate(args.get(1).toString());
+        ModuleCmd.runOnCurrentScriptModule(m -> m.soundPlayListeners.add(e -> {
+            if (soundPredicate.test(e.getSound()))
+                exc(args, 2);
+        }));
     }
 
     private void passPacket(ScriptArgs args, EventType type) {
@@ -233,6 +236,7 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         CHAT_SEND,
         CHAT_RECEIVE,
         PACKET_SEND,
-        PACKET_RECEIVE
+        PACKET_RECEIVE,
+        SOUND_PLAY
     }
 }

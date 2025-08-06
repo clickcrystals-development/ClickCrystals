@@ -136,18 +136,6 @@ public class ScriptArgs {
             return Integer.parseInt(arg);
         }
 
-        public long toLong() {
-            return Long.parseLong(arg);
-        }
-
-        public byte toByte() {
-            return Byte.parseByte(arg);
-        }
-
-        public short toShort() {
-            return Short.parseShort(arg);
-        }
-
         public double toDouble() {
             return Double.parseDouble(arg);
         }
@@ -160,8 +148,12 @@ public class ScriptArgs {
             return Boolean.parseBoolean(arg);
         }
 
-        public char toChar() {
-            return arg.isEmpty() ? ' ' : arg.charAt(0);
+        public boolean isNum() {
+            return arg.matches("^-?\\d*(\\.\\d*)?$");
+        }
+
+        public boolean isBool() {
+            return "true".equalsIgnoreCase(arg) || "false".equalsIgnoreCase(arg);
         }
 
         @Override
