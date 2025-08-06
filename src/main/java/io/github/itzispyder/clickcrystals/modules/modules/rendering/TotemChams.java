@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
-import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.ChanRagDoll;
+import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.ChamRagDoll;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.ExplodingChamRagDoll;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.FadingChamRagDoll;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
@@ -100,7 +100,7 @@ public class TotemChams extends ListenerModule {
             .build()
     );
 
-    private final ConcurrentLinkedQueue<ChanRagDoll<?>> ragDolls = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<ChamRagDoll<?>> ragDolls = new ConcurrentLinkedQueue<>();
 
     public TotemChams() {
         super("totem-chams", Categories.RENDER, "Renders a nice visual whenever a player's totem pops");
@@ -153,7 +153,7 @@ public class TotemChams extends ListenerModule {
         if (PlayerUtils.invalid())
             return;
 
-        for (ChanRagDoll<?> doll : ragDolls) {
+        for (ChamRagDoll<?> doll : ragDolls) {
             if (doll.isAlive())
                 doll.tick(gravity.getVal().floatValue(), maxVelocity.getVal().floatValue());
             else
@@ -169,7 +169,7 @@ public class TotemChams extends ListenerModule {
         MatrixStack matrices = e.getMatrices();
         float tickDelta = e.getTickCounter().getTickProgress(true);
 
-        for (ChanRagDoll<?> doll : ragDolls)
+        for (ChamRagDoll<?> doll : ragDolls)
             doll.render(matrices, getColor(), tickDelta);
     }
 
@@ -181,13 +181,13 @@ public class TotemChams extends ListenerModule {
         EXPLODING(ExplodingChamRagDoll.class),
         FADING(FadingChamRagDoll.class);
 
-        private final Class<? extends ChanRagDoll<?>> clazz;
+        private final Class<? extends ChamRagDoll<?>> clazz;
 
-        RagDoll(Class<? extends ChanRagDoll<?>> clazz) {
+        RagDoll(Class<? extends ChamRagDoll<?>> clazz) {
             this.clazz = clazz;
         }
 
-        public ChanRagDoll<?> get(PlayerEntity player) {
+        public ChamRagDoll<?> get(PlayerEntity player) {
             try {
                 int maxAge = Module.get(TotemChams.class).maxAge.getVal().intValue() * 20;
                 return clazz.getConstructor(PlayerEntity.class, int.class).newInstance(player, maxAge);
