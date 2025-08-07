@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.gui.screens.scripts;
 
-import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.commands.commands.ReloadCommand;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
@@ -14,13 +13,14 @@ import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
-import io.github.itzispyder.clickcrystals.modules.scripts.Conditionals;
-import io.github.itzispyder.clickcrystals.modules.scripts.InputType;
-import io.github.itzispyder.clickcrystals.modules.scripts.TargetType;
-import io.github.itzispyder.clickcrystals.modules.scripts.client.ConfigCmd;
-import io.github.itzispyder.clickcrystals.modules.scripts.client.DefineCmd;
-import io.github.itzispyder.clickcrystals.modules.scripts.client.ModuleCmd;
-import io.github.itzispyder.clickcrystals.modules.scripts.syntax.OnEventCmd;
+import io.github.itzispyder.clickcrystals.scripting.ClickScript;
+import io.github.itzispyder.clickcrystals.scripting.syntax.Conditionals;
+import io.github.itzispyder.clickcrystals.scripting.syntax.InputType;
+import io.github.itzispyder.clickcrystals.scripting.syntax.TargetType;
+import io.github.itzispyder.clickcrystals.scripting.syntax.client.ConfigCmd;
+import io.github.itzispyder.clickcrystals.scripting.syntax.client.DefineCmd;
+import io.github.itzispyder.clickcrystals.scripting.syntax.client.ModuleCmd;
+import io.github.itzispyder.clickcrystals.scripting.syntax.logic.OnEventCmd;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;

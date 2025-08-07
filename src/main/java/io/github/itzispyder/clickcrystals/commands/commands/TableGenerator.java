@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class TableGenerator extends Command {
 
     public TableGenerator() {
-        super("table-generator", "Generates a table with modules & commands.", ",table-generator modules");
+        super("table-generator", "Generates a table with modules & scripts.", ",table-generator modules");
     }
 
 
@@ -52,6 +52,6 @@ public class TableGenerator extends Command {
 
         mc.keyboard.setClipboard(chart);
 
-        info("Modules and commands chart has been copied to your clipboard!");
+        info("Modules and scripts chart has been copied to your clipboard!");
     }
 }

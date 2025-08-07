@@ -1,6 +1,5 @@
 package io.github.itzispyder.clickcrystals.gui.screens.scripts;
 
-import io.github.itzispyder.clickcrystals.client.clickscript.ScriptFormatter;
 import io.github.itzispyder.clickcrystals.commands.commands.ReloadCommand;
 import io.github.itzispyder.clickcrystals.data.Config;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
@@ -15,6 +14,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.AnimatedBase;
+import io.github.itzispyder.clickcrystals.scripting.ScriptFormatter;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;

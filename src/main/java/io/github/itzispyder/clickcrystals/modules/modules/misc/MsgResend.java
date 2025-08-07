@@ -17,7 +17,7 @@ public class MsgResend extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();
     public final ModuleSetting<Boolean> resendCommandOnly = scGeneral.add(createBoolSetting()
-            .name("resend-only-commands")
+            .name("resend-only-scripts")
             .description("Resend the last command that you have typed.")
             .def(false)
             .build()

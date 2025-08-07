@@ -27,7 +27,7 @@ public class HelpCommand extends Command {
                                     infoRaw(module.getHelp());
                                     return SINGLE_SUCCESS;
                                 })))
-                .then(literal("commands")
+                .then(literal("scripts")
                         .then(argument("command", CommandArgumentType.create())
                                 .executes(context -> {
                                     Command command = context.getArgument("command", Command.class);

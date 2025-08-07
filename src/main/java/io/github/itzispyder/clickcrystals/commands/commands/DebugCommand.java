@@ -1,11 +1,11 @@
 package io.github.itzispyder.clickcrystals.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import io.github.itzispyder.clickcrystals.client.clickscript.ClickScript;
 import io.github.itzispyder.clickcrystals.client.system.Notification;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.commands.arguments.PlayerArgumentType;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.scripting.ClickScript;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
@@ -38,14 +38,14 @@ public class DebugCommand extends Command {
                     ChatUtils.sendPrefixMessage(StringUtils.color("&cPlease provide an item!"));
                     return SINGLE_SUCCESS;
                 })
-                .then(literal("script-commands")
+                .then(literal("script-scripts")
                         .executes(context -> {
                             List<String> scriptCommands = Arrays.asList(ClickScript.collectNames());
 
                             ChatUtils.sendBlank(2);
-                            ChatUtils.sendPrefixMessage("All ClickScript commands:");
+                            ChatUtils.sendPrefixMessage("All ClickScript scripts:");
                             ChatUtils.sendBlank(1);
-                            ChatUtils.sendMessage("Script commands (" + scriptCommands.size() + "): " + ArrayUtils.list2string(scriptCommands));
+                            ChatUtils.sendMessage("Script scripts (" + scriptCommands.size() + "): " + ArrayUtils.list2string(scriptCommands));
                             ChatUtils.sendBlank(2);
                             return SINGLE_SUCCESS;
                         }))
