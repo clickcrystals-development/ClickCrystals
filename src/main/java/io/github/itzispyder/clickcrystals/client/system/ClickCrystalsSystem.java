@@ -12,6 +12,7 @@ import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
+import io.github.itzispyder.clickcrystals.scripting.format.Format;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
@@ -44,6 +45,7 @@ public class ClickCrystalsSystem implements Serializable {
     public final TickScheduler tickScheduler = new TickScheduler();
     public final ClickCrystalsLogger logger = new ClickCrystalsLogger(new File(Config.PATH_LOG));
     public final ProfileManager profiles = new ProfileManager();
+    public final Format scriptFormats = new Format();
     private final Map<Class<? extends Module>, Module> modules;
     private final Map<String, ScriptedModule> scriptedModules;
     private final Map<Class<? extends Command>, Command> commands;
