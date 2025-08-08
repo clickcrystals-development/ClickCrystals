@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
 import net.minecraft.util.math.Vec3d;
 
-// @Format velocity <num> <num> <num>
+// @Format velocity <x> <y> <z>
 public class VelocityCmd extends ScriptCommand {
 
     public VelocityCmd() {

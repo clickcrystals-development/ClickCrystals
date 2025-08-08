@@ -18,7 +18,7 @@ import java.util.function.Predicate;
 
 // @Format damage (nearest_entity|nearest_block) <identifier>
 // @Format damage (any_entity|target_entity|any_block)
-// @Format damage position <num> <num> <num>
+// @Format damage position <x> <y> <z>
 public class DamageCmd extends ScriptCommand implements ThenChainable {
 
     public static final Predicate<Entity> ENTITY_EXISTS = ent -> ent instanceof LivingEntity && ent.isAlive();

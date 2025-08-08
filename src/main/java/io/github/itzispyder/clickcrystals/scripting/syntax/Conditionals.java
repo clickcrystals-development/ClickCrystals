@@ -62,62 +62,68 @@ public class Conditionals implements Global {
 
 
     // conditionals
-    public static final Conditional TRUE;
-    public static final Conditional FALSE;
-    public static final Conditional HOLDING;
-    public static final Conditional OFF_HOLDING;
-    public static final Conditional TARGET_BLOCK;
-    public static final Conditional TARGET_ENTITY;
-    public static final Conditional TARGETING_BLOCK;
-    public static final Conditional TARGETING_ENTITY;
-    public static final Conditional INVENTORY_HAS;
-    public static final Conditional EQUIPMENT_HAS;
-    public static final Conditional HOTBAR_HAS;
+    public static final Conditional TRUE; // @Format (if|if_not|!if|while|while_not|!while) true
+    public static final Conditional FALSE; // @Format (if|if_not|!if|while|while_not|!while) false
+    public static final Conditional HOLDING; // @Format (if|if_not|!if|while|while_not|!while) holding <identifier>
+    public static final Conditional OFF_HOLDING; // @Format (if|if_not|!if|while|while_not|!while) off_holding <identifier>
+    public static final Conditional TARGET_BLOCK; // @Format (if|if_not|!if|while|while_not|!while) target_block <identifier>
+    public static final Conditional TARGET_ENTITY; // @Format (if|if_not|!if|while|while_not|!while) target_entity <identifier>
+    public static final Conditional TARGETING_BLOCK; // @Format (if|if_not|!if|while|while_not|!while) targeting_block
+    public static final Conditional TARGETING_ENTITY; // @Format (if|if_not|!if|while|while_not|!while) targeting_entity
+    public static final Conditional INVENTORY_HAS; // @Format (if|if_not|!if|while|while_not|!while) inventory_has <identifier>
+    public static final Conditional EQUIPMENT_HAS; // @Format (if|if_not|!if|while|while_not|!while) equipment_has <identifier>
+    public static final Conditional HOTBAR_HAS; // @Format (if|if_not|!if|while|while_not|!while) hotbar_has <identifier>
+
+    // @Format (if|if_not|!if|while|while_not|!while) input_active (attack|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory)
+    // @Format (if|if_not|!if|while|while_not|!while) input_active key ...
     public static final Conditional INPUT_ACTIVE;
-    public static final Conditional BLOCK_IN_RANGE;
-    public static final Conditional ENTITY_IN_RANGE;
-    public static final Conditional ATTACK_PROGRESS;
-    public static final Conditional HEALTH;
-    public static final Conditional HUNGER;
-    public static final Conditional HURT_TIME;
-    public static final Conditional ARMOR;
-    public static final Conditional POS_X;
-    public static final Conditional POS_Y;
-    public static final Conditional POS_Z;
-    public static final Conditional VEL_X;
-    public static final Conditional VEL_Y;
-    public static final Conditional VEL_Z;
-    public static final Conditional MODULE_ENABLED;
-    public static final Conditional MODULE_DISABLED;
-    public static final Conditional BLOCK;
-    public static final Conditional ENTITY;
-    public static final Conditional DIMENSION;
-    public static final Conditional EFFECT_AMPLIFIER;
-    public static final Conditional EFFECT_DURATION;
-    public static final Conditional IN_GAME;
-    public static final Conditional IN_SINGLEPLAYER;
-    public static final Conditional PLAYING;
-    public static final Conditional IN_SCREEN;
-    public static final Conditional CHANCE_OF;
-    public static final Conditional COLLIDING;
-    public static final Conditional COLLIDING_HORIZONTALLY;
-    public static final Conditional COLLIDING_VERTICALLY;
-    public static final Conditional JUMPING;
-    public static final Conditional MOVING;
-    public static final Conditional BLOCKING;
-    public static final Conditional ON_GROUND;
-    public static final Conditional ON_FIRE;
-    public static final Conditional FROZEN;
-    public static final Conditional DEAD;
-    public static final Conditional ALIVE;
-    public static final Conditional FALLING;
-    public static final Conditional CURSOR_ITEM;
-    public static final Conditional HOVERING_OVER;
+    public static final Conditional BLOCK_IN_RANGE; // @Format (if|if_not|!if|while|while_not|!while) block_in_range <identifier> <num>
+    public static final Conditional ENTITY_IN_RANGE; // @Format (if|if_not|!if|while|while_not|!while) entity_in_range <identifier> <num>
+    public static final Conditional ATTACK_PROGRESS; // @Format (if|if_not|!if|while|while_not|!while) attack_progress <comparator> <num>
+    public static final Conditional HEALTH; // @Format (if|if_not|!if|while|while_not|!while) health <comparator> <num>
+    public static final Conditional HUNGER; // @Format (if|if_not|!if|while|while_not|!while) hunger <comparator> <num>
+    public static final Conditional HURT_TIME; // @Format (if|if_not|!if|while|while_not|!while) hurt_time <comparator> <int>
+    public static final Conditional ARMOR; // @Format (if|if_not|!if|while|while_not|!while) armor <comparator> <int>
+    public static final Conditional POS_X; // @Format (if|if_not|!if|while|while_not|!while) pos_x <comparator> <num>
+    public static final Conditional POS_Y; // @Format (if|if_not|!if|while|while_not|!while) pos_y <comparator> <num>
+    public static final Conditional POS_Z; // @Format (if|if_not|!if|while|while_not|!while) pos_z <comparator> <num>
+    public static final Conditional VEL_X; // @Format (if|if_not|!if|while|while_not|!while) vel_x <comparator> <num>
+    public static final Conditional VEL_Y; // @Format (if|if_not|!if|while|while_not|!while) vel_y <comparator> <num>
+    public static final Conditional VEL_Z; // @Format (if|if_not|!if|while|while_not|!while) vel_z <comparator> <num>
+    public static final Conditional MODULE_ENABLED; // @Format (if|if_not|!if|while|while_not|!while) module_enabled ...
+    public static final Conditional MODULE_DISABLED; // @Format (if|if_not|!if|while|while_not|!while) module_disabled ...
+    public static final Conditional BLOCK; // @Format (if|if_not|!if|while|while_not|!while) block <x> <y> <z>
+    public static final Conditional ENTITY; // @Format (if|if_not|!if|while|while_not|!while) entity <x> <y> <z>
+    public static final Conditional DIMENSION; // @Format (if|if_not|!if|while|while_not|!while) dimension (overworld|the_nether|the_end)
+    public static final Conditional EFFECT_AMPLIFIER; // @Format (if|if_not|!if|while|while_not|!while) <identifier> <comparator> <int>
+    public static final Conditional EFFECT_DURATION; // @Format (if|if_not|!if|while|while_not|!while) <identifier> <comparator> <int>
+    public static final Conditional IN_GAME; // @Format (if|if_not|!if|while|while_not|!while) in_game
+    public static final Conditional IN_SINGLEPLAYER; // @Format (if|if_not|!if|while|while_not|!while) in_singleplayer
+    public static final Conditional PLAYING; // @Format (if|if_not|!if|while|while_not|!while) playing
+    public static final Conditional IN_SCREEN; // @Format (if|if_not|!if|while|while_not|!while) in_screen
+    public static final Conditional CHANCE_OF; // @Format (if|if_not|!if|while|while_not|!while) chance_of <num>
+    public static final Conditional COLLIDING; // @Format (if|if_not|!if|while|while_not|!while) colliding
+    public static final Conditional COLLIDING_HORIZONTALLY; // @Format (if|if_not|!if|while|while_not|!while) colliding_horizontally
+    public static final Conditional COLLIDING_VERTICALLY; // @Format (if|if_not|!if|while|while_not|!while) colliding_vertically
+    public static final Conditional JUMPING; // @Format (if|if_not|!if|while|while_not|!while) jumping
+    public static final Conditional MOVING; // @Format (if|if_not|!if|while|while_not|!while) moving
+    public static final Conditional BLOCKING; // @Format (if|if_not|!if|while|while_not|!while) blocking
+    public static final Conditional ON_GROUND; // @Format (if|if_not|!if|while|while_not|!while) on_ground
+    public static final Conditional ON_FIRE; // @Format (if|if_not|!if|while|while_not|!while) on_fire
+    public static final Conditional FROZEN; // @Format (if|if_not|!if|while|while_not|!while) frozen
+    public static final Conditional DEAD; // @Format (if|if_not|!if|while|while_not|!while) dead
+    public static final Conditional ALIVE; // @Format (if|if_not|!if|while|while_not|!while) alive
+    public static final Conditional FALLING; // @Format (if|if_not|!if|while|while_not|!while) falling
+    public static final Conditional CURSOR_ITEM; // @Format (if|if_not|!if|while|while_not|!while) cursor_item <identifier>
+    public static final Conditional HOVERING_OVER; // @Format (if|if_not|!if|while|while_not|!while) hovering_over <identifier>
+
+    // @Format (if|if_not|!if|while|while_not|!while) reference_entity (client|any_entity)
+    // @Format (if|if_not|!if|while|while_not|!while) reference_entity <identifier>
     public static final Conditional REFERENCE_ENTITY;
-    public static final Conditional ITEM_COUNT;
-    public static final Conditional ITEM_DURABILITY;
-    public static final Conditional GAMEMODE;
-    public static final Conditional LINE_OF_SIGHT;
+    public static final Conditional ITEM_COUNT; // @Format (if|if_not|!if|while|while_not|!while) <identifier> <comparator> <int>
+    public static final Conditional ITEM_DURABILITY; // @Format (if|if_not|!if|while|while_not|!while) <identifier> <comparator> <num>
+    public static final Conditional GAMEMODE; // @Format (if|if_not|!if|while|while_not|!while) gamemode (creative|survival|adventure|spectator)
+    public static final Conditional LINE_OF_SIGHT; // @Format (if|if_not|!if|while|while_not|!while) line_of_sight
 
 
     static {
