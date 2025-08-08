@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.function.Predicate;
 
+// @Format gui_swap <identifier>
 public class GuiSwapCmd extends ScriptCommand {
 
     public GuiSwapCmd() {

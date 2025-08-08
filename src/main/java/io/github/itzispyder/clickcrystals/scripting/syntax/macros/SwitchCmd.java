@@ -6,6 +6,9 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 
+// @Format switch back
+// @Format switch <int>
+// @Format switch <identifier>
 public class SwitchCmd extends ScriptCommand {
 
     public static int lastSlot = -1;

@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
 import net.minecraft.util.math.Vec3d;
 
+// @Format teleport <num> <num> <num>
 public class TeleportCmd extends ScriptCommand {
 
     public TeleportCmd() {

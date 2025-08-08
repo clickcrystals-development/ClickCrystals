@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.syntax.client.ModuleCmd;
 
+// @Format cancel_packet (c2s|s2c) ...
 public class CancelPacketCmd extends ScriptCommand {
 
     public CancelPacketCmd() {

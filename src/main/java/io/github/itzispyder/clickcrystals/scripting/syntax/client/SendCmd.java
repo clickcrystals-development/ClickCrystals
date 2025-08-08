@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 
+// @Format send "..."
 public class SendCmd extends ScriptCommand {
 
     public SendCmd() {

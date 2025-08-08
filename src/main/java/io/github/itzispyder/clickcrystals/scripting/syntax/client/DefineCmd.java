@@ -4,6 +4,9 @@ import io.github.itzispyder.clickcrystals.scripting.ClickScript;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 
+// @Format (define|def) module ...
+// @Format (define|def) (description|desc) "..."
+// @Format (define|def) (function|func) ...
 public class DefineCmd extends ScriptCommand {
 
     public DefineCmd() {

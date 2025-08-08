@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 
+// @Format (loop_period|repeat_period) <int> <num>
 public class LoopPeriodCmd extends ScriptCommand implements Global {
 
     public LoopPeriodCmd() {

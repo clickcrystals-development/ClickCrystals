@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.scripting.syntax.client.ModuleCmd;
 import static io.github.itzispyder.clickcrystals.scripting.syntax.logic.CancelPacketCmd.getC2S;
 import static io.github.itzispyder.clickcrystals.scripting.syntax.logic.CancelPacketCmd.getSC2;
 
+// @Format uncancel_packet (s2c|c2s) ...
 public class UncancelPacketCmd extends ScriptCommand {
 
     public UncancelPacketCmd() {

@@ -8,6 +8,7 @@ import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 
 import java.util.List;
 
+// @Format execute_random
 public class ExecuteRandomCmd extends ScriptCommand {
 
     public ExecuteRandomCmd() {

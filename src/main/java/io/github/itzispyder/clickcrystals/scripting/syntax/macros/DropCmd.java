@@ -5,6 +5,8 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 
+// @Format drop all
+// @Format drop <int>
 public class DropCmd extends ScriptCommand {
 
     public DropCmd() {

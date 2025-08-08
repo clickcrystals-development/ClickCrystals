@@ -7,6 +7,8 @@ import io.github.itzispyder.clickcrystals.scripting.syntax.InputType;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 
+// @Format input (attack|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory) <num>
+// @Format input key ...
 public class InputCmd extends ScriptCommand implements Global, ThenChainable {
 
     public InputCmd() {

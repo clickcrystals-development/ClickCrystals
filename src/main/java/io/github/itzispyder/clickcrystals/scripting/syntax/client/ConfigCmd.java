@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 
+// @Format config (save|load|reload)
 public class ConfigCmd extends ScriptCommand implements Global {
 
     public ConfigCmd() {

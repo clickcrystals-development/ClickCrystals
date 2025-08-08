@@ -17,6 +17,9 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.function.Predicate;
 
+// @Format interact (nearest_entity|nearest_block) <identifier>
+// @Format interact (any_entity|target_entity|any_block)
+// @Format interact position <num> <num> <num>
 public class InteractCmd extends ScriptCommand implements ThenChainable {
 
     public InteractCmd() {

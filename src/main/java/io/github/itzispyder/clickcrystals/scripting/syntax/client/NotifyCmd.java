@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.client.system.Notification;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 
+// @Format notify "..."
 public class NotifyCmd extends ScriptCommand {
 
     public NotifyCmd() {

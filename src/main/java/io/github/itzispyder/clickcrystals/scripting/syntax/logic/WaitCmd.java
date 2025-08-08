@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 
+// @Format wait <num>
 public class WaitCmd extends ScriptCommand implements Global, ThenChainable {
 
     public WaitCmd() {

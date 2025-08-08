@@ -12,6 +12,8 @@ import net.minecraft.util.hit.EntityHitResult;
 
 import java.util.function.Predicate;
 
+// @Format as (any_entity|target_entity|client)
+// @Format as nearest_entity <identifier>
 public class AsCmd extends ScriptCommand implements ThenChainable {
 
     private static Entity currentReference;

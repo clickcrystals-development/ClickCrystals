@@ -9,6 +9,7 @@ import net.minecraft.screen.slot.SlotActionType;
 
 import java.util.function.Predicate;
 
+// @Format gui_quickmove <identifier> <int>?
 public class GuiQuickMoveCmd extends ScriptCommand {
 
     public GuiQuickMoveCmd() {

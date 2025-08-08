@@ -7,6 +7,8 @@ import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.sound.SoundEvent;
 
+// @Format playsound stop
+// @Format playsound <identifier> <num>? <num>?
 public class PlaySoundCmd extends ScriptCommand {
 
     public PlaySoundCmd() {

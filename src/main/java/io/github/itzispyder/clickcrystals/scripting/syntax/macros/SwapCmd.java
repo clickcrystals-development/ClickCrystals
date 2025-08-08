@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 
+// @Format swap
 public class SwapCmd extends ScriptCommand {
 
     public SwapCmd() {

@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 
 import java.util.function.Predicate;
 
+// @Format gui_drop <identifier> all
+// @Format gui_drop <identifier> <int>
 public class GuiDropCmd extends ScriptCommand {
 
     public GuiDropCmd() {

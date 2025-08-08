@@ -8,6 +8,7 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 
 import java.util.function.Consumer;
 
+// @Format module (create|enable|disable) ...
 public class ModuleCmd extends ScriptCommand implements Global {
 
     private static ScriptedModule currentScriptModule;
