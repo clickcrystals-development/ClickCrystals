@@ -133,12 +133,12 @@ public final class InvUtils implements Global {
     }
 
     public static boolean isWearing(Item item) {
-        if (item == null) return false;
+        if (item == null)
+            return false;
 
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
+        for (EquipmentSlot slot : EquipmentSlot.values())
             if (getEquipmentSlot(slot).isOf(item))
-             return true;
-        }
+                return true;
         return false;
     }
 

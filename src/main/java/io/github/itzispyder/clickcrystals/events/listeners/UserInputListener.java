@@ -4,7 +4,6 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.RenderInventorySlotEvent;
-import io.github.itzispyder.clickcrystals.events.events.client.ScreenInitEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
@@ -25,10 +24,8 @@ import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
-import net.minecraft.client.gui.screen.DemoScreen;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.item.ItemStack;
 
 import java.util.HashSet;
@@ -117,21 +114,6 @@ public class UserInputListener implements Listener {
             this.handleKeybindings(e);
         }
         catch (Exception ignore) {}
-    }
-
-    @EventHandler
-    private void handleWelcomeScreen(ScreenInitEvent e) {
-        if (hasOpened || mc == null) return;
-
-        boolean isInDemo = e.getScreen() instanceof DemoScreen;
-        boolean isInTitle = e.getScreen() instanceof TitleScreen;
-        boolean isFirstSeen = !config.hasPlayedBefore();
-        boolean isDev = config.isDev();
-
-        if ((isFirstSeen || isDev) && (isInDemo || isInTitle)) {
-            scheduleOpenScreen(new WelcomeScreen());
-            hasOpened = true;
-        }
     }
 
     @EventHandler
