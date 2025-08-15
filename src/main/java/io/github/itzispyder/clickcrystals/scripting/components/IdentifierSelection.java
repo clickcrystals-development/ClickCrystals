@@ -21,11 +21,13 @@ public class IdentifierSelection<T> extends ArrayList<IdentifierSelection.Node> 
     }
 
     private Function<Node, Predicate<T>> containsStrategy, equalsStrategy, defaultStrategy, tagsStrategy;
+    private final boolean negated;
 
     private IdentifierSelection(String rawScriptInput) {
         super();
         containsStrategy = equalsStrategy = defaultStrategy = node -> object -> false;
         tagsStrategy = node -> object -> true;
+        negated = rawScriptInput.charAt(0) == '!';
 
         Matcher matcher = PATTERN.matcher(rawScriptInput);
         while (matcher.find())
@@ -49,6 +51,10 @@ public class IdentifierSelection<T> extends ArrayList<IdentifierSelection.Node> 
     }
 
     public Predicate<T> getIdentifierPredicate() {
+        return negated ? getInverseIdentifierPredicate() : getNormalIdentifierPredicate();
+    }
+
+    public Predicate<T> getNormalIdentifierPredicate() {
         return object -> this.getRawIdentifierPredicates().stream().anyMatch(pre -> pre.test(object));
     }
 
