@@ -3368,6 +3368,186 @@
     {
       "components": [
         {
+          "acceptingRegex": "(if|if_not|if)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(sneaking)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(while|while_not|while)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(sneaking)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(if|if_not|if)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(sprinting)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(while|while_not|while)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(sprinting)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(if|if_not|if)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(swimming)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(while|while_not|while)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(swimming)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(if|if_not|if)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(gliding)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(while|while_not|while)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(gliding)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false
+    },
+    {
+      "components": [
+        {
           "acceptingRegex": "(config)",
           "optional": false,
           "leading": true

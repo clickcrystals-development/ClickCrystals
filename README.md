@@ -55,36 +55,18 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Version: 1.3.5
+Version: 1.3.6
 
 Scripting:
-  - on tick N
-  - on sound (soundID)
-  - on mouse_wheel_up
-  - on mouse_wheel_down
-  - on mouse_wheel
-  - input mouse_wheel_up
-  - input mouse_wheel_down
-  - input mouse_wheel
-  - if line_of_sight
-  - if block ~ ~ ~ :lava_source
-  - if block ~ ~ ~ :water_source
-  - if holding :sword[sharpness,fire_aspect] # enchantments now possible
-  - if flying
-
-UI:
-  - make paste script button work for keyword DEFINE not just DEF
-  - remove annoying script print in chat for paste script button
-  - interact and damage commands have range of 32 instead of 128
-
-Modules:
-  - add chamsOnDamage to TotemChams
-  - add new fade animation to TotemChams # i-no-one
-  - add new infinite-elytra-durability # i-no-one
+  - if gliding
+  - if sneaking
+  - if sprinting
+  - if swimming
+  - if holding :charged_crossbow
+  - if holding :uncharged_crossbow
 
 Patches:
-  - fixed SearchScreen background being dark while not playing in world # i-no-one
-  - fixed comparator operators not evaluating negative numbers
+  - fix comparator operators ><= not working properly 
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)

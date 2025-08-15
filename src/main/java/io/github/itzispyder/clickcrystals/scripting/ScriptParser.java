@@ -12,7 +12,9 @@ import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Hand;
@@ -219,6 +221,10 @@ public class ScriptParser {
         this.put("water_source", state -> state.isOf(Blocks.WATER) && state.getFluidState().getLevel() == 8);
         this.put("lava_source", state -> state.isOf(Blocks.LAVA) && state.getFluidState().getLevel() == 8);
     }};
+    private static final Map<String, Predicate<ItemStack>> defaultedItemPredicates = new HashMap<>() {{
+        this.put("uncharged_crossbow", item -> item.getItem() == Items.CROSSBOW && !CrossbowItem.isCharged(item));
+        this.put("charged_crossbow", item -> item.getItem() == Items.CROSSBOW && CrossbowItem.isCharged(item));
+    }};
 
     public static ItemStack parseItemStack(String arg) {
         if ("holding".equals(arg)) {
@@ -237,7 +243,12 @@ public class ScriptParser {
     public static Predicate<ItemStack> parseItemPredicate(String arg) {
         IdentifierSelection<ItemStack> selection = IdentifierSelection.parse(arg, ItemStack.class);
         selection.setContainsStrategy(node -> item -> item.getItem().getTranslationKey().contains(node.name));
-        selection.setEqualsStrategy(node -> item -> item.getItem() == Registries.ITEM.get(Identifier.ofVanilla(node.name)));
+        selection.setEqualsStrategy(node -> {
+            if (defaultedItemPredicates.containsKey(node.name))
+                return defaultedItemPredicates.get(node.name);
+            else
+                return state -> state.getItem() == Registries.ITEM.get(Identifier.ofVanilla(node.name));
+        });
         selection.setNodeTagsStrategy(node -> item -> node.tags.stream().allMatch(tag -> NbtUtils.hasEnchant(item, tag)));
         return selection.getIdentifierPredicate();
     }

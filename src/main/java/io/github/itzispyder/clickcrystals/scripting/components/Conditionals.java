@@ -235,6 +235,18 @@ public class Conditionals implements Global {
     // @Format (if|if_not|!if) flying {}
     // @Format (while|while_not|!while) <num>? flying {}
     public static final Conditional FLYING;
+    // @Format (if|if_not|!if) sneaking {}
+    // @Format (while|while_not|!while) <num>? sneaking {}
+    public static final Conditional SNEAKING;
+    // @Format (if|if_not|!if) sprinting {}
+    // @Format (while|while_not|!while) <num>? sprinting {}
+    public static final Conditional SPRINTING;
+    // @Format (if|if_not|!if) swimming {}
+    // @Format (while|while_not|!while) <num>? swimming {}
+    public static final Conditional SWIMMING;
+    // @Format (if|if_not|!if) gliding {}
+    // @Format (while|while_not|!while) <num>? gliding {}
+    public static final Conditional GLIDING;
 
 
     static {
@@ -365,7 +377,7 @@ public class Conditionals implements Global {
             }
             return ctx.end(false);
         });
-        REFERENCE_ENTITY = register("ctx.entityerence_entity", ctx -> {
+        REFERENCE_ENTITY = register("reference_entity", ctx -> {
             if (ctx.match(0, "client")) {
                 return ctx.end(ctx.entity == PlayerUtils.player());
             }
@@ -385,6 +397,10 @@ public class Conditionals implements Global {
             return ctx.end(ctx.entity instanceof PlayerEntity p && p.getGameMode() == gm);
         });
         LINE_OF_SIGHT = register("line_of_sight", ctx -> ctx.end(true, PlayerUtils.valid() && ctx.entity != PlayerUtils.player() && PlayerUtils.player().canSee(ctx.entity)));
-        FLYING = register("flying", ctx -> ctx.end(PlayerUtils.valid() && PlayerUtils.player().getAbilities().flying));
+        FLYING = register("flying", ctx -> ctx.assertClientPlayer().end(PlayerUtils.valid() && PlayerUtils.player().getAbilities().flying));
+        SNEAKING = register("sneaking", ctx -> ctx.end(true, ctx.entity.isSneaking()));
+        SPRINTING = register("sprinting", ctx -> ctx.end(true, ctx.entity.isSprinting()));
+        SWIMMING = register("swimming", ctx -> ctx.end(true, ctx.entity.isSwimming()));
+        GLIDING = register("gliding", ctx -> ctx.end(true, ctx.entity instanceof PlayerEntity player && player.isGliding()));
     }
 }

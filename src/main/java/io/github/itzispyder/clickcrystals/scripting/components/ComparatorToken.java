@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 // >=30 <4.0 ==5 !=2
 public class ComparatorToken {
 
-    public static final Pattern TOKEN_REGEX = Pattern.compile("(?<operator>[<>!=]=?)?(?<value>(-?\\d*(\\d.\\d*)?))");
+    public static final Pattern TOKEN_REGEX = Pattern.compile("(?<operator>[<>!=]=?)?(?<value>(-?\\d*(\\.\\d*)?))");
     private final ComparatorOperator operator;
     private final double value;
 
