@@ -18,7 +18,7 @@ ClickCrystals script is an interrupted scripting language that allows you to scr
 without any knowledge of coding. It contains no variables and mostly are just command lines that
 are very similar to Minecraft.
 
-The short version can be found [here](./assets/scripting/legend.md)
+The short version can be found [here](./DOCUMENTATION/legend.md)
 <br>
 The full documentation can be found [here](https://bit.ly/ccs-wiki)
 
@@ -33,9 +33,9 @@ Happy coding and cpvping!
 | What You Have | What to get                                                                                                                   |
 |:--------------|:------------------------------------------------------------------------------------------------------------------------------|
 | higher..      | how is that even possible?                                                                                                    |
-| 1.21.8        | [ClickCrystals-1.21.6-1.3.3.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.3) *recommended |
-| 1.21.7        | [ClickCrystals-1.21.6-1.3.3.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.3) *recommended |
-| 1.21.6        | [ClickCrystals-1.21.6-1.3.3.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.3) *recommended |
+| 1.21.8        | [ClickCrystals-1.21.6-1.3.5.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.5) *recommended |
+| 1.21.7        | [ClickCrystals-1.21.6-1.3.5.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.5) *recommended |
+| 1.21.6        | [ClickCrystals-1.21.6-1.3.5.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.5) *recommended |
 | 1.21.5        | [ClickCrystals-1.21.5-1.3.2.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.2)              |
 | 1.21.4        | not supported                                                                                                                 |
 | 1.21.3        | not supported                                                                                                                 |
@@ -49,7 +49,7 @@ Happy coding and cpvping!
 | 1.20.2        | [ClickCrystals-1.20.2-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
 | 1.20.1        | [ClickCrystals-1.20-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
 | 1.20          | [ClickCrystals-1.20-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
-| ..lower       | cry                                                                                                                           |                                                                                                                       |                                                                                                                     |
+| ..lower       | cry                                                                                                                           |
 
 
 
@@ -70,6 +70,7 @@ Scripting:
   - if block ~ ~ ~ :lava_source
   - if block ~ ~ ~ :water_source
   - if holding :sword[sharpness,fire_aspect] # enchantments now possible
+  - if flying
 
 UI:
   - make paste script button work for keyword DEFINE not just DEF
