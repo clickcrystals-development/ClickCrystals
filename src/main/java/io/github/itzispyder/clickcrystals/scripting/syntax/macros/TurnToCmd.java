@@ -17,10 +17,10 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.function.Predicate;
 
-// @Format turn_to (nearest_entity|nearest_block) <identifier> then?
-// @Format turn_to (any_entity|target_entity|any_block) then?
-// @Format turn_to position <x> <y> <z> then?
-// @Format turn_to polar <pitch> <yaw> then?
+// @Format turn_to (nearest_entity|nearest_block) <identifier> then? {}?
+// @Format turn_to (any_entity|target_entity|any_block) then? {}?
+// @Format turn_to position <x> <y> <z> then? {}?
+// @Format turn_to polar <pitch> <yaw> then? {}?
 public class TurnToCmd extends ScriptCommand {
 
     public TurnToCmd() {

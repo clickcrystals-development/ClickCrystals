@@ -9,6 +9,8 @@
 ![PlanetMinecraft Downloads](https://img.shields.io/badge/PlanetMC-8.2k-brightgreen)
 ![Discord](https://img.shields.io/discord/1095079504516493404?label=Discord&color=b434eb)
 
+[e](./assets/scripting/commands/damage.md)
+
 ## Scripting Now Has a Wiki!
 
 Want to script custom modules but don't know how to script?

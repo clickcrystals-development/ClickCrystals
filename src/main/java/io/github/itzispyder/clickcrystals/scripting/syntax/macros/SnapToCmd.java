@@ -17,10 +17,10 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.function.Predicate;
 
-// @Format snap_to (nearest_entity|nearest_block) <identifier> then?
-// @Format snap_to (any_entity|target_entity|any_block) then?
-// @Format snap_to position <x> <y> <z> then?
-// @Format snap_to polar <pitch> <yaw> then?
+// @Format snap_to (nearest_entity|nearest_block) <identifier> then? {}?
+// @Format snap_to (any_entity|target_entity|any_block) then? {}?
+// @Format snap_to position <x> <y> <z> then? {}?
+// @Format snap_to polar <pitch> <yaw> then? {}?
 public class SnapToCmd extends ScriptCommand {
 
     public SnapToCmd() {

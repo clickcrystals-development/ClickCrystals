@@ -57,183 +57,183 @@ public class Conditionals implements Global {
     // conditionals
 
 
-    // @Format (if|if_not|!if) true
-    // @Format (while|while_not|!while) <num>? true
+    // @Format (if|if_not|!if) true {}
+    // @Format (while|while_not|!while) <num>? true {}
     public static final Conditional TRUE;
-    // @Format (if|if_not|!if) false
-    // @Format (while|while_not|!while) <num>? false
+    // @Format (if|if_not|!if) false {}
+    // @Format (while|while_not|!while) <num>? false {}
     public static final Conditional FALSE;
-    // @Format (if|if_not|!if) holding <identifier>
-    // @Format (while|while_not|!while) <num>? holding <identifier>
+    // @Format (if|if_not|!if) holding <identifier> {}
+    // @Format (while|while_not|!while) <num>? holding <identifier> {}
     public static final Conditional HOLDING;
-    // @Format (if|if_not|!if) off_holding <identifier>
-    // @Format (while|while_not|!while) <num>? off_holding <identifier>
+    // @Format (if|if_not|!if) off_holding <identifier> {}
+    // @Format (while|while_not|!while) <num>? off_holding <identifier> {}
     public static final Conditional OFF_HOLDING;
-    // @Format (if|if_not|!if) target_block <identifier>
-    // @Format (while|while_not|!while) <num>? target_block <identifier>
+    // @Format (if|if_not|!if) target_block <identifier> {}
+    // @Format (while|while_not|!while) <num>? target_block <identifier> {}
     public static final Conditional TARGET_BLOCK;
-    // @Format (if|if_not|!if) target_entity <identifier>
-    // @Format (while|while_not|!while) <num>? target_entity <identifier>
+    // @Format (if|if_not|!if) target_entity <identifier> {}
+    // @Format (while|while_not|!while) <num>? target_entity <identifier> {}
     public static final Conditional TARGET_ENTITY;
-    // @Format (if|if_not|!if) targeting_block
-    // @Format (while|while_not|!while) <num>? targeting_block
+    // @Format (if|if_not|!if) targeting_block {}
+    // @Format (while|while_not|!while) <num>? targeting_block {}
     public static final Conditional TARGETING_BLOCK;
-    // @Format (if|if_not|!if) targeting_entity
-    // @Format (while|while_not|!while) <num>? targeting_entity
+    // @Format (if|if_not|!if) targeting_entity {}
+    // @Format (while|while_not|!while) <num>? targeting_entity {}
     public static final Conditional TARGETING_ENTITY;
-    // @Format (if|if_not|!if) inventory_has <identifier>
-    // @Format (while|while_not|!while) <num>? inventory_has <identifier>
+    // @Format (if|if_not|!if) inventory_has <identifier> {}
+    // @Format (while|while_not|!while) <num>? inventory_has <identifier> {}
     public static final Conditional INVENTORY_HAS;
-    // @Format (if|if_not|!if) equipment_has <identifier>
-    // @Format (while|while_not|!while) <num>? equipment_has <identifier>
+    // @Format (if|if_not|!if) equipment_has <identifier> {}
+    // @Format (while|while_not|!while) <num>? equipment_has <identifier> {}
     public static final Conditional EQUIPMENT_HAS;
-    // @Format (if|if_not|!if) hotbar_has <identifier>
-    // @Format (while|while_not|!while) <num>? hotbar_has <identifier>
+    // @Format (if|if_not|!if) hotbar_has <identifier> {}
+    // @Format (while|while_not|!while) <num>? hotbar_has <identifier> {}
     public static final Conditional HOTBAR_HAS;
 
-    // @Format (if|if_not|!if) input_active (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory)
-    // @Format (if|if_not|!if) input_active key ...
-    // @Format (while|while_not|!while) <num>? input_active (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory)
-    // @Format (while|while_not|!while) <num>? input_active key ...
+    // @Format (if|if_not|!if) input_active (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory) {}
+    // @Format (if|if_not|!if) input_active key ... {}
+    // @Format (while|while_not|!while) <num>? input_active (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory) {}
+    // @Format (while|while_not|!while) <num>? input_active key ... {}
     public static final Conditional INPUT_ACTIVE;
 
-    // @Format (if|if_not|!if) block_in_range <identifier> <num>
-    // @Format (while|while_not|!while) <num>? block_in_range <identifier> <num>
+    // @Format (if|if_not|!if) block_in_range <identifier> <num> {}
+    // @Format (while|while_not|!while) <num>? block_in_range <identifier> <num> {}
     public static final Conditional BLOCK_IN_RANGE;
-    // @Format (if|if_not|!if) entity_in_range <identifier> <num>
-    // @Format (while|while_not|!while) <num>? entity_in_range <identifier> <num>
+    // @Format (if|if_not|!if) entity_in_range <identifier> <num> {}
+    // @Format (while|while_not|!while) <num>? entity_in_range <identifier> <num> {}
     public static final Conditional ENTITY_IN_RANGE;
-    // @Format (if|if_not|!if) attack_progress <comparator> <num>
-    // @Format (while|while_not|!while) <num>? attack_progress <comparator> <num>
+    // @Format (if|if_not|!if) attack_progress <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? attack_progress <comparator> <num> {}
     public static final Conditional ATTACK_PROGRESS;
-    // @Format (if|if_not|!if) health <comparator> <num>
-    // @Format (while|while_not|!while) <num>? health <comparator> <num>
+    // @Format (if|if_not|!if) health <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? health <comparator> <num> {}
     public static final Conditional HEALTH;
-    // @Format (if|if_not|!if) hunger <comparator> <num>
-    // @Format (while|while_not|!while) <num>? hunger <comparator> <num>
+    // @Format (if|if_not|!if) hunger <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? hunger <comparator> <num> {}
     public static final Conditional HUNGER;
-    // @Format (if|if_not|!if) hurt_time <comparator> <int>
-    // @Format (while|while_not|!while) <num>? hurt_time <comparator> <int>
+    // @Format (if|if_not|!if) hurt_time <comparator> <int> {}
+    // @Format (while|while_not|!while) <num>? hurt_time <comparator> <int> {}
     public static final Conditional HURT_TIME;
-    // @Format (if|if_not|!if) armor <comparator> <int>
-    // @Format (while|while_not|!while) <num>? armor <comparator> <int>
+    // @Format (if|if_not|!if) armor <comparator> <int> {}
+    // @Format (while|while_not|!while) <num>? armor <comparator> <int> {}
     public static final Conditional ARMOR;
-    // @Format (if|if_not|!if) pos_x <comparator> <num>
-    // @Format (while|while_not|!while) <num>? pos_x <comparator> <num>
+    // @Format (if|if_not|!if) pos_x <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? pos_x <comparator> <num> {}
     public static final Conditional POS_X;
-    // @Format (if|if_not|!if) pos_y <comparator> <num>
-    // @Format (while|while_not|!while) <num>? pos_y <comparator> <num>
+    // @Format (if|if_not|!if) pos_y <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? pos_y <comparator> <num> {}
     public static final Conditional POS_Y;
-    // @Format (if|if_not|!if) pos_z <comparator> <num>
-    // @Format (while|while_not|!while) <num>? pos_z <comparator> <num>
+    // @Format (if|if_not|!if) pos_z <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? pos_z <comparator> <num> {}
     public static final Conditional POS_Z;
-    // @Format (if|if_not|!if) vel_x <comparator> <num>
-    // @Format (while|while_not|!while) <num>? vel_x <comparator> <num>
+    // @Format (if|if_not|!if) vel_x <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? vel_x <comparator> <num> {}
     public static final Conditional VEL_X;
-    // @Format (if|if_not|!if) vel_y <comparator> <num>
-    // @Format (while|while_not|!while) <num>? vel_y <comparator> <num>
+    // @Format (if|if_not|!if) vel_y <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? vel_y <comparator> <num> {}
     public static final Conditional VEL_Y;
-    // @Format (if|if_not|!if) vel_z <comparator> <num>
-    // @Format (while|while_not|!while) <num>? vel_z <comparator> <num>
+    // @Format (if|if_not|!if) vel_z <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? vel_z <comparator> <num> {}
     public static final Conditional VEL_Z;
-    // @Format (if|if_not|!if) module_enabled ...
-    // @Format (while|while_not|!while) <num>? module_enabled ...
+    // @Format (if|if_not|!if) module_enabled ... {}
+    // @Format (while|while_not|!while) <num>? module_enabled ... {}
     public static final Conditional MODULE_ENABLED;
-    // @Format (if|if_not|!if) module_disabled ...
-    // @Format (while|while_not|!while) <num>? module_disabled ...
+    // @Format (if|if_not|!if) module_disabled ... {}
+    // @Format (while|while_not|!while) <num>? module_disabled ... {}
     public static final Conditional MODULE_DISABLED;
-    // @Format (if|if_not|!if) block <x> <y> <z>
-    // @Format (while|while_not|!while) <num>? block <x> <y> <z>
+    // @Format (if|if_not|!if) block <x> <y> <z> {}
+    // @Format (while|while_not|!while) <num>? block <x> <y> <z> {}
     public static final Conditional BLOCK;
-    // @Format (if|if_not|!if) entity <x> <y> <z>
-    // @Format (while|while_not|!while) <num>? entity <x> <y> <z>
+    // @Format (if|if_not|!if) entity <x> <y> <z> {}
+    // @Format (while|while_not|!while) <num>? entity <x> <y> <z> {}
     public static final Conditional ENTITY;
-    // @Format (if|if_not|!if) dimension (overworld|the_nether|the_end)
-    // @Format (while|while_not|!while) <num>? dimension (overworld|the_nether|the_end)
+    // @Format (if|if_not|!if) dimension (overworld|the_nether|the_end) {}
+    // @Format (while|while_not|!while) <num>? dimension (overworld|the_nether|the_end) {}
     public static final Conditional DIMENSION;
-    // @Format (if|if_not|!if) <identifier> <comparator> <int>
-    // @Format (while|while_not|!while) <num>? <identifier> <comparator> <int>
+    // @Format (if|if_not|!if) effect_amplifier <identifier> <comparator> <int> {}
+    // @Format (while|while_not|!while) <num>? <identifier> <comparator> <int> {}
     public static final Conditional EFFECT_AMPLIFIER;
-    // @Format (if|if_not|!if) <identifier> <comparator> <int>
-    // @Format (while|while_not|!while) <num>? <identifier> <comparator> <int>
+    // @Format (if|if_not|!if) effect_duration <identifier> <comparator> <int> {}
+    // @Format (while|while_not|!while) <num>? <identifier> <comparator> <int> {}
     public static final Conditional EFFECT_DURATION;
-    // @Format (if|if_not|!if) in_game
-    // @Format (while|while_not|!while) <num>? in_game
+    // @Format (if|if_not|!if) in_game {}
+    // @Format (while|while_not|!while) <num>? in_game {}
     public static final Conditional IN_GAME;
-    // @Format (if|if_not|!if) in_singleplayer
-    // @Format (while|while_not|!while) <num>? in_singleplayer
+    // @Format (if|if_not|!if) in_singleplayer {}
+    // @Format (while|while_not|!while) <num>? in_singleplayer {}
     public static final Conditional IN_SINGLEPLAYER;
-    // @Format (if|if_not|!if) playing
-    // @Format (while|while_not|!while) <num>? playing
+    // @Format (if|if_not|!if) playing {}
+    // @Format (while|while_not|!while) <num>? playing {}
     public static final Conditional PLAYING;
-    // @Format (if|if_not|!if) in_screen
-    // @Format (while|while_not|!while) <num>? in_screen
+    // @Format (if|if_not|!if) in_screen {}
+    // @Format (while|while_not|!while) <num>? in_screen {}
     public static final Conditional IN_SCREEN;
-    // @Format (if|if_not|!if) chance_of <num>
-    // @Format (while|while_not|!while) <num>? chance_of <num>
+    // @Format (if|if_not|!if) chance_of <num> {}
+    // @Format (while|while_not|!while) <num>? chance_of <num> {}
     public static final Conditional CHANCE_OF;
-    // @Format (if|if_not|!if) colliding
-    // @Format (while|while_not|!while) <num>? colliding
+    // @Format (if|if_not|!if) colliding {}
+    // @Format (while|while_not|!while) <num>? colliding {}
     public static final Conditional COLLIDING;
-    // @Format (if|if_not|!if) colliding_horizontally
-    // @Format (while|while_not|!while) <num>? colliding_horizontally
+    // @Format (if|if_not|!if) colliding_horizontally {}
+    // @Format (while|while_not|!while) <num>? colliding_horizontally {}
     public static final Conditional COLLIDING_HORIZONTALLY;
-    // @Format (if|if_not|!if) colliding_vertically
-    // @Format (while|while_not|!while) <num>? colliding_vertically
+    // @Format (if|if_not|!if) colliding_vertically {}
+    // @Format (while|while_not|!while) <num>? colliding_vertically {}
     public static final Conditional COLLIDING_VERTICALLY;
-    // @Format (if|if_not|!if) jumping
-    // @Format (while|while_not|!while) <num>? jumping
+    // @Format (if|if_not|!if) jumping {}
+    // @Format (while|while_not|!while) <num>? jumping {}
     public static final Conditional JUMPING;
-    // @Format (if|if_not|!if) moving
-    // @Format (while|while_not|!while) <num>? moving
+    // @Format (if|if_not|!if) moving {}
+    // @Format (while|while_not|!while) <num>? moving {}
     public static final Conditional MOVING;
-    // @Format (if|if_not|!if) blocking
-    // @Format (while|while_not|!while) <num>? blocking
+    // @Format (if|if_not|!if) blocking {}
+    // @Format (while|while_not|!while) <num>? blocking {}
     public static final Conditional BLOCKING;
-    // @Format (if|if_not|!if) on_ground
-    // @Format (while|while_not|!while) <num>? on_ground
+    // @Format (if|if_not|!if) on_ground {}
+    // @Format (while|while_not|!while) <num>? on_ground {}
     public static final Conditional ON_GROUND;
-    // @Format (if|if_not|!if) on_fire
-    // @Format (while|while_not|!while) <num>? on_fire
+    // @Format (if|if_not|!if) on_fire {}
+    // @Format (while|while_not|!while) <num>? on_fire {}
     public static final Conditional ON_FIRE;
-    // @Format (if|if_not|!if) frozen
-    // @Format (while|while_not|!while) <num>? frozen
+    // @Format (if|if_not|!if) frozen {}
+    // @Format (while|while_not|!while) <num>? frozen {}
     public static final Conditional FROZEN;
-    // @Format (if|if_not|!if) dead
-    // @Format (while|while_not|!while) <num>? dead
+    // @Format (if|if_not|!if) dead {}
+    // @Format (while|while_not|!while) <num>? dead {}
     public static final Conditional DEAD;
-    // @Format (if|if_not|!if) alive
-    // @Format (while|while_not|!while) <num>? alive
+    // @Format (if|if_not|!if) alive {}
+    // @Format (while|while_not|!while) <num>? alive {}
     public static final Conditional ALIVE;
-    // @Format (if|if_not|!if) falling
-    // @Format (while|while_not|!while) <num>? falling
+    // @Format (if|if_not|!if) falling {}
+    // @Format (while|while_not|!while) <num>? falling {}
     public static final Conditional FALLING;
-    // @Format (if|if_not|!if) cursor_item <identifier>
-    // @Format (while|while_not|!while) <num>? cursor_item <identifier>
+    // @Format (if|if_not|!if) cursor_item <identifier> {}
+    // @Format (while|while_not|!while) <num>? cursor_item <identifier> {}
     public static final Conditional CURSOR_ITEM;
-    // @Format (if|if_not|!if) hovering_over <identifier>
-    // @Format (while|while_not|!while) <num>? hovering_over <identifier>
+    // @Format (if|if_not|!if) hovering_over <identifier> {}
+    // @Format (while|while_not|!while) <num>? hovering_over <identifier> {}
     public static final Conditional HOVERING_OVER;
 
-    // @Format (if|if_not|!if) reference_entity (client|any_entity)
-    // @Format (if|if_not|!if) reference_entity <identifier>
-    // @Format (while|while_not|!while) <num>? reference_entity (client|any_entity)
-    // @Format (while|while_not|!while) <num>? reference_entity <identifier>
+    // @Format (if|if_not|!if) reference_entity (client|any_entity) {}
+    // @Format (if|if_not|!if) reference_entity <identifier> {}
+    // @Format (while|while_not|!while) <num>? reference_entity (client|any_entity) {}
+    // @Format (while|while_not|!while) <num>? reference_entity <identifier> {}
     public static final Conditional REFERENCE_ENTITY;
-    // @Format (if|if_not|!if) <identifier> <comparator> <int>
-    // @Format (while|while_not|!while) <num>? <identifier> <comparator> <int>
+    // @Format (if|if_not|!if) <identifier> <comparator> <int> {}
+    // @Format (while|while_not|!while) <num>? <identifier> <comparator> <int> {}
     public static final Conditional ITEM_COUNT;
-    // @Format (if|if_not|!if) <identifier> <comparator> <num>
-    // @Format (while|while_not|!while) <num>? <identifier> <comparator> <num>
+    // @Format (if|if_not|!if) <identifier> <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? <identifier> <comparator> <num> {}
     public static final Conditional ITEM_DURABILITY;
-    // @Format (if|if_not|!if) gamemode (creative|survival|adventure|spectator)
-    // @Format (while|while_not|!while) <num>? gamemode (creative|survival|adventure|spectator)
+    // @Format (if|if_not|!if) gamemode (creative|survival|adventure|spectator) {}
+    // @Format (while|while_not|!while) <num>? gamemode (creative|survival|adventure|spectator) {}
     public static final Conditional GAMEMODE;
-    // @Format (if|if_not|!if) line_of_sight
-    // @Format (while|while_not|!while) <num>? line_of_sight
+    // @Format (if|if_not|!if) line_of_sight {}
+    // @Format (while|while_not|!while) <num>? line_of_sight {}
     public static final Conditional LINE_OF_SIGHT;
-    // @Format (if|if_not|!if) flying
-    // @Format (while|while_not|!while) <num>? flying
+    // @Format (if|if_not|!if) flying {}
+    // @Format (while|while_not|!while) <num>? flying {}
     public static final Conditional FLYING;
 
 

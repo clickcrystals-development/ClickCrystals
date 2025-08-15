@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.scripting.components.CommandLine;
 import java.util.LinkedList;
 import java.util.Queue;
 
-// @Format execute_period <num>
+// @Format execute_period <num> {}
 public class ExecutePeriodCmd extends ScriptCommand {
 
     public ExecutePeriodCmd() {

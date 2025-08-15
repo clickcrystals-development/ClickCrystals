@@ -1,3 +1,3 @@
 
-"%JAVA_HOME%\bin\java" -jar ClickCrystalsUtils-1.3.jar %*
+"%JAVA_HOME%\bin\java" -jar ClickCrystalsUtils-1.4.jar %*
 
