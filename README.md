@@ -18,9 +18,9 @@ ClickCrystals script is an interrupted scripting language that allows you to scr
 without any knowledge of coding. It contains no variables and mostly are just command lines that
 are very similar to Minecraft.
 
-The short version can be found [here](./DOCUMENTATION/legend.md)
+The **short version** can be found [here](https://github.com/clickcrystals-development/ClickCrystalsScripting)
 <br>
-The full documentation can be found [here](https://bit.ly/ccs-wiki)
+The **legacy version** can be found [here](https://bit.ly/ccs-wiki)
 
 Happy coding and cpvping!
 
