@@ -16,7 +16,7 @@ snap_to polar <pitch> <yaw> then? {}?
 
 ### Regex
 ```regexp
-(((snap_to)( (nearest_entity|nearest_block))( !?(([#:](\w+)(\[(.*)\])?,?)+))( (then?))?( (\S+))?)|((snap_to)( (any_entity|target_entity|any_block))( (then?))?( (\S+))?)|((snap_to)( (position))( (\S+))( (\S+))( (\S+))( (then?))?( (\S+))?)|((snap_to)( (polar))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( (then?))?( (\S+))?))
+(((snap_to)( (nearest_entity|nearest_block))( !?(([#:](\w+)(\[(.*)\])?,?)+))( (then?))?)|((snap_to)( (any_entity|target_entity|any_block))( (then?))?)|((snap_to)( (position))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( (then?))?)|((snap_to)( (polar))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( (then?))?))
 ```
 
 ### Raw Documentation

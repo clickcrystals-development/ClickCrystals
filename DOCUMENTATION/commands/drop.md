@@ -11,7 +11,7 @@ drop <int>
 
 ### Regex
 ```regexp
-(((drop)( (\S+)))|((drop)( (-?\d+))))
+(((drop)( (all)))|((drop)( (-?\d+))))
 ```
 
 ### Raw Documentation

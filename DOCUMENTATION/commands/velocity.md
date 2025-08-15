@@ -10,7 +10,7 @@ velocity <x> <y> <z>
 
 ### Regex
 ```regexp
-(((velocity)( (\S+))( (\S+))( (\S+))))
+(((velocity)( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))))
 ```
 
 ### Raw Documentation

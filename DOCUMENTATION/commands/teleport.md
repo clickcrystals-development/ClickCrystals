@@ -10,7 +10,7 @@ teleport <x> <y> <z>
 
 ### Regex
 ```regexp
-(((teleport)( (\S+))( (\S+))( (\S+))))
+(((teleport)( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))))
 ```
 
 ### Raw Documentation

@@ -27,7 +27,7 @@ input key ...
 
 ### Regex
 ```regexp
-(((input)( (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory))( (-?\d*(\.\d*)?)))|((input)( (\S+))( (\S+))))
+(((input)( (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory))( (-?\d*(\.\d*)?)))|((input)( (key))( (\S+))))
 ```
 
 ### Raw Documentation

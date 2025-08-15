@@ -14,7 +14,7 @@ def func ... {}
 
 ### Regex
 ```regexp
-(((\S+)( (module))( (\S+)))|((\S+)( (description|desc))( (\".*?\")))|((\S+)( (function|func))( (\S+))))
+(((def)( (module))( (\S+)))|((def)( (description|desc))( (\".*?\")))|((def)( (function|func))( (\S+))))
 ```
 
 ### Raw Documentation

@@ -713,7 +713,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "(key)",
           "optional": false,
           "leading": false
         },
@@ -778,7 +778,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "(key)",
           "optional": false,
           "leading": false
         },
@@ -1763,17 +1763,17 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
@@ -1803,17 +1803,17 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
@@ -1838,17 +1838,17 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
@@ -1878,17 +1878,17 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
@@ -3618,7 +3618,7 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "(s2c)",
           "optional": false,
           "leading": false
         },
@@ -3638,7 +3638,7 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "(c2s)",
           "optional": false,
           "leading": false
         },
@@ -4333,7 +4333,7 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "(s2c)",
           "optional": false,
           "leading": false
         },
@@ -4353,7 +4353,7 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "(c2s)",
           "optional": false,
           "leading": false
         },
@@ -4458,17 +4458,17 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         }
@@ -4483,7 +4483,7 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "(all)",
           "optional": false,
           "leading": false
         }
@@ -4553,7 +4553,7 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "(key)",
           "optional": false,
           "leading": false
         },
@@ -4613,17 +4613,17 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         }
@@ -4643,7 +4643,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "(all)",
           "optional": false,
           "leading": false
         }
@@ -4743,7 +4743,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "",
           "optional": true,
           "leading": false
         }
@@ -4768,7 +4768,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "",
           "optional": true,
           "leading": false
         }
@@ -4788,17 +4788,17 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
@@ -4808,7 +4808,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "",
           "optional": true,
           "leading": false
         }
@@ -4843,7 +4843,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "",
           "optional": true,
           "leading": false
         }
@@ -4913,17 +4913,17 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         }
@@ -4953,7 +4953,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "",
           "optional": true,
           "leading": false
         }
@@ -4978,7 +4978,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "",
           "optional": true,
           "leading": false
         }
@@ -4998,17 +4998,17 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
@@ -5018,7 +5018,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "",
           "optional": true,
           "leading": false
         }
@@ -5053,7 +5053,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "",
           "optional": true,
           "leading": false
         }
@@ -5068,17 +5068,17 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         },
         {
-          "acceptingRegex": "(\\S+)",
+          "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
         }

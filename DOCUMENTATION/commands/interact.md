@@ -15,7 +15,7 @@ interact position <x> <y> <z>
 
 ### Regex
 ```regexp
-(((interact)( (nearest_entity|nearest_block))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((interact)( (any_entity|target_entity|any_block)))|((interact)( (position))( (\S+))( (\S+))( (\S+))))
+(((interact)( (nearest_entity|nearest_block))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((interact)( (any_entity|target_entity|any_block)))|((interact)( (position))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))))
 ```
 
 ### Raw Documentation

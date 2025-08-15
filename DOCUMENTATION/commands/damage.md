@@ -15,7 +15,7 @@ damage position <x> <y> <z>
 
 ### Regex
 ```regexp
-(((damage)( (nearest_entity|nearest_block))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((damage)( (any_entity|target_entity|any_block)))|((damage)( (position))( (\S+))( (\S+))( (\S+))))
+(((damage)( (nearest_entity|nearest_block))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((damage)( (any_entity|target_entity|any_block)))|((damage)( (position))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))))
 ```
 
 ### Raw Documentation

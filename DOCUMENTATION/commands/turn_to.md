@@ -16,7 +16,7 @@ turn_to polar <pitch> <yaw> then? {}?
 
 ### Regex
 ```regexp
-(((turn_to)( (nearest_entity|nearest_block))( !?(([#:](\w+)(\[(.*)\])?,?)+))( (then?))?( (\S+))?)|((turn_to)( (any_entity|target_entity|any_block))( (then?))?( (\S+))?)|((turn_to)( (position))( (\S+))( (\S+))( (\S+))( (then?))?( (\S+))?)|((turn_to)( (polar))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( (then?))?( (\S+))?))
+(((turn_to)( (nearest_entity|nearest_block))( !?(([#:](\w+)(\[(.*)\])?,?)+))( (then?))?)|((turn_to)( (any_entity|target_entity|any_block))( (then?))?)|((turn_to)( (position))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( (then?))?)|((turn_to)( (polar))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( (then?))?))
 ```
 
 ### Raw Documentation

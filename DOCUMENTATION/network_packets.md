@@ -5,7 +5,7 @@ There are two types of network packets in Minecraft:
 - Client to Server (c2s)
 - Server to Client (s2c)
 
-For the arguments that you saw in our [scripting legend](../legend.md), these
+For the arguments that you saw in our [scripting legend](./legend.md), these
 network packets are what represent the `<client-packet>` and `<server-packet>` respectively.
 
 ### Packet ID Table
