@@ -25,6 +25,8 @@ public enum InputType {
     RIGHT(InteractionUtils::rightClick, null, Global.mc.mouse::wasRightButtonClicked),
     MIDDLE(InteractionUtils::middleClick, null, Global.mc.mouse::wasMiddleButtonClicked),
     INVENTORY(InteractionUtils::inputInventory, null, () -> Global.mc.currentScreen instanceof HandledScreen<?>),
+    MOUSE_WHEEL_UP(() -> InteractionUtils.mouseScroll(1), null, () -> false),
+    MOUSE_WHEEL_DOWN(() -> InteractionUtils.mouseScroll(-1), null, () -> false),
     KEY(null, null, null);
 
     private final Runnable action;

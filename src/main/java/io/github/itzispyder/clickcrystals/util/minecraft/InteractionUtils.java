@@ -163,6 +163,10 @@ public final class InteractionUtils implements Global {
         ((MouseAccessor) mc.mouse).middleClick();
     }
 
+    public static void mouseScroll(double amount) {
+        ((MouseAccessor) mc.mouse).scroll(amount);
+    }
+
     public static void pressKey(int key, int scan) {
         ((KeyboardAccessor) mc.keyboard).pressKey(key, scan);
     }

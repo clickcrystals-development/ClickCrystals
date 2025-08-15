@@ -35,6 +35,10 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
             case PACKET_SEND, PACKET_RECEIVE -> passPacket(args, type);
             case SOUND_PLAY -> passSound(args);
 
+            case MOUSE_WHEEL -> ModuleCmd.runOnCurrentScriptModule(m -> m.mouseWheelListeners.add(() -> exc(args, 1)));
+            case MOUSE_WHEEL_UP -> ModuleCmd.runOnCurrentScriptModule(m -> m.mouseWheelUpListeners.add(() -> exc(args, 1)));
+            case MOUSE_WHEEL_DOWN -> ModuleCmd.runOnCurrentScriptModule(m -> m.mouseWheelDownListeners.add(() -> exc(args, 1)));
+
             case PRE_TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.preTickListeners.add(TickListener.fromScript(args, this)));
             case TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.tickListeners.add(TickListener.fromScript(args, this)));
             case POST_TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.postTickListeners.add(TickListener.fromScript(args, this)));
@@ -237,6 +241,9 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         CHAT_RECEIVE, // @Format on chat_receive "..."
         PACKET_SEND, // @Format on packet_send ...
         PACKET_RECEIVE, // @Format on packet_receive ...
-        SOUND_PLAY // @Format on sound_play <identifier>
+        SOUND_PLAY, // @Format on sound_play <identifier>
+        MOUSE_WHEEL_UP, // @Format on mouse_wheel_up
+        MOUSE_WHEEL_DOWN, // @Format on mouse_wheel_down
+        MOUSE_WHEEL // @Format on mouse_wheel
     }
 }

@@ -55,6 +55,9 @@ public class ScriptedModule extends ListenerModule {
     public final List<Runnable> deathListeners = new ArrayList<>();
     public final List<Runnable> gameJoinListeners = new ArrayList<>();
     public final List<Runnable> gameLeaveListeners = new ArrayList<>();
+    public final List<Runnable> mouseWheelUpListeners = new ArrayList<>();
+    public final List<Runnable> mouseWheelDownListeners = new ArrayList<>();
+    public final List<Runnable> mouseWheelListeners = new ArrayList<>();
 
 
     public final String filepath, filename, parentFolder;
@@ -116,12 +119,28 @@ public class ScriptedModule extends ListenerModule {
         packetSendListeners.clear();
 
         soundPlayListeners.clear();
+        mouseWheelListeners.clear();
+        mouseWheelUpListeners.clear();
+        mouseWheelDownListeners.clear();
     }
 
     @EventHandler
     public void onMouseClick(MouseClickEvent e) {
         for (ClickListener l : clickListeners) {
             l.pass(e);
+        }
+    }
+
+    @EventHandler
+    public void onMouseScroll(MouseScrollEvent e) {
+        double amount = e.getDeltaY();
+        if (amount > 0) {
+            mouseWheelListeners.forEach(Runnable::run);
+            mouseWheelUpListeners.forEach(Runnable::run);
+        }
+        else if (amount < 0) {
+            mouseWheelListeners.forEach(Runnable::run);
+            mouseWheelDownListeners.forEach(Runnable::run);
         }
     }
 

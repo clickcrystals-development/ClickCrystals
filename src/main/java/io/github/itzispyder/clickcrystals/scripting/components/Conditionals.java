@@ -91,9 +91,9 @@ public class Conditionals implements Global {
     // @Format (while|while_not|!while) <num>? hotbar_has <identifier>
     public static final Conditional HOTBAR_HAS;
 
-    // @Format (if|if_not|!if) input_active (attack|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory)
+    // @Format (if|if_not|!if) input_active (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory)
     // @Format (if|if_not|!if) input_active key ...
-    // @Format (while|while_not|!while) <num>? input_active (attack|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory)
+    // @Format (while|while_not|!while) <num>? input_active (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory)
     // @Format (while|while_not|!while) <num>? input_active key ...
     public static final Conditional INPUT_ACTIVE;
 
@@ -232,6 +232,9 @@ public class Conditionals implements Global {
     // @Format (if|if_not|!if) line_of_sight
     // @Format (while|while_not|!while) <num>? line_of_sight
     public static final Conditional LINE_OF_SIGHT;
+    // @Format (if|if_not|!if) flying
+    // @Format (while|while_not|!while) <num>? flying
+    public static final Conditional FLYING;
 
 
     static {
@@ -381,6 +384,7 @@ public class Conditionals implements Global {
             GameMode gm = ctx.get(0).toEnum(GameMode.class);
             return ctx.end(ctx.entity instanceof PlayerEntity p && p.getGameMode() == gm);
         });
-        LINE_OF_SIGHT = register("line_of_sight", ctx -> ctx.end(PlayerUtils.valid() && ctx.entity != PlayerUtils.player() && PlayerUtils.player().canSee(ctx.entity)));
+        LINE_OF_SIGHT = register("line_of_sight", ctx -> ctx.end(true, PlayerUtils.valid() && ctx.entity != PlayerUtils.player() && PlayerUtils.player().canSee(ctx.entity)));
+        FLYING = register("flying", ctx -> ctx.end(PlayerUtils.valid() && PlayerUtils.player().getAbilities().flying));
     }
 }

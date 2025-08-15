@@ -7,4 +7,6 @@ public interface MouseAccessor {
     void rightClick();
 
     void middleClick();
+
+    void scroll(double amount);
 }

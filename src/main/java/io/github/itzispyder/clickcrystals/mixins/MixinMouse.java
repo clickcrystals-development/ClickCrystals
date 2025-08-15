@@ -19,6 +19,7 @@ public abstract class MixinMouse implements Global, MouseAccessor {
     @Shadow private double cursorDeltaY;
     @Shadow private double cursorDeltaX;
     @Shadow protected abstract void onMouseButton(long window, int button, int action, int mods);
+    @Shadow protected abstract void onMouseScroll(long window, double horizontal, double vertical);
 
     @Inject(method = "onMouseButton", at = @At("HEAD"), cancellable = true)
     public void onButton(long window, int button, int action, int mods, CallbackInfo ci) {
@@ -63,5 +64,10 @@ public abstract class MixinMouse implements Global, MouseAccessor {
         system.scheduler.runDelayedTask(() -> mc.execute(() -> {
             onMouseButton(mc.getWindow().getHandle(), 2, 0, 0);
         }), 50);
+    }
+
+    @Override
+    public void scroll(double amount) {
+        onMouseScroll(mc.getWindow().getHandle(), 0, amount);
     }
 }
