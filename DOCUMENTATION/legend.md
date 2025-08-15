@@ -3,18 +3,20 @@ Here you will find out how to read this documentation, and what each symbol mean
 
 ### Legend Table
 
-| Symbol          | Meaning                                     | Aliases                             | Example           |
-|-----------------|---------------------------------------------|-------------------------------------|-------------------|
-| \<int\>         | integer                                     |                                     | 123               |
-| \<num\>         | number                                      |                                     | 1.23              |
-| \<vec\>         | singular relative vector component          | \<x\>,\<y\>,\<z\>,\<pitch\>,\<yaw\> | ~1.23             |
-| \<comparator\>  | \> < == >= <= !=                            |                                     | >=                |
-| \<identifier\>  | :direct_identifier OR #indirect_identifier  |                                     | :diamond_sword    |
-| ...             | literal                                     |                                     | abc               |
-| "..."           | quoted literal                              |                                     | "a b c"           |
-| \w+             | constant literal                            |                                     |                   |
-| (\w+\|\w+\|...) | constant literals                           |                                     |                   |
-| {}              | command line or code block of command lines |                                     | say "Hello World" |
+| Symbol            | Meaning                                     | Aliases                             | Example           |
+|-------------------|---------------------------------------------|-------------------------------------|-------------------|
+| \<int\>           | integer                                     |                                     | 123               |
+| \<num\>           | number                                      |                                     | 1.23              |
+| \<vec\>           | singular relative vector component          | \<x\>,\<y\>,\<z\>,\<pitch\>,\<yaw\> | ~1.23             |
+| \<comparator\>    | \> < == >= <= !=                            |                                     | >=                |
+| \<identifier\>    | :direct_identifier OR #indirect_identifier  |                                     | :diamond_sword    |
+| \<server-packet\> | [server packet](./network_packets.md)        |                                     | playerList        |
+| \<client-packet\> | [client packet](./network_packets.md)        |                                     | handSwing         |
+| ...               | literal                                     |                                     | abc               |
+| "..."             | quoted literal                              |                                     | "a b c"           |
+| \w+               | constant literal                            |                                     |                   |
+| (\w+\|\w+\|...)   | constant literals                           |                                     |                   |
+| {}                | command line or code block of command lines |                                     | say "Hello World" |
 
 ### Optional Argument Symbols
 The argument is optional if a ? is appended at the end. Any argument symbol followed by a question mark
