@@ -16,6 +16,10 @@ Here you will find out how to read this documentation, and what each symbol mean
 | (\w+\|\w+\|...) | constant literals                           |                                     |                   |
 | {}              | command line or code block of command lines |                                     | say "Hello World" |
 
+### Optional Argument Symbols
+The argument is optional if a ? is appended at the end. Any argument symbol followed by a question mark
+will render said argument optional, meaning the script interpreter will not throw an error if it was absent.
+
 ### What is a Command Line?
 A script command line is any instruction that'll tell your Minecraft client what to do.
 For example, a command line that tells your Minecraft client to say Hello World in chat would look like:
