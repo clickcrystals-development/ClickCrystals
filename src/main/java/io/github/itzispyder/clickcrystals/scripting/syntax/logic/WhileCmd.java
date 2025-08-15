@@ -2,7 +2,8 @@ package io.github.itzispyder.clickcrystals.scripting.syntax.logic;
 
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
-import io.github.itzispyder.clickcrystals.scripting.syntax.Conditionals;
+import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluationResult;
+import io.github.itzispyder.clickcrystals.scripting.components.Conditionals;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
@@ -34,9 +35,10 @@ public class WhileCmd extends ScriptCommand implements ThenChainable {
         AtomicReference<Scheduler.Task> task = new AtomicReference<>();
         task.set(system.scheduler.runRepeatingTask(() -> {
             try {
-                var condition = Conditionals.parseCondition(ref, args, beginIndex);
-                if (condition.value()) {
-                    executeOnClient(args, condition.nextIndex());
+                ScriptArgs copy = new ScriptArgs(args.getExecutor(), args.args());
+                ConditionEvaluationResult condition = Conditionals.evaluate(ref, copy, beginIndex);
+                if (condition.getValue()) {
+                    executeOnClient(copy);
                 }
                 else if (task.get() != null) {
                     task.get().cancel();
@@ -46,8 +48,8 @@ public class WhileCmd extends ScriptCommand implements ThenChainable {
         }, 0, period, Scheduler.INFINITE_ITERATIONS));
     }
 
-    private void executeOnClient(ScriptArgs args, int beginIndex) {
-        mc.execute(() -> executeWithThen(args, beginIndex));
+    private void executeOnClient(ScriptArgs args) {
+        mc.execute(() -> executeWithThen(args));
     }
 }
 

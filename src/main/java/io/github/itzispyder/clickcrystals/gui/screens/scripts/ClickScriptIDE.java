@@ -14,7 +14,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScree
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.scripting.ClickScript;
-import io.github.itzispyder.clickcrystals.scripting.syntax.Conditionals;
+import io.github.itzispyder.clickcrystals.scripting.components.Conditionals;
 import io.github.itzispyder.clickcrystals.scripting.syntax.InputType;
 import io.github.itzispyder.clickcrystals.scripting.syntax.TargetType;
 import io.github.itzispyder.clickcrystals.scripting.syntax.client.ConfigCmd;
