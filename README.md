@@ -55,39 +55,35 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Version: 1.3.4
+Version: 1.3.5
 
 Scripting:
-  - damage nearest_entity (id)
-  - damage any_entity
-  - damage nearest_block (id)
-  - damage any_block
-  - damage position (x) (y) (z)
-  - interact nearest_entity (id)
-  - interact any_entity
-  - interact nearest_block (id)
-  - interact any_block
-  - interact position (x) (y) (z) # air place AND opening chests through walls possible
-  - if vel_x
-  - if vel_y
-  - if vel_z
+  - on tick N
+  - on sound (soundID)
+  - on mouse_wheel_up
+  - on mouse_wheel_down
+  - on mouse_wheel
+  - input mouse_wheel_up
+  - input mouse_wheel_down
+  - input mouse_wheel
+  - if line_of_sight
+  - if block ~ ~ ~ :lava_source
+  - if block ~ ~ ~ :water_source
+  - if holding :sword[sharpness,fire_aspect] # enchantments now possible
+
+UI:
+  - make paste script button work for keyword DEFINE not just DEF
+  - remove annoying script print in chat for paste script button
+  - interact and damage commands have range of 32 instead of 128
 
 Modules:
-  - new module TotemChams
-  - new module AutoClicker
-  - Zoom (RENDERING -> MISC)
-  - FreeLook(RENDERING -> MISC)
-  - CameraClip (RENDERING -> MISC)
+  - add chamsOnDamage to TotemChams
+  - add new fade animation to TotemChams # i-no-one
+  - add new infinite-elytra-durability # i-no-one
 
 Patches:
-  - gui rendering glitches with download screens
-  - message resend module not working properly
-  - totem particles being white when module isnt even enabled
-  - armor bar position offset when HealthAsBar is enabled
-
-Tweaks:
-  - renamed ,ccs compile to ,ccs run
-  - added paste script button in scripts tab
+  - fixed SearchScreen background being dark while not playing in world # i-no-one
+  - fixed comparator operators not evaluating negative numbers
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)
