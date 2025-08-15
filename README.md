@@ -9,8 +9,6 @@
 ![PlanetMinecraft Downloads](https://img.shields.io/badge/PlanetMC-8.2k-brightgreen)
 ![Discord](https://img.shields.io/discord/1095079504516493404?label=Discord&color=b434eb)
 
-[e](./assets/scripting/commands/damage.md)
-
 ## Scripting Now Has a Wiki!
 
 Want to script custom modules but don't know how to script?
@@ -20,6 +18,8 @@ ClickCrystals script is an interrupted scripting language that allows you to scr
 without any knowledge of coding. It contains no variables and mostly are just command lines that
 are very similar to Minecraft.
 
+The short version can be found [here](./assets/scripting/legend.md)
+<br>
 The full documentation can be found [here](https://bit.ly/ccs-wiki)
 
 Happy coding and cpvping!
