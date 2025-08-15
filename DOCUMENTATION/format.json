@@ -4716,11 +4716,6 @@
           "acceptingRegex": "(attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory)",
           "optional": false,
           "leading": false
-        },
-        {
-          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
-          "optional": false,
-          "leading": false
         }
       ],
       "optional": false
