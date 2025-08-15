@@ -73,7 +73,6 @@ import org.lwjgl.glfw.GLFW;
  * TODO: (3) Update "README.md"
  * TODO: (4) Publishing checklist
  * TODO: (5) GitHub Release
- * TODO: (6) PlanetMC Release
  * TODO: (7) CurseForge Release
  * TODO: (8) Update <a href="https://itzispyder.github.io/clickcrystals/info.json">...</a>
  * TODO: (9) Discord Announcement
