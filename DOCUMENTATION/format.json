@@ -13,7 +13,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -28,7 +29,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -43,7 +45,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -58,7 +61,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -78,7 +82,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -93,7 +98,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -108,12 +114,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -128,12 +135,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -153,12 +161,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -173,12 +182,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -198,12 +208,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -223,12 +234,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -253,12 +265,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -278,12 +291,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -308,12 +322,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -333,12 +348,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -363,12 +379,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -388,12 +405,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -418,12 +436,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -438,12 +457,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -463,12 +483,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -483,12 +504,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -508,12 +530,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -533,12 +556,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -563,12 +587,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -588,12 +613,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -618,12 +644,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -643,12 +670,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -673,12 +701,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -698,12 +727,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -728,12 +758,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -758,12 +789,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -793,12 +825,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -823,12 +856,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -858,12 +892,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -888,12 +923,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -923,12 +959,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -953,12 +990,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -988,12 +1026,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1018,12 +1057,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1053,12 +1093,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1083,12 +1124,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1118,12 +1160,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1148,12 +1191,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1183,12 +1227,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1213,12 +1258,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1248,12 +1294,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1278,12 +1325,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1313,12 +1361,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1343,12 +1392,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1378,12 +1428,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1408,12 +1459,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1443,12 +1495,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1473,12 +1526,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1508,12 +1562,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1538,12 +1593,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1573,12 +1629,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1603,12 +1660,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1638,12 +1696,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1663,12 +1722,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1693,12 +1753,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1718,12 +1779,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1748,12 +1810,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1783,12 +1846,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1823,12 +1887,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1858,12 +1923,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1898,12 +1964,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1923,12 +1990,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -1953,12 +2021,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -1988,12 +2057,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2023,12 +2093,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2058,12 +2129,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2093,12 +2165,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2113,12 +2186,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2138,12 +2212,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2158,12 +2233,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2183,12 +2259,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2203,12 +2280,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2228,12 +2306,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2248,12 +2327,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2273,12 +2353,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2298,12 +2379,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2328,12 +2410,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2348,12 +2431,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2373,12 +2457,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2393,12 +2478,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2418,12 +2504,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2438,12 +2525,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2463,12 +2551,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2483,12 +2572,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2508,12 +2598,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2528,12 +2619,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2553,12 +2645,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2573,12 +2666,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2598,12 +2692,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2618,12 +2713,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2643,12 +2739,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2663,12 +2760,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2688,12 +2786,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2708,12 +2807,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2733,12 +2833,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2753,12 +2854,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2778,12 +2880,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2798,12 +2901,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2823,12 +2927,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2843,12 +2948,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2868,12 +2974,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2893,12 +3000,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2923,12 +3031,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -2948,12 +3057,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -2978,12 +3088,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -3003,12 +3114,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -3028,12 +3140,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -3058,12 +3171,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -3088,12 +3202,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -3118,12 +3233,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -3153,12 +3269,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -3183,12 +3300,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -3218,12 +3336,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -3243,12 +3362,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -3273,12 +3393,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -3293,12 +3414,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -3318,12 +3440,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -3338,12 +3461,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -3363,12 +3487,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -3383,12 +3508,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -3408,12 +3534,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -3428,12 +3555,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -3453,12 +3581,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -3473,12 +3602,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -3498,12 +3628,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(if|if_not|if)",
+          "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
         },
@@ -3518,12 +3649,13 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
         {
-          "acceptingRegex": "(while|while_not|while)",
+          "acceptingRegex": "(while|while_not|!while)",
           "optional": false,
           "leading": true
         },
@@ -3543,7 +3675,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -3558,7 +3691,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3578,7 +3712,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3598,7 +3733,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3623,7 +3759,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -3638,7 +3775,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3658,7 +3796,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3673,7 +3812,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3688,7 +3828,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3713,7 +3854,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3728,7 +3870,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3743,7 +3886,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3763,7 +3907,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -3788,7 +3933,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -3808,7 +3954,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3828,7 +3975,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3848,7 +3996,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -3863,7 +4012,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -3888,7 +4038,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -3903,7 +4054,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3918,7 +4070,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3933,7 +4086,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3953,7 +4107,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3968,7 +4123,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3983,7 +4139,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -3998,7 +4155,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4018,7 +4176,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4033,7 +4192,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4048,7 +4208,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4063,7 +4224,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4078,7 +4240,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4098,7 +4261,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4118,7 +4282,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4138,7 +4303,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4153,7 +4319,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4168,7 +4335,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4183,7 +4351,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4198,7 +4367,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4213,7 +4383,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4228,7 +4399,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4243,7 +4415,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4263,7 +4436,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4283,7 +4457,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4298,7 +4473,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4313,7 +4489,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4328,7 +4505,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4343,7 +4521,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4358,7 +4537,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4378,7 +4558,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4398,7 +4579,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4418,7 +4600,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4438,7 +4621,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4458,7 +4642,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4473,7 +4658,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4488,7 +4674,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4503,7 +4690,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4523,7 +4711,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4543,7 +4732,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4563,7 +4753,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4588,7 +4779,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4608,7 +4800,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4623,7 +4816,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4653,7 +4847,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4668,7 +4863,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4683,7 +4879,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4703,7 +4900,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4718,7 +4916,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4738,7 +4937,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4758,7 +4958,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4773,7 +4974,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4803,7 +5005,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4823,7 +5026,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4843,7 +5047,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4863,7 +5068,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4878,7 +5084,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4893,7 +5100,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4923,7 +5131,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4948,7 +5157,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -4988,7 +5198,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -5023,7 +5234,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -5033,7 +5245,8 @@
           "leading": true
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -5048,7 +5261,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -5063,7 +5277,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -5078,7 +5293,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -5103,7 +5319,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -5133,7 +5350,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -5158,7 +5376,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -5198,7 +5417,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -5233,7 +5453,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     },
     {
       "components": [
@@ -5258,7 +5479,8 @@
           "leading": false
         }
       ],
-      "optional": false
+      "optional": false,
+      "acceptingCodeBlocks": false
     }
   ]
 }
