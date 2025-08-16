@@ -5,8 +5,8 @@ Keyword: gui_drop
 
 ### Usages
 ```
-gui_drop <identifier> all
 gui_drop <identifier> <int>
+gui_drop <identifier> all
 ```
 
 ### Regex

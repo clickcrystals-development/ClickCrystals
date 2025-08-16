@@ -5,12 +5,12 @@ Keyword: interact
 
 ### Usages
 ```
-interact nearest_entity <identifier>
-interact nearest_block <identifier>
-interact any_entity
-interact target_entity
 interact any_block
+interact any_entity
+interact nearest_block <identifier>
+interact nearest_entity <identifier>
 interact position <x> <y> <z>
+interact target_entity
 ```
 
 ### Regex

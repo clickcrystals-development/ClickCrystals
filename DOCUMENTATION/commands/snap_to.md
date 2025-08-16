@@ -5,13 +5,13 @@ Keyword: snap_to
 
 ### Usages
 ```
-snap_to nearest_entity <identifier> then? {}?
-snap_to nearest_block <identifier> then? {}?
-snap_to any_entity then? {}?
-snap_to target_entity then? {}?
 snap_to any_block then? {}?
-snap_to position <x> <y> <z> then? {}?
+snap_to any_entity then? {}?
+snap_to nearest_block <identifier> then? {}?
+snap_to nearest_entity <identifier> then? {}?
 snap_to polar <pitch> <yaw> then? {}?
+snap_to position <x> <y> <z> then? {}?
+snap_to target_entity then? {}?
 ```
 
 ### Regex

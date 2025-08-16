@@ -5,11 +5,11 @@ Keyword: def
 
 ### Usages
 ```
-def module ...
-def description "..."
 def desc "..."
-def function ... {}
+def description "..."
 def func ... {}
+def function ... {}
+def module ...
 ```
 
 ### Regex

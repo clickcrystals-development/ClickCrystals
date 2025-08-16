@@ -5,11 +5,11 @@ Keyword: define
 
 ### Usages
 ```
-define module ...
-define description "..."
 define desc "..."
-define function ... {}
+define description "..."
 define func ... {}
+define function ... {}
+define module ...
 ```
 
 ### Regex

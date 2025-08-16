@@ -5,8 +5,8 @@ Keyword: drop
 
 ### Usages
 ```
-drop all
 drop <int>
+drop all
 ```
 
 ### Regex

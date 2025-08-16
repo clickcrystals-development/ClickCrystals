@@ -222,9 +222,24 @@ if_not reference_entity any_entity
 if reference_entity
 if_not reference_entity
 !if reference_entity
-if
-if_not
-!if
+if item_count
+if_not item_count
+!if item_count
+if item_count holding
+if item_count off_holding
+if_not item_count holding
+if_not item_count off_holding
+!if item_count holding
+!if item_count off_holding
+if item_durability
+if_not item_durability
+!if item_durability
+if item_durability holding
+if item_durability off_holding
+if_not item_durability holding
+if_not item_durability off_holding
+!if item_durability holding
+!if item_durability off_holding
 if gamemode creative
 if gamemode survival
 if gamemode adventure

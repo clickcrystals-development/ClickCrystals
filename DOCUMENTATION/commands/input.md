@@ -6,23 +6,23 @@ Keyword: input
 ### Usages
 ```
 input attack
-input mouse_wheel_up
-input mouse_wheel_down
-input use
-input forward
 input backward
+input forward
+input inventory
+input jump
+input key ...
+input left
+input lock_cursor
+input middle
+input mouse_wheel_down
+input mouse_wheel_up
+input right
+input sneak
+input sprint
 input strafe_left
 input strafe_right
-input jump
-input sprint
-input sneak
-input lock_cursor
 input unlock_cursor
-input left
-input right
-input middle
-input inventory
-input key ...
+input use
 ```
 
 ### Regex

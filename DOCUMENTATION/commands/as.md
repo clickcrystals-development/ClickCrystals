@@ -6,9 +6,9 @@ Keyword: as
 ### Usages
 ```
 as any_entity {}
-as target_entity {}
 as client {}
 as nearest_entity <identifier> {}
+as target_entity {}
 ```
 
 ### Regex

@@ -220,11 +220,17 @@ public class Conditionals implements Global {
     // @Format (while|while_not|!while) <num>? reference_entity (client|any_entity) {}
     // @Format (while|while_not|!while) <num>? reference_entity <identifier> {}
     public static final Conditional REFERENCE_ENTITY;
-    // @Format (if|if_not|!if) <identifier> <comparator> <int> {}
-    // @Format (while|while_not|!while) <num>? <identifier> <comparator> <int> {}
+
+    // @Format (if|if_not|!if) item_count <identifier> <comparator> <int> {}
+    // @Format (if|if_not|!if) item_count (holding|off_holding) <comparator> <int> {}
+    // @Format (while|while_not|!while) <num>? item_count <identifier> <comparator> <int> {}
+    // @Format (while|while_not|!while) <num>? item_count (holding|off_holding) <comparator> <int> {}
     public static final Conditional ITEM_COUNT;
-    // @Format (if|if_not|!if) <identifier> <comparator> <num> {}
-    // @Format (while|while_not|!while) <num>? <identifier> <comparator> <num> {}
+
+    // @Format (if|if_not|!if) item_durability <identifier> <comparator> <num> {}
+    // @Format (if|if_not|!if) item_durability (holding|off_holding) <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? item_durability <identifier> <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? item_durability (holding|off_holding) <comparator> <num> {}
     public static final Conditional ITEM_DURABILITY;
     // @Format (if|if_not|!if) gamemode (creative|survival|adventure|spectator) {}
     // @Format (while|while_not|!while) <num>? gamemode (creative|survival|adventure|spectator) {}

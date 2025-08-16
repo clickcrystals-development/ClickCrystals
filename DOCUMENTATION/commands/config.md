@@ -5,9 +5,9 @@ Keyword: config
 
 ### Usages
 ```
-config save
 config load
 config reload
+config save
 ```
 
 ### Regex

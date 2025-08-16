@@ -5,12 +5,12 @@ Keyword: damage
 
 ### Usages
 ```
-damage nearest_entity <identifier>
-damage nearest_block <identifier>
-damage any_entity
-damage target_entity
 damage any_block
+damage any_entity
+damage nearest_block <identifier>
+damage nearest_entity <identifier>
 damage position <x> <y> <z>
+damage target_entity
 ```
 
 ### Regex

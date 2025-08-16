@@ -5,13 +5,13 @@ Keyword: turn_to
 
 ### Usages
 ```
-turn_to nearest_entity <identifier> then? {}?
-turn_to nearest_block <identifier> then? {}?
-turn_to any_entity then? {}?
-turn_to target_entity then? {}?
 turn_to any_block then? {}?
-turn_to position <x> <y> <z> then? {}?
+turn_to any_entity then? {}?
+turn_to nearest_block <identifier> then? {}?
+turn_to nearest_entity <identifier> then? {}?
 turn_to polar <pitch> <yaw> then? {}?
+turn_to position <x> <y> <z> then? {}?
+turn_to target_entity then? {}?
 ```
 
 ### Regex

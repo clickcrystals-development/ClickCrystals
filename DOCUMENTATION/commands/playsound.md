@@ -5,8 +5,8 @@ Keyword: playsound
 
 ### Usages
 ```
-playsound stop
 playsound <identifier> <num>? <num>?
+playsound stop
 ```
 
 ### Regex

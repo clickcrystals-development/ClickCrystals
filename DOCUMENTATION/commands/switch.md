@@ -5,9 +5,9 @@ Keyword: switch
 
 ### Usages
 ```
-switch back
-switch <int>
 switch <identifier>
+switch <int>
+switch back
 ```
 
 ### Regex
