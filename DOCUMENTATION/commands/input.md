@@ -27,11 +27,11 @@ input use
 
 ### Regex
 ```regexp
-(((input)( (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory)))|((input)( (key))( (\S+))))
+(((input)( (attack|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory|mouse_wheel_up|mouse_wheel_down)))|((input)( (key))( (\S+))))
 ```
 
 ### Raw Documentation
 ```yml
-# input (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory)
+# input <input>
 # input key ...
 ```

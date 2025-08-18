@@ -6,7 +6,8 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.syntax.InputType;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 
-// @Format hold_input (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory) <num>
+// @Format hold_input <input> <num>
+// @Format hold_input cancel
 public class HoldInputCmd extends ScriptCommand implements ThenChainable {
 
     public HoldInputCmd() {
