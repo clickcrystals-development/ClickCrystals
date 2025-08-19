@@ -10,7 +10,7 @@ notify "..."
 
 ### Regex
 ```regexp
-(((notify)( (\"((\\\")|[^\"])+\"))))
+(((notify)( (\"((\\\")|[^\"])*\"))))
 ```
 
 ### Raw Documentation

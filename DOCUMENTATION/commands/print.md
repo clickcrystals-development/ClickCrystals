@@ -10,7 +10,7 @@ print "..."
 
 ### Regex
 ```regexp
-(((print)( (\"((\\\")|[^\"])+\"))))
+(((print)( (\"((\\\")|[^\"])*\"))))
 ```
 
 ### Raw Documentation

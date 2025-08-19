@@ -14,7 +14,7 @@ define module ...
 
 ### Regex
 ```regexp
-(((define)( (module))( (\S+)))|((define)( (description|desc))( (\"((\\\")|[^\"])+\")))|((define)( (function|func))( (\S+))))
+(((define)( (module))( (\S+)))|((define)( (description|desc))( (\"((\\\")|[^\"])*\")))|((define)( (function|func))( (\S+))))
 ```
 
 ### Raw Documentation
