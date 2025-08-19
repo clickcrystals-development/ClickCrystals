@@ -5322,7 +5322,7 @@
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -5348,7 +5348,7 @@
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -5389,7 +5389,7 @@
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -5425,7 +5425,7 @@
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -5541,7 +5541,7 @@
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -5567,7 +5567,7 @@
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -5608,7 +5608,7 @@
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -5644,7 +5644,7 @@
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
