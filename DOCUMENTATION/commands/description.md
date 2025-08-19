@@ -10,7 +10,7 @@ description "..."
 
 ### Regex
 ```regexp
-(((description)( (\".*?\"))))
+(((description)( (\"((\\\")|[^\"])+\"))))
 ```
 
 ### Raw Documentation

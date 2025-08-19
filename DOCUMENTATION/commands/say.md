@@ -10,7 +10,7 @@ say "..."
 
 ### Regex
 ```regexp
-(((say)( (\".*?\"))))
+(((say)( (\"((\\\")|[^\"])+\"))))
 ```
 
 ### Raw Documentation

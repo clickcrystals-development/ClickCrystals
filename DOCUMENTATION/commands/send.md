@@ -10,7 +10,7 @@ send "..."
 
 ### Regex
 ```regexp
-(((send)( (\".*?\"))))
+(((send)( (\"((\\\")|[^\"])+\"))))
 ```
 
 ### Raw Documentation

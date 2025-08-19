@@ -10,7 +10,7 @@ desc "..."
 
 ### Regex
 ```regexp
-(((desc)( (\".*?\"))))
+(((desc)( (\"((\\\")|[^\"])+\"))))
 ```
 
 ### Raw Documentation

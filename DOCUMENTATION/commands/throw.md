@@ -10,7 +10,7 @@ throw "..."
 
 ### Regex
 ```regexp
-(((throw)( (\".*?\"))))
+(((throw)( (\"((\\\")|[^\"])+\"))))
 ```
 
 ### Raw Documentation

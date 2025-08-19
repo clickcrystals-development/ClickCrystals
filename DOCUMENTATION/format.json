@@ -24,7 +24,7 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\\".*?\\\")",
+          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])+\\\")",
           "optional": false,
           "leading": false
         }
@@ -40,7 +40,7 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\\".*?\\\")",
+          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])+\\\")",
           "optional": false,
           "leading": false
         }
@@ -3902,7 +3902,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\\".*?\\\")",
+          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])+\\\")",
           "optional": false,
           "leading": false
         }
@@ -3944,7 +3944,7 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\\".*?\\\")",
+          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])+\\\")",
           "optional": false,
           "leading": false
         }
@@ -3981,7 +3981,7 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\\".*?\\\")",
+          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])+\\\")",
           "optional": false,
           "leading": false
         }
@@ -4039,7 +4039,7 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\\".*?\\\")",
+          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])+\\\")",
           "optional": false,
           "leading": false
         }
@@ -4055,7 +4055,7 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(\\\".*?\\\")",
+          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])+\\\")",
           "optional": false,
           "leading": false
         }
@@ -4727,7 +4727,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\\".*?\\\")",
+          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])+\\\")",
           "optional": false,
           "leading": false
         }
@@ -4748,7 +4748,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(\\\".*?\\\")",
+          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])+\\\")",
           "optional": false,
           "leading": false
         }
