@@ -4226,10 +4226,15 @@
           "acceptingRegex": "(right_click)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4242,10 +4247,15 @@
           "acceptingRegex": "(left_click)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4258,10 +4268,15 @@
           "acceptingRegex": "(middle_click)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4279,10 +4294,15 @@
           "acceptingRegex": "(-?\\d+)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4295,10 +4315,15 @@
           "acceptingRegex": "(right_release)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4311,10 +4336,15 @@
           "acceptingRegex": "(left_release)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4327,10 +4357,15 @@
           "acceptingRegex": "(middle_release)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4348,10 +4383,15 @@
           "acceptingRegex": "(-?\\d+)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4364,10 +4404,15 @@
           "acceptingRegex": "(place_block)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4380,10 +4425,15 @@
           "acceptingRegex": "(break_block)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4396,10 +4446,15 @@
           "acceptingRegex": "(punch_block)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4412,10 +4467,15 @@
           "acceptingRegex": "(interact_block)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4433,10 +4493,15 @@
           "acceptingRegex": "(-?\\d+)",
           "optional": true,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4454,10 +4519,15 @@
           "acceptingRegex": "(-?\\d+)",
           "optional": true,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4475,10 +4545,15 @@
           "acceptingRegex": "(-?\\d+)",
           "optional": true,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4491,10 +4566,15 @@
           "acceptingRegex": "(item_use)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4507,10 +4587,15 @@
           "acceptingRegex": "(item_consume)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4523,10 +4608,15 @@
           "acceptingRegex": "(totem_pop)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4539,10 +4629,15 @@
           "acceptingRegex": "(module_enable)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4555,10 +4650,15 @@
           "acceptingRegex": "(module_disable)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4571,10 +4671,15 @@
           "acceptingRegex": "(move_pos)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4587,10 +4692,15 @@
           "acceptingRegex": "(move_look)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4608,10 +4718,15 @@
           "acceptingRegex": "(\\S+)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4629,10 +4744,15 @@
           "acceptingRegex": "(\\S+)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4645,10 +4765,15 @@
           "acceptingRegex": "(damage)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4661,10 +4786,15 @@
           "acceptingRegex": "(respawn)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4677,10 +4807,15 @@
           "acceptingRegex": "(death)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4693,10 +4828,15 @@
           "acceptingRegex": "(game_join)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4709,10 +4849,15 @@
           "acceptingRegex": "(game_leave)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4730,10 +4875,15 @@
           "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])*\\\")",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4751,10 +4901,15 @@
           "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])*\\\")",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4772,10 +4927,15 @@
           "acceptingRegex": "(\\S+)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4793,10 +4953,15 @@
           "acceptingRegex": "(\\S+)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4814,10 +4979,15 @@
           "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4830,10 +5000,15 @@
           "acceptingRegex": "(mouse_wheel_up)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4846,10 +5021,15 @@
           "acceptingRegex": "(mouse_wheel_down)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [
@@ -4862,10 +5042,15 @@
           "acceptingRegex": "(mouse_wheel)",
           "optional": false,
           "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
         }
       ],
       "optional": false,
-      "acceptingCodeBlocks": false
+      "acceptingCodeBlocks": true
     },
     {
       "components": [

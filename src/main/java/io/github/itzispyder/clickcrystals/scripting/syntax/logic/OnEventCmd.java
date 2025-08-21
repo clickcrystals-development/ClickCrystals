@@ -208,42 +208,42 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
     }
 
     public enum EventType {
-        RIGHT_CLICK, // @Format on right_click
-        LEFT_CLICK, // @Format on left_click
-        MIDDLE_CLICK, // @Format on middle_click
-        MOUSE_CLICK, // @Format on mouse_click <int>
-        RIGHT_RELEASE, // @Format on right_release
-        LEFT_RELEASE, // @Format on left_release
-        MIDDLE_RELEASE, // @Format on middle_release
-        MOUSE_RELEASE, // @Format on mouse_release <int>
-        PLACE_BLOCK, // @Format on place_block
-        BREAK_BLOCK, // @Format on break_block
-        PUNCH_BLOCK, // @Format on punch_block
-        INTERACT_BLOCK, // @Format on interact_block
-        PRE_TICK, // @Format on pre_tick <int>?
-        TICK, // @Format on tick <int>?
-        POST_TICK, // @Format on post_tick <int>?
-        ITEM_USE, // @Format on item_use
-        ITEM_CONSUME, // @Format on item_consume
-        TOTEM_POP, // @Format on totem_pop
-        MODULE_ENABLE, // @Format on module_enable
-        MODULE_DISABLE, // @Format on module_disable
-        MOVE_POS, // @Format on move_pos
-        MOVE_LOOK, // @Format on move_look
-        KEY_PRESS, // @Format on key_press ...
-        KEY_RELEASE, // @Format on key_release ...
-        DAMAGE, // @Format on damage
-        RESPAWN, // @Format on respawn
-        DEATH, // @Format on death
-        GAME_JOIN, // @Format on game_join
-        GAME_LEAVE, // @Format on game_leave
-        CHAT_SEND, // @Format on chat_send "..."
-        CHAT_RECEIVE, // @Format on chat_receive "..."
-        PACKET_SEND, // @Format on packet_send ...
-        PACKET_RECEIVE, // @Format on packet_receive ...
-        SOUND_PLAY, // @Format on sound_play <identifier>
-        MOUSE_WHEEL_UP, // @Format on mouse_wheel_up
-        MOUSE_WHEEL_DOWN, // @Format on mouse_wheel_down
-        MOUSE_WHEEL // @Format on mouse_wheel
+        RIGHT_CLICK, // @Format on right_click {}
+        LEFT_CLICK, // @Format on left_click {}
+        MIDDLE_CLICK, // @Format on middle_click {}
+        MOUSE_CLICK, // @Format on mouse_click <int> {}
+        RIGHT_RELEASE, // @Format on right_release {}
+        LEFT_RELEASE, // @Format on left_release {}
+        MIDDLE_RELEASE, // @Format on middle_release {}
+        MOUSE_RELEASE, // @Format on mouse_release <int> {}
+        PLACE_BLOCK, // @Format on place_block {}
+        BREAK_BLOCK, // @Format on break_block {}
+        PUNCH_BLOCK, // @Format on punch_block {}
+        INTERACT_BLOCK, // @Format on interact_block {}
+        PRE_TICK, // @Format on pre_tick <int>? {}
+        TICK, // @Format on tick <int>? {}
+        POST_TICK, // @Format on post_tick <int>? {}
+        ITEM_USE, // @Format on item_use {}
+        ITEM_CONSUME, // @Format on item_consume {}
+        TOTEM_POP, // @Format on totem_pop {}
+        MODULE_ENABLE, // @Format on module_enable {}
+        MODULE_DISABLE, // @Format on module_disable {}
+        MOVE_POS, // @Format on move_pos {}
+        MOVE_LOOK, // @Format on move_look {}
+        KEY_PRESS, // @Format on key_press ... {}
+        KEY_RELEASE, // @Format on key_release ... {}
+        DAMAGE, // @Format on damage {}
+        RESPAWN, // @Format on respawn {}
+        DEATH, // @Format on death {}
+        GAME_JOIN, // @Format on game_join {}
+        GAME_LEAVE, // @Format on game_leave {}
+        CHAT_SEND, // @Format on chat_send "..." {}
+        CHAT_RECEIVE, // @Format on chat_receive "..." {}
+        PACKET_SEND, // @Format on packet_send ... {}
+        PACKET_RECEIVE, // @Format on packet_receive ... {}
+        SOUND_PLAY, // @Format on sound_play <identifier> {}
+        MOUSE_WHEEL_UP, // @Format on mouse_wheel_up {}
+        MOUSE_WHEEL_DOWN, // @Format on mouse_wheel_down {}
+        MOUSE_WHEEL // @Format on mouse_wheel {}
     }
 }
