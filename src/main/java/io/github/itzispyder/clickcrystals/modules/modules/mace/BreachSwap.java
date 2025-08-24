@@ -1,22 +1,21 @@
 package io.github.itzispyder.clickcrystals.modules.modules.mace;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
-import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.EntityDamageEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
-import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
+import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 
-public class BreachSwap extends Module implements Listener {
+public class BreachSwap extends ListenerModule {
 
     private final SettingSection sgGeneral = getGeneralSection();
     private final SettingSection sgTiming = createSettingSection("Timing");
@@ -68,16 +67,6 @@ public class BreachSwap extends Module implements Listener {
         super("breach-swap", Categories.PVP, "Switches from sword to breach mace when attacking entities for enhanced damage");
     }
 
-    @Override
-    protected void onEnable() {
-        system.addListener(this);
-    }
-
-    @Override
-    protected void onDisable() {
-        system.removeListener(this);
-    }
-
     @EventHandler
     private void onMouseClick(MouseClickEvent e) {
         if (!enabled.getVal() || e.getButton() != 0) return; // Only left click
@@ -118,46 +107,32 @@ public class BreachSwap extends Module implements Listener {
     }
 
     private ItemStack findBreachMace() {
-        if (PlayerUtils.invalid()) return null;
-        
-        for (int i = 0; i <= 8; i++) {
-            ItemStack stack = PlayerUtils.player().getInventory().getStack(i);
-            if (stack.getItem().getTranslationKey().contains("mace")) {
-                // If require breach is disabled, any mace works
-                if (!requireBreach.getVal()) return stack;
-                
-                // Check for breach enchantment
-                if (stack.hasEnchantments() && 
-                    stack.getEnchantments().getEnchantments().stream()
-                        .anyMatch(enchantment -> enchantment.getIdAsString().contains("breach"))) {
-                    return stack;
-                }
-            }
-        }
-        return null;
+        return HotbarUtils.searchItem(ScriptParser.parseItemPredicate(":mace[breach]"));
     }
 
     private void executeCombo(ItemStack breachMace) {
-        new Thread(() -> {
-            try {
-                // Switch to breach mace
-                HotbarUtils.search(item -> item == breachMace);
-                Thread.sleep((long) (switchDelay.getVal() * 1000));
-                
-                // Attack with breach mace
-                if (mc.targetedEntity != null) {
-                    mc.interactionManager.attackEntity(mc.player, mc.targetedEntity);
-                    mc.player.swingHand(Hand.MAIN_HAND);
-                }
-                Thread.sleep((long) (attackDelay.getVal() * 1000));
-                
-                // Switch back to sword if enabled
-                if (autoSwitchBack.getVal()) {
-                    HotbarUtils.search(item -> item.getItem().getTranslationKey().contains("sword"));
-                }
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-        }).start();
+        long delay = switchDelay.getVal().longValue() * 1000L;
+        var p = PlayerUtils.player();
+        var m = PlayerUtils.getInteractions();
+
+        system.scheduler.runChainTask()
+                .thenRun(system.mcExecuteRunnable(() -> {
+                    // Switch to breach mace
+                    HotbarUtils.search(item -> item == breachMace);
+                }))
+                .thenWait(delay)
+                .thenRun(system.mcExecuteRunnable(() -> {
+                    // Attack with breach mace
+                    if (mc.targetedEntity == null)
+                        return;
+                    m.attackEntity(mc.player, mc.targetedEntity);
+                    p.swingHand(Hand.MAIN_HAND);
+                }))
+                .thenWait(delay)
+                .thenRun(system.mcExecuteRunnable(() -> {
+                    if (autoSwitchBack.getVal())
+                        HotbarUtils.search(item -> item.getItem().getTranslationKey().contains("sword"));
+                }))
+                .startChain();
     }
 }

@@ -58,6 +58,14 @@ public class ClickCrystalsSystem implements Serializable {
         this.keybinds = new HashSet<>();
     }
 
+    public void mcExecute(Runnable task) {
+        mc.execute(task);
+    }
+
+    public Runnable mcExecuteRunnable(Runnable task) {
+        return () -> mcExecuteRunnable(task);
+    }
+
     public void openUrl(String url) {
         try {
             Util.getOperatingSystem().open(new URI(url));

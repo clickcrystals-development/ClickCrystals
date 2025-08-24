@@ -60,6 +60,19 @@ public final class HotbarUtils implements Global {
         return -1;
     }
 
+    public static ItemStack searchItem(Predicate<ItemStack> item) {
+        if (PlayerUtils.invalid())
+            return ItemStack.EMPTY;
+
+        PlayerInventory inv = PlayerUtils.player().getInventory();
+        for (int i = 0; i <= 8; i ++) {
+            ItemStack currStack = inv.getStack(i);
+            if (item.test(currStack))
+                return currStack;
+        }
+        return ItemStack.EMPTY;
+    }
+
     public static boolean has(Item item) {
         if (PlayerUtils.invalid()) {
             return false;

@@ -1,20 +1,20 @@
 package io.github.itzispyder.clickcrystals.modules.modules.mace;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
-import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
-import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 
-public class StunSlam extends Module implements Listener {
+public class StunSlam extends ListenerModule {
 
     private final SettingSection sgGeneral = getGeneralSection();
     private final SettingSection sgTiming = createSettingSection("Timing");
@@ -59,16 +59,6 @@ public class StunSlam extends Module implements Listener {
         super("stun-slam", Categories.PVP, "Switches from mace to axe when target has shield, then back to mace for devastating combos");
     }
 
-    @Override
-    protected void onEnable() {
-        system.addListener(this);
-    }
-
-    @Override
-    protected void onDisable() {
-        system.removeListener(this);
-    }
-
     @EventHandler
     private void onMouseClick(MouseClickEvent e) {
         if (!enabled.getVal() || e.getButton() != 0) return; // Only left click
@@ -105,33 +95,37 @@ public class StunSlam extends Module implements Listener {
     }
 
     private void executeCombo() {
-        new Thread(() -> {
-            try {
-                // Switch to axe
-                HotbarUtils.search(item -> item.getItem().getTranslationKey().contains("axe"));
-                Thread.sleep((long) (switchDelay.getVal() * 1000));
-                
-                // Attack with axe
-                if (mc.targetedEntity != null) {
-                    mc.interactionManager.attackEntity(mc.player, mc.targetedEntity);
-                    mc.player.swingHand(Hand.MAIN_HAND);
-                }
-                Thread.sleep((long) (attackDelay.getVal() * 1000));
-                
-                // Switch back to mace if enabled
-                if (autoSwitchBack.getVal()) {
-                    HotbarUtils.search(item -> item.getItem().getTranslationKey().contains("mace"));
-                    Thread.sleep((long) (switchDelay.getVal() * 1000));
-                    
-                    // Attack with mace
-                    if (mc.targetedEntity != null) {
-                        mc.interactionManager.attackEntity(mc.player, mc.targetedEntity);
-                        mc.player.swingHand(Hand.MAIN_HAND);
-                    }
-                }
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-        }).start();
+        long delay = switchDelay.getVal().longValue() * 1000L;
+        var p = PlayerUtils.player();
+        var m = PlayerUtils.getInteractions();
+        
+        system.scheduler.runChainTask()
+                .thenRun(system.mcExecuteRunnable(() -> {
+                    // Switch to axe
+                    HotbarUtils.search(item -> item.getItem().getTranslationKey().contains("axe"));
+                }))
+                .thenWait(delay)
+                .thenRun(system.mcExecuteRunnable(() -> {
+                    // Attack with axe
+                    if (mc.targetedEntity == null)
+                        return;
+                    m.attackEntity(p, mc.targetedEntity);
+                    p.swingHand(Hand.MAIN_HAND);
+                }))
+                .thenWait(delay)
+                .thenRun(system.mcExecuteRunnable(() -> {
+                    // Switch back to mace if enabled
+                    if (!autoSwitchBack.getVal())
+                        return;
+                    HotbarUtils.search(Items.MACE);
+                    system.scheduler.runDelayedTask(() -> {
+                        // Attack with mace
+                        if (mc.targetedEntity == null)
+                            return;
+                        m.attackEntity(p, mc.targetedEntity);
+                        p.swingHand(Hand.MAIN_HAND);
+                    }, delay);
+                }))
+                .startChain();
     }
 }
