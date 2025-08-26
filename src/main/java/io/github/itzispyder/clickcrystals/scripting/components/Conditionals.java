@@ -8,6 +8,7 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.scripting.syntax.InputType;
 import io.github.itzispyder.clickcrystals.util.minecraft.*;
 import io.github.itzispyder.clickcrystals.util.misc.Dimensions;
+import io.github.itzispyder.clickcrystals.util.misc.Voidable;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -15,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.hit.BlockHitResult;
@@ -75,12 +77,18 @@ public class Conditionals implements Global {
     // @Format (if|if_not|!if) target_entity <identifier> {}
     // @Format (while|while_not|!while) <num>? target_entity <identifier> {}
     public static final Conditional TARGET_ENTITY;
+    // @Format (if|if_not|!if) target_fluid <identifier> {}
+    // @Format (while|while_not|!while) <num>? target_fluid <identifier> {}
+    public static final Conditional TARGET_FLUID;
     // @Format (if|if_not|!if) targeting_block {}
     // @Format (while|while_not|!while) <num>? targeting_block {}
     public static final Conditional TARGETING_BLOCK;
     // @Format (if|if_not|!if) targeting_entity {}
     // @Format (while|while_not|!while) <num>? targeting_entity {}
     public static final Conditional TARGETING_ENTITY;
+    // @Format (if|if_not|!if) targeting_fluid {}
+    // @Format (while|while_not|!while) <num>? targeting_fluid {}
+    public static final Conditional TARGETING_FLUID;
     // @Format (if|if_not|!if) inventory_has <identifier> {}
     // @Format (while|while_not|!while) <num>? inventory_has <identifier> {}
     public static final Conditional INVENTORY_HAS;
@@ -262,8 +270,14 @@ public class Conditionals implements Global {
         OFF_HOLDING = register("off_holding", ctx -> ctx.end(true, EntityUtils.isOffHolding(ctx.entity, ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
         TARGET_BLOCK = register("target_block", ctx -> ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof BlockHitResult hit && ScriptParser.parseBlockPredicate(ctx.get(0).toString()).test(PlayerUtils.getWorld().getBlockState(hit.getBlockPos()))));
         TARGET_ENTITY = register("target_entity", ctx -> ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof EntityHitResult hit && ScriptParser.parseEntityPredicate(ctx.get(0).toString()).test(hit.getEntity())));
+        TARGET_FLUID = register("target_fluid", ctx -> {
+            Voidable<FluidState> state = EntityUtils.getTargetFluid(ctx.entity);
+            Predicate<BlockState> test = ScriptParser.parseBlockPredicate(ctx.get(0).toString());
+            return ctx.end(true, state.isPresent() && test.test(state.get().getBlockState()));
+        });
         TARGETING_BLOCK = register("targeting_block", ctx -> ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof BlockHitResult hit && !PlayerUtils.getWorld().getBlockState(hit.getBlockPos()).isAir()));
         TARGETING_ENTITY = register("targeting_entity", ctx -> ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof EntityHitResult hit && hit.getEntity().isAlive()));
+        TARGETING_FLUID = register("targeting_fluid", ctx -> ctx.end(true, EntityUtils.getTargetFluid(ctx.entity).isPresent()));
         INVENTORY_HAS = register("inventory_has", ctx -> ctx.assertClientPlayer().end(InvUtils.has(ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
         EQUIPMENT_HAS = register("equipment_has", ctx -> ctx.end(true, EntityUtils.hasEquipment(ctx.entity, ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
         HOTBAR_HAS = register("hotbar_has", ctx -> ctx.assertClientPlayer().end(HotbarUtils.has(ScriptParser.parseItemPredicate(ctx.get(0).toString()))));

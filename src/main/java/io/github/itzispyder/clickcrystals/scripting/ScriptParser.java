@@ -220,6 +220,8 @@ public class ScriptParser {
         this.put("charged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) > 0);
         this.put("water_source", state -> state.isOf(Blocks.WATER) && state.getFluidState().getLevel() == 8);
         this.put("lava_source", state -> state.isOf(Blocks.LAVA) && state.getFluidState().getLevel() == 8);
+        this.put("flowing_water", state -> state.isOf(Blocks.WATER) && state.getFluidState().getLevel() < 8);
+        this.put("flowing_lava", state -> state.isOf(Blocks.LAVA) && state.getFluidState().getLevel() < 8);
     }};
     private static final Map<String, Predicate<ItemStack>> defaultedItemPredicates = new HashMap<>() {{
         this.put("uncharged_crossbow", item -> item.getItem() == Items.CROSSBOW && !CrossbowItem.isCharged(item));

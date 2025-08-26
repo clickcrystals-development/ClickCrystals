@@ -18,7 +18,7 @@ public class NotifyCmd extends ScriptCommand {
                 .stayTime((long)(args.get(0).toDouble() * 1000L))
                 .id("clickscript-triggered-notification")
                 .title("ClickCrystals System")
-                .text(args.getQuoteAndRemove(1))
+                .text(args.getQuoteAndZeroCursor(1))
                 .build()
                 .sendToClient();
 

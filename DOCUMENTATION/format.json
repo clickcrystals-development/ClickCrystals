@@ -67,7 +67,7 @@
     {
       "components": [
         {
-          "acceptingRegex": "(loop)",
+          "acceptingRegex": "(loop|repeat)",
           "optional": false,
           "leading": true
         },
@@ -88,23 +88,7 @@
     {
       "components": [
         {
-          "acceptingRegex": "(function)",
-          "optional": false,
-          "leading": true
-        },
-        {
-          "acceptingRegex": "(\\S+)",
-          "optional": false,
-          "leading": false
-        }
-      ],
-      "optional": false,
-      "acceptingCodeBlocks": false
-    },
-    {
-      "components": [
-        {
-          "acceptingRegex": "(func)",
+          "acceptingRegex": "(function|func)",
           "optional": false,
           "leading": true
         },

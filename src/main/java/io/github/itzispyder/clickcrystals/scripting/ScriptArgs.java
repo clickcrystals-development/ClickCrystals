@@ -60,7 +60,7 @@ public class ScriptArgs {
         return new Arg(args[index]);
     }
 
-    public String getQuoteAndRemove(int beginIndex) {
+    public String getQuoteAndZeroCursor(int beginIndex) {
         String all = getAll(beginIndex).toString();
         var section = ScriptParser.firstSectionWithIndex(all, '"', '"');
 
@@ -73,8 +73,8 @@ public class ScriptArgs {
         return section.left;
     }
 
-    public String getQuoteAndRemove() {
-        return getQuoteAndRemove(0);
+    public String getQuoteAndZeroCursor() {
+        return getQuoteAndZeroCursor(0);
     }
 
     public String getQuote(int beginIndex) {

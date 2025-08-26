@@ -13,7 +13,7 @@ public class SayCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        String msg = args.getQuoteAndRemove();
+        String msg = args.getQuoteAndZeroCursor();
 
         if (msg != null && !msg.isEmpty()) {
             if (msg.startsWith("/") && msg.length() >= 2) {

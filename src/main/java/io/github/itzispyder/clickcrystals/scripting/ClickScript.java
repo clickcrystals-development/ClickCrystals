@@ -12,48 +12,18 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 
 import java.io.File;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 public class ClickScript implements Global {
 
     public static final AtomicReference<File> currentFile = new AtomicReference<>();
-    private static final Map<String, ScriptCommand> REGISTRATION = new HashMap<>() {{
-        this.put("exit", ScriptCommand.create("exit", (command, line, args) -> { // @Format exit <int>
-            System.exit(args.get(0).toInt());
-        }));
-        this.put("print", ScriptCommand.create("print", (command, line, args) -> { // @Format print "..."
-            system.println(args.getQuoteAndRemove());
-            if (args.match(0, "then")) {
-                args.executeAll(1);
-            }
-        }));
-        this.put("throw", ScriptCommand.create("throw", (command, line, args) -> { // @Format throw "..."
-            throw new RuntimeException(args.getQuoteAndRemove());
-        }));
-        this.put("execute", ScriptCommand.create("execute", (command, line, args) -> { // @Format execute {}
-            args.executeAll();
-        }));
-        this.put("loop", ScriptCommand.create("loop", (command, line, args) -> { // @Format loop <int> {}
-            int times = args.get(0).toInt();
-            for (int i = 0; i < times; i++) {
-                args.executeAll(1);
-            }
-        }, "repeat"));
-        ScriptCommand cmd = ScriptCommand.create("function", (command, line, args) -> {
-            ClickScript exe = args.getExecutor();
-            String name = args.get(0).toString();
-            executeDynamic(exe, exe.getFunction(name));
-        });
-        this.put("function", cmd); // @Format function ...
-        this.put("func", cmd); // @Format func ...
-    }};
+    private static final Map<String, ScriptCommand> REGISTRATION = new HashMap<>();
     public static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
+
     private final Map<String, String> functions;
     private final String path;
     private final File file;
-    private final AtomicLong pause = new AtomicLong(0L);
 
     private ClickScript(File file, String path) {
         this.file = file;
@@ -127,13 +97,6 @@ public class ClickScript implements Global {
         }
     }
 
-    public static void unregister(ScriptCommand command) {
-        if (command != null) {
-            REGISTRATION.remove(command.getName());
-            Arrays.stream(command.getAliases()).forEach(REGISTRATION::remove);
-        }
-    }
-
     public void execute() {
         try {
             if (!file.exists() || !(path.endsWith(".ccs") || path.endsWith(".txt"))) {
@@ -197,7 +160,7 @@ public class ClickScript implements Global {
         functions.put(name, command);
     }
 
-    private String getFunction(String name) {
+    public String getFunction(String name) {
         if (name == null || name.trim().isEmpty() || !functions.containsKey(name)) {
             throw new IllegalArgumentException("Function '%s' is not defined!".formatted(name));
         }

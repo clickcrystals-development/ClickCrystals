@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.util.minecraft;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.TeamDetector;
+import io.github.itzispyder.clickcrystals.util.misc.Voidable;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.entity.Entity;
@@ -12,6 +13,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.scoreboard.Scoreboard;
@@ -138,6 +140,21 @@ public class EntityUtils implements Global {
         Box box = ref.getBoundingBox().stretch(rot.multiply(d)).expand(1.0, 1.0, 1.0);
         EntityHitResult entHit = ProjectileUtil.raycast(ref, vec3d, vec, box, ent -> !ent.isSpectator() && ent.canHit(), e);
         return entHit != null && entHit.getPos().squaredDistanceTo(vec3d) < f ? ensureTargetInRange(entHit, vec3d, rangeE) : ensureTargetInRange(hitResult, vec3d, rangeB);
+    }
+
+    public static Voidable<FluidState> getTargetFluid(Entity ref) {
+        World world = ref.getWorld();
+        Vec3d eye = ref.getEyePos();
+        Vec3d dir = ref.getRotationVector().normalize();
+
+        for (double dist = 0; dist < 5; dist += 0.1) {
+            Vec3d point = eye.add(dir.multiply(dist));
+            BlockPos pos = BlockPos.ofFloored(point);
+            FluidState state = world.getFluidState(pos);
+            if (!state.isEmpty())
+                return Voidable.of(state);
+        }
+        return Voidable.empty();
     }
 
     private static HitResult ensureTargetInRange(HitResult hitResult, Vec3d cameraPos, double interactionRange) {

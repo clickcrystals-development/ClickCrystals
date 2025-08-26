@@ -64,6 +64,7 @@ Here are some examples of command lines:
 - [On (on)](./commands/on.md)
 - [Playsound (playsound)](./commands/playsound.md)
 - [Print (print)](./commands/print.md)
+- [Repeat (repeat)](./commands/repeat.md)
 - [Repeat Period (repeat_period)](./commands/repeat_period.md)
 - [Say (say)](./commands/say.md)
 - [Send (send)](./commands/send.md)

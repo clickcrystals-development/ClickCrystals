@@ -83,7 +83,7 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
 
     private void passChat(ScriptArgs args, EventType type) {
         ClickScript dispatcher = args.getExecutorOrDef();
-        String msg = args.getQuoteAndRemove(1);
+        String msg = args.getQuoteAndZeroCursor(1);
         String rest = args.getAll().toString();
 
         switch (type) {
