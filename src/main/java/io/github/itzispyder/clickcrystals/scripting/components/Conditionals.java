@@ -99,9 +99,9 @@ public class Conditionals implements Global {
     // @Format (while|while_not|!while) <num>? hotbar_has <identifier> {}
     public static final Conditional HOTBAR_HAS;
 
-    // @Format (if|if_not|!if) input_active (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory) {}
+    // @Format (if|if_not|!if) input_active <input> {}
     // @Format (if|if_not|!if) input_active key ... {}
-    // @Format (while|while_not|!while) <num>? input_active (attack|mouse_wheel_up|mouse_wheel_down|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory) {}
+    // @Format (while|while_not|!while) <num>? input_active <input> {}
     // @Format (while|while_not|!while) <num>? input_active key ... {}
     public static final Conditional INPUT_ACTIVE;
 
