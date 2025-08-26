@@ -3,107 +3,6 @@
     {
       "components": [
         {
-          "acceptingRegex": "(exit)",
-          "optional": false,
-          "leading": true
-        },
-        {
-          "acceptingRegex": "(-?\\d+)",
-          "optional": false,
-          "leading": false
-        }
-      ],
-      "optional": false,
-      "acceptingCodeBlocks": false
-    },
-    {
-      "components": [
-        {
-          "acceptingRegex": "(print)",
-          "optional": false,
-          "leading": true
-        },
-        {
-          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])*\\\")",
-          "optional": false,
-          "leading": false
-        }
-      ],
-      "optional": false,
-      "acceptingCodeBlocks": false
-    },
-    {
-      "components": [
-        {
-          "acceptingRegex": "(throw)",
-          "optional": false,
-          "leading": true
-        },
-        {
-          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])*\\\")",
-          "optional": false,
-          "leading": false
-        }
-      ],
-      "optional": false,
-      "acceptingCodeBlocks": false
-    },
-    {
-      "components": [
-        {
-          "acceptingRegex": "(execute)",
-          "optional": false,
-          "leading": true
-        },
-        {
-          "acceptingRegex": "",
-          "optional": false,
-          "leading": false
-        }
-      ],
-      "optional": false,
-      "acceptingCodeBlocks": true
-    },
-    {
-      "components": [
-        {
-          "acceptingRegex": "(loop|repeat)",
-          "optional": false,
-          "leading": true
-        },
-        {
-          "acceptingRegex": "(-?\\d+)",
-          "optional": false,
-          "leading": false
-        },
-        {
-          "acceptingRegex": "",
-          "optional": false,
-          "leading": false
-        }
-      ],
-      "optional": false,
-      "acceptingCodeBlocks": true
-    },
-    {
-      "components": [
-        {
-          "acceptingRegex": "(function|func)",
-          "optional": false,
-          "leading": true
-        },
-        {
-          "acceptingRegex": "(\\S+)",
-          "optional": false,
-          "leading": false
-        }
-      ],
-      "optional": false,
-      "acceptingCodeBlocks": false
-    },
-    {
-      "components": [
-        {
           "acceptingRegex": "(if|if_not|!if)",
           "optional": false,
           "leading": true
@@ -431,6 +330,63 @@
           "leading": true
         },
         {
+          "acceptingRegex": "(target_fluid)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(while|while_not|!while)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(target_fluid)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(if|if_not|!if)",
+          "optional": false,
+          "leading": true
+        },
+        {
           "acceptingRegex": "(targeting_block)",
           "optional": false,
           "leading": false
@@ -505,6 +461,53 @@
         },
         {
           "acceptingRegex": "(targeting_entity)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(if|if_not|!if)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(targeting_fluid)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(while|while_not|!while)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(targeting_fluid)",
           "optional": false,
           "leading": false
         },
@@ -4139,6 +4142,22 @@
     {
       "components": [
         {
+          "acceptingRegex": "(execute)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
           "acceptingRegex": "(execute_period)",
           "optional": false,
           "leading": true
@@ -4163,6 +4182,59 @@
           "acceptingRegex": "(execute_random)",
           "optional": false,
           "leading": true
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(exit)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d+)",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(function|func)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(\\S+)",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(loop|repeat)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d+)",
+          "optional": false,
+          "leading": false
         },
         {
           "acceptingRegex": "",
@@ -5039,6 +5111,38 @@
     {
       "components": [
         {
+          "acceptingRegex": "(print)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])*\\\")",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(throw|error)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])*\\\")",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": false
+    },
+    {
+      "components": [
+        {
           "acceptingRegex": "(uncancel_packet)",
           "optional": false,
           "leading": true
@@ -5188,6 +5292,17 @@
           "acceptingRegex": "([\\^~]?-?\\d*(\\.\\d*)?)",
           "optional": false,
           "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(disconnect)",
+          "optional": false,
+          "leading": true
         }
       ],
       "optional": false,
