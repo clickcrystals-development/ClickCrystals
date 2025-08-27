@@ -142,19 +142,32 @@ public class EntityUtils implements Global {
         return entHit != null && entHit.getPos().squaredDistanceTo(vec3d) < f ? ensureTargetInRange(entHit, vec3d, rangeE) : ensureTargetInRange(hitResult, vec3d, rangeB);
     }
 
-    public static Voidable<FluidState> getTargetFluid(Entity ref) {
+    public static Voidable<FluidState> getTargetFluid(Entity ref, boolean prioritizeSource) {
         World world = ref.getWorld();
         Vec3d eye = ref.getEyePos();
         Vec3d dir = ref.getRotationVector().normalize();
+        FluidState targetState = null;
 
         for (double dist = 0; dist < 5; dist += 0.1) {
             Vec3d point = eye.add(dir.multiply(dist));
             BlockPos pos = BlockPos.ofFloored(point);
             FluidState state = world.getFluidState(pos);
-            if (!state.isEmpty())
-                return Voidable.of(state);
+
+            if (state.isEmpty())
+                continue;
+
+            if (targetState == null) {
+                targetState = state;
+                if (!prioritizeSource)
+                    break;
+            }
+
+            if (state.getLevel() == 8) {
+                targetState = state;
+                break;
+            }
         }
-        return Voidable.empty();
+        return Voidable.of(targetState);
     }
 
     private static HitResult ensureTargetInRange(HitResult hitResult, Vec3d cameraPos, double interactionRange) {

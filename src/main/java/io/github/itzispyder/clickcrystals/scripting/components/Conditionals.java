@@ -271,13 +271,13 @@ public class Conditionals implements Global {
         TARGET_BLOCK = register("target_block", ctx -> ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof BlockHitResult hit && ScriptParser.parseBlockPredicate(ctx.get(0).toString()).test(PlayerUtils.getWorld().getBlockState(hit.getBlockPos()))));
         TARGET_ENTITY = register("target_entity", ctx -> ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof EntityHitResult hit && ScriptParser.parseEntityPredicate(ctx.get(0).toString()).test(hit.getEntity())));
         TARGET_FLUID = register("target_fluid", ctx -> {
-            Voidable<FluidState> state = EntityUtils.getTargetFluid(ctx.entity);
+            Voidable<FluidState> state = EntityUtils.getTargetFluid(ctx.entity, true);
             Predicate<BlockState> test = ScriptParser.parseBlockPredicate(ctx.get(0).toString());
             return ctx.end(true, state.isPresent() && test.test(state.get().getBlockState()));
         });
         TARGETING_BLOCK = register("targeting_block", ctx -> ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof BlockHitResult hit && !PlayerUtils.getWorld().getBlockState(hit.getBlockPos()).isAir()));
         TARGETING_ENTITY = register("targeting_entity", ctx -> ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof EntityHitResult hit && hit.getEntity().isAlive()));
-        TARGETING_FLUID = register("targeting_fluid", ctx -> ctx.end(true, EntityUtils.getTargetFluid(ctx.entity).isPresent()));
+        TARGETING_FLUID = register("targeting_fluid", ctx -> ctx.end(true, EntityUtils.getTargetFluid(ctx.entity, false).isPresent()));
         INVENTORY_HAS = register("inventory_has", ctx -> ctx.assertClientPlayer().end(InvUtils.has(ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
         EQUIPMENT_HAS = register("equipment_has", ctx -> ctx.end(true, EntityUtils.hasEquipment(ctx.entity, ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
         HOTBAR_HAS = register("hotbar_has", ctx -> ctx.assertClientPlayer().end(HotbarUtils.has(ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
