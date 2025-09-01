@@ -69,8 +69,7 @@ public class BreachSwap extends ListenerModule {
     }
 
     private void performBreachSwap() {
-        if (!isEnabled() && PlayerUtils.invalid() && !HotbarUtils.has(this::isSword)
-                && !EntityUtils.isTargetValid() || !requireBreach.getVal())
+        if (!isEnabled() && PlayerUtils.invalid() && !HotbarUtils.has(this::isSword) && !EntityUtils.isTargetValid())
             return;
 
         var mace = findBreachMace();
@@ -96,6 +95,6 @@ public class BreachSwap extends ListenerModule {
     }
 
     private ItemStack findBreachMace() {
-        return HotbarUtils.searchItem(item -> item.isOf(Items.MACE) && NbtUtils.hasEnchant(item, "breach"));
+        return HotbarUtils.searchItem(item -> item.isOf(Items.MACE) && (NbtUtils.hasEnchant(item, "breach") || !requireBreach.getVal()));
     }
 }

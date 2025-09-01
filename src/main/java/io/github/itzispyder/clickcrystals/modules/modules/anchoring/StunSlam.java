@@ -66,7 +66,7 @@ public class StunSlam extends ListenerModule {
         if (!HotbarUtils.nameContains("mace") || !EntityUtils.isTargetValid())
             return;
 
-        if (onlyOnShield.getVal() && mc.targetedEntity instanceof PlayerEntity player && !player.isBlocking())
+        if (!onlyOnShield.getVal() || onlyOnShield.getVal() && mc.targetedEntity instanceof PlayerEntity player && !player.isBlocking())
             return;
 
         if (!HotbarUtils.has(this::isAxe))
