@@ -45,8 +45,6 @@ import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.modules.modules.anchoring.*;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.*;
 import io.github.itzispyder.clickcrystals.modules.modules.crystalling.*;
-import io.github.itzispyder.clickcrystals.modules.modules.mace.BreachSwap;
-import io.github.itzispyder.clickcrystals.modules.modules.mace.StunSlam;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.*;
 import io.github.itzispyder.clickcrystals.modules.modules.optimization.*;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.*;
@@ -268,16 +266,14 @@ public final class ClickCrystals implements ModInitializer, Global {
         // anchors
         system.addModule(new ElytraSwitch());
         system.addModule(new AxeSwap());
+        system.addModule(new BreachSwap());
+        system.addModule(new StunSlam());
         system.addModule(new ShieldSwitch());
         system.addModule(new SwordSwap());
         system.addModule(new GapSwap());
         system.addModule(new RailSwap());
         system.addModule(new TntSwap());
         system.addModule(new BowSwap());
-
-        // mace combat
-        system.addModule(new StunSlam());
-        system.addModule(new BreachSwap());
 
         // client
         system.addModule(new AutoDisconnect());
