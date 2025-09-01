@@ -63,7 +63,7 @@ public class StunSlam extends ListenerModule {
     }
 
     private void performStunSlam() {
-        if (!HotbarUtils.nameContains("mace") || mc.targetedEntity == null)
+        if (!HotbarUtils.nameContains("mace") || !EntityUtils.isTargetValid())
             return;
 
         if (onlyOnShield.getVal() && mc.targetedEntity instanceof PlayerEntity player && !player.isBlocking())
@@ -96,7 +96,7 @@ public class StunSlam extends ListenerModule {
     }
 
     private void attack() {
-        if (EntityUtils.isTargetValid()) return;
+        if (!EntityUtils.isTargetValid()) return;
         InteractionUtils.inputAttack();
     }
 }

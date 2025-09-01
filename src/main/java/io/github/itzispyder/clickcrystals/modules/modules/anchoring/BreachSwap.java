@@ -53,30 +53,25 @@ public class BreachSwap extends ListenerModule {
 
     @EventHandler
     private void onMouseClick(MouseClickEvent e) {
-        if (!isEnabled() || e.getButton() != 0 && PlayerUtils.invalid())
-            return;
-
-        performBreachSwap();
+        if (e.getButton() == 0)
+            performBreachSwap();
     }
 
     @EventHandler
     private void onAttack(PlayerAttackEntityEvent e) {
-        if (!isEnabled() && PlayerUtils.invalid())
-            return;
-
         performBreachSwap();
     }
 
     @EventHandler
     private void onDamage(EntityDamageEvent e) {
-        if (!isEnabled() || !onDamageEvent.getVal() && PlayerUtils.invalid())
-            return;
-
-        performBreachSwap();
+        if (onDamageEvent.getVal())
+            performBreachSwap();
     }
 
     private void performBreachSwap() {
-        if (!HotbarUtils.has(this::isSword) && EntityUtils.isTargetValid() || !requireBreach.getVal()) return;
+        if (!isEnabled() && PlayerUtils.invalid() && !HotbarUtils.has(this::isSword)
+                && !EntityUtils.isTargetValid() || !requireBreach.getVal())
+            return;
 
         var mace = findBreachMace();
         if (mace == null) return;
@@ -101,6 +96,6 @@ public class BreachSwap extends ListenerModule {
     }
 
     private ItemStack findBreachMace() {
-        return HotbarUtils.searchItem(item -> item.isOf(Items.MACE) && NbtUtils.hasEnchant(item, "minecraft:breach"));
+        return HotbarUtils.searchItem(item -> item.isOf(Items.MACE) && NbtUtils.hasEnchant(item, "breach"));
     }
 }
