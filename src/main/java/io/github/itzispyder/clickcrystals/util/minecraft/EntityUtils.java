@@ -38,6 +38,10 @@ import java.util.function.Predicate;
 
 public class EntityUtils implements Global {
 
+    public static boolean isTargetValid() {
+        return mc.targetedEntity != null;
+    }
+
     public static boolean isMoving(Entity ref) {
         if (!(ref instanceof LivingEntity liv))
             return false;
@@ -254,10 +258,10 @@ public class EntityUtils implements Global {
     public static boolean isSameColorNameTeam(PlayerEntity player) {
         String playerColorName = String.valueOf(PlayerUtils.player().getTeamColorValue());
         String targetColorName = String.valueOf(player.getTeamColorValue());
-        if ((Formatting.WHITE.getColorValue() == player.getTeamColorValue()) || Formatting.WHITE.getColorValue() == PlayerUtils.player().getTeamColorValue()) {
+        if ((Formatting.WHITE.getCode() == player.getTeamColorValue()) || Formatting.WHITE.getCode() == PlayerUtils.player().getTeamColorValue()) {
             return false;
         }
-            return Objects.equals(playerColorName, targetColorName);
+            return playerColorName.equals(targetColorName);
     }
 
     public static List<Entity> getEntitiesAt(BlockPos pos) {
