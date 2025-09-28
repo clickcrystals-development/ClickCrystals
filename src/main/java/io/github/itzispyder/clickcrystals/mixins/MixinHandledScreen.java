@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.RenderInventorySlotEvent;
-import io.github.itzispyder.clickcrystals.interfaces.HandledScreenAccessor;
+import io.github.itzispyder.clickcrystals.interfaces.AccessorHandledScreen;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.screen.slot.Slot;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HandledScreen.class)
-public abstract class MixinHandledScreen implements Global, HandledScreenAccessor {
+public abstract class MixinHandledScreen implements Global, AccessorHandledScreen {
 
     @Shadow protected int x;
     @Shadow protected int y;

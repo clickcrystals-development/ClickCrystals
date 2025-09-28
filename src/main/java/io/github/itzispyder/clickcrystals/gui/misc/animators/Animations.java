@@ -25,6 +25,9 @@ public final class Animations {
     // f(x) = 1 / [1 + e^(8-16x)]
     public static final AnimationController FADE_IN_AND_OUT = x -> 1 / (1 + exp(8 - 16 * x));
 
+    // f(x) = 0.5+0.55arctan(2.55(x-0.5))
+    public static final AnimationController FADE_IN_AND_OUT_SLIGHT = x -> 0.5 + 0.55 * Math.atan(2.55 * (x - 0.5));
+
     // f(x) = 0.5sin(2π(x-0.25))+0.5
     public static final AnimationController HARMONIC = x -> 0.5 * sin(2 * PI * (x - 0.25)) + 0.5;
 

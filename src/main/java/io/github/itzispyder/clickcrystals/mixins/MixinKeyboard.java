@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
-import io.github.itzispyder.clickcrystals.interfaces.KeyboardAccessor;
+import io.github.itzispyder.clickcrystals.interfaces.AccessorKeyboard;
 import net.minecraft.client.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Keyboard.class)
-public abstract class MixinKeyboard implements Global, KeyboardAccessor {
+public abstract class MixinKeyboard implements Global, AccessorKeyboard {
 
     @Shadow public abstract void onKey(long window, int key, int scancode, int action, int modifiers);
 

@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.interfaces;
 
-public interface MouseAccessor {
+public interface AccessorMouse {
 
     void leftClick();
 

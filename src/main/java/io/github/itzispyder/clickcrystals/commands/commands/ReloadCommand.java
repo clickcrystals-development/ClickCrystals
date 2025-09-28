@@ -54,6 +54,7 @@ public class ReloadCommand extends Command {
         AsCmd.resetReferenceEntity();
         PixelArtGenerator.cancel();
         Notification.clearNotifications();
+        system.cameraRotator.closeAllTickets();
         system.scheduler.cancelAllTasks();
 
         // script reload

@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.interfaces;
 
-public interface MinecraftClientAccessor {
+public interface AccessorMinecraftClient {
 
     void inputAttack();
 

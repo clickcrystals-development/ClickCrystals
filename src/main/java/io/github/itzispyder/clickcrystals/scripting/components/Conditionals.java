@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.scripting.components;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.interfaces.HandledScreenAccessor;
+import io.github.itzispyder.clickcrystals.interfaces.AccessorHandledScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
@@ -384,7 +384,7 @@ public class Conditionals implements Global {
             if (p == null || p.currentScreenHandler == null || !(mc.currentScreen instanceof HandledScreen<?> handle))
                 return ctx.end(false);
 
-            HandledScreenAccessor screen = (HandledScreenAccessor) handle;
+            AccessorHandledScreen screen = (AccessorHandledScreen) handle;
             Point cursor = InteractionUtils.getCursor();
 
             for (Slot slot : p.currentScreenHandler.slots) {

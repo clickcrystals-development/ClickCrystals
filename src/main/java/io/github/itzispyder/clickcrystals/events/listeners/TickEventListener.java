@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickStartEvent;
+import io.github.itzispyder.clickcrystals.events.events.world.RenderWorldEvent;
 
 public class TickEventListener implements Listener, Global {
 
@@ -21,7 +22,12 @@ public class TickEventListener implements Listener, Global {
 
     @EventHandler
     public void onTickEnd(ClientTickEndEvent e) {
+        system.cameraRotator.onGameTick();
+    }
 
+    @EventHandler
+    public void onRenderTick(RenderWorldEvent e) {
+        system.cameraRotator.onRenderTick();
     }
 
     public static void cancelTickInputs() {

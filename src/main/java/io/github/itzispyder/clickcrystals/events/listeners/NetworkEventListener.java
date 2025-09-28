@@ -61,6 +61,7 @@ public class NetworkEventListener implements Listener {
             this.handleCheckUpdates();
             BulletinBoard.request();
             Module.disableAllGameJoinDisabled();
+            system.cameraRotator.closeAllTickets();
         }
         catch (Exception ignore) {}
     }
@@ -70,6 +71,7 @@ public class NetworkEventListener implements Listener {
         try {
             Notification.clearNotifications();
             BulletinBoard.request();
+            system.cameraRotator.closeAllTickets();
         }
         catch (Exception ignore) {}
     }

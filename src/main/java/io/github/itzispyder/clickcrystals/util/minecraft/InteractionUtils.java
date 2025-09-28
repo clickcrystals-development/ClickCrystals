@@ -3,9 +3,9 @@ package io.github.itzispyder.clickcrystals.util.minecraft;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
-import io.github.itzispyder.clickcrystals.interfaces.KeyboardAccessor;
-import io.github.itzispyder.clickcrystals.interfaces.MinecraftClientAccessor;
-import io.github.itzispyder.clickcrystals.interfaces.MouseAccessor;
+import io.github.itzispyder.clickcrystals.interfaces.AccessorKeyboard;
+import io.github.itzispyder.clickcrystals.interfaces.AccessorMinecraftClient;
+import io.github.itzispyder.clickcrystals.interfaces.AccessorMouse;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.GuiCursor;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
@@ -19,7 +19,7 @@ import java.util.function.Predicate;
 public final class InteractionUtils implements Global {
 
     public static void inputAttack() {
-        ((MinecraftClientAccessor) mc).inputAttack();
+        ((AccessorMinecraftClient) mc).inputAttack();
     }
 
     public static void inputAttack(long ms) {
@@ -27,7 +27,7 @@ public final class InteractionUtils implements Global {
     }
 
     public static void inputUse() {
-        ((MinecraftClientAccessor) mc).inputUse();
+        ((AccessorMinecraftClient) mc).inputUse();
     }
 
     public static void inputUse(long ms) {
@@ -152,23 +152,23 @@ public final class InteractionUtils implements Global {
     }
 
     public static void leftClick() {
-        ((MouseAccessor) mc.mouse).leftClick();
+        ((AccessorMouse) mc.mouse).leftClick();
     }
 
     public static void rightClick() {
-        ((MouseAccessor) mc.mouse).rightClick();
+        ((AccessorMouse) mc.mouse).rightClick();
     }
 
     public static void middleClick() {
-        ((MouseAccessor) mc.mouse).middleClick();
+        ((AccessorMouse) mc.mouse).middleClick();
     }
 
     public static void mouseScroll(double amount) {
-        ((MouseAccessor) mc.mouse).scroll(amount);
+        ((AccessorMouse) mc.mouse).scroll(amount);
     }
 
     public static void pressKey(int key, int scan) {
-        ((KeyboardAccessor) mc.keyboard).pressKey(key, scan);
+        ((AccessorKeyboard) mc.keyboard).pressKey(key, scan);
     }
 
     public static void pressKeyExtendedName(String name) {

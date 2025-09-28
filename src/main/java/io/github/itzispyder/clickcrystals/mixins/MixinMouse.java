@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseScrollEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
-import io.github.itzispyder.clickcrystals.interfaces.MouseAccessor;
+import io.github.itzispyder.clickcrystals.interfaces.AccessorMouse;
 import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.client.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Mouse.class)
-public abstract class MixinMouse implements Global, MouseAccessor {
+public abstract class MixinMouse implements Global, AccessorMouse {
 
     @Shadow private double cursorDeltaY;
     @Shadow private double cursorDeltaX;
@@ -37,6 +37,11 @@ public abstract class MixinMouse implements Global, MouseAccessor {
     @Inject(method = "updateMouse", at = @At("HEAD"), cancellable = true)
     public void onCursorPos(CallbackInfo ci) {
         if (CameraRotator.isCursorLocked()) {
+            cursorDeltaY = cursorDeltaX = 0;
+            ci.cancel();
+        }
+
+        if (system.cameraRotator.isCursorLocked()) {
             cursorDeltaY = cursorDeltaX = 0;
             ci.cancel();
         }

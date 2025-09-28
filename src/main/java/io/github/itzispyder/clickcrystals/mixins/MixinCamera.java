@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.interfaces.AccessorCamera;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.CameraClip;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.FreeLook;
@@ -17,10 +18,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(Camera.class)
-public abstract class MixinCamera implements Global {
+public abstract class MixinCamera implements Global, AccessorCamera {
 
     @Unique private boolean bypassCameraClip;
     @Shadow protected abstract float clipToSpace(float desiredCameraDistance);
+    @Shadow protected abstract void setRotation(float yaw, float pitch);
 
     @Inject(method = "getSubmersionType", at = @At("RETURN"), cancellable = true)
     public void getSubmersionType(CallbackInfoReturnable<CameraSubmersionType> cir) {
@@ -51,5 +53,10 @@ public abstract class MixinCamera implements Global {
             args.set(0, freeLook.cY);
             args.set(1, freeLook.cP);
         }
+    }
+
+    @Override
+    public void setCameraRotation(float pitch, float yaw) {
+        this.setRotation(pitch, yaw);
     }
 }

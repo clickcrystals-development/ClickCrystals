@@ -8,7 +8,6 @@ import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PolarParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
-import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -78,18 +77,30 @@ public class TurnToCmd extends ScriptCommand {
     }
 
     private void turn(int zeroCursor, Vec3d dest, Vec3d camPos, ScriptArgs args) {
-        if (!CameraRotator.isCameraRunning()) {
-            Vec3d target = dest.subtract(camPos).normalize();
-            CameraRotator.Builder cam = CameraRotator.create();
+//        if (!CameraRotator.isCameraRunning()) {
+//            Vec3d target = dest.subtract(camPos).normalize();
+//            CameraRotator.Builder cam = CameraRotator.create();
+//
+//            cam.enableCursorLock();
+//            cam.addGoal(new CameraRotator.Goal(target));
+//
+//            args.zeroCursor(zeroCursor);
+//            if (args.match(0, "then")) {
+//                cam.onFinish((pitch, yaw, cameraRotator) -> args.executeAll(1));
+//            }
+//            cam.build().start();
+//        }
 
-            cam.enableCursorLock();
-            cam.addGoal(new CameraRotator.Goal(target));
+        if (!system.cameraRotator.isRunningTicket()) {
+            Vec3d target = dest.subtract(camPos).normalize();
+
+            system.cameraRotator.ready();
+            system.cameraRotator.addTicket(target, 10, 10, true);
+            system.cameraRotator.openCurrentTicket();
 
             args.zeroCursor(zeroCursor);
-            if (args.match(0, "then")) {
-                cam.onFinish((pitch, yaw, cameraRotator) -> args.executeAll(1));
-            }
-            cam.build().start();
+            if (args.match(0, "then"))
+                system.cameraRotator.setFinishCallback((pitch, yaw, cameraRotator) -> args.executeAll(1));
         }
     }
 }
