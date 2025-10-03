@@ -28,12 +28,14 @@ public class CameraRotator implements Global {
         return lockCursor;
     }
 
-    public void unlockCursor() {
+    public CameraRotator unlockCursor() {
         lockCursor = false;
+        return this;
     }
 
-    public void lockCursor() {
+    public CameraRotator lockCursor() {
         lockCursor = true;
+        return this;
     }
 
     public void closeAllTickets() {
@@ -45,9 +47,10 @@ public class CameraRotator implements Global {
         tickets.clear();
     }
 
-    public void ready() {
+    public CameraRotator ready() {
         this.closeAllTickets();
         endCallback = null;
+        return this;
     }
 
     public void closeCurrentTicket() {
@@ -58,6 +61,11 @@ public class CameraRotator implements Global {
         ticket.close();
         onFinish();
         openCurrentTicket(); // reopen previous ticket
+    }
+
+    public CameraRotator setFinishCallback(CameraFinalizerCallback callback) {
+        this.endCallback = callback;
+        return this;
     }
 
     public void openCurrentTicket() {
@@ -93,46 +101,44 @@ public class CameraRotator implements Global {
         tracker.onTick();
     }
 
-    public void setFinishCallback(CameraFinalizerCallback callback) {
-        this.endCallback = callback;
-    }
-
     private void onFinish() {
         if (endCallback != null)
             endCallback.onFinish(getPitch(), getYaw(), this);
         unlockCursor();
     }
 
-    public void addTicket(CameraTicket ticket) {
+    public CameraRotator addTicket(CameraTicket ticket) {
         if (!tickets.isEmpty())
             tickets.peek().close(); // pause current ticket for next
         tickets.push(ticket);
+        return this;
     }
 
-    public void addTicket(float pitch, float yaw) {
+    public CameraRotator addTicket(float pitch, float yaw) {
         this.addTicket(pitch, yaw, 5);
+        return this;
     }
 
-    public void addTicket(float pitch, float yaw, float speed) {
-        this.addTicket(pitch, yaw, speed, speed, false);
+    public CameraRotator addTicket(float pitch, float yaw, float speed) {
+        return this.addTicket(pitch, yaw, speed, speed, false);
     }
 
-    public void addTicket(float pitch, float yaw, float pitchSpeed, float yawSpeed, boolean lockCursor) {
-        this.addTicket(new CameraTicket(this, Animations.FADE_IN_AND_OUT_SLIGHT,
+    public CameraRotator addTicket(float pitch, float yaw, float pitchSpeed, float yawSpeed, boolean lockCursor) {
+        return this.addTicket(new CameraTicket(this, Animations.FADE_IN_AND_OUT_SLIGHT,
                 pitch, yaw, yawSpeed, pitchSpeed, lockCursor));
     }
 
-    public void addTicket(Vec3d dir) {
-        this.addTicket(dir, 5);
+    public CameraRotator addTicket(Vec3d dir) {
+        return this.addTicket(dir, 5);
     }
 
-    public void addTicket(Vec3d dir, float speed) {
-        this.addTicket(dir, speed, speed, false);
+    public CameraRotator addTicket(Vec3d dir, float speed) {
+        return this.addTicket(dir, speed, speed, false);
     }
 
-    public void addTicket(Vec3d dir, float pitchSpeed, float yawSpeed, boolean lockCursor) {
+    public CameraRotator addTicket(Vec3d dir, float pitchSpeed, float yawSpeed, boolean lockCursor) {
         float[] rot = MathUtils.toPolar(dir.x, dir.y, dir.z);
-        this.addTicket(rot[0], rot[1], pitchSpeed, yawSpeed, lockCursor);
+        return this.addTicket(rot[0], rot[1], pitchSpeed, yawSpeed, lockCursor);
     }
 
     public CameraDataTracker getTracker() {

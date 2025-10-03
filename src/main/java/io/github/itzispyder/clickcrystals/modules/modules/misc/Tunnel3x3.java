@@ -12,7 +12,6 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils3d;
-import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -220,13 +219,12 @@ public class Tunnel3x3 extends ListenerModule {
             return;
         }
         if (index >= targets.size()) {
-            CameraRotator.cancelCurrentRotator();
-            if (centerRotationWhenDone.getVal())
-                CameraRotator.create()
-                        .addGoal(new CameraRotator.Goal(dir.getDoubleVector()))
-                        .enableCursorLock()
-                        .build()
-                        .start();
+             system.cameraRotator.closeAllTickets();
+             if (centerRotationWhenDone.getVal())
+                 system.cameraRotator.ready()
+                         .addTicket(dir.getDoubleVector())
+                         .lockCursor()
+                         .openCurrentTicket();
             this.setEnabled(false, true);
             return;
         }
@@ -235,7 +233,7 @@ public class Tunnel3x3 extends ListenerModule {
             ChatUtils.sendPrefixMessage("You moved!");
             return;
         }
-        if (CameraRotator.isCameraRunning())
+        if (system.cameraRotator.isRunningTicket())
             return;
 
         if (!(mc.crosshairTarget instanceof BlockHitResult result)) {
@@ -256,15 +254,13 @@ public class Tunnel3x3 extends ListenerModule {
     private void target() {
         mc.options.attackKey.setPressed(false);
         Vec3d target = targets.get(index).toCenterPos().subtract(PlayerUtils.getEyes());
-        CameraRotator.cancelCurrentRotator();
-        CameraRotator.create()
-                .addGoal(new CameraRotator.Goal(target))
-                .enableCursorLock()
-                .onFinish((pitch, yaw, rotator) -> {
+        system.cameraRotator.ready()
+                .addTicket(target)
+                .lockCursor()
+                .setFinishCallback((pitch, yaw, rotator) -> {
                     if (this.isEnabled())
                         mc.execute(() -> mc.options.attackKey.setPressed(true));
                 })
-                .build()
-                .start();
+                .openCurrentTicket();
     }
 }

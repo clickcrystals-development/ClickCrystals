@@ -11,7 +11,6 @@ import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.block.Block;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.util.hit.BlockHitResult;
@@ -96,7 +95,7 @@ public class MouseTaper extends ListenerModule {
 
         // locks cursor
         if (shouldLockCursor.getVal()) {
-            CameraRotator.lockCursor();
+            system.cameraRotator.lockCursor();
         }
     }
 
@@ -107,7 +106,7 @@ public class MouseTaper extends ListenerModule {
             this.unpressAll();
             targetType = null; // reset because punch-to-set-target only triggers once
             targetPos = null;
-            CameraRotator.unlockCursor();
+            system.cameraRotator.unlockCursor();
 
             if (reopenOnDisable.getVal() && mc.currentScreen == null) {
                 mc.setScreen(new ModuleEditScreen(this));
@@ -118,7 +117,7 @@ public class MouseTaper extends ListenerModule {
     @EventHandler
     public void onTick(ClientTickStartEvent e) {
         if (shouldLockCursor.getVal()) {
-            CameraRotator.lockCursor();
+            system.cameraRotator.lockCursor();
         }
         if (!(mc.crosshairTarget instanceof BlockHitResult hit)) {
             this.unpressAll();

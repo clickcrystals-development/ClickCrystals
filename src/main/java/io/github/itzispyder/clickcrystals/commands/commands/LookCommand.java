@@ -4,7 +4,6 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.commands.Command;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,8 +11,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 public class LookCommand extends Command {
-
-    private final CameraRotator cameraRotator = CameraRotator.create().build();
 
     public LookCommand() {
         super("look", "Looks at a location.", ",look <mode> <value>");
@@ -71,17 +68,19 @@ public class LookCommand extends Command {
             BlockPos pos = new BlockPos(x, y, z);
             Vec3d dir = pos.toCenterPos().subtract(PlayerUtils.player().getEyePos());
 
-            cameraRotator.clearGoals();
-            cameraRotator.addGoal(new CameraRotator.Goal(dir));
-            cameraRotator.start();
+            system.cameraRotator.ready()
+                    .addTicket(dir)
+                    .lockCursor()
+                    .openCurrentTicket();
         }
     }
 
     private void rotateTo(int pitch, int yaw) {
         if (PlayerUtils.valid()) {
-            cameraRotator.clearGoals();
-            cameraRotator.addGoal(new CameraRotator.Goal(pitch, yaw));
-            cameraRotator.start();
+            system.cameraRotator.ready()
+                    .addTicket(pitch, yaw)
+                    .lockCursor()
+                    .openCurrentTicket();
         }
     }
 

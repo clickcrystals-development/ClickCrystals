@@ -11,7 +11,7 @@ public class CameraTicket {
 
     private final CameraRotator owner;
     private final Animations.AnimationController progressFunction;
-    private Displacement displacementPitch, displacementYaw;
+    private CameraDisplacement displacementPitch, displacementYaw;
     private final boolean lockCursor;
 
     public CameraTicket(CameraRotator owner, Animations.AnimationController progressFunction, float pitch, float yaw, float sensX, float sensY, boolean lockCursor) {
@@ -27,8 +27,8 @@ public class CameraTicket {
     }
 
     public void open() {
-        this.displacementPitch = Displacement.fromAngles(startPitch, destPitch, sensY);
-        this.displacementYaw = Displacement.fromAngles(startYaw, destYaw, sensX);
+        this.displacementPitch = CameraDisplacement.fromAngles(startPitch, destPitch, sensY);
+        this.displacementYaw = CameraDisplacement.fromAngles(startYaw, destYaw, sensX);
 
         float len = displacementYaw.getTimeLen();
         if (len >= 5)
@@ -76,11 +76,11 @@ public class CameraTicket {
         return isOpen() && (displacementPitch.getProgress() > 1 && displacementYaw.getProgress() > 1);
     }
 
-    public Displacement getDisplacementPitch() {
+    public CameraDisplacement getDisplacementPitch() {
         return displacementPitch;
     }
 
-    public Displacement getDisplacementYaw() {
+    public CameraDisplacement getDisplacementYaw() {
         return displacementYaw;
     }
 }

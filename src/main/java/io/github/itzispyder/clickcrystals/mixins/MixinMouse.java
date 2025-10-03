@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseScrollEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.interfaces.AccessorMouse;
-import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.client.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -36,7 +35,7 @@ public abstract class MixinMouse implements Global, AccessorMouse {
 
     @Inject(method = "updateMouse", at = @At("HEAD"), cancellable = true)
     public void onCursorPos(CallbackInfo ci) {
-        if (CameraRotator.isCursorLocked()) {
+        if (system.cameraRotator.isRunningTicket()) {
             cursorDeltaY = cursorDeltaX = 0;
             ci.cancel();
         }

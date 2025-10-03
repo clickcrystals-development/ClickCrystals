@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.util.misc.camera;
 
-public class Displacement {
+public class CameraDisplacement {
 
     public final float displacement;
     public final int direction;
@@ -11,7 +11,7 @@ public class Displacement {
 
     // direction is -1, 0, 1
     // sensitivity in degrees per tick
-    public Displacement(float displacement, int direction, float sensitivity) {
+    public CameraDisplacement(float displacement, int direction, float sensitivity) {
         this.displacement = displacement;
         this.direction = direction;
         this.timeLen = estimateFinishTime(sensitivity);
@@ -26,7 +26,7 @@ public class Displacement {
     }
 
     // remember these are degrees not radians
-    public static Displacement fromAngles(float angle1, float angle2, float sensitivity) {
+    public static CameraDisplacement fromAngles(float angle1, float angle2, float sensitivity) {
         float a = angle1 % 360;
         float b = angle2 % 360;
         float dSigned = b - a;
@@ -38,7 +38,7 @@ public class Displacement {
 
         float displacement = Math.abs(dSigned);
         int direction = (int) Math.signum(dSigned);
-        return new Displacement(displacement, direction, sensitivity);
+        return new CameraDisplacement(displacement, direction, sensitivity);
     }
 
     public float getProgress() {

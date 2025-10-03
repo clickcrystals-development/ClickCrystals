@@ -4,11 +4,11 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.scripting.syntax.TargetType;
+import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PolarParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
-import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -80,10 +80,12 @@ public class SnapToCmd extends ScriptCommand {
 
     private void snap(int zeroCursor, Vec3d dest, Vec3d camPos, ScriptArgs args) {
         Vec3d target = dest.subtract(camPos).normalize();
-        CameraRotator.Goal goal = new CameraRotator.Goal(target);
+        float[] rot = MathUtils.toPolar(target.x, target.y, target.z);
+        float pitch = (float) MathUtils.wrapDegrees(rot[0]);
+        float yaw = (float) MathUtils.wrapDegrees(rot[1]);
 
-        PlayerUtils.player().setPitch(goal.getPitch());
-        PlayerUtils.player().setYaw(goal.getYaw());
+        PlayerUtils.player().setPitch(pitch);
+        PlayerUtils.player().setYaw(yaw);
 
         args.zeroCursor(zeroCursor);
         if (args.match(0, "then")) {

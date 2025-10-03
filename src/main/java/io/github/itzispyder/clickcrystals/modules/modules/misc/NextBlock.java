@@ -12,8 +12,8 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import io.github.itzispyder.clickcrystals.util.misc.Raytracer;
+import io.github.itzispyder.clickcrystals.util.misc.camera.CameraFinalizerCallback;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -40,7 +40,7 @@ public class NextBlock extends Module implements Listener {
     private Block lastTouched;
     private BlockPos lastTouchedPosition;
     private boolean wasAborted;
-    private final CameraRotator.EndAction REPOSITION_TARGET = (pitch, yaw, cameraRotator) -> {
+    private final CameraFinalizerCallback REPOSITION_TARGET = (pitch, yaw, cameraRotator) -> {
         system.scheduler.runDelayedTask(() -> {
             if (mc.crosshairTarget == null || mc.crosshairTarget.getType() == HitResult.Type.MISS) {
                 targetNextBlock();
@@ -113,7 +113,7 @@ public class NextBlock extends Module implements Listener {
     @EventHandler
     private void onTick(ClientTickStartEvent e) {
         if (PlayerUtils.valid() && shouldRaytrace.getVal() && mc.options.attackKey.isPressed()) {
-            if (!CameraRotator.isCameraRunning() && mc.crosshairTarget instanceof BlockHitResult hit) {
+            if (!system.cameraRotator.isRunningTicket() && mc.crosshairTarget instanceof BlockHitResult hit) {
                 BlockState state = PlayerUtils.getWorld().getBlockState(hit.getBlockPos());
                 if (!state.isOf(lastTouched)) {
                     targetNextBlock();
@@ -138,6 +138,9 @@ public class NextBlock extends Module implements Listener {
     }
 
     private void targetNextBlock() {
+        if (system.cameraRotator.isRunningTicket())
+            return;
+
         wasAborted = false;
         ClientPlayerEntity p = PlayerUtils.player();
         Vec3d target = null;
@@ -152,11 +155,11 @@ public class NextBlock extends Module implements Listener {
         }
 
         Vec3d rot = target.subtract(p.getEyePos()).normalize(); // slowly rotate towards target block smoothly
-        CameraRotator.Builder builder = CameraRotator.create();
-        builder.enableCursorLock();
-        builder.addGoal(new CameraRotator.Goal(rot));
-        builder.onFinish(REPOSITION_TARGET);
-        builder.build().start();
+        system.cameraRotator.ready()
+                .addTicket(rot)
+                .lockCursor()
+                .setFinishCallback(REPOSITION_TARGET)
+                .openCurrentTicket();
     }
 
     public Vec3d getNearestToPlayer(ClientPlayerEntity p) {

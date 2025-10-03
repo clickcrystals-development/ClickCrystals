@@ -14,7 +14,6 @@ import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEve
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.scripting.syntax.logic.AsCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
-import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;
 import net.minecraft.network.packet.c2s.login.LoginKeyC2SPacket;
@@ -79,7 +78,7 @@ public class NetworkEventListener implements Listener {
     private void handPlayerJoin(PacketReceiveEvent e) {
         if (e.getPacket() instanceof PlayerListS2CPacket packet) {
             if (packet.getActions().stream().anyMatch(a -> a == PlayerListS2CPacket.Action.ADD_PLAYER)) {
-                CameraRotator.cancelCurrentRotator(); // stops current rotator
+                system.cameraRotator.closeAllTickets(); // stops current rotator
 
                 // broadcasting joins
                 for (PlayerListS2CPacket.Entry entry : packet.getPlayerAdditionEntries()) {

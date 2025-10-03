@@ -2,13 +2,12 @@ package io.github.itzispyder.clickcrystals.scripting.syntax;
 
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
-import io.github.itzispyder.clickcrystals.util.misc.CameraRotator;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.LongConsumer;
 
-public enum InputType {
+public enum InputType implements Global {
 
     ATTACK(InteractionUtils::inputAttack, InteractionUtils::inputAttack, Global.mc.options.attackKey::isPressed),
     USE(InteractionUtils::inputUse, InteractionUtils::inputUse, Global.mc.options.useKey::isPressed),
@@ -19,8 +18,8 @@ public enum InputType {
     JUMP(InteractionUtils::inputJump, InteractionUtils::inputJump, Global.mc.options.jumpKey::isPressed),
     SPRINT(InteractionUtils::inputToggleSprint, null, Global.mc.options.sprintKey::isPressed),
     SNEAK(InteractionUtils::inputSneak, null, Global.mc.options.sneakKey::isPressed),
-    LOCK_CURSOR(CameraRotator::lockCursor, null, CameraRotator::isCursorLocked),
-    UNLOCK_CURSOR(CameraRotator::unlockCursor, null, () -> !CameraRotator.isCursorLocked()),
+    LOCK_CURSOR(system.cameraRotator::lockCursor, null, system.cameraRotator::isCursorLocked),
+    UNLOCK_CURSOR(system.cameraRotator::unlockCursor, null, () -> !system.cameraRotator.isCursorLocked()),
     LEFT(InteractionUtils::leftClick, null, Global.mc.mouse::wasLeftButtonClicked),
     RIGHT(InteractionUtils::rightClick, null, Global.mc.mouse::wasRightButtonClicked),
     MIDDLE(InteractionUtils::middleClick, null, Global.mc.mouse::wasMiddleButtonClicked),
