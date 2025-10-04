@@ -240,6 +240,12 @@ public class Conditionals implements Global {
     // @Format (while|while_not|!while) <num>? item_durability <identifier> <comparator> <num> {}
     // @Format (while|while_not|!while) <num>? item_durability (holding|off_holding) <comparator> <num> {}
     public static final Conditional ITEM_DURABILITY;
+
+    // @Format (if|if_not|!if) item_cooldown <identifier> <comparator> <num> {}
+    // @Format (if|if_not|!if) item_cooldown (holding|off_holding) <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? item_cooldown <identifier> <comparator> <num> {}
+    // @Format (while|while_not|!while) <num>? item_cooldown (holding|off_holding) <comparator> <num> {}
+    public static final Conditional ITEM_COOLDOWN;
     // @Format (if|if_not|!if) gamemode (creative|survival|adventure|spectator) {}
     // @Format (while|while_not|!while) <num>? gamemode (creative|survival|adventure|spectator) {}
     public static final Conditional GAMEMODE;
@@ -411,6 +417,12 @@ public class Conditionals implements Global {
         ITEM_DURABILITY = register("item_durability", ctx -> {
             ItemStack item = ScriptParser.parseItemStack(ctx.get(0).toString());
             return ctx.end(item != null && ctx.compareNumArg(1, 1 - item.getDamage() / (double) item.getMaxDamage()));
+        });
+        ITEM_COOLDOWN = register("item_cooldown", ctx -> {
+            if (!(ctx.entity instanceof PlayerEntity player))
+                return ctx.end(true, false);
+            ItemStack item = ScriptParser.parseItemStack(player, ctx.get(0).toString());
+            return ctx.end(true, item != null && ctx.compareNumArg(1, player.getItemCooldownManager().getCooldownProgress(item, 1.0F)));
         });
         GAMEMODE = register("gamemode", ctx -> {
             GameMode gm = ctx.get(0).toEnum(GameMode.class);

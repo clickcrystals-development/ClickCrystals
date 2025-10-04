@@ -18,8 +18,8 @@ public class DefineCmd extends ScriptCommand {
         var read = args.getReader();
 
         switch (read.next(Type.class)) {
-            case MODULE -> ClickScript.executeDynamic(args.getExecutorOrDef(), "module create " + read.next());
-            case DESCRIPTION, DESC -> ClickScript.executeDynamic(args.getExecutorOrDef(), "description " + read.nextQuote());
+            case MODULE -> ClickScript.executeDynamic(args.getExecutorOrDef(), "module create " + read.remainingStr());
+            case DESCRIPTION, DESC -> ClickScript.executeDynamic(args.getExecutorOrDef(), "description " + read.remainingStr());
             case FUNCTION, FUNC -> args.getExecutorOrDef().createFunction(read.nextStr(), read.remainingStr());
         }
     }

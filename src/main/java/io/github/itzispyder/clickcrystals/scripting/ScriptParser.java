@@ -12,6 +12,7 @@ import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -238,6 +239,24 @@ public class ScriptParser {
         else if (arg.matches("^[:#].*$")) {
             int slot = HotbarUtils.searchSlot(parseItemPredicate(arg));
             return InvUtils.inv().getStack(slot);
+        }
+        return null;
+    }
+
+    public static ItemStack parseItemStack(PlayerEntity player, String arg) {
+        if ("holding".equals(arg)) {
+            return player.getStackInHand(Hand.MAIN_HAND);
+        }
+        else if ("off_holding".equals(arg)) {
+            return player.getStackInHand(Hand.OFF_HAND);
+        }
+        else if (arg.matches("^[:#].*$")) {
+            Predicate<ItemStack> test = parseItemPredicate(arg);
+            for (Hand hand : Hand.values()) {
+                ItemStack item = player.getStackInHand(hand);
+                if (test.test(item))
+                    return item;
+            }
         }
         return null;
     }
