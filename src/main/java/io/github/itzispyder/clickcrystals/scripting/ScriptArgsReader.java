@@ -15,6 +15,20 @@ public class ScriptArgsReader {
         this.read = new StringBuilder();
     }
 
+    public void executeThenChain(boolean forceThenKeyword) {
+        if (forceThenKeyword && !args.match(index, "then"))
+            return;
+
+        int i = index;
+        if (forceThenKeyword)
+            i++;
+        args.executeAll(i);
+    }
+
+    public void executeThenChain() {
+        executeThenChain(true);
+    }
+
     public String getCurrentRead() {
         return read.toString().trim();
     }
@@ -27,6 +41,23 @@ public class ScriptArgsReader {
     public void zeroCursor() {
         args.zeroCursor(index);
         resetCursor();
+    }
+
+    private void jumpToEnd() {
+        index = args.getSize() - 1;
+        read = new StringBuilder(args.getAll().toString());
+    }
+
+    public ScriptArgs.Arg remaining() {
+        ScriptArgs.Arg arg = args.getAll(index);
+        jumpToEnd();
+        return arg;
+    }
+
+    public String remainingStr() {
+        String arg = args.getAll(index).toString();
+        jumpToEnd();
+        return arg;
     }
 
     private void markAsRead(int nextLen) {
@@ -61,14 +92,18 @@ public class ScriptArgsReader {
         }
         else { // "ab c"
             StringBuilder builder = new StringBuilder(first);
-            int len = args.getSize();
-            int i = index + 1;
-            String arg;
-            while (i < len && (arg = args.get(i).toString()).endsWith("\"") && !arg.endsWith("\\\"")) {
+            int endIndex = index + 1;
+
+            for (int i = index + 1; i < args.getSize(); i++) {
+                String arg = args.get(i).toString();
                 builder.append(' ').append(arg);
-                i++;
+                endIndex++;
+
+                if (arg.endsWith("\"") && !arg.endsWith("\\\""))
+                    break;
             }
-            markAsRead(i - index);
+
+            markAsRead(endIndex - index);
             return builder.substring(1, builder.length() - 1).replace("\\\"", "\"");
         }
     }

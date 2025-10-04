@@ -27,7 +27,6 @@ public abstract class ScriptCommand implements Global {
         }
         catch (Exception ex) {
             script.printErrorDetails(ex, cmd);
-            ex.printStackTrace(System.out);
         }
     }
 
