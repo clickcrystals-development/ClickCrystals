@@ -112,11 +112,12 @@ public class ClickScript implements Global {
 
     private synchronized void executeLine(String line) {
         if (line != null && !line.trim().isEmpty() && !line.startsWith("//")) {
-            String name = line.split(" ")[0];
+            ScriptArgsReader sar = new ScriptArgs(this, line.split(" ")).getReader();
+            String name = sar.next(REGISTRATION.keySet());
             ScriptCommand cmd = REGISTRATION.get(name);
 
             if (cmd != null) {
-                cmd.dispatch(this, name, line);
+                cmd.dispatch(this, name, sar.getCurrentRead(), line);
             }
             else {
                 printErrorDetails(new UnknownCommandException("No such command found"), line);

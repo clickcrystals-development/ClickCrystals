@@ -14,7 +14,7 @@ public abstract class ScriptCommand implements Global {
 
     public abstract void onCommand(ScriptCommand command, String line, ScriptArgs args);
 
-    public void dispatch(ClickScript script, String label, String cmd) {
+    public void dispatch(ClickScript script, String name, String label, String cmd) {
         try {
             if (cmd != null && !cmd.isEmpty() && cmd.startsWith(label)) {
                 String[] args = cmd
@@ -27,6 +27,7 @@ public abstract class ScriptCommand implements Global {
         }
         catch (Exception ex) {
             script.printErrorDetails(ex, cmd);
+            ex.printStackTrace(System.out);
         }
     }
 

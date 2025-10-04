@@ -4,6 +4,7 @@ public class ScriptArgs {
 
     private final ClickScript executor;
     private String[] args;
+    private ScriptArgsReader reader;
 
     public ScriptArgs(ClickScript executor, String... args) {
         this.executor = executor;
@@ -120,6 +121,12 @@ public class ScriptArgs {
 
     public String[] args() {
         return args;
+    }
+
+    public ScriptArgsReader getReader() {
+        if (reader == null)
+            reader = new ScriptArgsReader(this);
+        return reader;
     }
 
 

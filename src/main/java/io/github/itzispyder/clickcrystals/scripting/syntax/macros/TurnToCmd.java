@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.scripting.syntax.macros;
 
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
+import io.github.itzispyder.clickcrystals.scripting.ScriptArgsReader;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.scripting.syntax.TargetType;
@@ -34,14 +35,15 @@ public class TurnToCmd extends ScriptCommand {
 
         // ex.      turn_to nearest_entity :creeper then say Yo
         Vec3d eyes = PlayerUtils.player().getEyePos();
+        ScriptArgsReader sar = args.getReader();
 
-        switch (args.get(0).toEnum(TargetType.class, null)) {
+        switch (sar.next(TargetType.class)) {
             case NEAREST_BLOCK -> {
-                Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(args.get(1).toString());
+                Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(sar.nextStr());
                 PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> turn(2, pos.toCenterPos(), eyes, args));
             }
             case NEAREST_ENTITY -> {
-                Predicate<Entity> filter = ScriptParser.parseEntityPredicate(args.get(1).toString());
+                Predicate<Entity> filter = ScriptParser.parseEntityPredicate(sar.nextStr());
                 PlayerUtils.runOnNearestEntity(128, filter, entity -> {
                     if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate((PlayerEntity) entity))
                         turn(2, entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
@@ -56,17 +58,17 @@ public class TurnToCmd extends ScriptCommand {
 
             case POSITION -> {
                 VectorParser parser = new VectorParser(
-                        args.get(1).toString(),
-                        args.get(2).toString(),
-                        args.get(3).toString(),
+                        sar.nextStr(),
+                        sar.nextStr(),
+                        sar.nextStr(),
                         PlayerUtils.player()
                 );
                 turn(4, parser.getVector(), eyes, args);
             }
             case POLAR -> {
                 PolarParser parser = new PolarParser(
-                        args.get(1).toString(),
-                        args.get(2).toString(),
+                        sar.nextStr(),
+                        sar.nextStr(),
                         PlayerUtils.player()
                 );
                 turn(3, eyes.add(parser.getVector()), eyes, args);
