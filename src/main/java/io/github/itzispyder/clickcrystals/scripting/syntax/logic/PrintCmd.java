@@ -13,7 +13,8 @@ public class PrintCmd extends ScriptCommand implements ThenChainable {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        system.println(args.getQuoteAndZeroCursor());
-        executeWithThen(args);
+        var read = args.getReader();
+        system.println(read.nextQuote());
+        read.executeThenChain();
     }
 }

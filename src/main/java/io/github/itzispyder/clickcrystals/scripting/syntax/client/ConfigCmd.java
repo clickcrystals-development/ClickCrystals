@@ -14,7 +14,8 @@ public class ConfigCmd extends ScriptCommand implements Global {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        switch (args.get(0).toEnum(Type.class, null)) {
+        var read = args.getReader();
+        switch (read.next(Type.class)) {
             case SAVE -> saveEntireConfig();
             case LOAD -> ClickCrystals.config.loadEntireConfig();
             case RELOAD -> {
@@ -23,9 +24,7 @@ public class ConfigCmd extends ScriptCommand implements Global {
             }
         }
 
-        if (args.match(1, "then")) {
-            args.executeAll(2);
-        }
+        read.executeThenChain();
     }
 
     public static void saveEntireConfig() {

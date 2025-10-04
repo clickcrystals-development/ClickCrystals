@@ -12,6 +12,6 @@ public class DescCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        ModuleCmd.runOnCurrentScriptModule(m -> m.setDescription(args.getQuoteAndZeroCursor()));
+        ModuleCmd.runOnCurrentScriptModule(m -> m.setDescription(args.getReader().nextQuote()));
     }
 }

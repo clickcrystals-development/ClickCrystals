@@ -32,25 +32,27 @@ public class InteractCmd extends ScriptCommand implements ThenChainable {
             return;
         }
 
-        switch (args.get(0).toEnum(TargetType.class, null)) {
+        var read = args.getReader();
+
+        switch (read.next(TargetType.class)) {
             case NEAREST_ENTITY -> {
-                Predicate<Entity> filter = ScriptParser.parseEntityPredicate(args.get(1).toString());
+                Predicate<Entity> filter = ScriptParser.parseEntityPredicate(read.nextStr());
                 PlayerUtils.runOnNearestEntity(128, filter, entity -> mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND));
-                executeWithThen(args, 2);
+                read.executeThenChain();
             }
             case ANY_ENTITY -> {
                 PlayerUtils.runOnNearestEntity(128, DamageCmd.ENTITY_EXISTS, entity -> mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND));
-                executeWithThen(args, 1);
+                read.executeThenChain();
             }
             case NEAREST_BLOCK -> {
-                Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(args.get(1).toString());
+                Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(read.nextStr());
                 PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> {
                     Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
                     Direction face = Direction.getFacing(vector);
                     BlockHitResult hit = new BlockHitResult(pos.toCenterPos(), face, pos, false);
                     mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
                 });
-                executeWithThen(args, 2);
+                read.executeThenChain();
             }
             case ANY_BLOCK -> {
                 PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> {
@@ -59,13 +61,13 @@ public class InteractCmd extends ScriptCommand implements ThenChainable {
                     BlockHitResult hit = new BlockHitResult(pos.toCenterPos(), face, pos, false);
                     mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
                 });
-                executeWithThen(args, 1);
+                read.executeThenChain();
             }
             case POSITION -> {
                 VectorParser parser = new VectorParser(
-                        args.get(1).toString(),
-                        args.get(2).toString(),
-                        args.get(3).toString(),
+                        read.nextStr(),
+                        read.nextStr(),
+                        read.nextStr(),
                         PlayerUtils.player()
                 );
                 BlockPos pos = BlockPos.ofFloored(parser.getVector());
@@ -73,7 +75,7 @@ public class InteractCmd extends ScriptCommand implements ThenChainable {
                 Direction face = Direction.getFacing(vector);
                 BlockHitResult hit = new BlockHitResult(pos.toCenterPos(), face, pos, false);
                 mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
-                executeWithThen(args, 4);
+                read.executeThenChain();
             }
             default -> throw new IllegalArgumentException("unsupported operation");
         }

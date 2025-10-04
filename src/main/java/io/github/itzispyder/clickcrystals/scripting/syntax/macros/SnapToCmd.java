@@ -35,50 +35,51 @@ public class SnapToCmd extends ScriptCommand {
 
         // ex.      turn_to nearest_entity :creeper then say Yo
         Vec3d eyes = PlayerUtils.player().getEyePos();
+        var read = args.getReader();
 
-        switch (args.get(0).toEnum(TargetType.class, null)) {
+        switch (read.next(TargetType.class)) {
             case NEAREST_BLOCK -> {
-                Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(args.get(1).toString());
-                PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> snap(2, pos.toCenterPos(), eyes, args));
+                Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(read.nextStr());
+                PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> snap(pos.toCenterPos(), eyes, args));
             }
 
             case NEAREST_ENTITY -> {
-                Predicate<Entity> filter = ScriptParser.parseEntityPredicate(args.get(1).toString());
+                Predicate<Entity> filter = ScriptParser.parseEntityPredicate(read.nextStr());
                 PlayerUtils.runOnNearestEntity(128, filter, entity -> {
                     if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate((PlayerEntity) entity))
-                        snap(2, entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
+                        snap(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
                 });
             }
 
-            case ANY_BLOCK -> PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> snap(1, pos.toCenterPos(), eyes, args));
+            case ANY_BLOCK -> PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> snap(pos.toCenterPos(), eyes, args));
             case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(128, Entity::isAlive, entity -> {
                 if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate(((PlayerEntity) entity)))
-                    snap(1, entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
+                    snap(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
             });
 
             case POSITION -> {
                 VectorParser parser = new VectorParser(
-                        args.get(1).toString(),
-                        args.get(2).toString(),
-                        args.get(3).toString(),
+                        read.nextStr(),
+                        read.nextStr(),
+                        read.nextStr(),
                         PlayerUtils.player()
                 );
-                snap(4, parser.getVector(), eyes, args);
+                snap(parser.getVector(), eyes, args);
             }
             case POLAR -> {
                 PolarParser parser = new PolarParser(
-                        args.get(1).toString(),
-                        args.get(2).toString(),
+                        read.nextStr(),
+                        read.nextStr(),
                         PlayerUtils.player()
                 );
-                snap(3, eyes.add(parser.getVector()), eyes, args);
+                snap(eyes.add(parser.getVector()), eyes, args);
             }
 
             default -> throw new IllegalArgumentException("unsupported operation");
         }
     }
 
-    private void snap(int zeroCursor, Vec3d dest, Vec3d camPos, ScriptArgs args) {
+    private void snap(Vec3d dest, Vec3d camPos, ScriptArgs args) {
         Vec3d target = dest.subtract(camPos).normalize();
         float[] rot = MathUtils.toPolar(target.x, target.y, target.z);
         float pitch = (float) MathUtils.wrapDegrees(rot[0]);
@@ -87,9 +88,6 @@ public class SnapToCmd extends ScriptCommand {
         PlayerUtils.player().setPitch(pitch);
         PlayerUtils.player().setYaw(yaw);
 
-        args.zeroCursor(zeroCursor);
-        if (args.match(0, "then")) {
-            args.executeAll(1);
-        }
+        args.getReader().executeThenChain();
     }
 }

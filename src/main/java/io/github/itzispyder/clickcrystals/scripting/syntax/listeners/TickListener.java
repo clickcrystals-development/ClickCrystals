@@ -7,14 +7,14 @@ import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 public class TickListener {
 
     public static TickListener fromScript(ScriptArgs args, ThenChainable command) {
+        var read = args.getReader();
+        var first = read.next();
         int period = 0;
-        int execOffset = 1;
 
-        if (args.get(execOffset).isNum())
-            period = args.get(execOffset++).toInt();
+        if (first.isNum())
+            period = first.toInt();
 
-        int begin = execOffset;
-        return new TickListener(period, () -> command.executeWithThen(args, begin));
+        return new TickListener(period, () -> read.executeThenChain(false));
     }
 
     private final int period;

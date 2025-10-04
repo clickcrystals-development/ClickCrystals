@@ -12,6 +12,6 @@ public class ThrowCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        throw new RuntimeException(args.getQuoteAndZeroCursor());
+        throw new RuntimeException(args.getReader().nextQuote());
     }
 }

@@ -5,10 +5,7 @@ import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
-import io.github.itzispyder.clickcrystals.scripting.ClickScript;
-import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
-import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
-import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
+import io.github.itzispyder.clickcrystals.scripting.*;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 import io.github.itzispyder.clickcrystals.scripting.syntax.client.ModuleCmd;
 import io.github.itzispyder.clickcrystals.scripting.syntax.listeners.TickListener;
@@ -24,67 +21,69 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        EventType type = args.get(0).toEnum(EventType.class, null);
+        var read = args.getReader();
+        EventType type = read.next(EventType.class);
 
         switch (type) {
-            case LEFT_CLICK, RIGHT_CLICK, MIDDLE_CLICK, LEFT_RELEASE, RIGHT_RELEASE, MIDDLE_RELEASE, MOUSE_CLICK, MOUSE_RELEASE -> passClick(args, type);
-            case PLACE_BLOCK, BREAK_BLOCK, INTERACT_BLOCK, PUNCH_BLOCK -> passBlock(args, type);
-            case KEY_PRESS, KEY_RELEASE -> passKey(args, type);
-            case MOVE_LOOK, MOVE_POS -> passMove(args, type);
+            case LEFT_CLICK, RIGHT_CLICK, MIDDLE_CLICK, LEFT_RELEASE, RIGHT_RELEASE, MIDDLE_RELEASE, MOUSE_CLICK, MOUSE_RELEASE -> passClick(read, type);
+            case PLACE_BLOCK, BREAK_BLOCK, INTERACT_BLOCK, PUNCH_BLOCK -> passBlock(read, type);
+            case KEY_PRESS, KEY_RELEASE -> passKey(read, type);
+            case MOVE_LOOK, MOVE_POS -> passMove(read, type);
             case CHAT_SEND, CHAT_RECEIVE -> passChat(args, type);
-            case PACKET_SEND, PACKET_RECEIVE -> passPacket(args, type);
-            case SOUND_PLAY -> passSound(args);
+            case PACKET_SEND, PACKET_RECEIVE -> passPacket(read, type);
+            case SOUND_PLAY -> passSound(read);
 
-            case MOUSE_WHEEL -> ModuleCmd.runOnCurrentScriptModule(m -> m.mouseWheelListeners.add(() -> exc(args, 1)));
-            case MOUSE_WHEEL_UP -> ModuleCmd.runOnCurrentScriptModule(m -> m.mouseWheelUpListeners.add(() -> exc(args, 1)));
-            case MOUSE_WHEEL_DOWN -> ModuleCmd.runOnCurrentScriptModule(m -> m.mouseWheelDownListeners.add(() -> exc(args, 1)));
+            case MOUSE_WHEEL -> ModuleCmd.runOnCurrentScriptModule(m -> m.mouseWheelListeners.add(() -> read.executeThenChain(false)));
+            case MOUSE_WHEEL_UP -> ModuleCmd.runOnCurrentScriptModule(m -> m.mouseWheelUpListeners.add(() -> read.executeThenChain(false)));
+            case MOUSE_WHEEL_DOWN -> ModuleCmd.runOnCurrentScriptModule(m -> m.mouseWheelDownListeners.add(() -> read.executeThenChain(false)));
 
             case PRE_TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.preTickListeners.add(TickListener.fromScript(args, this)));
             case TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.tickListeners.add(TickListener.fromScript(args, this)));
             case POST_TICK -> ModuleCmd.runOnCurrentScriptModule(m -> m.postTickListeners.add(TickListener.fromScript(args, this)));
 
-            case ITEM_USE -> ModuleCmd.runOnCurrentScriptModule(m -> m.itemUseListeners.add(event -> exc(args, 1)));
-            case ITEM_CONSUME -> ModuleCmd.runOnCurrentScriptModule(m -> m.itemConsumeListeners.add(event -> exc(args, 1)));
-            case MODULE_ENABLE -> ModuleCmd.runOnCurrentScriptModule(m -> m.moduleEnableListeners.add(() -> exc(args, 1)));
-            case MODULE_DISABLE -> ModuleCmd.runOnCurrentScriptModule(m -> m.moduleDisableListeners.add(() -> exc(args, 1)));
-            case TOTEM_POP -> ModuleCmd.runOnCurrentScriptModule(m -> m.totemPopListeners.add(() -> exc(args, 1)));
-            case DAMAGE -> ModuleCmd.runOnCurrentScriptModule(m -> m.damageListeners.add(() -> exc(args, 1)));
-            case RESPAWN -> ModuleCmd.runOnCurrentScriptModule(m -> m.respawnListeners.add(() -> exc(args, 1)));
-            case DEATH -> ModuleCmd.runOnCurrentScriptModule(m -> m.deathListeners.add(() -> exc(args, 1)));
-            case GAME_JOIN -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameJoinListeners.add(() -> exc(args, 1)));
-            case GAME_LEAVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameLeaveListeners.add(() -> exc(args, 1)));
+            case ITEM_USE -> ModuleCmd.runOnCurrentScriptModule(m -> m.itemUseListeners.add(event -> read.executeThenChain(false)));
+            case ITEM_CONSUME -> ModuleCmd.runOnCurrentScriptModule(m -> m.itemConsumeListeners.add(event -> read.executeThenChain(false)));
+            case MODULE_ENABLE -> ModuleCmd.runOnCurrentScriptModule(m -> m.moduleEnableListeners.add(() -> read.executeThenChain(false)));
+            case MODULE_DISABLE -> ModuleCmd.runOnCurrentScriptModule(m -> m.moduleDisableListeners.add(() -> read.executeThenChain(false)));
+            case TOTEM_POP -> ModuleCmd.runOnCurrentScriptModule(m -> m.totemPopListeners.add(() -> read.executeThenChain(false)));
+            case DAMAGE -> ModuleCmd.runOnCurrentScriptModule(m -> m.damageListeners.add(() -> read.executeThenChain(false)));
+            case RESPAWN -> ModuleCmd.runOnCurrentScriptModule(m -> m.respawnListeners.add(() -> read.executeThenChain(false)));
+            case DEATH -> ModuleCmd.runOnCurrentScriptModule(m -> m.deathListeners.add(() -> read.executeThenChain(false)));
+            case GAME_JOIN -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameJoinListeners.add(() -> read.executeThenChain(false)));
+            case GAME_LEAVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.gameLeaveListeners.add(() -> read.executeThenChain(false)));
         }
     }
 
-    private void passSound(ScriptArgs args) {
-        Predicate<SoundInstance> soundPredicate = ScriptParser.parseSoundInstancePredicate(args.get(1).toString());
+    private void passSound(ScriptArgsReader read) {
+        Predicate<SoundInstance> soundPredicate = ScriptParser.parseSoundInstancePredicate(read.nextStr());
         ModuleCmd.runOnCurrentScriptModule(m -> m.soundPlayListeners.add(e -> {
             if (soundPredicate.test(e.getSound()))
-                exc(args, 2);
+                read.executeThenChain(false);
         }));
     }
 
-    private void passPacket(ScriptArgs args, EventType type) {
-        String targetPacketName = args.get(1).toString();
+    private void passPacket(ScriptArgsReader read, EventType type) {
+        String targetPacketName = read.nextStr();
 
         switch (type) {
             case PACKET_RECEIVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.packetReceiveListeners.add(packet -> {
                 PacketMapper.Info info = PacketMapper.S2C.get(packet.getClass());
                 if (targetPacketName.equals(info.id()))
-                    exc(args, 2);
+                    read.executeThenChain(false);
             }));
             case PACKET_SEND -> ModuleCmd.runOnCurrentScriptModule(m -> m.packetSendListeners.add(packet -> {
                 PacketMapper.Info info = PacketMapper.C2S.get(packet.getClass());
                 if (targetPacketName.equals(info.id()))
-                    exc(args, 2);
+                    read.executeThenChain(false);
             }));
         }
     }
 
     private void passChat(ScriptArgs args, EventType type) {
+        ScriptArgsReader read = args.getReader();
         ClickScript dispatcher = args.getExecutorOrDef();
-        String msg = args.getQuoteAndZeroCursor(1);
-        String rest = args.getAll().toString();
+        String msg = read.nextQuote();
+        String rest = read.remainingStr();
 
         switch (type) {
             case CHAT_RECEIVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatReceiveListeners.add(event -> {
@@ -100,61 +99,57 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         }
     }
 
-    private void passBlock(ScriptArgs args, EventType eventType) {
+    private void passBlock(ScriptArgsReader read, EventType eventType) {
         switch (eventType) {
-            case BREAK_BLOCK -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockBreakListeners.add(event -> exc(args, 1)));
-            case PLACE_BLOCK -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockPlaceListeners.add(event -> exc(args, 1)));
-            case PUNCH_BLOCK -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockPunchListeners.add((pos, dir) -> exc(args, 1)));
-            case INTERACT_BLOCK -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockInteractListeners.add((hit, hand) -> exc(args, 1)));
+            case BREAK_BLOCK -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockBreakListeners.add(event -> read.executeThenChain(false)));
+            case PLACE_BLOCK -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockPlaceListeners.add(event -> read.executeThenChain(false)));
+            case PUNCH_BLOCK -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockPunchListeners.add((pos, dir) -> read.executeThenChain(false)));
+            case INTERACT_BLOCK -> ModuleCmd.runOnCurrentScriptModule(m -> m.blockInteractListeners.add((hit, hand) -> read.executeThenChain(false)));
         }
     }
 
-    private void passClick(ScriptArgs args, EventType eventType) {
+    private void passClick(ScriptArgsReader read, EventType eventType) {
         ModuleCmd.runOnCurrentScriptModule(m -> m.clickListeners.add(event -> {
             if (eventType == EventType.MOUSE_CLICK && event.getAction().isDown()) {
-                int button = args.get(1).toInt();
+                int button = read.next().toInt();
                 if (button == event.getButton())
-                    exc(args, 2);
+                    read.executeThenChain(false);
             }
             else if (eventType == EventType.MOUSE_RELEASE && event.getAction().isRelease()) {
-                int button = args.get(1).toInt();
+                int button = read.next().toInt();
                 if (button == event.getButton())
-                    exc(args, 2);
+                    read.executeThenChain(false);
             }
 
             if (matchMouseClick(eventType, event)) {
-                exc(args, 1);
+                read.executeThenChain(false);
             }
         }));
     }
 
-    private void passKey(ScriptArgs args, EventType eventType) {
+    private void passKey(ScriptArgsReader read, EventType eventType) {
         ModuleCmd.runOnCurrentScriptModule(m -> m.keyListeners.add(event -> {
-            if (matchKeyPress(eventType, event, args.get(1).toString())) {
-                exc(args, 2);
+            if (matchKeyPress(eventType, event, read.next().toString())) {
+                read.executeThenChain(false);
             }
         }));
     }
 
-    private void passMove(ScriptArgs args, EventType eventType) {
+    private void passMove(ScriptArgsReader read, EventType eventType) {
         ModuleCmd.runOnCurrentScriptModule(m -> m.moveListeners.add(event -> {
             switch (eventType) {
                 case MOVE_LOOK -> {
                     if (event.changesLook()) {
-                        exc(args, 1);
+                        read.executeThenChain(false);
                     }
                 }
                 case MOVE_POS -> {
                     if (event.changesPosition()) {
-                        exc(args, 1);
+                        read.executeThenChain(false);
                     }
                 }
             }
         }));
-    }
-
-    private void exc(ScriptArgs args, int begin) {
-        executeWithThen(args, begin);
     }
 
     private boolean matchKeyPress(EventType type, KeyPressEvent event, String keyName) {

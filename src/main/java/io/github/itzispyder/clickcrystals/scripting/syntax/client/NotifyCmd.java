@@ -13,17 +13,17 @@ public class NotifyCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
+        var read = args.getReader();
+
         Notification.create()
                 .ccsIcon()
                 .stayTime((long)(args.get(0).toDouble() * 1000L))
                 .id("clickscript-triggered-notification")
                 .title("ClickCrystals System")
-                .text(args.getQuoteAndZeroCursor(1))
+                .text(read.nextQuote())
                 .build()
                 .sendToClient();
 
-        if (args.match(0, "then")) {
-            args.executeAll(1);
-        }
+        read.executeThenChain();
     }
 }

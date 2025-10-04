@@ -45,13 +45,13 @@ public class Conditionals implements Global {
     }
 
     public static ConditionEvaluationResult evaluate(Entity ref, ScriptArgs args, int beginIndex) {
-        String arg = args.get(beginIndex).toString();
-        Conditional condition = registry.get(arg.toLowerCase());
+        var read = args.getReader();
+        Conditional condition = registry.get(read.next(registry.keySet()));
 
         if (condition == null)
-            throw new IllegalArgumentException("cannot recognize conditional [%s]".formatted(arg));
+            throw new IllegalArgumentException("cannot recognize conditional [%s]".formatted(read.getCurrentRead()));
 
-        ConditionEvaluationContext context = new ConditionEvaluationContext(ref, args, beginIndex);
+        ConditionEvaluationContext context = new ConditionEvaluationContext(ref, args, beginIndex + read.getArgDiff());
         return condition.evaluate(context);
     }
 

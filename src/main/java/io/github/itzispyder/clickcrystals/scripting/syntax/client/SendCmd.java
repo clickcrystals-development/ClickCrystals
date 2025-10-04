@@ -13,10 +13,9 @@ public class SendCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        ChatUtils.sendPrefixMessage(args.getQuoteAndZeroCursor());
+        var read = args.getReader();
 
-        if (args.match(0, "then")) {
-            args.executeAll(1);
-        }
+        ChatUtils.sendPrefixMessage(read.nextQuote());
+        read.executeThenChain();
     }
 }

@@ -21,13 +21,14 @@ public class HoldInputCmd extends ScriptCommand implements ThenChainable {
             return;
         }
 
-        InputType a = args.get(0).toEnum(InputType.class, null);
-        long holdTime = (long)(args.get(1).toDouble() * 1000L);
+        var read = args.getReader();
+        InputType a = read.next(InputType.class);
+        long holdTime = (long)(read.next().toDouble() * 1000L);
 
         if (a.isDummy())
             throw new IllegalArgumentException("unsupported operation, input '%s' cannot be held".formatted(a));
 
         a.runFor(holdTime);
-        executeWithThen(args, 2);
+        read.executeThenChain();
     }
 }

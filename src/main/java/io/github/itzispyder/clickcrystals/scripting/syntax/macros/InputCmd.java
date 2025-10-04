@@ -17,14 +17,15 @@ public class InputCmd extends ScriptCommand implements Global, ThenChainable {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        InputType a = args.get(0).toEnum(InputType.class, null);
+        var read = args.getReader();
+        InputType a = read.next(InputType.class);
         if (a != InputType.KEY) {
             a.run();
-            executeWithThen(args, 1);
+            read.executeThenChain();
         }
         else {
-            InteractionUtils.pressKeyExtendedName(args.get(1).toString());
-            executeWithThen(args, 2);
+            InteractionUtils.pressKeyExtendedName(read.nextStr());
+            read.executeThenChain();
         }
     }
 

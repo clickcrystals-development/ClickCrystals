@@ -25,8 +25,6 @@ public class SayCmd extends ScriptCommand {
             }
         }
 
-        if (args.match(0, "then")) {
-            args.executeAll(1);
-        }
+        read.executeThenChain();
     }
 }

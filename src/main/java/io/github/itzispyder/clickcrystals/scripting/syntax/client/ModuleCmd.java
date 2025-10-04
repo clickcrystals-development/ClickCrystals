@@ -29,12 +29,14 @@ public class ModuleCmd extends ScriptCommand implements Global {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        switch (args.get(0).toEnum(Action.class, null)) {
+        var read = args.getReader();
+
+        switch (read.next(Action.class)) {
             case CREATE -> {
                 if (ClickScript.currentFile.get() == null)
                     throw new IllegalStateException("Module cannot be created: current file pointer is null!");
 
-                ScriptedModule created = new ScriptedModule(args.get(1).toString(), "", ClickScript.currentFile.get());
+                ScriptedModule created = new ScriptedModule(read.nextStr(), "", ClickScript.currentFile.get());
 
                 if (system.getModuleById(created.getId()) != null)
                     throw new IllegalStateException("Cannot create module '%s' because one with the same name already exists!".formatted(created.getId()));
@@ -43,13 +45,11 @@ public class ModuleCmd extends ScriptCommand implements Global {
                 system.addModule(currentScriptModule);
                 ClickScript.currentFile.set(null);
             }
-            case ENABLE -> system.runModuleById(args.get(1).toString(), m -> m.setEnabled(true, true));
-            case DISABLE -> system.runModuleById(args.get(1).toString(), m -> m.setEnabled(false, true));
+            case ENABLE -> system.runModuleById(read.nextStr(), m -> m.setEnabled(true, true));
+            case DISABLE -> system.runModuleById(read.nextStr(), m -> m.setEnabled(false, true));
         }
 
-        if (args.match(2, "then")) {
-            args.executeAll(3);
-        }
+        read.executeThenChain();
     }
 
     public enum Action {

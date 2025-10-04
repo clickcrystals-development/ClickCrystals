@@ -6,13 +6,14 @@ import java.util.Collection;
 public class ScriptArgsReader {
 
     private final ScriptArgs args;
-    private int index;
+    private int index, argDiff;
     private StringBuilder read;
 
     public ScriptArgsReader(ScriptArgs args) {
         this.args = args;
         this.index = 0;
         this.read = new StringBuilder();
+        this.argDiff = 0;
     }
 
     public void executeThenChain(boolean forceThenKeyword) {
@@ -36,6 +37,7 @@ public class ScriptArgsReader {
     public void resetCursor() {
         index = 0;
         read = new StringBuilder();
+        argDiff = 0;
     }
 
     public void zeroCursor() {
@@ -64,6 +66,7 @@ public class ScriptArgsReader {
         for (int i = 0; i < nextLen; i++)
             read.append(args.get(index + i)).append(' ');
         index += nextLen;
+        argDiff += nextLen - 1;
     }
 
     public ScriptArgs.Arg next() {
@@ -112,20 +115,21 @@ public class ScriptArgsReader {
         String[] matches = match.toLowerCase().split("[\\w_-]+");
         for (int i = 0; i < matches.length; i++)
             if (!args.match(index + i, matches[i]))
-                throw new IllegalArgumentException("expected argument: %s, got: %s"
+                throw new IllegalArgumentException("expected argument: '%s', got: '%s'"
                         .formatted(matches, args.get(index)));
         markAsRead(matches.length);
         return match;
     }
 
     public <T extends Enum<?>> T next(Class<T> match) {
+        T fallback = null;
         const_loop: for (T constant: match.getEnumConstants()) {
             if (args.match(index, constant.name())) {
-                markAsRead(1);
-                return constant;
+                fallback = constant;
+                continue;
             }
 
-            String[] matches = constant.name().toLowerCase().split("[\\s_-]+");
+            String[] matches = constant.name().toLowerCase().split("[\\s_]+");
             for (int i = 0; i < matches.length; i++)
                 if (!args.match(index + i, matches[i]))
                     continue const_loop;
@@ -133,18 +137,24 @@ public class ScriptArgsReader {
             return constant;
         }
 
-        throw new IllegalArgumentException("%s is not a value of %s"
+        if (fallback != null) {
+            markAsRead(1);
+            return fallback;
+        }
+
+        throw new IllegalArgumentException("'%s' is not a value of %s"
                 .formatted(args.get(index), match.getSimpleName()));
     }
 
     public String next(Collection<String> match) {
+        String fallback = null;
         const_loop: for (String constant: match) {
             if (args.match(index, constant)) {
-                markAsRead(1);
-                return constant;
+                fallback = constant;
+                continue;
             }
 
-            String[] matches = constant.toLowerCase().split("[\\s_-]+");
+            String[] matches = constant.toLowerCase().split("[\\s_]+");
             for (int i = 0; i < matches.length; i++)
                 if (!args.match(index + i, matches[i]))
                     continue const_loop;
@@ -152,7 +162,20 @@ public class ScriptArgsReader {
             return constant;
         }
 
-        throw new IllegalArgumentException("%s is not a value of %s"
+        if (fallback != null) {
+            markAsRead(1);
+            return fallback;
+        }
+
+        throw new IllegalArgumentException("'%s' is not a value of %s"
                 .formatted(args.get(index), match));
+    }
+
+    public int getArgDiff() {
+        return argDiff;
+    }
+
+    public int getCurrIndex() {
+        return index;
     }
 }

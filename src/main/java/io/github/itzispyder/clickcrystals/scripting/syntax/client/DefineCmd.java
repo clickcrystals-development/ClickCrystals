@@ -15,10 +15,12 @@ public class DefineCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        switch (args.get(0).toEnum(Type.class)) {
-            case MODULE -> ClickScript.executeDynamic(args.getExecutorOrDef(), "module create " + args.get(1));
-            case DESCRIPTION, DESC -> ClickScript.executeDynamic(args.getExecutorOrDef(), "description " + args.getAll(1));
-            case FUNCTION, FUNC -> args.getExecutorOrDef().createFunction(args.get(1).toString(), args.getAll(2).toString());
+        var read = args.getReader();
+
+        switch (read.next(Type.class)) {
+            case MODULE -> ClickScript.executeDynamic(args.getExecutorOrDef(), "module create " + read.next());
+            case DESCRIPTION, DESC -> ClickScript.executeDynamic(args.getExecutorOrDef(), "description " + read.nextQuote());
+            case FUNCTION, FUNC -> args.getExecutorOrDef().createFunction(read.nextStr(), read.remainingStr());
         }
     }
 

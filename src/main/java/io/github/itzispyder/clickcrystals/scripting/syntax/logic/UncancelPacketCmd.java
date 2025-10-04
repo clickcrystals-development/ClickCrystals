@@ -17,10 +17,10 @@ public class UncancelPacketCmd extends ScriptCommand {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        String id = args.get(1).toString();
-        switch (args.get(0).toEnum(CancelPacketCmd.Mode.class)) {
-            case C2S -> ModuleCmd.runOnCurrentScriptModule(m -> m.packetSendCancelQueue.remove(getC2S(id)));
-            case S2C -> ModuleCmd.runOnCurrentScriptModule(m -> m.packetReadCancelQueue.remove(getSC2(id)));
+        var read = args.getReader();
+        switch (read.next(CancelPacketCmd.Mode.class)) {
+            case C2S -> ModuleCmd.runOnCurrentScriptModule(m -> m.packetSendCancelQueue.remove(getC2S(read.nextStr())));
+            case S2C -> ModuleCmd.runOnCurrentScriptModule(m -> m.packetReadCancelQueue.remove(getSC2(read.nextStr())));
             default -> throw new IllegalArgumentException("packet type should be either c2s or s2c");
         }
     }
