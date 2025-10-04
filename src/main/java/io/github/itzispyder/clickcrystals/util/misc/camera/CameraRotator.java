@@ -3,10 +3,13 @@ package io.github.itzispyder.clickcrystals.util.misc.camera;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.interfaces.AccessorCamera;
+import io.github.itzispyder.clickcrystals.scripting.syntax.AimAnchorType;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.Camera;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.Stack;
@@ -139,6 +142,12 @@ public class CameraRotator implements Global {
     public CameraRotator addTicket(Vec3d dir, float pitchSpeed, float yawSpeed, boolean lockCursor) {
         float[] rot = MathUtils.toPolar(dir.x, dir.y, dir.z);
         return this.addTicket(rot[0], rot[1], pitchSpeed, yawSpeed, lockCursor);
+    }
+
+    public CameraRotator addTicket(Entity target, float speed, AimAnchorType anchor, boolean lockCursor) {
+        if (!(target instanceof LivingEntity liv))
+            return this.addTicket(target.getEyePos(), speed, speed, lockCursor);
+        return this.addTicket(anchor.entityFactory.apply(target), speed, speed, lockCursor);
     }
 
     public CameraDataTracker getTracker() {

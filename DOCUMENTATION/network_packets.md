@@ -31,7 +31,7 @@ Here's a table of what those network packet arguments should be:
 | CommandExecutionC2SPacket | C2S | commandExecution |
 | CraftRequestC2SPacket | C2S | craftRequest |
 | CreativeInventoryActionC2SPacket | C2S | creativeInventoryAction |
-| DebugSampleSubscriptionC2SPacket | C2S | debugSampleSubscription |
+| DebugSubscriptionRequestC2SPacket | C2S | debugSubscriptionRequest |
 | HandSwingC2SPacket | C2S | handSwing |
 | JigsawGeneratingC2SPacket | C2S | jigsawGenerating |
 | MessageAcknowledgmentC2SPacket | C2S | messageAcknowledgment |
@@ -74,6 +74,7 @@ Here's a table of what those network packet arguments should be:
 | BlockEntityUpdateS2CPacket | S2C | blockEntityUpdate |
 | BlockEventS2CPacket | S2C | blockEvent |
 | BlockUpdateS2CPacket | S2C | blockUpdate |
+| BlockValueDebugS2CPacket | S2C | blockValueDebug |
 | BossBarS2CPacket | S2C | bossBar |
 | BundleDelimiterS2CPacket | S2C | bundleDelimiter |
 | BundleS2CPacket | S2C | bundle |
@@ -85,6 +86,7 @@ Here's a table of what those network packet arguments should be:
 | ChunkLoadDistanceS2CPacket | S2C | chunkLoadDistance |
 | ChunkRenderDistanceCenterS2CPacket | S2C | chunkRenderDistanceCenter |
 | ChunkSentS2CPacket | S2C | chunkSent |
+| ChunkValueDebugS2CPacket | S2C | chunkValueDebug |
 | ClearTitleS2CPacket | S2C | clearTitle |
 | CloseScreenS2CPacket | S2C | closeScreen |
 | CommandSuggestionsS2CPacket | S2C | commandSuggestions |
@@ -113,12 +115,15 @@ Here's a table of what those network packet arguments should be:
 | EntityStatusEffectS2CPacket | S2C | entityStatusEffect |
 | EntityStatusS2CPacket | S2C | entityStatus |
 | EntityTrackerUpdateS2CPacket | S2C | entityTrackerUpdate |
+| EntityValueDebugS2CPacket | S2C | entityValueDebug |
 | EntityVelocityUpdateS2CPacket | S2C | entityVelocityUpdate |
+| EventDebugS2CPacket | S2C | eventDebug |
 | ExperienceBarUpdateS2CPacket | S2C | experienceBarUpdate |
 | ExplosionS2CPacket | S2C | explosion |
 | GameJoinS2CPacket | S2C | gameJoin |
 | GameMessageS2CPacket | S2C | gameMessage |
 | GameStateChangeS2CPacket | S2C | gameStateChange |
+| GameTestHighlightPosS2CPacket | S2C | gameTestHighlightPos |
 | HealthUpdateS2CPacket | S2C | healthUpdate |
 | InventoryS2CPacket | S2C | inventory |
 | ItemPickupAnimationS2CPacket | S2C | itemPickupAnimation |

@@ -212,7 +212,10 @@ public class Scheduler implements Global {
                 return;
             }
 
-            if (millisTimer == 0 || millisTimer++ >= period) {
+            if (iterations == INFINITE_ITERATIONS && millisTimer == 0)
+                task.run();
+
+            if (millisTimer++ >= period) {
                 if (iterations == INFINITE_ITERATIONS) {
                     millisTimer = 0;
                     task.run();

@@ -175,6 +175,20 @@ public class ScriptArgsReader {
         return argDiff;
     }
 
+    public boolean currMatches(String s) {
+        if (index < 0 || index >= args.getSize())
+            return false;
+        return getCurrStr().equalsIgnoreCase(s);
+    }
+
+    public ScriptArgs.Arg getCurr() {
+        return args.get(index);
+    }
+
+    public String getCurrStr() {
+        return args.get(index).toString();
+    }
+
     public int getCurrIndex() {
         return index;
     }

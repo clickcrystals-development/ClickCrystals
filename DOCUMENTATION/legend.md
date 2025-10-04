@@ -13,6 +13,7 @@ Here you will find out how to read this documentation, and what each symbol mean
 | \<server-packet\> | [server packet](./network_packets.md)       |                                     | playerList        |
 | \<client-packet\> | [client packet](./network_packets.md)       |                                     | handSwing         |
 | \<input\>         | an input type                               |                                     | attack            |
+| \<aim-anchor\>    | aim anchor                                  |                                     | head              |
 | ...               | literal                                     |                                     | abc               |
 | "..."             | quoted literal                              |                                     | "a b c"           |
 | \w+               | constant literal                            |                                     |                   |

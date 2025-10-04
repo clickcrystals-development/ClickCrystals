@@ -52,6 +52,8 @@ import io.github.itzispyder.clickcrystals.scripting.ClickScript;
 import io.github.itzispyder.clickcrystals.scripting.syntax.client.*;
 import io.github.itzispyder.clickcrystals.scripting.syntax.logic.*;
 import io.github.itzispyder.clickcrystals.scripting.syntax.macros.*;
+import io.github.itzispyder.clickcrystals.scripting.syntax.macros.camera.SnapToCmd;
+import io.github.itzispyder.clickcrystals.scripting.syntax.macros.camera.TurnToCmd;
 import io.github.itzispyder.clickcrystals.scripting.syntax.macros.inventory.GuiDropCmd;
 import io.github.itzispyder.clickcrystals.scripting.syntax.macros.inventory.GuiQuickMoveCmd;
 import io.github.itzispyder.clickcrystals.scripting.syntax.macros.inventory.GuiSwapCmd;

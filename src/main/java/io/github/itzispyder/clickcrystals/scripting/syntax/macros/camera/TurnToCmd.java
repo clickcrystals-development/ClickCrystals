@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.scripting.syntax.macros;
+package io.github.itzispyder.clickcrystals.scripting.syntax.macros.camera;
 
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
@@ -10,7 +10,6 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PolarParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
@@ -20,6 +19,16 @@ import java.util.function.Predicate;
 // @Format turn_to (any_entity|target_entity|any_block) then? {}?
 // @Format turn_to position <x> <y> <z> then? {}?
 // @Format turn_to polar <pitch> <yaw> then? {}?
+
+// @Format turn_to (nearest_entity|nearest_block) <identifier> aim <aim-anchor> then? {}?
+// @Format turn_to (any_entity|target_entity|any_block) aim <aim-anchor> then? {}?
+// @Format turn_to position <x> <y> <z> aim <aim-anchor> then? {}?
+// @Format turn_to polar <pitch> <yaw> aim <aim-anchor> then? {}?
+
+// @Format turn_to (nearest_entity|nearest_block) <identifier> speed <num> then? {}?
+// @Format turn_to (any_entity|target_entity|any_block) speed <num> then? {}?
+// @Format turn_to position <x> <y> <z> speed <num> then? {}?
+// @Format turn_to polar <pitch> <yaw> speed <num> then? {}?
 public class TurnToCmd extends ScriptCommand {
 
     public TurnToCmd() {
@@ -45,14 +54,14 @@ public class TurnToCmd extends ScriptCommand {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(read.nextStr());
                 PlayerUtils.runOnNearestEntity(128, filter, entity -> {
                     if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate((PlayerEntity) entity))
-                        turn(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
+                        turn(entity.getPos(), eyes, args);
                 });
             }
 
             case ANY_BLOCK -> PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> turn(pos.toCenterPos(), eyes, args));
             case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(128, Entity::isAlive, entity -> {
                 if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate(((PlayerEntity) entity)))
-                    turn(entity instanceof LivingEntity le ? le.getEyePos() : entity.getPos(), eyes, args);
+                    turn(entity.getPos(), eyes, args);
             });
 
             case POSITION -> {
@@ -78,13 +87,18 @@ public class TurnToCmd extends ScriptCommand {
     }
 
     private void turn(Vec3d dest, Vec3d camPos, ScriptArgs args) {
-        if (!system.cameraRotator.isRunningTicket()) {
-            Vec3d target = dest.subtract(camPos).normalize();
+        if (system.cameraRotator.isRunningTicket())
+            return;
 
-            system.cameraRotator.ready()
-                    .addTicket(target, 10, 10, true)
-                    .setFinishCallback((pitch, yaw, rotator) -> args.getReader().executeThenChain())
-                    .openCurrentTicket();
-        }
+        var read = args.getReader();
+
+        TurnOptions options = new TurnOptions();
+        options.configure(read);
+        options.configure(read);
+
+        system.cameraRotator.ready()
+                .addTicket(options.getCameraTicketPos(camPos, dest), options.speed, options.speed, true)
+                .setFinishCallback((pitch, yaw, rotator) -> read.executeThenChain())
+                .openCurrentTicket();
     }
 }
