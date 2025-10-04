@@ -3508,6 +3508,160 @@
           "leading": true
         },
         {
+          "acceptingRegex": "(item_cooldown)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "([\u003c\u003e\u003d!]\u003d)|[\u003c\u003e\u003d]",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(if|if_not|!if)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(item_cooldown)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(holding|off_holding)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "([\u003c\u003e\u003d!]\u003d)|[\u003c\u003e\u003d]",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(while|while_not|!while)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(item_cooldown)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "([\u003c\u003e\u003d!]\u003d)|[\u003c\u003e\u003d]",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(while|while_not|!while)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(item_cooldown)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(holding|off_holding)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "([\u003c\u003e\u003d!]\u003d)|[\u003c\u003e\u003d]",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(if|if_not|!if)",
+          "optional": false,
+          "leading": true
+        },
+        {
           "acceptingRegex": "(gamemode)",
           "optional": false,
           "leading": false
