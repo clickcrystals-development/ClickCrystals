@@ -54,18 +54,28 @@ Happy coding and cpvping!
 
 ## Newest Changes
 ```yml
-Version: 1.3.6
+Version: 1.3.7
 
 Scripting:
-  - if gliding
-  - if sneaking
-  - if sprinting
-  - if swimming
-  - if holding :charged_crossbow
-  - if holding :uncharged_crossbow
+  - disconnect
+  - if target_fluid <identifier>
+  - if targeting_fluid
+  - turn_to nearest_entity :player aim head
+  - turn_to nearest_entity :player aim head speed 10
+  - turn_to nearest_entity :player speed 10
+  - if item_cooldown <comparator> <num>
+  - if inventory_has :air
+  - if item_count <comparator> <int>
+  - if ping <comparator> int>
 
-Patches:
-  - fix comparator operators ><= not working properly 
+Script Syntax:
+  - you no longer need to spam underscores in scripts! just type spaces like normal english!
+  - remove !if, !while, please switch to if_not while_not
+
+Turn_To CameraRotator:
+  - revamp camera rotator
+  - remove ,rotate skip
+  - can now control speed and aim anchor with turn_to
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)

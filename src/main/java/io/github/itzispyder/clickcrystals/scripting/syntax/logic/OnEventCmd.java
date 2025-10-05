@@ -25,7 +25,8 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         EventType type = read.next(EventType.class);
 
         switch (type) {
-            case LEFT_CLICK, RIGHT_CLICK, MIDDLE_CLICK, LEFT_RELEASE, RIGHT_RELEASE, MIDDLE_RELEASE, MOUSE_CLICK, MOUSE_RELEASE -> passClick(read, type);
+            case LEFT_CLICK, RIGHT_CLICK, MIDDLE_CLICK, LEFT_RELEASE, RIGHT_RELEASE, MIDDLE_RELEASE -> passClick(read, type);
+            case MOUSE_CLICK, MOUSE_RELEASE -> passMouseButtonClick(read, type);
             case PLACE_BLOCK, BREAK_BLOCK, INTERACT_BLOCK, PUNCH_BLOCK -> passBlock(read, type);
             case KEY_PRESS, KEY_RELEASE -> passKey(read, type);
             case MOVE_LOOK, MOVE_POS -> passMove(read, type);
@@ -87,14 +88,12 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
 
         switch (type) {
             case CHAT_RECEIVE -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatReceiveListeners.add(event -> {
-                if (event.getMessage().contains(msg) || event.getMessage().matches(msg)) {
+                if (event.getMessage().contains(msg) || event.getMessage().matches(msg))
                     ClickScript.executeDynamic(dispatcher, rest);
-                }
             }));
             case CHAT_SEND -> ModuleCmd.runOnCurrentScriptModule(m -> m.chatSendListeners.add(event -> {
-                if (event.getMessage().contains(msg) || event.getMessage().matches(msg)) {
+                if (event.getMessage().contains(msg) || event.getMessage().matches(msg))
                     ClickScript.executeDynamic(dispatcher, rest);
-                }
             }));
         }
     }
@@ -110,28 +109,30 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
 
     private void passClick(ScriptArgsReader read, EventType eventType) {
         ModuleCmd.runOnCurrentScriptModule(m -> m.clickListeners.add(event -> {
+            if (matchMouseClick(eventType, event))
+                read.executeThenChain(false);
+        }));
+    }
+
+    private void passMouseButtonClick(ScriptArgsReader read, EventType eventType) {
+        int button = read.next().toInt();
+        ModuleCmd.runOnCurrentScriptModule(m -> m.clickListeners.add(event -> {
             if (eventType == EventType.MOUSE_CLICK && event.getAction().isDown()) {
-                int button = read.next().toInt();
                 if (button == event.getButton())
                     read.executeThenChain(false);
             }
             else if (eventType == EventType.MOUSE_RELEASE && event.getAction().isRelease()) {
-                int button = read.next().toInt();
                 if (button == event.getButton())
                     read.executeThenChain(false);
-            }
-
-            if (matchMouseClick(eventType, event)) {
-                read.executeThenChain(false);
             }
         }));
     }
 
     private void passKey(ScriptArgsReader read, EventType eventType) {
+        String key = read.nextStr();
         ModuleCmd.runOnCurrentScriptModule(m -> m.keyListeners.add(event -> {
-            if (matchKeyPress(eventType, event, read.next().toString())) {
+            if (matchKeyPress(eventType, event, key))
                 read.executeThenChain(false);
-            }
         }));
     }
 
@@ -139,14 +140,12 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         ModuleCmd.runOnCurrentScriptModule(m -> m.moveListeners.add(event -> {
             switch (eventType) {
                 case MOVE_LOOK -> {
-                    if (event.changesLook()) {
+                    if (event.changesLook())
                         read.executeThenChain(false);
-                    }
                 }
                 case MOVE_POS -> {
-                    if (event.changesPosition()) {
+                    if (event.changesPosition())
                         read.executeThenChain(false);
-                    }
                 }
             }
         }));

@@ -8,11 +8,10 @@ public class TickListener {
 
     public static TickListener fromScript(ScriptArgs args, ThenChainable command) {
         var read = args.getReader();
-        var first = read.next();
         int period = 0;
 
-        if (first.isNum())
-            period = first.toInt();
+        if (read.getCurr().isNum())
+            period = read.next().toInt();
 
         return new TickListener(period, () -> read.executeThenChain(false));
     }
