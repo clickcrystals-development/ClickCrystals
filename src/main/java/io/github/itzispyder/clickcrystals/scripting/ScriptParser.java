@@ -230,10 +230,10 @@ public class ScriptParser {
     }};
 
     public static ItemStack parseItemStack(String arg) {
-        if ("holding".equals(arg)) {
+        if ("mainhand".equals(arg)) {
             return HotbarUtils.getHand(Hand.MAIN_HAND);
         }
-        else if ("off_holding".equals(arg)) {
+        else if ("offhand".equals(arg)) {
             return HotbarUtils.getHand(Hand.OFF_HAND);
         }
         else if (arg.matches("^[:#].*$")) {
@@ -244,10 +244,10 @@ public class ScriptParser {
     }
 
     public static ItemStack parseItemStack(PlayerEntity player, String arg) {
-        if ("holding".equals(arg)) {
+        if ("mainhand".equals(arg)) {
             return player.getStackInHand(Hand.MAIN_HAND);
         }
-        else if ("off_holding".equals(arg)) {
+        else if ("offhand".equals(arg)) {
             return player.getStackInHand(Hand.OFF_HAND);
         }
         else if (arg.matches("^[:#].*$")) {

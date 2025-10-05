@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluationResult;
 import io.github.itzispyder.clickcrystals.scripting.components.Conditionals;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
-import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
 import net.minecraft.entity.Entity;
 
@@ -14,7 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class WhileNotCmd extends ScriptCommand implements ThenChainable {
 
     public WhileNotCmd() {
-        super("while_not", "!while");
+        super("while_not");
     }
 
     @Override
@@ -22,7 +21,7 @@ public class WhileNotCmd extends ScriptCommand implements ThenChainable {
         long period;
         int beginIndex;
 
-        if (StringUtils.isNumber(args.get(0).toString())) {
+        if (args.get(0).isNum()) {
             period = (long)(args.get(0).toDouble() * 1000);
             beginIndex = 1;
         }

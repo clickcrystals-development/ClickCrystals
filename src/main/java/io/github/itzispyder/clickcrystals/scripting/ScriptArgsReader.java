@@ -45,6 +45,18 @@ public class ScriptArgsReader {
         resetCursor();
     }
 
+    public void skip(int amount) {
+        if (amount < 1)
+            return;
+        index += amount;
+    }
+
+    public void skipTo(int index) {
+        if (index < 0)
+            return;
+        this.index = index;
+    }
+
     private void jumpToEnd() {
         index = args.getSize() - 1;
         read = new StringBuilder(args.getAll().toString());

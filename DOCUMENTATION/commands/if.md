@@ -28,6 +28,7 @@ if equipment_has <identifier> {}
 if falling {}
 if false {}
 if flying {}
+if fps <comparator> <int> {}
 if frozen {}
 if gamemode adventure {}
 if gamemode creative {}
@@ -63,14 +64,14 @@ if input_active unlock_cursor {}
 if input_active use {}
 if inventory_has <identifier> {}
 if item_cooldown <identifier> <comparator> <num> {}
-if item_cooldown holding <comparator> <num> {}
-if item_cooldown off_holding <comparator> <num> {}
+if item_cooldown mainhand <comparator> <num> {}
+if item_cooldown offhand <comparator> <num> {}
 if item_count <identifier> <comparator> <int> {}
-if item_count holding <comparator> <int> {}
-if item_count off_holding <comparator> <int> {}
+if item_count mainhand <comparator> <int> {}
+if item_count offhand <comparator> <int> {}
 if item_durability <identifier> <comparator> <num> {}
-if item_durability holding <comparator> <num> {}
-if item_durability off_holding <comparator> <num> {}
+if item_durability mainhand <comparator> <num> {}
+if item_durability offhand <comparator> <num> {}
 if jumping {}
 if line_of_sight {}
 if module_disabled ... {}
@@ -79,6 +80,7 @@ if moving {}
 if off_holding <identifier> {}
 if on_fire {}
 if on_ground {}
+if ping <comparator> <int> {}
 if playing {}
 if pos_x <comparator> <num> {}
 if pos_y <comparator> <num> {}
@@ -103,7 +105,7 @@ if vel_z <comparator> <num> {}
 
 ### Regex
 ```regexp
-(((if)( (true)))|((if)( (false)))|((if)( (holding))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (off_holding))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (target_block))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (target_entity))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (target_fluid))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (targeting_block)))|((if)( (targeting_entity)))|((if)( (targeting_fluid)))|((if)( (inventory_has))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (equipment_has))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (hotbar_has))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (input_active))( (attack|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory|mouse_wheel_up|mouse_wheel_down)))|((if)( (input_active))( (key))( (\S+)))|((if)( (block_in_range))( !?(([#:](\w+)(\[(.*)\])?,?)+))( (-?\d*(\.\d*)?)))|((if)( (entity_in_range))( !?(([#:](\w+)(\[(.*)\])?,?)+))( (-?\d*(\.\d*)?)))|((if)( (attack_progress))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (health))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (hunger))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (hurt_time))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (armor))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (pos_x))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (pos_y))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (pos_z))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (vel_x))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (vel_y))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (vel_z))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (module_enabled))( (\S+)))|((if)( (module_disabled))( (\S+)))|((if)( (block))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?)))|((if)( (entity))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?)))|((if)( (dimension))( (overworld|the_nether|the_end)))|((if)( (effect_amplifier))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (effect_duration))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (in_game)))|((if)( (in_singleplayer)))|((if)( (playing)))|((if)( (in_screen)))|((if)( (chance_of))( (-?\d*(\.\d*)?)))|((if)( (colliding)))|((if)( (colliding_horizontally)))|((if)( (colliding_vertically)))|((if)( (jumping)))|((if)( (moving)))|((if)( (blocking)))|((if)( (on_ground)))|((if)( (on_fire)))|((if)( (frozen)))|((if)( (dead)))|((if)( (alive)))|((if)( (falling)))|((if)( (cursor_item))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (hovering_over))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (reference_entity))( (client|any_entity)))|((if)( (reference_entity))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (item_count))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (item_count))( (holding|off_holding))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (item_durability))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (item_durability))( (holding|off_holding))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (item_cooldown))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (item_cooldown))( (holding|off_holding))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (gamemode))( (creative|survival|adventure|spectator)))|((if)( (line_of_sight)))|((if)( (flying)))|((if)( (sneaking)))|((if)( (sprinting)))|((if)( (swimming)))|((if)( (gliding))))
+(((if)( (true)))|((if)( (false)))|((if)( (holding))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (off_holding))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (target_block))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (target_entity))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (target_fluid))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (targeting_block)))|((if)( (targeting_entity)))|((if)( (targeting_fluid)))|((if)( (inventory_has))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (equipment_has))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (hotbar_has))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (input_active))( (attack|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory|mouse_wheel_up|mouse_wheel_down)))|((if)( (input_active))( (key))( (\S+)))|((if)( (block_in_range))( !?(([#:](\w+)(\[(.*)\])?,?)+))( (-?\d*(\.\d*)?)))|((if)( (entity_in_range))( !?(([#:](\w+)(\[(.*)\])?,?)+))( (-?\d*(\.\d*)?)))|((if)( (attack_progress))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (health))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (hunger))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (hurt_time))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (armor))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (pos_x))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (pos_y))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (pos_z))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (vel_x))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (vel_y))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (vel_z))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (module_enabled))( (\S+)))|((if)( (module_disabled))( (\S+)))|((if)( (block))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?)))|((if)( (entity))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?)))|((if)( (dimension))( (overworld|the_nether|the_end)))|((if)( (effect_amplifier))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (effect_duration))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (in_game)))|((if)( (in_singleplayer)))|((if)( (playing)))|((if)( (in_screen)))|((if)( (chance_of))( (-?\d*(\.\d*)?)))|((if)( (colliding)))|((if)( (colliding_horizontally)))|((if)( (colliding_vertically)))|((if)( (jumping)))|((if)( (moving)))|((if)( (blocking)))|((if)( (on_ground)))|((if)( (on_fire)))|((if)( (frozen)))|((if)( (dead)))|((if)( (alive)))|((if)( (falling)))|((if)( (cursor_item))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (hovering_over))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (reference_entity))( (client|any_entity)))|((if)( (reference_entity))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((if)( (item_count))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (item_count))( (mainhand|offhand))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (item_durability))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (item_durability))( (mainhand|offhand))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (item_cooldown))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (item_cooldown))( (mainhand|offhand))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((if)( (gamemode))( (creative|survival|adventure|spectator)))|((if)( (ping))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (fps))( ([<>=!]=)|[<>=])( (-?\d+)))|((if)( (line_of_sight)))|((if)( (flying)))|((if)( (sneaking)))|((if)( (sprinting)))|((if)( (swimming)))|((if)( (gliding))))
 ```
 
 ### Raw Documentation
@@ -165,12 +167,14 @@ if vel_z <comparator> <num> {}
 # if reference_entity (client|any_entity) {}
 # if reference_entity <identifier> {}
 # if item_count <identifier> <comparator> <int> {}
-# if item_count (holding|off_holding) <comparator> <int> {}
+# if item_count (mainhand|offhand) <comparator> <int> {}
 # if item_durability <identifier> <comparator> <num> {}
-# if item_durability (holding|off_holding) <comparator> <num> {}
+# if item_durability (mainhand|offhand) <comparator> <num> {}
 # if item_cooldown <identifier> <comparator> <num> {}
-# if item_cooldown (holding|off_holding) <comparator> <num> {}
+# if item_cooldown (mainhand|offhand) <comparator> <num> {}
 # if gamemode (creative|survival|adventure|spectator) {}
+# if ping <comparator> <int> {}
+# if fps <comparator> <int> {}
 # if line_of_sight {}
 # if flying {}
 # if sneaking {}

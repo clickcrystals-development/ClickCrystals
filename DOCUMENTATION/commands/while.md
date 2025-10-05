@@ -27,6 +27,7 @@ while <num>? equipment_has <identifier> {}
 while <num>? falling {}
 while <num>? false {}
 while <num>? flying {}
+while <num>? fps <comparator> <int> {}
 while <num>? frozen {}
 while <num>? gamemode adventure {}
 while <num>? gamemode creative {}
@@ -62,14 +63,14 @@ while <num>? input_active unlock_cursor {}
 while <num>? input_active use {}
 while <num>? inventory_has <identifier> {}
 while <num>? item_cooldown <identifier> <comparator> <num> {}
-while <num>? item_cooldown holding <comparator> <num> {}
-while <num>? item_cooldown off_holding <comparator> <num> {}
+while <num>? item_cooldown mainhand <comparator> <num> {}
+while <num>? item_cooldown offhand <comparator> <num> {}
 while <num>? item_count <identifier> <comparator> <int> {}
-while <num>? item_count holding <comparator> <int> {}
-while <num>? item_count off_holding <comparator> <int> {}
+while <num>? item_count mainhand <comparator> <int> {}
+while <num>? item_count offhand <comparator> <int> {}
 while <num>? item_durability <identifier> <comparator> <num> {}
-while <num>? item_durability holding <comparator> <num> {}
-while <num>? item_durability off_holding <comparator> <num> {}
+while <num>? item_durability mainhand <comparator> <num> {}
+while <num>? item_durability offhand <comparator> <num> {}
 while <num>? jumping {}
 while <num>? line_of_sight {}
 while <num>? module_disabled ... {}
@@ -78,6 +79,7 @@ while <num>? moving {}
 while <num>? off_holding <identifier> {}
 while <num>? on_fire {}
 while <num>? on_ground {}
+while <num>? ping <comparator> <int> {}
 while <num>? playing {}
 while <num>? pos_x <comparator> <num> {}
 while <num>? pos_y <comparator> <num> {}
@@ -102,7 +104,7 @@ while <num>? vel_z <comparator> <num> {}
 
 ### Regex
 ```regexp
-(((while)( (-?\d*(\.\d*)?))?( (true)))|((while)( (-?\d*(\.\d*)?))?( (false)))|((while)( (-?\d*(\.\d*)?))?( (holding))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (off_holding))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (target_block))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (target_entity))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (target_fluid))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (targeting_block)))|((while)( (-?\d*(\.\d*)?))?( (targeting_entity)))|((while)( (-?\d*(\.\d*)?))?( (targeting_fluid)))|((while)( (-?\d*(\.\d*)?))?( (inventory_has))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (equipment_has))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (hotbar_has))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (input_active))( (attack|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory|mouse_wheel_up|mouse_wheel_down)))|((while)( (-?\d*(\.\d*)?))?( (input_active))( (key))( (\S+)))|((while)( (-?\d*(\.\d*)?))?( (block_in_range))( !?(([#:](\w+)(\[(.*)\])?,?)+))( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (entity_in_range))( !?(([#:](\w+)(\[(.*)\])?,?)+))( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (attack_progress))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (health))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (hunger))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (hurt_time))( ([<>=!]=)|[<>=])( (-?\d+)))|((while)( (-?\d*(\.\d*)?))?( (armor))( ([<>=!]=)|[<>=])( (-?\d+)))|((while)( (-?\d*(\.\d*)?))?( (pos_x))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (pos_y))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (pos_z))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (vel_x))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (vel_y))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (vel_z))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (module_enabled))( (\S+)))|((while)( (-?\d*(\.\d*)?))?( (module_disabled))( (\S+)))|((while)( (-?\d*(\.\d*)?))?( (block))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (entity))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (dimension))( (overworld|the_nether|the_end)))|((while)( (-?\d*(\.\d*)?))?( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d+)))|((while)( (-?\d*(\.\d*)?))?( (in_game)))|((while)( (-?\d*(\.\d*)?))?( (in_singleplayer)))|((while)( (-?\d*(\.\d*)?))?( (playing)))|((while)( (-?\d*(\.\d*)?))?( (in_screen)))|((while)( (-?\d*(\.\d*)?))?( (chance_of))( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (colliding)))|((while)( (-?\d*(\.\d*)?))?( (colliding_horizontally)))|((while)( (-?\d*(\.\d*)?))?( (colliding_vertically)))|((while)( (-?\d*(\.\d*)?))?( (jumping)))|((while)( (-?\d*(\.\d*)?))?( (moving)))|((while)( (-?\d*(\.\d*)?))?( (blocking)))|((while)( (-?\d*(\.\d*)?))?( (on_ground)))|((while)( (-?\d*(\.\d*)?))?( (on_fire)))|((while)( (-?\d*(\.\d*)?))?( (frozen)))|((while)( (-?\d*(\.\d*)?))?( (dead)))|((while)( (-?\d*(\.\d*)?))?( (alive)))|((while)( (-?\d*(\.\d*)?))?( (falling)))|((while)( (-?\d*(\.\d*)?))?( (cursor_item))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (hovering_over))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (reference_entity))( (client|any_entity)))|((while)( (-?\d*(\.\d*)?))?( (reference_entity))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (item_count))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d+)))|((while)( (-?\d*(\.\d*)?))?( (item_count))( (holding|off_holding))( ([<>=!]=)|[<>=])( (-?\d+)))|((while)( (-?\d*(\.\d*)?))?( (item_durability))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (item_durability))( (holding|off_holding))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (item_cooldown))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (item_cooldown))( (holding|off_holding))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (gamemode))( (creative|survival|adventure|spectator)))|((while)( (-?\d*(\.\d*)?))?( (line_of_sight)))|((while)( (-?\d*(\.\d*)?))?( (flying)))|((while)( (-?\d*(\.\d*)?))?( (sneaking)))|((while)( (-?\d*(\.\d*)?))?( (sprinting)))|((while)( (-?\d*(\.\d*)?))?( (swimming)))|((while)( (-?\d*(\.\d*)?))?( (gliding))))
+(((while)( (-?\d*(\.\d*)?))?( (true)))|((while)( (-?\d*(\.\d*)?))?( (false)))|((while)( (-?\d*(\.\d*)?))?( (holding))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (off_holding))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (target_block))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (target_entity))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (target_fluid))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (targeting_block)))|((while)( (-?\d*(\.\d*)?))?( (targeting_entity)))|((while)( (-?\d*(\.\d*)?))?( (targeting_fluid)))|((while)( (-?\d*(\.\d*)?))?( (inventory_has))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (equipment_has))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (hotbar_has))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (input_active))( (attack|use|forward|backward|strafe_left|strafe_right|jump|sprint|sneak|lock_cursor|unlock_cursor|left|right|middle|inventory|mouse_wheel_up|mouse_wheel_down)))|((while)( (-?\d*(\.\d*)?))?( (input_active))( (key))( (\S+)))|((while)( (-?\d*(\.\d*)?))?( (block_in_range))( !?(([#:](\w+)(\[(.*)\])?,?)+))( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (entity_in_range))( !?(([#:](\w+)(\[(.*)\])?,?)+))( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (attack_progress))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (health))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (hunger))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (hurt_time))( ([<>=!]=)|[<>=])( (-?\d+)))|((while)( (-?\d*(\.\d*)?))?( (armor))( ([<>=!]=)|[<>=])( (-?\d+)))|((while)( (-?\d*(\.\d*)?))?( (pos_x))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (pos_y))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (pos_z))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (vel_x))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (vel_y))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (vel_z))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (module_enabled))( (\S+)))|((while)( (-?\d*(\.\d*)?))?( (module_disabled))( (\S+)))|((while)( (-?\d*(\.\d*)?))?( (block))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (entity))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?))( ([\^~]?-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (dimension))( (overworld|the_nether|the_end)))|((while)( (-?\d*(\.\d*)?))?( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d+)))|((while)( (-?\d*(\.\d*)?))?( (in_game)))|((while)( (-?\d*(\.\d*)?))?( (in_singleplayer)))|((while)( (-?\d*(\.\d*)?))?( (playing)))|((while)( (-?\d*(\.\d*)?))?( (in_screen)))|((while)( (-?\d*(\.\d*)?))?( (chance_of))( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (colliding)))|((while)( (-?\d*(\.\d*)?))?( (colliding_horizontally)))|((while)( (-?\d*(\.\d*)?))?( (colliding_vertically)))|((while)( (-?\d*(\.\d*)?))?( (jumping)))|((while)( (-?\d*(\.\d*)?))?( (moving)))|((while)( (-?\d*(\.\d*)?))?( (blocking)))|((while)( (-?\d*(\.\d*)?))?( (on_ground)))|((while)( (-?\d*(\.\d*)?))?( (on_fire)))|((while)( (-?\d*(\.\d*)?))?( (frozen)))|((while)( (-?\d*(\.\d*)?))?( (dead)))|((while)( (-?\d*(\.\d*)?))?( (alive)))|((while)( (-?\d*(\.\d*)?))?( (falling)))|((while)( (-?\d*(\.\d*)?))?( (cursor_item))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (hovering_over))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (reference_entity))( (client|any_entity)))|((while)( (-?\d*(\.\d*)?))?( (reference_entity))( !?(([#:](\w+)(\[(.*)\])?,?)+)))|((while)( (-?\d*(\.\d*)?))?( (item_count))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d+)))|((while)( (-?\d*(\.\d*)?))?( (item_count))( (mainhand|offhand))( ([<>=!]=)|[<>=])( (-?\d+)))|((while)( (-?\d*(\.\d*)?))?( (item_durability))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (item_durability))( (mainhand|offhand))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (item_cooldown))( !?(([#:](\w+)(\[(.*)\])?,?)+))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (item_cooldown))( (mainhand|offhand))( ([<>=!]=)|[<>=])( (-?\d*(\.\d*)?)))|((while)( (-?\d*(\.\d*)?))?( (gamemode))( (creative|survival|adventure|spectator)))|((while)( (-?\d*(\.\d*)?))?( (ping))( ([<>=!]=)|[<>=])( (-?\d+)))|((while)( (-?\d*(\.\d*)?))?( (fps))( ([<>=!]=)|[<>=])( (-?\d+)))|((while)( (-?\d*(\.\d*)?))?( (line_of_sight)))|((while)( (-?\d*(\.\d*)?))?( (flying)))|((while)( (-?\d*(\.\d*)?))?( (sneaking)))|((while)( (-?\d*(\.\d*)?))?( (sprinting)))|((while)( (-?\d*(\.\d*)?))?( (swimming)))|((while)( (-?\d*(\.\d*)?))?( (gliding))))
 ```
 
 ### Raw Documentation
@@ -163,12 +165,14 @@ while <num>? vel_z <comparator> <num> {}
 # while <num>? reference_entity (client|any_entity) {}
 # while <num>? reference_entity <identifier> {}
 # while <num>? item_count <identifier> <comparator> <int> {}
-# while <num>? item_count (holding|off_holding) <comparator> <int> {}
+# while <num>? item_count (mainhand|offhand) <comparator> <int> {}
 # while <num>? item_durability <identifier> <comparator> <num> {}
-# while <num>? item_durability (holding|off_holding) <comparator> <num> {}
+# while <num>? item_durability (mainhand|offhand) <comparator> <num> {}
 # while <num>? item_cooldown <identifier> <comparator> <num> {}
-# while <num>? item_cooldown (holding|off_holding) <comparator> <num> {}
+# while <num>? item_cooldown (mainhand|offhand) <comparator> <num> {}
 # while <num>? gamemode (creative|survival|adventure|spectator) {}
+# while <num>? ping <comparator> <int> {}
+# while <num>? fps <comparator> <int> {}
 # while <num>? line_of_sight {}
 # while <num>? flying {}
 # while <num>? sneaking {}

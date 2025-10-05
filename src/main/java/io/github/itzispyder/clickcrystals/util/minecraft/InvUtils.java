@@ -99,29 +99,13 @@ public final class InvUtils implements Global {
 
         for (int i = 0; i < inv().getMainStacks().size(); i++) {
             ItemStack stack = inv().getStack(i);
-            if (stack == null || stack.isEmpty()) continue;
-            if (item.test(stack)) count += stack.getCount();
+            if (stack != null && item.test(stack))
+                count += stack.getCount();
         }
 
         ItemStack off = HotbarUtils.getHand(Hand.OFF_HAND);
         if (item.test(off)) {
             count += off.getCount();
-        }
-
-        return count;
-    }
-
-    public static int count(Item item, PlayerInventory other) {
-        int count = 0;
-
-        if (item == null || other == null) {
-            return count;
-        }
-
-        for (int i = 0; i < other.size(); i++) {
-            ItemStack stack = other.getStack(i);
-            if (stack == null || stack.isEmpty()) continue;
-            if (stack.isOf(item)) count += stack.getCount();
         }
 
         return count;
@@ -159,8 +143,8 @@ public final class InvUtils implements Global {
 
         for (int i = 0; i < inv().getMainStacks().size(); i++) {
             ItemStack stack = inv().getStack(i);
-            if (stack == null || stack.isEmpty()) continue;
-            if (stack.isOf(item)) return true;
+            if (stack != null && stack.isOf(item))
+                return true;
         }
 
         return false;
@@ -171,8 +155,8 @@ public final class InvUtils implements Global {
 
         for (int i = 0; i < inv().getMainStacks().size(); i++) {
             ItemStack stack = inv().getStack(i);
-            if (stack == null || stack.isEmpty()) continue;
-            if (item.test(stack)) return true;
+            if (stack != null && item.test(stack))
+                return true;
         }
 
         return false;

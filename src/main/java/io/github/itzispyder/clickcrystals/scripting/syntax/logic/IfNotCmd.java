@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 public class IfNotCmd extends ScriptCommand implements Global, ThenChainable {
 
     public IfNotCmd() {
-        super("if_not", "!if");
+        super("if_not");
     }
 
     @Override
