@@ -43,13 +43,6 @@ Happy coding and cpvping!
 | 1.21.2        | not supported                                                                                                                 |
 | 1.21.1        | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
 | 1.21          | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
-| 1.20.6        | [ClickCrystals-1.20.6-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
-| 1.20.5        | not supported                                                                                                                 |
-| 1.20.4        | [ClickCrystals-1.20.4-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
-| 1.20.3        | [ClickCrystals-1.20.4-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
-| 1.20.2        | [ClickCrystals-1.20.2-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
-| 1.20.1        | [ClickCrystals-1.20-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
-| 1.20          | [ClickCrystals-1.20-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
 | ..lower       | cry                                                                                                                           |
 
 
