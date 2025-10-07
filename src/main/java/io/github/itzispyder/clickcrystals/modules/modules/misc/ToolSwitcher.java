@@ -81,7 +81,7 @@ public class ToolSwitcher extends Module implements Listener {
         if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
             if (packet.getAction() == PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) {
                 final BlockPos pos = packet.getPos();
-                final BlockState state = mc.player.getWorld().getBlockState(pos);
+                final BlockState state = mc.player.getEntityWorld().getBlockState(pos);
 
                 if (BlockUtils.canCrystalOn(pos)) return;
                 if (itemExcluded()) return;

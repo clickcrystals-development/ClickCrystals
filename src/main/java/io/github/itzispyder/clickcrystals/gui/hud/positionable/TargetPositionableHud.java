@@ -35,7 +35,7 @@ public class TargetPositionableHud extends Hud {
 
         if (target != null && !target.isDead() && timer > System.currentTimeMillis()) {
             ClientPlayerEntity p = PlayerUtils.player();
-            PlayerListEntry targetEntry = p.networkHandler.getPlayerListEntry(target.getGameProfile().getId());
+            PlayerListEntry targetEntry = p.networkHandler.getPlayerListEntry(target.getGameProfile().id());
 
             if (targetEntry == null) {
                 target = null;
@@ -55,7 +55,7 @@ public class TargetPositionableHud extends Hud {
             // player name (next to player head)
             // and player ping and distance
             caret += 7;
-            String name = targetEntry.getProfile().getName();
+            String name = targetEntry.getProfile().name();
             String info = "§f" + targetEntry.getLatency() + " §7ms, §f" + MathUtils.round(target.distanceTo(p), 10) + " §7dist";
             RenderUtils.drawText(context, name, margin + 15 + g, caret, 0.8F, true);
             caret += 15;

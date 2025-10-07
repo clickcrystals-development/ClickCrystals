@@ -5,11 +5,8 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 
+// NOTICE: Module pause development until rendering issue is resolved @I-No-One
 public class SelfGlow extends DummyModule {
-    public SelfGlow() {
-        super("self-glow", Categories.CLIENT, "Am I Glowing?");
-    }
-
 
     private final SettingSection scGeneral = getGeneralSection();
     public final ModuleSetting<Color> glowColor = scGeneral.add(createEnumSetting(Color.class)
@@ -18,6 +15,10 @@ public class SelfGlow extends DummyModule {
             .def(Color.CYAN)
             .build()
     );
+
+    public SelfGlow() {
+        super("self-glow", Categories.CLIENT, "Am I Glowing?");
+    }
 
     public enum Color {
         RED(255, 0, 0, 255),

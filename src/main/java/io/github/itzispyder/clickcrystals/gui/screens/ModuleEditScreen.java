@@ -12,6 +12,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.List;
@@ -66,10 +67,10 @@ public class ModuleEditScreen extends DefaultBase {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        super.mouseClicked(mouseX, mouseY, button);
+    public boolean mouseClicked(Click click, boolean doubled) {
+        super.mouseClicked(click, doubled);
 
-        if (isCategoryHovered(mouseX, mouseY)) {
+        if (isCategoryHovered((int)click.x(), (int)click.y())) {
             BrowsingScreen.currentCategory = module.getCategory();
             UserInputListener.openModulesScreen();
         }
@@ -78,8 +79,8 @@ public class ModuleEditScreen extends DefaultBase {
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        super.mouseReleased(mouseX, mouseY, button);
+    public boolean mouseReleased(Click click) {
+        super.mouseReleased(click);
         ClickCrystals.config.saveModule(module);
         ClickCrystals.config.save();
         return true;

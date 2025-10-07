@@ -10,6 +10,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.input.KeyInput;
 
 import java.util.Comparator;
 import java.util.List;
@@ -110,8 +111,8 @@ public class SearchScreen extends DefaultBase {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        super.keyPressed(keyCode, scanCode, modifiers);
+    public boolean keyPressed(KeyInput e) {
+        super.keyPressed(e);
         filterByQuery(searchbar);
         return true;
     }

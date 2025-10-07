@@ -69,7 +69,7 @@ public class PixelArtGenerator {
     }
 
     public synchronized CompletableFuture<Void> generateAt(LivingEntity ent) {
-        World world = ent.getWorld();
+        World world = ent.getEntityWorld();
         BlockPos pos = ent.getBlockPos();
         Facing facing = Facing.fromDirection(ent.getMovementDirection());
 

@@ -89,10 +89,10 @@ public class DebugCommand extends Command {
                                 .executes(context -> {
                                     PlayerListEntry entry = context.getArgument("player", PlayerListEntry.class);
                                     ClientPlayerEntity p = PlayerUtils.player();
-                                    World world = p.getWorld();
+                                    World world = p.getEntityWorld();
 
                                     for (PlayerEntity player : world.getPlayers()) {
-                                        if (entry.getProfile().getId() == player.getGameProfile().getId()) {
+                                        if (entry.getProfile().id() == player.getGameProfile().id()) {
                                             printPlayerStats(player, entry);
                                             return SINGLE_SUCCESS;
                                         }
@@ -118,11 +118,11 @@ public class DebugCommand extends Command {
         int ab = (int)player.getAbsorptionAmount();
 
         infoRaw("");
-        info("&b" + player.getGameProfile().getName() + "&3 has the following statistics:");
+        info("&b" + player.getGameProfile().name() + "&3 has the following statistics:");
         infoRaw(hp + (ab == 0 ? "" : "   &e+" + (int)player.getAbsorptionAmount() + " ab"));
         infoRaw("   &3Gamemode: &6" + StringUtils.capitalizeWords(entry.getGameMode().name()));
         infoRaw("   &3Latency: &7" + entry.getLatency() + " ms");
-        infoRaw("   &3UUID: &7" + entry.getProfile().getId());
+        infoRaw("   &3UUID: &7" + entry.getProfile().id());
         infoRaw("   &3Armor:");
         ArrayUtils.reverseForEach(EntityUtils.getArmorItems(player), this::printItem);
         infoRaw("   &3Hand:");

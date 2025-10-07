@@ -40,7 +40,7 @@ public class CrosshairPositionableHud extends Hud {
         }
         else if (mc.crosshairTarget instanceof BlockHitResult hit) {
             setWidth(60);
-            BlockState state = PlayerUtils.player().getWorld().getBlockState(hit.getBlockPos());
+            BlockState state = PlayerUtils.player().getEntityWorld().getBlockState(hit.getBlockPos());
             int x = getX() + 3;
             int y = getY() + (int)(getHeight() * 0.33);
             RenderUtils.drawText(context, "Target: ", x, y, 1.0F, true);

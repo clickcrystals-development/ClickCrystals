@@ -23,7 +23,7 @@ public class SphereWireframeRenderState implements SimpleGuiElementRenderState {
     }
 
     @Override
-    public void setupVertices(VertexConsumer buf, float depth) {
+    public void setupVertices(VertexConsumer buf) {
         for (int pitch = 0; pitch < 360; pitch += ss.deltaTheta) {
             for (int yaw = 0; yaw < 180; yaw += ss.deltaTheta) {
                 Vector3d vec1 = MathUtils.toVector(pitch, yaw, ss.radius);
@@ -70,10 +70,10 @@ public class SphereWireframeRenderState implements SimpleGuiElementRenderState {
         float length = (float) Math.sqrt(dx * dx + dy * dy);
 
         ss.pose.rotateAbout(angle, x1, y1);
-        buf.vertex(ss.pose, x1 - t, y1 - t, 0).color(color);
-        buf.vertex(ss.pose, x1 + length + t, y1 - t, 0).color(color);
-        buf.vertex(ss.pose, x1 + length + t, y1 + t, 0).color(color);
-        buf.vertex(ss.pose, x1 - t, y1 + t, 0).color(color);
+        buf.vertex(ss.pose, x1 - t, y1 - t).color(color);
+        buf.vertex(ss.pose, x1 + length + t, y1 - t).color(color);
+        buf.vertex(ss.pose, x1 + length + t, y1 + t).color(color);
+        buf.vertex(ss.pose, x1 - t, y1 + t).color(color);
 
         ss.pose.popMatrix();
     }

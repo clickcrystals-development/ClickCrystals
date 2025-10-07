@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.events.events.client.MouseScrollEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.interfaces.AccessorMouse;
 import net.minecraft.client.Mouse;
+import net.minecraft.client.input.MouseInput;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,13 +18,13 @@ public abstract class MixinMouse implements Global, AccessorMouse {
 
     @Shadow private double cursorDeltaY;
     @Shadow private double cursorDeltaX;
-    @Shadow protected abstract void onMouseButton(long window, int button, int action, int mods);
+    @Shadow protected abstract void onMouseButton(long window, MouseInput input, int action);
     @Shadow protected abstract void onMouseScroll(long window, double horizontal, double vertical);
 
     @Inject(method = "onMouseButton", at = @At("HEAD"), cancellable = true)
-    public void onButton(long window, int button, int action, int mods, CallbackInfo ci) {
+    public void onButton(long window, MouseInput input, int action, CallbackInfo ci) {
         ClickType click = ClickType.of(action);
-        MouseClickEvent event = new MouseClickEvent(button, click);
+        MouseClickEvent event = new MouseClickEvent(input.button(), click);
         system.eventBus.passWithCallbackInfo(ci, event);
     }
 
@@ -48,25 +49,25 @@ public abstract class MixinMouse implements Global, AccessorMouse {
 
     @Override
     public void leftClick() {
-        onMouseButton(mc.getWindow().getHandle(), 0, 1, 0);
+        onMouseButton(mc.getWindow().getHandle(), new MouseInput(0, 0), 1);
         system.scheduler.runDelayedTask(() -> mc.execute(() -> {
-            onMouseButton(mc.getWindow().getHandle(), 0, 0, 0);
+            onMouseButton(mc.getWindow().getHandle(), new MouseInput(0, 0), 0);
         }), 50);
     }
 
     @Override
     public void rightClick() {
-        onMouseButton(mc.getWindow().getHandle(), 1, 1, 0);
+        onMouseButton(mc.getWindow().getHandle(), new MouseInput(1, 0), 1);
         system.scheduler.runDelayedTask(() -> mc.execute(() -> {
-            onMouseButton(mc.getWindow().getHandle(), 1, 0, 0);
+            onMouseButton(mc.getWindow().getHandle(), new MouseInput(1, 0), 0);
         }), 50);
     }
 
     @Override
     public void middleClick() {
-        onMouseButton(mc.getWindow().getHandle(), 2, 1, 0);
+        onMouseButton(mc.getWindow().getHandle(), new MouseInput(2, 0), 1);
         system.scheduler.runDelayedTask(() -> mc.execute(() -> {
-            onMouseButton(mc.getWindow().getHandle(), 2, 0, 0);
+            onMouseButton(mc.getWindow().getHandle(), new MouseInput(2, 0), 0);
         }), 50);
     }
 

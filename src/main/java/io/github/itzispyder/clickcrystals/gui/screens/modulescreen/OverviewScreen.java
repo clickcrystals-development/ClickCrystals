@@ -14,6 +14,7 @@ import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;
@@ -80,18 +81,18 @@ public class OverviewScreen extends GuiScreen {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (currentEditing != null && !currentEditing.isMouseOver((int)mouseX, (int)mouseY)) {
+    public boolean mouseClicked(Click click, boolean doubled) {
+        if (currentEditing != null && !currentEditing.isMouseOver((int)click.x(), (int)click.y())) {
             this.removeCurrentEditing();
             return true;
         }
 
-        return super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(click, doubled);
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        super.mouseReleased(mouseX, mouseY, button);
+    public boolean mouseReleased(Click click) {
+        super.mouseReleased(click);
         ClickCrystals.config.saveOverviewScreen(this);
         ClickCrystals.config.save();
         return true;

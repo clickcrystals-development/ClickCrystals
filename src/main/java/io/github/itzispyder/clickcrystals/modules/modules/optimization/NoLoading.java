@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
+import net.minecraft.client.gui.screen.world.LevelLoadingScreen;
 
 public class NoLoading extends Module implements Listener {
 
@@ -25,7 +25,7 @@ public class NoLoading extends Module implements Listener {
 
     @EventHandler
     private void onScreenChange(SetScreenEvent e) {
-        if (e.getScreen() instanceof DownloadingTerrainScreen) {
+        if (e.getScreen() instanceof LevelLoadingScreen) {
             e.setCancelled(true);
         }
     }

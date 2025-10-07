@@ -43,7 +43,7 @@ public class LookCommand extends Command {
                                 .executes(context -> {
                                     PlayerEntity player = PlayerUtils.getNearestPlayer(128, Entity::isAlive);
                                     if (player != null) {
-                                        info("Rotating to " + player.getGameProfile().getName() + " from " + dist(player) + " blocks away");
+                                        info("Rotating to " + player.getGameProfile().name() + " from " + dist(player) + " blocks away");
                                         rotateTo(player);
                                         return SINGLE_SUCCESS;
                                     }
@@ -92,6 +92,6 @@ public class LookCommand extends Command {
         if (PlayerUtils.invalid() || ent == null) {
             return 0;
         }
-        return (int)ent.getPos().distanceTo(PlayerUtils.player().getPos());
+        return (int)ent.getEntityPos().distanceTo(PlayerUtils.player().getEntityPos());
     }
 }

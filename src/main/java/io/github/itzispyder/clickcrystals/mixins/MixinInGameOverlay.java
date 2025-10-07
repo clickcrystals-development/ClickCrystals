@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinInGameOverlay {
 
     @Inject(method = "renderFireOverlay", at = @At("HEAD"), cancellable = true)
-    private static void renderFireOverlay(MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
+    private static void renderFireOverlay(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Sprite sprite, CallbackInfo ci) {
         if (Module.isEnabled(NoOverlay.class)) {
             ci.cancel();
         }

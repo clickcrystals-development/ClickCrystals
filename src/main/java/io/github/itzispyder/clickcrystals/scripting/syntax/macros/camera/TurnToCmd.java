@@ -54,14 +54,14 @@ public class TurnToCmd extends ScriptCommand {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(read.nextStr());
                 PlayerUtils.runOnNearestEntity(128, filter, entity -> {
                     if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate((PlayerEntity) entity))
-                        turn(entity.getPos(), eyes, args);
+                        turn(entity.getEntityPos(), eyes, args);
                 });
             }
 
             case ANY_BLOCK -> PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> turn(pos.toCenterPos(), eyes, args));
             case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(128, Entity::isAlive, entity -> {
                 if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate(((PlayerEntity) entity)))
-                    turn(entity.getPos(), eyes, args);
+                    turn(entity.getEntityPos(), eyes, args);
             });
 
             case POSITION -> {

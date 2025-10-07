@@ -38,7 +38,7 @@ public class CapeManager {
     }
 
     public Identifier getCapeTexture(GameProfile profile) {
-        String id = profile.getId().toString();
+        String id = profile.id().toString();
 
         if (owners.contains(id)) {
             return Tex.Models.CLICKCRYSTALS_CAPE_DEV;

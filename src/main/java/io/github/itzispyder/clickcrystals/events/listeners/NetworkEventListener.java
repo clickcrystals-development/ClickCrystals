@@ -82,8 +82,8 @@ public class NetworkEventListener implements Listener {
 
                 // broadcasting joins
                 for (PlayerListS2CPacket.Entry entry : packet.getPlayerAdditionEntries()) {
-                    UUID id = entry.profile().getId();
-                    String name = entry.profile().getName();
+                    UUID id = entry.profile().id();
+                    String name = entry.profile().name();
 
                     if (ClickCrystals.info.getOwner(id) != null) {
                         Notification.create()

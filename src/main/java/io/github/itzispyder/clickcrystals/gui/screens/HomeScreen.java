@@ -13,7 +13,9 @@ import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.input.KeyInput;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -116,9 +118,9 @@ public class HomeScreen extends AnimatedBase {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        super.keyPressed(keyCode, scanCode, modifiers);
-        if (keyCode == GLFW.GLFW_KEY_ENTER && this.selected == searchBar && !searchBar.getQuery().isEmpty()) {
+    public boolean keyPressed(KeyInput e) {
+        super.keyPressed(e);
+        if (e.getKeycode() == GLFW.GLFW_KEY_ENTER && this.selected == searchBar && !searchBar.getQuery().isEmpty()) {
             mc.setScreen(new SearchScreen() {{
                 this.searchbar.setQuery(HomeScreen.this.searchBar.getQuery());
                 this.filterByQuery(this.searchbar);
@@ -128,14 +130,14 @@ public class HomeScreen extends AnimatedBase {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(Click click, boolean doubled) {
         if (!OPENED_BEFORE) {
             mc.setScreen(new DiscordInviteScreen());
             OPENED_BEFORE = true;
             return true;
         }
 
-        super.mouseClicked(mouseX, mouseY, button);
+        super.mouseClicked(click, doubled);
         return true;
     }
 }

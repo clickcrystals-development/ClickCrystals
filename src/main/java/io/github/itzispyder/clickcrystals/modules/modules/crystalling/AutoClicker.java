@@ -240,7 +240,7 @@ public class AutoClicker extends ListenerModule {
         float hp = prevHp;
         Vec3d pos = prevPos;
         prevHp = p.getHealth();
-        prevPos = p.getPos();
+        prevPos = p.getEntityPos();
 
         if (mc.crosshairTarget instanceof EntityHitResult hit) {
             noTarget = false;
@@ -261,7 +261,7 @@ public class AutoClicker extends ListenerModule {
             }
             return false;
         }
-        if (stopWhenMove.getVal() && p.getPos().distanceTo(pos) > 0.1) {
+        if (stopWhenMove.getVal() && p.getEntityPos().distanceTo(pos) > 0.1) {
             if (left.getVal() || right.getVal()) {
                 left.setVal(false);
                 right.setVal(false);

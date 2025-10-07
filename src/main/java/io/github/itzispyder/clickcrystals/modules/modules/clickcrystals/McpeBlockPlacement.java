@@ -60,7 +60,7 @@ public class McpeBlockPlacement extends ListenerModule {
         Direction dir = p.getMovementDirection();
         BlockPos foot = p.getBlockPos().add(0, -1, 0);
         BlockPos target = this.getDirectionalFootBlock(dir, p.getBlockPos());
-        World world = p.getWorld();
+        World world = p.getEntityWorld();
 
         if (target.toCenterPos().distanceTo(foot.toCenterPos()) > 1.1) // can't place diagonally with a 10% error range
             return null;

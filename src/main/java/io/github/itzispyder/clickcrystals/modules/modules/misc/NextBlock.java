@@ -125,7 +125,7 @@ public class NextBlock extends Module implements Listener {
     private void setNextBlock() {
         wasAborted = false;
         ClientPlayerEntity p = PlayerUtils.player();
-        World w = p.getWorld();
+        World w = p.getEntityWorld();
 
         if (mc.crosshairTarget instanceof BlockHitResult hit) {
             BlockState b = w.getBlockState(hit.getBlockPos());
@@ -163,7 +163,7 @@ public class NextBlock extends Module implements Listener {
     }
 
     public Vec3d getNearestToPlayer(ClientPlayerEntity p) {
-        World w = p.getWorld();
+        World w = p.getEntityWorld();
         Box box = new Box(p.getBlockPos()).expand(5);
         AtomicDouble nearest = new AtomicDouble(10.0);
         AtomicReference<Vec3d> target = new AtomicReference<>(null);

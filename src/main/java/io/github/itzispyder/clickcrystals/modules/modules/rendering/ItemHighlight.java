@@ -81,7 +81,7 @@ public class ItemHighlight extends ListenerModule {
 
     public List<ItemEntity> getItemEntities() {
         List<ItemEntity> list = new ArrayList<>();
-        for (Entity ent : PlayerUtils.player().clientWorld.getEntities())
+        for (Entity ent : PlayerUtils.getClientWorld().getEntities())
             if (ent instanceof ItemEntity item)
                 list.add(item);
         return list;

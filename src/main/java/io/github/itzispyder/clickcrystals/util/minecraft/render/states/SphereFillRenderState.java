@@ -22,7 +22,7 @@ public class SphereFillRenderState implements SimpleGuiElementRenderState {
     }
 
     @Override
-    public void setupVertices(VertexConsumer buf, float depth) {
+    public void setupVertices(VertexConsumer buf) {
         for (int pitch = 0; pitch < 360; pitch += ss.deltaTheta) {
             for (int yaw = 0; yaw < 180; yaw += ss.deltaTheta) {
                 Vector3d vec1 = MathUtils.toVector(pitch, yaw, ss.radius);
@@ -35,10 +35,10 @@ public class SphereFillRenderState implements SimpleGuiElementRenderState {
                 float[] vtx3 = MathUtils.projectVertex(vec3, ss.rotation, ss.focalLen);
                 float[] vtx4 = MathUtils.projectVertex(vec4, ss.rotation, ss.focalLen);
 
-                buf.vertex(ss.pose, ss.x + vtx1[0], ss.y + vtx1[1], depth).color(color);
-                buf.vertex(ss.pose, ss.x + vtx2[0], ss.y + vtx2[1], depth).color(color);
-                buf.vertex(ss.pose, ss.x + vtx3[0], ss.y + vtx3[1], depth).color(color);
-                buf.vertex(ss.pose, ss.x + vtx4[0], ss.y + vtx4[1], depth).color(color);
+                buf.vertex(ss.pose, ss.x + vtx1[0], ss.y + vtx1[1]).color(color);
+                buf.vertex(ss.pose, ss.x + vtx2[0], ss.y + vtx2[1]).color(color);
+                buf.vertex(ss.pose, ss.x + vtx3[0], ss.y + vtx3[1]).color(color);
+                buf.vertex(ss.pose, ss.x + vtx4[0], ss.y + vtx4[1]).color(color);
             }
         }
     }

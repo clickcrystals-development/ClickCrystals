@@ -11,6 +11,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.Comparator;
@@ -77,8 +78,8 @@ public class KeybindScreen extends DefaultBase {
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        super.mouseReleased(mouseX, mouseY, button);
+    public boolean mouseReleased(Click click) {
+        super.mouseReleased(click);
         ClickCrystals.config.saveKeybinds();
         ClickCrystals.config.save();
         return true;

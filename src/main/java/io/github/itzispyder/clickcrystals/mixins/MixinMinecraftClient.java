@@ -48,7 +48,7 @@ public abstract class MixinMinecraftClient implements AccessorMinecraftClient, G
         system.onClientStopping();
     }
 
-    @Inject(method = "disconnect", at = @At("HEAD"))
+    @Inject(method = "disconnect*", at = @At("HEAD"))
     public void disconnect(Screen disconnectionScreen, boolean transferring, CallbackInfo ci) {
         system.eventBus.pass(new GameLeaveEvent());
     }
@@ -63,9 +63,9 @@ public abstract class MixinMinecraftClient implements AccessorMinecraftClient, G
         this.doItemUse();
     }
 
-    @Inject(method = "hasOutline", at = @At("HEAD"), cancellable = true)
-    private void outlineEntities(Entity entity, CallbackInfoReturnable<Boolean> ci) {
-        if (entity instanceof ClientPlayerEntity && Module.isEnabled(SelfGlow.class))
-            ci.setReturnValue(true);
-    }
+//    @Inject(method = "hasOutline", at = @At("HEAD"), cancellable = true)
+//    private void outlineEntities(Entity entity, CallbackInfoReturnable<Boolean> ci) {
+//        if (entity instanceof ClientPlayerEntity && Module.isEnabled(SelfGlow.class))
+//            ci.setReturnValue(true);
+//    }
 }

@@ -11,6 +11,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 
 public class AdvancedSettingScreen extends DefaultBase {
@@ -108,8 +109,8 @@ public class AdvancedSettingScreen extends DefaultBase {
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        super.mouseReleased(mouseX, mouseY, button);
+    public boolean mouseReleased(Click click) {
+        super.mouseReleased(click);
         ClickCrystals.config.saveKeybinds();
         ClickCrystals.config.save();
         return true;

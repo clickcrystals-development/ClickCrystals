@@ -41,7 +41,7 @@ public final class PlayerUtils implements Global {
 
         ClientPlayerEntity p = mc.player;
         GameProfile profile = player.getGameProfile();
-        PlayerListEntry entry = p.networkHandler.getPlayerListEntry(profile.getId());
+        PlayerListEntry entry = p.networkHandler.getPlayerListEntry(profile.id());
 
         return entry != null;
     }
@@ -55,15 +55,15 @@ public final class PlayerUtils implements Global {
     }
 
     public static World getWorld() {
-        return player().getWorld();
+        return player().getEntityWorld();
     }
 
     public static ClientWorld getClientWorld() {
-        return player().clientWorld;
+        return mc.world;
     }
 
     public static Vec3d getPos() {
-        return player().getPos();
+        return player().getEntityPos();
     }
 
     public static Vec3d getEyes() {
@@ -92,7 +92,7 @@ public final class PlayerUtils implements Global {
         }
 
         GameProfile p = player().getGameProfile();
-        PlayerListEntry entry = player().networkHandler.getPlayerListEntry(p.getId());
+        PlayerListEntry entry = player().networkHandler.getPlayerListEntry(p.id());
 
         if (entry == null) {
             return -1;
@@ -155,7 +155,7 @@ public final class PlayerUtils implements Global {
 
     public static Entity getNearestEntity(World world, Entity exclude, Vec3d at, double range, Predicate<Entity> filter) {
         List<Entity> candidates = world.getOtherEntities(exclude, Box.from(at).expand(range), filter).stream()
-                .sorted(Comparator.comparing(entity -> entity.getPos().distanceTo(at)))
+                .sorted(Comparator.comparing(entity -> entity.getEntityPos().distanceTo(at)))
                 .toList();
 
         if (candidates.isEmpty()) {
@@ -170,12 +170,12 @@ public final class PlayerUtils implements Global {
 
     public static Entity getNearestEntity(double range, Predicate<Entity> filter) {
         if (invalid()) return null;
-        return getNearestEntity(getWorld(), player(), player().getPos(), range, filter);
+        return getNearestEntity(getWorld(), player(), player().getEntityPos(), range, filter);
     }
 
     public static PlayerEntity getNearestPlayer(double range, Predicate<Entity> filter) {
         if (invalid()) return null;
-        return (PlayerEntity)getNearestEntity(getWorld(), player(), player().getPos(), range, entity -> entity instanceof PlayerEntity && filter.test(entity));
+        return (PlayerEntity)getNearestEntity(getWorld(), player(), player().getEntityPos(), range, entity -> entity instanceof PlayerEntity && filter.test(entity));
     }
 
     public static boolean runOnNearestBlock(double range, BiPredicate<BlockPos, BlockState> filter, BiConsumer<BlockPos, BlockState> function) {
@@ -187,7 +187,7 @@ public final class PlayerUtils implements Global {
         AtomicReference<BlockPos> nearestPos = new AtomicReference<>();
         AtomicReference<BlockState> nearestState = new AtomicReference<>();
         Box box = player().getBoundingBox().expand(range);
-        Vec3d player = player().getPos();
+        Vec3d player = player().getEntityPos();
         World world = getWorld();
 
         PlayerUtils.boxIterator(world, box, (pos, state) -> {
@@ -231,7 +231,7 @@ public final class PlayerUtils implements Global {
         AtomicReference<Double> nearestDist = new AtomicReference<>(range);
         AtomicReference<BlockPos> nearestPos = new AtomicReference<>();
         Box box = player().getBoundingBox().expand(range);
-        Vec3d playerPos = player().getPos();
+        Vec3d playerPos = player().getEntityPos();
         World world = getWorld();
 
         boxIterator(world, box, (pos, state) -> {

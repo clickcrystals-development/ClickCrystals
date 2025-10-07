@@ -146,7 +146,7 @@ public class EntityUtils implements Global {
     }
 
     public static Voidable<FluidState> getTargetFluid(Entity ref, boolean prioritizeSource) {
-        World world = ref.getWorld();
+        World world = ref.getEntityWorld();
         Vec3d eye = ref.getEyePos();
         Vec3d dir = ref.getRotationVector().normalize();
         FluidState targetState = null;
@@ -184,10 +184,10 @@ public class EntityUtils implements Global {
     }
 
     public static Entity getNearestEntity(Entity ref, double range, Predicate<Entity> filter) {
-        Vec3d at = ref.getPos();
-        List<Entity> candidates = ref.getWorld()
+        Vec3d at = ref.getEntityPos();
+        List<Entity> candidates = ref.getEntityWorld()
                 .getOtherEntities(PlayerUtils.player(), Box.from(at).expand(range), ent -> ent != ref && filter.test(ent)).stream()
-                .sorted(Comparator.comparing(entity -> entity.getPos().distanceTo(at)))
+                .sorted(Comparator.comparing(entity -> entity.getEntityPos().distanceTo(at)))
                 .toList();
 
         if (candidates.isEmpty()) {
@@ -205,8 +205,8 @@ public class EntityUtils implements Global {
         AtomicReference<BlockPos> nearestPos = new AtomicReference<>();
         AtomicReference<BlockState> nearestState = new AtomicReference<>();
         Box box = ref.getBoundingBox().expand(range);
-        Vec3d player = ref.getPos();
-        World world = ref.getWorld();
+        Vec3d player = ref.getEntityPos();
+        World world = ref.getEntityWorld();
 
         PlayerUtils.boxIterator(world, box, (pos, state) -> {
             if (filter.test(pos, state) && pos.isWithinDistance(player, nearestDist.get())) {
@@ -268,7 +268,8 @@ public class EntityUtils implements Global {
             return new ArrayList<>();
 
         List<Entity> list = new ArrayList<>();
-        for (Entity ent : PlayerUtils.player().clientWorld.getEntities())
+
+        for (Entity ent : PlayerUtils.getClientWorld().getEntities())
             if (ent != null && ent.isAlive() && pos.equals(ent.getBlockPos()))
                 list.add(ent);
         return list;

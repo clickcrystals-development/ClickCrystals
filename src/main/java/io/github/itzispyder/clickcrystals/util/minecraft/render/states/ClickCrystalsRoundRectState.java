@@ -60,7 +60,7 @@ public class ClickCrystalsRoundRectState implements SimpleGuiElementRenderState 
     // squeezes entire quads into triangle fans for rounded rectangle
     // ...yeah i know ...blame vibrant visuals
     @Override
-    public void setupVertices(VertexConsumer buf, float depth) {
+    public void setupVertices(VertexConsumer buf) {
         float[][] corners = {
                 { x + w - r,  y + h - r },
                 { x + r,      y + h - r },
@@ -84,31 +84,31 @@ public class ClickCrystalsRoundRectState implements SimpleGuiElementRenderState 
             float x3 = corners[corner][0] + (float)(Math.cos(angle) * r);
             float y3 = corners[corner][1] + (float)(Math.sin(angle) * r);
 
-            buf.vertex(pose, x1, y1, depth).color(colorCenter);
-            buf.vertex(pose, x1, y1, depth).color(colorCenter);
-            buf.vertex(pose, x2, y2, depth).color(colors[corner]);
-            buf.vertex(pose, x3, y3, depth).color(colors[corner]);
+            buf.vertex(pose, x1, y1).color(colorCenter);
+            buf.vertex(pose, x1, y1).color(colorCenter);
+            buf.vertex(pose, x2, y2).color(colors[corner]);
+            buf.vertex(pose, x3, y3).color(colors[corner]);
         }
 
-        buf.vertex(pose, x1, y1, depth).color(colorCenter);
-        buf.vertex(pose, x1, y1, depth).color(colorCenter);
-        buf.vertex(pose, x + w - r, y + h, depth).color(colors[0]);
-        buf.vertex(pose, x + r, y + h, depth).color(colors[1]);
+        buf.vertex(pose, x1, y1).color(colorCenter);
+        buf.vertex(pose, x1, y1).color(colorCenter);
+        buf.vertex(pose, x + w - r, y + h).color(colors[0]);
+        buf.vertex(pose, x + r, y + h).color(colors[1]);
 
-        buf.vertex(pose, x1, y1, depth).color(colorCenter);
-        buf.vertex(pose, x1, y1, depth).color(colorCenter);
-        buf.vertex(pose, x, y + h - r, depth).color(colors[1]);
-        buf.vertex(pose, x, y + r, depth).color(colors[2]);
+        buf.vertex(pose, x1, y1).color(colorCenter);
+        buf.vertex(pose, x1, y1).color(colorCenter);
+        buf.vertex(pose, x, y + h - r).color(colors[1]);
+        buf.vertex(pose, x, y + r).color(colors[2]);
 
-        buf.vertex(pose, x1, y1, depth).color(colorCenter);
-        buf.vertex(pose, x1, y1, depth).color(colorCenter);
-        buf.vertex(pose, x + r, y, depth).color(colors[2]);
-        buf.vertex(pose, x + w - r, y, depth).color(colors[3]);
+        buf.vertex(pose, x1, y1).color(colorCenter);
+        buf.vertex(pose, x1, y1).color(colorCenter);
+        buf.vertex(pose, x + r, y).color(colors[2]);
+        buf.vertex(pose, x + w - r, y).color(colors[3]);
 
-        buf.vertex(pose, x1, y1, depth).color(colorCenter);
-        buf.vertex(pose, x1, y1, depth).color(colorCenter);
-        buf.vertex(pose, x + w, y + r, depth).color(colors[3]);
-        buf.vertex(pose, x + w, y + h - r, depth).color(colors[0]);
+        buf.vertex(pose, x1, y1).color(colorCenter);
+        buf.vertex(pose, x1, y1).color(colorCenter);
+        buf.vertex(pose, x + w, y + r).color(colors[3]);
+        buf.vertex(pose, x + w, y + h - r).color(colors[0]);
     }
 
     @Override

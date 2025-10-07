@@ -119,7 +119,7 @@ public final class ClickCrystals implements ModInitializer, Global {
             .id("command-prefix")
             .defaultKey(GLFW.GLFW_KEY_COMMA)
             .condition((bind, screen) -> screen == null)
-            .onPress(bind -> mc.setScreen(new ChatScreen("")))
+            .onPress(bind -> mc.setScreen(new ChatScreen("", false)))
             .onChange(config::saveKeybind)
             .build();
 
@@ -279,7 +279,7 @@ public final class ClickCrystals implements ModInitializer, Global {
 
         // client
         system.addModule(new AutoDisconnect());
-        system.addModule(new SelfGlow());
+//        system.addModule(new SelfGlow());
         system.addModule(new GuiBorders());
         system.addModule(new InGameHuds());
         system.addModule(new SilkTouch());
@@ -332,7 +332,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         // rendering
         system.addModule(new Trajectories());
         system.addModule(new PearlCustomizer());
-        system.addModule(new TotemPopColor());
+//        system.addModule(new TotemPopColor());
         system.addModule(new DeathEffects());
         system.addModule(new BlockOutline());
         system.addModule(new NoGuiBackground());

@@ -77,11 +77,11 @@ public class VectorParser {
     }
 
     public VectorParser(String arg1, String arg2, String arg3, Entity relativeTo) {
-        this(arg1, arg2, arg3, relativeTo.getPos(), relativeTo.getRotationClient());
+        this(arg1, arg2, arg3, relativeTo.getEntityPos(), relativeTo.getRotationClient());
     }
 
     public VectorParser(ScriptArgs.Arg arg1, ScriptArgs.Arg arg2, ScriptArgs.Arg arg3, Entity relativeTo) {
-        this(arg1.toString(), arg2.toString(), arg3.toString(), relativeTo.getPos(), relativeTo.getRotationClient());
+        this(arg1.toString(), arg2.toString(), arg3.toString(), relativeTo.getEntityPos(), relativeTo.getRotationClient());
     }
 
     public VectorParser(String arg1, String arg2, String arg3, Vec3d relativePos, Vec2f relativeDir) {

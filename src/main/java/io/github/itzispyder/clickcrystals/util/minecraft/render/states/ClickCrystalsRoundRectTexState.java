@@ -56,7 +56,7 @@ public class ClickCrystalsRoundRectTexState implements SimpleGuiElementRenderSta
     // squeezes entire quads into triangle fans for rounded rectangle
     // ...yeah i know ...blame vibrant visuals
     @Override
-    public void setupVertices(VertexConsumer buf, float depth) {
+    public void setupVertices(VertexConsumer buf) {
         float[][] corners = {
                 { x + w - r,  y + h - r },
                 { x + r,      y + h - r },
@@ -85,31 +85,31 @@ public class ClickCrystalsRoundRectTexState implements SimpleGuiElementRenderSta
             float u3 = (x3 - x) / w;
             float v3 = (y3 - y) / h;
 
-            buf.vertex(pose, x1, y1, depth).texture(u1, v1).color(-1);
-            buf.vertex(pose, x1, y1, depth).texture(u1, v1).color(-1);
-            buf.vertex(pose, x2, y2, depth).texture(u2, v2).color(-1);
-            buf.vertex(pose, x3, y3, depth).texture(u3, v3).color(-1);
+            buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
+            buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
+            buf.vertex(pose, x2, y2).texture(u2, v2).color(-1);
+            buf.vertex(pose, x3, y3).texture(u3, v3).color(-1);
         }
 
-        buf.vertex(pose, x1, y1, depth).texture(u1, v1).color(-1);
-        buf.vertex(pose, x1, y1, depth).texture(u1, v1).color(-1);
-        buf.vertex(pose, x + w - r, y + h, depth).texture((w - r) / w, 1).color(-1);
-        buf.vertex(pose, x + r, y + h, depth).texture(r / w, 1).color(-1);
+        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
+        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
+        buf.vertex(pose, x + w - r, y + h).texture((w - r) / w, 1).color(-1);
+        buf.vertex(pose, x + r, y + h).texture(r / w, 1).color(-1);
 
-        buf.vertex(pose, x1, y1, depth).texture(u1, v1).color(-1);
-        buf.vertex(pose, x1, y1, depth).texture(u1, v1).color(-1);
-        buf.vertex(pose, x, y + h - r, depth).texture(0, (h - r) / h).color(-1);
-        buf.vertex(pose, x, y + r, depth).texture(0, r / h).color(-1);
+        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
+        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
+        buf.vertex(pose, x, y + h - r).texture(0, (h - r) / h).color(-1);
+        buf.vertex(pose, x, y + r).texture(0, r / h).color(-1);
 
-        buf.vertex(pose, x1, y1, depth).texture(u1, v1).color(-1);
-        buf.vertex(pose, x1, y1, depth).texture(u1, v1).color(-1);
-        buf.vertex(pose, x + r, y, depth).texture(r / w, 0).color(-1);
-        buf.vertex(pose, x + w - r, y, depth).texture((w - r) / w, 0).color(-1);
+        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
+        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
+        buf.vertex(pose, x + r, y).texture(r / w, 0).color(-1);
+        buf.vertex(pose, x + w - r, y).texture((w - r) / w, 0).color(-1);
 
-        buf.vertex(pose, x1, y1, depth).texture(u1, v1).color(-1);
-        buf.vertex(pose, x1, y1, depth).texture(u1, v1).color(-1);
-        buf.vertex(pose, x + w, y + r, depth).texture(1, r / h).color(-1);
-        buf.vertex(pose, x + w, y + h - r, depth).texture(1, (h - r) / h).color(-1);
+        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
+        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
+        buf.vertex(pose, x + w, y + r).texture(1, r / h).color(-1);
+        buf.vertex(pose, x + w, y + h - r).texture(1, (h - r) / h).color(-1);
     }
 
     @Override

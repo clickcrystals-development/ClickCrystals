@@ -7,13 +7,10 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 
 import java.awt.*;
 
+// pause development until you find solution @I-No-One
 public class TotemPopColor extends DummyModule {
-    public TotemPopColor(){
-        super("totem-color", Categories.RENDER, "Change totem pop particles color");
-    }
 
     private final SettingSection scGeneral = getGeneralSection();
-
     public final ModuleSetting<Double> red = scGeneral.add(createDoubleSetting()
             .name("Red")
             .description("Decide how much red will be on the color pattern.")
@@ -23,7 +20,6 @@ public class TotemPopColor extends DummyModule {
             .decimalPlaces(1)
             .build()
     );
-
     public final ModuleSetting<Double> green = scGeneral.add(createDoubleSetting()
             .name("Green")
             .description("Decide how much green will be on the color pattern.")
@@ -33,7 +29,6 @@ public class TotemPopColor extends DummyModule {
             .decimalPlaces(1)
             .build()
     );
-
     public final ModuleSetting<Double> blue = scGeneral.add(createDoubleSetting()
             .name("Blue")
             .description("Decide how much blue will be on the color pattern.")
@@ -43,7 +38,6 @@ public class TotemPopColor extends DummyModule {
             .decimalPlaces(1)
             .build()
     );
-
     public final ModuleSetting<Double> alpha = scGeneral.add(createDoubleSetting()
             .name("Alpha")
             .description("Set transparency of the color.")
@@ -53,6 +47,10 @@ public class TotemPopColor extends DummyModule {
             .decimalPlaces(1)
             .build()
     );
+
+    public TotemPopColor(){
+        super("totem-color", Categories.RENDER, "Change totem pop particles color");
+    }
 
     public Color getColor() {
         int r = red.getVal().intValue();

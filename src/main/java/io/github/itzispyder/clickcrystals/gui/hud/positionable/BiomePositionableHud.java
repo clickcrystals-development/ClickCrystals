@@ -26,7 +26,7 @@ public class BiomePositionableHud extends TextHud {
         if (PlayerUtils.valid()) {
             ClientPlayerEntity p = PlayerUtils.player();
             BlockPos pos = p.getBlockPos();
-            World w = p.getWorld();
+            World w = p.getEntityWorld();
             Optional<RegistryKey<Biome>> bi = w.getBiome(pos).getKey();
 
             if (bi.isPresent()) {

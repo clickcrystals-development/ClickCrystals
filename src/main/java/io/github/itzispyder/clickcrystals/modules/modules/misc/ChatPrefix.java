@@ -109,7 +109,7 @@ public class ChatPrefix extends Module implements Listener {
         }
 
         String msg = e.getMessage().toLowerCase();
-        String name = PlayerUtils.player().getGameProfile().getName().toLowerCase();
+        String name = PlayerUtils.player().getGameProfile().name().toLowerCase();
 
         if (!msg.isEmpty() && msg.contains(name)) {
             ping();

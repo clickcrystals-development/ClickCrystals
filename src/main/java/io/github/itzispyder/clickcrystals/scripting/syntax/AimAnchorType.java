@@ -8,10 +8,10 @@ import java.util.function.Function;
 public enum AimAnchorType {
 
     HEAD(Entity::getEyePos, v -> v.add(0, 1.6, 0)),
-    BODY(ent -> ent.getPos().add(0, ent.getHeight() * 0.66, 0), v -> v.add(0, 1.8 * 0.66, 0)),
-    LEGS(ent -> ent.getPos().add(0, ent.getHeight() * 0.33, 0), v -> v.add(0, 1.8 * 0.33, 0)),
-    FEET(Entity::getPos, v -> v),
-    RANDOM(ent -> ent.getPos().add(0.1 * Math.random(), ent.getHeight() * Math.random(), 0.1 * Math.random()),
+    BODY(ent -> ent.getEntityPos().add(0, ent.getHeight() * 0.66, 0), v -> v.add(0, 1.8 * 0.66, 0)),
+    LEGS(ent -> ent.getEntityPos().add(0, ent.getHeight() * 0.33, 0), v -> v.add(0, 1.8 * 0.33, 0)),
+    FEET(Entity::getEntityPos, v -> v),
+    RANDOM(ent -> ent.getEntityPos().add(0.1 * Math.random(), ent.getHeight() * Math.random(), 0.1 * Math.random()),
             v -> v.add(0.1 * Math.random(), 1.6 * Math.random(), 0.1 * Math.random()));
 
     public final Function<Entity, Vec3d> entityFactory;

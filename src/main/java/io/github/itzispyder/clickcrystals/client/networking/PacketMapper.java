@@ -28,7 +28,7 @@ public class PacketMapper {
         this.put(CommandExecutionC2SPacket.class, new Info("commandExecution", "CommandExecutionC2SPacket"));
         this.put(CraftRequestC2SPacket.class, new Info("craftRequest", "CraftRequestC2SPacket"));
         this.put(CreativeInventoryActionC2SPacket.class, new Info("creativeInventoryAction", "CreativeInventoryActionC2SPacket"));
-        this.put(DebugSampleSubscriptionC2SPacket.class, new Info("debugSampleSubscription", "DebugSampleSubscriptionC2SPacket"));
+        this.put(DebugSubscriptionRequestC2SPacket.class, new Info("debugSubscriptionRequest", "DebugSubscriptionRequestC2SPacket"));
         this.put(HandSwingC2SPacket.class, new Info("handSwing", "HandSwingC2SPacket"));
         this.put(JigsawGeneratingC2SPacket.class, new Info("jigsawGenerating", "JigsawGeneratingC2SPacket"));
         this.put(MessageAcknowledgmentC2SPacket.class, new Info("messageAcknowledgment", "MessageAcknowledgmentC2SPacket"));
@@ -73,6 +73,7 @@ public class PacketMapper {
         this.put(BlockEntityUpdateS2CPacket.class, new Info("blockEntityUpdate", "BlockEntityUpdateS2CPacket"));
         this.put(BlockEventS2CPacket.class, new Info("blockEvent", "BlockEventS2CPacket"));
         this.put(BlockUpdateS2CPacket.class, new Info("blockUpdate", "BlockUpdateS2CPacket"));
+        this.put(BlockValueDebugS2CPacket.class, new Info("blockValueDebug", "BlockValueDebugS2CPacket"));
         this.put(BossBarS2CPacket.class, new Info("bossBar", "BossBarS2CPacket"));
         this.put(BundleDelimiterS2CPacket.class, new Info("bundleDelimiter", "BundleDelimiterS2CPacket"));
         this.put(BundleS2CPacket.class, new Info("bundle", "BundleS2CPacket"));
@@ -84,6 +85,7 @@ public class PacketMapper {
         this.put(ChunkLoadDistanceS2CPacket.class, new Info("chunkLoadDistance", "ChunkLoadDistanceS2CPacket"));
         this.put(ChunkRenderDistanceCenterS2CPacket.class, new Info("chunkRenderDistanceCenter", "ChunkRenderDistanceCenterS2CPacket"));
         this.put(ChunkSentS2CPacket.class, new Info("chunkSent", "ChunkSentS2CPacket"));
+        this.put(ChunkValueDebugS2CPacket.class, new Info("chunkValueDebug", "ChunkValueDebugS2CPacket"));
         this.put(ClearTitleS2CPacket.class, new Info("clearTitle", "ClearTitleS2CPacket"));
         this.put(CloseScreenS2CPacket.class, new Info("closeScreen", "CloseScreenS2CPacket"));
         this.put(CommandSuggestionsS2CPacket.class, new Info("commandSuggestions", "CommandSuggestionsS2CPacket"));
@@ -112,12 +114,15 @@ public class PacketMapper {
         this.put(EntityStatusEffectS2CPacket.class, new Info("entityStatusEffect", "EntityStatusEffectS2CPacket"));
         this.put(EntityStatusS2CPacket.class, new Info("entityStatus", "EntityStatusS2CPacket"));
         this.put(EntityTrackerUpdateS2CPacket.class, new Info("entityTrackerUpdate", "EntityTrackerUpdateS2CPacket"));
+        this.put(EntityValueDebugS2CPacket.class, new Info("entityValueDebug", "EntityValueDebugS2CPacket"));
         this.put(EntityVelocityUpdateS2CPacket.class, new Info("entityVelocityUpdate", "EntityVelocityUpdateS2CPacket"));
+        this.put(EventDebugS2CPacket.class, new Info("eventDebug", "EventDebugS2CPacket"));
         this.put(ExperienceBarUpdateS2CPacket.class, new Info("experienceBarUpdate", "ExperienceBarUpdateS2CPacket"));
         this.put(ExplosionS2CPacket.class, new Info("explosion", "ExplosionS2CPacket"));
         this.put(GameJoinS2CPacket.class, new Info("gameJoin", "GameJoinS2CPacket"));
         this.put(GameMessageS2CPacket.class, new Info("gameMessage", "GameMessageS2CPacket"));
         this.put(GameStateChangeS2CPacket.class, new Info("gameStateChange", "GameStateChangeS2CPacket"));
+        this.put(GameTestHighlightPosS2CPacket.class, new Info("gameTestHighlightPos", "GameTestHighlightPosS2CPacket"));
         this.put(HealthUpdateS2CPacket.class, new Info("healthUpdate", "HealthUpdateS2CPacket"));
         this.put(InventoryS2CPacket.class, new Info("inventory", "InventoryS2CPacket"));
         this.put(ItemPickupAnimationS2CPacket.class, new Info("itemPickupAnimation", "ItemPickupAnimationS2CPacket"));

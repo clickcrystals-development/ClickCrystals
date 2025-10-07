@@ -16,7 +16,7 @@ public class SimulationEntry {
 
     public SimulationEntry(Entity entity, ClientPlayerEntity client) {
         this.entityClass = entity.getClass();
-        this.vecDifference = entity.getPos().subtract(client.getPos()).normalize();
+        this.vecDifference = entity.getEntityPos().subtract(client.getEntityPos()).normalize();
 
         float[] rot = MathUtils.toPolar(vecDifference.x, vecDifference.y, vecDifference.z);
         this.yawDifference = rot[1] - client.getYaw();

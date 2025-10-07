@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
+import net.minecraft.client.input.KeyInput;
 
 public class AutoWalk extends ListenerModule {
 
@@ -34,11 +35,12 @@ public class AutoWalk extends ListenerModule {
     @EventHandler
     private void onKey(KeyPressEvent e) {
         if (e.isScreenNull()) {
-            if (mc.options.sprintKey.matchesKey(e.getKeycode(), e.getScancode()) ||
-                    mc.options.forwardKey.matchesKey(e.getKeycode(), e.getScancode()) ||
-                    mc.options.backKey.matchesKey(e.getKeycode(), e.getScancode()) ||
-                    mc.options.leftKey.matchesKey(e.getKeycode(), e.getScancode()) ||
-                    mc.options.rightKey.matchesKey(e.getKeycode(), e.getScancode())
+            KeyInput input = new KeyInput(e.getKeycode(), e.getScancode(), 0);
+            if (mc.options.sprintKey.matchesKey(input) ||
+                    mc.options.forwardKey.matchesKey(input) ||
+                    mc.options.backKey.matchesKey(input) ||
+                    mc.options.leftKey.matchesKey(input) ||
+                    mc.options.rightKey.matchesKey(input)
             ) {
                 e.cancel();
             }

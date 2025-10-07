@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoArmorRender;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
@@ -24,7 +25,7 @@ public abstract class MixinArmorFeatureRenderer<S extends BipedEntityRenderState
     }
 
     @Inject(method = "renderArmor", at = @At("HEAD"), cancellable = true)
-    private void onRenderArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ItemStack stack, EquipmentSlot slot, int light, A armorModel, CallbackInfo ci) {
+    private void onRenderArmor(MatrixStack matrices, OrderedRenderCommandQueue orderedRenderCommandQueue, ItemStack stack, EquipmentSlot slot, int light, S bipedEntityRenderState, CallbackInfo ci) {
         NoArmorRender nar = Module.get(NoArmorRender.class);
 
         if (nar.isEnabled() && !nar.canRender(slot)) {

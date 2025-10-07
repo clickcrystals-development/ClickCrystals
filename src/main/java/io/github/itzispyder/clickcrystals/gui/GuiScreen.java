@@ -11,8 +11,10 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import net.minecraft.client.gl.RenderPipelines;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
@@ -128,12 +130,16 @@ public abstract class GuiScreen extends Screen implements Global {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(Click click, boolean doubled) {
+        int mouseX = (int) click.x();
+        int mouseY = (int) click.y();
+        int button = click.button();
+
         for (int i = children.size() - 1; i >= 0; i--) {
             GuiElement child = children.get(i);
-            if (child.isMouseOver((int)mouseX, (int)mouseY)) {
+            if (child.isMouseOver(mouseX, mouseY)) {
                 this.selected = child;
-                this.cursor = Pair.of((int)mouseX, (int)mouseY);
+                this.cursor = Pair.of(mouseX, mouseY);
                 child.mouseClicked(mouseX, mouseY, button);
                 break;
             }
@@ -147,16 +153,20 @@ public abstract class GuiScreen extends Screen implements Global {
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        super.mouseReleased(mouseX, mouseY, button);
+    public boolean mouseReleased(Click click) {
+        super.mouseReleased(click);
 
         if (!(selected instanceof Typeable)) {
             this.selected = null;
         }
 
+        int mouseX = (int) click.x();
+        int mouseY = (int) click.y();
+        int button = click.button();
+
         for (int i = children.size() - 1; i >= 0; i--) {
             GuiElement child = children.get(i);
-            if (child.isMouseOver((int)mouseX, (int)mouseY)) {
+            if (child.isMouseOver(mouseX, mouseY)) {
                 child.mouseReleased(mouseX, mouseY, button);
                 break;
             }
@@ -170,11 +180,11 @@ public abstract class GuiScreen extends Screen implements Global {
     }
 
     @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-        super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+    public boolean mouseDragged(Click click, double offsetX, double offsetY) {
+        super.mouseDragged(click, offsetX, offsetY);
 
         for (MouseDragCallback callback : mouseDragListeners) {
-            callback.handleMouse(mouseX, mouseY, button, deltaX, deltaY);
+            callback.handleMouse(click.x(), click.y(), click.button(), offsetX, offsetY);
         }
 
         return true;
@@ -213,7 +223,11 @@ public abstract class GuiScreen extends Screen implements Global {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyInput input) {
+        int keyCode = input.getKeycode();
+        int scanCode = input.scancode();
+        int modifiers = input.modifiers();
+
         if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT) {
             this.shiftKeyPressed = true;
         }
@@ -224,7 +238,7 @@ public abstract class GuiScreen extends Screen implements Global {
             this.ctrlKeyPressed = true;
         }
 
-        super.keyPressed(keyCode, scanCode, modifiers);
+        super.keyPressed(input);
 
         for (KeyPressCallback callback : keyActionListeners) {
             callback.handleKey(keyCode, ClickType.CLICK, scanCode, modifiers);
@@ -238,7 +252,11 @@ public abstract class GuiScreen extends Screen implements Global {
     }
 
     @Override
-    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+    public boolean keyReleased(KeyInput input) {
+        int keyCode = input.getKeycode();
+        int scanCode = input.scancode();
+        int modifiers = input.modifiers();
+
         if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT) {
             this.shiftKeyPressed = false;
         }
@@ -249,7 +267,7 @@ public abstract class GuiScreen extends Screen implements Global {
             this.ctrlKeyPressed = false;
         }
 
-        super.keyReleased(keyCode, scanCode, modifiers);
+        super.keyReleased(input);
 
         for (KeyPressCallback callback : keyActionListeners) {
             callback.handleKey(keyCode, ClickType.RELEASE, scanCode, modifiers);

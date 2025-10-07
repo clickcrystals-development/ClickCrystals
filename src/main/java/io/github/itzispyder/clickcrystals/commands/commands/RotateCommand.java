@@ -35,12 +35,12 @@ public class RotateCommand extends Command {
                         .then(argument("player", PlayerArgumentType.create())
                                 .executes(context -> {
                                     PlayerListEntry entry = context.getArgument("player", PlayerListEntry.class);
-                                    String name = entry.getProfile().getName();
+                                    String name = entry.getProfile().name();
                                     ClientPlayerEntity p = PlayerUtils.player();
                                     PlayerEntity target = null;
 
-                                    for (PlayerEntity player : p.getWorld().getPlayers()) {
-                                        if (player.getGameProfile().getName().equalsIgnoreCase(name)) {
+                                    for (PlayerEntity player : p.getEntityWorld().getPlayers()) {
+                                        if (player.getGameProfile().name().equalsIgnoreCase(name)) {
                                             target = player;
                                             break;
                                         }
@@ -51,7 +51,7 @@ public class RotateCommand extends Command {
                                         return SINGLE_SUCCESS;
                                     }
 
-                                    Vec3d vec = target.getPos().subtract(p.getEyePos()).normalize();
+                                    Vec3d vec = target.getEntityPos().subtract(p.getEyePos()).normalize();
                                     system.cameraRotator.ready()
                                             .addTicket(vec)
                                             .lockCursor()
