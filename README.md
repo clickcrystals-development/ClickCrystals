@@ -33,7 +33,7 @@ Happy coding and cpvping!
 | What You Have | What to get                                                                                                                   |
 |:--------------|:------------------------------------------------------------------------------------------------------------------------------|
 | higher..      | how is that even possible?                                                                                                    |
-| 1.21.9        | not supported                                                                                                                 |
+| 1.21.9        | [ClickCrystals-1.21.9-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended |
 | 1.21.8        | [ClickCrystals-1.21.6-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended |
 | 1.21.7        | [ClickCrystals-1.21.6-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended |
 | 1.21.6        | [ClickCrystals-1.21.6-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended |
@@ -44,6 +44,10 @@ Happy coding and cpvping!
 | 1.21.1        | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
 | 1.21          | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
 | ..lower       | cry                                                                                                                           |
+
+### Can't Find The Version You're Looking For?
+There's still a chance for you to access latest script syntax!
+Take a look in latest releases for [experimental versions](https://github.com/itzispyder/clickcrystals/releases/latest)!
 
 
 ## Newest Changes

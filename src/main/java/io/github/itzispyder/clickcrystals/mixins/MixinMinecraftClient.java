@@ -5,12 +5,10 @@ import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntit
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.interfaces.AccessorMinecraftClient;
-import io.github.itzispyder.clickcrystals.modules.Module;
-import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SelfGlow;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -48,8 +46,13 @@ public abstract class MixinMinecraftClient implements AccessorMinecraftClient, G
         system.onClientStopping();
     }
 
-    @Inject(method = "disconnect*", at = @At("HEAD"))
+    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;Z)V", at = @At("HEAD"))
     public void disconnect(Screen disconnectionScreen, boolean transferring, CallbackInfo ci) {
+        system.eventBus.pass(new GameLeaveEvent());
+    }
+
+    @Inject(method = "disconnect(Lnet/minecraft/text/Text;)V", at = @At("HEAD"))
+    public void disconnect(Text reasonText, CallbackInfo ci) {
         system.eventBus.pass(new GameLeaveEvent());
     }
 
