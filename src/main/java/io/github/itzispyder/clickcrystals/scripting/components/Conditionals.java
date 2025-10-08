@@ -95,8 +95,8 @@ public class Conditionals implements Global {
     // @Format (if|if_not) inventory_has <identifier> {}
     // @Format (while|while_not) <num>? inventory_has <identifier> {}
     public static final Conditional INVENTORY_HAS;
-    // @Format (if|if_not) inventory_has <identifier> {}
-    // @Format (while|while_not) <num>? inventory_has <identifier> {}
+    // @Format (if|if_not) inventory_count <identifier> <comparator> <int> {}
+    // @Format (while|while_not) <num>? inventory_count <identifier> <comparator> <int> {}
     public static final Conditional INVENTORY_COUNT;
     // @Format (if|if_not) equipment_has <identifier> {}
     // @Format (while|while_not) <num>? equipment_has <identifier> {}

@@ -585,12 +585,22 @@
           "leading": true
         },
         {
-          "acceptingRegex": "(inventory_has)",
+          "acceptingRegex": "(inventory_count)",
           "optional": false,
           "leading": false
         },
         {
           "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "([\u003c\u003e\u003d!]\u003d)|[\u003c\u003e\u003d]",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d+)",
           "optional": false,
           "leading": false
         },
@@ -616,12 +626,22 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(inventory_has)",
+          "acceptingRegex": "(inventory_count)",
           "optional": false,
           "leading": false
         },
         {
           "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "([\u003c\u003e\u003d!]\u003d)|[\u003c\u003e\u003d]",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d+)",
           "optional": false,
           "leading": false
         },
