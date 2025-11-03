@@ -47,7 +47,7 @@ public class BowSwap extends Module implements Listener {
         Module.acceptFor(TntSwap.class, tntSwap -> tntSwap.remove(postAction));
     }
 
-    /*
+    /* @improperIssues TODO?
     @EventHandler
     private void onInteract(PacketSendEvent e) {
         if (e.getPacket() instanceof PlayerInteractBlockC2SPacket packet) {

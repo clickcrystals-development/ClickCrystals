@@ -22,7 +22,7 @@ public abstract class MixinLightmapTextureManager implements Global {
 
     @Inject(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;push(Ljava/lang/String;)V", shift = At.Shift.AFTER), cancellable = true)
     private void onUpdate(float tickProgress, CallbackInfo ci, @Local Profiler profiler) {
-        if (Module.get(FullBright.class).isEnabled()) {
+        if (Module.isEnabled(FullBright.class)) {
             RenderSystem.getDevice().createCommandEncoder().clearColorTexture(this.glTexture, 0xFFFFFFFF);
             profiler.pop();
             ci.cancel();

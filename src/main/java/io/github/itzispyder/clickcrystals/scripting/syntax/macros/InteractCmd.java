@@ -11,6 +11,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -37,11 +38,19 @@ public class InteractCmd extends ScriptCommand implements ThenChainable {
         switch (read.next(TargetType.class)) {
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(read.nextStr());
-                PlayerUtils.runOnNearestEntity(128, filter, entity -> mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND));
+                PlayerUtils.runOnNearestEntity(128, filter, entity -> {
+                    EntityHitResult hitResult = new EntityHitResult(entity, entity.getBoundingBox().getCenter());
+                    mc.interactionManager.interactEntityAtLocation(mc.player, entity, hitResult, Hand.MAIN_HAND);
+                    mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND);
+                });
                 read.executeThenChain();
             }
             case ANY_ENTITY -> {
-                PlayerUtils.runOnNearestEntity(128, DamageCmd.ENTITY_EXISTS, entity -> mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND));
+                PlayerUtils.runOnNearestEntity(128, DamageCmd.ENTITY_EXISTS, entity -> {
+                    EntityHitResult hitResult = new EntityHitResult(entity, entity.getBoundingBox().getCenter());
+                    mc.interactionManager.interactEntityAtLocation(mc.player, entity, hitResult, Hand.MAIN_HAND);
+                    mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND);
+                });
                 read.executeThenChain();
             }
             case NEAREST_BLOCK -> {
