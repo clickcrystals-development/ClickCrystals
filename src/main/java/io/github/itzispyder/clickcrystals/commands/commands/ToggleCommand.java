@@ -10,7 +10,7 @@ import net.minecraft.command.CommandSource;
 
 public class ToggleCommand extends Command {
 
-    public static boolean used = false;
+    public static boolean active = false;
 
     public ToggleCommand() {
         super("toggle","§7Toggles the modules from this mod. THIS CAN ALSO BE DONE VIA GUI MENU, PRESS YOUR §l§oAPOSTROPHE §7KEY!",",toggle <module> [on|off|help]","t");
@@ -28,27 +28,27 @@ public class ToggleCommand extends Command {
                                     for (Module m: system.collectModules())
                                         if (m.getClass() != SilkTouch.class)
                                             m.setEnabled(true, false);
-                                    used = true;
+                                    active = true;
                                     info("&bToggled all modules on");
-                                    used = false;
+                                    active = false;
                                     return SINGLE_SUCCESS;
                                 }))
                         .then(literal("off")
                                 .executes(context -> {
                                     for (Module m: system.collectModules())
                                         m.setEnabled(false, false);
-                                    used = true;
+                                    active = true;
                                     info("&7Toggled all modules off");
-                                    used = false;
+                                    active = false;
                                     return SINGLE_SUCCESS;
                                 }))
                         .executes(context -> {
                             for (Module m: system.collectModules())
                                 if (m.getClass() != SilkTouch.class)
                                     m.setEnabled(!m.isEnabled(), false);
-                            used = true;
+                            active = true;
                             info("&bToggled all modules (on -> off, off -> on)");
-                            used = false;
+                            active = false;
                             return SINGLE_SUCCESS;
                         }))
                 .then(argument("module", ModuleArgumentType.create())
