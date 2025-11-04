@@ -43,7 +43,7 @@ public class SelfGlow extends DummyModule {
         }
 
         public int getRGBA() {
-            return ((alpha & 0xFF) << 24) | ((red & 0xFF) << 16) | ((green & 0xFF) << 8) | (blue & 0xFF);
+            return alpha << 24 | red << 16 | green << 8 | blue;
         }
     }
 }
