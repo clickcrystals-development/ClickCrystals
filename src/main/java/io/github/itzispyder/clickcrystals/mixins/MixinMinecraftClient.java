@@ -75,6 +75,6 @@ public abstract class MixinMinecraftClient implements AccessorMinecraftClient, G
     private boolean hasOutline(boolean original, Entity entity) {
         if (mc == null) return original;
         SelfGlow selfGlow = Module.get(SelfGlow.class);
-        return selfGlow != null ? selfGlow.isEnabled() && entity.getType() == EntityType.PLAYER : original;
+        return selfGlow != null ? selfGlow.isEnabled() && entity == mc.player : original;
     }
 }
