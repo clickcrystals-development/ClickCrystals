@@ -279,7 +279,7 @@ public final class ClickCrystals implements ModInitializer, Global {
 
         // client
         system.addModule(new AutoDisconnect());
-//        system.addModule(new SelfGlow());
+        system.addModule(new SelfGlow());
         system.addModule(new GuiBorders());
         system.addModule(new InGameHuds());
         system.addModule(new SilkTouch());

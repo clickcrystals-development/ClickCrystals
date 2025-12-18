@@ -31,7 +31,7 @@ public class MixinFlyingItemEntityRenderer implements Global {
         PearlCustomizer pc = Module.get(PearlCustomizer.class);
         Entity entity = EntityUtils.getRenderStateOwner(flyingItemEntityRenderState);
 
-        if (!pc.isEnabled())
+        if (pc == null || !pc.isEnabled())
             return;
 
         if (!(entity instanceof EnderPearlEntity pearl))

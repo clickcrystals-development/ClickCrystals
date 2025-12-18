@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 
-// NOTICE: Module pause development until rendering issue is resolved @I-No-One
 public class SelfGlow extends DummyModule {
 
     private final SettingSection scGeneral = getGeneralSection();
@@ -43,8 +42,8 @@ public class SelfGlow extends DummyModule {
             this.alpha = alpha;
         }
 
-        public int[] getRGBA() {
-            return new int[]{red, green, blue, alpha};
+        public int getRGBA() {
+            return alpha << 24 | red << 16 | green << 8 | blue;
         }
     }
 }

@@ -36,20 +36,6 @@ public class MixinWorldRenderer implements Global {
         }
     }
 
-//    @Inject(method = "renderEntity", at = @At("HEAD"))
-//    private void onRenderEntity(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
-//        if (!(entity instanceof ClientPlayerEntity && vertexConsumers instanceof OutlineVertexConsumerProvider outlineConsumers))
-//            return;
-//
-//        SelfGlow selfGlow = Module.get(SelfGlow.class);
-//
-//        if (selfGlow.isEnabled()) {
-//            SelfGlow.Color glowColor = selfGlow.glowColor.getVal();
-//            int[] rgba = glowColor.getRGBA();
-//            outlineConsumers.setColor(rgba[0], rgba[1], rgba[2], rgba[3]);
-//        }
-//    }
-
     @Inject(method = "render", at = @At("TAIL"))
     public void render(ObjectAllocator allocator, RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, Matrix4f positionMatrix, Matrix4f matrix4f, Matrix4f projectionMatrix, GpuBufferSlice fogBuffer, Vector4f fogColor, boolean renderSky, CallbackInfo ci) {
         RenderWorldEvent event = new RenderWorldEvent(mc.gameRenderer, positionMatrix, projectionMatrix, tickCounter);
