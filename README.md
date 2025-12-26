@@ -30,20 +30,24 @@ Happy coding and cpvping!
 
 ## What Version Should I Get?
 
-| What You Have | What to get                                                                                                                   |
-|:--------------|:------------------------------------------------------------------------------------------------------------------------------|
-| higher..      | how is that even possible?                                                                                                    |
-| 1.21.9        | [ClickCrystals-1.21.9-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended |
-| 1.21.8        | [ClickCrystals-1.21.6-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended |
-| 1.21.7        | [ClickCrystals-1.21.6-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended |
-| 1.21.6        | [ClickCrystals-1.21.6-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended |
-| 1.21.5        | [ClickCrystals-1.21.5-1.3.2.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.2)              |
-| 1.21.4        | not supported                                                                                                                 |
-| 1.21.3        | not supported                                                                                                                 |
-| 1.21.2        | not supported                                                                                                                 |
-| 1.21.1        | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
-| 1.21          | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                |
-| ..lower       | cry                                                                                                                           |
+| What You Have | What to get                                                                                                                    |
+|:--------------|:-------------------------------------------------------------------------------------------------------------------------------|
+| higher..      | how is that even possible?                                                                                                     |
+| 1.21.11       | [ClickCrystals-1.21.11-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended |
+| 1.21.10       | [ClickCrystals-1.21.9-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended  |
+| 1.21.9        | [ClickCrystals-1.21.9-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended  |
+| 1.21.8        | [ClickCrystals-1.21.6-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended  |
+| 1.21.7        | [ClickCrystals-1.21.6-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended  |
+| 1.21.6        | [ClickCrystals-1.21.6-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7) *recommended  |
+| 1.21.5        | [ClickCrystals-1.21.5-1.3.2.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.2)               |
+| 1.21.4        | not supported                                                                                                                  |
+| 1.21.3        | not supported                                                                                                                  |
+| 1.21.2        | not supported                                                                                                                  |
+| 1.21.1        | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                 |
+| 1.21          | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                 |
+| ..lower       | cry                                                                                                                            |
+
+
 
 ### Can't Find The Version You're Looking For?
 There's still a chance for you to access latest script syntax!
@@ -92,84 +96,86 @@ Turn_To CameraRotator:
 
 -----------------------------------------
 
-|     **Module**     |                                                **Description**                                                |
-|:------------------:|:-------------------------------------------------------------------------------------------------------------:|
-|      AxeSwap       |                          Switch to axe if hitting a shielding opponent with a sword                           |
-|      BowSwap       |         Hotkey flame bow after placing cart. Requires TntSwap and its "instant" setting to be active          |
-|    ElytraSwitch    |                       Swap to elytra from your hotbar when ever you are double jumping                        |
-|      GapSwap       |                                 Swaps to gap when you right click with sword                                  |
-|      RailSwap      |                                       Swaps to rails after shooting bow                                       |
-|    ShieldSwitch    |                                     Hotkey to shield after clicking sword                                     |
-|     SwordSwap      |                        Switch to sword after hitting a shielding opponent with an axe                         |
-|      TntSwap       |                                       Swaps to tnt after placing rails                                        |
-|   AutoDisconnect   |                         Disconnect you from the world when a certain condition is met                         |
-|   EntityStatuses   |                               DEBUG: Sends received EntityStatusPackets in chat                               |
-|     GuiBorders     |                         DEBUG: Renders borders around all ClickCrystals GUI elements                          |
-|     InGameHuds     |                               Manager of all custom ClickCrystals in-game huds                                |
-|  InvPacketSniffer  |                            Observe inventory packets you are sending to the server                            |
-| McpeBlockPlacement |                     Place blocks on the group in front of you even with no support blocks                     |
-|      SelfGlow      |                                                 Am I Glowing?                                                 |
-|     SilkTouch      |                               "Is there a silk touch module?" - I_Got_You_Dead                                |
-|    AnchorSwitch    |             Whenever you place an anchor, switch to glowstone then back after it has been charged             |
-|    AutoClicker     |                                               Auto clicker duh                                                |
-|   AutoReplenish    |                     Automatically replenishes items from your inventory into your hotbar                      |
-|    ClickCrystal    |                                     Binds end crystal place to left click                                     |
-|   ClientCrystals   |                            Removes crystals client-side the moment you punch them                             |
-|   CrystalAnchor    |                    Right click the ground with a crystal to switch to your respawn anchor                     |
-|   CrystalSwitch    |               Whenever you punch bedrock or obsidian with a sword, it will switch to a crystal                |
-|   ObsidianSwitch   |                            Punch the ground with your sword to switch to obsidian                             |
-|    PearlSwitch     |                         Right click your sword or totem to switch to your pearl slot                          |
-|     ArrayList      |                                      Shows the enabled modules on screen                                      |
-|       AutoGg       |                                     Sends a message upon killing a player                                     |
-|    AutoRespawn     |                                       Clicks the respawn button for you                                       |
-|      AutoWalk      |                            Presses the walk key for you (only useful in survival)                             |
-|     CameraClip     |                    Change the camera distance and the camera behavior when encounter walls                    |
-|     ChatPrefix     |                                      Chat tweaks and additional features                                      |
-|    DeathEffects    |                                Spawn lightning/rocket particle on entity death                                |
-|      FreeLook      |                            lock your camera perspective and let you move around it                            |
-|     GuiCursor      |                            What to do with your cursor when you open inventory gui                            |
-|     MouseTaper     | "I taped a piece of tape on my mouse button, now I cannot use that button anymore but it is still taped down" |
-|   MessageResend    |                          Press up arrow key to resend your last message or command.                           |
-|     NextBlock      |              Targets next same block that you're mining. (for farming, not pvp, useless in pvp)               |
-|    NoBreakDelay    |                                    No block break delay [flags-anticheat]                                     |
-|   NoInteractions   |                           Prevents opening certain containers(e-chests,chests,etc)                            |
-|    NoScrolling     |                                           Disable hotbar scrolling                                            |
-|    SoundOnDeath    |                                      Plays a sound upon killing a player                                      |
-|    TeamDetector    |                               Finding teams and disable attacking your own team                               |
-|    ToolSwitcher    |                                 Switches to the right tool for mining a block                                 |
-|     TotemPops      |                                 Send messages when a player pops their totem                                  |
-|     Tunnel3x3      |                               Enable to tunnel a 3x3x5 tunnel in your direction                               |
-|        Zoom        |                                               Changes your FOV                                                |
-|     AntiCrash      | Prevents various ways servers can crash your client. Be sure to report new crashes to us so we can add more!  |
-|  ExplodeParticles  |                            Turns off explosion particles for smoother crystal pvp!                            |
-|     FullBright     |                             Increases your gamma so you can actually see in caves                             |
-|    NoItemBounce    |          Prevents the item sprites from playing the bounce animation in your inventory when updated           |
-|    NoLoadScreen    |                                 Prevents some loading screens from rendering                                  |
-|   NoServerPacks    |                     Prevents servers from forcing you to download their bad resource pack                     |
-|    TimeChanger     |                                           Changes client world time                                           |
-|    BlockOutline    |                                     Change the color of the block outline                                     |
-|    CrystalSpeed    |                                          Crystals per second counter                                          |
-|  EntityIndicator   |                              Indicates entities around you. Players are excluded                              |
-|     GhostTotem     |               Renders a totem in your hand upon dying. Will not work if AutoRespawn is enabled!               |
-|  GlowingEntities   |                                  Having trouble seeing entities in the dark?                                  |
-|    HealthAsBar     |               Renders your health bar as a singular bar to prevent lag. Recommended for NBT pvp               |
-|   ItemHighlight    |                      Renders a highlight around dropped items to make them more visible                       |
-|   NoArmorRender    |                        Make armor invisible,try to use the enemy hud with this module!                        |
-|  NoGuiBackground   |                                 disable the black effect when opening the GUI                                 |
-|     NoHurtCam      |                            Removes the annoying screen shake when you take damage                             |
-|   NoGameOverlay    |                                     Stops various overlays from rendering                                     |
-|    NoScoreboard    |                                Disables the scoreboard sidebar display render                                 |
-|     NoViewBob      |                                              Turns off view bob                                               |
-|  PearlCustomizer   |                           Customize appearance and sound settings for ender pearls                            |
-|   RenderOwnName    |                                             Renders your own name                                             |
-|   SlowHandSwing    |                              Makes your hand swing as if you had mining fatigue                               |
-|   SpectatorSight   |      Renders invisible entities the way you see them in spectator mode. Never get sneak attacked again!       |
-|     TotemChams     |                             Renders a nice visual whenever a player's totem pops                              |
-|    TotemOverlay    |                                  Renders red overlay when not holding totem                                   |
-|     TotemColor     |                                       Change totem pop particles color                                        |
-|     TotemScale     |                                      Changes the scale of the totem pop                                       |
-|    Trajectories    |                                Simulates arrow trajectories and draws a line!                                 |
-|     ViewModel      |                            Changes your view model in your first person hand view                             |
+|  | **Module** | **Description** |
+|:----------:|:---------------:|
+| AxeSwap | Switch to axe if hitting a shielding opponent with a sword |
+| BowSwap | Hotkey flame bow after placing cart. Requires TntSwap and its "instant" setting to be active |
+| BreachSwap | Switches from sword to breach mace when attacking entities for enhanced damage |
+| ElytraSwitch | Swap to elytra from your hotbar when ever you are double jumping |
+| GapSwap | Swaps to gap when you right click with sword |
+| RailSwap | Swaps to rails after shooting bow |
+| ShieldSwitch | Hotkey to shield after clicking sword |
+| StunSlam | Switches from mace to axe when target has shield, then back to mace for devastating combos |
+| SwordSwap | Switch to sword after hitting a shielding opponent with an axe |
+| TntSwap | Swaps to tnt after placing rails |
+| AutoDisconnect | Disconnect you from the world when a certain condition is met |
+| EntityStatuses | DEBUG: Sends received EntityStatusPackets in chat |
+| GuiBorders | DEBUG: Renders borders around all ClickCrystals GUI elements |
+| InGameHuds | Manager of all custom ClickCrystals in-game huds |
+| InvPacketSniffer | Observe inventory packets you are sending to the server |
+| McpeBlockPlacement | Place blocks on the group in front of you even with no support blocks |
+| SelfGlow | Am I Glowing? |
+| SilkTouch | "Is there a silk touch module?" - I_Got_You_Dead |
+| AnchorSwitch | Whenever you place an anchor, switch to glowstone then back after it has been charged |
+| AutoClicker | Auto clicker duh |
+| AutoReplenish | Automatically replenishes items from your inventory into your hotbar |
+| ClickCrystal | Binds end crystal place to left click |
+| ClientCrystals | Removes crystals client-side the moment you punch them |
+| CrystalAnchor | Right click the ground with a crystal to switch to your respawn anchor |
+| CrystalSwitch | Whenever you punch bedrock or obsidian with a sword, it will switch to a crystal |
+| ObsidianSwitch | Punch the ground with your sword to switch to obsidian |
+| PearlSwitch | Right click your sword or totem to switch to your pearl slot |
+| ArrayList | Shows the enabled modules on screen |
+| AutoGg | Sends a message upon killing a player |
+| AutoRespawn | Clicks the respawn button for you |
+| AutoWalk | Presses the walk key for you (only useful in survival) |
+| CameraClip | Change the camera distance and the camera behavior when encounter walls |
+| ChatPrefix | Chat tweaks and additional features |
+| DeathEffects | Spawn lightning/rocket particle on entity death |
+| FreeLook | lock your camera perspective and let you move around it |
+| GuiCursor | What to do with your cursor when you open inventory gui |
+| MouseTaper | "I taped a piece of tape on my mouse button, now I cannot use that button anymore but it is still taped down" |
+| MessageResend | Press up arrow key to resend your last message or command. |
+| NextBlock | Targets next same block that you're mining. (for farming, not pvp, useless in pvp) |
+| NoBreakDelay | No block break delay [flags-anticheat] |
+| NoInteractions | Prevents opening certain containers(e-chests,chests,etc) |
+| NoScrolling | Disable hotbar scrolling |
+| SoundOnDeath | Plays a sound upon killing a player |
+| TeamDetector | Finding teams and disable attacking your own team |
+| ToolSwitcher | Switches to the right tool for mining a block |
+| TotemPops | Send messages when a player pops their totem |
+| Tunnel3x3 | Enable to tunnel a 3x3x5 tunnel in your direction |
+| Zoom | Changes your FOV |
+| AntiCrash | Prevents various ways servers can crash your client. Be sure to report new crashes to us so we can add more! |
+| ExplodeParticles | Turns off explosion particles for smoother crystal pvp! |
+| FullBright | Increases your gamma so you can actually see in caves |
+| NoItemBounce | Prevents the item sprites from playing the bounce animation in your inventory when updated |
+| NoLoadScreen | Prevents some loading screens from rendering |
+| NoServerPacks | Prevents servers from forcing you to download their bad resource pack |
+| TimeChanger | Changes client world time |
+| BlockOutline | Change the color of the block outline |
+| CrystalSpeed | Crystals per second counter |
+| EntityIndicator | Indicates entities around you. Players are excluded |
+| GhostTotem | Renders a totem in your hand upon dying. Will not work if AutoRespawn is enabled! |
+| GlowingEntities | Having trouble seeing entities in the dark? |
+| HealthAsBar | Renders your health bar as a singular bar to prevent lag. Recommended for NBT pvp |
+| ItemHighlight | Renders a highlight around dropped items to make them more visible |
+| NoArmorRender | Make armor invisible,try to use the enemy hud with this module! |
+| NoGuiBackground | disable the black effect when opening the GUI |
+| NoHurtCam | Removes the annoying screen shake when you take damage |
+| NoGameOverlay | Stops various overlays from rendering |
+| NoScoreboard | Disables the scoreboard sidebar display render |
+| NoViewBob | Turns off view bob |
+| PearlCustomizer | Customize appearance and sound settings for ender pearls |
+| RenderOwnName | Renders your own name |
+| SlowHandSwing | Makes your hand swing as if you had mining fatigue |
+| SpectatorSight | Renders invisible entities the way you see them in spectator mode. Never get sneak attacked again! |
+| TotemChams | Renders a nice visual whenever a player's totem pops |
+| TotemOverlay | Renders red overlay when not holding totem |
+| TotemColor | Change totem pop particles color |
+| TotemScale | Changes the scale of the totem pop |
+| Trajectories | Simulates arrow trajectories and draws a line! |
+| ViewModel | Changes your view model in your first person hand view |
 
 
 
