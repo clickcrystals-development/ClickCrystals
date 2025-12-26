@@ -131,7 +131,7 @@ public class PacketMapper {
         this.put(MapUpdateS2CPacket.class, new Info("mapUpdate", "MapUpdateS2CPacket"));
         this.put(MoveMinecartAlongTrackS2CPacket.class, new Info("moveMinecartAlongTrack", "MoveMinecartAlongTrackS2CPacket"));
         this.put(NbtQueryResponseS2CPacket.class, new Info("nbtQueryResponse", "NbtQueryResponseS2CPacket"));
-        this.put(OpenHorseScreenS2CPacket.class, new Info("openHorseScreen", "OpenHorseScreenS2CPacket"));
+        this.put(OpenMountScreenS2CPacket.class, new Info("openMountScreen", "OpenMountScreenS2CPacket"));
         this.put(OpenScreenS2CPacket.class, new Info("openScreen", "OpenScreenS2CPacket"));
         this.put(OpenWrittenBookS2CPacket.class, new Info("openWrittenBook", "OpenWrittenBookS2CPacket"));
         this.put(OverlayMessageS2CPacket.class, new Info("overlayMessage", "OverlayMessageS2CPacket"));

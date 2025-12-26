@@ -1,10 +1,9 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import net.minecraft.client.gui.screen.SplashTextRenderer;
 import net.minecraft.client.resource.SplashTextResourceSupplier;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -12,26 +11,33 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(SplashTextResourceSupplier.class)
 public class MixinSplashTextResourceSupplier implements Global {
 
-    @Shadow @Final private List<String> splashTexts;
+    @Shadow private List<String> splashTexts;
     @Unique private static final String SPLASH_URL = "https://raw.githubusercontent.com/clickcrystals-development/ClickCrystals-Plus-Pack/main/assets/minecraft/texts/splashes.txt";
     @Unique private static List<String> customSplashes = null;
 
-    @Inject(method = "get", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "get", at = @At("RETURN"), cancellable = true)
     private void onGet(CallbackInfoReturnable<SplashTextRenderer> cir) {
-        List<String> custom = loadCustomSplashes();
-        if (custom == null || custom.isEmpty() || splashTexts.isEmpty())
+        if (splashTexts.isEmpty() || Math.random() < 0.2)
             return;
 
-        List<String> pool = Math.random() < 0.8 ? splashTexts : custom;
-        String text = system.random.getRandomElement(pool);
-        cir.setReturnValue(new SplashTextRenderer(text));
+        List<String> custom = loadCustomSplashes();
+        if (custom.isEmpty())
+            return;
+
+        Text text = Text.literal(system.random.getRandomElement(custom));
+        SplashTextRenderer renderer = new SplashTextRenderer(text);
+        cir.setReturnValue(renderer);
     }
 
     @Unique
@@ -39,19 +45,24 @@ public class MixinSplashTextResourceSupplier implements Global {
         if (customSplashes != null)
             return customSplashes;
 
-        try (InputStream is = URI.create(SPLASH_URL).toURL().openStream()) {
-            String texts = new String(is.readAllBytes());
-            String[] lines = texts.split("\\s*\n\\s*");
+        customSplashes = new ArrayList<>();
+        try {
+            URL url = URI.create(SPLASH_URL).toURL();
+            InputStream is = url.openStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String line;
 
-            if (lines.length == 0)
-                return customSplashes;
-            customSplashes = ArrayUtils.toList(lines);
-            system.logger.info("Loaded " + customSplashes.size() + " custom splash texts.");
+            while ((line = br.readLine()) != null)
+                customSplashes.add(line);
+
+            br.close();
+            isr.close();
+            is.close();
         }
         catch (Exception ex) {
             system.logger.error("Failed to load custom splash texts -> " + ex.getMessage());
         }
-
         return customSplashes;
     }
 }

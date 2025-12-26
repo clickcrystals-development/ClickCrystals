@@ -13,6 +13,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.minecraft.client.network.ClientCommandSource;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;
+import net.minecraft.command.permission.PermissionPredicate;
 import net.minecraft.registry.BuiltinRegistries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.command.CommandManager;
@@ -25,7 +26,7 @@ public abstract class Command implements Global {
     public static final RegistryWrapper.WrapperLookup WRAPPER = BuiltinRegistries.createWrapperLookup();
     public static final CommandRegistryAccess REGISTRY = CommandManager.createRegistryAccess(WRAPPER);
     public static final CommandDispatcher<CommandSource> DISPATCHER = new CommandDispatcher<>();
-    public static final CommandSource SOURCE = new ClientCommandSource(null, mc, false);
+    public static final CommandSource SOURCE = new ClientCommandSource(null, mc, PermissionPredicate.NONE);
 
     private final String name, description, usage;
     private final String[] aliases;

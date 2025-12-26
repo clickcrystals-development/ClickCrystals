@@ -27,7 +27,6 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Dimensions;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
 import java.io.*;
@@ -326,7 +325,7 @@ public class ClickScriptIDE extends DefaultBase {
     }
 
     @Override
-    public void resize(MinecraftClient client, int width, int height) {
+    public void resize(int width, int height) {
         mc.setScreen(new ClickScriptIDE(new File(filepath)));
     }
 }

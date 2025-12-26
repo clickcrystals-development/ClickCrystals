@@ -1,6 +1,8 @@
 package io.github.itzispyder.clickcrystals.util.minecraft.render.states;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.textures.FilterMode;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
 import net.minecraft.client.MinecraftClient;
@@ -36,10 +38,11 @@ public class ClickCrystalsRoundRectTexState implements SimpleGuiElementRenderSta
 
     public ClickCrystalsRoundRectTexState(Matrix3x2f pose, Identifier texture, float x, float y, float w, float h, float r, ScreenRect scissor) {
         this(ClickCrystalsRenderPipelines.PIPELINE_TEX_QUADS,
-                TextureSetup.withoutGlTexture(MinecraftClient.getInstance()
+                TextureSetup.of(MinecraftClient.getInstance()
                         .getTextureManager()
                         .getTexture(texture)
-                        .getGlTextureView()),
+                        .getGlTextureView(),
+                        RenderSystem.getSamplerCache().get(FilterMode.NEAREST)),
                 pose,
                 x, y, w, h, (float) MathUtils.clamp(r, 0, Math.min(w, h) / 2),
                 scissor,

@@ -5,13 +5,7 @@ import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexRendering;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -88,9 +82,5 @@ public class McpeBlockPlacement extends ListenerModule {
         return BlockPos.ofFloored(clientPos.toCenterPos()
                 .add(0, -1, 0)
                 .add(dir.getDoubleVector()));
-    }
-
-    private void drawBlockOutline(MatrixStack matrices, VertexConsumer vertexConsumer, World world, Entity entity, double cameraX, double cameraY, double cameraZ, BlockPos pos, BlockState state, int color) {
-        VertexRendering.drawOutline(matrices, vertexConsumer, state.getOutlineShape(world, pos, ShapeContext.of(entity)), pos.getX() - cameraX, pos.getY() - cameraY, pos.getZ() - cameraZ, color);
     }
 }

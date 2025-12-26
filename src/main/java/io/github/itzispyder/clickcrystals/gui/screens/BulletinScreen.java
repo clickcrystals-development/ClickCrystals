@@ -7,7 +7,6 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIco
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.concurrent.CompletableFuture;
@@ -63,7 +62,7 @@ public class BulletinScreen extends DefaultBase {
     }
 
     @Override
-    public void resize(MinecraftClient client, int width, int height) {
+    public void resize(int width, int height) {
         client.setScreen(new BulletinScreen());
     }
 }

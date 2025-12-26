@@ -14,7 +14,7 @@ public class DisconnectCmd extends ScriptCommand implements ThenChainable {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        mc.disconnect(new TitleScreen(), false);
+        mc.disconnect(new TitleScreen(), false, true);
         executeWithThen(args);
     }
 }

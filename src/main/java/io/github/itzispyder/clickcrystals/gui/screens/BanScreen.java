@@ -78,7 +78,7 @@ public class BanScreen extends GuiScreen {
     }
 
     @Override
-    public void resize(MinecraftClient client, int width, int height) {
+    public void resize(int width, int height) {
         client.setScreen(new BanScreen());
     }
 }

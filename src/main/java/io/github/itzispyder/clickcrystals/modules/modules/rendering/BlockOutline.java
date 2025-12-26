@@ -8,31 +8,28 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 public class BlockOutline extends DummyModule {
 
     private final SettingSection scGeneral = getGeneralSection();
-    public final ModuleSetting<Double> red = scGeneral.add(createDoubleSetting()
+    public final ModuleSetting<Integer> red = scGeneral.add(createIntSetting()
             .name("Red")
             .description("Decide how much red will be on the color pattern.")
-            .def(255.0)
-            .max(255.0)
-            .min(0.0)
-            .decimalPlaces(1)
+            .def(255)
+            .max(255)
+            .min(0)
             .build()
     );
-    public final ModuleSetting<Double> green = scGeneral.add(createDoubleSetting()
+    public final ModuleSetting<Integer> green = scGeneral.add(createIntSetting()
             .name("Green")
             .description("Decide how much green will be on the color pattern.")
-            .def(255.0)
-            .max(255.0)
-            .min(0.0)
-            .decimalPlaces(1)
+            .def(255)
+            .max(255)
+            .min(0)
             .build()
     );
-    public final ModuleSetting<Double> blue = scGeneral.add(createDoubleSetting()
+    public final ModuleSetting<Integer> blue = scGeneral.add(createIntSetting()
             .name("Blue")
             .description("Decide how much blue will be on the color pattern.")
-            .def(255.0)
-            .max(255.0)
-            .min(0.0)
-            .decimalPlaces(1)
+            .def(255)
+            .max(255)
+            .min(0)
             .build()
     );
 
@@ -40,4 +37,7 @@ public class BlockOutline extends DummyModule {
         super("block-outline", Categories.RENDER, "Change the color of the block outline");
     }
 
+    public int getRGB() {
+        return red.getVal() << 16 | green.getVal() << 8 | blue.getVal();
+    }
 }

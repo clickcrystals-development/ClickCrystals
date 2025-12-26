@@ -51,7 +51,7 @@ public class ProjectilePath implements Global {
 
         Vec3d dir = Vec3d.fromPolar(pitch, yaw).multiply(velocity);
         Vec3d pos = shooter.getEyePos();
-        Vec3d pos2 = MathUtils.forward((firstPerson ? cam.getPos() : pos).add(0, -0.05, 0), Vec3d.fromPolar(0, yaw + 90), renderOffset);
+        Vec3d pos2 = MathUtils.forward((firstPerson ? cam.getCameraPos() : pos).add(0, -0.05, 0), Vec3d.fromPolar(0, yaw + 90), renderOffset);
         Vec3d prevPos;
 
         HitResult hit = MissHitResult.MISS;
@@ -146,7 +146,7 @@ public class ProjectilePath implements Global {
             else if (hit instanceof BlockHitResult block)
                 RenderUtils3d.renderBlock(matrices, e.getOffsetPos(block.getBlockPos()), 0x40FFFFFF);
             else if (hit instanceof EntityHitResult eHit && eHit.getEntity() instanceof LivingEntity liv && liv != p) {
-                Box box = liv.getBoundingBox().offset(e.getCamera().getPos().negate());
+                Box box = liv.getBoundingBox().offset(e.getCamera().getCameraPos().negate());
                 RenderUtils3d.fillBox(matrices, box, 0x40FF4040);
             }
 

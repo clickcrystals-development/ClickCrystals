@@ -21,7 +21,7 @@ public abstract class MixinHandledScreen implements Global, AccessorHandledScree
     @Shadow protected abstract boolean isPointOverSlot(Slot slot, double pointX, double pointY);
 
     @Inject(method = "drawSlot", at = @At("HEAD"))
-    public void drawItemInSlot(DrawContext context, Slot slot, CallbackInfo ci) {
+    public void drawItemInSlot(DrawContext context, Slot slot, int mouseX, int mouseY, CallbackInfo ci) {
         system.eventBus.pass(new RenderInventorySlotEvent(context, slot.getStack(), slot.x + x, slot.y + y, slot.x, slot.y));
     }
 

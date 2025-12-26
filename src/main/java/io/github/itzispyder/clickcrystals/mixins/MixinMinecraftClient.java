@@ -11,7 +11,6 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SelfGlow
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -50,8 +49,8 @@ public abstract class MixinMinecraftClient implements AccessorMinecraftClient, G
         system.onClientStopping();
     }
 
-    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;Z)V", at = @At("HEAD"))
-    public void disconnect(Screen disconnectionScreen, boolean transferring, CallbackInfo ci) {
+    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;ZZ)V", at = @At("HEAD"))
+    public void disconnect(Screen disconnectionScreen, boolean transferring, boolean bl, CallbackInfo ci) {
         system.eventBus.pass(new GameLeaveEvent());
     }
 

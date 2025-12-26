@@ -56,11 +56,11 @@ public class RenderWorldEvent extends Event {
     }
 
     public Vec3d getOffsetPos(Vec3d pos) {
-        return pos.subtract(getCamera().getPos());
+        return pos.subtract(getCamera().getCameraPos());
     }
 
     public Vec3d getOffsetPos(BlockPos pos) {
-        var c = getCamera().getPos();
+        var c = getCamera().getCameraPos();
         double x = pos.getX() - c.x;
         double y = pos.getY() - c.y;
         double z = pos.getZ() - c.z;

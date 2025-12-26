@@ -116,7 +116,7 @@ public class EntityUtils implements Global {
         if (PlayerUtils.invalid())
             return null;
         for (Entity entity: PlayerUtils.getClientWorld().getEntities())
-            if (state.squaredDistanceToCamera == entity.squaredDistanceTo(mc.gameRenderer.getCamera().getPos()))
+            if (state.squaredDistanceToCamera == entity.squaredDistanceTo(mc.gameRenderer.getCamera().getCameraPos()))
                 return entity;
         return null;
     }
