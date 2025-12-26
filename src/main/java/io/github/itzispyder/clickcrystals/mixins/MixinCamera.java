@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.interfaces.AccessorCamera;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.CameraClip;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.FreeLook;
@@ -9,7 +8,6 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoOverlay;
 import net.minecraft.block.enums.CameraSubmersionType;
 import net.minecraft.client.render.Camera;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,11 +16,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(Camera.class)
-public abstract class MixinCamera implements Global, AccessorCamera {
+public abstract class MixinCamera implements Global {
 
     @Unique private boolean bypassCameraClip;
-    @Shadow protected abstract float clipToSpace(float desiredCameraDistance);
-    @Shadow protected abstract void setRotation(float yaw, float pitch);
 
     @Inject(method = "getSubmersionType", at = @At("RETURN"), cancellable = true)
     public void getSubmersionType(CallbackInfoReturnable<CameraSubmersionType> cir) {
@@ -38,11 +34,15 @@ public abstract class MixinCamera implements Global, AccessorCamera {
             bypassCameraClip = false;
             return;
         }
+
         if (clip.isEnabled() && clip.enableCameraClip.getVal()) {
             cir.setReturnValue(clip.clipDistance.getVal().floatValue());
-        } else if (clip.isEnabled() && clip.clipDistance.getVal() > 0.0) {
+        }
+        else if (clip.isEnabled() && clip.clipDistance.getVal() > 0.0) {
             bypassCameraClip = true;
-            cir.setReturnValue(clipToSpace(clip.clipDistance.getVal().floatValue()));
+            AccessorCamera ac = (AccessorCamera) this;
+            float dist = ac.invokeClipToSpace(clip.clipDistance.getVal().floatValue());
+            cir.setReturnValue(dist);
         }
     }
 
@@ -53,10 +53,5 @@ public abstract class MixinCamera implements Global, AccessorCamera {
             args.set(0, freeLook.cY);
             args.set(1, freeLook.cP);
         }
-    }
-
-    @Override
-    public void setCameraRotation(float pitch, float yaw) {
-        this.setRotation(pitch, yaw);
     }
 }

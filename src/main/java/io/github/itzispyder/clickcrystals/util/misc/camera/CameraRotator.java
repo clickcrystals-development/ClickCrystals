@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.util.misc.camera;
 
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
-import io.github.itzispyder.clickcrystals.interfaces.AccessorCamera;
+import io.github.itzispyder.clickcrystals.mixins.AccessorCamera;
 import io.github.itzispyder.clickcrystals.scripting.syntax.AimAnchorType;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
@@ -184,6 +184,6 @@ public class CameraRotator implements Global {
             return;
         Camera c = mc.gameRenderer.getCamera();
         AccessorCamera cam = (AccessorCamera) c;
-        cam.setCameraRotation(pitch, yaw);
+        cam.invokeSetRotation(yaw, pitch);
     }
 }

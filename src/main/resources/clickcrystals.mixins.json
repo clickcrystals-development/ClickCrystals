@@ -3,6 +3,8 @@
   "package": "io.github.itzispyder.clickcrystals.mixins",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "AccessorCamera",
+    "AccessorMinecraftClient",
     "MixinAbstractClientPlayerEntity",
     "MixinArmorFeatureRenderer",
     "MixinBlockItem",
@@ -37,6 +39,7 @@
     "defaultRequire": 1
   },
   "mixins": [
+    "AccessorLivingEntity",
     "MixinBlock",
     "MixinEntity",
     "MixinItem",

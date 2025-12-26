@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.crystalling;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
-import io.github.itzispyder.clickcrystals.interfaces.AccessorMinecraftClient;
+import io.github.itzispyder.clickcrystals.mixins.AccessorMinecraftClient;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;

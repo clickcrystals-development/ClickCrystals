@@ -10,8 +10,6 @@ import net.minecraft.command.CommandSource;
 
 public class ToggleCommand extends Command {
 
-    public static boolean active = false;
-
     public ToggleCommand() {
         super("toggle","§7Toggles the modules from this mod. THIS CAN ALSO BE DONE VIA GUI MENU, PRESS YOUR §l§oAPOSTROPHE §7KEY!",",toggle <module> [on|off|help]","t");
     }
@@ -28,27 +26,21 @@ public class ToggleCommand extends Command {
                                     for (Module m: system.collectModules())
                                         if (m.getClass() != SilkTouch.class)
                                             m.setEnabled(true, false);
-                                    active = true;
                                     info("&bToggled all modules on");
-                                    active = false;
                                     return SINGLE_SUCCESS;
                                 }))
                         .then(literal("off")
                                 .executes(context -> {
                                     for (Module m: system.collectModules())
                                         m.setEnabled(false, false);
-                                    active = true;
                                     info("&7Toggled all modules off");
-                                    active = false;
                                     return SINGLE_SUCCESS;
                                 }))
                         .executes(context -> {
                             for (Module m: system.collectModules())
                                 if (m.getClass() != SilkTouch.class)
                                     m.setEnabled(!m.isEnabled(), false);
-                            active = true;
                             info("&bToggled all modules (on -> off, off -> on)");
-                            active = false;
                             return SINGLE_SUCCESS;
                         }))
                 .then(argument("module", ModuleArgumentType.create())

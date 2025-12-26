@@ -12,7 +12,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,7 +22,6 @@ public abstract class MixinItem implements Global {
 
     @Unique private long itemUseCooldown = 0L;
     @Unique private long itemConsumeCooldown = 0L;
-    @Shadow public abstract ActionResult use(World world, PlayerEntity user, Hand hand);
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
     public void use(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
@@ -65,18 +63,22 @@ public abstract class MixinItem implements Global {
         system.eventBus.passWithCallbackInfo(cir, event);
     }
 
+    @Unique
     private boolean isItemUseOnCooldown() {
         return itemUseCooldown + 50L > System.currentTimeMillis();
     }
 
+    @Unique
     private boolean isItemConsumeOnCooldown() {
         return itemConsumeCooldown + 50L > System.currentTimeMillis();
     }
 
+    @Unique
     private void resetItemUseCooldown() {
         itemUseCooldown = System.currentTimeMillis() + 50L;
     }
 
+    @Unique
     private void resetItemConsumeCooldown() {
         itemConsumeCooldown = System.currentTimeMillis() + 50L;
     }

@@ -5,28 +5,20 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
-import io.github.itzispyder.clickcrystals.interfaces.AccessorMinecraftClient;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SelfGlow;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.Entity;
 import net.minecraft.text.Text;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MinecraftClient.class)
-public abstract class MixinMinecraftClient implements AccessorMinecraftClient, Global {
-
-    @Shadow public abstract void setScreen(@Nullable Screen screen);
-    @Shadow protected abstract boolean doAttack();
-    @Shadow protected abstract void doItemUse();
-    @Shadow @Nullable public Entity targetedEntity;
+public abstract class MixinMinecraftClient implements Global {
 
     @Inject(method = "setScreen", at = @At("HEAD"), cancellable = true)
     public void set(Screen screen, CallbackInfo ci) {
@@ -35,13 +27,16 @@ public abstract class MixinMinecraftClient implements AccessorMinecraftClient, G
 
         if (event.isCancelled()) {
             ci.cancel();
-            setScreen(null);
+            AccessorMinecraftClient mc = (AccessorMinecraftClient) this;
+            mc.invokeSetScreen(null);
         }
     }
 
     @Inject(method = "doAttack", at = @At("HEAD") ,cancellable = true)
     private void attack(CallbackInfoReturnable<Boolean> cir) {
-        system.eventBus.passWithCallbackInfo(cir, new PlayerAttackEntityEvent(mc.player, targetedEntity, mc.crosshairTarget));
+        AccessorMinecraftClient amc = (AccessorMinecraftClient) this;
+        PlayerAttackEntityEvent evt = new PlayerAttackEntityEvent(mc.player, amc.accessTargetedEntity(), mc.crosshairTarget);
+        system.eventBus.passWithCallbackInfo(cir, evt);
     }
 
     @Inject(method = "stop", at = @At("HEAD"))
@@ -58,17 +53,6 @@ public abstract class MixinMinecraftClient implements AccessorMinecraftClient, G
     public void disconnect(Text reasonText, CallbackInfo ci) {
         system.eventBus.pass(new GameLeaveEvent());
     }
-
-    @Override
-    public void inputAttack() {
-        this.doAttack();
-    }
-
-    @Override
-    public void inputUse() {
-        this.doItemUse();
-    }
-
 
     @ModifyReturnValue(method = "hasOutline", at = @At("RETURN"))
     private boolean hasOutline(boolean original, Entity entity) {
