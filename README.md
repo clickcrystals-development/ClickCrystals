@@ -191,7 +191,7 @@ It is not a cheat. It does not automate any task, for every action the mod prefo
 | `cubecraft`.net         | no    | pending  |
 | `firevanilla`.net       | no    | yes      |
 | `shatteredvanilla`.net  | no    | no       |
-| `pvphub`.me             | no    | yes      |
+| `pvphub`.me             | yes   | yes      |
 | `europemc`.org          | no    | pending  |
 | play.`jackpot`.org      | no    | pending  |
 | `kingsmp`.net           | no    | pending  |
