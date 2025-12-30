@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
+import io.github.itzispyder.clickcrystals.modrinth.ModrinthSupport;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -11,11 +12,17 @@ import net.minecraft.client.gui.DrawContext;
 public class ModuleElement extends GuiElement {
 
     private final Module module;
+    private final boolean blacklisted;
 
     public ModuleElement(Module module, int x, int y, int width, int height) {
         super(x, y, width, height);
         this.setTooltip(module.getDescription());
         this.module = module;
+        this.blacklisted = ModrinthSupport.active && ModrinthSupport.isBlacklisted(module);
+
+        if (blacklisted) {
+            setTooltip(ModrinthSupport.warning);
+        }
     }
 
     @Override
@@ -25,7 +32,7 @@ public class ModuleElement extends GuiElement {
         if (module.isEnabled()) {
             color = Shades.TRANS_GRAY;
         }
-        if (isHovered(mouseX, mouseY) && hasParent() && mc.currentScreen instanceof GuiScreen screen && screen.hovered == getParent()) {
+        if (!blacklisted && isHovered(mouseX, mouseY) && hasParent() && mc.currentScreen instanceof GuiScreen screen && screen.hovered == getParent()) {
             color = Shades.TRANS_LIGHT_GRAY;
         }
 
@@ -33,10 +40,17 @@ public class ModuleElement extends GuiElement {
 
         String text = (module.isEnabled() ? "§b" : "§7") + module.getNameLimited();
         RenderUtils.drawText(context, text, x + 5, y + height / 3, 0.8F, false);
+
+        if (blacklisted) {
+            RenderUtils.fillRect(context, x, y, width, height, 0x60000000);
+        }
     }
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
+        if (blacklisted)
+            return;
+
         if (button == 0) {
             module.setEnabled(!module.isEnabled(), false);
         }

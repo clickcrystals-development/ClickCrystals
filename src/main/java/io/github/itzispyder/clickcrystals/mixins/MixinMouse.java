@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseScrollEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
-import io.github.itzispyder.clickcrystals.mixins.interfaces.AccessorMouse;
+import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorMouse;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.input.MouseInput;
 import org.spongepowered.asm.mixin.Mixin;

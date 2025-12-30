@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.screens.ModuleEditScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.scripts.ClickScriptIDE;
+import io.github.itzispyder.clickcrystals.modrinth.ModrinthSupport;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
@@ -13,15 +14,20 @@ import net.minecraft.client.gui.DrawContext;
 public class ModuleElement extends GuiElement {
 
     private final Module module;
+    private final boolean blacklisted;
     private Animator animator;
 
     public ModuleElement(Module module, int x, int y) {
         super(x, y, 300, 15);
         super.setTooltip("§eLEFT-CLICK§7 to toggle, §eRIGHT-CLICK§7 to edit");
         this.module = module;
+        this.blacklisted = ModrinthSupport.active && ModrinthSupport.isBlacklisted(module);
         this.animator = new Animator(400, Animations.FADE_IN_AND_OUT);
 
-        if (module instanceof ScriptedModule) {
+        if (blacklisted) {
+            setTooltip(ModrinthSupport.warning);
+        }
+        else if (module instanceof ScriptedModule) {
             setTooltip(getTooltip().concat(", §6MIDDLE-CLICK§7 to open IDE"));
         }
     }
@@ -37,7 +43,7 @@ public class ModuleElement extends GuiElement {
             animator = null;
         }
 
-        if (isHovered(mouseX, mouseY)) {
+        if (!blacklisted && isHovered(mouseX, mouseY)) {
             RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
         }
 
@@ -53,10 +59,16 @@ public class ModuleElement extends GuiElement {
         if (isAnimating) {
             context.getMatrices().popMatrix();
         }
+        if (blacklisted) {
+            RenderUtils.fillRect(context, x, y, width, height, 0x60000000);
+        }
     }
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
+        if (blacklisted)
+            return;
+
         if (button == 0) {
             module.setEnabled(!module.isEnabled(), false);
         }

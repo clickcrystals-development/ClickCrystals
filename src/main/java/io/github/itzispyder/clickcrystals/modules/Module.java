@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.modules;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.modrinth.ModrinthSupport;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingContainer;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
@@ -52,6 +53,12 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
     public void setEnabled(boolean enabled, boolean sendFeedback) {
         if (enabled == isEnabled())
             return;
+
+        if (enabled && ModrinthSupport.isBlacklisted(this)) {
+            if (sendFeedback)
+                ChatUtils.sendPrefixMessage(ModrinthSupport.warning);
+            return;
+        }
 
         this.data.setEnabled(enabled);
         if (sendFeedback)

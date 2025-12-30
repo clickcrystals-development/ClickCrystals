@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.mixins.interfaces;
+package io.github.itzispyder.clickcrystals.mixininterfaces;
 
 public interface AccessorKeyboard {
 

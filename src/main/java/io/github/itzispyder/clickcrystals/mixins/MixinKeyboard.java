@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.mixins;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
-import io.github.itzispyder.clickcrystals.mixins.interfaces.AccessorKeyboard;
+import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorKeyboard;
 import net.minecraft.client.Keyboard;
 import net.minecraft.client.input.KeyInput;
 import org.spongepowered.asm.mixin.Mixin;
