@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.clickcrystals;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
+import io.github.itzispyder.clickcrystals.modrinth.ModrinthNoNo;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
@@ -16,6 +17,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+@ModrinthNoNo
 public class McpeBlockPlacement extends ListenerModule {
 
     public McpeBlockPlacement() {

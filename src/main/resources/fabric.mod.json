@@ -22,7 +22,7 @@
     ],
     "modmenu":
     [
-      "io.github.itzispyder.clickcrystals.client.client.ModMenuIntegration"
+      "io.github.itzispyder.clickcrystals.client.system.ModMenuIntegration"
     ]
   },
 "depends": {

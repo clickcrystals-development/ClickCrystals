@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "AccessorCamera",
+    "AccessorHandledScreen",
     "AccessorMinecraftClient",
     "MixinAbstractClientPlayerEntity",
     "MixinArmorFeatureRenderer",

@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.BlockPlaceEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.ItemConsumeEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.ItemUseEvent;
+import io.github.itzispyder.clickcrystals.modrinth.ModrinthNoNo;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
@@ -17,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Hand;
 
+@ModrinthNoNo
 public class AutoReplenish extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();

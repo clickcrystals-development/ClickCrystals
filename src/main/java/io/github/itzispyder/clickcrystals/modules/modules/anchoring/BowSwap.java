@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.anchoring;
 
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.PostActionable;
+import io.github.itzispyder.clickcrystals.modrinth.ModrinthNoNo;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
@@ -12,6 +13,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.NbtUtils;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 
+@ModrinthNoNo
 public class BowSwap extends Module implements Listener {
 
     private final SettingSection scGeneral = getGeneralSection();

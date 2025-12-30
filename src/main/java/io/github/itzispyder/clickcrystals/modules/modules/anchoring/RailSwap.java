@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.anchoring;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
+import io.github.itzispyder.clickcrystals.modrinth.ModrinthNoNo;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
@@ -12,6 +13,7 @@ import net.minecraft.item.Items;
 
 import java.util.List;
 
+@ModrinthNoNo
 public class RailSwap extends Module implements Listener {
 
     private static final List<Item> RAILS = List.of(

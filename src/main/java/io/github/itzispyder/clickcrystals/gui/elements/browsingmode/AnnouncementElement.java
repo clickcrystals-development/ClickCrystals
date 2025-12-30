@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.elements.browsingmode;
 
-import io.github.itzispyder.clickcrystals.data.announce.Announcement;
+import io.github.itzispyder.clickcrystals.client.system.Announcement;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;

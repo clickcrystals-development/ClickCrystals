@@ -24,12 +24,9 @@
 package io.github.itzispyder.clickcrystals;
 
 import com.google.gson.Gson;
-import io.github.itzispyder.clickcrystals.client.client.ProfileManager;
-import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsInfo;
-import io.github.itzispyder.clickcrystals.client.system.Version;
-import io.github.itzispyder.clickcrystals.commands.commands.*;
-import io.github.itzispyder.clickcrystals.data.Config;
-import io.github.itzispyder.clickcrystals.data.JsonSerializable;
+import io.github.itzispyder.clickcrystals.client.commands.commands.*;
+import io.github.itzispyder.clickcrystals.client.commands.commands.pixelart.PixelArtCommand;
+import io.github.itzispyder.clickcrystals.client.system.*;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.events.listeners.ChatEventListener;

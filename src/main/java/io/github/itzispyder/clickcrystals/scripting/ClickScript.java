@@ -1,8 +1,8 @@
 package io.github.itzispyder.clickcrystals.scripting;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.commands.Command;
-import io.github.itzispyder.clickcrystals.data.Config;
+import io.github.itzispyder.clickcrystals.client.commands.Command;
+import io.github.itzispyder.clickcrystals.client.system.Config;
 import io.github.itzispyder.clickcrystals.scripting.components.CommandLine;
 import io.github.itzispyder.clickcrystals.scripting.exceptions.ScriptNotFoundException;
 import io.github.itzispyder.clickcrystals.scripting.exceptions.UnknownCommandException;

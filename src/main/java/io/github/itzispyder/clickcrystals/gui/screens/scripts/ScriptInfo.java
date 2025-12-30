@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.screens.scripts;
 
 import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.data.Config;
+import io.github.itzispyder.clickcrystals.client.system.Config;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 
 import java.io.File;

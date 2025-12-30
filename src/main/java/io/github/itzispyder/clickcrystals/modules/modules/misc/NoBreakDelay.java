@@ -1,8 +1,10 @@
 package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
+import io.github.itzispyder.clickcrystals.modrinth.ModrinthNoNo;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 
+@ModrinthNoNo
 public class NoBreakDelay extends Module {
 
     public NoBreakDelay() {

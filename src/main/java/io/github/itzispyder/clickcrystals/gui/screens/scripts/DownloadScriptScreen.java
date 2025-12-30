@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.screens.scripts;
 
-import io.github.itzispyder.clickcrystals.commands.commands.ReloadCommand;
-import io.github.itzispyder.clickcrystals.data.Config;
+import io.github.itzispyder.clickcrystals.client.commands.commands.ReloadCommand;
+import io.github.itzispyder.clickcrystals.client.system.Config;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;

@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
-import io.github.itzispyder.clickcrystals.data.announce.Announcement;
-import io.github.itzispyder.clickcrystals.data.announce.BulletinBoard;
+import io.github.itzispyder.clickcrystals.client.system.Announcement;
+import io.github.itzispyder.clickcrystals.client.system.BulletinBoard;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.AnnouncementElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;

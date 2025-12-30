@@ -1,10 +1,7 @@
 package io.github.itzispyder.clickcrystals.client.system;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
-import io.github.itzispyder.clickcrystals.client.client.CapeManager;
-import io.github.itzispyder.clickcrystals.client.client.ProfileManager;
-import io.github.itzispyder.clickcrystals.commands.Command;
-import io.github.itzispyder.clickcrystals.data.Config;
+import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.events.EventBus;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;

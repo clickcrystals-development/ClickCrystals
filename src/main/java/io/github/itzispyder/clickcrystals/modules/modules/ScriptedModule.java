@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.modules.modules;
 
 import io.github.itzispyder.clickcrystals.client.networking.PacketMapper;
-import io.github.itzispyder.clickcrystals.data.Config;
+import io.github.itzispyder.clickcrystals.client.system.Config;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.client.*;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameJoinEvent;

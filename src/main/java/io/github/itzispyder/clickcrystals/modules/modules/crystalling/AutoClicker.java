@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.crystalling;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.mixins.AccessorMinecraftClient;
+import io.github.itzispyder.clickcrystals.modrinth.ModrinthNoNo;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
@@ -16,6 +17,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.Arrays;
 
+@ModrinthNoNo
 public class AutoClicker extends ListenerModule {
 
     private final SettingSection scLeft = createSettingSection("left");
