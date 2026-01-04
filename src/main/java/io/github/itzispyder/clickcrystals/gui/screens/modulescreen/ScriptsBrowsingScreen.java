@@ -52,7 +52,6 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
     public ScriptsBrowsingScreen() {
         super();
-        filter();
 
         this.backButton = new ButtonElement("< Back", baseX + baseWidth - 50 - 10, baseY + 10, 50, 15, (mx, my, self) -> {
             File parent = new File(parentFolder).getParentFile();
@@ -295,26 +294,24 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
             }
 
             @Override
-            public void onKey(int key, int scancode) {
-                super.onKey(key, scancode);
-                if (!(mc.currentScreen instanceof GuiScreen screen)) {
-                    return;
-                }
+            public boolean onKey(int key, int scancode) {
+                if (key == GLFW.GLFW_KEY_ENTER) {
+                    if (mc.currentScreen instanceof GuiScreen screen) {
+                        if (getQuery().isEmpty()) {
+                            screen.selected = null;
+                        }
+                        else {
+                            String name = getQuery().trim()
+                                    .replace(' ', '-')
+                                    .replaceAll("[^a-zA-Z0-9_-]", "")
+                                    .toLowerCase();
 
-                if (key != GLFW.GLFW_KEY_ENTER) {
-                    return;
+                            createScript(name);
+                        }
+                    }
+                    return true;
                 }
-                if (getQuery().isEmpty()) {
-                    screen.selected = null;
-                    return;
-                }
-
-                String name = getQuery().trim()
-                        .replace(' ', '-')
-                        .replaceAll("[^a-zA-Z0-9_-]", "")
-                        .toLowerCase();
-
-                createScript(name);
+                return super.onKey(key, scancode);
             }
         };
         private final AbstractElement pasteScriptButton;
