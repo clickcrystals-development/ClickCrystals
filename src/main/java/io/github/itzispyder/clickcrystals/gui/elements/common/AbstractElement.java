@@ -39,8 +39,11 @@ public class AbstractElement extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-        this.onPress.onPress(this);
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (isHovered((int)mouseX, (int)mouseY)) {
+            this.onPress.onPress(this);
+        }
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     public RenderAction<AbstractElement> getRenderAction() {
