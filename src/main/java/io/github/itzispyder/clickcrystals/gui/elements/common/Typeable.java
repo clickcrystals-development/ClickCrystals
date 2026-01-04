@@ -9,12 +9,11 @@ import java.util.function.Function;
 
 public interface Typeable extends Global {
 
-    default void onKey(int key, int scan) {
+    default boolean onKey(int key, int scan) {
         if (mc.currentScreen instanceof GuiScreen screen) {
-            String typed = GLFW.glfwGetKeyName(key, scan);
-
             if (key == GLFW.GLFW_KEY_ESCAPE) {
                 screen.selected = null;
+                return true;
             }
             else if (key == GLFW.GLFW_KEY_BACKSPACE) {
                 onInput(input -> {
@@ -23,17 +22,21 @@ public interface Typeable extends Global {
                     }
                     return input;
                 });
-            }
-            else if (key == GLFW.GLFW_KEY_SPACE) {
-                onInput(input -> input.concat(" "));
+                return true;
             }
             else if (key == GLFW.GLFW_KEY_V && screen.ctrlKeyPressed) {
                 onInput(input -> input.concat(mc.keyboard.getClipboard()));
-            }
-            else if (typed != null){
-                onInput(input -> input.concat(screen.shiftKeyPressed ? StringUtils.keyPressWithShift(typed) : typed));
+                return true;
             }
         }
+        return false;
+    }
+
+    default void onChar(char chr, int modifiers) {
+        if (Character.isISOControl(chr)) {
+            return;
+        }
+        onInput(input -> input.concat(String.valueOf(chr)));
     }
 
     void onInput(Function<String, String> factory);
