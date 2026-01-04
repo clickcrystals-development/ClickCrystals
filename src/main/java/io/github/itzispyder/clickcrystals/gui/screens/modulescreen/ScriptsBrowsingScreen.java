@@ -331,7 +331,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
                                 .stayTime(1000 * 3)
                                 .build();
 
-                        if (script == null || script.isBlank()) {
+                        if (script == null || script.isBlank() || script.length() > 50000) {
                             if (PlayerUtils.valid()) {
                                 system.closeCurrentScreen();
                                 notification.sendToClient();
@@ -339,19 +339,26 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
                             return;
                         }
 
-                        Pattern pattern = Pattern.compile(".*(define module|def module|module create) (\\S*).*", Pattern.DOTALL);
-                        Matcher matcher = pattern.matcher(script);
+                        try {
+                            Pattern pattern = Pattern.compile(".*(define module|def module|module create) (\\S*).*", Pattern.DOTALL);
+                            Matcher matcher = pattern.matcher(script.substring(0, Math.min(script.length(), 1000)));
 
-                        if (!matcher.matches()) {
+                            if (!matcher.matches()) {
+                                if (PlayerUtils.valid()) {
+                                    system.closeCurrentScreen();
+                                    notification.sendToClient();
+                                }
+                                return;
+                            }
+
+                            String name = matcher.group(2);
+                            ScriptCreateNew.createScriptWithPretext(name, script);
+                        } catch (Exception ex) {
                             if (PlayerUtils.valid()) {
                                 system.closeCurrentScreen();
                                 notification.sendToClient();
                             }
-                            return;
                         }
-
-                        String name = matcher.group(2);
-                        ScriptCreateNew.createScriptWithPretext(name, script);
                     })
                     .build();
             this.pasteScriptButton.setTooltip("Paste script from clipboard");
