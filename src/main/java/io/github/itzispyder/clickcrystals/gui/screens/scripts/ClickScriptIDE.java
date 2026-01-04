@@ -11,6 +11,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.ScriptsBrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.scripting.ClickScript;
@@ -283,8 +284,8 @@ public class ClickScriptIDE extends DefaultBase {
         if (loading.isRendering()) {
             return Voidable.of(null);
         }
+        loading.setRendering(true);
         return Voidable.of(CompletableFuture.runAsync(() -> {
-            loading.setRendering(true);
             try {
                 File file = new File(filepath);
                 if (!FileValidationUtils.validate(file)) {
@@ -294,13 +295,17 @@ public class ClickScriptIDE extends DefaultBase {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                 writer.write(textField.getContent());
                 writer.close();
+                ReloadCommand.reload();
+                // Refresh the scripts browsing screen if it's open
+                if (mc.currentScreen instanceof ScriptsBrowsingScreen) {
+                    mc.setScreen(new ScriptsBrowsingScreen());
+                }
             }
             catch (Exception ex) {
                 system.printErr("Error: IDE failed to save script");
                 UserInputListener.openPreviousScreen();
             }
-            ReloadCommand.reload();
-        }).thenRun(() -> {
+        }).whenComplete((result, throwable) -> {
             loading.setRendering(false);
         }));
     }
