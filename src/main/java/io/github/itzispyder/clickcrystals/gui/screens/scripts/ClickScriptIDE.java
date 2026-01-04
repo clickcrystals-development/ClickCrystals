@@ -267,13 +267,19 @@ public class ClickScriptIDE extends DefaultBase {
                 reader.close();
 
                 String finalStr = str;
-                textField.clear();
-                textField.onInput(input -> textField.insertInput(finalStr));
-                textField.shiftEnd();
+                mc.execute(() -> {
+                    textField.clear();
+                    textField.onInput(input -> textField.insertInput(finalStr));
+                    textField.shiftEnd();
+                });
             }
             catch (Exception ex) {
                 system.printErr("Failed to load IDE contents: " + ex.getMessage());
-                UserInputListener.openPreviousScreen();
+                // On first load failure, just show empty editor instead of navigating away
+                mc.execute(() -> {
+                    textField.clear();
+                    textField.insertInput("");
+                });
             }
         }).thenRun(() -> {
             loading.setRendering(false);
