@@ -47,6 +47,15 @@ public class TextFieldElement extends GuiElement implements Typeable {
     }
 
     @Override
+    public void onChar(char chr, int modifiers) {
+        if (Character.isISOControl(chr)) {
+            return;
+        }
+        onInput(input -> insertInput(String.valueOf(chr)));
+        shiftRight();
+    }
+
+    @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
         context.getMatrices().pushMatrix();
         context.enableScissor(x, y, x + width, y + height);
@@ -106,61 +115,68 @@ public class TextFieldElement extends GuiElement implements Typeable {
     }
 
     @Override
-    public void onKey(int key, int scan) {
+    public boolean onKey(int key, int scan) {
         if (mc.currentScreen instanceof GuiScreen screen) {
-            String typed = GLFW.glfwGetKeyName(key, scan);
-
             if (key == GLFW.GLFW_KEY_ESCAPE) {
                 selectedAll = false;
                 screen.selected = null;
+                return true;
             }
             else if (key == GLFW.GLFW_KEY_A && screen.ctrlKeyPressed) {
                 selectedAll = true;
+                return true;
             }
             else if (key == GLFW.GLFW_KEY_BACKSPACE) {
-                onInput(input -> StringUtils.insertString(content, selectionStart, null));
+                onInput(currentContent -> {
+                    if (selectionStart > 0 && !currentContent.isEmpty()) {
+                        return currentContent.substring(0, selectionStart - 1) + currentContent.substring(selectionStart);
+                    }
+                    return currentContent;
+                });
                 shiftLeft();
+                return true;
             }
             else if (key == GLFW.GLFW_KEY_DELETE) {
                 onInput(input -> StringUtils.insertString(content, selectionStart + 1, null));
-            }
-            else if (key == GLFW.GLFW_KEY_SPACE) {
-                onInput(input -> insertInput(" "));
-                shiftRight();
+                return true;
             }
             else if (key == GLFW.GLFW_KEY_V && screen.ctrlKeyPressed) {
                 onInput(input -> insertInput(mc.keyboard.getClipboard()));
                 shiftRight();
+                return true;
             }
             else if (key == GLFW.GLFW_KEY_C && screen.ctrlKeyPressed && selectedAll) {
                 mc.keyboard.setClipboard(content);
+                return true;
             }
             else if (key == GLFW.GLFW_KEY_ENTER) {
                 onInput(input -> insertInput("\n"));
                 shiftRight();
                 shiftRight();
+                return true;
             }
             else if (key == GLFW.GLFW_KEY_LEFT) {
                 shiftLeft();
+                return true;
             }
             else if (key == GLFW.GLFW_KEY_RIGHT) {
                 shiftRight();
+                return true;
             }
             else if (key == GLFW.GLFW_KEY_UP) {
                 for (int i = 0; i < 10; i++) {
                     shiftLeft();
                 }
+                return true;
             }
             else if (key == GLFW.GLFW_KEY_DOWN) {
                 for (int i = 0; i < 10; i++) {
                     shiftRight();
                 }
-            }
-            else if (typed != null){
-                onInput(input -> insertInput(screen.shiftKeyPressed ? StringUtils.keyPressWithShift(typed) : typed));
-                shiftRight();
+                return true;
             }
         }
+        return false;
     }
 
     @Override
