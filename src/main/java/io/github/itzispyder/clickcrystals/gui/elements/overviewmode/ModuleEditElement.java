@@ -49,17 +49,17 @@ public class ModuleEditElement extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
+    public void mouseClicked(double mouseX, double mouseY, int button) {
         if (isHoverExit((int)mouseX, (int)mouseY) && mc.currentScreen instanceof OverviewScreen screen) {
             screen.removeCurrentEditing();
             return;
         }
-        super.onClick(mouseX, mouseY, button);
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
-    public void onRelease(double mouseX, double mouseY, int button) {
-        super.onRelease(mouseX, mouseY, button);
+    public void mouseReleased(double mouseX, double mouseY, int button) {
+        super.mouseReleased(mouseX, mouseY, button);
         ClickCrystals.config.saveModule(module);
         ClickCrystals.config.save();
     }
