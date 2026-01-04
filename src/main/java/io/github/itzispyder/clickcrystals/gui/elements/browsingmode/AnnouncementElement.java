@@ -60,8 +60,8 @@ public class AnnouncementElement extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     public Announcement getAnnouncement() {
