@@ -24,7 +24,7 @@ public class ModuleElement extends GuiElement {
         this.animator = new Animator(400, Animations.FADE_IN_AND_OUT);
 
         if (module != null) {
-            this.blacklisted = ModrinthSupport.isBlacklisted(module);
+            this.blacklisted = ModrinthSupport.active && ModrinthSupport.isBlacklisted(module);
             if (blacklisted) {
                 setTooltip(ModrinthSupport.warning);
             }
@@ -72,23 +72,19 @@ public class ModuleElement extends GuiElement {
     }
 
     @Override
-    public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (module != null) {
-            if (blacklisted || !isHovered((int)mouseX, (int)mouseY)) {
-                return;
-            }
+    public void onClick(double mouseX, double mouseY, int button) {
+        if (blacklisted)
+            return;
 
-            if (button == 0) {
-                module.setEnabled(!module.isEnabled(), false);
-            }
-            else if (button == 1) {
-                mc.setScreen(new ModuleEditScreen(module));
-            }
-            else if (button == 2 && module instanceof ScriptedModule m) {
-                mc.setScreen(new ClickScriptIDE(m));
-            }
+        if (button == 0) {
+            module.setEnabled(!module.isEnabled(), false);
         }
-        super.mouseClicked(mouseX, mouseY, button);
+        else if (button == 1) {
+            mc.setScreen(new ModuleEditScreen(module));
+        }
+        else if (button == 2 && module instanceof ScriptedModule m) {
+            mc.setScreen(new ClickScriptIDE(m));
+        }
     }
 
     @Override
