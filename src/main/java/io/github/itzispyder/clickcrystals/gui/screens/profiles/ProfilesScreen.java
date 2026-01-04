@@ -95,16 +95,19 @@ public class ProfilesScreen extends DefaultBase {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY, int button) {
-            if (!deleteButton.isHovered((int)mouseX, (int)mouseY)) {
-                system.profiles.switchProfile(profileId);
-            }
-            else {
-                while (system.profiles.hasProfile(profileId)) {
-                    system.profiles.deleteProfile(profileId);
+        public void mouseClicked(double mouseX, double mouseY, int button) {
+            if (isHovered((int)mouseX, (int)mouseY)) {
+                if (!deleteButton.isHovered((int)mouseX, (int)mouseY)) {
+                    system.profiles.switchProfile(profileId);
                 }
-                mc.setScreen(new ProfilesScreen());
+                else {
+                    while (system.profiles.hasProfile(profileId)) {
+                        system.profiles.deleteProfile(profileId);
+                    }
+                    mc.setScreen(new ProfilesScreen());
+                }
             }
+            super.mouseClicked(mouseX, mouseY, button);
         }
     }
 
@@ -115,27 +118,24 @@ public class ProfilesScreen extends DefaultBase {
             }
 
             @Override
-            public void onKey(int key, int scancode) {
-                super.onKey(key, scancode);
-                if (!(mc.currentScreen instanceof GuiScreen screen)) {
-                    return;
+            public boolean onKey(int key, int scancode) {
+                if (key == GLFW.GLFW_KEY_ENTER) {
+                    if (mc.currentScreen instanceof GuiScreen screen) {
+                        if (getQuery().isEmpty()) {
+                            screen.selected = null;
+                        }
+                        else {
+                            String name = getQuery().trim()
+                                    .toLowerCase()
+                                    .replace(' ', '-')
+                                    .replaceAll("[^a-z_-]", "");
+                            system.profiles.switchProfile(name);
+                            mc.setScreen(new ProfilesScreen());
+                        }
+                    }
+                    return true;
                 }
-
-                if (key != GLFW.GLFW_KEY_ENTER) {
-                    return;
-                }
-                if (getQuery().isEmpty()) {
-                    screen.selected = null;
-                    return;
-                }
-
-                String name = getQuery().trim()
-                        .toLowerCase()
-                        .replace(' ', '-')
-                        .replaceAll("[^a-z_-]", "");
-
-                system.profiles.switchProfile(name);
-                mc.setScreen(new ProfilesScreen());
+                return super.onKey(key, scancode);
             }
         };
 
@@ -159,11 +159,12 @@ public class ProfilesScreen extends DefaultBase {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY, int button) {
-            if (mc.currentScreen instanceof GuiScreen screen) {
+        public void mouseClicked(double mouseX, double mouseY, int button) {
+            if (mc.currentScreen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
                 textField.setDefaultText("§c*Enter profile name*");
                 screen.selected = textField;
             }
+            super.mouseClicked(mouseX, mouseY, button);
         }
     }
 
@@ -185,8 +186,11 @@ public class ProfilesScreen extends DefaultBase {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY, int button) {
-            mc.setScreen(new DownloadProfileScreen());
+        public void mouseClicked(double mouseX, double mouseY, int button) {
+            if (isHovered((int)mouseX, (int)mouseY)) {
+                mc.setScreen(new DownloadProfileScreen());
+            }
+            super.mouseClicked(mouseX, mouseY, button);
         }
     }
 }
