@@ -32,8 +32,11 @@ public class HyperLinkElement extends GuiElement {
 
     @Override
     @SuppressWarnings("deprecation")
-    public void onClick(double mouseX, double mouseY, int button) {
-        system.openUrl(url);
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (isHovered((int)mouseX, (int)mouseY)) {
+            system.openUrl(url);
+        }
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     public String getUrl() {
