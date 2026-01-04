@@ -24,8 +24,8 @@ public class PositionableHudElement extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     public Hud getHud() {
