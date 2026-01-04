@@ -44,19 +44,21 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-        if (mc.currentScreen instanceof GuiScreen screen) {
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (mc.currentScreen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
             screen.selected = this;
         }
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
-    public void onKey(int key, int scanCode) {
+    public boolean onKey(int key, int scanCode) {
         if (mc.currentScreen instanceof GuiScreen screen) {
             setting.setKey(key == GLFW.GLFW_KEY_ESCAPE ? Keybind.NONE : key);
             currentScanCode = scanCode;
             screen.selected = null;
         }
+        return true;
     }
 
     @Override
