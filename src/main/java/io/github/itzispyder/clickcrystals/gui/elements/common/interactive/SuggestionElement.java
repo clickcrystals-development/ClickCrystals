@@ -33,7 +33,10 @@ public class SuggestionElement extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-        clickAction.accept(this);
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (isHovered((int)mouseX, (int)mouseY)) {
+            clickAction.accept(this);
+        }
+        super.mouseClicked(mouseX, mouseY, button);
     }
 }
