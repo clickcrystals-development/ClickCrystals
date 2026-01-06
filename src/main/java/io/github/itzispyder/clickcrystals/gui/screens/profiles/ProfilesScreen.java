@@ -96,16 +96,18 @@ public class ProfilesScreen extends DefaultBase {
 
         @Override
         public void mouseClicked(double mouseX, double mouseY, int button) {
-            if (isHovered((int)mouseX, (int)mouseY)) {
-                if (!deleteButton.isHovered((int)mouseX, (int)mouseY)) {
-                    system.profiles.switchProfile(profileId);
-                }
-                else {
-                    while (system.profiles.hasProfile(profileId)) {
-                        system.profiles.deleteProfile(profileId);
-                    }
-                    mc.setScreen(new ProfilesScreen());
-                }
+            if (!isHovered((int)mouseX, (int)mouseY)) {
+                super.mouseClicked(mouseX, mouseY, button);
+                return;
+            }
+
+            if (!deleteButton.isHovered((int)mouseX, (int)mouseY)) {
+                system.profiles.switchProfile(profileId);
+            }
+            else {
+                while (system.profiles.hasProfile(profileId))
+                    system.profiles.deleteProfile(profileId);
+                mc.setScreen(new ProfilesScreen());
             }
             super.mouseClicked(mouseX, mouseY, button);
         }
@@ -119,23 +121,23 @@ public class ProfilesScreen extends DefaultBase {
 
             @Override
             public boolean onKey(int key, int scancode) {
-                if (key == GLFW.GLFW_KEY_ENTER) {
-                    if (mc.currentScreen instanceof GuiScreen screen) {
-                        if (getQuery().isEmpty()) {
-                            screen.selected = null;
-                        }
-                        else {
-                            String name = getQuery().trim()
-                                    .toLowerCase()
-                                    .replace(' ', '-')
-                                    .replaceAll("[^a-z_-]", "");
-                            system.profiles.switchProfile(name);
-                            mc.setScreen(new ProfilesScreen());
-                        }
-                    }
+                if (key != GLFW.GLFW_KEY_ENTER)
+                    return super.onKey(key, scancode);
+                if (!(mc.currentScreen instanceof GuiScreen screen))
                     return true;
+
+                if (getQuery().isEmpty()) {
+                    screen.selected = null;
                 }
-                return super.onKey(key, scancode);
+                else {
+                    String name = getQuery().trim()
+                            .toLowerCase()
+                            .replace(' ', '-')
+                            .replaceAll("[^a-z_-]", "");
+                    system.profiles.switchProfile(name);
+                    mc.setScreen(new ProfilesScreen());
+                }
+                return true;
             }
         };
 

@@ -116,65 +116,61 @@ public class TextFieldElement extends GuiElement implements Typeable {
 
     @Override
     public boolean onKey(int key, int scan) {
-        if (mc.currentScreen instanceof GuiScreen screen) {
-            if (key == GLFW.GLFW_KEY_ESCAPE) {
-                selectedAll = false;
-                screen.selected = null;
-                return true;
-            }
-            else if (key == GLFW.GLFW_KEY_A && screen.ctrlKeyPressed) {
-                selectedAll = true;
-                return true;
-            }
-            else if (key == GLFW.GLFW_KEY_BACKSPACE) {
-                onInput(currentContent -> {
-                    if (selectionStart > 0 && !currentContent.isEmpty()) {
-                        return currentContent.substring(0, selectionStart - 1) + currentContent.substring(selectionStart);
-                    }
-                    return currentContent;
-                });
+        if (!(mc.currentScreen instanceof GuiScreen screen))
+            return false;
+
+        if (key == GLFW.GLFW_KEY_ESCAPE) {
+            selectedAll = false;
+            screen.selected = null;
+            return true;
+        }
+        else if (key == GLFW.GLFW_KEY_A && screen.ctrlKeyPressed) {
+            selectedAll = true;
+            return true;
+        }
+        else if (key == GLFW.GLFW_KEY_BACKSPACE) {
+            onInput(currentContent -> selectionStart > 0 && !currentContent.isEmpty()
+                    ? currentContent.substring(0, selectionStart - 1) + currentContent.substring(selectionStart)
+                    : currentContent);
+            shiftLeft();
+            return true;
+        }
+        else if (key == GLFW.GLFW_KEY_DELETE) {
+            onInput(input -> StringUtils.insertString(content, selectionStart + 1, null));
+            return true;
+        }
+        else if (key == GLFW.GLFW_KEY_V && screen.ctrlKeyPressed) {
+            onInput(input -> insertInput(mc.keyboard.getClipboard()));
+            shiftRight();
+            return true;
+        }
+        else if (key == GLFW.GLFW_KEY_C && screen.ctrlKeyPressed && selectedAll) {
+            mc.keyboard.setClipboard(content);
+            return true;
+        }
+        else if (key == GLFW.GLFW_KEY_ENTER) {
+            onInput(input -> insertInput("\n"));
+            shiftRight();
+            shiftRight();
+            return true;
+        }
+        else if (key == GLFW.GLFW_KEY_LEFT) {
+            shiftLeft();
+            return true;
+        }
+        else if (key == GLFW.GLFW_KEY_RIGHT) {
+            shiftRight();
+            return true;
+        }
+        else if (key == GLFW.GLFW_KEY_UP) {
+            for (int i = 0; i < 10; i++)
                 shiftLeft();
-                return true;
-            }
-            else if (key == GLFW.GLFW_KEY_DELETE) {
-                onInput(input -> StringUtils.insertString(content, selectionStart + 1, null));
-                return true;
-            }
-            else if (key == GLFW.GLFW_KEY_V && screen.ctrlKeyPressed) {
-                onInput(input -> insertInput(mc.keyboard.getClipboard()));
+            return true;
+        }
+        else if (key == GLFW.GLFW_KEY_DOWN) {
+            for (int i = 0; i < 10; i++)
                 shiftRight();
-                return true;
-            }
-            else if (key == GLFW.GLFW_KEY_C && screen.ctrlKeyPressed && selectedAll) {
-                mc.keyboard.setClipboard(content);
-                return true;
-            }
-            else if (key == GLFW.GLFW_KEY_ENTER) {
-                onInput(input -> insertInput("\n"));
-                shiftRight();
-                shiftRight();
-                return true;
-            }
-            else if (key == GLFW.GLFW_KEY_LEFT) {
-                shiftLeft();
-                return true;
-            }
-            else if (key == GLFW.GLFW_KEY_RIGHT) {
-                shiftRight();
-                return true;
-            }
-            else if (key == GLFW.GLFW_KEY_UP) {
-                for (int i = 0; i < 10; i++) {
-                    shiftLeft();
-                }
-                return true;
-            }
-            else if (key == GLFW.GLFW_KEY_DOWN) {
-                for (int i = 0; i < 10; i++) {
-                    shiftRight();
-                }
-                return true;
-            }
+            return true;
         }
         return false;
     }

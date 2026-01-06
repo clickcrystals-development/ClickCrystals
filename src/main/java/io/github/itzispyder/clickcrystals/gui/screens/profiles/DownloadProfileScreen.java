@@ -168,20 +168,20 @@ public class DownloadProfileScreen extends AnimatedBase {
 
         @Override
         public void mouseClicked(double mouseX, double mouseY, int button) {
-            if (isHovered((int)mouseX, (int)mouseY)) {
-                if (button != 0 || loading.isRendering() || owned)
-                    return;
+            if (!isHovered((int)mouseX, (int)mouseY))
+                return;
+            if (button != 0 || loading.isRendering() || owned)
+                return;
 
-                CompletableFuture.runAsync(() -> {
-                    loading.setX(x + width / 2);
-                    loading.setY(y + height / 2);
-                    loading.setRendering(true);
-                    info.download(profile);
-                }).thenRun(() -> {
-                    loading.setRendering(false);
-                    owned = true;
-                });
-            }
+            CompletableFuture.runAsync(() -> {
+                loading.setX(x + width / 2);
+                loading.setY(y + height / 2);
+                loading.setRendering(true);
+                info.download(profile);
+            }).thenRun(() -> {
+                loading.setRendering(false);
+                owned = true;
+            });
         }
     }
 }

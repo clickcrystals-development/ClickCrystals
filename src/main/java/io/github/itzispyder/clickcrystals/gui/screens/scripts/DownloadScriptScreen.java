@@ -412,21 +412,22 @@ public class DownloadScriptScreen extends AnimatedBase {
 
         @Override
         public void mouseClicked(double mouseX, double mouseY, int button) {
-            if (isHovered((int)mouseX, (int)mouseY)) {
-                if (button != 0 || downloadStatus.isRendering() || owned)
-                    return;
+            if (!isHovered((int)mouseX, (int)mouseY))
+                return;
+            if (button != 0 || downloadStatus.isRendering() || owned)
+                return;
 
-                CompletableFuture.runAsync(() -> {
-                    downloadStatus.setX(x + width / 2);
-                    downloadStatus.setY(y + height / 2);
-                    downloadStatus.setRendering(true);
-                    script.download();
-                    ReloadCommand.reload();
-                }).thenRun(() -> {
-                    downloadStatus.setRendering(false);
-                    owned = true;
-                });
-            }
+            CompletableFuture.runAsync(() -> {
+                downloadStatus.setX(x + width / 2);
+                downloadStatus.setY(y + height / 2);
+                downloadStatus.setRendering(true);
+                script.download();
+                ReloadCommand.reload();
+            }).thenRun(() -> {
+                downloadStatus.setRendering(false);
+                owned = true;
+            });
+
         }
 
         public void renderStatus(DrawContext context) {

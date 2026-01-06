@@ -23,18 +23,16 @@ public class ModuleElement extends GuiElement {
         this.module = module;
         this.animator = new Animator(400, Animations.FADE_IN_AND_OUT);
 
-        if (module != null) {
-            this.blacklisted = ModrinthSupport.active && ModrinthSupport.isBlacklisted(module);
-            if (blacklisted) {
-                setTooltip(ModrinthSupport.warning);
-            }
-            else if (module instanceof ScriptedModule) {
-                setTooltip(getTooltip().concat(", §6MIDDLE-CLICK§7 to open IDE"));
-            }
-        }
-        else {
+        if (module == null) {
             this.blacklisted = false;
+            return;
         }
+
+        this.blacklisted = ModrinthSupport.active && ModrinthSupport.isBlacklisted(module);
+        if (blacklisted)
+            setTooltip(ModrinthSupport.warning);
+        else if (module instanceof ScriptedModule)
+            setTooltip(getTooltip().concat(", §6MIDDLE-CLICK§7 to open IDE"));
     }
 
     @Override

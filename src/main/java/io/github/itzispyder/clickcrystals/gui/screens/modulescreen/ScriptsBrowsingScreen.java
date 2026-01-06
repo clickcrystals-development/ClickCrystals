@@ -295,23 +295,20 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
             @Override
             public boolean onKey(int key, int scancode) {
-                if (key == GLFW.GLFW_KEY_ENTER) {
-                    if (mc.currentScreen instanceof GuiScreen screen) {
-                        if (getQuery().isEmpty()) {
-                            screen.selected = null;
-                        }
-                        else {
-                            String name = getQuery().trim()
-                                    .replace(' ', '-')
-                                    .replaceAll("[^a-zA-Z0-9_-]", "")
-                                    .toLowerCase();
-
-                            createScript(name);
-                        }
-                    }
+                if (key != GLFW.GLFW_KEY_ENTER)
+                    return super.onKey(key, scancode);
+                if (!(mc.currentScreen instanceof GuiScreen screen))
+                    return true;
+                if (getQuery().isEmpty()) {
+                    screen.selected = null;
                     return true;
                 }
-                return super.onKey(key, scancode);
+
+                createScript(getQuery().trim()
+                        .replace(' ', '-')
+                        .replaceAll("[^a-zA-Z0-9_-]", "")
+                        .toLowerCase());
+                return true;
             }
         };
         private final AbstractElement pasteScriptButton;
@@ -321,49 +318,47 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
             this.setTooltip("§7Type the file name then hit §eENTER§7!");
             this.pasteScriptButton = AbstractElement.create().pos(0, 0).dimensions(40, textField.height)
                     .onRender(AbstractElement.RENDER_BUTTON.apply(() -> "Paste"))
-                    .onPress(self -> {
-                        String script = mc.keyboard.getClipboard();
-                        Notification notification = Notification.create()
-                                .ccsIcon()
-                                .id("invalid-clipboard-script")
-                                .title("Invalid Clipboard Script")
-                                .text("§eYour clipboard was invalid. Please copy a script first!")
-                                .stayTime(1000 * 3)
-                                .build();
-
-                        if (script == null || script.isBlank() || script.length() > 50000) {
-                            if (PlayerUtils.valid()) {
-                                system.closeCurrentScreen();
-                                notification.sendToClient();
-                            }
-                            return;
-                        }
-
-                        try {
-                            Pattern pattern = Pattern.compile(".*(define module|def module|module create) (\\S*).*", Pattern.DOTALL);
-                            Matcher matcher = pattern.matcher(script.substring(0, Math.min(script.length(), 1000)));
-
-                            if (!matcher.matches()) {
-                                if (PlayerUtils.valid()) {
-                                    system.closeCurrentScreen();
-                                    notification.sendToClient();
-                                }
-                                return;
-                            }
-
-                            String name = matcher.group(2);
-                            ScriptCreateNew.createScriptWithPretext(name, script);
-                        } catch (Exception ex) {
-                            if (PlayerUtils.valid()) {
-                                system.closeCurrentScreen();
-                                notification.sendToClient();
-                            }
-                        }
-                    })
+                    .onPress(ScriptCreateNew::onScriptPasteClicked)
                     .build();
             this.pasteScriptButton.setTooltip("Paste script from clipboard");
             this.addChild(pasteScriptButton);
             this.addChild(textField);
+        }
+
+        private static void onScriptPasteClicked(AbstractElement self) {
+            String script = mc.keyboard.getClipboard();
+            Notification notification = Notification.create()
+                    .ccsIcon()
+                    .id("invalid-clipboard-script")
+                    .title("Invalid Clipboard Script")
+                    .text("§eYour clipboard was invalid. Please copy a script first!")
+                    .stayTime(1000 * 3)
+                    .build();
+            Runnable notify = () -> { if (PlayerUtils.valid()) {
+                system.closeCurrentScreen();
+                notification.sendToClient();
+            }};
+
+            if (script == null || script.isBlank() || script.length() > 50000) {
+                notify.run();
+                return;
+            }
+
+            try {
+                Pattern pattern = Pattern.compile(".*(define module|def module|module create) (\\S*).*", Pattern.DOTALL);
+                Matcher matcher = pattern.matcher(script.substring(0, Math.min(script.length(), 1000)));
+
+                if (!matcher.matches()) {
+                    notify.run();
+                    return;
+                }
+
+                String name = matcher.group(2);
+                ScriptCreateNew.createScriptWithPretext(name, script);
+            }
+            catch (Exception ex) {
+                notify.run();
+            }
         }
 
         public static void createScript(String moduleId) {
