@@ -14,10 +14,7 @@ public class ModrinthSupport {
     public static final String warning = "§eThe Modrinth version of this §emod has prevented the use §eof this module, please §edownload the original version of §eClickCrystals via linked §esources on our client's §ehome page!";
 
     public static boolean isBlacklisted(Class<? extends Module> modType) {
-        if (!active) {
-            return false;
-        }
-        return modType.getAnnotation(ModrinthNoNo.class) != null;
+        return active && modType.getAnnotation(ModrinthNoNo.class) != null;
     }
 
     public static boolean isBlacklisted(Module mod) {
