@@ -94,10 +94,11 @@ public class SettingScreen extends DefaultBase {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY, int button) {
-            if (check.getAsBoolean()) {
+        public void mouseClicked(double mouseX, double mouseY, int button) {
+            if (check.getAsBoolean() && isHovered((int)mouseX, (int)mouseY)) {
                 destination.run();
             }
+            super.mouseClicked(mouseX, mouseY, button);
         }
     }
 

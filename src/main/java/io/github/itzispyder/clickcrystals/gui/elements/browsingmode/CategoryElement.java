@@ -32,9 +32,12 @@ public class CategoryElement extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-        BrowsingScreen.currentCategory = category;
-        UserInputListener.openModulesScreen();
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (isHovered((int)mouseX, (int)mouseY)) {
+            BrowsingScreen.currentCategory = category;
+            UserInputListener.openModulesScreen();
+        }
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     public Category getCategory() {

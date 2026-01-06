@@ -40,13 +40,15 @@ public class CategoryElement extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        super.mouseClicked(mouseX, mouseY, button);
         this.lastClickX = x;
         this.lastClickY = y;
     }
 
     @Override
-    public void onRelease(double mouseX, double mouseY, int button) {
+    public void mouseReleased(double mouseX, double mouseY, int button) {
+        super.mouseReleased(mouseX, mouseY, button);
         if (button == 0 && isHoverCollapsion((int)mouseX, (int)mouseY) && lastClickX == x && lastClickY == y) {
             setCollapsed(!isCollapsed());
             if (mc.currentScreen instanceof OverviewScreen screen) {

@@ -47,8 +47,8 @@ public class SearchResultsElement extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     public void updateResults() {
@@ -118,8 +118,11 @@ public class SearchResultsElement extends GuiElement {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY, int button) {
-            mc.setScreen(new ModuleEditScreen(module));
+        public void mouseClicked(double mouseX, double mouseY, int button) {
+            if (isHovered((int)mouseX, (int)mouseY)) {
+                mc.setScreen(new ModuleEditScreen(module));
+            }
+            super.mouseClicked(mouseX, mouseY, button);
         }
 
         public Module getModule() {

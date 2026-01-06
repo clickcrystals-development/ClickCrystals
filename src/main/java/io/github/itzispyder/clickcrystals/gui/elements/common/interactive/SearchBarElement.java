@@ -59,16 +59,19 @@ public class SearchBarElement extends GuiElement implements Typeable {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (mc.currentScreen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
+            screen.selected = this;
+        }
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
-    public void onKey(int key, int scancode) {
-        Typeable.super.onKey(key, scancode);
+    public boolean onKey(int key, int scancode) {
         for (KeyPressCallback callback : keyPressCallbacks) {
             callback.handleKey(key, ClickType.CLICK, scancode, -1);
         }
+        return Typeable.super.onKey(key, scancode);
     }
 
     @Override

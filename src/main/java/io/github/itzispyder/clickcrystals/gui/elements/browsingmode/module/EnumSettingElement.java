@@ -37,7 +37,10 @@ public class EnumSettingElement extends SettingElement<EnumSetting<?>> {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-        setting.next();
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (isHovered((int)mouseX, (int)mouseY)) {
+            setting.next();
+        }
+        super.mouseClicked(mouseX, mouseY, button);
     }
 }

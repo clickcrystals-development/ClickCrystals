@@ -18,7 +18,7 @@ public class ModuleElement extends GuiElement {
         super(x, y, width, height);
         this.setTooltip(module.getDescription());
         this.module = module;
-        this.blacklisted = ModrinthSupport.active && ModrinthSupport.isBlacklisted(module);
+        this.blacklisted = ModrinthSupport.isBlacklisted(module);
 
         if (blacklisted) {
             setTooltip(ModrinthSupport.warning);
@@ -47,8 +47,8 @@ public class ModuleElement extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-        if (blacklisted)
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (blacklisted || !isHovered((int)mouseX, (int)mouseY))
             return;
 
         if (button == 0) {
@@ -57,6 +57,7 @@ public class ModuleElement extends GuiElement {
         else if (button == 1 && mc.currentScreen instanceof OverviewScreen screen) {
             screen.setCurrentEditing(module, (int)mouseX, (int)mouseY);
         }
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     public Module getModule() {

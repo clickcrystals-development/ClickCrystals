@@ -55,15 +55,15 @@ public class ButtonElement extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-        super.onClick(mouseX, mouseY, button);
-        clickCallback.onClick((int)mouseX, (int)mouseY, this);
-        mouseDown = true;
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (isHovered((int)mouseX, (int)mouseY)) {
+            clickCallback.onClick((int)mouseX, (int)mouseY, this);
+            mouseDown = true;
+        }
     }
 
     @Override
-    public void onRelease(double mouseX, double mouseY, int button) {
-        super.onRelease(mouseX, mouseY, button);
+    public void mouseReleased(double mouseX, double mouseY, int button) {
         mouseDown = false;
     }
 

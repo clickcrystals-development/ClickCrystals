@@ -56,10 +56,11 @@ public class DoubleSettingElement extends SettingElement<DoubleSetting> {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-        if (mc.currentScreen instanceof GuiScreen screen) {
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (mc.currentScreen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
             screen.selected = this;
         }
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     public void enableSettingRenderUpdates() {

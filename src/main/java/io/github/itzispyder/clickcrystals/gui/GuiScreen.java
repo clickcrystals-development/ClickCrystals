@@ -14,6 +14,7 @@ import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.input.CharInput;
 import net.minecraft.client.input.KeyInput;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
@@ -153,6 +154,15 @@ public abstract class GuiScreen extends Screen implements Global {
     }
 
     @Override
+    public boolean charTyped(CharInput input) {
+        if (selected instanceof Typeable typeable) {
+            typeable.onChar((char)input.codepoint(), input.modifiers());
+            return true;
+        }
+        return super.charTyped(input);
+    }
+
+    @Override
     public boolean mouseReleased(Click click) {
         super.mouseReleased(click);
 
@@ -238,17 +248,15 @@ public abstract class GuiScreen extends Screen implements Global {
             this.ctrlKeyPressed = true;
         }
 
-        super.keyPressed(input);
+        if (selected instanceof Typeable typeable && typeable.onKey(keyCode, scanCode)) {
+            return true;
+        }
 
         for (KeyPressCallback callback : keyActionListeners) {
             callback.handleKey(keyCode, ClickType.CLICK, scanCode, modifiers);
         }
 
-        if (selected instanceof Typeable typeable) {
-            typeable.onKey(keyCode, scanCode);
-        }
-
-        return true;
+        return super.keyPressed(input);
     }
 
     @Override

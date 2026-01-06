@@ -34,8 +34,8 @@ public class SearchCategoryElement extends GuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-        super.onClick(mouseX, mouseY, button);
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        super.mouseClicked(mouseX, mouseY, button);
         if (mc.currentScreen instanceof OverviewScreen screen) {
             if (searchbar.isHovered((int)mouseX, (int)mouseY)) {
                 screen.selected = searchbar;

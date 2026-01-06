@@ -156,10 +156,6 @@ public class ScrollPanelElement extends GuiElement {
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (isMouseOver((int)mouseX, (int)mouseY)) {
-            onClick(mouseX, mouseY, button);
-        }
-
         for (int i = getChildren().size() - 1; i >= 0; i--) {
             if (MathUtils.oob(i, 0, getChildren().size() - 1))
                 break;

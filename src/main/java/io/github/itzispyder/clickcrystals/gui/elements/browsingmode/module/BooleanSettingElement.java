@@ -31,10 +31,11 @@ public class BooleanSettingElement extends SettingElement<BooleanSetting> {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
+    public void mouseClicked(double mouseX, double mouseY, int button) {
         if (isHovered((int)mouseX, (int)mouseY)) {
             setting.setVal(!setting.getVal());
         }
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     public BooleanSetting getSetting() {

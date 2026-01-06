@@ -21,14 +21,19 @@ public class ModuleElement extends GuiElement {
         super(x, y, 300, 15);
         super.setTooltip("§eLEFT-CLICK§7 to toggle, §eRIGHT-CLICK§7 to edit");
         this.module = module;
-        this.blacklisted = ModrinthSupport.active && ModrinthSupport.isBlacklisted(module);
         this.animator = new Animator(400, Animations.FADE_IN_AND_OUT);
 
-        if (blacklisted) {
-            setTooltip(ModrinthSupport.warning);
+        if (module != null) {
+            this.blacklisted = ModrinthSupport.active && ModrinthSupport.isBlacklisted(module);
+            if (blacklisted) {
+                setTooltip(ModrinthSupport.warning);
+            }
+            else if (module instanceof ScriptedModule) {
+                setTooltip(getTooltip().concat(", §6MIDDLE-CLICK§7 to open IDE"));
+            }
         }
-        else if (module instanceof ScriptedModule) {
-            setTooltip(getTooltip().concat(", §6MIDDLE-CLICK§7 to open IDE"));
+        else {
+            this.blacklisted = false;
         }
     }
 
@@ -49,12 +54,14 @@ public class ModuleElement extends GuiElement {
 
         String text;
 
-        text = "  %s".formatted(module.getOnOrOff());
-        RenderUtils.drawText(context, text, x, y + height / 3, 0.7F, false);
-        text = " §8|   §f%s".formatted(module.getNameLimited());
-        RenderUtils.drawText(context, text, x + 20, y + height / 3, 0.7F, false);
-        text = "§7- %s".formatted(module.getDescriptionLimited());
-        RenderUtils.drawText(context, text, x + width / 3, y + height / 3, 0.7F, false);
+        if (module != null) {
+            text = "  %s".formatted(module.getOnOrOff());
+            RenderUtils.drawText(context, text, x, y + height / 3, 0.7F, false);
+            text = " §8|   §f%s".formatted(module.getNameLimited());
+            RenderUtils.drawText(context, text, x + 20, y + height / 3, 0.7F, false);
+            text = "§7- %s".formatted(module.getDescriptionLimited());
+            RenderUtils.drawText(context, text, x + width / 3, y + height / 3, 0.7F, false);
+        }
 
         if (isAnimating) {
             context.getMatrices().popMatrix();

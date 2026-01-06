@@ -51,12 +51,12 @@ public class StringSettingElement extends SettingElement<StringSetting> implemen
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-        if (mc.currentScreen instanceof GuiScreen screen) {
+    public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (mc.currentScreen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
             screen.selected = this;
+            setting.setVal(input);
         }
-
-        setting.setVal(input);
+        super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
