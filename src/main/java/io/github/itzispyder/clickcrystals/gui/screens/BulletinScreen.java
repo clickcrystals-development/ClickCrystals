@@ -1,15 +1,16 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
-import io.github.itzispyder.clickcrystals.client.system.Announcement;
 import io.github.itzispyder.clickcrystals.client.system.BulletinBoard;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.AnnouncementElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BulletinScreen extends DefaultBase {
 
@@ -32,6 +33,7 @@ public class BulletinScreen extends DefaultBase {
                 this.bulletin = BulletinBoard.createNull();
             }
             if (bulletin.announcements().length == 0) {
+                ChatUtils.sendMessage("empty bulletin");
                 return;
             }
 
@@ -40,12 +42,12 @@ public class BulletinScreen extends DefaultBase {
             int caret = contentY + 21;
             int margin = contentX + 5;
 
-            for (Announcement ann : bulletin.announcements()) {
-                caret += 5;
-                AnnouncementElement ae = new AnnouncementElement(ann, margin, caret);
+            AtomicInteger finalCaret = new AtomicInteger(caret);
+            mc.execute(() -> { for (var ann: bulletin.announcements()) {
+                AnnouncementElement ae = new AnnouncementElement(ann, margin, finalCaret.addAndGet(5));
                 panel.addChild(ae);
-                caret += ae.height;
-            }
+                finalCaret.addAndGet(ae.getHeight());
+            }});
             this.addChild(panel);
         });
     }

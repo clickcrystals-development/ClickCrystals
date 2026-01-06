@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
@@ -73,20 +73,20 @@ public record BulletinBoard(Announcement... announcements) implements Global {
 
     private static synchronized void get() {
         try {
-            URL u = new URL(URL);
+            URL u = URI.create(URL).toURL();
             InputStream is = u.openStream();
-            InputStreamReader isr = new InputStreamReader(is);
-            Gson gson = new Gson();
-            BulletinBoard bulletin = gson.fromJson(isr, BulletinBoard.class);
+            String jsonString = new String(is.readAllBytes());
 
-            if (bulletin == null) {
+            is.close();
+
+            BulletinBoard bulletin = new Gson().fromJson(jsonString, BulletinBoard.class);
+            if (bulletin == null)
                 throw new IllegalStateException("json parse failed!");
-            }
 
-            isr.close();
             current.set(bulletin);
             ClickCrystals.requestModInfo();
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             system.printErr("Error requesting bulletin board");
             system.printErr(ex.getMessage());
         }
