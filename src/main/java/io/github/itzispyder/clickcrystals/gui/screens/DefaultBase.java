@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.gui.screens;
 
+import io.github.itzispyder.clickcrystals.client.system.BulletinBoard;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.CategoryElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
@@ -31,8 +32,13 @@ public abstract class DefaultBase extends AnimatedBase {
     public final List<CategoryElement> navlistModules = new ArrayList<>();
     protected final AbstractElement buttonSearch, buttonHome, buttonModules, buttonNews, buttonSettings;
 
+    private int unreadAnnouncementsCount;
+
     public DefaultBase(String title) {
         super(title);
+
+        if (BulletinBoard.isCurrentValid())
+            this.unreadAnnouncementsCount = BulletinBoard.getCurrent().getUnreadCount();
 
         int caret = 40;
         for (Category category : Categories.getCategories().values()) {
@@ -96,6 +102,12 @@ public abstract class DefaultBase extends AnimatedBase {
         this.addChild(buttonSettings);
     }
 
+    @Override
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
+        this.renderAnnouncementPing(context);
+    }
+
     public void renderDefaultBase(DrawContext context) {
         renderOpaqueBackground(context);
 
@@ -157,5 +169,19 @@ public abstract class DefaultBase extends AnimatedBase {
         RenderUtils.drawText(context, "§bI-No-oNe §8(dev) ", 15, caret, 0.65F, false);
 
         context.getMatrices().popMatrix();
+    }
+
+    private void renderAnnouncementPing(DrawContext context) {
+        if (this instanceof SearchScreen) // looks ugly with search
+            return;
+        if (unreadAnnouncementsCount <= 0)
+            return;
+
+        int pingX = contentX - 40;
+        int pingY = contentY + 156;
+        String pingLabel = unreadAnnouncementsCount + " Unread";
+        int pingLabelWidth = 3 + (int)(textRenderer.getWidth(pingLabel) * 0.6F) + 3;
+        RenderUtils.fillRoundRect(context, pingX, pingY, pingLabelWidth, 10, 5, 0xFFFF3030);
+        RenderUtils.drawText(context, pingLabel, pingX + 3, pingY + 3, 0.6F, false);
     }
 }

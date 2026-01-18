@@ -14,7 +14,10 @@ import java.util.concurrent.atomic.AtomicReference;
  * Try not to instantiate this class, parse it from json!
  * This will be read off of <a href="https://itzispyder.github.io/clickcrystals/bulletin.json">https://itzispyder.github.io/clickcrystals/bulletin.json</a>
  */
-public record BulletinBoard(Announcement... announcements) implements Global {
+public class BulletinBoard implements Global {
+
+    private final Announcement[] announcements;
+    private transient int unreadCount;
 
     public BulletinBoard(Announcement... announcements) {
         this.announcements = announcements;
@@ -30,6 +33,24 @@ public record BulletinBoard(Announcement... announcements) implements Global {
 
     public boolean isEmpty() {
         return size() == 0;
+    }
+
+    public Announcement[] getAnnouncements() {
+        return announcements;
+    }
+
+    public int getUnreadCount() {
+        return unreadCount;
+    }
+
+    public void updateUnreadCount(int fetchedCount) {
+        this.unreadCount = Math.max(0, fetchedCount - ClickCrystals.config.getReadAnnouncementCount());
+    }
+
+    public void markAllAsRead() {
+        ClickCrystals.config.setReadAnnouncementCount(size());
+        ClickCrystals.config.save();
+        this.unreadCount = 0;
     }
 
     public static boolean hasCurrent() {
@@ -67,11 +88,24 @@ public record BulletinBoard(Announcement... announcements) implements Global {
      *
      * @return async future
      */
-    public static synchronized CompletableFuture<Void> request() {
-        return CompletableFuture.runAsync(BulletinBoard::get);
+    public static CompletableFuture<BulletinBoard> request() {
+        return CompletableFuture
+                .supplyAsync(BulletinBoard::requestInternal)
+                .thenApply(bulletinBoard ->  {
+                    // ping if unread
+                    bulletinBoard.updateUnreadCount(bulletinBoard.getAnnouncements().length);
+                    current.set(bulletinBoard);
+                    ClickCrystals.requestModInfo();
+                    return bulletinBoard;
+                })
+                .exceptionally(error -> {
+                    system.printErr("Error requesting bulletin board");
+                    system.printErr(error.getMessage());
+                    return createNull();
+                });
     }
 
-    private static synchronized void get() {
+    private static synchronized BulletinBoard requestInternal() {
         try {
             URL u = URI.create(URL).toURL();
             InputStream is = u.openStream();
@@ -82,13 +116,10 @@ public record BulletinBoard(Announcement... announcements) implements Global {
             BulletinBoard bulletin = new Gson().fromJson(jsonString, BulletinBoard.class);
             if (bulletin == null)
                 throw new IllegalStateException("json parse failed!");
-
-            current.set(bulletin);
-            ClickCrystals.requestModInfo();
+            return bulletin;
         }
         catch (Exception ex) {
-            system.printErr("Error requesting bulletin board");
-            system.printErr(ex.getMessage());
+            throw new RuntimeException(ex);
         }
     }
 

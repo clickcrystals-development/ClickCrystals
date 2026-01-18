@@ -34,6 +34,7 @@ public class Config implements JsonSerializable<Config>, Global {
     private boolean disableModuleToggleBroadcast;
     private boolean modMenuIntegration;
     private boolean devMode;
+    private int readAnnouncementCount;
     private final Map<String, Integer> keybindEntries;
     private final Map<String, Positionable.Dimension> positionEntries;
     private final Map<String, Pair<Positionable.Dimension, Boolean>> overviewScreenEntries;
@@ -226,5 +227,13 @@ public class Config implements JsonSerializable<Config>, Global {
 
     public void setCustomPath(String customPath) {
         this.customPath = customPath;
+    }
+
+    public int getReadAnnouncementCount() {
+        return readAnnouncementCount;
+    }
+
+    public void setReadAnnouncementCount(int readAnnouncementCount) {
+        this.readAnnouncementCount = readAnnouncementCount;
     }
 }

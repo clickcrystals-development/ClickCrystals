@@ -5,49 +5,35 @@ import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.Announcement
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
-import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BulletinScreen extends DefaultBase {
-
-    private BulletinBoard bulletin;
 
     public BulletinScreen() {
         super("Bulletin Screen");
 
         LoadingIconElement loadingIcon = new LoadingIconElement(contentX + contentWidth / 2 - 10, contentY + contentHeight / 2 - 10, 20);
+        ScrollPanelElement panel = new ScrollPanelElement(this, contentX + 5, contentY + 21, contentWidth - 5, contentHeight - 21);
         this.addChild(loadingIcon);
 
-        CompletableFuture<Void> f = BulletinBoard.request();
-        ScrollPanelElement panel = new ScrollPanelElement(this, contentX + 5, contentY + 21, contentWidth - 5, contentHeight - 21);
-
-        f.thenRun(() -> {
-            if (f.isDone() && BulletinBoard.isCurrentValid()) {
-                this.bulletin = BulletinBoard.getCurrent();
-            }
-            else {
-                this.bulletin = BulletinBoard.createNull();
-            }
-            if (bulletin.announcements().length == 0) {
-                ChatUtils.sendMessage("empty bulletin");
-                return;
-            }
-
+        BulletinBoard.request().thenAccept(bulletinBoard -> {
             loadingIcon.setRendering(false);
+            bulletinBoard.markAllAsRead();
 
             int caret = contentY + 21;
             int margin = contentX + 5;
 
             AtomicInteger finalCaret = new AtomicInteger(caret);
-            mc.execute(() -> { for (var ann: bulletin.announcements()) {
-                AnnouncementElement ae = new AnnouncementElement(ann, margin, finalCaret.addAndGet(5));
+
+            Arrays.stream(bulletinBoard.getAnnouncements()).forEach(announcement -> mc.execute(() -> {
+                AnnouncementElement ae = new AnnouncementElement(announcement, margin, finalCaret.addAndGet(5));
                 panel.addChild(ae);
                 finalCaret.addAndGet(ae.getHeight());
-            }});
+            }));
             this.addChild(panel);
         });
     }

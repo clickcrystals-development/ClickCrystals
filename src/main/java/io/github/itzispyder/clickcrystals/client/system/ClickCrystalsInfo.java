@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.util.*;
 
@@ -141,7 +142,7 @@ public class ClickCrystalsInfo implements Global {
 
     public static ClickCrystalsInfo request() {
         try {
-            URL u = new URL(URL);
+            URL u = new URI(URL).toURL();
             InputStreamReader ir = new InputStreamReader(u.openStream());
             BufferedReader br = new BufferedReader(ir);
             Gson gson = new Gson();

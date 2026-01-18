@@ -143,6 +143,8 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.printf("<- Profile set '%s'", system.profiles.profileConfig.getCurrentProfileName());
         system.println("-> checking updates...");
         ClickCrystals.checkUpdates();
+        system.println("-> requesting bulletin announcements...");
+        BulletinBoard.request();
 
         system.println("-> clicking crystals!");
         system.println("ClickCrystals had loaded successfully!");
