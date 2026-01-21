@@ -1,18 +1,19 @@
 package io.github.itzispyder.clickcrystals.modules.modules.anchoring;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
-import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
+import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.modrinth.ModrinthNoNo;
 import io.github.itzispyder.clickcrystals.modules.Categories;
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
-import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.IntegerSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.NbtUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -22,26 +23,35 @@ public class StunSlam extends ListenerModule {
 
     private final SettingSection sgGeneral = getGeneralSection();
     private final SettingSection sgTiming = createSettingSection("Timing");
+    private final SettingSection sgConditions = createSettingSection("Conditions");
+    
+    private int backTimer = 0;
+    private boolean awaitingBack = false;
 
-    private final BooleanSetting onlyOnShield = sgGeneral.add(BooleanSetting.create()
+    private final ModuleSetting<Boolean> requireDensity = sgConditions.add(BooleanSetting.create()
+            .name("require-density")
+            .description("Only swap if mace has density enchantment")
+            .def(true)
+            .build());
+
+    private final ModuleSetting<Boolean> onlyOnShield = sgConditions.add(BooleanSetting.create()
             .name("only-on-shield")
-            .description("Only activate when target is blocking with shield")
+            .description("Only swap if target is blocking with shield")
             .def(true)
             .build());
 
-    private final BooleanSetting autoSwitchBack = sgGeneral.add(BooleanSetting.create()
+    private final ModuleSetting<Boolean> autoSwitchBack = sgGeneral.add(BooleanSetting.create()
             .name("auto-switch-back")
-            .description("Automatically switch back to mace after axe hit")
+            .description("Automatically switch back to axe after mace hit")
             .def(true)
             .build());
 
-    private final DoubleSetting switchDelay = sgTiming.add(DoubleSetting.create()
-            .name("switch-delay")
-            .description("Delay between weapon switches (seconds)")
-            .def(0.02)
-            .min(0.0)
-            .max(0.1)
-            .decimalPlaces(2)
+    private final ModuleSetting<Integer> swapBackDelay = sgTiming.add(IntegerSetting.create()
+            .name("swap-back-delay")
+            .description("Delay in ticks before swapping back")
+            .def(2)
+            .min(0)
+            .max(20)
             .build());
 
     public StunSlam() {
@@ -49,56 +59,64 @@ public class StunSlam extends ListenerModule {
     }
 
     @EventHandler
-    private void onMouseClick(MouseClickEvent e) {
-        if (PlayerUtils.invalid() && !isEnabled() || e.getButton() != 0)
-            return;
-
+    private void onAttack(PlayerAttackEntityEvent e) {
+        if (mc.currentScreen != null) return;
         performStunSlam();
     }
 
     @EventHandler
-    private void onAttack(PlayerAttackEntityEvent e) {
-        if (!isEnabled() && PlayerUtils.invalid())
-            return;
-
-        performStunSlam();
+    private void onTick(ClientTickEndEvent e) {
+        if (awaitingBack && backTimer-- <= 0) {
+            if (HotbarUtils.has(this::isAxe)) {
+                HotbarUtils.search(this::isAxe);
+            }
+            awaitingBack = false;
+        }
     }
 
     private void performStunSlam() {
-        if (!HotbarUtils.nameContains("mace") || !EntityUtils.isTargetValid())
+        if (!isEnabled() || PlayerUtils.invalid() || !(mc.targetedEntity instanceof LivingEntity))
+            return;
+            
+        if (!isAxe(mc.player.getMainHandStack())) return;
+
+        if (awaitingBack) return;
+
+        if (onlyOnShield.getVal() && mc.targetedEntity instanceof PlayerEntity player && !isPlayerBlocking(player))
             return;
 
-        if (!onlyOnShield.getVal() || onlyOnShield.getVal() && mc.targetedEntity instanceof PlayerEntity player && !player.isBlocking())
-            return;
-
-        if (!HotbarUtils.has(this::isAxe))
-            return;
-
-        executeCombo();
+        var mace = findDensityMace();
+        if (mace.isEmpty()) return;
+        
+        system.scheduler.runDelayedTask(() -> {
+            if (!HotbarUtils.search(item -> ItemStack.areEqual(item, mace))) return;
+            
+            system.scheduler.runDelayedTask(() -> {
+                if (mc.targetedEntity instanceof LivingEntity) {
+                    mc.interactionManager.attackEntity(mc.player, mc.targetedEntity);
+                    mc.player.swingHand(mc.player.getActiveHand());
+                }
+                
+                if (autoSwitchBack.getVal()) {
+                    awaitingBack = true;
+                    backTimer = swapBackDelay.getVal();
+                }
+            }, 1);
+        }, 2);
     }
 
-    private void executeCombo() {
-        long delay = switchDelay.getVal().longValue() * 1000L;
-        system.scheduler.runChainTask()
-                .thenRun(system.mcExecuteRunnable(() -> HotbarUtils.search(this::isAxe)))
-                .thenWait(delay)
-                .thenRun(system.mcExecuteRunnable(this::attack))
-                .thenWait(delay)
-                .thenRun(system.mcExecuteRunnable(() -> {
-                    if (!autoSwitchBack.getVal())
-                        return;
-                    HotbarUtils.search(Items.MACE);
-                    system.scheduler.runDelayedTask(this::attack, delay);
-                }))
-                .startChain();
+    private boolean isPlayerBlocking(PlayerEntity player) {
+        return player.isBlocking() && player.getActiveItem().isOf(Items.SHIELD);
     }
 
     private boolean isAxe(ItemStack item) {
         return item.getItem().getTranslationKey().contains("axe");
     }
 
-    private void attack() {
-        if (!EntityUtils.isTargetValid()) return;
-        InteractionUtils.inputAttack();
+    private ItemStack findDensityMace() {
+        if (requireDensity.getVal()) {
+            return HotbarUtils.searchItem(item -> item.isOf(Items.MACE) && NbtUtils.hasEnchant(item, "density"));
+        }
+        return HotbarUtils.searchItem(item -> item.isOf(Items.MACE));
     }
 }
