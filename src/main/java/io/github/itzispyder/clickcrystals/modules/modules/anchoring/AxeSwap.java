@@ -8,6 +8,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import net.minecraft.entity.player.PlayerEntity;
+import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import net.minecraft.item.AxeItem;
 
 @ModrinthNoNo
@@ -29,7 +30,7 @@ public class AxeSwap extends Module implements Listener {
 
     @EventHandler
     private void onAttack(PlayerAttackEntityEvent e) {
-        if (e.getEntity() instanceof PlayerEntity p && p.isBlocking()) {
+        if (e.getEntity() instanceof PlayerEntity p && EntityUtils.isBlocking(p)) {
             if (HotbarUtils.nameContains("sword") && HotbarUtils.has(item -> item.getItem() instanceof AxeItem)) {
                 HotbarUtils.search(item -> item.getItem() instanceof AxeItem);
             }
