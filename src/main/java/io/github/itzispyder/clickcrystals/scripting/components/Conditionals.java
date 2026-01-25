@@ -1,30 +1,24 @@
 package io.github.itzispyder.clickcrystals.scripting.components;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.mixins.AccessorHandledScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgsReader;
 import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
-import io.github.itzispyder.clickcrystals.scripting.syntax.InputType;
+import io.github.itzispyder.clickcrystals.scripting.components.conditionalcontexts.*;
 import io.github.itzispyder.clickcrystals.util.minecraft.*;
-import io.github.itzispyder.clickcrystals.util.misc.Dimensions;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.GameMode;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -104,6 +98,9 @@ public class Conditionals implements Global {
     // @Format (if|if_not) hotbar_has <identifier> {}
     // @Format (while|while_not) <num>? hotbar_has <identifier> {}
     public static final Conditional HOTBAR_HAS;
+    // @Format (if|if_not) hotbar_count <identifier> <comparator> <int> {}
+    // @Format (while|while_not) <num>? hotbar_count <identifier> <comparator> <int> {}
+    public static final Conditional HOTBAR_COUNT;
 
     // @Format (if|if_not) input_active <input> {}
     // @Format (if|if_not) input_active key ... {}
@@ -310,32 +307,14 @@ public class Conditionals implements Global {
         });
         EQUIPMENT_HAS = register("equipment_has", ctx -> ctx.end(true, EntityUtils.hasEquipment(ctx.entity, ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
         HOTBAR_HAS = register("hotbar_has", ctx -> ctx.assertClientPlayer().end(HotbarUtils.has(ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
-        INPUT_ACTIVE = register("input_active", ctx -> {
+        HOTBAR_COUNT = register("hotbar_count", ctx -> {
             ctx.assertClientPlayer();
-            InputType a = ctx.get(0).toEnum(InputType.class, null);
-            if (a != InputType.KEY)
-                return ctx.end(a.isActive());
-            else
-                return ctx.end(InteractionUtils.isKeyExtendedNamePressed(ctx.get(1).toString()));
+            Predicate<ItemStack> item = ScriptParser.parseItemPredicate(ctx.get(0).toString());
+            return ctx.end(ctx.compareNumArg(1, HotbarUtils.count(item)));
         });
-        BLOCK_IN_RANGE = register("block_in_range", ctx -> {
-            Predicate<BlockState> filter = ctx.match(0, "any_block") ? state -> true : ScriptParser.parseBlockPredicate(ctx.get(0).toString());
-            double range = ctx.get(1).toDouble();
-            boolean[] bl = { false };
-            EntityUtils.runOnNearestBlock(ctx.entity, range, filter, (pos, state) -> {
-                bl[0] = pos.toCenterPos().distanceTo(PlayerUtils.getPos()) <= range;
-            });
-            return ctx.end(true, bl[0]);
-        });
-        ENTITY_IN_RANGE = register("entity_in_range", ctx -> {
-            Predicate<Entity> filter = ctx.match(0, "any_entity") ? entity -> true : ScriptParser.parseEntityPredicate(ctx.get(0).toString());
-            double range = ctx.get(1).toDouble();
-            boolean[] bl = { false };
-            EntityUtils.runOnNearestEntity(ctx.entity, range, filter, entity -> {
-                bl[0] = entity.distanceTo(PlayerUtils.player()) <= range;
-            });
-            return ctx.end(true, bl[0]);
-        });
+        INPUT_ACTIVE = register("input_active", new ConditionalInputActive());
+        BLOCK_IN_RANGE = register("block_in_range", new ConditionalBlockInRange());
+        ENTITY_IN_RANGE = register("entity_in_range", new ConditionalEntityInRange());
         ATTACK_PROGRESS = register("attack_progress", ctx -> ctx.assertClientPlayer().end(ctx.compareNumArg(0, PlayerUtils.player().getAttackCooldownProgress(1.0F))));
         HEALTH = register("health", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && ctx.compareNumArg(0, (int) liv.getHealth())));
         HUNGER = register("hunger", ctx -> ctx.end(true, ctx.entity instanceof PlayerEntity liv && ctx.compareNumArg(0, liv.getHungerManager().getFoodLevel())));
@@ -365,15 +344,7 @@ public class Conditionals implements Global {
             Predicate<Entity> pre = ScriptParser.parseEntityPredicate(ctx.get(3).toString());
             return ctx.end(true, EntityUtils.checkEntityAt(loc.getBlockPos(), pre));
         });
-        DIMENSION = register("dimension", ctx -> {
-            boolean bl = false;
-            switch (ctx.get(0).toEnum(Dimensions.class, null)) {
-                case OVERWORLD -> bl = Dimensions.isOverworld();
-                case THE_NETHER -> bl = Dimensions.isNether();
-                case THE_END -> bl = Dimensions.isEnd();
-            }
-            return ctx.end(bl);
-        });
+        DIMENSION = register("dimension", new ConditionalDimension());
         EFFECT_AMPLIFIER = register("effect_amplifier", ctx -> {
             StatusEffectInstance effect = EntityUtils.getEffect(ctx.entity, ScriptParser.parseStatusEffect(ctx.get(0).toString()));
             return ctx.end(true, ctx.compareNumArg(1, effect.getAmplifier()));
@@ -399,37 +370,11 @@ public class Conditionals implements Global {
         DEAD = register("dead", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && liv.isDead()));
         ALIVE = register("alive", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && liv.isAlive()));
         FALLING = register("falling", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && !liv.isOnGround() && liv.fallDistance > 0.0));
-        CURSOR_ITEM = register("cursor_item", ctx -> {
-            ClientPlayerEntity p = PlayerUtils.player();
-            Predicate<ItemStack> item = ScriptParser.parseItemPredicate(ctx.get(0).toString());
-            if (p == null || p.currentScreenHandler == null)
-                return ctx.end(false);
-            ItemStack stack = p.currentScreenHandler.getCursorStack();
-            return ctx.end(stack != null && item.test(stack));
-        });
-        HOVERING_OVER = register("hovering_over", ctx -> {
-            ClientPlayerEntity p = PlayerUtils.player();
-            Predicate<ItemStack> item = ScriptParser.parseItemPredicate(ctx.get(0).toString());
-            if (p == null || p.currentScreenHandler == null || !(mc.currentScreen instanceof HandledScreen<?> handle))
-                return ctx.end(false);
-
-            AccessorHandledScreen screen = (AccessorHandledScreen) handle;
-            Point cursor = InteractionUtils.getCursor();
-
-            for (Slot slot : p.currentScreenHandler.slots) {
-                if (!screen.isHovered(slot, cursor.x, cursor.y))
-                    continue;
-                ItemStack stack = slot.getStack();
-                if (stack == null || !item.test(stack))
-                    continue;
-                return ctx.end(true);
-            }
-            return ctx.end(false);
-        });
+        CURSOR_ITEM = register("cursor_item", new ConditionalCursorItem());
+        HOVERING_OVER = register("hovering_over", new ConditionalHoveringOver());
         REFERENCE_ENTITY = register("reference_entity", ctx -> {
-            if (ctx.match(0, "client")) {
+            if (ctx.match(0, "client"))
                 return ctx.end(ctx.entity == PlayerUtils.player());
-            }
             Predicate<Entity> filter = ctx.match(0, "any_entity") ? entity -> true : ScriptParser.parseEntityPredicate(ctx.get(0).toString());
             return ctx.end(filter.test(ctx.entity));
         });

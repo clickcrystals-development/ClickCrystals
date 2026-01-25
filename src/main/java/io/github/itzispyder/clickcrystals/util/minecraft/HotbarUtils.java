@@ -48,6 +48,18 @@ public final class HotbarUtils implements Global {
         return false;
     }
 
+    public static int count(Predicate<ItemStack> item) {
+        if (PlayerUtils.invalid())
+            return 0;
+
+        PlayerInventory inv = InvUtils.inv();
+        int count = 0;
+        for (int i = 0; i < 9; i++)
+            if (item.test(inv.getStack(i)))
+                count++;
+        return count;
+    }
+
     public static int searchSlot(Predicate<ItemStack> item) {
         if (PlayerUtils.invalid())
             return -1;
