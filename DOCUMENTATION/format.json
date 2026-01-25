@@ -776,6 +776,83 @@
           "leading": true
         },
         {
+          "acceptingRegex": "(hotbar_count)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "([\u003c\u003e\u003d!]\u003d)|[\u003c\u003e\u003d]",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(while|while_not)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(hotbar_count)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "([\u003c\u003e\u003d!]\u003d)|[\u003c\u003e\u003d]",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(if|if_not)",
+          "optional": false,
+          "leading": true
+        },
+        {
           "acceptingRegex": "(input_active)",
           "optional": false,
           "leading": false
@@ -4207,6 +4284,53 @@
     {
       "components": [
         {
+          "acceptingRegex": "(if|if_not)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(invisible)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(while|while_not)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(invisible)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
           "acceptingRegex": "(config)",
           "optional": false,
           "leading": true
@@ -4475,7 +4599,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(advancementUpdate|blockBreakingProgress|blockEntityUpdate|blockEvent|blockUpdate|blockValueDebug|bossBar|bundleDelimiter|bundle|chatMessage|chatSuggestions|chunkBiomeData|chunkData|chunkDeltaUpdate|chunkLoadDistance|chunkRenderDistanceCenter|chunkSent|chunkValueDebug|clearTitle|closeScreen|commandSuggestions|commandTree|cooldownUpdate|craftFailedResponse|damageTilt|deathMessage|debugSample|difficulty|endCombat|enterCombat|enterReconfiguration|entitiesDestroy|entityAnimation|entityAttach|entityAttributes|entityDamage|entityEquipmentUpdate|entityPassengersSet|entityPosition|entityPositionSync|entity|entitySetHeadYaw|entitySpawn|entityStatusEffect|entityStatus|entityTrackerUpdate|entityValueDebug|entityVelocityUpdate|eventDebug|experienceBarUpdate|explosion|gameJoin|gameMessage|gameStateChange|gameTestHighlightPos|healthUpdate|inventory|itemPickupAnimation|lightUpdate|lookAt|mapUpdate|moveMinecartAlongTrack|nbtQueryResponse|openHorseScreen|openScreen|openWrittenBook|overlayMessage|particle|playerAbilities|playerActionResponse|playerListHeader|playerList|playerPositionLook|playerRemove|playerRespawn|playerRotation|playerSpawnPosition|playSoundFromEntity|playSound|profilelessChatMessage|projectilePower|recipeBookAdd|recipeBookRemove|recipeBookSettings|removeEntityStatusEffect|removeMessage|scoreboardDisplay|scoreboardObjectiveUpdate|scoreboardScoreReset|scoreboardScoreUpdate|screenHandlerPropertyUpdate|screenHandlerSlotUpdate|selectAdvancementTab|serverMetadata|setCameraEntity|setCursorItem|setPlayerInventory|setTradeOffers|signEditorOpen|simulationDistance|startChunkSend|statistics|stopSound|subtitle|synchronizeRecipes|team|testInstanceBlockStatus|tickStep|titleFade|title|unloadChunk|updateSelectedSlot|updateTickRate|vehicleMove|waypoint|worldBorderCenterChanged|worldBorderInitialize|worldBorderInterpolateSize|worldBorderSizeChanged|worldBorderWarningBlocksChanged|worldBorderWarningTimeChanged|worldEvent|worldTimeUpdate)",
+          "acceptingRegex": "(advancementUpdate|blockBreakingProgress|blockEntityUpdate|blockEvent|blockUpdate|blockValueDebug|bossBar|bundleDelimiter|bundle|chatMessage|chatSuggestions|chunkBiomeData|chunkData|chunkDeltaUpdate|chunkLoadDistance|chunkRenderDistanceCenter|chunkSent|chunkValueDebug|clearTitle|closeScreen|commandSuggestions|commandTree|cooldownUpdate|craftFailedResponse|damageTilt|deathMessage|debugSample|difficulty|endCombat|enterCombat|enterReconfiguration|entitiesDestroy|entityAnimation|entityAttach|entityAttributes|entityDamage|entityEquipmentUpdate|entityPassengersSet|entityPosition|entityPositionSync|entity|entitySetHeadYaw|entitySpawn|entityStatusEffect|entityStatus|entityTrackerUpdate|entityValueDebug|entityVelocityUpdate|eventDebug|experienceBarUpdate|explosion|gameJoin|gameMessage|gameStateChange|gameTestHighlightPos|healthUpdate|inventory|itemPickupAnimation|lightUpdate|lookAt|mapUpdate|moveMinecartAlongTrack|nbtQueryResponse|openMountScreen|openScreen|openWrittenBook|overlayMessage|particle|playerAbilities|playerActionResponse|playerListHeader|playerList|playerPositionLook|playerRemove|playerRespawn|playerRotation|playerSpawnPosition|playSoundFromEntity|playSound|profilelessChatMessage|projectilePower|recipeBookAdd|recipeBookRemove|recipeBookSettings|removeEntityStatusEffect|removeMessage|scoreboardDisplay|scoreboardObjectiveUpdate|scoreboardScoreReset|scoreboardScoreUpdate|screenHandlerPropertyUpdate|screenHandlerSlotUpdate|selectAdvancementTab|serverMetadata|setCameraEntity|setCursorItem|setPlayerInventory|setTradeOffers|signEditorOpen|simulationDistance|startChunkSend|statistics|stopSound|subtitle|synchronizeRecipes|team|testInstanceBlockStatus|tickStep|titleFade|title|unloadChunk|updateSelectedSlot|updateTickRate|vehicleMove|waypoint|worldBorderCenterChanged|worldBorderInitialize|worldBorderInterpolateSize|worldBorderSizeChanged|worldBorderWarningBlocksChanged|worldBorderWarningTimeChanged|worldEvent|worldTimeUpdate)",
           "optional": false,
           "leading": false
         }
@@ -5518,7 +5642,7 @@
           "leading": false
         },
         {
-          "acceptingRegex": "(advancementUpdate|blockBreakingProgress|blockEntityUpdate|blockEvent|blockUpdate|blockValueDebug|bossBar|bundleDelimiter|bundle|chatMessage|chatSuggestions|chunkBiomeData|chunkData|chunkDeltaUpdate|chunkLoadDistance|chunkRenderDistanceCenter|chunkSent|chunkValueDebug|clearTitle|closeScreen|commandSuggestions|commandTree|cooldownUpdate|craftFailedResponse|damageTilt|deathMessage|debugSample|difficulty|endCombat|enterCombat|enterReconfiguration|entitiesDestroy|entityAnimation|entityAttach|entityAttributes|entityDamage|entityEquipmentUpdate|entityPassengersSet|entityPosition|entityPositionSync|entity|entitySetHeadYaw|entitySpawn|entityStatusEffect|entityStatus|entityTrackerUpdate|entityValueDebug|entityVelocityUpdate|eventDebug|experienceBarUpdate|explosion|gameJoin|gameMessage|gameStateChange|gameTestHighlightPos|healthUpdate|inventory|itemPickupAnimation|lightUpdate|lookAt|mapUpdate|moveMinecartAlongTrack|nbtQueryResponse|openHorseScreen|openScreen|openWrittenBook|overlayMessage|particle|playerAbilities|playerActionResponse|playerListHeader|playerList|playerPositionLook|playerRemove|playerRespawn|playerRotation|playerSpawnPosition|playSoundFromEntity|playSound|profilelessChatMessage|projectilePower|recipeBookAdd|recipeBookRemove|recipeBookSettings|removeEntityStatusEffect|removeMessage|scoreboardDisplay|scoreboardObjectiveUpdate|scoreboardScoreReset|scoreboardScoreUpdate|screenHandlerPropertyUpdate|screenHandlerSlotUpdate|selectAdvancementTab|serverMetadata|setCameraEntity|setCursorItem|setPlayerInventory|setTradeOffers|signEditorOpen|simulationDistance|startChunkSend|statistics|stopSound|subtitle|synchronizeRecipes|team|testInstanceBlockStatus|tickStep|titleFade|title|unloadChunk|updateSelectedSlot|updateTickRate|vehicleMove|waypoint|worldBorderCenterChanged|worldBorderInitialize|worldBorderInterpolateSize|worldBorderSizeChanged|worldBorderWarningBlocksChanged|worldBorderWarningTimeChanged|worldEvent|worldTimeUpdate)",
+          "acceptingRegex": "(advancementUpdate|blockBreakingProgress|blockEntityUpdate|blockEvent|blockUpdate|blockValueDebug|bossBar|bundleDelimiter|bundle|chatMessage|chatSuggestions|chunkBiomeData|chunkData|chunkDeltaUpdate|chunkLoadDistance|chunkRenderDistanceCenter|chunkSent|chunkValueDebug|clearTitle|closeScreen|commandSuggestions|commandTree|cooldownUpdate|craftFailedResponse|damageTilt|deathMessage|debugSample|difficulty|endCombat|enterCombat|enterReconfiguration|entitiesDestroy|entityAnimation|entityAttach|entityAttributes|entityDamage|entityEquipmentUpdate|entityPassengersSet|entityPosition|entityPositionSync|entity|entitySetHeadYaw|entitySpawn|entityStatusEffect|entityStatus|entityTrackerUpdate|entityValueDebug|entityVelocityUpdate|eventDebug|experienceBarUpdate|explosion|gameJoin|gameMessage|gameStateChange|gameTestHighlightPos|healthUpdate|inventory|itemPickupAnimation|lightUpdate|lookAt|mapUpdate|moveMinecartAlongTrack|nbtQueryResponse|openMountScreen|openScreen|openWrittenBook|overlayMessage|particle|playerAbilities|playerActionResponse|playerListHeader|playerList|playerPositionLook|playerRemove|playerRespawn|playerRotation|playerSpawnPosition|playSoundFromEntity|playSound|profilelessChatMessage|projectilePower|recipeBookAdd|recipeBookRemove|recipeBookSettings|removeEntityStatusEffect|removeMessage|scoreboardDisplay|scoreboardObjectiveUpdate|scoreboardScoreReset|scoreboardScoreUpdate|screenHandlerPropertyUpdate|screenHandlerSlotUpdate|selectAdvancementTab|serverMetadata|setCameraEntity|setCursorItem|setPlayerInventory|setTradeOffers|signEditorOpen|simulationDistance|startChunkSend|statistics|stopSound|subtitle|synchronizeRecipes|team|testInstanceBlockStatus|tickStep|titleFade|title|unloadChunk|updateSelectedSlot|updateTickRate|vehicleMove|waypoint|worldBorderCenterChanged|worldBorderInitialize|worldBorderInterpolateSize|worldBorderSizeChanged|worldBorderWarningBlocksChanged|worldBorderWarningTimeChanged|worldEvent|worldTimeUpdate)",
           "optional": false,
           "leading": false
         }

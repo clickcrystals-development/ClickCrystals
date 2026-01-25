@@ -6,9 +6,9 @@ import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntit
 import io.github.itzispyder.clickcrystals.modrinth.ModrinthNoNo;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import net.minecraft.entity.player.PlayerEntity;
-import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import net.minecraft.item.AxeItem;
 
 @ModrinthNoNo

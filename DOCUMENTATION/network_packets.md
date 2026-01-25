@@ -132,7 +132,7 @@ Here's a table of what those network packet arguments should be:
 | MapUpdateS2CPacket | S2C | mapUpdate |
 | MoveMinecartAlongTrackS2CPacket | S2C | moveMinecartAlongTrack |
 | NbtQueryResponseS2CPacket | S2C | nbtQueryResponse |
-| OpenHorseScreenS2CPacket | S2C | openHorseScreen |
+| OpenMountScreenS2CPacket | S2C | openMountScreen |
 | OpenScreenS2CPacket | S2C | openScreen |
 | OpenWrittenBookS2CPacket | S2C | openWrittenBook |
 | OverlayMessageS2CPacket | S2C | overlayMessage |
