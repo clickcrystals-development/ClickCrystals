@@ -276,6 +276,9 @@ public class Conditionals implements Global {
     // @Format (if|if_not) gliding {}
     // @Format (while|while_not) <num>? gliding {}
     public static final Conditional GLIDING;
+    // @Format (if|if_not) invisible {}
+    // @Format (while|while_not) <num>? invisible {}
+    public static final Conditional INVISIBLE;
 
 
     static {
@@ -404,5 +407,6 @@ public class Conditionals implements Global {
         SPRINTING = register("sprinting", ctx -> ctx.end(true, ctx.entity.isSprinting()));
         SWIMMING = register("swimming", ctx -> ctx.end(true, ctx.entity.isSwimming()));
         GLIDING = register("gliding", ctx -> ctx.end(true, ctx.entity instanceof PlayerEntity player && player.isGliding()));
+        INVISIBLE = register("invisible", ctx -> ctx.end(true, ctx.entity.isInvisible()));
     }
 }
