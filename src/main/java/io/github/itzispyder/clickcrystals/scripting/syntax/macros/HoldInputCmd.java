@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.scripting.syntax.InputType;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 
 // @Format hold_input <input> <num>
+// @Format hold_input key ... <num>
 // @Format hold_input cancel
 public class HoldInputCmd extends ScriptCommand implements ThenChainable {
 
@@ -23,6 +24,15 @@ public class HoldInputCmd extends ScriptCommand implements ThenChainable {
 
         var read = args.getReader();
         InputType a = read.next(InputType.class);
+        
+        if (a == InputType.KEY) {
+            String keyName = read.nextStr();
+            long holdTime = (long)(read.next().toDouble() * 1000L);
+            TickEventListener.holdKey(keyName, holdTime);
+            read.executeThenChain();
+            return;
+        }
+        
         long holdTime = (long)(read.next().toDouble() * 1000L);
 
         if (a.isDummy())
