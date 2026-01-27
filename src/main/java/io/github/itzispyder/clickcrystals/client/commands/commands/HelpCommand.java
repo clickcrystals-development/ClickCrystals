@@ -7,6 +7,13 @@ import io.github.itzispyder.clickcrystals.client.commands.arguments.ModuleArgume
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.minecraft.command.CommandSource;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.HoverEvent;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+
+import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
 
 public class HelpCommand extends Command {
 
@@ -17,7 +24,12 @@ public class HelpCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
-                    ChatUtils.sendPrefixMessage("§cPlease include an item!");
+                    ChatUtils.sendPrefixMessage("§bCommands (§f" + system.commands().size() + "§b):");
+                    
+                    MutableText commands = Text.literal("");
+                    system.commands().values().forEach(command -> commands.append(getCommandText(command)));
+                    ChatUtils.sendRawText(commands);
+                    
                     return SINGLE_SUCCESS;
                 })
                 .then(literal("modules")
@@ -34,5 +46,25 @@ public class HelpCommand extends Command {
                                     infoRaw(command.getHelp());
                                     return SINGLE_SUCCESS;
                                 })));
+    }
+    
+    private MutableText getCommandText(Command command) {
+        // Hover tooltip
+        MutableText tooltip = Text.literal("");
+        tooltip.append(Text.literal(command.getName()).formatted(Formatting.AQUA, Formatting.BOLD)).append("\n");
+        tooltip.append(Text.literal("," + command.getName()).formatted(Formatting.GRAY)).append("\n\n");
+        tooltip.append(Text.literal(command.getDescription()).formatted(Formatting.WHITE));
+        
+        // Clickable text
+        MutableText text = Text.literal(command.getName());
+        var commandsList = system.commands().values().stream().toList();
+        if (!commandsList.getLast().equals(command))
+            text.append(Text.literal(", ").formatted(Formatting.GRAY));
+        text.setStyle(text.getStyle()
+            .withHoverEvent(new HoverEvent.ShowText(tooltip))
+            .withClickEvent(new ClickEvent.SuggestCommand("," + command.getName()))
+        );
+        
+        return text;
     }
 }
