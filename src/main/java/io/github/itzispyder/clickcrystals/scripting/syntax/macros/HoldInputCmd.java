@@ -29,9 +29,9 @@ public class HoldInputCmd extends ScriptCommand implements ThenChainable {
         InputType a = read.next(InputType.class);
         
         if (a == InputType.KEY) {
-            String keyName = read.nextStr();
-            long holdTime = (long)(read.next().toDouble() * 1000L);
-            TickEventListener.holdKey(keyName, holdTime);
+            String key = read.nextStr();
+            long ms = (long)(read.next().toDouble() * 1000L);
+            TickEventListener.holdKey(key, ms);
             read.executeThenChain();
             return;
         }
@@ -44,12 +44,12 @@ public class HoldInputCmd extends ScriptCommand implements ThenChainable {
             }
         }
         
-        long holdTime = (long)(read.next().toDouble() * 1000L);
+        long ms = (long)(read.next().toDouble() * 1000L);
 
         if (a.isDummy())
             throw new IllegalArgumentException("unsupported operation, input '%s' cannot be held".formatted(a));
 
-        a.runFor(holdTime);
+        a.runFor(ms);
         read.executeThenChain();
     }
 }
