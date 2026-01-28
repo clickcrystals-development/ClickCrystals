@@ -5,11 +5,13 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.scripting.syntax.TargetType;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
+import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -38,11 +40,21 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
         switch (read.next(TargetType.class)) {
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(read.nextStr());
-                PlayerUtils.runOnNearestEntity(128, filter, entity -> mc.interactionManager.attackEntity(mc.player, entity));
+                PlayerUtils.runOnNearestEntity(128, filter, entity -> {
+                    if (entity instanceof PlayerEntity player && EntityUtils.shouldCancelCcsAttack(player)) {
+                        return; // Skip attacking teammates
+                    }
+                    mc.interactionManager.attackEntity(mc.player, entity);
+                });
                 read.executeThenChain();
             }
             case ANY_ENTITY -> {
-                PlayerUtils.runOnNearestEntity(128, ENTITY_EXISTS, entity -> mc.interactionManager.attackEntity(mc.player, entity));
+                PlayerUtils.runOnNearestEntity(128, ENTITY_EXISTS, entity -> {
+                    if (entity instanceof PlayerEntity player && EntityUtils.shouldCancelCcsAttack(player)) {
+                        return; // Skip attacking teammates
+                    }
+                    mc.interactionManager.attackEntity(mc.player, entity);
+                });
                 read.executeThenChain();
             }
             case NEAREST_BLOCK -> {

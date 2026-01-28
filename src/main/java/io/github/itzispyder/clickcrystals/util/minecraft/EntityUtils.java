@@ -248,14 +248,29 @@ public class EntityUtils implements Global {
 
     public static boolean isTeammate(PlayerEntity target) {
         TeamDetector teamDetector = Module.get(TeamDetector.class);
-        if (!teamDetector.isEnabled() || !teamDetector.cancelCcs.getVal())
+        if (!teamDetector.isEnabled())
             return false;
 
+        // Check manual list first
+        String[] names = teamDetector.playerNames.getVal().split(",");
+        String targetName = target.getName().getString();
+        for (String name : names) {
+            if (name.trim().equalsIgnoreCase(targetName)) {
+                return true;
+            }
+        }
+
+        // Check automatic detection
         if (teamDetector.teamFindingMethod.getVal() == TeamDetector.TeamsMethod.SCOREBOARD)
             return isSameScoreboardTeam(target);
         else if (teamDetector.teamFindingMethod.getVal() == TeamDetector.TeamsMethod.COLOR_NAME)
             return isSameColorNameTeam(target);
         return false;
+    }
+
+    public static boolean shouldCancelCcsAttack(PlayerEntity target) {
+        TeamDetector teamDetector = Module.get(TeamDetector.class);
+        return teamDetector.isEnabled() && teamDetector.cancelCcs.getVal() && isTeammate(target);
     }
   
     public static boolean isSameScoreboardTeam(PlayerEntity player) {
@@ -266,12 +281,9 @@ public class EntityUtils implements Global {
     }
 
     public static boolean isSameColorNameTeam(PlayerEntity player) {
-        String playerColorName = String.valueOf(PlayerUtils.player().getTeamColorValue());
-        String targetColorName = String.valueOf(player.getTeamColorValue());
-        if ((Formatting.WHITE.getCode() == player.getTeamColorValue()) || Formatting.WHITE.getCode() == PlayerUtils.player().getTeamColorValue()) {
-            return false;
-        }
-            return playerColorName.equals(targetColorName);
+        int playerColor = PlayerUtils.player().getTeamColorValue();
+        int targetColor = player.getTeamColorValue();
+        return playerColor == targetColor && playerColor != Formatting.WHITE.getCode();
     }
 
     public static List<Entity> getEntitiesAt(BlockPos pos) {

@@ -5,10 +5,12 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.scripting.syntax.TargetType;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
+import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -39,6 +41,9 @@ public class InteractCmd extends ScriptCommand implements ThenChainable {
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(read.nextStr());
                 PlayerUtils.runOnNearestEntity(128, filter, entity -> {
+                    if (entity instanceof PlayerEntity player && EntityUtils.shouldCancelCcsAttack(player)) {
+                        return; // Skip interacting with teammates
+                    }
                     EntityHitResult hitResult = new EntityHitResult(entity, entity.getBoundingBox().getCenter());
                     mc.interactionManager.interactEntityAtLocation(mc.player, entity, hitResult, Hand.MAIN_HAND);
                     mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND);
@@ -47,6 +52,9 @@ public class InteractCmd extends ScriptCommand implements ThenChainable {
             }
             case ANY_ENTITY -> {
                 PlayerUtils.runOnNearestEntity(128, DamageCmd.ENTITY_EXISTS, entity -> {
+                    if (entity instanceof PlayerEntity player && EntityUtils.shouldCancelCcsAttack(player)) {
+                        return; // Skip interacting with teammates
+                    }
                     EntityHitResult hitResult = new EntityHitResult(entity, entity.getBoundingBox().getCenter());
                     mc.interactionManager.interactEntityAtLocation(mc.player, entity, hitResult, Hand.MAIN_HAND);
                     mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND);
