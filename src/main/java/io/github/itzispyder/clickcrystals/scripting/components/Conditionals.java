@@ -114,6 +114,12 @@ public class Conditionals implements Global {
     // @Format (if|if_not) entity_in_range <identifier> <num> {}
     // @Format (while|while_not) <num>? entity_in_range <identifier> <num> {}
     public static final Conditional ENTITY_IN_RANGE;
+    // @Format (if|if_not) block_in_range <identifier> <num> {}
+    // @Format (while|while_not) <num>? block_in_range <identifier> <num> {}
+    public static final Conditional BLOCK_IN_FOV;
+    // @Format (if|if_not) entity_in_fov <identifier> <num> {}
+    // @Format (while|while_not) <num>? entity_in_fov <identifier> <num> {}
+    public static final Conditional ENTITY_IN_FOV;
     // @Format (if|if_not) attack_progress <comparator> <num> {}
     // @Format (while|while_not) <num>? attack_progress <comparator> <num> {}
     public static final Conditional ATTACK_PROGRESS;
@@ -318,6 +324,8 @@ public class Conditionals implements Global {
         INPUT_ACTIVE = register("input_active", new ConditionalInputActive());
         BLOCK_IN_RANGE = register("block_in_range", new ConditionalBlockInRange());
         ENTITY_IN_RANGE = register("entity_in_range", new ConditionalEntityInRange());
+        BLOCK_IN_FOV = register("block_in_fov", new ConditionalBlockInFov());
+        ENTITY_IN_FOV = register("entity_in_fov", new ConditionalEntityInFov());
         ATTACK_PROGRESS = register("attack_progress", ctx -> ctx.assertClientPlayer().end(ctx.compareNumArg(0, PlayerUtils.player().getAttackCooldownProgress(1.0F))));
         HEALTH = register("health", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && ctx.compareNumArg(0, (int) liv.getHealth())));
         HUNGER = register("hunger", ctx -> ctx.end(true, ctx.entity instanceof PlayerEntity liv && ctx.compareNumArg(0, liv.getHungerManager().getFoodLevel())));

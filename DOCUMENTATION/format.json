@@ -1111,6 +1111,140 @@
           "leading": true
         },
         {
+          "acceptingRegex": "(block_in_range)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(while|while_not)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(block_in_range)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(if|if_not)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(entity_in_fov)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(while|while_not)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": true,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(entity_in_fov)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "!?(([#:](\\w+)(\\[(.*)\\])?,?)+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": true
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(if|if_not)",
+          "optional": false,
+          "leading": true
+        },
+        {
           "acceptingRegex": "(attack_progress)",
           "optional": false,
           "leading": false

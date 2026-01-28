@@ -7,20 +7,28 @@ import io.github.itzispyder.clickcrystals.scripting.components.Conditional;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 
-public class ConditionalBlockInRange implements Conditional {
+public class ConditionalBlockInFov implements Conditional {
 
     @Override
     public ConditionEvaluationResult evaluate(ConditionEvaluationContext ctx) {
         Predicate<BlockState> filter = ctx.match(0, "any_block") ? state -> true : ScriptParser.parseBlockPredicate(ctx.get(0).toString());
         AtomicBoolean bl = new AtomicBoolean(false);
-        double range = ctx.get(1).toDouble();
+        float fovDeg = ctx.get(1).toFloat();
 
-        EntityUtils.runOnNearestBlock(ctx.entity, range, filter,
-                (pos, state) -> bl.set(pos.toCenterPos().distanceTo(PlayerUtils.getPos()) <= range));
+        EntityUtils.runOnNearestBlock(ctx.entity, fovDeg, filter,
+                (pos, state) -> bl.set(validBlock(pos, fovDeg)));
         return ctx.end(true, bl.get());
+    }
+
+    private boolean validBlock(BlockPos pos, float fovDeg) {
+        if (fovDeg != 360 && PlayerUtils.valid())
+            if (!ConditionalEntityInFov.isPointInFov(PlayerUtils.getEyes(), PlayerUtils.getDir(), fovDeg, pos.toCenterPos()))
+                return false;
+        return pos.toCenterPos().distanceTo(PlayerUtils.getPos()) <= fovDeg;
     }
 }
