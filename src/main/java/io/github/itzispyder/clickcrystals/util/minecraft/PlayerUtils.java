@@ -70,6 +70,10 @@ public final class PlayerUtils implements Global {
         return player().getEyePos();
     }
 
+    public static Vec3d getDir() {
+        return player().getRotationVector();
+    }
+
     public static ClientPlayerInteractionManager getInteractionManager() {
         return mc.interactionManager;
     }
