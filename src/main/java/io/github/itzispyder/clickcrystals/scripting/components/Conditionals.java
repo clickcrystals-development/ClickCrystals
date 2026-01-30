@@ -285,6 +285,9 @@ public class Conditionals implements Global {
     // @Format (if|if_not) invisible {}
     // @Format (while|while_not) <num>? invisible {}
     public static final Conditional INVISIBLE;
+    // @Format (if|if_not) inventory_slot <int> <identifier> {}
+    // @Format (while|while_not) inventory_slot <int> <identifier> {}
+    public static final Conditional INVENTORY_SLOT;
 
 
     static {
@@ -416,5 +419,6 @@ public class Conditionals implements Global {
         SWIMMING = register("swimming", ctx -> ctx.end(true, ctx.entity.isSwimming()));
         GLIDING = register("gliding", ctx -> ctx.end(true, ctx.entity instanceof PlayerEntity player && player.isGliding()));
         INVISIBLE = register("invisible", ctx -> ctx.end(true, ctx.entity.isInvisible()));
+        INVENTORY_SLOT = register("inventory_slot", new ConditionalInventorySlot());
     }
 }
