@@ -5,12 +5,18 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickStartEvent;
+import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
+import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorKeyboard;
 import io.github.itzispyder.clickcrystals.events.events.world.RenderWorldEvent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TickEventListener implements Listener, Global {
 
     public static boolean shouldForward, shouldBackward, shouldStrafeLeft, shouldStrafeRight, shouldSneak, shouldJump;
     public static boolean shouldAttack, shouldUse;
+    private static final Map<Integer, Boolean> heldKeys = new HashMap<>();
 
     @EventHandler
     public void onTickStart(ClientTickStartEvent e) {
@@ -33,6 +39,7 @@ public class TickEventListener implements Listener, Global {
     public static void cancelTickInputs() {
         shouldForward = shouldBackward = shouldStrafeLeft = shouldStrafeRight =
                 shouldSneak = shouldJump = shouldAttack = shouldUse = false;
+        heldKeys.clear();
     }
 
     public static void forward(long millis) {
@@ -115,6 +122,22 @@ public class TickEventListener implements Listener, Global {
         }
     }
 
+    public static void holdKey(String keyName, long millis) {
+        int keyCode = Keybind.fromExtendedKeyName(keyName);
+        if (keyCode != -1) {
+            holdKey(keyCode, millis);
+        }
+    }
+
+    public static void holdKey(int keyCode, long millis) {
+        if (!heldKeys.getOrDefault(keyCode, false)) {
+            heldKeys.put(keyCode, true);
+            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+                heldKeys.remove(keyCode);
+            }), millis);
+        }
+    }
+
     private void handleAutoKeys() {
         if (shouldForward) {
             mc.options.forwardKey.setPressed(true);
@@ -139,6 +162,13 @@ public class TickEventListener implements Listener, Global {
         }
         if (shouldUse) {
             mc.options.useKey.setPressed(true);
+        }
+        
+        // Handle held keys
+        for (Map.Entry<Integer, Boolean> entry : heldKeys.entrySet()) {
+            if (entry.getValue()) {
+                ((AccessorKeyboard) mc.keyboard).pressKey(entry.getKey(), 42);
+            }
         }
     }
 }
