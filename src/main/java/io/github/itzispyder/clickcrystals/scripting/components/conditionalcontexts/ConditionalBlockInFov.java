@@ -24,7 +24,7 @@ public class ConditionalBlockInFov implements Conditional {
         Vec3d playerPos = ctx.entity.getEntityPos();
         Vec3d eyes = PlayerUtils.getEyes();
         Vec3d dir = PlayerUtils.getDir();
-        double maxDist = fovDeg;
+        double maxDist = Math.min(fovDeg, 32); // Cap search distance at 32 blocks
         double maxDistSq = maxDist * maxDist;
         
         int minX = (int) Math.floor(playerPos.x - maxDist);
@@ -39,16 +39,19 @@ public class ConditionalBlockInFov implements Conditional {
                 for (int z = minZ; z <= maxZ; z++) {
                     BlockPos pos = new BlockPos(x, y, z);
                     Vec3d center = pos.toCenterPos();
+                    double distSq = center.squaredDistanceTo(playerPos);
                     
-                    if (center.squaredDistanceTo(playerPos) > maxDistSq)
+                    if (distSq > maxDistSq)
                         continue;
                         
                     if (fovDeg != 360 && !ConditionalEntityInFov.isPointInFov(eyes, dir, fovDeg, center))
                         continue;
                         
-                    BlockState state = ctx.entity.getEntityWorld().getBlockState(pos);
-                    if (filter.test(state))
-                        return ctx.end(true, true);
+                    if (distSq <= fovDeg * fovDeg) {
+                        BlockState state = ctx.entity.getEntityWorld().getBlockState(pos);
+                        if (filter.test(state))
+                            return ctx.end(true, true);
+                    }
                 }
             }
         }
