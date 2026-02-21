@@ -129,7 +129,8 @@ public class ClickCrystalsSystem implements Serializable {
     }
 
     public Map<Class<? extends Module>, Module> modules() {
-        return new HashMap<>(modules);
+//        return new HashMap<>(modules);
+        return modules;
     }
 
     public Map<String, ScriptedModule> scriptedModules() {
