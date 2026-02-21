@@ -5,7 +5,10 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.syntax.InputType;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
+import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.hit.EntityHitResult;
 
 // @Format input <input>
 // @Format input key ...
@@ -20,6 +23,13 @@ public class InputCmd extends ScriptCommand implements Global, ThenChainable {
         var read = args.getReader();
         InputType a = read.next(InputType.class);
         if (a != InputType.KEY) {
+            // Check for teammate protection on attack inputs
+            if ((a == InputType.ATTACK || a == InputType.LEFT) && mc.crosshairTarget instanceof EntityHitResult hit) {
+                if (hit.getEntity() instanceof PlayerEntity player && EntityUtils.shouldCancelCcsAttack(player)) {
+                    read.executeThenChain();
+                    return; // Skip attack on teammate
+                }
+            }
             a.run();
             read.executeThenChain();
         }
