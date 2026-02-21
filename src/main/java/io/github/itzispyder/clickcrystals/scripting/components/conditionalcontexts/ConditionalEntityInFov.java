@@ -17,23 +17,24 @@ public class ConditionalEntityInFov implements Conditional {
     public ConditionEvaluationResult evaluate(ConditionEvaluationContext ctx) {
         Predicate<Entity> filter = ctx.match(0, "any_entity") ? entity -> true : ScriptParser.parseEntityPredicate(ctx.get(0).toString());
         float fovDeg = ctx.get(1).toFloat();
+        
+        if (!PlayerUtils.valid())
+            return ctx.end(true, false);
+            
+        Vec3d eyes = PlayerUtils.getEyes();
+        Vec3d dir = PlayerUtils.getDir();
         Box box = Box.from(ctx.entity.getEntityPos()).expand(fovDeg);
 
         for (Entity entity : ctx.entity.getEntityWorld().getOtherEntities(ctx.entity, box, filter)) {
-            if (validEntity(entity, fovDeg))
-                return ctx.end(true, true);
+            if (entity.distanceTo(PlayerUtils.player()) > fovDeg)
+                continue;
+                
+            if (fovDeg != 360 && !isPointInFov(eyes, dir, fovDeg, entity.getEntityPos()))
+                continue;
+                
+            return ctx.end(true, true);
         }
         return ctx.end(true, false);
-    }
-
-    private boolean validEntity(Entity entity, float fovDeg) {
-        if (!PlayerUtils.valid())
-            return false;
-        if (entity.distanceTo(PlayerUtils.player()) > fovDeg)
-            return false;
-        if (fovDeg != 360)
-            return isPointInFov(PlayerUtils.getEyes(), PlayerUtils.getDir(), fovDeg, entity.getEntityPos());
-        return true;
     }
 
     public static boolean isPointInFov(Vec3d cam, Vec3d dir, float fovDeg, Vec3d point) {
