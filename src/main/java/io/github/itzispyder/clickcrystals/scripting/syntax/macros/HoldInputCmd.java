@@ -36,11 +36,11 @@ public class HoldInputCmd extends ScriptCommand implements ThenChainable {
             return;
         }
         
-        // Check for teammate protection on attack inputs
+        // check for teammate protection on attack inputs
         if ((a == InputType.ATTACK || a == InputType.LEFT) && mc.crosshairTarget instanceof EntityHitResult hit) {
             if (hit.getEntity() instanceof PlayerEntity player && EntityUtils.shouldCancelCcsAttack(player)) {
                 read.executeThenChain();
-                return; // Skip holding attack on teammate
+                return; // skip holding attack on teammate
             }
         }
         

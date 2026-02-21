@@ -23,11 +23,10 @@ public class InputCmd extends ScriptCommand implements Global, ThenChainable {
         var read = args.getReader();
         InputType a = read.next(InputType.class);
         if (a != InputType.KEY) {
-            // Check for teammate protection on attack inputs
             if ((a == InputType.ATTACK || a == InputType.LEFT) && mc.crosshairTarget instanceof EntityHitResult hit) {
                 if (hit.getEntity() instanceof PlayerEntity player && EntityUtils.shouldCancelCcsAttack(player)) {
                     read.executeThenChain();
-                    return; // Skip attack on teammate
+                    return; // check if teammate
                 }
             }
             a.run();

@@ -13,8 +13,6 @@ import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import net.minecraft.entity.player.PlayerEntity;
 
-import java.util.Arrays;
-
 public class TeamDetector extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();
@@ -49,40 +47,33 @@ public class TeamDetector extends ListenerModule {
 
     @EventHandler
     private void onPlayerAttackEntityEvent(PlayerAttackEntityEvent e) {
-        if (!protectTeammates.getVal()) return;
-        
-        if (e.getEntity() instanceof PlayerEntity player) {
-            if (EntityUtils.isTeammate(player)) {
-                e.cancel();
-            }
-        }
+        if (!protectTeammates.getVal())
+            return;
+        if (e.getEntity() instanceof PlayerEntity p && EntityUtils.isTeammate(p))
+            e.cancel();
     }
 
     @EventHandler
     private void onMiddleClick(MouseClickEvent e) {
-        // Only handle middle click press events when no screen is open
-        if (e.getButton() != 2 || e.getAction() != ClickType.CLICK || !e.isScreenNull()) return;
-        
-        // Check if we're targeting a player entity
-        if (mc.targetedEntity instanceof PlayerEntity player) {
-            String playerName = player.getName().getString();
-            String current = playerNames.getVal();
-            
-            if (current.toLowerCase().contains(playerName.toLowerCase())) {
-                // Remove from team
-                String updated = current.replace(playerName + ",", "")
-                                       .replace("," + playerName, "")
-                                       .replace(playerName, "");
-                playerNames.setVal(updated);
-                ChatUtils.sendPrefixMessage("§c✖ Removed " + playerName + " from team");
-            } else {
-                // Add to team
-                String updated = current.isEmpty() ? playerName : current + "," + playerName;
-                playerNames.setVal(updated);
-                ChatUtils.sendPrefixMessage("§a✓ Added " + playerName + " to team");
-            }
-            e.setCancelled(true);
+        if (e.getButton() != 2 || e.getAction() != ClickType.CLICK || !e.isScreenNull())
+            return;
+        if (!(mc.targetedEntity instanceof PlayerEntity player))
+            return;
+
+        String playerName = player.getName().getString();
+        String current = playerNames.getVal();
+
+        if (current.toLowerCase().contains(playerName.toLowerCase())) { // remove teammate
+            String updated = current.replaceAll(",?\\w+,?", "");
+            playerNames.setVal(updated);
+            ChatUtils.sendPrefixMessage("§c✖ Removed " + playerName + " from team");
         }
+        else { // add teammate
+            String updated = current.isEmpty() ? playerName : current + "," + playerName;
+            playerNames.setVal(updated);
+            ChatUtils.sendPrefixMessage("§a✓ Added " + playerName + " to team");
+        }
+        e.setCancelled(true);
     }
 
 

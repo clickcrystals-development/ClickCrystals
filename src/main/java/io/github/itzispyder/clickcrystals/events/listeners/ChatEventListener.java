@@ -5,7 +5,6 @@ import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.ChatReceiveEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.ChatSendEvent;
-import net.minecraft.client.MinecraftClient;
 
 public class ChatEventListener implements Listener {
 
@@ -13,18 +12,13 @@ public class ChatEventListener implements Listener {
     public void onChatSend(ChatSendEvent e) {
         String message = e.getMessage();
         
-        // Intercept comma commands for mobile-friendly usage
+        // intercept comma commands for mobile-friendly usage
         if (message.startsWith(",")) {
-            String command = message.substring(1); // Remove comma
-            
-            // Execute as ClickCrystals command
+            String command = message.substring(1);
             try {
                 Command.dispatch(command);
-            } catch (Exception ex) {
-                // Command failed, ignore silently
             }
-            
-            // Cancel sending to server
+            catch (Exception ignore) {}
             e.cancel();
         }
     }

@@ -13,8 +13,6 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-import static io.github.itzispyder.clickcrystals.ClickCrystals.system;
-
 public class HelpCommand extends Command {
 
     public HelpCommand() {
@@ -49,13 +47,11 @@ public class HelpCommand extends Command {
     }
     
     private MutableText getCommandText(Command command) {
-        // Hover tooltip
         MutableText tooltip = Text.literal("");
         tooltip.append(Text.literal(command.getName()).formatted(Formatting.AQUA, Formatting.BOLD)).append("\n");
         tooltip.append(Text.literal("," + command.getName()).formatted(Formatting.GRAY)).append("\n\n");
         tooltip.append(Text.literal(command.getDescription()).formatted(Formatting.WHITE));
         
-        // Clickable text
         MutableText text = Text.literal(command.getName());
         var commandsList = system.commands().values().stream().toList();
         if (!commandsList.getLast().equals(command))
