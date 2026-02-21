@@ -6844,6 +6844,32 @@
           "leading": true
         },
         {
+          "acceptingRegex": "(key)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(\\S+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(-?\\d*(\\.\\d*)?)",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": false
+    },
+    {
+      "components": [
+        {
+          "acceptingRegex": "(hold_input)",
+          "optional": false,
+          "leading": true
+        },
+        {
           "acceptingRegex": "(cancel)",
           "optional": false,
           "leading": false
