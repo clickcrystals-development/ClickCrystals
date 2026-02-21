@@ -4,12 +4,11 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluationContext;
 import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluationResult;
 import io.github.itzispyder.clickcrystals.scripting.components.Conditional;
-import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 
 public class ConditionalEntityInFov implements Conditional {
@@ -17,19 +16,24 @@ public class ConditionalEntityInFov implements Conditional {
     @Override
     public ConditionEvaluationResult evaluate(ConditionEvaluationContext ctx) {
         Predicate<Entity> filter = ctx.match(0, "any_entity") ? entity -> true : ScriptParser.parseEntityPredicate(ctx.get(0).toString());
-        AtomicBoolean bl = new AtomicBoolean(false);
         float fovDeg = ctx.get(1).toFloat();
+        Box box = Box.from(ctx.entity.getEntityPos()).expand(fovDeg);
 
-        EntityUtils.runOnNearestEntity(ctx.entity, fovDeg, filter,
-                entity -> bl.set(validEntity(entity, fovDeg)));
-        return ctx.end(true, bl.get());
+        for (Entity entity : ctx.entity.getEntityWorld().getOtherEntities(ctx.entity, box, filter)) {
+            if (validEntity(entity, fovDeg))
+                return ctx.end(true, true);
+        }
+        return ctx.end(true, false);
     }
 
     private boolean validEntity(Entity entity, float fovDeg) {
-        if (fovDeg != 360 && PlayerUtils.valid())
-            if (!isPointInFov(PlayerUtils.getEyes(), PlayerUtils.getDir(), fovDeg, entity.getEntityPos()))
-                return false;
-        return entity.distanceTo(PlayerUtils.player()) <= fovDeg;
+        if (!PlayerUtils.valid())
+            return false;
+        if (entity.distanceTo(PlayerUtils.player()) > fovDeg)
+            return false;
+        if (fovDeg != 360)
+            return isPointInFov(PlayerUtils.getEyes(), PlayerUtils.getDir(), fovDeg, entity.getEntityPos());
+        return true;
     }
 
     public static boolean isPointInFov(Vec3d cam, Vec3d dir, float fovDeg, Vec3d point) {
