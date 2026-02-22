@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Quaternionf;
 import org.joml.Vector3d;
@@ -86,18 +87,6 @@ public final class MathUtils {
         return new float[] { pitch, yaw };
     }
 
-    public static float cosInverse(double a) {
-        return (float)Math.toDegrees(Math.acos(a));
-    }
-
-    public static float sinInverse(double a) {
-        return (float)Math.toDegrees(Math.asin(a));
-    }
-
-    public static float tanInverse(double a) {
-        return (float)Math.toDegrees(Math.atan(a));
-    }
-
     public static boolean isWrapped(double deg) {
         double f = deg % 360.0;
         return f < 180 && f >= -180;
@@ -133,9 +122,9 @@ public final class MathUtils {
     public static Vector3d toVector(float pitch, float yaw, float radius) {
         pitch = (float) Math.toRadians(pitch);
         yaw = (float) Math.toRadians(yaw);
-        double x = radius * Math.cos(yaw) * Math.cos(pitch);
-        double y = radius * Math.sin(pitch);
-        double z = radius * Math.sin(yaw) * Math.cos(pitch);
+        double x = radius * MathHelper.cos(yaw) * MathHelper.cos(pitch);
+        double y = radius * MathHelper.sin(pitch);
+        double z = radius * MathHelper.sin(yaw) * MathHelper.cos(pitch);
         return new Vector3d(x, y, z);
     }
 

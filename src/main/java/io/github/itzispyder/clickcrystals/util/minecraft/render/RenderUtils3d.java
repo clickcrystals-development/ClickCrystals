@@ -7,6 +7,7 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
@@ -149,8 +150,8 @@ public class RenderUtils3d {
 
         for (int i = 0; i <= 360; i += 24) {
             float angle = (float)Math.toRadians(i);
-            float cx = (float)(x + Math.cos(angle) * radius);
-            float cz = (float)(z + Math.sin(angle) * radius);
+            float cx = (float)(x + MathHelper.cos(angle) * radius);
+            float cz = (float)(z + MathHelper.sin(angle) * radius);
             buf.vertex(mat, cx, (float)y, cz).color(color);
             buf.vertex(mat, cx, (float)(y + height), cz).color(color);
         }
@@ -164,8 +165,8 @@ public class RenderUtils3d {
 
         for (int i = 0; i <= 360; i += 30) {
             float angle = (float)Math.toRadians(i);
-            float cx = (float)(x + Math.cos(angle) * radius);
-            float cz = (float)(z + Math.sin(angle) * radius);
+            float cx = (float)(x + MathHelper.cos(angle) * radius);
+            float cz = (float)(z + MathHelper.sin(angle) * radius);
             buf.vertex(mat, cx, (float)y, cz).color(colorBottom);
             buf.vertex(mat, cx, (float)(y + height), cz).color(colorTop);
         }

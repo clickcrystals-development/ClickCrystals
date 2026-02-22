@@ -10,6 +10,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.render.states.SphereWir
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 import org.joml.Quaternionf;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
@@ -87,9 +88,9 @@ public class EntityIndicatorSimulationRenderer {
     private Vector3d polar2vector(float pitch, float yaw, float radius) {
         pitch = (float) Math.toRadians(pitch);
         yaw = (float) Math.toRadians(yaw);
-        double x = radius * Math.cos(yaw) * Math.cos(pitch);
-        double y = radius * Math.sin(pitch);
-        double z = radius * Math.sin(yaw) * Math.cos(pitch);
+        double x = radius * MathHelper.cos(yaw) * MathHelper.cos(pitch);
+        double y = radius * MathHelper.sin(pitch);
+        double z = radius * MathHelper.sin(yaw) * MathHelper.cos(pitch);
         return new Vector3d(x, y, z);
     }
 

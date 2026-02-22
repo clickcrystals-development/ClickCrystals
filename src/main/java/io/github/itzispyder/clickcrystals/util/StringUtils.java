@@ -1,5 +1,7 @@
 package io.github.itzispyder.clickcrystals.util;
 
+import io.github.itzispyder.clickcrystals.gui.misc.ChatColor;
+
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -80,6 +82,10 @@ public final class StringUtils {
 
     public static String decolor(String s) {
         return s.replaceAll("[§|&][1234567890abcdefklmnor]", "");
+    }
+
+    public static String forceColor(String s, ChatColor color) {
+        return s.replaceAll("\\b(\\w+)\\b", color + "$1");
     }
 
     public static String format(String s, Object... args) {
