@@ -412,7 +412,10 @@ public class Conditionals implements Global {
         });
         PING = register("ping", ctx -> ctx.assertClientPlayer().end(ctx.compareNumArg(0, PlayerUtils.getPing())));
         FPS = register("fps", ctx -> ctx.assertClientPlayer().end(ctx.compareNumArg(0, PlayerUtils.getFps())));
-        LINE_OF_SIGHT = register("line_of_sight", ctx -> ctx.end(true, PlayerUtils.valid() && ctx.entity != PlayerUtils.player() && PlayerUtils.player().canSee(ctx.entity)));
+        LINE_OF_SIGHT = register("line_of_sight", ctx -> {
+            var target = EntityUtils.getTarget(ctx.entity);
+            return ctx.end(PlayerUtils.valid() && target instanceof EntityHitResult hit && PlayerUtils.player().canSee(hit.getEntity()));
+        });
         FLYING = register("flying", ctx -> ctx.assertClientPlayer().end(PlayerUtils.valid() && PlayerUtils.player().getAbilities().flying));
         SNEAKING = register("sneaking", ctx -> ctx.end(true, ctx.entity.isSneaking()));
         SPRINTING = register("sprinting", ctx -> ctx.end(true, ctx.entity.isSprinting()));
