@@ -8,23 +8,31 @@ import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.block.BlockState;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 
 public class ConditionalBlockInRange implements Conditional {
 
-    private static final Map<String, Predicate<BlockState>> PREDICATE_CACHE = new ConcurrentHashMap<>();
+    private static final Map<String, Predicate<BlockState>> PREDICATE_CACHE = new LinkedHashMap<>(16, 0.75f, true) {
+        protected boolean removeEldestEntry(Map.Entry<String, Predicate<BlockState>> eldest) {
+            return size() > 32;
+        }
+    };
 
     @Override
     public ConditionEvaluationResult evaluate(ConditionEvaluationContext ctx) {
+        if (!PlayerUtils.valid())
+            return ctx.end(true, false);
+
         Predicate<BlockState> filter = resolveFilter(ctx);
         AtomicBoolean bl = new AtomicBoolean(false);
         double range = ctx.get(1).toDouble();
 
         EntityUtils.runOnNearestBlock(ctx.entity, range, filter,
                 (pos, state) -> bl.set(pos.toCenterPos().distanceTo(PlayerUtils.getPos()) <= range));
+        
         return ctx.end(true, bl.get());
     }
 
