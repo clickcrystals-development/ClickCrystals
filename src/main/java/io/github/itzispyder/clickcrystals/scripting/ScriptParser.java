@@ -359,10 +359,7 @@ public class ScriptParser {
 
         String path = Registries.POTION.getId(potionEntry.value()).getPath();
 
-        String search = tag.toLowerCase();
-        if (search.equals("speed"))
-            search = "swiftness";
-
-        return path.equals(search);
+        String search = tag.equalsIgnoreCase("speed") ? "swiftness" : tag.toLowerCase();
+        return path.contains(search);
     }
 }
