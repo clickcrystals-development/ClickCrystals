@@ -78,25 +78,25 @@ public class StunSlam extends ListenerModule {
     private void performStunSlam() {
         if (!isEnabled() || PlayerUtils.invalid() || !(mc.targetedEntity instanceof LivingEntity))
             return;
-            
-        if (!isAxe(mc.player.getMainHandStack())) return;
-
-        if (awaitingBack) return;
-
+        if (!isAxe(HotbarUtils.getHand()))
+            return;
+        if (awaitingBack)
+            return;
         if (onlyOnShield.getVal() && mc.targetedEntity instanceof PlayerEntity player && !isPlayerBlocking(player))
             return;
 
-        var mace = findDensityMace();
-        if (mace.isEmpty()) return;
+        ItemStack mace = findDensityMace();
+        if (mace.isEmpty())
+            return;
         
         system.scheduler.runDelayedTask(() -> {
-            if (!HotbarUtils.search(item -> ItemStack.areEqual(item, mace))) return;
+            if (!HotbarUtils.search(item -> ItemStack.areEqual(item, mace)))
+                return;
             
             system.scheduler.runDelayedTask(() -> {
                 if (mc.targetedEntity instanceof LivingEntity) {
                     InteractionUtils.leftClick();
                 }
-                
                 if (autoSwitchBack.getVal()) {
                     awaitingBack = true;
                     backTimer = swapBackDelay.getVal();
@@ -114,9 +114,8 @@ public class StunSlam extends ListenerModule {
     }
 
     private ItemStack findDensityMace() {
-        if (requireDensity.getVal()) {
+        if (requireDensity.getVal())
             return HotbarUtils.searchItem(item -> item.isOf(Items.MACE) && NbtUtils.hasEnchant(item, "density"));
-        }
         return HotbarUtils.searchItem(item -> item.isOf(Items.MACE));
     }
 }

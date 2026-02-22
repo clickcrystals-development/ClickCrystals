@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.GameLeaveEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SelfGlow;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.Entity;
@@ -56,8 +57,8 @@ public abstract class MixinMinecraftClient implements Global {
 
     @ModifyReturnValue(method = "hasOutline", at = @At("RETURN"))
     private boolean hasOutline(boolean original, Entity entity) {
-        if (mc == null) return original;
-        SelfGlow selfGlow = Module.get(SelfGlow.class);
-        return selfGlow != null ? selfGlow.isEnabled() && entity == mc.player : original;
+        return Module.isEnabled(SelfGlow.class)
+                ? entity == PlayerUtils.player()
+                : original;
     }
 }

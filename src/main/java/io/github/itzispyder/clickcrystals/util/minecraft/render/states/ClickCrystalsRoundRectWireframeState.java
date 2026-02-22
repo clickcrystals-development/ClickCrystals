@@ -8,6 +8,7 @@ import net.minecraft.client.gui.ScreenRect;
 import net.minecraft.client.gui.render.state.SimpleGuiElementRenderState;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.texture.TextureSetup;
+import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix3x2f;
 
@@ -87,16 +88,16 @@ public class ClickCrystalsRoundRectWireframeState implements SimpleGuiElementRen
             float angle;
 
             angle = (float)Math.toRadians(i);
-            float x1 = corners[corner][0] + (float)(Math.cos(angle) * r);
-            float y1 = corners[corner][1] + (float)(Math.sin(angle) * r);
-            float x4 = corners[corner][0] + (float)(Math.cos(angle) * (r + thickness));
-            float y4 = corners[corner][1] + (float)(Math.sin(angle) * (r + thickness));
+            float x1 = corners[corner][0] + (MathHelper.cos(angle) * r);
+            float y1 = corners[corner][1] + (MathHelper.sin(angle) * r);
+            float x4 = corners[corner][0] + MathHelper.cos(angle) * (r + thickness);
+            float y4 = corners[corner][1] + MathHelper.sin(angle) * (r + thickness);
 
             angle = (float)Math.toRadians(i + 10);
-            float x2 = corners[corner][0] + (float)(Math.cos(angle) * r);
-            float y2 = corners[corner][1] + (float)(Math.sin(angle) * r);
-            float x3 = corners[corner][0] + (float)(Math.cos(angle) * (r + thickness));
-            float y3 = corners[corner][1] + (float)(Math.sin(angle) * (r + thickness));
+            float x2 = corners[corner][0] + (MathHelper.cos(angle) * r);
+            float y2 = corners[corner][1] + (MathHelper.sin(angle) * r);
+            float x3 = corners[corner][0] + MathHelper.cos(angle) * (r + thickness);
+            float y3 = corners[corner][1] + MathHelper.sin(angle) * (r + thickness);
 
             buf.vertex(pose, x1, y1).color(colors[corner][0]);
             buf.vertex(pose, x2, y2).color(colors[corner][0]);

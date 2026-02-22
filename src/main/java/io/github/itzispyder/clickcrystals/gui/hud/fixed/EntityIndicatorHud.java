@@ -13,6 +13,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.util.math.MathHelper;
 import org.joml.Quaternionf;
 
 public class EntityIndicatorHud extends Hud {
@@ -70,15 +71,15 @@ public class EntityIndicatorHud extends Hud {
 
         for (SimulationEntry display : module.getSimulation().getEntities()) {
             float θ = display.getYawDifference(); // TheTrouper gave me this Unicode LOL (the real theta)
-            int x = (int)(cx + Math.cos(Math.toRadians(θ - 90)) * radius);
-            int y = (int)(cy + Math.sin(Math.toRadians(θ - 90)) * radius);
+            int x = (int)(cx + MathHelper.cos(Math.toRadians(θ - 90)) * radius);
+            int y = (int)(cy + MathHelper.sin(Math.toRadians(θ - 90)) * radius);
             MobHeadBrush.drawHead(context, display.getEntityClass(), x - size / 2, y - size / 2, size);
         }
 
         nearest.accept(display -> {
             float θ = display.getYawDifference(); // TheTrouper gave me this Unicode LOL (the real theta)
-            int x = (int)(cx + Math.cos(Math.toRadians(θ - 90)) * radius);
-            int y = (int)(cy + Math.sin(Math.toRadians(θ - 90)) * radius);
+            int x = (int)(cx + MathHelper.cos(Math.toRadians(θ - 90)) * radius);
+            int y = (int)(cy + MathHelper.sin(Math.toRadians(θ - 90)) * radius);
             int bigger = size + 2;
 
             RenderUtils.fillRect(context, x - bigger / 2 - 1, y - bigger / 2 - 1, bigger + 2, bigger + 2, 0xFFFFFFFF);
