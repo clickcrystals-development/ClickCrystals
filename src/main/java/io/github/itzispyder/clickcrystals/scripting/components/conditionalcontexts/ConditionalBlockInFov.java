@@ -46,7 +46,18 @@ public class ConditionalBlockInFov implements Conditional {
             return state -> true;
         
         String arg = ctx.get(0).toString();
-        return PREDICATE_CACHE.computeIfAbsent(arg, ScriptParser::parseBlockPredicate);
+        Predicate<BlockState> cached = PREDICATE_CACHE.get(arg);
+        if (cached != null)
+            return cached;
+        
+        synchronized (PREDICATE_CACHE) {
+            cached = PREDICATE_CACHE.get(arg);
+            if (cached != null)
+                return cached;
+            cached = ScriptParser.parseBlockPredicate(arg);
+            PREDICATE_CACHE.put(arg, cached);
+            return cached;
+        }
     }
 
     private float resolveFov(ConditionEvaluationContext ctx) {
