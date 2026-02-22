@@ -10,6 +10,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.client.sound.SoundInstance;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
@@ -270,7 +272,19 @@ public class ScriptParser {
             else
                 return state -> state.getItem() == Registries.ITEM.get(Identifier.ofVanilla(node.name));
         });
-        selection.setNodeTagsStrategy(node -> item -> node.tags.stream().allMatch(tag -> NbtUtils.hasEnchant(item, tag)));
+        selection.setNodeTagsStrategy(node -> item -> {
+            if (node.tags.isEmpty())
+                return true;
+            
+            boolean isPotion = item.isOf(Items.SPLASH_POTION) || item.isOf(Items.POTION);
+            for (String tag : node.tags) {
+                if (isPotion && hasPotion(item, tag))
+                    return true;
+                if (NbtUtils.hasEnchant(item, tag))
+                    return true;
+            }
+            return false;
+        });
         return selection.getIdentifierPredicate();
     }
 
@@ -332,5 +346,23 @@ public class ScriptParser {
             }
         }
         return null;
+    }
+
+    private static boolean hasPotion(ItemStack item, String tag) {
+        PotionContentsComponent contents = item.get(DataComponentTypes.POTION_CONTENTS);
+        if (contents == null)
+            return false;
+
+        var potionEntry = contents.potion().orElse(null);
+        if (potionEntry == null)
+            return false;
+
+        String path = Registries.POTION.getId(potionEntry.value()).getPath();
+
+        String search = tag.toLowerCase();
+        if (search.equals("speed"))
+            search = "swiftness";
+
+        return path.equals(search);
     }
 }
