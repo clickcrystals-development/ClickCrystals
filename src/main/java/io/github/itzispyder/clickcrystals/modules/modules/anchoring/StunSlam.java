@@ -11,6 +11,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.IntegerSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.NbtUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.entity.LivingEntity;
@@ -93,8 +94,7 @@ public class StunSlam extends ListenerModule {
             
             system.scheduler.runDelayedTask(() -> {
                 if (mc.targetedEntity instanceof LivingEntity) {
-                    mc.interactionManager.attackEntity(mc.player, mc.targetedEntity);
-                    mc.player.swingHand(mc.player.getActiveHand());
+                    InteractionUtils.leftClick();
                 }
                 
                 if (autoSwitchBack.getVal()) {

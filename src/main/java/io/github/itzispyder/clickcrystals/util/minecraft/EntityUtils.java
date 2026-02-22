@@ -61,7 +61,7 @@ public class EntityUtils implements Global {
         Vec3d toAttacker = PlayerUtils.player().getEntityPos().subtract(liv.getEntityPos()).normalize();
         double dot = targetLook.dotProduct(toAttacker);
         
-        return dot > 0.8; // Shield blocks if target is facing attacker
+        return dot > 0.3; // Shield blocks if target is facing attacker
     }
 
     public static boolean isColliding(Entity ref) {

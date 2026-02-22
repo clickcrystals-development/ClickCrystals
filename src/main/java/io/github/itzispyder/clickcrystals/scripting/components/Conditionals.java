@@ -337,9 +337,9 @@ public class Conditionals implements Global {
         POS_X = register("pos_x", ctx -> ctx.end(true, ctx.compareNumArg(0, (int) ctx.entity.getX())));
         POS_Y = register("pos_y", ctx -> ctx.end(true, ctx.compareNumArg(0, (int) ctx.entity.getY())));
         POS_Z = register("pos_z", ctx -> ctx.end(true, ctx.compareNumArg(0, (int) ctx.entity.getZ())));
-        VEL_X = register("vel_x", ctx -> ctx.end(true, ctx.compareNumArg(0, (int) ctx.entity.getVelocity().getX())));
-        VEL_Y = register("vel_y", ctx -> ctx.end(true, ctx.compareNumArg(0, (int) ctx.entity.getVelocity().getY())));
-        VEL_Z = register("vel_z", ctx -> ctx.end(true, ctx.compareNumArg(0, (int) ctx.entity.getVelocity().getZ())));
+        VEL_X = register("vel_x", ctx -> ctx.end(true, ctx.compareNumArg(0, ctx.entity.getVelocity().getX())));
+        VEL_Y = register("vel_y", ctx -> ctx.end(true, ctx.compareNumArg(0, ctx.entity.getVelocity().getY())));
+        VEL_Z = register("vel_z", ctx -> ctx.end(true, ctx.compareNumArg(0, ctx.entity.getVelocity().getZ())));
         MODULE_ENABLED = register("module_enabled", ctx -> {
             Module m = system.getModuleById(ctx.get(0).toString());
             return ctx.end(m != null && m.isEnabled());
