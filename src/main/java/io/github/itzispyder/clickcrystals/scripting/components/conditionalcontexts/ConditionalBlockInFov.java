@@ -11,6 +11,8 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 public class ConditionalBlockInFov implements Conditional {
@@ -18,6 +20,7 @@ public class ConditionalBlockInFov implements Conditional {
     private static final double DEFAULT_RANGE = 6.0;
     private static final float[] YAW_OFFSETS = {0, -1, 1};
     private static final float[] PITCH_OFFSETS = {0, -1, 1};
+    private static final Map<String, Predicate<BlockState>> PREDICATE_CACHE = new ConcurrentHashMap<>();
 
     @Override
     public ConditionEvaluationResult evaluate(ConditionEvaluationContext ctx) {
@@ -32,7 +35,11 @@ public class ConditionalBlockInFov implements Conditional {
     }
 
     private Predicate<BlockState> resolveFilter(ConditionEvaluationContext ctx) {
-        return ctx.match(0, "any_block") ? state -> true : ScriptParser.parseBlockPredicate(ctx.get(0).toString());
+        if (ctx.match(0, "any_block"))
+            return state -> true;
+        
+        String arg = ctx.get(0).toString();
+        return PREDICATE_CACHE.computeIfAbsent(arg, ScriptParser::parseBlockPredicate);
     }
 
     private float resolveFov(ConditionEvaluationContext ctx) {
