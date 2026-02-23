@@ -8,7 +8,7 @@ public class ModrinthSupport {
 
     // change this field to update modrinth support status
 
-    public static final boolean active = true; // set to true to active modrinth TOS support
+    public static final boolean active = false; // set to true to active modrinth TOS support
 
 
     // helper methods and stuff

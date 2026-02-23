@@ -1,5 +1,7 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKey;
@@ -21,5 +23,17 @@ public final class NbtUtils {
             if (enchant.getIdAsString().equals(id.toString()))
                 return true;
         return false;
+    }
+
+    public static boolean hasPotion(ItemStack item, String potionId) {
+        PotionContentsComponent potion = item.get(DataComponentTypes.POTION_CONTENTS);
+        if (potion == null || potion.potion().isEmpty())
+            return false;
+        return potion.potion().get().getIdAsString().toLowerCase()
+                .contains(potionId.toLowerCase());
+    }
+
+    public static boolean hasPotionOrEnchant(ItemStack item, String tag) {
+        return hasEnchant(item, tag) || hasPotion(item, tag);
     }
 }

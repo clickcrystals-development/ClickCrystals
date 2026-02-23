@@ -270,7 +270,7 @@ public class ScriptParser {
             else
                 return state -> state.getItem() == Registries.ITEM.get(Identifier.ofVanilla(node.name));
         });
-        selection.setNodeTagsStrategy(node -> item -> node.tags.stream().allMatch(tag -> NbtUtils.hasEnchant(item, tag)));
+        selection.setNodeTagsStrategy(node -> item -> node.tags.stream().allMatch(tag -> NbtUtils.hasPotionOrEnchant(item, tag)));
         return selection.getIdentifierPredicate();
     }
 
