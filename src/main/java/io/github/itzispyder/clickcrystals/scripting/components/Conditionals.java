@@ -20,7 +20,6 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.GameMode;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -29,33 +28,6 @@ public class Conditionals implements Global {
     // registry
 
     private static final Map<String, Conditional> registry = new HashMap<>();
-    private static final Map<String, Predicate<ItemStack>> ITEM_PREDICATE_CACHE = new LinkedHashMap<>(16, 0.75f, true) {
-        protected boolean removeEldestEntry(Map.Entry<String, Predicate<ItemStack>> eldest) {
-            return size() > 32;
-        }
-    };
-    private static final Map<String, Predicate<BlockState>> BLOCK_PREDICATE_CACHE = new LinkedHashMap<>(16, 0.75f, true) {
-        protected boolean removeEldestEntry(Map.Entry<String, Predicate<BlockState>> eldest) {
-            return size() > 32;
-        }
-    };
-    private static final Map<String, Predicate<Entity>> ENTITY_PREDICATE_CACHE = new LinkedHashMap<>(16, 0.75f, true) {
-        protected boolean removeEldestEntry(Map.Entry<String, Predicate<Entity>> eldest) {
-            return size() > 32;
-        }
-    };
-
-    private static Predicate<ItemStack> cacheItemPredicate(String arg) {
-        return ITEM_PREDICATE_CACHE.computeIfAbsent(arg, ScriptParser::parseItemPredicate);
-    }
-
-    private static Predicate<BlockState> cacheBlockPredicate(String arg) {
-        return BLOCK_PREDICATE_CACHE.computeIfAbsent(arg, ScriptParser::parseBlockPredicate);
-    }
-
-    private static Predicate<Entity> cacheEntityPredicate(String arg) {
-        return ENTITY_PREDICATE_CACHE.computeIfAbsent(arg, ScriptParser::parseEntityPredicate);
-    }
 
     private static Conditional register(String name, Conditional conditional) {
         if (name != null && conditional != null && !name.isEmpty())
@@ -321,35 +293,35 @@ public class Conditionals implements Global {
     static {
         TRUE = register("true", ctx -> ctx.end(true));
         FALSE = register("false", ctx -> ctx.end(false));
-        HOLDING = register("holding", ctx -> ctx.end(true, EntityUtils.isHolding(ctx.entity, cacheItemPredicate(ctx.get(0).toString()))));
-        OFF_HOLDING = register("off_holding", ctx -> ctx.end(true, EntityUtils.isOffHolding(ctx.entity, cacheItemPredicate(ctx.get(0).toString()))));
+        HOLDING = register("holding", ctx -> ctx.end(true, EntityUtils.isHolding(ctx.entity, ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
+        OFF_HOLDING = register("off_holding", ctx -> ctx.end(true, EntityUtils.isOffHolding(ctx.entity, ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
         TARGET_BLOCK = register("target_block", ctx -> {
-            Predicate<BlockState> test = cacheBlockPredicate(ctx.get(0).toString());
+            Predicate<BlockState> test = ScriptParser.parseBlockPredicate(ctx.get(0).toString());
             return ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof BlockHitResult hit && test.test(PlayerUtils.getWorld().getBlockState(hit.getBlockPos())));
         });
         TARGET_ENTITY = register("target_entity", ctx -> {
-            Predicate<Entity> test = cacheEntityPredicate(ctx.get(0).toString());
+            Predicate<Entity> test = ScriptParser.parseEntityPredicate(ctx.get(0).toString());
             return ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof EntityHitResult hit && test.test(hit.getEntity()));
         });
         TARGET_FLUID = register("target_fluid", ctx -> {
             Voidable<FluidState> state = EntityUtils.getTargetFluid(ctx.entity, true);
-            Predicate<BlockState> test = cacheBlockPredicate(ctx.get(0).toString());
+            Predicate<BlockState> test = ScriptParser.parseBlockPredicate(ctx.get(0).toString());
             return ctx.end(true, state.isPresent() && test.test(state.get().getBlockState()));
         });
         TARGETING_BLOCK = register("targeting_block", ctx -> ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof BlockHitResult hit && !PlayerUtils.getWorld().getBlockState(hit.getBlockPos()).isAir()));
         TARGETING_ENTITY = register("targeting_entity", ctx -> ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof EntityHitResult hit && hit.getEntity().isAlive()));
         TARGETING_FLUID = register("targeting_fluid", ctx -> ctx.end(true, EntityUtils.getTargetFluid(ctx.entity, false).isPresent()));
-        INVENTORY_HAS = register("inventory_has", ctx -> ctx.assertClientPlayer().end(InvUtils.has(cacheItemPredicate(ctx.get(0).toString()))));
+        INVENTORY_HAS = register("inventory_has", ctx -> ctx.assertClientPlayer().end(InvUtils.has(ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
         INVENTORY_COUNT = register("inventory_count", ctx -> {
             ctx.assertClientPlayer();
-            Predicate<ItemStack> item = cacheItemPredicate(ctx.get(0).toString());
+            Predicate<ItemStack> item = ScriptParser.parseItemPredicate(ctx.get(0).toString());
             return ctx.end(ctx.compareNumArg(1, InvUtils.count(item)));
         });
-        EQUIPMENT_HAS = register("equipment_has", ctx -> ctx.end(true, EntityUtils.hasEquipment(ctx.entity, cacheItemPredicate(ctx.get(0).toString()))));
-        HOTBAR_HAS = register("hotbar_has", ctx -> ctx.assertClientPlayer().end(HotbarUtils.has(cacheItemPredicate(ctx.get(0).toString()))));
+        EQUIPMENT_HAS = register("equipment_has", ctx -> ctx.end(true, EntityUtils.hasEquipment(ctx.entity, ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
+        HOTBAR_HAS = register("hotbar_has", ctx -> ctx.assertClientPlayer().end(HotbarUtils.has(ScriptParser.parseItemPredicate(ctx.get(0).toString()))));
         HOTBAR_COUNT = register("hotbar_count", ctx -> {
             ctx.assertClientPlayer();
-            Predicate<ItemStack> item = cacheItemPredicate(ctx.get(0).toString());
+            Predicate<ItemStack> item = ScriptParser.parseItemPredicate(ctx.get(0).toString());
             return ctx.end(ctx.compareNumArg(1, HotbarUtils.count(item)));
         });
         INPUT_ACTIVE = register("input_active", new ConditionalInputActive());
@@ -378,12 +350,12 @@ public class Conditionals implements Global {
         });
         BLOCK = register("block", ctx -> {
             VectorParser loc = new VectorParser(ctx.get(0), ctx.get(1), ctx.get(2), ctx.entity);
-            Predicate<BlockState> pre = cacheBlockPredicate(ctx.get(3).toString());
+            Predicate<BlockState> pre = ScriptParser.parseBlockPredicate(ctx.get(3).toString());
             return ctx.end(true, pre.test(loc.getBlock(PlayerUtils.getWorld())));
         });
         ENTITY = register("entity", ctx -> {
             VectorParser loc = new VectorParser(ctx.get(0), ctx.get(1), ctx.get(2), ctx.entity);
-            Predicate<Entity> pre = cacheEntityPredicate(ctx.get(3).toString());
+            Predicate<Entity> pre = ScriptParser.parseEntityPredicate(ctx.get(3).toString());
             return ctx.end(true, EntityUtils.checkEntityAt(loc.getBlockPos(), pre));
         });
         DIMENSION = register("dimension", new ConditionalDimension());
@@ -417,7 +389,7 @@ public class Conditionals implements Global {
         REFERENCE_ENTITY = register("reference_entity", ctx -> {
             if (ctx.match(0, "client"))
                 return ctx.end(ctx.entity == PlayerUtils.player());
-            Predicate<Entity> filter = ctx.match(0, "any_entity") ? entity -> true : cacheEntityPredicate(ctx.get(0).toString());
+            Predicate<Entity> filter = ctx.match(0, "any_entity") ? entity -> true : ScriptParser.parseEntityPredicate(ctx.get(0).toString());
             return ctx.end(filter.test(ctx.entity));
         });
         ITEM_COUNT = register("item_count", ctx -> {

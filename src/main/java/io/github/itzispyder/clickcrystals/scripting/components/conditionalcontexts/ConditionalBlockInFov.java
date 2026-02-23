@@ -11,9 +11,6 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.function.Predicate;
 
 public class ConditionalBlockInFov implements Conditional {
@@ -21,13 +18,6 @@ public class ConditionalBlockInFov implements Conditional {
     private static final double DEFAULT_RANGE = 6.0;
     private static final float[] YAW_OFFSETS = {0, -1, 1};
     private static final float[] PITCH_OFFSETS = {0, -1, 1};
-    private static final Map<String, Predicate<BlockState>> PREDICATE_CACHE = Collections.synchronizedMap(
-        new LinkedHashMap<>(16, 0.75f, true) {
-            protected boolean removeEldestEntry(Map.Entry<String, Predicate<BlockState>> eldest) {
-                return size() > 32;
-            }
-        }
-    );
 
     @Override
     public ConditionEvaluationResult evaluate(ConditionEvaluationContext ctx) {
@@ -36,28 +26,13 @@ public class ConditionalBlockInFov implements Conditional {
 
         Predicate<BlockState> filter = resolveFilter(ctx);
         float fovDeg = resolveFov(ctx);
+
         boolean found = scanCone(ctx, filter, fovDeg);
-        
         return ctx.end(true, found);
     }
 
     private Predicate<BlockState> resolveFilter(ConditionEvaluationContext ctx) {
-        if (ctx.match(0, "any_block"))
-            return state -> true;
-        
-        String arg = ctx.get(0).toString();
-        Predicate<BlockState> cached = PREDICATE_CACHE.get(arg);
-        if (cached != null)
-            return cached;
-        
-        synchronized (PREDICATE_CACHE) {
-            cached = PREDICATE_CACHE.get(arg);
-            if (cached != null)
-                return cached;
-            cached = ScriptParser.parseBlockPredicate(arg);
-            PREDICATE_CACHE.put(arg, cached);
-            return cached;
-        }
+        return ctx.match(0, "any_block") ? state -> true : ScriptParser.parseBlockPredicate(ctx.get(0).toString());
     }
 
     private float resolveFov(ConditionEvaluationContext ctx) {
