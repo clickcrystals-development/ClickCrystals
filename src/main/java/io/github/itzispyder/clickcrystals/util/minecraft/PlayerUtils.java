@@ -142,10 +142,18 @@ public final class PlayerUtils implements Global {
     }
 
     public static void boxIterator(World world, Box box, BiConsumer<BlockPos, BlockState> function) {
-        for (double x = box.minX; x <= box.maxX; x++) {
-            for (double y = box.minY; y <= box.maxY; y++) {
-                for (double z = box.minZ; z <= box.maxZ; z++) {
-                    BlockPos pos = new BlockPos((int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
+        int minX = (int) Math.floor(box.minX);
+        int minY = (int) Math.floor(box.minY);
+        int minZ = (int) Math.floor(box.minZ);
+        int maxX = (int) Math.floor(box.maxX);
+        int maxY = (int) Math.floor(box.maxY);
+        int maxZ = (int) Math.floor(box.maxZ);
+        BlockPos.Mutable pos = new BlockPos.Mutable();
+        
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                for (int z = minZ; z <= maxZ; z++) {
+                    pos.set(x, y, z);
                     BlockState state = world.getBlockState(pos);
 
                     if (state == null || state.isAir()) {
@@ -187,24 +195,39 @@ public final class PlayerUtils implements Global {
             return false;
         }
 
-        AtomicReference<Double> nearestDist = new AtomicReference<>(64.0);
-        AtomicReference<BlockPos> nearestPos = new AtomicReference<>();
-        AtomicReference<BlockState> nearestState = new AtomicReference<>();
-        Box box = player().getBoundingBox().expand(range);
-        Vec3d player = player().getEntityPos();
+        Vec3d playerPos = player().getEntityPos();
         World world = getWorld();
-
-        PlayerUtils.boxIterator(world, box, (pos, state) -> {
-            if (filter.test(pos, state) && pos.isWithinDistance(player, nearestDist.get())) {
-                nearestDist.set(Math.sqrt(pos.getSquaredDistance(player)));
-                nearestPos.set(pos);
-                nearestState.set(state);
+        int centerX = (int) Math.floor(playerPos.x);
+        int centerY = (int) Math.floor(playerPos.y);
+        int centerZ = (int) Math.floor(playerPos.z);
+        int maxRadius = (int) Math.ceil(range);
+        BlockPos.Mutable pos = new BlockPos.Mutable();
+        
+        for (int radius = 0; radius <= maxRadius; radius++) {
+            for (int x = -radius; x <= radius; x++) {
+                for (int y = -radius; y <= radius; y++) {
+                    for (int z = -radius; z <= radius; z++) {
+                        if (Math.abs(x) != radius && Math.abs(y) != radius && Math.abs(z) != radius) {
+                            continue;
+                        }
+                        
+                        pos.set(centerX + x, centerY + y, centerZ + z);
+                        if (pos.getSquaredDistance(playerPos) > range * range) {
+                            continue;
+                        }
+                        
+                        BlockState state = world.getBlockState(pos);
+                        if (state == null || state.isAir()) {
+                            continue;
+                        }
+                        
+                        if (filter.test(pos, state)) {
+                            function.accept(pos, state);
+                            return true;
+                        }
+                    }
+                }
             }
-        });
-
-        if (nearestState.get() != null && nearestPos.get() != null) {
-            function.accept(nearestPos.get(), nearestState.get());
-            return true;
         }
         return false;
     }
@@ -232,22 +255,39 @@ public final class PlayerUtils implements Global {
             return null;
         }
 
-        AtomicReference<Double> nearestDist = new AtomicReference<>(range);
-        AtomicReference<BlockPos> nearestPos = new AtomicReference<>();
-        Box box = player().getBoundingBox().expand(range);
         Vec3d playerPos = player().getEntityPos();
         World world = getWorld();
-
-        boxIterator(world, box, (pos, state) -> {
-            if (filter.test(state) && pos.isWithinDistance(playerPos, nearestDist.get())) {
-                double distance = Math.sqrt(pos.getSquaredDistance(playerPos));
-                if (distance < nearestDist.get()) {
-                    nearestDist.set(distance);
-                    nearestPos.set(pos);
+        int centerX = (int) Math.floor(playerPos.x);
+        int centerY = (int) Math.floor(playerPos.y);
+        int centerZ = (int) Math.floor(playerPos.z);
+        int maxRadius = (int) Math.ceil(range);
+        BlockPos.Mutable pos = new BlockPos.Mutable();
+        
+        for (int radius = 0; radius <= maxRadius; radius++) {
+            for (int x = -radius; x <= radius; x++) {
+                for (int y = -radius; y <= radius; y++) {
+                    for (int z = -radius; z <= radius; z++) {
+                        if (Math.abs(x) != radius && Math.abs(y) != radius && Math.abs(z) != radius) {
+                            continue;
+                        }
+                        
+                        pos.set(centerX + x, centerY + y, centerZ + z);
+                        if (pos.getSquaredDistance(playerPos) > range * range) {
+                            continue;
+                        }
+                        
+                        BlockState state = world.getBlockState(pos);
+                        if (state == null || state.isAir()) {
+                            continue;
+                        }
+                        
+                        if (filter.test(state)) {
+                            return pos.toImmutable();
+                        }
+                    }
                 }
             }
-        });
-
-        return nearestPos.get();
+        }
+        return null;
     }
 }

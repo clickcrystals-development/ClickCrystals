@@ -212,23 +212,39 @@ public class EntityUtils implements Global {
             return;
         }
 
-        AtomicReference<Double> nearestDist = new AtomicReference<>(64.0);
-        AtomicReference<BlockPos> nearestPos = new AtomicReference<>();
-        AtomicReference<BlockState> nearestState = new AtomicReference<>();
-        Box box = ref.getBoundingBox().expand(range);
-        Vec3d player = ref.getEntityPos();
+        Vec3d entityPos = ref.getEntityPos();
         World world = ref.getEntityWorld();
-
-        PlayerUtils.boxIterator(world, box, (pos, state) -> {
-            if (filter.test(pos, state) && pos.isWithinDistance(player, nearestDist.get())) {
-                nearestDist.set(Math.sqrt(pos.getSquaredDistance(player)));
-                nearestPos.set(pos);
-                nearestState.set(state);
+        int centerX = (int) Math.floor(entityPos.x);
+        int centerY = (int) Math.floor(entityPos.y);
+        int centerZ = (int) Math.floor(entityPos.z);
+        int maxRadius = (int) Math.ceil(range);
+        BlockPos.Mutable pos = new BlockPos.Mutable();
+        
+        for (int radius = 0; radius <= maxRadius; radius++) {
+            for (int x = -radius; x <= radius; x++) {
+                for (int y = -radius; y <= radius; y++) {
+                    for (int z = -radius; z <= radius; z++) {
+                        if (Math.abs(x) != radius && Math.abs(y) != radius && Math.abs(z) != radius) {
+                            continue;
+                        }
+                        
+                        pos.set(centerX + x, centerY + y, centerZ + z);
+                        if (pos.getSquaredDistance(entityPos) > range * range) {
+                            continue;
+                        }
+                        
+                        BlockState state = world.getBlockState(pos);
+                        if (state == null || state.isAir()) {
+                            continue;
+                        }
+                        
+                        if (filter.test(pos, state)) {
+                            function.accept(pos, state);
+                            return;
+                        }
+                    }
+                }
             }
-        });
-
-        if (nearestState.get() != null && nearestPos.get() != null) {
-            function.accept(nearestPos.get(), nearestState.get());
         }
     }
 
