@@ -8,26 +8,27 @@ import net.minecraft.world.World;
 public class Raytracer {
 
     public static Pair<BlockPos, BlockState> trace(World world, Vec3d start, Vec3d dir, double dist, HitCondition predicate) {
+        BlockPos.Mutable pos = new BlockPos.Mutable();
         BlockPos prev = null;
         for (double curDist = 0.0; curDist <= dist; curDist += 0.5) {
             Vec3d point = start.add(dir.x * curDist, dir.y * curDist, dir.z * curDist);
-            BlockPos pos = new BlockPos((int)Math.floor(point.x), (int)Math.floor(point.y), (int)Math.floor(point.z));
+            pos.set((int)Math.floor(point.x), (int)Math.floor(point.y), (int)Math.floor(point.z));
 
             if (prev == null) {
-                prev = pos;
+                prev = pos.toImmutable();
             }
 
             if (!prev.equals(pos)) {
                 if (predicate.test(pos, point)) {
-                    return Pair.of(pos, world.getBlockState(pos));
+                    return Pair.of(pos.toImmutable(), world.getBlockState(pos));
                 }
-                prev = pos;
+                prev = pos.toImmutable();
             }
         }
 
         Vec3d point = start.add(dir.x * dist, dir.y * dist, dir.z * dist);
-        BlockPos pos = new BlockPos((int)Math.floor(point.x), (int)Math.floor(point.y), (int)Math.floor(point.z));
-        return Pair.of(pos, world.getBlockState(pos));
+        pos.set((int)Math.floor(point.x), (int)Math.floor(point.y), (int)Math.floor(point.z));
+        return Pair.of(pos.toImmutable(), world.getBlockState(pos));
     }
 
     @FunctionalInterface
