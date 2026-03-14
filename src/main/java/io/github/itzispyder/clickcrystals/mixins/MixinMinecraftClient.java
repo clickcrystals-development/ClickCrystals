@@ -57,8 +57,9 @@ public abstract class MixinMinecraftClient implements Global {
 
     @ModifyReturnValue(method = "hasOutline", at = @At("RETURN"))
     private boolean hasOutline(boolean original, Entity entity) {
-        return Module.isEnabled(SelfGlow.class)
-                ? entity == PlayerUtils.player()
-                : original;
+        if (Module.isEnabled(SelfGlow.class) && entity == PlayerUtils.player()) {
+            return true;
+        }
+        return original;
     }
 }
