@@ -142,16 +142,33 @@ public final class PlayerUtils implements Global {
     }
 
     public static void boxIterator(World world, Box box, BiConsumer<BlockPos, BlockState> function) {
-        for (double x = box.minX; x <= box.maxX; x++) {
-            for (double y = box.minY; y <= box.maxY; y++) {
-                for (double z = box.minZ; z <= box.maxZ; z++) {
-                    BlockPos pos = new BlockPos((int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
-                    BlockState state = world.getBlockState(pos);
-
-                    if (state == null || state.isAir()) {
-                        continue;
+        Vec3d center = box.getCenter();
+        int centerX = (int) Math.floor(center.x);
+        int centerY = (int) Math.floor(center.y);
+        int centerZ = (int) Math.floor(center.z);
+        double range = Math.max(Math.max(box.getXLength(), box.getYLength()), box.getZLength()) / 2;
+        int maxRadius = (int) Math.ceil(range);
+        
+        for (int radius = 0; radius <= maxRadius; radius++) {
+            for (int x = -radius; x <= radius; x++) {
+                for (int y = -radius; y <= radius; y++) {
+                    for (int z = -radius; z <= radius; z++) {
+                        if (Math.abs(x) != radius && Math.abs(y) != radius && Math.abs(z) != radius) {
+                            continue;
+                        }
+                        
+                        BlockPos pos = new BlockPos(centerX + x, centerY + y, centerZ + z);
+                        if (!box.contains(pos.getX(), pos.getY(), pos.getZ())) {
+                            continue;
+                        }
+                        
+                        BlockState state = world.getBlockState(pos);
+                        if (state == null || state.isAir()) {
+                            continue;
+                        }
+                        
+                        function.accept(pos, state);
                     }
-                    function.accept(pos, state);
                 }
             }
         }
