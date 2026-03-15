@@ -13,10 +13,10 @@ factor = -factor OR +factor OR number OR expression OR function(expression) OR v
  */
 public class ExpressionEvaluator {
 
-    private final ExpressionScope scope;
-    private String expression;
-    private int pos;
-    private char currChar;
+    protected final ExpressionScope scope;
+    protected String expression;
+    protected int pos;
+    protected char currChar;
 
     public ExpressionEvaluator(ExpressionScope scope) {
         this.scope = scope;
@@ -37,19 +37,19 @@ public class ExpressionEvaluator {
         return parseExpression();
     }
 
-    private void reset(String expression) {
+    protected void reset(String expression) {
         this.expression = expression;
         pos = -1;
         currChar = (char) -1;
     }
 
-    private void next() {
+    protected void next() {
         currChar = ++pos < expression.length()
                 ? expression.charAt(pos)
                 : (char) -1;
     }
 
-    private boolean consume(char toConsume) {
+    protected boolean consume(char toConsume) {
         while (currChar == ' ')
             next();
 
@@ -62,7 +62,23 @@ public class ExpressionEvaluator {
         return false;
     }
 
-    private double parseExpression() {
+    protected boolean consume(String toConsume) {
+        while (currChar == ' ')
+            next();
+
+        int pos0 = pos;
+        char char0 = currChar;
+        for (int i = 0; i < toConsume.length(); i++) {
+            if (!consume(toConsume.charAt(i))) {
+                pos = pos0;
+                currChar = char0;
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected double parseExpression() {
         double x = parseTerm();
         while (true) {
             if (consume('+')) x += parseTerm();
@@ -71,7 +87,7 @@ public class ExpressionEvaluator {
         }
     }
 
-    private double parseTerm() {
+    protected double parseTerm() {
         double x = parseFactor();
         while (true) {
             if (consume('*')) x *= parseFactor();
@@ -80,19 +96,19 @@ public class ExpressionEvaluator {
         }
     }
 
-    private boolean isNumber(char c) {
+    protected boolean isNumber(char c) {
         return c == '.'
                 || ('0' <= c && c <= '9');
     }
 
-    private boolean isAlphaNumeric(char c) {
+    protected boolean isAlphaNumeric(char c) {
         return c == '_' || c == '.'
                 || ('0' <= c && c <= '9')
                 || ('A' <= c && c <= 'Z')
                 || ('a' <= c && c <= 'z');
     }
 
-    private void assertUnclosedParenthesis() {
+    protected void assertUnclosedParenthesis() {
         if (!consume(')'))
             throw new IllegalArgumentException("Unclosed parenthesis");
     }
@@ -107,7 +123,7 @@ public class ExpressionEvaluator {
             throw new IllegalArgumentException("Unknown variable: " + name);
     }
 
-    private double parseFactor() {
+    protected double parseFactor() {
         if (consume('-')) return -parseFactor();
         if (consume('+')) return +parseFactor();
 
