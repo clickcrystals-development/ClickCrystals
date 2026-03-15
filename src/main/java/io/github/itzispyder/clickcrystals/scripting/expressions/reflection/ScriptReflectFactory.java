@@ -22,14 +22,26 @@ public class ScriptReflectFactory {
 
         for (Method method : object.getDeclaredMethods()) {
             ScriptReflect ann = method.getAnnotation(ScriptReflect.class);
-            if (ann != null)
-                scope.defFun(ann.name(), mapMethod(method));
+
+            if (ann == null)
+                continue;
+
+            method.setAccessible(true);
+            switch (ann.type()) {
+                case FUNCTION -> scope.defFun(ann.name(), mapMethod(method));
+                case VARIABLE -> scope.defVar(ann.name(), mapGetterMethod(method));
+            }
         }
 
         for (Field field : object.getDeclaredFields()) {
             ScriptReflect ann = field.getAnnotation(ScriptReflect.class);
-            if (ann != null)
-                scope.defVar(ann.name(), mapField(field));
+            if (ann == null)
+                continue;
+            if (ann.type() != ScriptReflect.Type.VARIABLE)
+                throw new IllegalArgumentException("ScriptReflect: cannot treat field as method");
+
+            field.setAccessible(true);
+            scope.defVar(ann.name(), mapField(field));
         }
 
         return registry.put(object, scope);
@@ -38,8 +50,18 @@ public class ScriptReflectFactory {
     private static ExpressionFunction mapMethod(Method method) {
         return (args, names) -> {
             try {
-                method.setAccessible(true);
                 return (double) method.invoke(null, args, names);
+            }
+            catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        };
+    }
+
+    private static ExpressionVariableSupplier mapGetterMethod(Method method) {
+        return () -> {
+            try {
+                return (double) method.invoke(null);
             }
             catch (Exception ex) {
                 throw new RuntimeException(ex);
@@ -50,7 +72,6 @@ public class ScriptReflectFactory {
     private static ExpressionVariableSupplier mapField(Field field) {
         return () -> {
             try {
-                field.setAccessible(true);
                 return field.getDouble(null);
             }
             catch (Exception ex) {

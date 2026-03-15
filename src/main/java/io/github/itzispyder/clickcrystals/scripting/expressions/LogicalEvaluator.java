@@ -1,5 +1,7 @@
 package io.github.itzispyder.clickcrystals.scripting.expressions;
 
+import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
+
 /*
 this parser uses an algorithm called recursive descent parsing.
 the grammar of this evaluator is listed below:
@@ -34,6 +36,17 @@ public class LogicalEvaluator extends ExpressionEvaluator {
 
     public boolean evalLogic(String logicalExpression) {
         return (int) eval(logicalExpression) != 0;
+    }
+
+    public boolean evalLogic(ScriptArgs args) {
+        String expression = args.getAll().toString();
+        boolean result = evalLogic(expression);
+
+        String readExpression = expression.substring(0, pos);
+        int nextCursor = readExpression.split(" ").length;
+        args.zeroCursor(nextCursor);
+
+        return result;
     }
 
     private double parseLogicalOr() {

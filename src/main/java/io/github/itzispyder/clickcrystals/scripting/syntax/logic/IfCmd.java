@@ -19,13 +19,13 @@ public class IfCmd extends ScriptCommand implements Global, ThenChainable {
             executeWithThen(args);
         }
 
-//        ExpressionEvaluator evaluator = new ExpressionEvaluator();
-//        LogicalEvaluator logic = new LogicalEvaluator(evaluator);
+//        LogicalEvaluator logic = new LogicalEvaluator();
+//        logic.getScope().importScope(ScriptReflectFactory.extract(ScriptPlayer.class));
 //
-//        evaluator.getScope().importScope(ScriptReflectFactory.extract(ScriptPlayer.class));
+//        ChatUtils.sendMessage("" + logic.getScope().isValidVar("player.health"));
 //
-//        if (logic.eval(args.getAll().toString())) {
-//            executeWithThen(); // TODO: figure out where expression ends and run rest of command
+//        if (logic.evalLogic(args)) {
+//            executeWithThen(args);
 //        }
     }
 }
