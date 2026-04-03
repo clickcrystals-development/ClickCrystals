@@ -300,6 +300,8 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.addModule(new ChestSorter());
 
         // crystalling
+        system.addModule(new AutoTotem());
+        system.addModule(new AimAssist());
         system.addModule(new CrystAnchor());
         system.addModule(new AnchorSwitch());
         system.addModule(new ClickCrystal());
