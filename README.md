@@ -33,7 +33,9 @@ Happy coding and cpvping!
 | What You Have | What to get                                                                                                                    |
 |:--------------|:-------------------------------------------------------------------------------------------------------------------------------|
 | higher..      | how is that even possible?                                                                                                     |
-| 1.21.11       | [ClickCrystals-1.21.11-1.3.8.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.8) *recommended |
+| 26.1.1        | not supported                                                                                                                  |
+| 26.1          | not supported                                                                                                                  |
+| 1.21.11       | [ClickCrystals-1.21.11-1.3.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.9) *recommended |
 | 1.21.10       | [ClickCrystals-1.21.9-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7)               |
 | 1.21.9        | [ClickCrystals-1.21.9-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7)               |
 | 1.21.8        | [ClickCrystals-1.21.6-1.3.7.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.3.7)               |
@@ -45,7 +47,7 @@ Happy coding and cpvping!
 | 1.21.2        | not supported                                                                                                                  |
 | 1.21.1        | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                 |
 | 1.21          | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)                 |
-| ..lower       | cry                                                                                                                            |
+| ..lower       | cry                                                                                                                            |                                                                                                                  |
 
 
 
@@ -56,45 +58,19 @@ Take a look in latest releases for [experimental versions](https://github.com/it
 
 ## Newest Changes
 ```yml
-Version: 1.3.8
-
-Performance:
-  - used spark profiler to optimize method calls that cause lag spikes
-  - fixed entity tick lag
-  - improved GUI responsiveness # let_me_practice
-  - significant performance improvements, especially for mobile / Pojav users # let_me_practice
+Version: 1.3.9
 
 Scripting:
-  - if invisible
-  - if blocking (directional shield detection)
-  - if entity_in_fov <identifier> <num>
-  - if block_in_fov <identifier> <num>
-  - if hotbar_count <comparator> <num>
-  - if slot <int> <identifier>
-
-Modules:
-  - Fixed BreachSwap
-  - Fixed StunSlam
-  - Improved AxeSwap shield detection (directional blocking)
+  - added support for checking potion type (same way you'd check enchantments) #potion[regen],#potion[fall]
 
 Patches:
-  - patch and undisable TotemPopColor
-  - patch and undisable SelfGlow # i-no-am
-  - patch and fixed message broadcast # i-no-am
-  - fixed modules not toggling correctly after input-related changes # let_me_practice
+  - optimized rendering by using sine table for trig functions
+  - entity glow and spectral arrows being ineffective
+  - text miscolor for modrinth warnings
+  - improved accuracy for entity_in_fov and block_in_fov
 
-Scripts:
-  - Improved entity interactions # i-no-am
-  - vel values now support decimal numbers # let_me_practice
-
-GUI:
-  - added ping for users that haven't read new announcement bulletins
-  - refactored text input handling to support virtual keyboards (mobile / Pojav) # let_me_practice
-  - separated character input from key actions # let_me_practice
-  - fixed duplicated or dropped text input across all text fields # let_me_practice
-  - fixed script IDE opening wrong screen # let_me_practice
-  - fixed paste script crash # let_me_practice
-  - fixed script save spinner getting stuck # let_me_practice
+Modules:
+  - made StumSlam attack differently
 ```
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)
