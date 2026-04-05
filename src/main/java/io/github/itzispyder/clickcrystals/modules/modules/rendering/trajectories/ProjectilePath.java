@@ -20,7 +20,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 import net.minecraft.world.RaycastContext;
 
 import java.util.ArrayList;
@@ -49,13 +49,13 @@ public class ProjectilePath implements Global {
         float yaw = (float)MathUtils.lerp(shooter.renderYaw, shooter.getYaw(), tickDelta);
         boolean firstPerson = mc.options.getPerspective().isFirstPerson();
 
-        Vec3d dir = Vec3d.fromPolar(pitch, yaw).multiply(velocity);
-        Vec3d pos = shooter.getEyePos();
-        Vec3d pos2 = MathUtils.forward((firstPerson ? cam.getCameraPos() : pos).add(0, -0.05, 0), Vec3d.fromPolar(0, yaw + 90), renderOffset);
-        Vec3d prevPos;
+        Vec3 dir = Vec3.fromPolar(pitch, yaw).multiply(velocity);
+        Vec3 pos = shooter.getEyePosition();
+        Vec3 pos2 = MathUtils.forward((firstPerson ? cam.getCameraPos() : pos).add(0, -0.05, 0), Vec3.fromPolar(0, yaw + 90), renderOffset);
+        Vec3 prevPos;
 
         HitResult hit = MissHitResult.MISS;
-        List<Vec3d> vertices = new ArrayList<>();
+        List<Vec3> vertices = new ArrayList<>();
 
         vertices.add(pos2);
         for (int i = 0; i < maxTicks; i++) {
@@ -78,12 +78,12 @@ public class ProjectilePath implements Global {
         return new Result(hit, vertices);
     }
 
-    private HitResult get(ClientWorld world, Vec3d pos, Vec3d prevPos) {
-        Vec3d dir = pos.subtract(prevPos).normalize();
+    private HitResult get(ClientWorld world, Vec3 pos, Vec3 prevPos) {
+        Vec3 dir = pos.subtract(prevPos).normalize();
         double dist = prevPos.distanceTo(pos);
 
         for (double i = 0.0; i <= dist; i += 0.0625) {
-            Vec3d point = pos.add(dir.multiply(i));
+            Vec3 point = pos.add(dir.multiply(i));
             for (Entity ent : world.getEntities())
                 if (ent.getBoundingBox().contains(point))
                     return new EntityHitResult(ent, pos);
@@ -93,7 +93,7 @@ public class ProjectilePath implements Global {
         return world.raycast(context);
     }
 
-    private boolean isInFluid(ClientWorld world, Vec3d pos) {
+    private boolean isInFluid(ClientWorld world, Vec3 pos) {
         FluidState state = world.getFluidState(BlockPos.ofFloored(pos));
         Fluid fluid = state.getFluid();
 
@@ -109,7 +109,7 @@ public class ProjectilePath implements Global {
         this.maxVelocity = maxVelocity;
     }
 
-    public record Result(HitResult hit, List<Vec3d> vertices) {
+    public record Result(HitResult hit, List<Vec3> vertices) {
         public static final Result MISS = new Result(MissHitResult.MISS, new ArrayList<>());
 
         public void draw(RenderWorldEvent e, float tickDelta) {
@@ -118,25 +118,25 @@ public class ProjectilePath implements Global {
 
             ClientPlayerEntity p = PlayerUtils.player();
             MatrixStack matrices = e.getMatrices();
-            Vec3d playerPos = MathUtils.lerpEntityPosVec(p, tickDelta);
-            Vec3d playerEye = MathUtils.lerpEntityEyeVec(p, tickDelta);
-            Vec3d offset = playerPos.subtract(p.lastRenderX, p.lastRenderY, p.lastRenderZ);
+            Vec3 playerPos = MathUtils.lerpEntityPosVec(p, tickDelta);
+            Vec3 playerEye = MathUtils.lerpEntityEyeVec(p, tickDelta);
+            Vec3 offset = playerPos.subtract(p.lastRenderX, p.lastRenderY, p.lastRenderZ);
 
             for (int i = 0; i < vertices.size(); i++) {
-                Vec3d vec = vertices.get(i);
+                Vec3 vec = vertices.get(i);
                 float pitch = (p.getPitch() - p.lastPitch) * tickDelta;
                 float yaw = (p.getYaw() - p.lastYaw) * tickDelta;
                 MathUtils.rotate(vec, playerEye, pitch, yaw);
             }
 
-            Vec3d last = vertices.get(vertices.size() - 1);
+            Vec3 last = vertices.get(vertices.size() - 1);
 
             if (vertices.size() >= 2) {
                 for (int i = 0; i < vertices.size() - 1; i++) {
                     boolean player = (int)vertices.get(i).y == (int)p.getY();
                     boolean hitEnt = hit.getType() == HitResult.Type.ENTITY;
-                    Vec3d v1 = e.getOffsetPos(vertices.get(i).add(offset));
-                    Vec3d v2 = e.getOffsetPos(vertices.get(i + 1).add(offset));
+                    Vec3 v1 = e.getOffsetPos(vertices.get(i).add(offset));
+                    Vec3 v2 = e.getOffsetPos(vertices.get(i + 1).add(offset));
                     RenderUtils3d.drawFlatLine(matrices, v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, 0.05, player || hitEnt ? 0xFFFF4040 : 0xFFFFFFFF);
                 }
             }
@@ -150,9 +150,9 @@ public class ProjectilePath implements Global {
                 RenderUtils3d.fillBox(matrices, box, 0x40FF4040);
             }
 
-            if (last.distanceTo(p.getEyePos()) > 3.0) {
-//                Vec3d from = e.getOffsetPos(playerPos);
-                Vec3d to = e.getOffsetPos(last.add(offset));
+            if (last.distanceTo(p.getEyePosition()) > 3.0) {
+//                Vec3 from = e.getOffsetPos(playerPos);
+                Vec3 to = e.getOffsetPos(last.add(offset));
                 double w = 0.125;
                 Box box = new Box(to.add(-w, -w, -w), to.add(w, w, w));
                 RenderUtils3d.fillBox(matrices, box, 0x80FF4040);

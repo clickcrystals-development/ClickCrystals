@@ -34,7 +34,7 @@ public class IntegerSettingElement extends SettingElement<IntegerSetting> {
         int sliderStart = drawX + 10;
         int sliderLen = sliderEnd - sliderStart;
 
-        if (mc.currentScreen instanceof GuiScreen screen && screen.selected == this) {
+        if (mc.screen instanceof GuiScreen screen && screen.selected == this) {
             this.fillEnd = MathUtils.clamp(mouseX, sliderStart, sliderEnd);
             int range = settingMax - settingMin;
             double ratio = (double)(fillEnd - sliderStart) / (double)sliderLen;
@@ -59,7 +59,7 @@ public class IntegerSettingElement extends SettingElement<IntegerSetting> {
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (mc.currentScreen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
+        if (mc.screen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
             screen.selected = this;
         }
         super.mouseClicked(mouseX, mouseY, button);

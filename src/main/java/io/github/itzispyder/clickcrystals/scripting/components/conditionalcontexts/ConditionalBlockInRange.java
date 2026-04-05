@@ -20,7 +20,7 @@ public class ConditionalBlockInRange implements Conditional {
         double range = ctx.get(1).toDouble();
 
         EntityUtils.runOnNearestBlock(ctx.entity, range, filter,
-                (pos, state) -> bl.set(pos.toCenterPos().distanceTo(PlayerUtils.getPos()) <= range));
+                (pos, state) -> bl.set(pos.getCenter().distanceTo(PlayerUtils.getPos()) <= range));
         return ctx.end(true, bl.get());
     }
 }

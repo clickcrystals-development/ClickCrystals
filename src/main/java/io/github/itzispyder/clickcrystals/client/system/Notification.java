@@ -1,15 +1,16 @@
 package io.github.itzispyder.clickcrystals.client.system;
 
+import com.mojang.blaze3d.platform.Window;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.util.Window;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvents;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -40,7 +41,7 @@ public class Notification implements Global {
         this.icon = icon;
     }
 
-    public void render(DrawContext context) {
+    public void render(GuiGraphicsExtractor context) {
         if (!showing.get()) {
             return;
         }
@@ -48,7 +49,7 @@ public class Notification implements Global {
         Window win = mc.getWindow();
         int w = DISPLAY_WIDTH;
         int h = DISPLAY_HEIGHT;
-        int x = win.getScaledWidth() / 2 - w / 2;
+        int x = win.getGuiScaledWidth() / 2 - w / 2;
         int y = 10 + translation.get();
 
         RenderUtils.fillRoundShadow(context, x, y, w, h, 5, 10, 0x80000000);
@@ -109,7 +110,7 @@ public class Notification implements Global {
     }
 
     public void ping(boolean in) {
-        PositionedSoundInstance sound = PositionedSoundInstance.master(in ? SoundEvents.UI_TOAST_IN : SoundEvents.UI_TOAST_OUT, 1, 10);
+        SoundInstance sound = SimpleSoundInstance.forUI(in ? SoundEvents.UI_TOAST_IN : SoundEvents.UI_TOAST_OUT, 1, 10);
         mc.execute(() -> mc.getSoundManager().play(sound));
     }
 

@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.Typeable;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import java.util.function.Function;
 
@@ -22,10 +22,10 @@ public class StringSettingElement extends SettingElement<StringSetting> implemen
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         this.renderSettingDetails(context);
 
-        if (mc.currentScreen instanceof GuiScreen screen) {
+        if (mc.screen instanceof GuiScreen screen) {
             int drawW = width / (screen.selected == this ? 2 : 4);
             int drawH = 12;
             int drawY = y + height / 2;
@@ -35,7 +35,7 @@ public class StringSettingElement extends SettingElement<StringSetting> implemen
             RenderUtils.fillRoundHoriLine(context, drawX, drawY, drawW, drawH, fill);
 
             String text = input;
-            while (text.length() > 0 && mc.textRenderer.getWidth(text) * 0.7F > drawW - 10) {
+            while (text.length() > 0 && mc.font.width(text) * 0.7F > drawW - 10) {
                 text = text.substring(1);
             }
 
@@ -52,7 +52,7 @@ public class StringSettingElement extends SettingElement<StringSetting> implemen
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (mc.currentScreen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
+        if (mc.screen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
             screen.selected = this;
             setting.setVal(input);
         }

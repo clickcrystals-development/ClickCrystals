@@ -2,5 +2,5 @@ package io.github.itzispyder.clickcrystals.mixininterfaces;
 
 public interface AccessorKeyboard {
 
-    void pressKey(int key, int scan);
+    void clickCrystals$pressKey(int key, int scan);
 }

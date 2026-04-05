@@ -22,7 +22,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 import net.minecraft.world.World;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -143,7 +143,7 @@ public class NextBlock extends Module implements Listener {
 
         wasAborted = false;
         ClientPlayerEntity p = PlayerUtils.player();
-        Vec3d target = null;
+        Vec3 target = null;
 
         if (lastTouchedPosition != null) {
             target = getNearestToTarget(lastTouchedPosition);
@@ -154,7 +154,7 @@ public class NextBlock extends Module implements Listener {
             }
         }
 
-        Vec3d rot = target.subtract(p.getEyePos()).normalize(); // slowly rotate towards target block smoothly
+        Vec3 rot = target.subtract(p.getEyePosition()).normalize(); // slowly rotate towards target block smoothly
         system.cameraRotator.ready()
                 .addTicket(rot)
                 .lockCursor()
@@ -162,24 +162,24 @@ public class NextBlock extends Module implements Listener {
                 .openCurrentTicket();
     }
 
-    public Vec3d getNearestToPlayer(ClientPlayerEntity p) {
+    public Vec3 getNearestToPlayer(ClientPlayerEntity p) {
         World w = p.getEntityWorld();
         Box box = new Box(p.getBlockPos()).expand(5);
         AtomicDouble nearest = new AtomicDouble(10.0);
-        AtomicReference<Vec3d> target = new AtomicReference<>(null);
+        AtomicReference<Vec3> target = new AtomicReference<>(null);
         double max = p.getBlockInteractionRange();
 
         PlayerUtils.boxIterator(w, box, (pos, state) -> {
-            Vec3d posVec = pos.toCenterPos();
-            double dist = posVec.distanceTo(p.getEyePos());
+            Vec3 posVec = pos.getCenter();
+            double dist = posVec.distanceTo(p.getEyePosition());
 
             if (dist > max) {
                 return;
             }
 
             if (shouldRaytrace.getVal()) { // filter out blocks you cannot see
-                Vec3d dir = posVec.subtract(p.getEyePos()).normalize();
-                var hit = Raytracer.trace(w, p.getEyePos(), dir, dist, (blockPos, point) -> {
+                Vec3 dir = posVec.subtract(p.getEyePosition()).normalize();
+                var hit = Raytracer.trace(w, p.getEyePosition(), dir, dist, (blockPos, point) -> {
                     return w.getBlockState(blockPos).isFullCube(w, blockPos);
                 });
 
@@ -196,27 +196,27 @@ public class NextBlock extends Module implements Listener {
         return target.get();
     }
 
-    public Vec3d getNearestToTarget(BlockPos pos) {
-        Vec3d start = pos.toCenterPos();
+    public Vec3 getNearestToTarget(BlockPos pos) {
+        Vec3 start = pos.getCenter();
         ClientPlayerEntity p = PlayerUtils.player();
         World w = PlayerUtils.getWorld();
         Box box = new Box(pos).expand(5);
         AtomicDouble nearest = new AtomicDouble(10.0);
-        AtomicReference<Vec3d> target = new AtomicReference<>(null);
+        AtomicReference<Vec3> target = new AtomicReference<>(null);
         double max = PlayerUtils.player().getBlockInteractionRange();
 
         PlayerUtils.boxIterator(w, box, (blockPos, state) -> {
-            Vec3d posVec = blockPos.toCenterPos();
+            Vec3 posVec = blockPos.getCenter();
             double dist = posVec.distanceTo(start);
-            double reach = posVec.distanceTo(p.getEyePos());
+            double reach = posVec.distanceTo(p.getEyePosition());
 
             if (reach > max) {
                 return;
             }
 
             if (shouldRaytrace.getVal()) { // filter out blocks you cannot see
-                Vec3d dir = posVec.subtract(p.getEyePos()).normalize();
-                var hit = Raytracer.trace(w, p.getEyePos(), dir, dist, (block, point) -> {
+                Vec3 dir = posVec.subtract(p.getEyePosition()).normalize();
+                var hit = Raytracer.trace(w, p.getEyePosition(), dir, dist, (block, point) -> {
                     return w.getBlockState(blockPos).isFullCube(w, blockPos);
                 });
 

@@ -5,11 +5,11 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.client.commands.arguments.PlayerArgumentType;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.network.PlayerListEntry;
-import net.minecraft.command.CommandSource;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.multiplayer.PlayerInfo;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 
 public class RotateCommand extends Command {
 
@@ -18,7 +18,7 @@ public class RotateCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
         builder.then(literal("polar")
                         .then(argument("pitch", IntegerArgumentType.integer(-90, 90))
                                 .then(argument("yaw", IntegerArgumentType.integer(-360, 360))
@@ -34,12 +34,12 @@ public class RotateCommand extends Command {
                 .then(literal("towards")
                         .then(argument("player", PlayerArgumentType.create())
                                 .executes(context -> {
-                                    PlayerListEntry entry = context.getArgument("player", PlayerListEntry.class);
+                                    PlayerInfo entry = context.getArgument("player", PlayerInfo.class);
                                     String name = entry.getProfile().name();
-                                    ClientPlayerEntity p = PlayerUtils.player();
-                                    PlayerEntity target = null;
+                                    LocalPlayer p = PlayerUtils.player();
+                                    Player target = null;
 
-                                    for (PlayerEntity player : p.getEntityWorld().getPlayers()) {
+                                    for (Player player : p.level().players()) {
                                         if (player.getGameProfile().name().equalsIgnoreCase(name)) {
                                             target = player;
                                             break;
@@ -51,7 +51,7 @@ public class RotateCommand extends Command {
                                         return SINGLE_SUCCESS;
                                     }
 
-                                    Vec3d vec = target.getEntityPos().subtract(p.getEyePos()).normalize();
+                                    Vec3 vec = target.position().subtract(p.getEyePosition()).normalize();
                                     system.cameraRotator.ready()
                                             .addTicket(vec)
                                             .lockCursor()

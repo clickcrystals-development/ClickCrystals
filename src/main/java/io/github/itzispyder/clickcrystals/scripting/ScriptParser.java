@@ -6,20 +6,20 @@ import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.NbtUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RespawnAnchorBlock;
-import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RespawnAnchorBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -217,12 +217,12 @@ public class ScriptParser {
     // script predicates
 
     private static final Map<String, Predicate<BlockState>> defaultedBlockPredicates = new HashMap<>() {{
-        this.put("uncharged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) < 1);
-        this.put("charged_respawn_anchor", state -> state.isOf(Blocks.RESPAWN_ANCHOR) && state.get(RespawnAnchorBlock.CHARGES) > 0);
-        this.put("water_source", state -> state.isOf(Blocks.WATER) && state.getFluidState().getLevel() == 8);
-        this.put("lava_source", state -> state.isOf(Blocks.LAVA) && state.getFluidState().getLevel() == 8);
-        this.put("flowing_water", state -> state.isOf(Blocks.WATER) && state.getFluidState().getLevel() < 8);
-        this.put("flowing_lava", state -> state.isOf(Blocks.LAVA) && state.getFluidState().getLevel() < 8);
+        this.put("uncharged_respawn_anchor", state -> state.is(Blocks.RESPAWN_ANCHOR) && state.getValue(RespawnAnchorBlock.CHARGE) < 1);
+        this.put("charged_respawn_anchor", state -> state.is(Blocks.RESPAWN_ANCHOR) && state.getValue(RespawnAnchorBlock.CHARGE) > 0);
+        this.put("water_source", state -> state.is(Blocks.WATER) && state.getFluidState().getAmount() == 8);
+        this.put("lava_source", state -> state.is(Blocks.LAVA) && state.getFluidState().getAmount() == 8);
+        this.put("flowing_water", state -> state.is(Blocks.WATER) && state.getFluidState().getAmount() < 8);
+        this.put("flowing_lava", state -> state.is(Blocks.LAVA) && state.getFluidState().getAmount() < 8);
     }};
     private static final Map<String, Predicate<ItemStack>> defaultedItemPredicates = new HashMap<>() {{
         this.put("uncharged_crossbow", item -> item.getItem() == Items.CROSSBOW && !CrossbowItem.isCharged(item));
@@ -231,29 +231,29 @@ public class ScriptParser {
 
     public static ItemStack parseItemStack(String arg) {
         if ("mainhand".equals(arg)) {
-            return HotbarUtils.getHand(Hand.MAIN_HAND);
+            return HotbarUtils.getHand(InteractionHand.MAIN_HAND);
         }
         else if ("offhand".equals(arg)) {
-            return HotbarUtils.getHand(Hand.OFF_HAND);
+            return HotbarUtils.getHand(InteractionHand.OFF_HAND);
         }
         else if (arg.matches("^[:#].*$")) {
             int slot = HotbarUtils.searchSlot(parseItemPredicate(arg));
-            return InvUtils.inv().getStack(slot);
+            return InvUtils.inv().getItem(slot);
         }
         return null;
     }
 
-    public static ItemStack parseItemStack(PlayerEntity player, String arg) {
+    public static ItemStack parseItemStack(Player player, String arg) {
         if ("mainhand".equals(arg)) {
-            return player.getStackInHand(Hand.MAIN_HAND);
+            return player.getItemInHand(InteractionHand.MAIN_HAND);
         }
         else if ("offhand".equals(arg)) {
-            return player.getStackInHand(Hand.OFF_HAND);
+            return player.getItemInHand(InteractionHand.OFF_HAND);
         }
         else if (arg.matches("^[:#].*$")) {
             Predicate<ItemStack> test = parseItemPredicate(arg);
-            for (Hand hand : Hand.values()) {
-                ItemStack item = player.getStackInHand(hand);
+            for (InteractionHand InteractionHand : InteractionHand.values()) {
+                ItemStack item = player.getItemInHand(InteractionHand);
                 if (test.test(item))
                     return item;
             }
@@ -263,12 +263,12 @@ public class ScriptParser {
 
     public static Predicate<ItemStack> parseItemPredicate(String arg) {
         IdentifierSelection<ItemStack> selection = IdentifierSelection.parse(arg, ItemStack.class);
-        selection.setContainsStrategy(node -> item -> item.getItem().getTranslationKey().contains(node.name));
+        selection.setContainsStrategy(node -> item -> item.getItem().getDescriptionId().contains(node.name));
         selection.setEqualsStrategy(node -> {
             if (defaultedItemPredicates.containsKey(node.name))
                 return defaultedItemPredicates.get(node.name);
             else
-                return state -> state.getItem() == Registries.ITEM.get(Identifier.ofVanilla(node.name));
+                return state -> state.getItem() == BuiltInRegistries.ITEM.getValue(Identifier.parse(node.name));
         });
         selection.setNodeTagsStrategy(node -> item -> node.tags.stream().allMatch(tag -> NbtUtils.hasPotionOrEnchant(item, tag)));
         return selection.getIdentifierPredicate();
@@ -276,27 +276,27 @@ public class ScriptParser {
 
     public static Predicate<BlockState> parseBlockPredicate(String arg) {
         IdentifierSelection<BlockState> selection = IdentifierSelection.parse(arg, BlockState.class);
-        selection.setContainsStrategy(node -> state -> state.getBlock().getTranslationKey().contains(node.name));
+        selection.setContainsStrategy(node -> state -> state.getBlock().getDescriptionId().contains(node.name));
         selection.setEqualsStrategy(node -> {
             if (defaultedBlockPredicates.containsKey(node.name))
                 return defaultedBlockPredicates.get(node.name);
             else
-                return state -> state.getBlock() == Registries.BLOCK.get(Identifier.ofVanilla(node.name));
+                return state -> state.getBlock() == BuiltInRegistries.BLOCK.getValue(Identifier.parse(node.name));
         });
         return selection.getIdentifierPredicate();
     }
 
     public static Predicate<Entity> parseEntityPredicate(String arg) {
         IdentifierSelection<Entity> selection = IdentifierSelection.parse(arg, Entity.class);
-        selection.setContainsStrategy(node -> ent -> ent.getType().getTranslationKey().contains(node.name));
-        selection.setEqualsStrategy(node -> ent -> ent.getType() == Registries.ENTITY_TYPE.get(Identifier.ofVanilla(node.name)));
+        selection.setContainsStrategy(node -> ent -> ent.getType().getDescriptionId().contains(node.name));
+        selection.setEqualsStrategy(node -> ent -> ent.getType() == BuiltInRegistries.ENTITY_TYPE.getValue(Identifier.parse(node.name)));
         return selection.getIdentifierPredicate();
     }
 
     public static Predicate<SoundInstance> parseSoundInstancePredicate(String arg) {
         IdentifierSelection<SoundInstance> selection = IdentifierSelection.parse(arg, SoundInstance.class);
-        selection.setContainsStrategy(node -> sound -> sound.getId().toTranslationKey().replace('.', '_').contains(node.name));
-        selection.setEqualsStrategy(node -> sound -> sound.getId().equals(Identifier.ofVanilla(node.name)));
+        selection.setContainsStrategy(node -> sound -> sound.getIdentifier().toLanguageKey().replace('.', '_').contains(node.name));
+        selection.setEqualsStrategy(node -> sound -> sound.getIdentifier().equals(Identifier.parse(node.name)));
         return selection.getIdentifierPredicate();
     }
 
@@ -304,31 +304,31 @@ public class ScriptParser {
         for (IdentifierSelection.Node node : IdentifierSelection.parse(arg, SoundEvent.class)) switch (node.type) {
             case CONTAINS -> {
                 Identifier result = null;
-                for (Identifier id : Registries.SOUND_EVENT.getIds()) if (id.getPath().contains(node.name)) {
+                for (Identifier id : BuiltInRegistries.SOUND_EVENT.keySet()) if (id.getPath().contains(node.name)) {
                     result = id;
                     break;
                 }
-                return result == null ? null : Registries.SOUND_EVENT.get(result);
+                return result == null ? null : BuiltInRegistries.SOUND_EVENT.getValue(result);
             }
             case EQUALS -> {
-                return Registries.SOUND_EVENT.get(Identifier.ofVanilla(node.name));
+                return BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse(node.name));
             }
         }
         return null;
     }
 
-    public static StatusEffect parseStatusEffect(String arg) {
-        for (IdentifierSelection.Node node : IdentifierSelection.parse(arg, StatusEffect.class)) switch (node.type) {
+    public static MobEffect parseStatusEffect(String arg) {
+        for (IdentifierSelection.Node node : IdentifierSelection.parse(arg, MobEffect.class)) switch (node.type) {
             case CONTAINS -> {
                 Identifier result = null;
-                for (Identifier id : Registries.STATUS_EFFECT.getIds()) if (id.getPath().contains(node.name)) {
+                for (Identifier id : BuiltInRegistries.MOB_EFFECT.keySet()) if (id.getPath().contains(node.name)) {
                     result = id;
                     break;
                 }
-                return result == null ? null : Registries.STATUS_EFFECT.get(result);
+                return result == null ? null : BuiltInRegistries.MOB_EFFECT.getValue(result);
             }
             case EQUALS -> {
-                return Registries.STATUS_EFFECT.get(Identifier.ofVanilla(node.name));
+                return BuiltInRegistries.MOB_EFFECT.getValue(Identifier.parse(node.name));
             }
         }
         return null;

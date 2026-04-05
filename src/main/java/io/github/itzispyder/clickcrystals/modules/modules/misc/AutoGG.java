@@ -84,7 +84,7 @@ public class AutoGG extends Module implements Listener {
             ClientPlayerEntity p = PlayerUtils.player();
             Entity ent = packet.getEntity(p.getEntityWorld());
             int status = packet.getStatus();
-            boolean playerWithinRange = ent instanceof PlayerEntity player && player.getEntityPos().distanceTo(p.getEntityPos()) < distance.getVal() && player != p;
+            boolean playerWithinRange = ent instanceof PlayerEntity player && player.position().distanceTo(p.position()) < distance.getVal() && player != p;
 
             if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES && playerWithinRange) {
                 this.sendRandomMessage();

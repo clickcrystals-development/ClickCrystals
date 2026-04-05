@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.client.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
-import net.minecraft.command.CommandSource;
+import net.minecraft.commands.SharedSuggestionProvider;
 
 import java.util.stream.Collectors;
 
@@ -14,7 +14,7 @@ public class TableGenerator extends Command {
 
 
     @Override
-    public void build(LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
         builder.then(literal("modules")
                 .executes(context -> {
                     generateModulesTable();
@@ -50,7 +50,7 @@ public class TableGenerator extends Command {
                 %s
                 """.formatted(moduleChart, commandChart);
 
-        mc.keyboard.setClipboard(chart);
+        mc.keyboardHandler.setClipboard(chart);
 
         info("Modules and scripts chart has been copied to your clipboard!");
     }

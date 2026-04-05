@@ -1,12 +1,12 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec2f;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -43,7 +43,7 @@ public class VectorParser {
         this.z = argZ;
     }
 
-    public VectorParser(String arg1, String arg2, String arg3, Vec3d relativeTo) {
+    public VectorParser(String arg1, String arg2, String arg3, Vec3 relativeTo) {
         arg1 = toRelation.apply(arg1);
         arg2 = toRelation.apply(arg2);
         arg3 = toRelation.apply(arg3);
@@ -77,14 +77,14 @@ public class VectorParser {
     }
 
     public VectorParser(String arg1, String arg2, String arg3, Entity relativeTo) {
-        this(arg1, arg2, arg3, relativeTo.getEntityPos(), relativeTo.getRotationClient());
+        this(arg1, arg2, arg3, relativeTo.position(), relativeTo.getRotationVector());
     }
 
     public VectorParser(ScriptArgs.Arg arg1, ScriptArgs.Arg arg2, ScriptArgs.Arg arg3, Entity relativeTo) {
-        this(arg1.toString(), arg2.toString(), arg3.toString(), relativeTo.getEntityPos(), relativeTo.getRotationClient());
+        this(arg1.toString(), arg2.toString(), arg3.toString(), relativeTo.position(), relativeTo.getRotationVector());
     }
 
-    public VectorParser(String arg1, String arg2, String arg3, Vec3d relativePos, Vec2f relativeDir) {
+    public VectorParser(String arg1, String arg2, String arg3, Vec3 relativePos, Vec2 relativeDir) {
         arg1 = toRelation.apply(arg1);
         arg2 = toRelation.apply(arg2);
         arg3 = toRelation.apply(arg3);
@@ -105,7 +105,7 @@ public class VectorParser {
             argZ = Double.parseDouble(argNum3);
         }
 
-        Vec3d result = relativePos;
+        Vec3 result = relativePos;
 
         if (arg1.startsWith("~")) {
             result = result.add(argX, 0, 0);
@@ -137,23 +137,23 @@ public class VectorParser {
         this.z = isRelative.test(arg3) ? result.z : argZ;
     }
 
-    public static Vec3d distInFront(Vec3d start, Vec3d dir, double dist) {
+    public static Vec3 distInFront(Vec3 start, Vec3 dir, double dist) {
         return start.add(dir.x * dist, dir.y * dist, dir.z * dist);
     }
 
-    public static Vec3d distInFront(Vec3d start, float pitch, float yaw, double dist) {
-        return distInFront(start, Vec3d.fromPolar(pitch, yaw), dist);
+    public static Vec3 distInFront(Vec3 start, float pitch, float yaw, double dist) {
+        return distInFront(start, Vec3.directionFromRotation(pitch, yaw), dist);
     }
 
-    public Vec3d getVector() {
-        return new Vec3d(x, y, z);
+    public Vec3 getVector() {
+        return new Vec3(x, y, z);
     }
 
     public BlockPos getBlockPos() {
         return new BlockPos((int)x, (int)y, (int)z);
     }
 
-    public BlockState getBlock(World world) {
+    public BlockState getBlock(Level world) {
         return world.getBlockState(getBlockPos());
     }
 

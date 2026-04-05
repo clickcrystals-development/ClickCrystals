@@ -6,12 +6,12 @@ import io.github.itzispyder.clickcrystals.client.commands.arguments.CommandArgum
 import io.github.itzispyder.clickcrystals.client.commands.arguments.ModuleArgumentType;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
-import net.minecraft.command.CommandSource;
-import net.minecraft.text.ClickEvent;
-import net.minecraft.text.HoverEvent;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.MutableComponent;
 
 public class HelpCommand extends Command {
 
@@ -20,11 +20,11 @@ public class HelpCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
         builder.executes(context -> {
                     ChatUtils.sendPrefixMessage("§bCommands (§f" + system.commands().size() + "§b):");
                     
-                    MutableText commands = Text.literal("");
+                    MutableComponent commands = Component.literal("");
                     system.commands().values().forEach(command -> commands.append(getCommandText(command)));
                     ChatUtils.sendRawText(commands);
                     
@@ -46,21 +46,21 @@ public class HelpCommand extends Command {
                                 })));
     }
     
-    private MutableText getCommandText(Command command) {
-        MutableText tooltip = Text.literal("");
-        tooltip.append(Text.literal(command.getName()).formatted(Formatting.AQUA, Formatting.BOLD)).append("\n");
-        tooltip.append(Text.literal("," + command.getName()).formatted(Formatting.GRAY)).append("\n\n");
-        tooltip.append(Text.literal(command.getDescription()).formatted(Formatting.WHITE));
-        
-        MutableText text = Text.literal(command.getName());
+    private MutableComponent getCommandText(Command command) {
+        MutableComponent tooltip = Component.literal("");
+        tooltip.append(Component.literal(command.getName()).withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD)).append("\n");
+        tooltip.append(Component.literal("," + command.getName()).withStyle(ChatFormatting.GRAY)).append("\n\n");
+        tooltip.append(Component.literal(command.getDescription()).withStyle(ChatFormatting.WHITE));
+
+        MutableComponent text = Component.literal(command.getName());
         var commandsList = system.commands().values().stream().toList();
         if (!commandsList.getLast().equals(command))
-            text.append(Text.literal(", ").formatted(Formatting.GRAY));
+            text.append(Component.literal(", ").withStyle(ChatFormatting.GRAY));
         text.setStyle(text.getStyle()
             .withHoverEvent(new HoverEvent.ShowText(tooltip))
             .withClickEvent(new ClickEvent.SuggestCommand("," + command.getName()))
         );
-        
+
         return text;
     }
 }

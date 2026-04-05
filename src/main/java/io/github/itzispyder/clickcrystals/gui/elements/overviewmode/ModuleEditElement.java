@@ -50,7 +50,7 @@ public class ModuleEditElement extends GuiElement {
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (isHoverExit((int)mouseX, (int)mouseY) && mc.currentScreen instanceof OverviewScreen screen) {
+        if (isHoverExit((int)mouseX, (int)mouseY) && mc.screen instanceof OverviewScreen screen) {
             screen.removeCurrentEditing();
             return;
         }

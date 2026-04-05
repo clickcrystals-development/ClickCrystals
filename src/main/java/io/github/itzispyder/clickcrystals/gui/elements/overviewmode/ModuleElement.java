@@ -32,7 +32,7 @@ public class ModuleElement extends GuiElement {
         if (module.isEnabled()) {
             color = Shades.TRANS_GRAY;
         }
-        if (!blacklisted && isHovered(mouseX, mouseY) && hasParent() && mc.currentScreen instanceof GuiScreen screen && screen.hovered == getParent()) {
+        if (!blacklisted && isHovered(mouseX, mouseY) && hasParent() && mc.screen instanceof GuiScreen screen && screen.hovered == getParent()) {
             color = Shades.TRANS_LIGHT_GRAY;
         }
 
@@ -54,7 +54,7 @@ public class ModuleElement extends GuiElement {
         if (button == 0) {
             module.setEnabled(!module.isEnabled(), false);
         }
-        else if (button == 1 && mc.currentScreen instanceof OverviewScreen screen) {
+        else if (button == 1 && mc.screen instanceof OverviewScreen screen) {
             screen.setCurrentEditing(module, (int)mouseX, (int)mouseY);
         }
         super.mouseClicked(mouseX, mouseY, button);

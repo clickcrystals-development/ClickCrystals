@@ -56,7 +56,7 @@ public class Zoom extends Module implements Listener {
 
     @EventHandler
     private void onRelease(KeyPressEvent e) {
-        if (mc.currentScreen != null) return;
+        if (mc.screen != null) return;
         if (((KeybindSetting)keybind).getKey() == e.getKeycode()) {
             if (e.getAction().isDown()) {
                 zooming = true;
@@ -71,7 +71,7 @@ public class Zoom extends Module implements Listener {
 
     @EventHandler
     private void onScroll(MouseScrollEvent e) {
-        if (mc.currentScreen != null) return;
+        if (mc.screen != null) return;
         if (e.isVertical() && scrollToChange.getVal() && zooming) {
             modifier -= e.getDeltaYAsInt();
             e.cancel();

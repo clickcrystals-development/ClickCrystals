@@ -297,7 +297,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
             public boolean onKey(int key, int scancode) {
                 if (key != GLFW.GLFW_KEY_ENTER)
                     return super.onKey(key, scancode);
-                if (!(mc.currentScreen instanceof GuiScreen screen))
+                if (!(mc.screen instanceof GuiScreen screen))
                     return true;
                 if (getQuery().isEmpty()) {
                     screen.selected = null;
@@ -398,7 +398,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
         @Override
         public void onClick(double mouseX, double mouseY, int button) {
-            if (mc.currentScreen instanceof GuiScreen screen) {
+            if (mc.screen instanceof GuiScreen screen) {
                 textField.setDefaultText("§c*Enter module name*");
                 screen.selected = textField;
             }

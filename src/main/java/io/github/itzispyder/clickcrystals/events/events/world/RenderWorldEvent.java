@@ -8,7 +8,7 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 import org.joml.Matrix4f;
 
 public class RenderWorldEvent extends Event {
@@ -55,16 +55,16 @@ public class RenderWorldEvent extends Event {
         return PlayerUtils.player();
     }
 
-    public Vec3d getOffsetPos(Vec3d pos) {
+    public Vec3 getOffsetPos(Vec3 pos) {
         return pos.subtract(getCamera().getCameraPos());
     }
 
-    public Vec3d getOffsetPos(BlockPos pos) {
+    public Vec3 getOffsetPos(BlockPos pos) {
         var c = getCamera().getCameraPos();
         double x = pos.getX() - c.x;
         double y = pos.getY() - c.y;
         double z = pos.getZ() - c.z;
-        return new Vec3d(x, y, z);
+        return new Vec3(x, y, z);
     }
 
     public boolean valid() {

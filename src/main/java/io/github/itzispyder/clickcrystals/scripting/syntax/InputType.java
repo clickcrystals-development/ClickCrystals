@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.scripting.syntax;
 
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.gui.screens.ingame.HandledScreen;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.LongConsumer;
@@ -23,7 +23,7 @@ public enum InputType implements Global {
     LEFT(InteractionUtils::leftClick, null, Global.mc.mouse::wasLeftButtonClicked),
     RIGHT(InteractionUtils::rightClick, null, Global.mc.mouse::wasRightButtonClicked),
     MIDDLE(InteractionUtils::middleClick, null, Global.mc.mouse::wasMiddleButtonClicked),
-    INVENTORY(InteractionUtils::inputInventory, null, () -> Global.mc.currentScreen instanceof HandledScreen<?>),
+    INVENTORY(InteractionUtils::inputInventory, null, () -> Global.mc.screen instanceof HandledScreen<?>),
     MOUSE_WHEEL_UP(() -> InteractionUtils.mouseScroll(1), null, () -> false),
     MOUSE_WHEEL_DOWN(() -> InteractionUtils.mouseScroll(-1), null, () -> false),
     KEY(null, null, null);

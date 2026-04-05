@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorMouse;
 import io.github.itzispyder.clickcrystals.mixins.AccessorMinecraftClient;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.GuiCursor;
-import net.minecraft.client.gui.screen.ingame.InventoryScreen;
+import net.minecraft.client.gui.screens.ingame.InventoryScreen;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
@@ -106,7 +106,7 @@ public final class InteractionUtils implements Global {
             return;
         }
 
-        if (mc.currentScreen instanceof InventoryScreen inv) {
+        if (mc.screen instanceof InventoryScreen inv) {
             mc.execute(inv::close);
         }
         else {
@@ -168,7 +168,7 @@ public final class InteractionUtils implements Global {
     }
 
     public static void pressKey(int key, int scan) {
-        ((AccessorKeyboard) mc.keyboard).pressKey(key, scan);
+        ((AccessorKeyboard) mc.keyboard).clickCrystals$pressKey(key, scan);
     }
 
     public static void pressKeyExtendedName(String name) {

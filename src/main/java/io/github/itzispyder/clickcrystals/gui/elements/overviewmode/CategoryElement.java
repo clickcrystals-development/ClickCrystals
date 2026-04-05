@@ -51,7 +51,7 @@ public class CategoryElement extends GuiElement {
         super.mouseReleased(mouseX, mouseY, button);
         if (button == 0 && isHoverCollapsion((int)mouseX, (int)mouseY) && lastClickX == x && lastClickY == y) {
             setCollapsed(!isCollapsed());
-            if (mc.currentScreen instanceof OverviewScreen screen) {
+            if (mc.screen instanceof OverviewScreen screen) {
                 screen.bringForward(this);
             }
         }

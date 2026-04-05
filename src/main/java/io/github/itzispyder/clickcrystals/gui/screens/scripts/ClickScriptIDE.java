@@ -303,7 +303,7 @@ public class ClickScriptIDE extends DefaultBase {
                 writer.close();
                 ReloadCommand.reload();
                 // Refresh the scripts browsing screen if it's open
-                if (mc.currentScreen instanceof ScriptsBrowsingScreen) {
+                if (mc.screen instanceof ScriptsBrowsingScreen) {
                     mc.setScreen(new ScriptsBrowsingScreen());
                 }
             }

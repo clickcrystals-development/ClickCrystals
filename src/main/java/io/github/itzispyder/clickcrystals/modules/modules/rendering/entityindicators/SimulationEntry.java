@@ -6,17 +6,17 @@ import io.github.itzispyder.clickcrystals.util.misc.Voidable;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 
 public class SimulationEntry {
 
     private final Class<? extends Entity> entityClass;
-    private final Vec3d vecDifference;
+    private final Vec3 vecDifference;
     private final float yawDifference;
 
     public SimulationEntry(Entity entity, ClientPlayerEntity client) {
         this.entityClass = entity.getClass();
-        this.vecDifference = entity.getEntityPos().subtract(client.getEntityPos()).normalize();
+        this.vecDifference = entity.position().subtract(client.position()).normalize();
 
         float[] rot = MathUtils.toPolar(vecDifference.x, vecDifference.y, vecDifference.z);
         this.yawDifference = rot[1] - client.getYaw();
@@ -30,7 +30,7 @@ public class SimulationEntry {
         return Voidable.of(MobHeadBrush.getIdentifier(entityClass));
     }
 
-    public Vec3d getVecDifference() {
+    public Vec3 getVecDifference() {
         return vecDifference;
     }
 

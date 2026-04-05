@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.Global;
-import net.minecraft.client.gui.screen.SplashTextRenderer;
+import net.minecraft.client.gui.screens.SplashTextRenderer;
 import net.minecraft.client.resource.SplashTextResourceSupplier;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;

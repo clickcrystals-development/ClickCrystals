@@ -2,11 +2,11 @@ package io.github.itzispyder.clickcrystals;
 
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.client.system.Version;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public interface Global {
 
-    MinecraftClient mc = MinecraftClient.getInstance();
+    Minecraft mc = Minecraft.getInstance();
     ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
 
     String prefix = "[ClickCrystals] ";

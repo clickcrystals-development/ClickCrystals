@@ -8,10 +8,10 @@ import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PolarParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Predicate;
 
@@ -42,26 +42,26 @@ public class TurnToCmd extends ScriptCommand {
         }
 
         // ex.      turn_to nearest_entity :creeper then say Yo
-        Vec3d eyes = PlayerUtils.player().getEyePos();
+        Vec3 eyes = PlayerUtils.player().getEyePosition();
         var read = args.getReader();
 
         switch (read.next(TargetType.class)) {
             case NEAREST_BLOCK -> {
                 Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(read.nextStr());
-                PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> turn(pos.toCenterPos(), eyes, args));
+                PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> turn(pos.getCenter(), eyes, args));
             }
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(read.nextStr());
                 PlayerUtils.runOnNearestEntity(128, filter, entity -> {
-                    if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate((PlayerEntity) entity))
-                        turn(entity.getEntityPos(), eyes, args);
+                    if (!(entity instanceof Player) || !EntityUtils.isTeammate((Player) entity))
+                        turn(entity.position(), eyes, args);
                 });
             }
 
-            case ANY_BLOCK -> PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> turn(pos.toCenterPos(), eyes, args));
+            case ANY_BLOCK -> PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> turn(pos.getCenter(), eyes, args));
             case ANY_ENTITY -> PlayerUtils.runOnNearestEntity(128, Entity::isAlive, entity -> {
-                if (!(entity instanceof PlayerEntity) || !EntityUtils.isTeammate(((PlayerEntity) entity)))
-                    turn(entity.getEntityPos(), eyes, args);
+                if (!(entity instanceof Player) || !EntityUtils.isTeammate(((Player) entity)))
+                    turn(entity.position(), eyes, args);
             });
 
             case POSITION -> {
@@ -86,7 +86,7 @@ public class TurnToCmd extends ScriptCommand {
         }
     }
 
-    private void turn(Vec3d dest, Vec3d camPos, ScriptArgs args) {
+    private void turn(Vec3 dest, Vec3 camPos, ScriptArgs args) {
         if (system.cameraRotator.isRunningTicket())
             return;
 

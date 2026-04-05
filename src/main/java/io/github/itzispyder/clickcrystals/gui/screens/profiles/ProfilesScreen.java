@@ -123,7 +123,7 @@ public class ProfilesScreen extends DefaultBase {
             public boolean onKey(int key, int scancode) {
                 if (key != GLFW.GLFW_KEY_ENTER)
                     return super.onKey(key, scancode);
-                if (!(mc.currentScreen instanceof GuiScreen screen))
+                if (!(mc.screen instanceof GuiScreen screen))
                     return true;
 
                 if (getQuery().isEmpty()) {
@@ -162,7 +162,7 @@ public class ProfilesScreen extends DefaultBase {
 
         @Override
         public void mouseClicked(double mouseX, double mouseY, int button) {
-            if (mc.currentScreen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
+            if (mc.screen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
                 textField.setDefaultText("§c*Enter profile name*");
                 screen.selected = textField;
             }

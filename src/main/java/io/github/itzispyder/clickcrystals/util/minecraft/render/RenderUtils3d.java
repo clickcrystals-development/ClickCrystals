@@ -9,7 +9,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 import org.joml.Matrix4f;
 
 import static io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils.drawBuffer;
@@ -33,14 +33,14 @@ public class RenderUtils3d {
         int colorFull = (0xFF << 24) | (0x00FFFFFF & color);
 
         double half = width * 0.5;
-        Vec3d from = new Vec3d(x1, y1, z1);
-        Vec3d to = new Vec3d(x2, y2, z2);
-        Vec3d dir = from.subtract(to).normalize();
+        Vec3 from = new Vec3(x1, y1, z1);
+        Vec3 to = new Vec3(x2, y2, z2);
+        Vec3 dir = from.subtract(to).normalize();
 
-        Vec3d v1 = MathUtils.forward(from, MathUtils.rotate(dir, from, 0, -90F), half);
-        Vec3d v2 = MathUtils.forward(to, MathUtils.rotate(dir, to, 0, -90F), half);
-        Vec3d v3 = MathUtils.forward(to, MathUtils.rotate(dir, to, 0, 90F), half);
-        Vec3d v4 = MathUtils.forward(from, MathUtils.rotate(dir, from, 0, 90F), half);
+        Vec3 v1 = MathUtils.forward(from, MathUtils.rotate(dir, from, 0, -90F), half);
+        Vec3 v2 = MathUtils.forward(to, MathUtils.rotate(dir, to, 0, -90F), half);
+        Vec3 v3 = MathUtils.forward(to, MathUtils.rotate(dir, to, 0, 90F), half);
+        Vec3 v4 = MathUtils.forward(from, MathUtils.rotate(dir, from, 0, 90F), half);
 
         // rect
         BufferBuilder buf = getBuffer(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
@@ -208,7 +208,7 @@ public class RenderUtils3d {
         drawBuffer(buf, ClickCrystalsRenderLayers.LINES);
     }
 
-    public static void renderBlock(MatrixStack matrices, Vec3d block, int color) {
+    public static void renderBlock(MatrixStack matrices, Vec3 block, int color) {
         var c = new Color(color);
         fillCube(matrices, block.getX(), block.getY(), block.getZ(), c.getHex());
         drawCube(matrices, block.getX(), block.getY(), block.getZ(), c.getHexOpaque());
