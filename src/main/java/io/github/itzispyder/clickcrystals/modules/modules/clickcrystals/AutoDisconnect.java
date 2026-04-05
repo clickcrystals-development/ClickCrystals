@@ -7,17 +7,17 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RespawnAnchorBlock;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.decoration.EndCrystalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.packet.s2c.common.DisconnectS2CPacket;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.DisconnectionDetails;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RespawnAnchorBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,8 +88,8 @@ public class AutoDisconnect extends ListenerModule {
     }
 
     private void disconnectPlayer(String reason) {
-        Text text = Text.literal("§3Auto-Disconnect was triggered§r\n\n§c" + reason);
-        PlayerUtils.player().networkHandler.onDisconnect(new DisconnectS2CPacket(text));
+        Component text = Component.literal("§3Auto-Disconnect was triggered§r\n\n§c" + reason);
+        PlayerUtils.player().connection.onDisconnect(new DisconnectionDetails(text));
         setAutoDisable();
     }
 
@@ -104,13 +104,13 @@ public class AutoDisconnect extends ListenerModule {
         if (PlayerUtils.invalid())
             return;
 
-        ClientPlayerEntity p = PlayerUtils.player();
-        World w = PlayerUtils.getWorld();
+        LocalPlayer p = PlayerUtils.player();
+        Level w = PlayerUtils.getWorld();
         double maxRange = range.getVal();
         List<Integer> rangeList = getRangeList(maxRange);
 
         if (isEnabled()) {
-            if (!PlayerUtils.player().isDead() && PlayerUtils.player().getHealth() <= hp.getVal() && hp.getVal() != 0) {
+            if (!PlayerUtils.player().isDeadOrDying() && PlayerUtils.player().getHealth() <= hp.getVal() && hp.getVal() != 0) {
                 disconnectPlayer("Player health is below " + hp.getVal());
                 return;
             }
@@ -121,8 +121,8 @@ public class AutoDisconnect extends ListenerModule {
                 BlockPos anchorPos = PlayerUtils.getNearestBlock(r, state -> {
                     if (state.getBlock() == Blocks.RESPAWN_ANCHOR) {
                         if (glowstone.getVal()) {
-                            BlockState blockState = state.getBlock().getStateWithProperties(state);
-                            int charges = blockState.get(RespawnAnchorBlock.CHARGES);
+                            BlockState blockState = state.getBlock().withPropertiesOf(state);
+                            int charges = blockState.getValue(RespawnAnchorBlock.CHARGE);
                             return charges > 0;
                         } else {
                             return true;
@@ -139,7 +139,7 @@ public class AutoDisconnect extends ListenerModule {
 
         if (crystals.getVal()) {
             for (Integer r : rangeList) {
-                Entity crystal = PlayerUtils.getNearestEntity(r, entity -> entity instanceof EndCrystalEntity);
+                Entity crystal = PlayerUtils.getNearestEntity(r, entity -> entity instanceof EndCrystal);
                 if (crystal != null) {
                     disconnectPlayer("End Crystal is in range");
                     return;
@@ -147,8 +147,8 @@ public class AutoDisconnect extends ListenerModule {
             }
         }
         if (newPlayers.getVal()) {
-            for (PlayerEntity player : w.getPlayers()) {
-                if (player != p && p.squaredDistanceTo(player) <= mc.options.getViewDistance().getValue() * 16 * mc.options.getViewDistance().getValue() * 16) {
+            for (Player player : w.players()) {
+                if (player != p && p.distanceToSqr(player) <= mc.options.renderDistance().get() * 16 * mc.options.renderDistance().get() * 16) {
                     disconnectPlayer("New player detected within render distance");
                 }
                 return;

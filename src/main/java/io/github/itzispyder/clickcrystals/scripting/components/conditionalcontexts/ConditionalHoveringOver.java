@@ -8,10 +8,8 @@ import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluati
 import io.github.itzispyder.clickcrystals.scripting.components.Conditional;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.gui.screens.ingame.HandledScreen;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.item.ItemStack;
 
 import java.awt.*;
 import java.util.function.Predicate;
@@ -20,7 +18,7 @@ public class ConditionalHoveringOver implements Conditional, Global {
 
     @Override
     public ConditionEvaluationResult evaluate(ConditionEvaluationContext ctx) {
-        ClientPlayerEntity p = PlayerUtils.player();
+        LocalPlayer p = PlayerUtils.player();
         Predicate<ItemStack> item = ScriptParser.parseItemPredicate(ctx.get(0).toString());
         if (p == null || p.currentScreenHandler == null || !(mc.screen instanceof HandledScreen<?> handle))
             return ctx.end(false);

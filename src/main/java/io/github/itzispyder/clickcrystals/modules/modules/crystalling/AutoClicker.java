@@ -11,9 +11,9 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.Vec3;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Arrays;
 
@@ -179,7 +179,7 @@ public class AutoClicker extends ListenerModule {
         }
         else if (leftToggle) {
             leftToggle = false;
-            mc.options.attackKey.setPressed(false);
+            mc.options.keyAttack.setDown(false);
         }
 
         if (right.getVal()) {
@@ -188,16 +188,16 @@ public class AutoClicker extends ListenerModule {
         }
         else if (rightToggle) {
             rightToggle = false;
-            mc.options.useKey.setPressed(false);
+            mc.options.keyUse.setDown(false);
         }
     }
 
     private void clickLeft() {
         if (!leftSpam.getVal()) {
-            mc.options.attackKey.setPressed(true);
+            mc.options.keyAttack.setDown(true);
             return;
         }
-        if (leftOnlyHold.getVal() && !mc.options.attackKey.isPressed())
+        if (leftOnlyHold.getVal() && !mc.options.keyAttack.isDown())
             return;
 
         for (int i = 0; i < noiseMapLeft[tickLeft]; i++)
@@ -214,10 +214,10 @@ public class AutoClicker extends ListenerModule {
 
     private void clickRight() {
         if (!rightSpam.getVal()) {
-            mc.options.useKey.setPressed(true);
+            mc.options.keyUse.setDown(true);
             return;
         }
-        if (rightOnlyHold.getVal() && !mc.options.useKey.isPressed())
+        if (rightOnlyHold.getVal() && !mc.options.keyUse.isDown())
             return;
 
         for (int i = 0; i < noiseMapRight[tickRight]; i++)
@@ -244,7 +244,7 @@ public class AutoClicker extends ListenerModule {
         prevHp = p.getHealth();
         prevPos = p.position();
 
-        if (mc.crosshairTarget instanceof EntityHitResult hit) {
+        if (mc.hitResult instanceof EntityHitResult hit) {
             noTarget = false;
             isBaby = hit.getEntity() instanceof LivingEntity liv && liv.isBaby();
         }
@@ -253,7 +253,7 @@ public class AutoClicker extends ListenerModule {
             return false;
         if (noBabies.getVal() && isBaby)
             return false;
-        if (maxAttackCooldown.getVal() > 0 && p.getAttackCooldownProgress(1.0F) < maxAttackCooldown.getVal())
+        if (maxAttackCooldown.getVal() > 0 && p.getCurrentItemAttackStrengthDelay() < maxAttackCooldown.getVal())
             return false;
         if (stopWhenDamage.getVal() && p.getHealth() < hp) {
             if (left.getVal() || right.getVal()) {

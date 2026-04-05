@@ -2,8 +2,8 @@ package io.github.itzispyder.clickcrystals.events.events.client;
 
 import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.events.Event;
-import net.minecraft.particle.ParticleType;
-import net.minecraft.util.math.Vec3;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.world.phys.Vec3;
 
 public class ParticleReceiveEvent extends Event implements Cancellable {
 

@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.scripting.components.Conditionals;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 
 import java.util.concurrent.atomic.AtomicReference;
 

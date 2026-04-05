@@ -15,6 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3;
+import net.minecraft.world.entity.Entity;
 
 import java.util.function.Predicate;
 
@@ -23,7 +24,7 @@ import java.util.function.Predicate;
 // @Format damage position <x> <y> <z>
 public class DamageCmd extends ScriptCommand implements ThenChainable {
 
-    public static final Predicate<Entity> ENTITY_EXISTS = ent -> ent instanceof LivingEntity && ent.isAlive();
+    public static final Predicate<net.minecraft.world.entity.Entity> ENTITY_EXISTS = ent -> ent instanceof LivingEntity && ent.isAlive();
   
     public DamageCmd() {
         super("damage");

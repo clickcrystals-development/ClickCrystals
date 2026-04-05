@@ -4,16 +4,16 @@ import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -69,9 +69,9 @@ public class PixelArtGenerator {
     }
 
     public synchronized CompletableFuture<Void> generateAt(LivingEntity ent) {
-        World world = ent.getEntityWorld();
-        BlockPos pos = ent.getBlockPos();
-        Facing facing = Facing.fromDirection(ent.getMovementDirection());
+        Level world = ent.level();
+        BlockPos pos = ent.getOnPos();
+        Facing facing = Facing.fromDirection(ent.getMotionDirection());
 
         running.set(true);
         return CompletableFuture.runAsync(() -> {
@@ -82,7 +82,7 @@ public class PixelArtGenerator {
         });
     }
 
-    private synchronized void genRow(int y, World world, BlockPos pos, Facing facing) {
+    private synchronized void genRow(int y, Level world, BlockPos pos, Facing facing) {
         Block prev = null;
         BlockPos c1 = pos;
         BlockPos c2 = c1;
@@ -101,7 +101,7 @@ public class PixelArtGenerator {
             }
             else {
                 if (c1.getY() != c2.getY()) {
-                    c1 = c1.withY(c2.getY());
+                    c1 = c1.atY(c2.getY());
                 }
 
                 String key = keyOf(prev);
@@ -130,7 +130,7 @@ public class PixelArtGenerator {
     }
 
     private String keyOf(Block block) {
-        String[] ks = block.getTranslationKey().split("\\.");
+        String[] ks = block.getDescriptionId().split("\\.");
         return ks[ks.length - 1];
     }
 
@@ -189,7 +189,7 @@ public class PixelArtGenerator {
                 "command"
         );
 
-        public synchronized Block getBlock(BlockView view, BlockPos pos, Facing facing) {
+        public synchronized Block getBlock(LevelAccessor view, BlockPos pos, Facing facing) {
             Block mostSimilar = Blocks.AIR;
             double similarity = 999999999.0;
             int x = facing == Facing.NORTH_SOUTH ? pos.getX() + this.x : pos.getX();
@@ -197,9 +197,9 @@ public class PixelArtGenerator {
             int z = facing == Facing.EAST_WEST ? pos.getZ() + this.x : pos.getZ();
             pos = new BlockPos(x, y, z);
 
-            for (Block b : Registries.BLOCK) {
+            for (Block b : BuiltInRegistries.BLOCK) {
                 if (!isValid(b, view, pos)) continue;
-                double sim = ColorComparator.compare(color, b.getDefaultMapColor().color);
+                double sim = ColorComparator.compare(color, b.defaultMapColor().col);
                 if (sim < similarity) {
                     mostSimilar = b;
                     similarity = sim;
@@ -209,11 +209,11 @@ public class PixelArtGenerator {
             return mostSimilar;
         }
 
-        private boolean isValid(Block b, BlockView v, BlockPos p) {
-            BlockState state = b.getDefaultState();
-            boolean full = !state.isTransparent() && state.isFullCube(v, p);
+        private boolean isValid(Block b, LevelAccessor v, BlockPos p) {
+            BlockState state = b.defaultBlockState();
+            boolean full = !state.canOcclude() && state.isCollisionShapeFullBlock(v, p);
             boolean type = !BLACKLIST.contains(b);
-            boolean keys = BLACKLIST_KEYS.stream().noneMatch(b.getTranslationKey()::contains);
+            boolean keys = BLACKLIST_KEYS.stream().noneMatch(b.getDescriptionId()::contains);
             return full && type && keys;
         }
 
@@ -241,7 +241,7 @@ public class PixelArtGenerator {
     }
 
     public static synchronized void generateImage(String stringUrl, long delay, Consumer<ImageEditor> edits) {
-        ClientPlayerEntity p = PlayerUtils.player();
+        LocalPlayer p = PlayerUtils.player();
 
         if (!p.isCreative()) {
             Command.error("Please refrain from using this in any gamemode other than creative!");
@@ -269,7 +269,7 @@ public class PixelArtGenerator {
 
         PixelArtGenerator gen = new PixelArtGenerator(e, delay);
         Timer timer = Timer.start();
-        Command.info("&bGenerating &7" + a + "&b blocks &7(" + w + " x " + h + ")&b at position &7[" + p.getBlockPos().toShortString() + "]");
+        Command.info("&bGenerating &7" + a + "&b blocks &7(" + w + " x " + h + ")&b at position &7[" + p.getOnPos().toShortString() + "]");
         CompletableFuture<Void> future = gen.generateAt(p);
 
         future.thenRun(() -> {
