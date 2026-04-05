@@ -35,7 +35,7 @@ public class MixinSplashTextResourceSupplier implements Global {
         if (custom.isEmpty())
             return;
 
-        Text text = Text.literal(system.random.getRandomElement(custom));
+        Text text = Text.literal(ChatColor.YELLOW + system.random.getRandomElement(custom));
         SplashTextRenderer renderer = new SplashTextRenderer(text);
         cir.setReturnValue(renderer);
     }
