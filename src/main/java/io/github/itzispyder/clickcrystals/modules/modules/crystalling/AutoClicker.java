@@ -13,7 +13,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 
 import java.util.Arrays;
 
@@ -137,7 +137,7 @@ public class AutoClicker extends ListenerModule {
     );
 
     private boolean leftToggle, rightToggle;
-    private Vec3d prevPos;
+    private Vec3 prevPos;
     private float prevHp;
     private int tickLeft, tickRight;
     private final int[] noiseMapLeft = new int[20];
@@ -240,9 +240,9 @@ public class AutoClicker extends ListenerModule {
         boolean noTarget = true;
         boolean isBaby = false;
         float hp = prevHp;
-        Vec3d pos = prevPos;
+        Vec3 pos = prevPos;
         prevHp = p.getHealth();
-        prevPos = p.getEntityPos();
+        prevPos = p.position();
 
         if (mc.crosshairTarget instanceof EntityHitResult hit) {
             noTarget = false;
@@ -263,7 +263,7 @@ public class AutoClicker extends ListenerModule {
             }
             return false;
         }
-        if (stopWhenMove.getVal() && p.getEntityPos().distanceTo(pos) > 0.1) {
+        if (stopWhenMove.getVal() && p.position().distanceTo(pos) > 0.1) {
             if (left.getVal() || right.getVal()) {
                 left.setVal(false);
                 right.setVal(false);

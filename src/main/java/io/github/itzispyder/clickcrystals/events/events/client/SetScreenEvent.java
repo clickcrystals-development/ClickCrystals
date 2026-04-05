@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.events.events.client;
 
 import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.events.Event;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 
 public class SetScreenEvent extends Event implements Cancellable {
 
@@ -10,7 +10,7 @@ public class SetScreenEvent extends Event implements Cancellable {
     private boolean cancelled;
 
     public SetScreenEvent(Screen screen) {
-        this.previousScreen = mc.currentScreen;
+        this.previousScreen = mc.screen;
         this.screen = screen;
         this.cancelled = false;
     }

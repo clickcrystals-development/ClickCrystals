@@ -24,9 +24,9 @@ import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.ManualMap;
-import net.minecraft.client.gui.screen.GameMenuScreen;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.gui.screens.PauseScreen;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -99,7 +99,7 @@ public class UserInputListener implements Listener {
     }
 
     public static void scheduleOpenScreen(GuiScreen screen) {
-        if (screen instanceof AnimatedBase base && mc.currentScreen == null) {
+        if (screen instanceof AnimatedBase base && mc.screen == null) {
             boolean bl = PlayerUtils.valid();
             base.setPlayOpenAnimation(bl);
             base.setPlayCloseAnimation(bl);
@@ -147,7 +147,7 @@ public class UserInputListener implements Listener {
     }
 
     private void handleConfigSave(SetScreenEvent e) {
-        if (e.getScreen() instanceof GameMenuScreen) {
+        if (e.getScreen() instanceof PauseScreen) {
             system.println("<- saving data...");
             config.saveKeybinds();
             config.saveHuds();

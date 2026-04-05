@@ -369,8 +369,8 @@ public class Conditionals implements Global {
         });
         IN_GAME = register("in_game", ctx -> ctx.end(PlayerUtils.valid()));
         IN_SINGLEPLAYER = register("in_singleplayer", ctx -> ctx.end(mc.isInSingleplayer()));
-        PLAYING = register("playing", ctx -> ctx.end(PlayerUtils.valid() && mc.currentScreen == null));
-        IN_SCREEN = register("in_screen", ctx -> ctx.end(PlayerUtils.valid() && mc.currentScreen != null));
+        PLAYING = register("playing", ctx -> ctx.end(PlayerUtils.valid() && mc.screen == null));
+        IN_SCREEN = register("in_screen", ctx -> ctx.end(PlayerUtils.valid() && mc.screen != null));
         CHANCE_OF = register("chance_of", ctx -> ctx.end(Math.random() * 100 < ctx.get(0).toDouble()));
         COLLIDING = register("colliding", ctx -> ctx.end(true, EntityUtils.isColliding(ctx.entity)));
         COLLIDING_HORIZONTALLY = register("colliding_horizontally", ctx -> ctx.end(true, EntityUtils.isCollidingHorizontally(ctx.entity)));

@@ -86,8 +86,8 @@ public class ClickCrystalsSystem implements Serializable {
     }
 
     public void closeCurrentScreen() {
-        if (mc.currentScreen != null)
-            mc.currentScreen.close();
+        if (mc.screen != null)
+            mc.screen.close();
     }
 
     public void addCommand(Command command) {

@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.SplashOverlay;
+import net.minecraft.client.gui.screens.SplashOverlay;
 import net.minecraft.util.math.MathHelper;
 import org.joml.Matrix3x2fStack;
 import org.spongepowered.asm.mixin.Mixin;

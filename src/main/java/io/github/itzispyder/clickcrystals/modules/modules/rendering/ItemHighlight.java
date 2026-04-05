@@ -16,7 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Rarity;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class ItemHighlight extends ListenerModule {
 
         for (ItemEntity itemEntity : getItemEntities()) {
             ItemStack item = itemEntity.getStack();
-            Vec3d pos = e.getOffsetPos(MathUtils.lerpEntityPosVec(itemEntity, tickDelta));
+            Vec3 pos = e.getOffsetPos(MathUtils.lerpEntityPosVec(itemEntity, tickDelta));
             Rarity rarity = item.getRarity();
 
             if (rarity.ordinal() < rarityFilter.getVal().ordinal())

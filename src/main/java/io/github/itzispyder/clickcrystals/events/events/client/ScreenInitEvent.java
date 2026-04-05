@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.events.events.client;
 
 import io.github.itzispyder.clickcrystals.events.Event;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 
 public class ScreenInitEvent extends Event {
 

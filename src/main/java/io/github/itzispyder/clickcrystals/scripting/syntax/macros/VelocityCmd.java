@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 
 // @Format velocity <x> <y> <z>
 public class VelocityCmd extends ScriptCommand {
@@ -22,7 +22,7 @@ public class VelocityCmd extends ScriptCommand {
                 PlayerUtils.player().getVelocity(),
                 PlayerUtils.player().getRotationClient()
         );
-        Vec3d dest = parser.getVector();
+        Vec3 dest = parser.getVector();
         PlayerUtils.player().setVelocity(dest);
 
         if (args.match(3, "then")) {

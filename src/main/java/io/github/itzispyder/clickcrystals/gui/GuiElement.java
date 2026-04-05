@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorde
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,43 +37,40 @@ public abstract class GuiElement implements Positionable, Global {
         this.isContainer = false;
     }
 
-    public void render(DrawContext context, int mouseX, int mouseY) {
+    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         boolean bl = canRender();
         if (bl) {
-            onRender(context, mouseX, mouseY);
+            onRender(graphics, mouseX, mouseY);
         }
 
         for (GuiElement child : this.children) {
-            child.render(context, mouseX, mouseY);
+            child.render(graphics, mouseX, mouseY);
         }
 
         Module guiBorders = Module.get(GuiBorders.class);
         if (guiBorders.isEnabled()) {
-            RenderUtils.drawRect(context, x, y, width, height, 0xFFFFFFFF);
+            RenderUtils.drawRect(graphics, x, y, width, height, 0xFFFFFFFF);
         }
 
         if (bl) {
-            postRender(context, mouseX, mouseY);
+            postRender(graphics, mouseX, mouseY);
         }
     }
 
-    /**
-     * Should always call hasTooltip() before calling this method
-     */
-    public void renderTooltip(DrawContext context, int x, int y) {
+    public void renderTooltip(GuiGraphicsExtractor graphics, int x, int y) {
         List<String> lines = TextUtils.wordWrap(getTooltip(), 150 - 6 - 6, 0.7F);
         int height = lines.size() * 8;
         int caret = y + 2;
         int margin = x + 6;
 
-        RenderUtils.fillRect(context, x, y, 150, height + 2, 0xD0000000);
+        RenderUtils.fillRect(graphics, x, y, 150, height + 2, 0xD0000000);
         for (String line : lines) {
-            RenderUtils.drawText(context, "§7" + line, margin, caret, 0.7F, false);
+            RenderUtils.drawText(graphics, "§7" + line, margin, caret, 0.7F, false);
             caret += 8;
         }
     }
 
-    public abstract void onRender(DrawContext context, int mouseX, int mouseY);
+    public abstract void onRender(GuiGraphicsExtractor graphics, int mouseX, int mouseY);
 
     public void onClick(double mouseX, double mouseY, int button) {
 
@@ -83,7 +80,7 @@ public abstract class GuiElement implements Positionable, Global {
 
     }
 
-    public void postRender(DrawContext context, int mouseX, int mouseY) {
+    public void postRender(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
 
     }
 
@@ -263,7 +260,6 @@ public abstract class GuiElement implements Positionable, Global {
         return tooltip != null;
     }
 
-    // default null
     public void setTooltip(String tooltip) {
         this.tooltip = tooltip;
     }
@@ -272,7 +268,6 @@ public abstract class GuiElement implements Positionable, Global {
         return tooltipDelay;
     }
 
-    // default 500 ms
     public void setTooltipDelay(long delayMillis) {
         this.tooltipDelay = delayMillis;
     }

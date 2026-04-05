@@ -14,7 +14,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 
 import java.util.function.BooleanSupplier;
 

@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.events.events.networking;
 
 import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.events.Event;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.network.protocol.Packet;
 
 public class PacketSendEvent extends Event implements Cancellable {
 

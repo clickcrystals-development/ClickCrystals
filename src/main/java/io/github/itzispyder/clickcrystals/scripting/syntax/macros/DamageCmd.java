@@ -14,7 +14,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 
 import java.util.function.Predicate;
 
@@ -60,7 +60,7 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
             case NEAREST_BLOCK -> {
                 Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(read.nextStr());
                 PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> {
-                    Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
+                    Vec3 vector = PlayerUtils.getEyes().subtract(pos.getCenter());
                     Direction face = Direction.getFacing(vector);
                     mc.interactionManager.attackBlock(pos, face);
                 });
@@ -68,7 +68,7 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
             }
             case ANY_BLOCK -> {
                 PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> {
-                    Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
+                    Vec3 vector = PlayerUtils.getEyes().subtract(pos.getCenter());
                     Direction face = Direction.getFacing(vector);
                     mc.interactionManager.attackBlock(pos, face);
                 });
@@ -82,7 +82,7 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
                         PlayerUtils.player()
                 );
                 BlockPos pos = BlockPos.ofFloored(parser.getVector());
-                Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
+                Vec3 vector = PlayerUtils.getEyes().subtract(pos.getCenter());
                 Direction face = Direction.getFacing(vector);
                 mc.interactionManager.attackBlock(pos, face);
                 read.executeThenChain();

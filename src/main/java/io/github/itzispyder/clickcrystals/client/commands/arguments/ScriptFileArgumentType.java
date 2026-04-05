@@ -9,8 +9,8 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.scripting.ClickScript;
-import net.minecraft.command.CommandSource;
-import net.minecraft.text.Text;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.Component;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ScriptFileArgumentType implements Global, ArgumentType<String> {
 
-    public static final DynamicCommandExceptionType fileNotFound = new DynamicCommandExceptionType(name -> Text.literal("File not found: " + name));
+    public static final DynamicCommandExceptionType fileNotFound = new DynamicCommandExceptionType(name -> Component.literal("File not found: " + name));
 
     public static ScriptFileArgumentType create() {
         return new ScriptFileArgumentType();
@@ -40,7 +40,7 @@ public class ScriptFileArgumentType implements Global, ArgumentType<String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        return CommandSource.suggestMatching(getPaths(), builder);
+        return SharedSuggestionProvider.suggest(getPaths(), builder);
     }
 
     public List<String> getPaths() {

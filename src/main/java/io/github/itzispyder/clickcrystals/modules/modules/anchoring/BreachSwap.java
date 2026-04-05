@@ -59,7 +59,7 @@ public class BreachSwap extends ListenerModule {
 
     @EventHandler
     private void onAttack(PlayerAttackEntityEvent e) {
-        if (mc.currentScreen != null) return;
+        if (mc.screen != null) return;
         performBreachSwap();
     }
 

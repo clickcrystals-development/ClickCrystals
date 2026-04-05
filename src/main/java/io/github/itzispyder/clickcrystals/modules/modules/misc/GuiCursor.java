@@ -12,7 +12,7 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
-import net.minecraft.client.gui.screen.ingame.InventoryScreen;
+import net.minecraft.client.gui.screens.ingame.InventoryScreen;
 import net.minecraft.client.util.Window;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -120,7 +120,7 @@ public class GuiCursor extends Module implements Listener {
     private void onClick(PacketSendEvent e) {
         if (e.getPacket() instanceof ClickSlotC2SPacket packet) {
             ItemStack stack = InvUtils.inv().getStack(packet.slot());
-            boolean clickedTotem = mc.currentScreen instanceof InventoryScreen && stack.isOf(Items.TOTEM_OF_UNDYING) && totemShiftHolder.getVal();
+            boolean clickedTotem = mc.screen instanceof InventoryScreen && stack.isOf(Items.TOTEM_OF_UNDYING) && totemShiftHolder.getVal();
             boolean actionMatches = !shiftKeyDown && packet.actionType() == SlotActionType.PICKUP;
 
             if (clickedTotem && actionMatches) {

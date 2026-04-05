@@ -6,11 +6,11 @@ import io.github.itzispyder.clickcrystals.mixins.AccessorCamera;
 import io.github.itzispyder.clickcrystals.scripting.syntax.AimAnchorType;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.Camera;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.Camera;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Stack;
 
@@ -131,22 +131,22 @@ public class CameraRotator implements Global {
                 pitch, yaw, yawSpeed, pitchSpeed, lockCursor));
     }
 
-    public CameraRotator addTicket(Vec3d dir) {
+    public CameraRotator addTicket(Vec3 dir) {
         return this.addTicket(dir, 5);
     }
 
-    public CameraRotator addTicket(Vec3d dir, float speed) {
+    public CameraRotator addTicket(Vec3 dir, float speed) {
         return this.addTicket(dir, speed, speed, false);
     }
 
-    public CameraRotator addTicket(Vec3d dir, float pitchSpeed, float yawSpeed, boolean lockCursor) {
+    public CameraRotator addTicket(Vec3 dir, float pitchSpeed, float yawSpeed, boolean lockCursor) {
         float[] rot = MathUtils.toPolar(dir.x, dir.y, dir.z);
         return this.addTicket(rot[0], rot[1], pitchSpeed, yawSpeed, lockCursor);
     }
 
     public CameraRotator addTicket(Entity target, float speed, AimAnchorType anchor, boolean lockCursor) {
         if (!(target instanceof LivingEntity liv))
-            return this.addTicket(target.getEyePos(), speed, speed, lockCursor);
+            return this.addTicket(target.getEyePosition(), speed, speed, lockCursor);
         return this.addTicket(anchor.entityFactory.apply(target), speed, speed, lockCursor);
     }
 
@@ -155,34 +155,34 @@ public class CameraRotator implements Global {
     }
 
     public float getPitch() {
-        return PlayerUtils.invalid() ? 0 : PlayerUtils.player().getPitch();
+        return PlayerUtils.invalid() ? 0 : PlayerUtils.player().getXRot();
     }
 
     public float getYaw() {
-        return PlayerUtils.invalid() ? 0 : PlayerUtils.player().getYaw();
+        return PlayerUtils.invalid() ? 0 : PlayerUtils.player().getYRot();
     }
 
     private void setPlayerRotation(float pitch, float yaw) {
         if (PlayerUtils.invalid())
             return;
-        ClientPlayerEntity p = PlayerUtils.player();
+        LocalPlayer p = PlayerUtils.player();
 
         // ceptea told me that setting same rotation in the
         // same tick would flag AC
         if (prevPitch != pitch) {
             prevPitch = pitch;
-            p.setPitch(pitch);
+            p.setXRot(pitch);
         }
         if (prevYaw != yaw) {
             prevYaw = pitch;
-            p.setYaw(yaw);
+            p.setYRot(yaw);
         }
     }
 
     private void setCameraRotation(float pitch, float yaw) {
         if (PlayerUtils.invalid())
             return;
-        Camera c = mc.gameRenderer.getCamera();
+        Camera c = mc.gameRenderer.getMainCamera();
         AccessorCamera cam = (AccessorCamera) c;
         cam.invokeSetRotation(yaw, pitch);
     }

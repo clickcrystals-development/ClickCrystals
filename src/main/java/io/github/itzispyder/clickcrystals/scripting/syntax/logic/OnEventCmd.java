@@ -9,7 +9,6 @@ import io.github.itzispyder.clickcrystals.scripting.*;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 import io.github.itzispyder.clickcrystals.scripting.syntax.client.ModuleCmd;
 import io.github.itzispyder.clickcrystals.scripting.syntax.listeners.TickListener;
-import net.minecraft.client.sound.SoundInstance;
 
 import java.util.function.Predicate;
 

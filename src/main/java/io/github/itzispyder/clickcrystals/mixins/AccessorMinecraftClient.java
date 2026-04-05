@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;

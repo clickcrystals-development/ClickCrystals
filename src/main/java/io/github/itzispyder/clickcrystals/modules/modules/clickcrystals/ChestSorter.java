@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
-import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
+import net.minecraft.client.gui.screens.ingame.GenericContainerScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.screen.GenericContainerScreenHandler;
@@ -23,7 +23,7 @@ public class ChestSorter extends ListenerModule {
     @EventHandler
     private void onClick(MouseClickEvent e) {
         if (e.getButton() != 1 || !e.getAction().isRelease()) return;
-        if (!(mc.currentScreen instanceof GenericContainerScreen container)) return;
+        if (!(mc.screen instanceof GenericContainerScreen container)) return;
 
         GenericContainerScreenHandler handler = container.getScreenHandler();
         int chestSize = handler.getRows() * 9;

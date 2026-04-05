@@ -32,7 +32,7 @@ public class DoubleSettingElement extends SettingElement<DoubleSetting> {
         int sliderStart = drawX + 10;
         int sliderLen = sliderEnd - sliderStart;
 
-        if (mc.currentScreen instanceof GuiScreen screen && screen.selected == this) {
+        if (mc.screen instanceof GuiScreen screen && screen.selected == this) {
             this.fillEnd = MathUtils.clamp(mouseX, sliderStart, sliderEnd);
             double range = setting.getMax() - setting.getMin();
             double ratio = (double)(fillEnd - sliderStart) / (double)sliderLen;
@@ -57,7 +57,7 @@ public class DoubleSettingElement extends SettingElement<DoubleSetting> {
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (mc.currentScreen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
+        if (mc.screen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
             screen.selected = this;
         }
         super.mouseClicked(mouseX, mouseY, button);

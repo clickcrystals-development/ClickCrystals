@@ -9,7 +9,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 
 public class RotateCommand extends Command {
 
@@ -51,7 +51,7 @@ public class RotateCommand extends Command {
                                         return SINGLE_SUCCESS;
                                     }
 
-                                    Vec3d vec = target.getEntityPos().subtract(p.getEyePos()).normalize();
+                                    Vec3 vec = target.position().subtract(p.getEyePosition()).normalize();
                                     system.cameraRotator.ready()
                                             .addTicket(vec)
                                             .lockCursor()

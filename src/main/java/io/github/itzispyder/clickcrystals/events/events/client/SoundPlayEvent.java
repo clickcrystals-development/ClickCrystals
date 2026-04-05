@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.events.events.client;
 
 import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.events.Event;
-import net.minecraft.client.sound.SoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
 
 public class SoundPlayEvent extends Event implements Cancellable {
 

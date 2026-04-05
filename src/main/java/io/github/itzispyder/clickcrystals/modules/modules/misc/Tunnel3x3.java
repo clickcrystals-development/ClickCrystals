@@ -19,7 +19,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -82,8 +82,8 @@ public class Tunnel3x3 extends ListenerModule {
             this.setEnabled(false, false);
             return;
         }
-        if (mc.currentScreen != null)
-            mc.currentScreen.close();
+        if (mc.screen != null)
+            mc.screen.close();
 
         ClientPlayerEntity p = PlayerUtils.player();
         dir = p.getMovementDirection();
@@ -103,7 +103,7 @@ public class Tunnel3x3 extends ListenerModule {
 
         if (mc != null && mc.options != null) {
             mc.options.attackKey.setPressed(false);
-            if (reopenOnDisable.getVal() && mc.currentScreen == null) {
+            if (reopenOnDisable.getVal() && mc.screen == null) {
                 mc.setScreen(new ModuleEditScreen(this));
             }
         }
@@ -111,7 +111,7 @@ public class Tunnel3x3 extends ListenerModule {
 
     @EventHandler
     private void onMouseClick(MouseClickEvent e) {
-        if (e.getButton() == 0 && mc.currentScreen == null)
+        if (e.getButton() == 0 && mc.screen == null)
             e.setCancelled(true);
     }
 
@@ -191,7 +191,7 @@ public class Tunnel3x3 extends ListenerModule {
     private boolean validForBreaking(int targetIndex) {
         if (targetIndex < 0 || targetIndex >= targets.size())
             return false;
-        if (PlayerUtils.getEyes().distanceTo(targets.get(targetIndex).toCenterPos()) > PlayerUtils.player().getBlockInteractionRange())
+        if (PlayerUtils.getEyes().distanceTo(targets.get(targetIndex).getCenter()) > PlayerUtils.player().getBlockInteractionRange())
             return false;
         World w = PlayerUtils.getWorld();
         BlockPos pos = targets.get(targetIndex);
@@ -208,8 +208,8 @@ public class Tunnel3x3 extends ListenerModule {
             return;
 
         for (int i = targets.size() - 1; i >= index + 1; i--)
-            RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3d.of(targets.get(i))), 0x05FFFFFF);
-        RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3d.of(targets.get(index))), 0x05FF2020);
+            RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3.of(targets.get(i))), 0x05FFFFFF);
+        RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3.of(targets.get(index))), 0x05FF2020);
     }
 
     @EventHandler
@@ -253,7 +253,7 @@ public class Tunnel3x3 extends ListenerModule {
 
     private void target() {
         mc.options.attackKey.setPressed(false);
-        Vec3d target = targets.get(index).toCenterPos().subtract(PlayerUtils.getEyes());
+        Vec3 target = targets.get(index).getCenter().subtract(PlayerUtils.getEyes());
         system.cameraRotator.ready()
                 .addTicket(target)
                 .lockCursor()

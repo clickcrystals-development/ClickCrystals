@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SelfGlow;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.entity.Entity;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
@@ -45,7 +45,7 @@ public abstract class MixinMinecraftClient implements Global {
         system.onClientStopping();
     }
 
-    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;ZZ)V", at = @At("HEAD"))
+    @Inject(method = "disconnect(Lnet.minecraft.client.gui.screens.Screen;ZZ)V", at = @At("HEAD"))
     public void disconnect(Screen disconnectionScreen, boolean transferring, boolean bl, CallbackInfo ci) {
         system.eventBus.pass(new GameLeaveEvent());
     }

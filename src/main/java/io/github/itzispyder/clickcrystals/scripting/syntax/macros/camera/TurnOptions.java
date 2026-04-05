@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.scripting.syntax.macros.camera;
 
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgsReader;
 import io.github.itzispyder.clickcrystals.scripting.syntax.AimAnchorType;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.phys.Vec3;
 
 public class TurnOptions {
 
@@ -14,7 +14,7 @@ public class TurnOptions {
         speed = 10F;
     }
 
-    public Vec3d getCameraTicketPos(Vec3d camera, Vec3d dest) {
+    public Vec3 getCameraTicketPos(Vec3 camera, Vec3 dest) {
         return anchor.positionFactory.apply(dest).subtract(camera).normalize();
     }
 

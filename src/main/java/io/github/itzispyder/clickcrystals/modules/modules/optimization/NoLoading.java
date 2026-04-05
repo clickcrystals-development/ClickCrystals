@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
-import net.minecraft.client.gui.screen.world.LevelLoadingScreen;
+import net.minecraft.client.gui.screens.world.LevelLoadingScreen;
 
 public class NoLoading extends Module implements Listener {
 

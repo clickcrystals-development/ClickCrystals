@@ -2,17 +2,17 @@ package io.github.itzispyder.clickcrystals.events.events.world;
 
 import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.events.Event;
-import net.minecraft.item.Item;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.Item;
 
 public class ItemUseEvent extends Event implements Cancellable {
 
     private final Item item;
-    private final Hand hand;
+    private final InteractionHand hand;
     private boolean cancelled;
     private final UseType useType;
 
-    public ItemUseEvent(Item item, Hand hand, UseType useType) {
+    public ItemUseEvent(Item item, InteractionHand hand, UseType useType) {
         this.item = item;
         this.hand = hand;
         this.cancelled = false;
@@ -23,7 +23,7 @@ public class ItemUseEvent extends Event implements Cancellable {
         return item;
     }
 
-    public Hand getHand() {
+    public InteractionHand getHand() {
         return hand;
     }
 

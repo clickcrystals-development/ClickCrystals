@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.p
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -42,7 +42,7 @@ public abstract class ChamRagDoll<P extends ChamPart> implements Global {
     protected abstract void renderPart(P part, MatrixStack matrices, int color, float tickDelta);
 
     public void render(MatrixStack matrices, int color, float tickDelta) {
-        Vector3f c = new Vec3d(x, y, z).subtract(mc.gameRenderer.getCamera().getCameraPos()).toVector3f();
+        Vector3f c = new Vec3(x, y, z).subtract(mc.gameRenderer.getCamera().getCameraPos()).toVector3f();
         Quaternionf pitch = new Quaternionf().rotationX((float) Math.toRadians(glidingProgress == 1 ? this.pitch + 90 : glidingProgress * 90));
         Quaternionf yaw = new Quaternionf().rotationY((float) Math.toRadians(-this.yaw));
 

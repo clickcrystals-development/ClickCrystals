@@ -3,14 +3,14 @@ package io.github.itzispyder.clickcrystals.mixins;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.world.ItemConsumeEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.ItemUseEvent;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,7 +24,7 @@ public abstract class MixinItem implements Global {
     @Unique private long itemConsumeCooldown = 0L;
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
-    public void use(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
+    public void use(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (isItemUseOnCooldown()) {
             return;
         }
@@ -33,8 +33,8 @@ public abstract class MixinItem implements Global {
         system.eventBus.passWithCallbackInfo(cir, event);
     }
 
-    @Inject(method = "useOnBlock", at = @At("HEAD"), cancellable = true)
-    public void use(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
+    @Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
+    public void use(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
         if (isItemUseOnCooldown()) {
             return;
         }
@@ -43,8 +43,8 @@ public abstract class MixinItem implements Global {
         system.eventBus.passWithCallbackInfo(cir, event);
     }
 
-    @Inject(method = "useOnEntity", at = @At("HEAD"), cancellable = true)
-    public void use(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
+    @Inject(method = "interactLivingEntity", at = @At("HEAD"), cancellable = true)
+    public void use(ItemStack stack, Player user, LivingEntity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (isItemUseOnCooldown()) {
             return;
         }
@@ -53,8 +53,8 @@ public abstract class MixinItem implements Global {
         system.eventBus.passWithCallbackInfo(cir, event);
     }
 
-    @Inject(method = "finishUsing", at = @At("HEAD"), cancellable = true)
-    public void use(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
+    @Inject(method = "finishUsingItem", at = @At("HEAD"), cancellable = true)
+    public void use(ItemStack stack, Level world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
         if (isItemConsumeOnCooldown()) {
             return;
         }

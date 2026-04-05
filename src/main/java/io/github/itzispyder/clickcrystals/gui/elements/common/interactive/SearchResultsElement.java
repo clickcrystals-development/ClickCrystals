@@ -30,7 +30,7 @@ public class SearchResultsElement extends GuiElement {
 
     @Override
     public void onRender(DrawContext context, int mouseX, int mouseY) {
-        if (mc.currentScreen instanceof GuiScreen screen && screen.selected != searchbar) {
+        if (mc.screen instanceof GuiScreen screen && screen.selected != searchbar) {
             this.setRendering(false);
             return;
         }
@@ -56,7 +56,7 @@ public class SearchResultsElement extends GuiElement {
         this.searchResults.clear();
         this.setDimensions(searchbar.getDimensions());
 
-        if (mc.currentScreen instanceof GuiScreen screen) {
+        if (mc.screen instanceof GuiScreen screen) {
             this.setRendering(screen.selected == searchbar);
         }
 

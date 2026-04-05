@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.keybinds;
 
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 
 @FunctionalInterface
 public interface BindCondition {

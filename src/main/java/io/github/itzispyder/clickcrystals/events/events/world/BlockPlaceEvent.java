@@ -2,10 +2,10 @@ package io.github.itzispyder.clickcrystals.events.events.world;
 
 import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.events.Event;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class BlockPlaceEvent extends Event implements Cancellable {
 

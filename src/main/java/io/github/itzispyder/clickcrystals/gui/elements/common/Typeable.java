@@ -9,7 +9,7 @@ import java.util.function.Function;
 public interface Typeable extends Global {
 
     default boolean onKey(int key, int scan) {
-        if (!(mc.currentScreen instanceof GuiScreen screen))
+        if (!(mc.screen instanceof GuiScreen screen))
             return false;
 
         if (key == GLFW.GLFW_KEY_ESCAPE) {
@@ -23,13 +23,13 @@ public interface Typeable extends Global {
             return true;
         }
         else if (key == GLFW.GLFW_KEY_V && screen.ctrlKeyPressed) {
-            onInput(input -> input.concat(mc.keyboard.getClipboard()));
+            onInput(input -> input.concat(mc.keyboardHandler.getClipboard()));
             return true;
         }
         return false;
     }
 
-    default void onChar(char chr, int modifiers) {
+    default void onChar(char chr) {
         if (!Character.isISOControl(chr))
             onInput(input -> input.concat(String.valueOf(chr)));
     }

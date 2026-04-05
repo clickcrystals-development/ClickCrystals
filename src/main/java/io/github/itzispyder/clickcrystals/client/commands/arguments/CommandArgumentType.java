@@ -9,9 +9,8 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
-import io.github.itzispyder.clickcrystals.util.ArrayUtils;
-import net.minecraft.command.CommandSource;
-import net.minecraft.text.Text;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.Component;
 
 import java.util.Collection;
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
 public class CommandArgumentType implements ArgumentType<Command> {
 
     private static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
-    public static final DynamicCommandExceptionType commandNotFound = new DynamicCommandExceptionType(module -> Text.literal("Command " + module + " not found!"));
+    public static final DynamicCommandExceptionType commandNotFound = new DynamicCommandExceptionType(module -> Component.literal("Command " + module + " not found!"));
     public static final List<String> examples = List.of("debug", "help", "toggle");
 
     public CommandArgumentType() {
@@ -49,7 +48,7 @@ public class CommandArgumentType implements ArgumentType<Command> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        return CommandSource.suggestMatching(ArrayUtils.toNewList(system.commands().values(), Command::getName), builder);
+        return SharedSuggestionProvider.suggest(system.commands().values().stream().map(Command::getName), builder);
     }
 
     @Override

@@ -14,7 +14,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3;
 import net.minecraft.world.World;
 
 @ModrinthNoNo
@@ -58,22 +58,22 @@ public class McpeBlockPlacement extends ListenerModule {
         BlockPos target = this.getDirectionalFootBlock(dir, p.getBlockPos());
         World world = p.getEntityWorld();
 
-        if (target.toCenterPos().distanceTo(foot.toCenterPos()) > 1.1) // can't place diagonally with a 10% error range
+        if (target.getCenter().distanceTo(foot.getCenter()) > 1.1) // can't place diagonally with a 10% error range
             return null;
         if (world.getBlockState(foot).isAir())
             target = foot;
         if (!p.isOnGround() || !world.getBlockState(target).isAir())
             return null;
-        if (!raycastHit(p.getEyePos(), p.getRotationVecClient(), target, 2, 0.1))
+        if (!raycastHit(p.getEyePosition(), p.getRotationVecClient(), target, 2, 0.1))
             return null;
 
-        return new BlockHitResult(target.toCenterPos(), dir.getOpposite(), target, false);
+        return new BlockHitResult(target.getCenter(), dir.getOpposite(), target, false);
     }
 
-    private boolean raycastHit(Vec3d start, Vec3d dir, BlockPos target, double len, double step) {
-        Box box = Box.from(Vec3d.of(target));
+    private boolean raycastHit(Vec3 start, Vec3 dir, BlockPos target, double len, double step) {
+        Box box = Box.from(Vec3.of(target));
         for (double i = 0; i <= len; i += step) {
-            Vec3d pos = start.add(dir.multiply(i));
+            Vec3 pos = start.add(dir.multiply(i));
             if (box.contains(pos))
                 return true;
         }
@@ -81,7 +81,7 @@ public class McpeBlockPlacement extends ListenerModule {
     }
 
     private BlockPos getDirectionalFootBlock(Direction dir, BlockPos clientPos) {
-        return BlockPos.ofFloored(clientPos.toCenterPos()
+        return BlockPos.ofFloored(clientPos.getCenter()
                 .add(0, -1, 0)
                 .add(dir.getDoubleVector()));
     }
