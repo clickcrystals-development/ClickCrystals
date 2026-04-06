@@ -2,20 +2,19 @@ package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import io.github.itzispyder.clickcrystals.Global;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
-import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.screen.sync.ItemStackHash;
-import net.minecraft.util.Hand;
-
 import java.util.function.Predicate;
+import net.minecraft.network.HashedStack;
+import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public final class InvUtils implements Global {
 
-    public static PlayerInventory inv() {
+    public static Inventory inv() {
         return mc.player.getInventory();
     }
 
@@ -28,19 +27,19 @@ public final class InvUtils implements Global {
     }
 
     public static ItemStack selectedStack() {
-        return inv().getStack(selected());
+        return inv().getItem(selected());
     }
 
     public static boolean swapOffhand(int slot) {
-        return sendSlotPacket(slot, 40, SlotActionType.SWAP);
+        return sendSlotPacket(slot, 40, ClickType.SWAP);
     }
 
     public static boolean quickMove(int slot) {
-        return sendSlotPacket(slot, 0, SlotActionType.QUICK_MOVE);
+        return sendSlotPacket(slot, 0, ClickType.QUICK_MOVE);
     }
 
     public static boolean dropSlot(int slot, boolean full) {
-        return sendSlotPacket(slot, full ? 1 : 0, SlotActionType.THROW);
+        return sendSlotPacket(slot, full ? 1 : 0, ClickType.THROW);
     }
 
     public static boolean isHotbar(int slot) {
@@ -52,14 +51,14 @@ public final class InvUtils implements Global {
     }
 
     public static int search(Item item) {
-        return search(stack -> stack.isOf(item));
+        return search(stack -> stack.is(item));
     }
 
     public static int search(Predicate<ItemStack> item) {
         if (item == null) return -1;
 
-        for (int i = 0; i < inv().getMainStacks().size(); i++) {
-            ItemStack stack = inv().getStack(i);
+        for (int i = 0; i < inv().getNonEquipmentItems().size(); i++) {
+            ItemStack stack = inv().getItem(i);
             if (stack == null || stack.isEmpty()) continue;
             if (item.test(stack)) return i;
         }
@@ -68,7 +67,7 @@ public final class InvUtils implements Global {
     }
 
     public static int searchInsideOnly(Item item) {
-        return searchInsideOnly(stack -> stack.isOf(item));
+        return searchInsideOnly(stack -> stack.is(item));
     }
 
     public static int searchInsideOnly(Predicate<ItemStack> item) {
@@ -76,7 +75,7 @@ public final class InvUtils implements Global {
             return -1;
 
         for (int i = 9; i < 36; i++) {
-            ItemStack stack = inv().getStack(i);
+            ItemStack stack = inv().getItem(i);
             if (stack == null || stack.isEmpty())
                 continue;
             if (item.test(stack))
@@ -87,7 +86,7 @@ public final class InvUtils implements Global {
     }
 
     public static int count(Item item) {
-        return count(stack -> stack.isOf(item));
+        return count(stack -> stack.is(item));
     }
 
     public static int count(Predicate<ItemStack> item) {
@@ -97,13 +96,13 @@ public final class InvUtils implements Global {
             return count;
         }
 
-        for (int i = 0; i < inv().getMainStacks().size(); i++) {
-            ItemStack stack = inv().getStack(i);
+        for (int i = 0; i < inv().getNonEquipmentItems().size(); i++) {
+            ItemStack stack = inv().getItem(i);
             if (stack != null && item.test(stack))
                 count += stack.getCount();
         }
 
-        ItemStack off = HotbarUtils.getHand(Hand.OFF_HAND);
+        ItemStack off = HotbarUtils.getHand(InteractionHand.OFF_HAND);
         if (item.test(off)) {
             count += off.getCount();
         }
@@ -113,7 +112,7 @@ public final class InvUtils implements Global {
 
     public static ItemStack getEquipmentSlot(EquipmentSlot equipmentSlot){
         if (equipmentSlot == null) return ItemStack.EMPTY;
-        return inv().player.getEquippedStack(equipmentSlot).getItem().getDefaultStack();
+        return inv().player.getItemBySlot(equipmentSlot).getItem().getDefaultInstance();
     }
 
     public static boolean isWearing(Item item) {
@@ -121,7 +120,7 @@ public final class InvUtils implements Global {
             return false;
 
         for (EquipmentSlot slot : EquipmentSlot.values())
-            if (getEquipmentSlot(slot).isOf(item))
+            if (getEquipmentSlot(slot).is(item))
                 return true;
         return false;
     }
@@ -141,9 +140,9 @@ public final class InvUtils implements Global {
     public static boolean has(Item item) {
         if (item == null) return false;
 
-        for (int i = 0; i < inv().getMainStacks().size(); i++) {
-            ItemStack stack = inv().getStack(i);
-            if (stack != null && stack.isOf(item))
+        for (int i = 0; i < inv().getNonEquipmentItems().size(); i++) {
+            ItemStack stack = inv().getItem(i);
+            if (stack != null && stack.is(item))
                 return true;
         }
 
@@ -153,8 +152,8 @@ public final class InvUtils implements Global {
     public static boolean has(Predicate<ItemStack> item) {
         if (item == null) return false;
 
-        for (int i = 0; i < inv().getMainStacks().size(); i++) {
-            ItemStack stack = inv().getStack(i);
+        for (int i = 0; i < inv().getNonEquipmentItems().size(); i++) {
+            ItemStack stack = inv().getItem(i);
             if (stack != null && item.test(stack))
                 return true;
         }
@@ -162,8 +161,8 @@ public final class InvUtils implements Global {
         return false;
     }
 
-    public static boolean sendSlotPacket(int slot, int button, SlotActionType action) {
-        ItemStack stack = inv().getStack(slot);
+    public static boolean sendSlotPacket(int slot, int button, ClickType action) {
+        ItemStack stack = inv().getItem(slot);
 
         if (slot <= 8) {
             slot += 36;
@@ -172,8 +171,8 @@ public final class InvUtils implements Global {
         if (stack == null || PlayerUtils.invalid()) return false;
 
         int hashSlot = slot;
-        ItemStackHash hash = ItemStackHash.fromItemStack(stack, component -> hashSlot);
-        ClickSlotC2SPacket swap = new ClickSlotC2SPacket(0, 1, (short) slot, (byte) button, action, Int2ObjectMaps.singleton(slot, hash), hash);
+        HashedStack hash = HashedStack.create(stack, component -> hashSlot);
+        ServerboundContainerClickPacket swap = new ServerboundContainerClickPacket(0, 1, (short) slot, (byte) button, action, Int2ObjectMaps.singleton(slot, hash), hash);
         PlayerUtils.sendPacket(swap);
         return true;
     }

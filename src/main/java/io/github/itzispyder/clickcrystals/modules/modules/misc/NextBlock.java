@@ -14,18 +14,17 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Raytracer;
 import io.github.itzispyder.clickcrystals.util.misc.camera.CameraFinalizerCallback;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-
 import java.util.concurrent.atomic.AtomicReference;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class NextBlock extends Module implements Listener {
 
@@ -42,7 +41,7 @@ public class NextBlock extends Module implements Listener {
     private boolean wasAborted;
     private final CameraFinalizerCallback REPOSITION_TARGET = (pitch, yaw, cameraRotator) -> {
         system.scheduler.runDelayedTask(() -> {
-            if (mc.crosshairTarget == null || mc.crosshairTarget.getType() == HitResult.Type.MISS) {
+            if (mc.hitResult == null || mc.hitResult.getType() == HitResult.Type.MISS) {
                 targetNextBlock();
             }
         }, 3 * 50);
@@ -73,8 +72,8 @@ public class NextBlock extends Module implements Listener {
 
     @EventHandler
     private void onAction(PacketSendEvent e) {
-        if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
-            if (packet.getAction() == PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) {
+        if (e.getPacket() instanceof ServerboundPlayerActionPacket packet) {
+            if (packet.getAction() == ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK) {
                 if (wasAborted) {
                     wasAborted = false;
                 }
@@ -83,7 +82,7 @@ public class NextBlock extends Module implements Listener {
                 }
                 targetNextBlock();
             }
-            else if (packet.getAction() == PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK) {
+            else if (packet.getAction() == ServerboundPlayerActionPacket.Action.ABORT_DESTROY_BLOCK) {
                 wasAborted = true;
             }
         }
@@ -112,10 +111,10 @@ public class NextBlock extends Module implements Listener {
 
     @EventHandler
     private void onTick(ClientTickStartEvent e) {
-        if (PlayerUtils.valid() && shouldRaytrace.getVal() && mc.options.attackKey.isPressed()) {
-            if (!system.cameraRotator.isRunningTicket() && mc.crosshairTarget instanceof BlockHitResult hit) {
+        if (PlayerUtils.valid() && shouldRaytrace.getVal() && mc.options.keyAttack.isDown()) {
+            if (!system.cameraRotator.isRunningTicket() && mc.hitResult instanceof BlockHitResult hit) {
                 BlockState state = PlayerUtils.getWorld().getBlockState(hit.getBlockPos());
-                if (!state.isOf(lastTouched)) {
+                if (!state.is(lastTouched)) {
                     targetNextBlock();
                 }
             }
@@ -124,10 +123,10 @@ public class NextBlock extends Module implements Listener {
 
     private void setNextBlock() {
         wasAborted = false;
-        ClientPlayerEntity p = PlayerUtils.player();
-        World w = p.getEntityWorld();
+        LocalPlayer p = PlayerUtils.player();
+        Level w = p.level();
 
-        if (mc.crosshairTarget instanceof BlockHitResult hit) {
+        if (mc.hitResult instanceof BlockHitResult hit) {
             BlockState b = w.getBlockState(hit.getBlockPos());
 
             if (!b.isAir()) {
@@ -142,8 +141,8 @@ public class NextBlock extends Module implements Listener {
             return;
 
         wasAborted = false;
-        ClientPlayerEntity p = PlayerUtils.player();
-        Vec3d target = null;
+        LocalPlayer p = PlayerUtils.player();
+        Vec3 target = null;
 
         if (lastTouchedPosition != null) {
             target = getNearestToTarget(lastTouchedPosition);
@@ -154,7 +153,7 @@ public class NextBlock extends Module implements Listener {
             }
         }
 
-        Vec3d rot = target.subtract(p.getEyePos()).normalize(); // slowly rotate towards target block smoothly
+        Vec3 rot = target.subtract(p.getEyePosition()).normalize(); // slowly rotate towards target block smoothly
         system.cameraRotator.ready()
                 .addTicket(rot)
                 .lockCursor()
@@ -162,25 +161,25 @@ public class NextBlock extends Module implements Listener {
                 .openCurrentTicket();
     }
 
-    public Vec3d getNearestToPlayer(ClientPlayerEntity p) {
-        World w = p.getEntityWorld();
-        Box box = new Box(p.getBlockPos()).expand(5);
+    public Vec3 getNearestToPlayer(LocalPlayer p) {
+        Level w = p.level();
+        AABB box = new AABB(p.blockPosition()).inflate(5);
         AtomicDouble nearest = new AtomicDouble(10.0);
-        AtomicReference<Vec3d> target = new AtomicReference<>(null);
-        double max = p.getBlockInteractionRange();
+        AtomicReference<Vec3> target = new AtomicReference<>(null);
+        double max = p.blockInteractionRange();
 
         PlayerUtils.boxIterator(w, box, (pos, state) -> {
-            Vec3d posVec = pos.toCenterPos();
-            double dist = posVec.distanceTo(p.getEyePos());
+            Vec3 posVec = pos.getCenter();
+            double dist = posVec.distanceTo(p.getEyePosition());
 
             if (dist > max) {
                 return;
             }
 
             if (shouldRaytrace.getVal()) { // filter out blocks you cannot see
-                Vec3d dir = posVec.subtract(p.getEyePos()).normalize();
-                var hit = Raytracer.trace(w, p.getEyePos(), dir, dist, (blockPos, point) -> {
-                    return w.getBlockState(blockPos).isFullCube(w, blockPos);
+                Vec3 dir = posVec.subtract(p.getEyePosition()).normalize();
+                var hit = Raytracer.trace(w, p.getEyePosition(), dir, dist, (blockPos, point) -> {
+                    return w.getBlockState(blockPos).isCollisionShapeFullBlock(w, blockPos);
                 });
 
                 if (!hit.left.equals(pos)) {
@@ -188,7 +187,7 @@ public class NextBlock extends Module implements Listener {
                 }
             }
 
-            if (state.isOf(lastTouched) && dist < nearest.get()) {
+            if (state.is(lastTouched) && dist < nearest.get()) {
                 target.set(posVec);
                 nearest.set(dist);
             }
@@ -196,28 +195,28 @@ public class NextBlock extends Module implements Listener {
         return target.get();
     }
 
-    public Vec3d getNearestToTarget(BlockPos pos) {
-        Vec3d start = pos.toCenterPos();
-        ClientPlayerEntity p = PlayerUtils.player();
-        World w = PlayerUtils.getWorld();
-        Box box = new Box(pos).expand(5);
+    public Vec3 getNearestToTarget(BlockPos pos) {
+        Vec3 start = pos.getCenter();
+        LocalPlayer p = PlayerUtils.player();
+        Level w = PlayerUtils.getWorld();
+        AABB box = new AABB(pos).inflate(5);
         AtomicDouble nearest = new AtomicDouble(10.0);
-        AtomicReference<Vec3d> target = new AtomicReference<>(null);
-        double max = PlayerUtils.player().getBlockInteractionRange();
+        AtomicReference<Vec3> target = new AtomicReference<>(null);
+        double max = PlayerUtils.player().blockInteractionRange();
 
         PlayerUtils.boxIterator(w, box, (blockPos, state) -> {
-            Vec3d posVec = blockPos.toCenterPos();
+            Vec3 posVec = blockPos.getCenter();
             double dist = posVec.distanceTo(start);
-            double reach = posVec.distanceTo(p.getEyePos());
+            double reach = posVec.distanceTo(p.getEyePosition());
 
             if (reach > max) {
                 return;
             }
 
             if (shouldRaytrace.getVal()) { // filter out blocks you cannot see
-                Vec3d dir = posVec.subtract(p.getEyePos()).normalize();
-                var hit = Raytracer.trace(w, p.getEyePos(), dir, dist, (block, point) -> {
-                    return w.getBlockState(blockPos).isFullCube(w, blockPos);
+                Vec3 dir = posVec.subtract(p.getEyePosition()).normalize();
+                var hit = Raytracer.trace(w, p.getEyePosition(), dir, dist, (block, point) -> {
+                    return w.getBlockState(blockPos).isCollisionShapeFullBlock(w, blockPos);
                 });
 
                 if (!hit.left.equals(blockPos)) {
@@ -225,7 +224,7 @@ public class NextBlock extends Module implements Listener {
                 }
             }
 
-            if (state.isOf(lastTouched) && dist < nearest.get()) {
+            if (state.is(lastTouched) && dist < nearest.get()) {
                 target.set(posVec);
                 nearest.set(dist);
             }

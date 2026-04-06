@@ -14,11 +14,11 @@ public class BooleanSetting extends ModuleSetting<Boolean> {
         return new BooleanSettingElement(this, x, y);
     }
 
-    public static Builder create() {
-        return new Builder();
+    public static io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting.Builder create() {
+        return new io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting.Builder();
     }
 
-    public static class Builder extends SettingBuilder<Boolean, Builder, BooleanSetting> {
+    public static class Builder extends SettingBuilder<Boolean, io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting.Builder, BooleanSetting> {
         @Override
         public BooleanSetting buildSetting() {
             return new BooleanSetting(name, description, def, getOrDef(val, def));

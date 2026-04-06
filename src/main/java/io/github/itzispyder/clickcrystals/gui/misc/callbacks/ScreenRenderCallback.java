@@ -1,9 +1,9 @@
 package io.github.itzispyder.clickcrystals.gui.misc.callbacks;
 
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 @FunctionalInterface
 public interface ScreenRenderCallback {
 
-    void handleScreen(DrawContext context, int mouseX, int mouseY, float delta);
+    void handleScreen(GuiGraphics context, int mouseX, int mouseY, float delta);
 }

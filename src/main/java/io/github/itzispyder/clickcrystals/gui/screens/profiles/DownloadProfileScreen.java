@@ -10,9 +10,8 @@ import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.AnimatedBase;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
-
 import java.util.concurrent.CompletableFuture;
+import net.minecraft.client.gui.GuiGraphics;
 
 import static io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils.*;
 
@@ -82,11 +81,11 @@ public class DownloadProfileScreen extends AnimatedBase {
     }
 
     @Override
-    public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
         renderOpaqueBackground(context);
 
-        context.getMatrices().pushMatrix();
-        context.getMatrices().translate(baseX, baseY);
+        context.pose().pushMatrix();
+        context.pose().translate(baseX, baseY);
 
         // backdrop
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
@@ -102,7 +101,7 @@ public class DownloadProfileScreen extends AnimatedBase {
         drawText(context, "Online Configuration Profiles", margin, caret, 1.3F, false);
 
 
-        context.getMatrices().popMatrix();
+        context.pose().popMatrix();
     }
 
     private void filterQuery() {
@@ -135,7 +134,7 @@ public class DownloadProfileScreen extends AnimatedBase {
         }
 
         @Override
-        public void onRender(DrawContext context, int mx, int my) {
+        public void onRender(GuiGraphics context, int mx, int my) {
             int bg1 = Shades.TRANS_GRAY;
             int bg2 = Shades.TRANS_GENERIC_LOW;
             int bg3 = Shades.TRANS_GENERIC;

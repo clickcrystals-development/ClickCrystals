@@ -38,11 +38,11 @@ public class EnumSetting<E extends Enum<?>> extends ModuleSetting<E> {
         return new EnumSettingElement(this, x, y);
     }
 
-    public static <E extends Enum<?>> Builder<E> create(Class<E> type) {
-        return new Builder<>();
+    public static <E extends Enum<?>> io.github.itzispyder.clickcrystals.modules.settings.EnumSetting.Builder<E> create(Class<E> type) {
+        return new io.github.itzispyder.clickcrystals.modules.settings.EnumSetting.Builder<>();
     }
 
-    public static class Builder<E extends Enum<?>> extends SettingBuilder<E, Builder<E>, EnumSetting<E>> {
+    public static class Builder<E extends Enum<?>> extends SettingBuilder<E, io.github.itzispyder.clickcrystals.modules.settings.EnumSetting.Builder<E>, EnumSetting<E>> {
         @Override
         public EnumSetting<E> buildSetting() {
             return new EnumSetting<>(name, description, def, getOrDef(val, def));

@@ -14,19 +14,18 @@ import io.github.itzispyder.clickcrystals.scripting.ClickScript;
 import io.github.itzispyder.clickcrystals.scripting.syntax.listeners.*;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
-import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
-import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
-import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
-import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
-import net.minecraft.network.packet.s2c.play.PlayerRespawnS2CPacket;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import net.minecraft.network.protocol.game.ClientboundEntityEventPacket;
+import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
+import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
+import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
+import net.minecraft.world.entity.EntityEvent;
+import net.minecraft.world.entity.player.Player;
 
 public class ScriptedModule extends ListenerModule {
 
@@ -232,19 +231,19 @@ public class ScriptedModule extends ListenerModule {
             }
         }
 
-        if (e.getPacket() instanceof PlayerInteractBlockC2SPacket packet) {
+        if (e.getPacket() instanceof ServerboundUseItemOnPacket packet) {
             for (BlockInteractListener l : blockInteractListeners) {
-                l.pass(packet.getBlockHitResult(), packet.getHand());
+                l.pass(packet.getHitResult(), packet.getHand());
             }
         }
-        else if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
-            if (packet.getAction() == PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) {
+        else if (e.getPacket() instanceof ServerboundPlayerActionPacket packet) {
+            if (packet.getAction() == ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK) {
                 for (BlockPunchListener l : blockPunchListeners) {
                     l.pass(packet.getPos(), packet.getDirection());
                 }
             }
         }
-        else if (e.getPacket() instanceof PlayerMoveC2SPacket packet) {
+        else if (e.getPacket() instanceof ServerboundMovePlayerPacket packet) {
             for (MoveListener l : moveListeners) {
                 l.pass(packet);
             }
@@ -281,17 +280,17 @@ public class ScriptedModule extends ListenerModule {
             }
         }
 
-        if (e.getPacket() instanceof EntityStatusS2CPacket packet) {
-            if (packet.getEntity(PlayerUtils.getWorld()) instanceof PlayerEntity p && p.getId() == PlayerUtils.player().getId()) {
-                if (packet.getStatus() == EntityStatuses.USE_TOTEM_OF_UNDYING) {
+        if (e.getPacket() instanceof ClientboundEntityEventPacket packet) {
+            if (packet.getEntity(PlayerUtils.getWorld()) instanceof Player p && p.getId() == PlayerUtils.player().getId()) {
+                if (packet.getEventId() == EntityEvent.PROTECTED_FROM_DEATH) {
                     totemPopListeners.forEach(Runnable::run);
                 }
-                else if (packet.getStatus() == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
+                else if (packet.getEventId() == EntityEvent.DEATH) {
                     deathListeners.forEach(Runnable::run);
                 }
             }
         }
-        else if (e.getPacket() instanceof PlayerRespawnS2CPacket) {
+        else if (e.getPacket() instanceof ClientboundRespawnPacket) {
             respawnListeners.forEach(Runnable::run);
         }
     }

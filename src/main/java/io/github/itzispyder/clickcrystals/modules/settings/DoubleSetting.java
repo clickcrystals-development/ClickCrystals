@@ -60,11 +60,11 @@ public class DoubleSetting extends NumberSetting<Double> {
         return Math.floor(val * ex) / ex;
     }
 
-    public static Builder create() {
-        return new Builder();
+    public static io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting.Builder create() {
+        return new io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting.Builder();
     }
 
-    public static class Builder extends SettingBuilder<Double, Builder, DoubleSetting> {
+    public static class Builder extends SettingBuilder<Double, io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting.Builder, DoubleSetting> {
 
         private double min, max;
         private int decimalPlaces;
@@ -74,17 +74,17 @@ public class DoubleSetting extends NumberSetting<Double> {
             this.max = 1;
         }
 
-        public Builder min(double min) {
+        public io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting.Builder min(double min) {
             this.min = Math.min(min, max);
             return this;
         }
 
-        public Builder max(double max) {
+        public io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting.Builder max(double max) {
             this.max = Math.max(min, max);
             return this;
         }
 
-        public Builder decimalPlaces(int decimalPlaces) {
+        public io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting.Builder decimalPlaces(int decimalPlaces) {
             this.decimalPlaces = decimalPlaces;
             return this;
         }

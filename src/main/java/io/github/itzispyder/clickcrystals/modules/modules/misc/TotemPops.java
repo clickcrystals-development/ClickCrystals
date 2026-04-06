@@ -12,13 +12,12 @@ import io.github.itzispyder.clickcrystals.modules.settings.StringSetting;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.EntityType;
-import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
-
 import java.util.HashMap;
 import java.util.Map;
+import net.minecraft.network.protocol.game.ClientboundEntityEventPacket;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityEvent;
+import net.minecraft.world.entity.EntityType;
 
 public class TotemPops extends Module implements Listener {
 
@@ -67,13 +66,13 @@ public class TotemPops extends Module implements Listener {
 
     @EventHandler
     private void onReceiveStatus(PacketReceiveEvent e) {
-        if (e.getPacket() instanceof EntityStatusS2CPacket packet) {
+        if (e.getPacket() instanceof ClientboundEntityEventPacket packet) {
             if (PlayerUtils.invalid())
                 return;
 
             var p = PlayerUtils.player();
             final Entity ent = packet.getEntity(PlayerUtils.getWorld());
-            final int status = packet.getStatus();
+            final int status = packet.getEventId();
 
             if (ent == null) return;
             if (ent.getType() != EntityType.PLAYER) return;
@@ -87,14 +86,14 @@ public class TotemPops extends Module implements Listener {
                 }
             }
 
-            if (status == EntityStatuses.USE_TOTEM_OF_UNDYING) {
+            if (status == EntityEvent.PROTECTED_FROM_DEATH) {
                 setPops(ent,getPops(ent) + 1);
 
                 if (isEnabled()) {
                     ChatUtils.sendPrefixMessage(compilePopMsg(ent, name, enemyPops.getVal()));
                 }
             }
-            else if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
+            else if (status == EntityEvent.DEATH) {
                 if (isEnabled()) {
                     ChatUtils.sendPrefixMessage(compilePopMsg(ent, name, enemyDeath.getVal()));
                 }
@@ -108,7 +107,7 @@ public class TotemPops extends Module implements Listener {
         return StringUtils.color(msg)
                 .replaceAll("%pops%", "" + getPops(ent))
                 .replaceAll("%enemy%", entName)
-                .replaceAll("%player%",mc.getSession().getUsername());
+                .replaceAll("%player%",mc.getUser().getName());
     }
 
     public int getPops(Entity ent) {

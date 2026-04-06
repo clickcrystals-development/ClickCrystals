@@ -6,11 +6,10 @@ import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.ModuleEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class SearchResultsElement extends GuiElement {
 
@@ -29,8 +28,8 @@ public class SearchResultsElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
-        if (mc.currentScreen instanceof GuiScreen screen && screen.selected != searchbar) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        if (mc.screen instanceof GuiScreen screen && screen.selected != searchbar) {
             this.setRendering(false);
             return;
         }
@@ -56,7 +55,7 @@ public class SearchResultsElement extends GuiElement {
         this.searchResults.clear();
         this.setDimensions(searchbar.getDimensions());
 
-        if (mc.currentScreen instanceof GuiScreen screen) {
+        if (mc.screen instanceof GuiScreen screen) {
             this.setRendering(screen.selected == searchbar);
         }
 
@@ -96,7 +95,7 @@ public class SearchResultsElement extends GuiElement {
         }
 
         @Override
-        public void onRender(DrawContext context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
             if (!SearchResultsElement.this.rendering) {
                 this.rendering = false;
                 return;

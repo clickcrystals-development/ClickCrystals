@@ -1,8 +1,8 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.Vec2f;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 
 public class PolarParser {
 
@@ -25,7 +25,7 @@ public class PolarParser {
         this.yaw = argYaw;
     }
 
-    public PolarParser(String arg1, String arg2, Vec2f relativeTo) {
+    public PolarParser(String arg1, String arg2, Vec2 relativeTo) {
         arg1 = VectorParser.toRelation.apply(arg1);
         arg2 = VectorParser.toRelation.apply(arg2);
         float argPitch = 0.0F;
@@ -50,7 +50,7 @@ public class PolarParser {
     }
 
     public PolarParser(String arg1, String arg2, Entity relativeTo) {
-        this(arg1, arg2, relativeTo.getRotationClient());
+        this(arg1, arg2, relativeTo.getRotationVector());
     }
 
     public float getPitch() {
@@ -61,11 +61,11 @@ public class PolarParser {
         return yaw;
     }
 
-    public Vec2f getPolar() {
-        return new Vec2f(pitch, yaw);
+    public Vec2 getPolar() {
+        return new Vec2(pitch, yaw);
     }
 
-    public Vec3d getVector() {
-        return Vec3d.fromPolar(pitch, yaw);
+    public Vec3 getVector() {
+        return Vec3.directionFromRotation(pitch, yaw);
     }
 }

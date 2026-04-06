@@ -40,11 +40,11 @@ public class KeybindSetting extends ModuleSetting<Keybind> {
         return new KeybindSettingElement(this, x, y);
     }
 
-    public static Builder create() {
-        return new Builder();
+    public static io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting.Builder create() {
+        return new io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting.Builder();
     }
 
-    public static class Builder extends SettingBuilder<Keybind, Builder, KeybindSetting> {
+    public static class Builder extends SettingBuilder<Keybind, io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting.Builder, KeybindSetting> {
 
         private String id;
         private int key, defaultKey;
@@ -58,34 +58,34 @@ public class KeybindSetting extends ModuleSetting<Keybind> {
             bindCondition = (bind, screen) -> true;
         }
 
-        public Builder val(int key) {
+        public io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting.Builder val(int key) {
             this.key = key;
             return this;
         }
 
-        public Builder def(int defaultKey) {
+        public io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting.Builder def(int defaultKey) {
             this.defaultKey = defaultKey;
             return this;
         }
 
         @Override
-        public Builder name(String id) {
+        public io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting.Builder name(String id) {
             this.id = id;
             return this;
         }
 
         @Override
-        public Builder description(String description) {
+        public io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting.Builder description(String description) {
             this.description = description;
             return this;
         }
 
-        public Builder onPress(KeyAction keyAction) {
+        public io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting.Builder onPress(KeyAction keyAction) {
             this.keyAction = keyAction;
             return this;
         }
 
-        public Builder condition(BindCondition bindCondition) {
+        public io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting.Builder condition(BindCondition bindCondition) {
             this.bindCondition = bindCondition;
             return this;
         }

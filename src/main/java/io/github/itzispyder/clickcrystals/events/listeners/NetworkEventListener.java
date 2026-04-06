@@ -14,19 +14,18 @@ import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEve
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.scripting.syntax.logic.AsCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;
-import net.minecraft.network.packet.c2s.login.LoginKeyC2SPacket;
-import net.minecraft.network.packet.s2c.common.DisconnectS2CPacket;
-import net.minecraft.network.packet.s2c.login.LoginHelloS2CPacket;
-import net.minecraft.network.packet.s2c.login.LoginSuccessS2CPacket;
-import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
-import net.minecraft.text.ClickEvent;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-
 import java.net.URI;
 import java.util.UUID;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.common.ClientboundDisconnectPacket;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
+import net.minecraft.network.protocol.login.ClientboundHelloPacket;
+import net.minecraft.network.protocol.login.ClientboundLoginFinishedPacket;
+import net.minecraft.network.protocol.login.ServerboundHelloPacket;
+import net.minecraft.network.protocol.login.ServerboundKeyPacket;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.commandPrefix;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
@@ -76,12 +75,12 @@ public class NetworkEventListener implements Listener {
     }
 
     private void handPlayerJoin(PacketReceiveEvent e) {
-        if (e.getPacket() instanceof PlayerListS2CPacket packet) {
-            if (packet.getActions().stream().anyMatch(a -> a == PlayerListS2CPacket.Action.ADD_PLAYER)) {
+        if (e.getPacket() instanceof ClientboundPlayerInfoUpdatePacket packet) {
+            if (packet.actions().stream().anyMatch(a -> a == ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER)) {
                 system.cameraRotator.closeAllTickets(); // stops current rotator
 
                 // broadcasting joins
-                for (PlayerListS2CPacket.Entry entry : packet.getPlayerAdditionEntries()) {
+                for (ClientboundPlayerInfoUpdatePacket.Entry entry : packet.newEntries()) {
                     UUID id = entry.profile().id();
                     String name = entry.profile().name();
 
@@ -111,7 +110,7 @@ public class NetworkEventListener implements Listener {
     }
 
     private void handleHudConfigLoading(PacketReceiveEvent e) {
-        if (e.getPacket() instanceof LoginSuccessS2CPacket) {
+        if (e.getPacket() instanceof ClientboundLoginFinishedPacket) {
             config.loadHuds();
             config.save(); // saving just to be safe
         }
@@ -119,14 +118,14 @@ public class NetworkEventListener implements Listener {
 
     private void handlePixelArtStop(PacketReceiveEvent e) {
         Packet<?> p = e.getPacket();
-        if (p instanceof DisconnectS2CPacket || p instanceof LoginHelloS2CPacket) {
+        if (p instanceof ClientboundDisconnectPacket || p instanceof ClientboundHelloPacket) {
             PixelArtGenerator.cancel();
         }
     }
 
     private void handlePixelArtStop(PacketSendEvent e) {
         Packet<?> p = e.getPacket();
-        if (p instanceof LoginHelloC2SPacket || p instanceof LoginKeyC2SPacket) {
+        if (p instanceof ServerboundHelloPacket || p instanceof ServerboundKeyPacket) {
             PixelArtGenerator.cancel();
         }
     }
@@ -147,10 +146,10 @@ public class NetworkEventListener implements Listener {
                         ChatUtils.sendPrefixMessage("§bYour Version=§7" + version + "§b, §oNewest Version=§7" + ClickCrystals.getLatestVersion());
 
                         try {
-                            Text literal = Text.literal(starter + "§a§o§n https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
+                            Component literal = Component.literal(starter + "§a§o§n https://www.curseforge.com/minecraft/mc-mods/clickcrystals");
                             ClickEvent event = new ClickEvent.OpenUrl(new URI("https://www.curseforge.com/minecraft/mc-mods/clickcrystals"));
-                            MutableText text = literal.copy();
-                            ChatUtils.sendRawText(text.fillStyle(text.getStyle().withClickEvent(event)));
+                            MutableComponent text = literal.copy();
+                            ChatUtils.sendRawText(text.withStyle(text.getStyle().withClickEvent(event)));
                             ChatUtils.sendBlank();
                         }
                         catch (Exception ignore) {}

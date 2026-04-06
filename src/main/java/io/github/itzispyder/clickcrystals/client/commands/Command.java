@@ -10,23 +10,23 @@ import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
-import net.minecraft.client.network.ClientCommandSource;
-import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.permission.PermissionPredicate;
-import net.minecraft.registry.BuiltinRegistries;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.command.CommandManager;
+import net.minecraft.client.multiplayer.ClientSuggestionProvider;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.registries.VanillaRegistries;
+import net.minecraft.server.permissions.PermissionSet;
 
 public abstract class Command implements Global {
 
     protected static final int COMMAND_FAIL = -1;
     protected static final int COMMAND_PASS = 0;
     protected static final int SINGLE_SUCCESS = 1;
-    public static final RegistryWrapper.WrapperLookup WRAPPER = BuiltinRegistries.createWrapperLookup();
-    public static final CommandRegistryAccess REGISTRY = CommandManager.createRegistryAccess(WRAPPER);
-    public static final CommandDispatcher<CommandSource> DISPATCHER = new CommandDispatcher<>();
-    public static final CommandSource SOURCE = new ClientCommandSource(null, mc, PermissionPredicate.NONE);
+    public static final HolderLookup.Provider WRAPPER = VanillaRegistries.createLookup();
+    public static final CommandBuildContext REGISTRY = Commands.createValidationContext(WRAPPER);
+    public static final CommandDispatcher<SharedSuggestionProvider> DISPATCHER = new CommandDispatcher<>();
+    public static final SharedSuggestionProvider SOURCE = new ClientSuggestionProvider(null, mc, PermissionSet.NO_PERMISSIONS);
 
     private final String name, description, usage;
     private final String[] aliases;
@@ -54,7 +54,7 @@ public abstract class Command implements Global {
         return aliases;
     }
 
-    public abstract void build(LiteralArgumentBuilder<CommandSource> builder);
+    public abstract void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder);
 
     public void register() {
         registerToDispatcher(name);
@@ -64,21 +64,21 @@ public abstract class Command implements Global {
     }
 
     public void registerToDispatcher(String name) {
-        LiteralArgumentBuilder<CommandSource> builder = literal(name);
+        LiteralArgumentBuilder<SharedSuggestionProvider> builder = literal(name);
         build(builder);
         DISPATCHER.register(builder);
     }
 
-    protected static LiteralArgumentBuilder<CommandSource> literal(String literal) {
+    protected static LiteralArgumentBuilder<SharedSuggestionProvider> literal(String literal) {
         return LiteralArgumentBuilder.literal(literal);
     }
 
-    protected static <T> RequiredArgumentBuilder<CommandSource, T> argument(String name, ArgumentType<T> argument) {
+    protected static <T> RequiredArgumentBuilder<SharedSuggestionProvider, T> argument(String name, ArgumentType<T> argument) {
         return RequiredArgumentBuilder.argument(name, argument);
     }
 
     public static void dispatch(String line) throws CommandSyntaxException {
-        ParseResults<CommandSource> results = DISPATCHER.parse(line, SOURCE);
+        ParseResults<SharedSuggestionProvider> results = DISPATCHER.parse(line, SOURCE);
         DISPATCHER.execute(results);
     }
 

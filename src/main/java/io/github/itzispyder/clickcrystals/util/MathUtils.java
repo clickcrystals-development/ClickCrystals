@@ -1,9 +1,5 @@
 package io.github.itzispyder.clickcrystals.util;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import org.joml.Quaternionf;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
@@ -11,6 +7,10 @@ import org.joml.Vector3f;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
 
 public final class MathUtils {
 
@@ -45,28 +45,28 @@ public final class MathUtils {
         return val < min || val > max;
     }
 
-    public static Vec3d forward(Vec3d pos, Vec3d dir, double dist) {
-        return pos.add(dir.normalize().multiply(dist));
+    public static Vec3 forward(Vec3 pos, Vec3 dir, double dist) {
+        return pos.add(dir.normalize().scale(dist));
     }
 
     public static double floorDiff(double a) {
         return a - (int)a;
     }
 
-    public static Vec3d lerpVec(double x1, double y1, double z1, double x2, double y2, double z2, float tickDelta) {
-        return new Vec3d(
+    public static Vec3 lerpVec(double x1, double y1, double z1, double x2, double y2, double z2, float tickDelta) {
+        return new Vec3(
                 x1 + (x2 - x1) * tickDelta,
                 y1 + (y2 - y1) * tickDelta,
                 z1 + (z2 - z1) * tickDelta
         );
     }
 
-    public static Vec3d lerpEntityPosVec(Entity entity, float tickDelta) {
-        return lerpVec(entity.lastRenderX, entity.lastRenderY, entity.lastRenderZ, entity.getX(), entity.getY(), entity.getZ(), tickDelta);
+    public static Vec3 lerpEntityPosVec(Entity entity, float tickDelta) {
+        return lerpVec(entity.xOld, entity.yOld, entity.zOld, entity.getX(), entity.getY(), entity.getZ(), tickDelta);
     }
 
-    public static Vec3d lerpEntityEyeVec(LivingEntity entity, float tickDelta) {
-        return lerpVec(entity.lastRenderX, entity.lastRenderY, entity.lastRenderZ, entity.getX(), entity.getY(), entity.getZ(), tickDelta).add(0, entity.getStandingEyeHeight(), 0);
+    public static Vec3 lerpEntityEyeVec(LivingEntity entity, float tickDelta) {
+        return lerpVec(entity.xOld, entity.yOld, entity.zOld, entity.getX(), entity.getY(), entity.getZ(), tickDelta).add(0, entity.getEyeHeight(), 0);
     }
 
     public static float[] toPolar(double x, double y, double z) {
@@ -122,9 +122,9 @@ public final class MathUtils {
     public static Vector3d toVector(float pitch, float yaw, float radius) {
         pitch = (float) Math.toRadians(pitch);
         yaw = (float) Math.toRadians(yaw);
-        double x = radius * MathHelper.cos(yaw) * MathHelper.cos(pitch);
-        double y = radius * MathHelper.sin(pitch);
-        double z = radius * MathHelper.sin(yaw) * MathHelper.cos(pitch);
+        double x = radius * Mth.cos(yaw) * Mth.cos(pitch);
+        double y = radius * Mth.sin(pitch);
+        double z = radius * Mth.sin(yaw) * Mth.cos(pitch);
         return new Vector3d(x, y, z);
     }
 
@@ -147,11 +147,11 @@ public final class MathUtils {
         return projectVertex(vector.x, vector.y, vector.z, focalLen);
     }
 
-    public static Vec3d rotate(Vec3d vec, Vec3d og, float pitch, float yaw) {
+    public static Vec3 rotate(Vec3 vec, Vec3 og, float pitch, float yaw) {
         Vector3f vector = vec.subtract(og).toVector3f();
         Quaternionf qYaw = new Quaternionf().rotationY((float)Math.toRadians(yaw));
         Quaternionf qPitch = new Quaternionf().rotationX((float)Math.toRadians(pitch));
         vector = qYaw.mul(qPitch).transform(vector).add(og.toVector3f());
-        return new Vec3d(vector.x, vector.y, vector.z);
+        return new Vec3(vector.x, vector.y, vector.z);
     }
 }

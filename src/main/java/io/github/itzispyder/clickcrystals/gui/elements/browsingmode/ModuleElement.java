@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modrinth.ModrinthSupport;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class ModuleElement extends GuiElement {
 
@@ -36,11 +36,11 @@ public class ModuleElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         boolean isAnimating = animator != null && !animator.isFinished();
         if (isAnimating) {
-            context.getMatrices().pushMatrix();
-            context.getMatrices().translate(-(float)(width * 0.5 * animator.getAnimationReversed()), 0);
+            context.pose().pushMatrix();
+            context.pose().translate(-(float)(width * 0.5 * animator.getAnimationReversed()), 0);
         }
         else {
             animator = null;
@@ -62,7 +62,7 @@ public class ModuleElement extends GuiElement {
         }
 
         if (isAnimating) {
-            context.getMatrices().popMatrix();
+            context.pose().popMatrix();
         }
         if (blacklisted) {
             RenderUtils.fillRect(context, x, y, width, height, 0x60000000);

@@ -1,56 +1,56 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import io.github.itzispyder.clickcrystals.Global;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 public final class BlockUtils implements Global {
 
-    public static ActionResult interact(Vec3d vec) {
+    public static InteractionResult interact(Vec3 vec) {
         return interact(vec,Direction.UP);
     }
 
-    public static ActionResult interact(BlockPos pos, Direction dir) {
-        Vec3d vec = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+    public static InteractionResult interact(BlockPos pos, Direction dir) {
+        Vec3 vec = new Vec3(pos.getX(), pos.getY(), pos.getZ());
         return interact(vec, dir);
     }
 
-    public static ActionResult interact(Vec3d vec3d, Direction dir) {
+    public static InteractionResult interact(Vec3 vec3d, Direction dir) {
         if (PlayerUtils.invalid()) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         Vec3i vec3i = new Vec3i((int) vec3d.x, (int) vec3d.y, (int) vec3d.z);
         BlockPos pos = new BlockPos(vec3i);
         BlockHitResult result = new BlockHitResult(vec3d, dir, pos, false);
         var p = PlayerUtils.player();
-        return PlayerUtils.getInteractions().interactBlock(p, p.getActiveHand(), result);
+        return PlayerUtils.getInteractions().useItemOn(p, p.getUsedItemHand(), result);
     }
 
-    public static ActionResult interact(BlockHitResult result) {
+    public static InteractionResult interact(BlockHitResult result) {
         if (PlayerUtils.invalid()) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         var im = PlayerUtils.getInteractions();
         var p = PlayerUtils.player();
-        return im.interactBlock(p, p.getActiveHand(), result);
+        return im.useItemOn(p, p.getUsedItemHand(), result);
     }
 
     public static boolean matchTargetBlock(Block block) {
-        if (mc.crosshairTarget == null) {
+        if (mc.hitResult == null) {
             return false;
         }
 
-        Vec3d vec3d = mc.crosshairTarget.getPos();
+        Vec3 vec3d = mc.hitResult.getLocation();
         Vec3i vec3i = new Vec3i((int) vec3d.x, (int) vec3d.y, (int) vec3d.z);
         BlockPos pos = new BlockPos(vec3i);
         return matchBlock(pos,block);
@@ -67,9 +67,9 @@ public final class BlockUtils implements Global {
             return false;
         }
 
-        World world = PlayerUtils.getWorld();
+        Level world = PlayerUtils.getWorld();
         BlockState state = world.getBlockState(pos);
-        return state != null && state.isOf(block);
+        return state != null && state.is(block);
     }
 
     public static boolean canCrystalOn(BlockPos pos) {

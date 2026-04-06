@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.scripting.components;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.syntax.logic.AsCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 
 public class ConditionEvaluationContext {
 

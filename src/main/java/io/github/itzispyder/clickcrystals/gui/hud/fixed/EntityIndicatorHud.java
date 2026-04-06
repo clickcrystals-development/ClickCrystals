@@ -11,9 +11,9 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.entityindica
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.util.Mth;
 import org.joml.Quaternionf;
 
 public class EntityIndicatorHud extends Hud {
@@ -24,15 +24,15 @@ public class EntityIndicatorHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context, float tickDelta) {
+    public void render(GuiGraphics context, float tickDelta) {
         EntityIndicator m = Module.get(EntityIndicator.class);
         if (!m.isEnabled() || PlayerUtils.invalid())
             return;
         if (m.updatePerRender.getVal())
             m.update();
 
-        int cx = context.getScaledWindowWidth() / 2;
-        int cy = context.getScaledWindowHeight() / 2;
+        int cx = context.guiWidth() / 2;
+        int cy = context.guiHeight() / 2;
         int radius = m.hudSize.getVal();
 
         EntityIndicatorSimulation sim = m.getSimulation();
@@ -44,12 +44,12 @@ public class EntityIndicatorHud extends Hud {
             this.render3D(context, m, cx, cy, radius, tickDelta); // render 3d
     }
 
-    private void render3D(DrawContext context, EntityIndicator module, int cx, int cy, int radius, float tickDelta) {
+    private void render3D(GuiGraphics context, EntityIndicator module, int cx, int cy, int radius, float tickDelta) {
         EntityIndicatorSimulationRenderer renderer = module.getSimulation().getRenderer();
-        ClientPlayerEntity client = PlayerUtils.player();
+        LocalPlayer client = PlayerUtils.player();
 
-        float pitch = (float) Math.toRadians(client.getPitch(tickDelta));
-        float yaw = (float) Math.toRadians(client.getYaw(tickDelta));
+        float pitch = (float) Math.toRadians(client.getViewXRot(tickDelta));
+        float yaw = (float) Math.toRadians(client.getViewYRot(tickDelta));
 
         Quaternionf qPitch = new Quaternionf().rotationX(-pitch);
         Quaternionf qYaw = new Quaternionf().rotationY(yaw);
@@ -59,27 +59,27 @@ public class EntityIndicatorHud extends Hud {
         renderer.setFocalLen(100);
     }
 
-    private void render2D(DrawContext context, EntityIndicator module, int cx, int cy, int radius, Voidable<SimulationEntry> nearest) {
+    private void render2D(GuiGraphics context, EntityIndicator module, int cx, int cy, int radius, Voidable<SimulationEntry> nearest) {
         int size = module.spriteSize.getVal();
 
         nearest.accept(display -> {
-            context.getMatrices().pushMatrix();
-            context.getMatrices().rotateAbout((float)Math.toRadians(display.getYawDifference()), cx, cy);
+            context.pose().pushMatrix();
+            context.pose().rotateAbout((float)Math.toRadians(display.getYawDifference()), cx, cy);
             RenderUtils.drawTexture(context, Tex.Overlays.DIRECTION, cx - radius, cy - radius, radius * 2, radius * 2);
-            context.getMatrices().popMatrix();
+            context.pose().popMatrix();
         });
 
         for (SimulationEntry display : module.getSimulation().getEntities()) {
             float θ = display.getYawDifference(); // TheTrouper gave me this Unicode LOL (the real theta)
-            int x = (int)(cx + MathHelper.cos(Math.toRadians(θ - 90)) * radius);
-            int y = (int)(cy + MathHelper.sin(Math.toRadians(θ - 90)) * radius);
+            int x = (int)(cx + Mth.cos(Math.toRadians(θ - 90)) * radius);
+            int y = (int)(cy + Mth.sin(Math.toRadians(θ - 90)) * radius);
             MobHeadBrush.drawHead(context, display.getEntityClass(), x - size / 2, y - size / 2, size);
         }
 
         nearest.accept(display -> {
             float θ = display.getYawDifference(); // TheTrouper gave me this Unicode LOL (the real theta)
-            int x = (int)(cx + MathHelper.cos(Math.toRadians(θ - 90)) * radius);
-            int y = (int)(cy + MathHelper.sin(Math.toRadians(θ - 90)) * radius);
+            int x = (int)(cx + Mth.cos(Math.toRadians(θ - 90)) * radius);
+            int y = (int)(cy + Mth.sin(Math.toRadians(θ - 90)) * radius);
             int bigger = size + 2;
 
             RenderUtils.fillRect(context, x - bigger / 2 - 1, y - bigger / 2 - 1, bigger + 2, bigger + 2, 0xFFFFFFFF);

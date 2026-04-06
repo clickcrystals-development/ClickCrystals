@@ -13,10 +13,10 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 @ModrinthNoNo
 public class AutoReplenish extends ListenerModule {
@@ -51,10 +51,10 @@ public class AutoReplenish extends ListenerModule {
             return;
 
         Item item = e.getItem();
-        if (HotbarUtils.getHand(Hand.MAIN_HAND).isOf(item))
-            set(item, HotbarUtils.getHand(Hand.MAIN_HAND).getCount());
-        else if (HotbarUtils.getHand(Hand.OFF_HAND).isOf(item))
-            set(item, HotbarUtils.getHand(Hand.OFF_HAND).getCount());
+        if (HotbarUtils.getHand(InteractionHand.MAIN_HAND).is(item))
+            set(item, HotbarUtils.getHand(InteractionHand.MAIN_HAND).getCount());
+        else if (HotbarUtils.getHand(InteractionHand.OFF_HAND).is(item))
+            set(item, HotbarUtils.getHand(InteractionHand.OFF_HAND).getCount());
     }
 
     @EventHandler
@@ -63,9 +63,9 @@ public class AutoReplenish extends ListenerModule {
             return;
 
         Item item = e.getItem().getItem();
-        if (HotbarUtils.getHand(Hand.MAIN_HAND).isOf(item))
+        if (HotbarUtils.getHand(InteractionHand.MAIN_HAND).is(item))
             set(item, e.getItem().getCount());
-        else if (HotbarUtils.getHand(Hand.OFF_HAND).isOf(item))
+        else if (HotbarUtils.getHand(InteractionHand.OFF_HAND).is(item))
             set(item, e.getItem().getCount());
     }
 
@@ -77,12 +77,12 @@ public class AutoReplenish extends ListenerModule {
             return;
 
         if (e.getAction().isDown()) {
-            if (!HotbarUtils.getHand(Hand.MAIN_HAND).isEmpty()) {
-                ItemStack item = HotbarUtils.getHand(Hand.MAIN_HAND);
+            if (!HotbarUtils.getHand(InteractionHand.MAIN_HAND).isEmpty()) {
+                ItemStack item = HotbarUtils.getHand(InteractionHand.MAIN_HAND);
                 set(item.getItem(), item.getCount());
             }
-            else if (!HotbarUtils.getHand(Hand.OFF_HAND).isEmpty()) {
-                ItemStack item = HotbarUtils.getHand(Hand.OFF_HAND);
+            else if (!HotbarUtils.getHand(InteractionHand.OFF_HAND).isEmpty()) {
+                ItemStack item = HotbarUtils.getHand(InteractionHand.OFF_HAND);
                 set(item.getItem(), item.getCount());
             }
         }
@@ -99,13 +99,13 @@ public class AutoReplenish extends ListenerModule {
     private void onItemClick(Item item, int count) {
         set(null, 0);
 
-        if (item.getMaxCount() <= 1)
+        if (item.getDefaultMaxStackSize() <= 1)
             return;
-        if (count > 1 && count > item.getMaxCount() * replenishPercentage.getVal())
+        if (count > 1 && count > item.getDefaultMaxStackSize() * replenishPercentage.getVal())
             return;
 
         // if hotbar already has the item, then prioritize that
-        if (HotbarUtils.hasButNotHolding(target -> target.isOf(item))) {
+        if (HotbarUtils.hasButNotHolding(target -> target.is(item))) {
             HotbarUtils.search(item);
             return;
         }
@@ -116,7 +116,7 @@ public class AutoReplenish extends ListenerModule {
             return;
 
         if (count <= 1)
-            InvUtils.sendSlotPacket(slot, InvUtils.selected(), SlotActionType.SWAP);
+            InvUtils.sendSlotPacket(slot, InvUtils.selected(), ClickType.SWAP);
         else
             InvUtils.quickMove(slot);
     }

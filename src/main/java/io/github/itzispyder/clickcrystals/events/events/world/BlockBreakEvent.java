@@ -1,17 +1,17 @@
 package io.github.itzispyder.clickcrystals.events.events.world;
 
 import io.github.itzispyder.clickcrystals.events.Event;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class BlockBreakEvent extends Event {
 
     private final BlockPos pos;
     private final BlockState state;
-    private final WorldAccess world;
+    private final LevelAccessor world;
 
-    public BlockBreakEvent(BlockPos pos, BlockState state, WorldAccess world) {
+    public BlockBreakEvent(BlockPos pos, BlockState state, LevelAccessor world) {
         this.pos = pos;
         this.state = state;
         this.world = world;
@@ -25,7 +25,7 @@ public class BlockBreakEvent extends Event {
         return state;
     }
 
-    public WorldAccess getWorld() {
+    public LevelAccessor getWorld() {
         return world;
     }
 }

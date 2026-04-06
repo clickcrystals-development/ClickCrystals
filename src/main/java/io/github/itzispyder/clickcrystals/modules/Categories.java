@@ -1,9 +1,8 @@
 package io.github.itzispyder.clickcrystals.modules;
 
-import net.minecraft.util.Identifier;
-
 import java.util.LinkedHashMap;
 import java.util.function.Consumer;
+import net.minecraft.resources.Identifier;
 
 public abstract class Categories {
 
@@ -18,7 +17,7 @@ public abstract class Categories {
             SCRIPTED         = register("Custom Made", "clickcrystals:textures/display/categories/scripted.png");
 
     private static Category register(String name, String texPath) {
-        Category c = new Category(name, Identifier.of(texPath));
+        Category c = new Category(name, Identifier.parse(texPath));
         categories.put(name, c);
         return c;
     }

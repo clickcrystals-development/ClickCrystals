@@ -1,37 +1,37 @@
 package io.github.itzispyder.clickcrystals.events.events.world;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.events.Event;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.Camera;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 
 public class RenderWorldEvent extends Event {
 
-    private final MatrixStack matrices;
+    private final PoseStack matrices;
     private final Matrix4f rotationMatrix, projectionMatrix;
     private final GameRenderer renderer;
-    private final RenderTickCounter tickCounter;
+    private final DeltaTracker tickCounter;
 
-    public RenderWorldEvent(GameRenderer renderer, Matrix4f rotationMatrix, Matrix4f projectionMatrix, RenderTickCounter tickCounter) {
+    public RenderWorldEvent(GameRenderer renderer, Matrix4f rotationMatrix, Matrix4f projectionMatrix, DeltaTracker tickCounter) {
         this.tickCounter = tickCounter;
         this.renderer = renderer;
         this.rotationMatrix = rotationMatrix;
         this.projectionMatrix = projectionMatrix;
-        this.matrices = new MatrixStack();
-        this.matrices.multiplyPositionMatrix(rotationMatrix);
+        this.matrices = new PoseStack();
+        this.matrices.mulPose(rotationMatrix);
     }
 
-    public MatrixStack getMatrices() {
+    public PoseStack getMatrices() {
         return matrices;
     }
 
-    public RenderTickCounter getTickCounter() {
+    public DeltaTracker getTickCounter() {
         return tickCounter;
     }
 
@@ -48,23 +48,23 @@ public class RenderWorldEvent extends Event {
     }
 
     public Camera getCamera() {
-        return renderer.getCamera();
+        return renderer.getMainCamera();
     }
 
-    public ClientPlayerEntity getPlayer() {
+    public LocalPlayer getPlayer() {
         return PlayerUtils.player();
     }
 
-    public Vec3d getOffsetPos(Vec3d pos) {
-        return pos.subtract(getCamera().getCameraPos());
+    public Vec3 getOffsetPos(Vec3 pos) {
+        return pos.subtract(getCamera().position());
     }
 
-    public Vec3d getOffsetPos(BlockPos pos) {
-        var c = getCamera().getCameraPos();
+    public Vec3 getOffsetPos(BlockPos pos) {
+        var c = getCamera().position();
         double x = pos.getX() - c.x;
         double y = pos.getY() - c.y;
         double z = pos.getZ() - c.z;
-        return new Vec3d(x, y, z);
+        return new Vec3(x, y, z);
     }
 
     public boolean valid() {

@@ -5,7 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.TeamDetector;
-import net.minecraft.command.CommandSource;
+import net.minecraft.commands.SharedSuggestionProvider;
 
 public class TeamCommand extends Command {
 
@@ -14,7 +14,7 @@ public class TeamCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
         builder.then(literal("add")
                 .then(argument("player", StringArgumentType.string())
                         .executes(context -> {

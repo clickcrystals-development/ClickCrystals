@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlot;
 
 public class NoArmorRender extends DummyModule {
 

@@ -4,10 +4,9 @@ import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.screens.BanScreen;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.session.Session;
-
 import java.util.UUID;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.User;
 
 public class ClickCrystalsGate implements Global {
 
@@ -28,7 +27,7 @@ public class ClickCrystalsGate implements Global {
 
     public Voidable<ClickCrystalsInfo.Ban> getBanSession() {
         try {
-            UUID id = MinecraftClient.getInstance().getSession().getUuidOrNull();
+            UUID id = Minecraft.getInstance().getUser().getProfileId();
             return Voidable.of(info().getBlacklisted(id));
         }
         catch (Exception ex) {
@@ -40,9 +39,9 @@ public class ClickCrystalsGate implements Global {
 
     public Voidable<ClickCrystalsInfo.User> getSessionUser() {
         try {
-            Session ses = MinecraftClient.getInstance().getSession();
-            UUID id = ses.getUuidOrNull();
-            String name = ses.getUsername();
+            User ses = Minecraft.getInstance().getUser();
+            UUID id = ses.getProfileId();
+            String name = ses.getName();
             return Voidable.of(new ClickCrystalsInfo.User(name, id));
         }
         catch (Exception ex) {
@@ -54,7 +53,7 @@ public class ClickCrystalsGate implements Global {
 
     public void banishCurrentSession() {
         try {
-            MinecraftClient mc = MinecraftClient.getInstance();
+            Minecraft mc = Minecraft.getInstance();
             mc.execute(() -> mc.disconnect(new BanScreen(), false, true));
         }
         catch (Exception ex) {

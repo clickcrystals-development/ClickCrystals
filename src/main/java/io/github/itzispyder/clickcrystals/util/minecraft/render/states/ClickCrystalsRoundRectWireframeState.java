@@ -1,27 +1,27 @@
 package io.github.itzispyder.clickcrystals.util.minecraft.render.states;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.ScreenRect;
-import net.minecraft.client.gui.render.state.SimpleGuiElementRenderState;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.texture.TextureSetup;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.navigation.ScreenRectangle;
+import net.minecraft.client.gui.render.TextureSetup;
+import net.minecraft.client.gui.render.state.GuiElementRenderState;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix3x2f;
 
-public class ClickCrystalsRoundRectWireframeState implements SimpleGuiElementRenderState {
+public class ClickCrystalsRoundRectWireframeState implements GuiElementRenderState {
 
     private final RenderPipeline pipeline;
     private final TextureSetup texture;
     private final Matrix3x2f pose;
     public float x, y, w, h, r, thickness;
     public int colorInner1, colorOuter1, colorInner2, colorOuter2, colorInner3, colorOuter3, colorInner4, colorOuter4;
-    private final ScreenRect scissor, bounds;
+    private final ScreenRectangle scissor, bounds;
 
-    public ClickCrystalsRoundRectWireframeState(RenderPipeline pipeline, TextureSetup texture, Matrix3x2f pose, float x, float y, float w, float h, float r, float thickness, int colorInner1, int colorOuter1, int colorInner2, int colorOuter2, int colorInner3, int colorOuter3, int colorInner4, int colorOuter4, ScreenRect scissor, ScreenRect bounds) {
+    public ClickCrystalsRoundRectWireframeState(RenderPipeline pipeline, TextureSetup texture, Matrix3x2f pose, float x, float y, float w, float h, float r, float thickness, int colorInner1, int colorOuter1, int colorInner2, int colorOuter2, int colorInner3, int colorOuter3, int colorInner4, int colorOuter4, ScreenRectangle scissor, ScreenRectangle bounds) {
         this.pipeline = pipeline;
         this.texture = texture;
         this.pose = pose;
@@ -43,8 +43,8 @@ public class ClickCrystalsRoundRectWireframeState implements SimpleGuiElementRen
         this.bounds = bounds;
     }
 
-    public ClickCrystalsRoundRectWireframeState(Matrix3x2f pose, float x, float y, float w, float h, float r, float thickness, int colorInner1, int colorOuter1, int colorInner2, int colorOuter2, int colorInner3, int colorOuter3, int colorInner4, int colorOuter4, ScreenRect scissor) {
-        this(ClickCrystalsRenderPipelines.PIPELINE_QUADS, TextureSetup.empty(), pose,
+    public ClickCrystalsRoundRectWireframeState(Matrix3x2f pose, float x, float y, float w, float h, float r, float thickness, int colorInner1, int colorOuter1, int colorInner2, int colorOuter2, int colorInner3, int colorOuter3, int colorInner4, int colorOuter4, ScreenRectangle scissor) {
+        this(ClickCrystalsRenderPipelines.PIPELINE_QUADS, TextureSetup.noTexture(), pose,
                 x, y, w, h, (float) MathUtils.clamp(r, 0, Math.min(w, h) / 2), thickness,
                 colorInner1, colorOuter1, colorInner2, colorOuter2, colorInner3, colorOuter3, colorInner4, colorOuter4,
                 scissor,
@@ -54,22 +54,22 @@ public class ClickCrystalsRoundRectWireframeState implements SimpleGuiElementRen
                 ));
     }
 
-    public ClickCrystalsRoundRectWireframeState(DrawContext context, float x, float y, float w, float h, float r, float thickness, int colorInner1, int colorOuter1, int colorInner2, int colorOuter2, int colorInner3, int colorOuter3, int colorInner4, int colorOuter4) {
-        this(new Matrix3x2f(context.getMatrices()), x, y, w, h, r, thickness, colorInner1, colorOuter1, colorInner2, colorOuter2, colorInner3, colorOuter3, colorInner4, colorOuter4, context.scissorStack.peekLast());
+    public ClickCrystalsRoundRectWireframeState(GuiGraphics context, float x, float y, float w, float h, float r, float thickness, int colorInner1, int colorOuter1, int colorInner2, int colorOuter2, int colorInner3, int colorOuter3, int colorInner4, int colorOuter4) {
+        this(new Matrix3x2f(context.pose()), x, y, w, h, r, thickness, colorInner1, colorOuter1, colorInner2, colorOuter2, colorInner3, colorOuter3, colorInner4, colorOuter4, context.scissorStack.peek());
     }
 
-    public ClickCrystalsRoundRectWireframeState(DrawContext context, float x, float y, float w, float h, float r, float thickness, int colorInner, int colorOuter) {
-        this(new Matrix3x2f(context.getMatrices()), x, y, w, h, r, thickness, colorInner, colorOuter, colorInner, colorOuter, colorInner, colorOuter, colorInner, colorOuter, context.scissorStack.peekLast());
+    public ClickCrystalsRoundRectWireframeState(GuiGraphics context, float x, float y, float w, float h, float r, float thickness, int colorInner, int colorOuter) {
+        this(new Matrix3x2f(context.pose()), x, y, w, h, r, thickness, colorInner, colorOuter, colorInner, colorOuter, colorInner, colorOuter, colorInner, colorOuter, context.scissorStack.peek());
     }
 
-    public ClickCrystalsRoundRectWireframeState(DrawContext context, float x, float y, float w, float h, float r, float thickness, int color) {
+    public ClickCrystalsRoundRectWireframeState(GuiGraphics context, float x, float y, float w, float h, float r, float thickness, int color) {
         this(context, x, y, w, h, r, thickness, color, color);
     }
 
     // squeezes entire quads into triangle fans for rounded rectangle
     // ...yeah i know ...blame vibrant visuals
     @Override
-    public void setupVertices(VertexConsumer buf) {
+    public void buildVertices(VertexConsumer buf) {
         float[][] corners = {
                 { x + w - r,  y + h - r },
                 { x + r,      y + h - r },
@@ -88,42 +88,42 @@ public class ClickCrystalsRoundRectWireframeState implements SimpleGuiElementRen
             float angle;
 
             angle = (float)Math.toRadians(i);
-            float x1 = corners[corner][0] + (MathHelper.cos(angle) * r);
-            float y1 = corners[corner][1] + (MathHelper.sin(angle) * r);
-            float x4 = corners[corner][0] + MathHelper.cos(angle) * (r + thickness);
-            float y4 = corners[corner][1] + MathHelper.sin(angle) * (r + thickness);
+            float x1 = corners[corner][0] + (Mth.cos(angle) * r);
+            float y1 = corners[corner][1] + (Mth.sin(angle) * r);
+            float x4 = corners[corner][0] + Mth.cos(angle) * (r + thickness);
+            float y4 = corners[corner][1] + Mth.sin(angle) * (r + thickness);
 
             angle = (float)Math.toRadians(i + 10);
-            float x2 = corners[corner][0] + (MathHelper.cos(angle) * r);
-            float y2 = corners[corner][1] + (MathHelper.sin(angle) * r);
-            float x3 = corners[corner][0] + MathHelper.cos(angle) * (r + thickness);
-            float y3 = corners[corner][1] + MathHelper.sin(angle) * (r + thickness);
+            float x2 = corners[corner][0] + (Mth.cos(angle) * r);
+            float y2 = corners[corner][1] + (Mth.sin(angle) * r);
+            float x3 = corners[corner][0] + Mth.cos(angle) * (r + thickness);
+            float y3 = corners[corner][1] + Mth.sin(angle) * (r + thickness);
 
-            buf.vertex(pose, x1, y1).color(colors[corner][0]);
-            buf.vertex(pose, x2, y2).color(colors[corner][0]);
-            buf.vertex(pose, x3, y3).color(colors[corner][1]);
-            buf.vertex(pose, x4, y4).color(colors[corner][1]);
+            buf.addVertexWith2DPose(pose, x1, y1).setColor(colors[corner][0]);
+            buf.addVertexWith2DPose(pose, x2, y2).setColor(colors[corner][0]);
+            buf.addVertexWith2DPose(pose, x3, y3).setColor(colors[corner][1]);
+            buf.addVertexWith2DPose(pose, x4, y4).setColor(colors[corner][1]);
         }
 
-        buf.vertex(pose, x + w - r, y + h).color(colors[0][0]);
-        buf.vertex(pose, x + r, y + h).color(colors[0][0]);
-        buf.vertex(pose, x + r, y + h + thickness).color(colors[0][1]);
-        buf.vertex(pose, x + w - r, y + h + thickness).color(colors[0][1]);
+        buf.addVertexWith2DPose(pose, x + w - r, y + h).setColor(colors[0][0]);
+        buf.addVertexWith2DPose(pose, x + r, y + h).setColor(colors[0][0]);
+        buf.addVertexWith2DPose(pose, x + r, y + h + thickness).setColor(colors[0][1]);
+        buf.addVertexWith2DPose(pose, x + w - r, y + h + thickness).setColor(colors[0][1]);
 
-        buf.vertex(pose, x, y + h - r).color(colors[1][0]);
-        buf.vertex(pose, x, y + r).color(colors[1][0]);
-        buf.vertex(pose, x - thickness, y + r).color(colors[1][1]);
-        buf.vertex(pose, x - thickness, y + h - r).color(colors[1][1]);
+        buf.addVertexWith2DPose(pose, x, y + h - r).setColor(colors[1][0]);
+        buf.addVertexWith2DPose(pose, x, y + r).setColor(colors[1][0]);
+        buf.addVertexWith2DPose(pose, x - thickness, y + r).setColor(colors[1][1]);
+        buf.addVertexWith2DPose(pose, x - thickness, y + h - r).setColor(colors[1][1]);
 
-        buf.vertex(pose, x + r, y).color(colors[2][0]);
-        buf.vertex(pose, x + w - r, y).color(colors[2][0]);
-        buf.vertex(pose, x + w - r, y - thickness).color(colors[2][1]);
-        buf.vertex(pose, x + r, y - thickness).color(colors[2][1]);
+        buf.addVertexWith2DPose(pose, x + r, y).setColor(colors[2][0]);
+        buf.addVertexWith2DPose(pose, x + w - r, y).setColor(colors[2][0]);
+        buf.addVertexWith2DPose(pose, x + w - r, y - thickness).setColor(colors[2][1]);
+        buf.addVertexWith2DPose(pose, x + r, y - thickness).setColor(colors[2][1]);
 
-        buf.vertex(pose, x + w, y + r).color(colors[3][0]);
-        buf.vertex(pose, x + w, y + h - r).color(colors[3][0]);
-        buf.vertex(pose, x + w + thickness, y + h - r).color(colors[3][1]);
-        buf.vertex(pose, x + w + thickness, y + r).color(colors[3][1]);
+        buf.addVertexWith2DPose(pose, x + w, y + r).setColor(colors[3][0]);
+        buf.addVertexWith2DPose(pose, x + w, y + h - r).setColor(colors[3][0]);
+        buf.addVertexWith2DPose(pose, x + w + thickness, y + h - r).setColor(colors[3][1]);
+        buf.addVertexWith2DPose(pose, x + w + thickness, y + r).setColor(colors[3][1]);
     }
 
     @Override
@@ -138,22 +138,22 @@ public class ClickCrystalsRoundRectWireframeState implements SimpleGuiElementRen
 
     @Nullable
     @Override
-    public ScreenRect scissorArea() {
+    public ScreenRectangle scissorArea() {
         return scissor;
     }
 
     @Nullable
     @Override
-    public ScreenRect bounds() {
+    public ScreenRectangle bounds() {
         return bounds;
     }
 
-    private static ScreenRect createBounds(Matrix3x2f pose, ScreenRect scissor, float x, float y, float w, float h, float thickness) {
+    private static ScreenRectangle createBounds(Matrix3x2f pose, ScreenRectangle scissor, float x, float y, float w, float h, float thickness) {
         int a = (int) (x - thickness);
         int b = (int) (y - thickness);
         int c = (int) (w + thickness * 2);
         int d = (int) (h + thickness * 2);
-        ScreenRect bounds = new ScreenRect(a, b, c, d).transformEachVertex(pose);
+        ScreenRectangle bounds = new ScreenRectangle(a, b, c, d).transformMaxBounds(pose);
         return scissor == null ? bounds : scissor.intersection(bounds);
     }
 }

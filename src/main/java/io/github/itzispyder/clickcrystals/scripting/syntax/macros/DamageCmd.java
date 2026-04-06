@@ -8,15 +8,14 @@ import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-
 import java.util.function.Predicate;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 // @Format damage (nearest_entity|nearest_block) <identifier>
 // @Format damage (any_entity|target_entity|any_block)
@@ -31,7 +30,7 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        if (mc.interactionManager == null) {
+        if (mc.gameMode == null) {
             return;
         }
 
@@ -41,36 +40,36 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(read.nextStr());
                 PlayerUtils.runOnNearestEntity(128, filter, entity -> {
-                    if (entity instanceof PlayerEntity player && EntityUtils.shouldCancelCcsAttack(player)) {
+                    if (entity instanceof Player player && EntityUtils.shouldCancelCcsAttack(player)) {
                         return; // Skip attacking teammates
                     }
-                    mc.interactionManager.attackEntity(mc.player, entity);
+                    mc.gameMode.attack(mc.player, entity);
                 });
                 read.executeThenChain();
             }
             case ANY_ENTITY -> {
                 PlayerUtils.runOnNearestEntity(128, ENTITY_EXISTS, entity -> {
-                    if (entity instanceof PlayerEntity player && EntityUtils.shouldCancelCcsAttack(player)) {
+                    if (entity instanceof Player player && EntityUtils.shouldCancelCcsAttack(player)) {
                         return; // Skip attacking teammates
                     }
-                    mc.interactionManager.attackEntity(mc.player, entity);
+                    mc.gameMode.attack(mc.player, entity);
                 });
                 read.executeThenChain();
             }
             case NEAREST_BLOCK -> {
                 Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(read.nextStr());
                 PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> {
-                    Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
-                    Direction face = Direction.getFacing(vector);
-                    mc.interactionManager.attackBlock(pos, face);
+                    Vec3 vector = PlayerUtils.getEyes().subtract(pos.getCenter());
+                    Direction face = Direction.getApproximateNearest(vector);
+                    mc.gameMode.startDestroyBlock(pos, face);
                 });
                 read.executeThenChain();
             }
             case ANY_BLOCK -> {
                 PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> {
-                    Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
-                    Direction face = Direction.getFacing(vector);
-                    mc.interactionManager.attackBlock(pos, face);
+                    Vec3 vector = PlayerUtils.getEyes().subtract(pos.getCenter());
+                    Direction face = Direction.getApproximateNearest(vector);
+                    mc.gameMode.startDestroyBlock(pos, face);
                 });
                 read.executeThenChain();
             }
@@ -81,10 +80,10 @@ public class DamageCmd extends ScriptCommand implements ThenChainable {
                         read.nextStr(),
                         PlayerUtils.player()
                 );
-                BlockPos pos = BlockPos.ofFloored(parser.getVector());
-                Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
-                Direction face = Direction.getFacing(vector);
-                mc.interactionManager.attackBlock(pos, face);
+                BlockPos pos = BlockPos.containing(parser.getVector());
+                Vec3 vector = PlayerUtils.getEyes().subtract(pos.getCenter());
+                Direction face = Direction.getApproximateNearest(vector);
+                mc.gameMode.startDestroyBlock(pos, face);
                 read.executeThenChain();
             }
             default -> throw new IllegalArgumentException("unsupported operation");

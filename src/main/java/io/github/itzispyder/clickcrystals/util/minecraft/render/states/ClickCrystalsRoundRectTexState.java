@@ -3,28 +3,28 @@ package io.github.itzispyder.clickcrystals.util.minecraft.render.states;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.FilterMode;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.ScreenRect;
-import net.minecraft.client.gui.render.state.SimpleGuiElementRenderState;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.texture.TextureSetup;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.navigation.ScreenRectangle;
+import net.minecraft.client.gui.render.TextureSetup;
+import net.minecraft.client.gui.render.state.GuiElementRenderState;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix3x2f;
 
-public class ClickCrystalsRoundRectTexState implements SimpleGuiElementRenderState {
+public class ClickCrystalsRoundRectTexState implements GuiElementRenderState {
 
     private final RenderPipeline pipeline;
     private final TextureSetup texture;
     private final Matrix3x2f pose;
     public float x, y, w, h, r;
-    private final ScreenRect scissor, bounds;
+    private final ScreenRectangle scissor, bounds;
 
-    public ClickCrystalsRoundRectTexState(RenderPipeline pipeline, TextureSetup texture, Matrix3x2f pose, float x, float y, float w, float h, float r, ScreenRect scissor, ScreenRect bounds) {
+    public ClickCrystalsRoundRectTexState(RenderPipeline pipeline, TextureSetup texture, Matrix3x2f pose, float x, float y, float w, float h, float r, ScreenRectangle scissor, ScreenRectangle bounds) {
         this.pipeline = pipeline;
         this.texture = texture;
         this.pose = pose;
@@ -37,13 +37,13 @@ public class ClickCrystalsRoundRectTexState implements SimpleGuiElementRenderSta
         this.bounds = bounds;
     }
 
-    public ClickCrystalsRoundRectTexState(Matrix3x2f pose, Identifier texture, float x, float y, float w, float h, float r, ScreenRect scissor) {
+    public ClickCrystalsRoundRectTexState(Matrix3x2f pose, Identifier texture, float x, float y, float w, float h, float r, ScreenRectangle scissor) {
         this(ClickCrystalsRenderPipelines.PIPELINE_TEX_QUADS,
-                TextureSetup.of(MinecraftClient.getInstance()
+                TextureSetup.singleTexture(Minecraft.getInstance()
                         .getTextureManager()
                         .getTexture(texture)
-                        .getGlTextureView(),
-                        RenderSystem.getSamplerCache().get(FilterMode.NEAREST)),
+                        .getTextureView(),
+                        RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST)),
                 pose,
                 x, y, w, h, (float) MathUtils.clamp(r, 0, Math.min(w, h) / 2),
                 scissor,
@@ -53,14 +53,14 @@ public class ClickCrystalsRoundRectTexState implements SimpleGuiElementRenderSta
                 ));
     }
 
-    public ClickCrystalsRoundRectTexState(DrawContext context, Identifier texture, float x, float y, float w, float h, float r) {
-        this(new Matrix3x2f(context.getMatrices()), texture, x, y, w, h, r, context.scissorStack.peekLast());
+    public ClickCrystalsRoundRectTexState(GuiGraphics context, Identifier texture, float x, float y, float w, float h, float r) {
+        this(new Matrix3x2f(context.pose()), texture, x, y, w, h, r, context.scissorStack.peek());
     }
 
     // squeezes entire quads into triangle fans for rounded rectangle
     // ...yeah i know ...blame vibrant visuals
     @Override
-    public void setupVertices(VertexConsumer buf) {
+    public void buildVertices(VertexConsumer buf) {
         float[][] corners = {
                 { x + w - r,  y + h - r },
                 { x + r,      y + h - r },
@@ -78,42 +78,42 @@ public class ClickCrystalsRoundRectTexState implements SimpleGuiElementRenderSta
             float angle;
 
             angle = (float)Math.toRadians(i);
-            float x2 = corners[corner][0] + (MathHelper.cos(angle) * r);
-            float y2 = corners[corner][1] + (MathHelper.sin(angle) * r);
+            float x2 = corners[corner][0] + (Mth.cos(angle) * r);
+            float y2 = corners[corner][1] + (Mth.sin(angle) * r);
             float u2 = (x2 - x) / w;
             float v2 = (y2 - y) / h;
 
             angle = (float)Math.toRadians(i + 10);
-            float x3 = corners[corner][0] + (MathHelper.cos(angle) * r);
-            float y3 = corners[corner][1] + (MathHelper.sin(angle) * r);
+            float x3 = corners[corner][0] + (Mth.cos(angle) * r);
+            float y3 = corners[corner][1] + (Mth.sin(angle) * r);
             float u3 = (x3 - x) / w;
             float v3 = (y3 - y) / h;
 
-            buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
-            buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
-            buf.vertex(pose, x2, y2).texture(u2, v2).color(-1);
-            buf.vertex(pose, x3, y3).texture(u3, v3).color(-1);
+            buf.addVertexWith2DPose(pose, x1, y1).setUv(u1, v1).setColor(-1);
+            buf.addVertexWith2DPose(pose, x1, y1).setUv(u1, v1).setColor(-1);
+            buf.addVertexWith2DPose(pose, x2, y2).setUv(u2, v2).setColor(-1);
+            buf.addVertexWith2DPose(pose, x3, y3).setUv(u3, v3).setColor(-1);
         }
 
-        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
-        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
-        buf.vertex(pose, x + w - r, y + h).texture((w - r) / w, 1).color(-1);
-        buf.vertex(pose, x + r, y + h).texture(r / w, 1).color(-1);
+        buf.addVertexWith2DPose(pose, x1, y1).setUv(u1, v1).setColor(-1);
+        buf.addVertexWith2DPose(pose, x1, y1).setUv(u1, v1).setColor(-1);
+        buf.addVertexWith2DPose(pose, x + w - r, y + h).setUv((w - r) / w, 1).setColor(-1);
+        buf.addVertexWith2DPose(pose, x + r, y + h).setUv(r / w, 1).setColor(-1);
 
-        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
-        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
-        buf.vertex(pose, x, y + h - r).texture(0, (h - r) / h).color(-1);
-        buf.vertex(pose, x, y + r).texture(0, r / h).color(-1);
+        buf.addVertexWith2DPose(pose, x1, y1).setUv(u1, v1).setColor(-1);
+        buf.addVertexWith2DPose(pose, x1, y1).setUv(u1, v1).setColor(-1);
+        buf.addVertexWith2DPose(pose, x, y + h - r).setUv(0, (h - r) / h).setColor(-1);
+        buf.addVertexWith2DPose(pose, x, y + r).setUv(0, r / h).setColor(-1);
 
-        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
-        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
-        buf.vertex(pose, x + r, y).texture(r / w, 0).color(-1);
-        buf.vertex(pose, x + w - r, y).texture((w - r) / w, 0).color(-1);
+        buf.addVertexWith2DPose(pose, x1, y1).setUv(u1, v1).setColor(-1);
+        buf.addVertexWith2DPose(pose, x1, y1).setUv(u1, v1).setColor(-1);
+        buf.addVertexWith2DPose(pose, x + r, y).setUv(r / w, 0).setColor(-1);
+        buf.addVertexWith2DPose(pose, x + w - r, y).setUv((w - r) / w, 0).setColor(-1);
 
-        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
-        buf.vertex(pose, x1, y1).texture(u1, v1).color(-1);
-        buf.vertex(pose, x + w, y + r).texture(1, r / h).color(-1);
-        buf.vertex(pose, x + w, y + h - r).texture(1, (h - r) / h).color(-1);
+        buf.addVertexWith2DPose(pose, x1, y1).setUv(u1, v1).setColor(-1);
+        buf.addVertexWith2DPose(pose, x1, y1).setUv(u1, v1).setColor(-1);
+        buf.addVertexWith2DPose(pose, x + w, y + r).setUv(1, r / h).setColor(-1);
+        buf.addVertexWith2DPose(pose, x + w, y + h - r).setUv(1, (h - r) / h).setColor(-1);
     }
 
     @Override
@@ -128,18 +128,18 @@ public class ClickCrystalsRoundRectTexState implements SimpleGuiElementRenderSta
 
     @Nullable
     @Override
-    public ScreenRect scissorArea() {
+    public ScreenRectangle scissorArea() {
         return scissor;
     }
 
     @Nullable
     @Override
-    public ScreenRect bounds() {
+    public ScreenRectangle bounds() {
         return bounds;
     }
 
-    private static ScreenRect createBounds(Matrix3x2f pose, ScreenRect scissor, float x, float y, float w, float h) {
-        ScreenRect bounds = new ScreenRect((int) x, (int) y, (int) w, (int) h).transformEachVertex(pose);
+    private static ScreenRectangle createBounds(Matrix3x2f pose, ScreenRectangle scissor, float x, float y, float w, float h) {
+        ScreenRectangle bounds = new ScreenRectangle((int) x, (int) y, (int) w, (int) h).transformMaxBounds(pose);
         return scissor == null ? bounds : scissor.intersection(bounds);
     }
 }

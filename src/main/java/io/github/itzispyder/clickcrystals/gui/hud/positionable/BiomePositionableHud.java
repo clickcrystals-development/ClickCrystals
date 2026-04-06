@@ -5,13 +5,12 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-
 import java.util.Optional;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 
 public class BiomePositionableHud extends TextHud {
 
@@ -24,13 +23,13 @@ public class BiomePositionableHud extends TextHud {
         String name = "UNKNOWN";
 
         if (PlayerUtils.valid()) {
-            ClientPlayerEntity p = PlayerUtils.player();
-            BlockPos pos = p.getBlockPos();
-            World w = p.getEntityWorld();
-            Optional<RegistryKey<Biome>> bi = w.getBiome(pos).getKey();
+            LocalPlayer p = PlayerUtils.player();
+            BlockPos pos = p.blockPosition();
+            Level w = p.level();
+            Optional<ResourceKey<Biome>> bi = w.getBiome(pos).unwrapKey();
 
             if (bi.isPresent()) {
-                String[] secs = bi.get().getValue().toTranslationKey().split("\\.");
+                String[] secs = bi.get().identifier().toLanguageKey().split("\\.");
                 name = StringUtils.capitalizeWords(secs[secs.length - 1]);
             }
         }

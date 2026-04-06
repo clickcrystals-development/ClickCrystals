@@ -6,10 +6,9 @@ import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluati
 import io.github.itzispyder.clickcrystals.scripting.components.Conditional;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.block.BlockState;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class ConditionalBlockInRange implements Conditional {
 
@@ -20,7 +19,7 @@ public class ConditionalBlockInRange implements Conditional {
         double range = ctx.get(1).toDouble();
 
         EntityUtils.runOnNearestBlock(ctx.entity, range, filter,
-                (pos, state) -> bl.set(pos.toCenterPos().distanceTo(PlayerUtils.getPos()) <= range));
+                (pos, state) -> bl.set(pos.getCenter().distanceTo(PlayerUtils.getPos()) <= range));
         return ctx.end(true, bl.get());
     }
 }

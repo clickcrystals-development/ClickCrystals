@@ -1,6 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
-import net.minecraft.client.render.Camera;
+import net.minecraft.client.Camera;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
@@ -10,6 +10,6 @@ public interface AccessorCamera {
     @Invoker("setRotation")
     void invokeSetRotation(float yaw, float pitch);
 
-    @Invoker("clipToSpace")
+    @Invoker("getMaxZoom")
     float invokeClipToSpace(float desiredCameraDistance);
 }

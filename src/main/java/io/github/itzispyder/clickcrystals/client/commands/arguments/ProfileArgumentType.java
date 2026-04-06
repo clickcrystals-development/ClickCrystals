@@ -8,16 +8,15 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.github.itzispyder.clickcrystals.Global;
-import net.minecraft.command.CommandSource;
-import net.minecraft.text.Text;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.Component;
 
 public class ProfileArgumentType implements Global, ArgumentType<String> {
 
-    public static final DynamicCommandExceptionType profileNotFound = new DynamicCommandExceptionType(name -> Text.literal("Profile not found: " + name));
+    public static final DynamicCommandExceptionType profileNotFound = new DynamicCommandExceptionType(name -> Component.literal("Profile not found: " + name));
 
     public static ProfileArgumentType create() {
         return new ProfileArgumentType();
@@ -37,6 +36,6 @@ public class ProfileArgumentType implements Global, ArgumentType<String> {
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
         List<String> list = Arrays.asList(system.profiles.getCustomProfiles());
-        return CommandSource.suggestMatching(list, builder);
+        return SharedSuggestionProvider.suggest(list, builder);
     }
 }

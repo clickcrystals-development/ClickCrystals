@@ -13,9 +13,9 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.NbtUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 @ModrinthNoNo
 public class BreachSwap extends ListenerModule {
@@ -59,7 +59,7 @@ public class BreachSwap extends ListenerModule {
 
     @EventHandler
     private void onAttack(PlayerAttackEntityEvent e) {
-        if (mc.currentScreen != null) return;
+        if (mc.screen != null) return;
         performBreachSwap();
     }
 
@@ -74,10 +74,10 @@ public class BreachSwap extends ListenerModule {
     }
 
     private void performBreachSwap() {
-        if (!isEnabled() || PlayerUtils.invalid() || !(mc.targetedEntity instanceof LivingEntity))
+        if (!isEnabled() || PlayerUtils.invalid() || !(mc.crosshairPickEntity instanceof LivingEntity))
             return;
             
-        if (!isSword(mc.player.getMainHandStack())) return;
+        if (!isSword(mc.player.getMainHandItem())) return;
 
         if (awaitingBack) return;
 
@@ -86,7 +86,7 @@ public class BreachSwap extends ListenerModule {
         var mace = findBreachMace();
         if (mace.isEmpty()) return;
         
-        if (!HotbarUtils.search(item -> ItemStack.areEqual(item, mace))) return;
+        if (!HotbarUtils.search(item -> ItemStack.matches(item, mace))) return;
         
         if (autoSwitchBack.getVal()) {
             awaitingBack = true;
@@ -95,22 +95,22 @@ public class BreachSwap extends ListenerModule {
     }
 
     private boolean targetHasArmor() {
-        if (!(mc.targetedEntity instanceof net.minecraft.entity.LivingEntity living)) return false;
+        if (!(mc.crosshairPickEntity instanceof net.minecraft.world.entity.LivingEntity living)) return false;
         
-        return !living.getEquippedStack(net.minecraft.entity.EquipmentSlot.HEAD).isEmpty() ||
-               !living.getEquippedStack(net.minecraft.entity.EquipmentSlot.CHEST).isEmpty() ||
-               !living.getEquippedStack(net.minecraft.entity.EquipmentSlot.LEGS).isEmpty() ||
-               !living.getEquippedStack(net.minecraft.entity.EquipmentSlot.FEET).isEmpty();
+        return !living.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD).isEmpty() ||
+               !living.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST).isEmpty() ||
+               !living.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.LEGS).isEmpty() ||
+               !living.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.FEET).isEmpty();
     }
 
     private boolean isSword(ItemStack item) {
-        return item.getItem().getTranslationKey().contains("sword");
+        return item.getItem().getDescriptionId().contains("sword");
     }
 
     private ItemStack findBreachMace() {
         if (requireBreach.getVal()) {
-            return HotbarUtils.searchItem(item -> item.isOf(Items.MACE) && NbtUtils.hasEnchant(item, "breach"));
+            return HotbarUtils.searchItem(item -> item.is(Items.MACE) && NbtUtils.hasEnchant(item, "breach"));
         }
-        return HotbarUtils.searchItem(item -> item.isOf(Items.MACE));
+        return HotbarUtils.searchItem(item -> item.is(Items.MACE));
     }
 }

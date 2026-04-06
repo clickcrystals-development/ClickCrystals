@@ -6,10 +6,10 @@ import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.function.Function;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class KeybindSettingElement extends SettingElement<KeybindSetting> implements Typeable {
 
@@ -25,14 +25,14 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         this.renderSettingDetails(context);
         int drawW = 20;
         int drawH = 12;
         int drawX = x + width - drawW - 5;
         int drawY = y + height / 2 - 2;
 
-        if (mc.currentScreen instanceof GuiScreen screen) {
+        if (mc.screen instanceof GuiScreen screen) {
             int fill = screen.selected == this ? Shades.LIGHT_GRAY : Shades.GRAY;
             RenderUtils.fillRoundRect(context, drawX, drawY, drawW, drawH, 3, fill);
 
@@ -45,7 +45,7 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (mc.currentScreen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
+        if (mc.screen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
             screen.selected = this;
         }
         super.mouseClicked(mouseX, mouseY, button);
@@ -53,7 +53,7 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
 
     @Override
     public boolean onKey(int key, int scanCode) {
-        if (mc.currentScreen instanceof GuiScreen screen) {
+        if (mc.screen instanceof GuiScreen screen) {
             setting.setKey(key == GLFW.GLFW_KEY_ESCAPE ? Keybind.NONE : key);
             currentScanCode = scanCode;
             screen.selected = null;

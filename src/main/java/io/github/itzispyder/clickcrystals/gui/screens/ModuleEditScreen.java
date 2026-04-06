@@ -11,10 +11,9 @@ import io.github.itzispyder.clickcrystals.modules.modules.crystalling.ClickCryst
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.Click;
-import net.minecraft.client.gui.DrawContext;
-
 import java.util.List;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.input.MouseButtonEvent;
 
 public class ModuleEditScreen extends DefaultBase {
 
@@ -45,7 +44,7 @@ public class ModuleEditScreen extends DefaultBase {
     }
 
     @Override
-    public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
         // default base
         this.renderDefaultBase(context);
 
@@ -66,7 +65,7 @@ public class ModuleEditScreen extends DefaultBase {
     }
 
     @Override
-    public boolean mouseClicked(Click click, boolean doubled) {
+    public boolean mouseClicked(MouseButtonEvent click, boolean doubled) {
         super.mouseClicked(click, doubled);
 
         if (isCategoryHovered((int)click.x(), (int)click.y())) {
@@ -78,14 +77,14 @@ public class ModuleEditScreen extends DefaultBase {
     }
 
     @Override
-    public boolean mouseReleased(Click click) {
+    public boolean mouseReleased(MouseButtonEvent click) {
         super.mouseReleased(click);
         ClickCrystals.config.saveModule(module);
         ClickCrystals.config.save();
         return true;
     }
 
-    private void renderDescription(DrawContext context, int mouseX, int mouseY) {
+    private void renderDescription(GuiGraphics context, int mouseX, int mouseY) {
         List<String> lines = TextUtils.wordWrap(module.getDescription(), 250 - 2 - 2, 0.7F);
         int height = lines.size() * 8;
         int caret = mouseY - height + 1;
@@ -125,6 +124,6 @@ public class ModuleEditScreen extends DefaultBase {
 
     @Override
     public void resize(int width, int height) {
-        client.setScreen(new ModuleEditScreen(module));
+        minecraft.setScreen(new ModuleEditScreen(module));
     }
 }

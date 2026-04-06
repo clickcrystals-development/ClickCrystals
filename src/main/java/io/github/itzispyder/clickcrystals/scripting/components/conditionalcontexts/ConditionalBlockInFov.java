@@ -6,11 +6,10 @@ import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluati
 import io.github.itzispyder.clickcrystals.scripting.components.Conditional;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class ConditionalBlockInFov implements Conditional {
 
@@ -28,8 +27,8 @@ public class ConditionalBlockInFov implements Conditional {
 
     private boolean validBlock(BlockPos pos, float fovDeg) {
         if (fovDeg != 360 && PlayerUtils.valid())
-            if (!ConditionalEntityInFov.isPointInFov(PlayerUtils.getEyes(), PlayerUtils.getDir(), fovDeg, pos.toCenterPos()))
+            if (!ConditionalEntityInFov.isPointInFov(PlayerUtils.getEyes(), PlayerUtils.getDir(), fovDeg, pos.getCenter()))
                 return false;
-        return pos.toCenterPos().distanceTo(PlayerUtils.getPos()) <= fovDeg;
+        return pos.getCenter().distanceTo(PlayerUtils.getPos()) <= fovDeg;
     }
 }

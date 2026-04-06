@@ -1,8 +1,8 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.parts;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils3d;
-import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Quaternionf;
 
 public class FadingChamPart extends ChamPart {
@@ -107,7 +107,7 @@ public class FadingChamPart extends ChamPart {
     }
 
     @Override
-    public void render(MatrixStack matrices, int color, float tickDelta, int age) {
+    public void render(PoseStack matrices, int color, float tickDelta, int age) {
         float globalProgress = age / 100.0f;
         if (!isVisible(globalProgress)) return;
 
@@ -119,8 +119,8 @@ public class FadingChamPart extends ChamPart {
         float cy = minY + y + (maxY - minY) / 2;
         float cz = minZ + z + (maxZ - minZ) / 2;
 
-        matrices.push();
-        matrices.multiply(getRotation(tickDelta), cx, cy, cz);
+        matrices.pushPose();
+        matrices.rotateAround(getRotation(tickDelta), cx, cy, cz);
         matrices.translate(x, y, z);
 
         float fadeAlpha = getFadeAlpha(globalProgress);
@@ -132,6 +132,6 @@ public class FadingChamPart extends ChamPart {
         int outlineColor = (outlineAlpha << 24) | (color & 0x00FFFFFF);
         RenderUtils3d.drawRectPrism(matrices, minX, minY, minZ, maxX, maxY, maxZ, outlineColor, true);
 
-        matrices.pop();
+        matrices.popPose();
     }
 }

@@ -11,20 +11,19 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.network.PlayerListEntry;
-import net.minecraft.command.CommandSource;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.HoverEvent;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.world.World;
-
 import java.util.Arrays;
 import java.util.List;
+import net.minecraft.client.multiplayer.PlayerInfo;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class DebugCommand extends Command {
 
@@ -33,7 +32,7 @@ public class DebugCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
         builder.executes(context -> {
                     ChatUtils.sendPrefixMessage(StringUtils.color("&cPlease provide an item!"));
                     return SINGLE_SUCCESS;
@@ -87,11 +86,11 @@ public class DebugCommand extends Command {
                 .then(literal("players")
                         .then(argument("player", PlayerArgumentType.create())
                                 .executes(context -> {
-                                    PlayerListEntry entry = context.getArgument("player", PlayerListEntry.class);
-                                    ClientPlayerEntity p = PlayerUtils.player();
-                                    World world = p.getEntityWorld();
+                                    PlayerInfo entry = context.getArgument("player", PlayerInfo.class);
+                                    LocalPlayer p = PlayerUtils.player();
+                                    Level world = p.level();
 
-                                    for (PlayerEntity player : world.getPlayers()) {
+                                    for (Player player : world.players()) {
                                         if (entry.getProfile().id() == player.getGameProfile().id()) {
                                             printPlayerStats(player, entry);
                                             return SINGLE_SUCCESS;
@@ -113,7 +112,7 @@ public class DebugCommand extends Command {
                 }));
     }
 
-    private void printPlayerStats(PlayerEntity player, PlayerListEntry entry) {
+    private void printPlayerStats(Player player, PlayerInfo entry) {
         String hp = "   &3Health: &c" + (int)player.getHealth() + "/" + (int)player.getMaxHealth() +" hp";
         int ab = (int)player.getAbsorptionAmount();
 
@@ -133,7 +132,7 @@ public class DebugCommand extends Command {
     private void printItem(ItemStack stack) {
         if (PlayerUtils.valid()) {
             Item item = stack.getItem();
-            String key = item.getTranslationKey();
+            String key = item.getDescriptionId();
             String pre = "§8";
             if (key.contains("netherite"))      pre = "§4";
             else if (key.contains("diamond"))   pre = "§b";
@@ -141,14 +140,14 @@ public class DebugCommand extends Command {
             else if (key.contains("chainmail")) pre = "§7";
             else if (key.contains("gold"))      pre = "§e";
 
-            String[] secs = item.getTranslationKey().split("\\.");
-            Text text = Text.literal("      §7- " + pre + StringUtils.capitalizeWords(secs[secs.length - 1]));
-            MutableText msg = text.copy();
+            String[] secs = item.getDescriptionId().split("\\.");
+            Component text = Component.literal("      §7- " + pre + StringUtils.capitalizeWords(secs[secs.length - 1]));
+            MutableComponent msg = text.copy();
             Style style = text.getStyle();
             HoverEvent.ShowItem content = new HoverEvent.ShowItem(stack);
 
-            msg.fillStyle(style.withHoverEvent(content));
-            PlayerUtils.player().sendMessage(msg, false);
+            msg.withStyle(style.withHoverEvent(content));
+            PlayerUtils.player().displayClientMessage(msg, false);
         }
     }
 }

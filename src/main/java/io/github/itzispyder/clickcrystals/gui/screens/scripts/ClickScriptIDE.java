@@ -28,12 +28,11 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Dimensions;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
-import net.minecraft.client.gui.DrawContext;
-
 import java.io.*;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
+import net.minecraft.client.gui.GuiGraphics;
 
 import static io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils.*;
 
@@ -173,11 +172,11 @@ public class ClickScriptIDE extends DefaultBase {
     }
 
     @Override
-    public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
         renderOpaqueBackground(context);
 
-        context.getMatrices().pushMatrix();
-        context.getMatrices().translate(baseX, baseY);
+        context.pose().pushMatrix();
+        context.pose().translate(baseX, baseY);
 
         // backdrop
         fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
@@ -235,7 +234,7 @@ public class ClickScriptIDE extends DefaultBase {
         deleteButton.x = baseX + 10;
         deleteButton.y = baseY + caret;
 
-        context.getMatrices().popMatrix();
+        context.pose().popMatrix();
 
 
         // content
@@ -303,7 +302,7 @@ public class ClickScriptIDE extends DefaultBase {
                 writer.close();
                 ReloadCommand.reload();
                 // Refresh the scripts browsing screen if it's open
-                if (mc.currentScreen instanceof ScriptsBrowsingScreen) {
+                if (mc.screen instanceof ScriptsBrowsingScreen) {
                     mc.setScreen(new ScriptsBrowsingScreen());
                 }
             }

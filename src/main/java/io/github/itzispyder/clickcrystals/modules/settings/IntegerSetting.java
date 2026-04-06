@@ -14,11 +14,11 @@ public class IntegerSetting extends NumberSetting<Integer> {
         return new IntegerSettingElement(this, x, y);
     }
 
-    public static Builder create() {
-        return new Builder();
+    public static io.github.itzispyder.clickcrystals.modules.settings.IntegerSetting.Builder create() {
+        return new io.github.itzispyder.clickcrystals.modules.settings.IntegerSetting.Builder();
     }
 
-    public static class Builder extends SettingBuilder<Integer, Builder, IntegerSetting> {
+    public static class Builder extends SettingBuilder<Integer, io.github.itzispyder.clickcrystals.modules.settings.IntegerSetting.Builder, IntegerSetting> {
 
         private int min, max;
 
@@ -27,12 +27,12 @@ public class IntegerSetting extends NumberSetting<Integer> {
             this.max = 1;
         }
 
-        public Builder min(int min) {
+        public io.github.itzispyder.clickcrystals.modules.settings.IntegerSetting.Builder min(int min) {
             this.min = Math.min(min, max);
             return this;
         }
 
-        public Builder max(int max) {
+        public io.github.itzispyder.clickcrystals.modules.settings.IntegerSetting.Builder max(int max) {
             this.max = Math.max(min, max);
             return this;
         }

@@ -10,7 +10,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScree
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class ModuleEditElement extends GuiElement {
 
@@ -37,7 +37,7 @@ public class ModuleEditElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         RenderUtils.fillRoundRect(context, x, y, width, height, 5, Shades.TRANS_DARK_GRAY);
 
         int caret = y + 10;
@@ -50,7 +50,7 @@ public class ModuleEditElement extends GuiElement {
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (isHoverExit((int)mouseX, (int)mouseY) && mc.currentScreen instanceof OverviewScreen screen) {
+        if (isHoverExit((int)mouseX, (int)mouseY) && mc.screen instanceof OverviewScreen screen) {
             screen.removeCurrentEditing();
             return;
         }

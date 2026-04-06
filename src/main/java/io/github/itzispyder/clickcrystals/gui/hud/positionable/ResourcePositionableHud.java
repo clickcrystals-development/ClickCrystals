@@ -5,9 +5,9 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 public class ResourcePositionableHud extends Hud {
 
@@ -16,7 +16,7 @@ public class ResourcePositionableHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context, float tickDelta) {
+    public void render(GuiGraphics context, float tickDelta) {
         renderBackdrop(context);
 
         int y = getY();
@@ -33,14 +33,14 @@ public class ResourcePositionableHud extends Hud {
         caret += next;
         drawItem(context, Items.EXPERIENCE_BOTTLE, margin, caret);
         caret += next;
-        RenderUtils.drawItem(context, Items.ARROW.getDefaultStack(), margin, caret, 1.0F,
-                InvUtils.count(stack -> stack.getItem().getTranslationKey().contains("arrow")) + "");
+        RenderUtils.drawItem(context, Items.ARROW.getDefaultInstance(), margin, caret, 1.0F,
+                InvUtils.count(stack -> stack.getItem().getDescriptionId().contains("arrow")) + "");
         caret += next + g;
         setHeight(caret - y);
     }
 
-    private void drawItem(DrawContext context, Item item, int x, int y) {
-        RenderUtils.drawItem(context, item.getDefaultStack(), x, y, 1.0F, InvUtils.count(item) + "");
+    private void drawItem(GuiGraphics context, Item item, int x, int y) {
+        RenderUtils.drawItem(context, item.getDefaultInstance(), x, y, 1.0F, InvUtils.count(item) + "");
     }
 
     @Override

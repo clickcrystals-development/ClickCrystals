@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.*;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class InGameHuds extends Module implements Listener {
 
@@ -173,7 +173,7 @@ public class InGameHuds extends Module implements Listener {
 
     @EventHandler
     private void onAttack(PlayerAttackEntityEvent e) {
-        if (e.getEntity() instanceof PlayerEntity player && hudTarget.getVal()) {
+        if (e.getEntity() instanceof Player player && hudTarget.getVal()) {
             TargetPositionableHud.setTarget(player);
         }
     }

@@ -12,18 +12,17 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils3d;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class Tunnel3x3 extends ListenerModule {
 
@@ -82,12 +81,12 @@ public class Tunnel3x3 extends ListenerModule {
             this.setEnabled(false, false);
             return;
         }
-        if (mc.currentScreen != null)
-            mc.currentScreen.close();
+        if (mc.screen != null)
+            mc.screen.onClose();
 
-        ClientPlayerEntity p = PlayerUtils.player();
-        dir = p.getMovementDirection();
-        playerPos = p.getBlockPos();
+        LocalPlayer p = PlayerUtils.player();
+        dir = p.getMotionDirection();
+        playerPos = p.blockPosition();
         index = 0;
 
         recalculateTargets();
@@ -102,8 +101,8 @@ public class Tunnel3x3 extends ListenerModule {
         index = 0;
 
         if (mc != null && mc.options != null) {
-            mc.options.attackKey.setPressed(false);
-            if (reopenOnDisable.getVal() && mc.currentScreen == null) {
+            mc.options.keyAttack.setDown(false);
+            if (reopenOnDisable.getVal() && mc.screen == null) {
                 mc.setScreen(new ModuleEditScreen(this));
             }
         }
@@ -111,7 +110,7 @@ public class Tunnel3x3 extends ListenerModule {
 
     @EventHandler
     private void onMouseClick(MouseClickEvent e) {
-        if (e.getButton() == 0 && mc.currentScreen == null)
+        if (e.getButton() == 0 && mc.screen == null)
             e.setCancelled(true);
     }
 
@@ -191,15 +190,15 @@ public class Tunnel3x3 extends ListenerModule {
     private boolean validForBreaking(int targetIndex) {
         if (targetIndex < 0 || targetIndex >= targets.size())
             return false;
-        if (PlayerUtils.getEyes().distanceTo(targets.get(targetIndex).toCenterPos()) > PlayerUtils.player().getBlockInteractionRange())
+        if (PlayerUtils.getEyes().distanceTo(targets.get(targetIndex).getCenter()) > PlayerUtils.player().blockInteractionRange())
             return false;
-        World w = PlayerUtils.getWorld();
+        Level w = PlayerUtils.getWorld();
         BlockPos pos = targets.get(targetIndex);
         BlockState block = w.getBlockState(pos);
 
         if (miningMode.getVal() && !MINER_BLOCKS.contains(block.getBlock()))
             return false;
-        return block.isFullCube(w, pos) && !BLACKLIST.contains(block.getBlock());
+        return block.isCollisionShapeFullBlock(w, pos) && !BLACKLIST.contains(block.getBlock());
     }
 
     @EventHandler
@@ -208,8 +207,8 @@ public class Tunnel3x3 extends ListenerModule {
             return;
 
         for (int i = targets.size() - 1; i >= index + 1; i--)
-            RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3d.of(targets.get(i))), 0x05FFFFFF);
-        RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3d.of(targets.get(index))), 0x05FF2020);
+            RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3.atLowerCornerOf(targets.get(i))), 0x05FFFFFF);
+        RenderUtils3d.renderBlock(e.getMatrices(), e.getOffsetPos(Vec3.atLowerCornerOf(targets.get(index))), 0x05FF2020);
     }
 
     @EventHandler
@@ -222,13 +221,13 @@ public class Tunnel3x3 extends ListenerModule {
              system.cameraRotator.closeAllTickets();
              if (centerRotationWhenDone.getVal())
                  system.cameraRotator.ready()
-                         .addTicket(dir.getDoubleVector())
+                         .addTicket(dir.getUnitVec3())
                          .lockCursor()
                          .openCurrentTicket();
             this.setEnabled(false, true);
             return;
         }
-        if (!PlayerUtils.player().getBlockPos().equals(playerPos)) {
+        if (!PlayerUtils.player().blockPosition().equals(playerPos)) {
             this.setEnabled(false, true);
             ChatUtils.sendPrefixMessage("You moved!");
             return;
@@ -236,13 +235,13 @@ public class Tunnel3x3 extends ListenerModule {
         if (system.cameraRotator.isRunningTicket())
             return;
 
-        if (!(mc.crosshairTarget instanceof BlockHitResult result)) {
+        if (!(mc.hitResult instanceof BlockHitResult result)) {
             target();
             return;
         }
 
         if (validForBreaking(index)) {
-            mc.options.attackKey.setPressed(true);
+            mc.options.keyAttack.setDown(true);
             if (!targets.get(index).equals(result.getBlockPos()))
                 target();
         }
@@ -252,14 +251,14 @@ public class Tunnel3x3 extends ListenerModule {
     }
 
     private void target() {
-        mc.options.attackKey.setPressed(false);
-        Vec3d target = targets.get(index).toCenterPos().subtract(PlayerUtils.getEyes());
+        mc.options.keyAttack.setDown(false);
+        Vec3 target = targets.get(index).getCenter().subtract(PlayerUtils.getEyes());
         system.cameraRotator.ready()
                 .addTicket(target)
                 .lockCursor()
                 .setFinishCallback((pitch, yaw, rotator) -> {
                     if (this.isEnabled())
-                        mc.execute(() -> mc.options.attackKey.setPressed(true));
+                        mc.execute(() -> mc.options.keyAttack.setDown(true));
                 })
                 .openCurrentTicket();
     }

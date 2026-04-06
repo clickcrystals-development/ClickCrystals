@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.client.commands.commands;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.gui.screens.settings.KeybindScreen;
-import net.minecraft.command.CommandSource;
+import net.minecraft.commands.SharedSuggestionProvider;
 
 public class KeybindsCommand extends Command {
 
@@ -12,7 +12,7 @@ public class KeybindsCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
         builder.executes(context -> {
             system.scheduler.runDelayedTask(() -> {
                 mc.execute(() -> mc.setScreen(new KeybindScreen()));

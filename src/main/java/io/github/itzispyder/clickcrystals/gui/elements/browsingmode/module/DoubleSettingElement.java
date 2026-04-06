@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class DoubleSettingElement extends SettingElement<DoubleSetting> {
 
@@ -23,7 +23,7 @@ public class DoubleSettingElement extends SettingElement<DoubleSetting> {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         this.renderSettingDetails(context);
         int drawY = y + height / 2;
         int drawX = x + width / 4 * 3 - 5;
@@ -32,7 +32,7 @@ public class DoubleSettingElement extends SettingElement<DoubleSetting> {
         int sliderStart = drawX + 10;
         int sliderLen = sliderEnd - sliderStart;
 
-        if (mc.currentScreen instanceof GuiScreen screen && screen.selected == this) {
+        if (mc.screen instanceof GuiScreen screen && screen.selected == this) {
             this.fillEnd = MathUtils.clamp(mouseX, sliderStart, sliderEnd);
             double range = setting.getMax() - setting.getMin();
             double ratio = (double)(fillEnd - sliderStart) / (double)sliderLen;
@@ -57,7 +57,7 @@ public class DoubleSettingElement extends SettingElement<DoubleSetting> {
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (mc.currentScreen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
+        if (mc.screen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
             screen.selected = this;
         }
         super.mouseClicked(mouseX, mouseY, button);

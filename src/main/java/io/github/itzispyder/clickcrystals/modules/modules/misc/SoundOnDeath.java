@@ -8,15 +8,15 @@ import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.network.protocol.game.ClientboundEntityEventPacket;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityEvent;
+import net.minecraft.world.entity.player.Player;
 
 public class SoundOnDeath extends ListenerModule {
 
@@ -57,20 +57,20 @@ public class SoundOnDeath extends ListenerModule {
 
     @EventHandler
     private void onReceivePacket(PacketReceiveEvent e) {
-        if (e.getPacket() instanceof EntityStatusS2CPacket packet && PlayerUtils.valid()) {
-            ClientPlayerEntity p = PlayerUtils.player();
-            Entity ent = packet.getEntity(p.getEntityWorld());
-            int status = packet.getStatus();
-            boolean playerWithinRange = ent instanceof PlayerEntity player && player.getEntityPos().distanceTo(p.getEntityPos()) < distance.getVal() && player != p;
+        if (e.getPacket() instanceof ClientboundEntityEventPacket packet && PlayerUtils.valid()) {
+            LocalPlayer p = PlayerUtils.player();
+            Entity ent = packet.getEntity(p.level());
+            int status = packet.getEventId();
+            boolean playerWithinRange = ent instanceof Player player && player.position().distanceTo(p.position()) < distance.getVal() && player != p;
 
-            if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES && playerWithinRange) {
-                this.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, pitch.getVal().floatValue(), volume.getVal().floatValue());
+            if (status == EntityEvent.DEATH && playerWithinRange) {
+                this.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, pitch.getVal().floatValue(), volume.getVal().floatValue());
             }
         }
     }
 
     private void playSound(SoundEvent soundEvent, float volume, float pitch) {
-        SoundInstance sound = PositionedSoundInstance.master(soundEvent, volume, pitch);
+        SoundInstance sound = SimpleSoundInstance.forUI(soundEvent, volume, pitch);
         mc.getSoundManager().play(sound);
     }
 }

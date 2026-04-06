@@ -11,10 +11,9 @@ import io.github.itzispyder.clickcrystals.scripting.ClickScript;
 import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.scripting.syntax.logic.AsCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
-import net.minecraft.command.CommandSource;
-import net.minecraft.entity.Entity;
-
 import java.io.File;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.world.entity.Entity;
 
 public class ScriptCommand extends Command {
 
@@ -23,7 +22,7 @@ public class ScriptCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
         builder.executes(cxt -> {
                     system.scheduler.runDelayedTask(() -> {
                         BrowsingScreen.currentCategory = Categories.SCRIPTED;
@@ -57,9 +56,9 @@ public class ScriptCommand extends Command {
                                     }
 
                                     String script = ScriptParser.condenseLines(ScriptParser.readFile(file.getPath()));
-                                    mc.keyboard.setClipboard(script);
+                                    mc.keyboardHandler.setClipboard(script);
                                     info("Copied script contents from '%s' to clipboard!".formatted(name));
-                                    info("&7" + mc.keyboard.getClipboard());
+                                    info("&7" + mc.keyboardHandler.getClipboard());
                                     return SINGLE_SUCCESS;
                                 })))
                 .then(literal("reload-scripts")

@@ -8,16 +8,16 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.text.OrderedText;
-import net.minecraft.text.StringVisitable;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.util.FormattedCharSequence;
 
 public class BanScreen extends GuiScreen {
 
-    public final int windowWidth = MinecraftClient.getInstance().getWindow().getScaledWidth();
-    public final int windowHeight = MinecraftClient.getInstance().getWindow().getScaledHeight();
+    public final int windowWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+    public final int windowHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
     public final int baseWidth = 420;
     public final int baseHeight = 240;
     public final int baseX = (int)(windowWidth / 2.0 - baseWidth / 2.0);
@@ -32,12 +32,12 @@ public class BanScreen extends GuiScreen {
     }
 
     @Override
-    public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
         if (PlayerUtils.invalid()) {
-            this.renderPanoramaBackground(context, delta);
+            this.renderPanorama(context, delta);
         }
-        this.applyBlur(context);
-        this.renderDarkening(context);
+        this.renderBlurredBackground(context);
+        this.renderMenuBackground(context);
         //RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA0000000, 0xA0FF4538);
 
         int cX = baseX + baseWidth / 2;
@@ -47,23 +47,23 @@ public class BanScreen extends GuiScreen {
         String text;
 
         text = StringUtils.color("&cMinecraft Account");
-        RenderUtils.drawDefaultCenteredScaledText(context, Text.literal(text), cX, cY += 10, 1.0F, true);
+        RenderUtils.drawDefaultCenteredScaledText(context, Component.literal(text), cX, cY += 10, 1.0F, true);
         text = StringUtils.color("&7{\"name\": \"%s\", \"id\": \"%s\"}".formatted(user.name(), user.id()));
-        RenderUtils.drawDefaultCenteredScaledText(context, Text.literal(text), cX, cY += 10, 1.0F, true);
+        RenderUtils.drawDefaultCenteredScaledText(context, Component.literal(text), cX, cY += 10, 1.0F, true);
         text = StringUtils.color("&cis blacklisted from ClickCrystals!");
-        RenderUtils.drawDefaultCenteredScaledText(context, Text.literal(text), cX, cY += 10, 1.0F, true);
+        RenderUtils.drawDefaultCenteredScaledText(context, Component.literal(text), cX, cY += 10, 1.0F, true);
 
         cY += 20;
         text = StringUtils.color("&cReason:\n&7%s".formatted(ses.isPresent() ? ses.get().reason() : "Unspecified reason."));
-        var lines = mc.textRenderer.wrapLines(StringVisitable.plain(text), baseWidth);
-        for (OrderedText line : lines) {
-            context.drawCenteredTextWithShadow(mc.textRenderer, line, cX, cY, 0xFFFFFFFF);
+        var lines = mc.font.split(FormattedText.of(text), baseWidth);
+        for (FormattedCharSequence line : lines) {
+            context.drawCenteredString(mc.font, line, cX, cY, 0xFFFFFFFF);
             cY += 10;
         }
 
         cY += 20;
         text = StringUtils.color("&cAppeal at:");
-        RenderUtils.drawDefaultCenteredScaledText(context, Text.literal(text), cX, cY += 10, 1.0F, true);
+        RenderUtils.drawDefaultCenteredScaledText(context, Component.literal(text), cX, cY += 10, 1.0F, true);
         appealLink.x = cX - appealLink.width / 2;
         appealLink.y = cY + 10;
     }
@@ -73,12 +73,12 @@ public class BanScreen extends GuiScreen {
     }
 
     @Override
-    public void close() {
+    public void onClose() {
 
     }
 
     @Override
     public void resize(int width, int height) {
-        client.setScreen(new BanScreen());
+        minecraft.setScreen(new BanScreen());
     }
 }

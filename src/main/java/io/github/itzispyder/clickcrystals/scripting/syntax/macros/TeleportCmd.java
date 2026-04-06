@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.phys.Vec3;
 
 // @Format teleport <x> <y> <z>
 public class TeleportCmd extends ScriptCommand {
@@ -21,8 +21,8 @@ public class TeleportCmd extends ScriptCommand {
                 args.get(2).toString(),
                 PlayerUtils.player()
         );
-        Vec3d dest = parser.getVector();
-        PlayerUtils.player().setPos(dest.x, dest.y, dest.z);
+        Vec3 dest = parser.getVector();
+        PlayerUtils.player().setPosRaw(dest.x, dest.y, dest.z);
 
         if (args.match(3, "then")) {
             args.executeAll(4);

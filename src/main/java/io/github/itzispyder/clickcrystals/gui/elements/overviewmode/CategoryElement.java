@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScree
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class CategoryElement extends GuiElement {
 
@@ -32,7 +32,7 @@ public class CategoryElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         RenderUtils.fillRoundRect(context, x, y, width, height, 5, Shades.TRANS_BLACK);
         RenderUtils.drawTexture(context, category.texture(), x + 5, y + 7, 10, 10);
         RenderUtils.drawText(context, category.name(), x + 18, y + 9, 0.9F, false);
@@ -51,7 +51,7 @@ public class CategoryElement extends GuiElement {
         super.mouseReleased(mouseX, mouseY, button);
         if (button == 0 && isHoverCollapsion((int)mouseX, (int)mouseY) && lastClickX == x && lastClickY == y) {
             setCollapsed(!isCollapsed());
-            if (mc.currentScreen instanceof OverviewScreen screen) {
+            if (mc.screen instanceof OverviewScreen screen) {
                 screen.bringForward(this);
             }
         }

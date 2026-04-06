@@ -10,17 +10,16 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
-import net.minecraft.command.CommandSource;
-import net.minecraft.text.Text;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.Component;
 
 public class ModuleArgumentType implements ArgumentType<Module> {
 
     private static final ClickCrystalsSystem system = ClickCrystalsSystem.getInstance();
-    public static final DynamicCommandExceptionType moduleNotFound = new DynamicCommandExceptionType(module -> Text.literal("Module " + module + " not found!"));
+    public static final DynamicCommandExceptionType moduleNotFound = new DynamicCommandExceptionType(module -> Component.literal("Module " + module + " not found!"));
     public static final List<String> examples = List.of("click-crystal", "anchor-switch");
 
     public ModuleArgumentType() {
@@ -49,7 +48,7 @@ public class ModuleArgumentType implements ArgumentType<Module> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        return CommandSource.suggestMatching(ArrayUtils.toNewList(system.collectModules(), Module::getId), builder);
+        return SharedSuggestionProvider.suggest(ArrayUtils.toNewList(system.collectModules(), Module::getId), builder);
     }
 
     @Override

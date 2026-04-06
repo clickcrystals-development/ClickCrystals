@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScree
 import io.github.itzispyder.clickcrystals.modrinth.ModrinthSupport;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class ModuleElement extends GuiElement {
 
@@ -26,13 +26,13 @@ public class ModuleElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         int color = Shades.TRANS_DARK_GRAY;
 
         if (module.isEnabled()) {
             color = Shades.TRANS_GRAY;
         }
-        if (!blacklisted && isHovered(mouseX, mouseY) && hasParent() && mc.currentScreen instanceof GuiScreen screen && screen.hovered == getParent()) {
+        if (!blacklisted && isHovered(mouseX, mouseY) && hasParent() && mc.screen instanceof GuiScreen screen && screen.hovered == getParent()) {
             color = Shades.TRANS_LIGHT_GRAY;
         }
 
@@ -54,7 +54,7 @@ public class ModuleElement extends GuiElement {
         if (button == 0) {
             module.setEnabled(!module.isEnabled(), false);
         }
-        else if (button == 1 && mc.currentScreen instanceof OverviewScreen screen) {
+        else if (button == 1 && mc.screen instanceof OverviewScreen screen) {
             screen.setCurrentEditing(module, (int)mouseX, (int)mouseY);
         }
         super.mouseClicked(mouseX, mouseY, button);

@@ -7,11 +7,10 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.Typeable;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.callbacks.KeyPressCallback;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class SearchBarElement extends GuiElement implements Typeable {
 
@@ -31,16 +30,16 @@ public class SearchBarElement extends GuiElement implements Typeable {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         RenderUtils.fillRoundHoriLine(context, x, y, width, height, Shades.LIGHT);
 
-        if (!(mc.currentScreen instanceof GuiScreen screen))
+        if (!(mc.screen instanceof GuiScreen screen))
             return;
         if (screen.selected == this)
             RenderUtils.fillRoundShadow(context, x, y, width, height, height / 2, 3, 0x80FFFFFF, 0x00FFFFFF);
 
         String text = query;
-        while (!text.isEmpty() && mc.textRenderer.getWidth(text) * 0.7F > width - height - 4) {
+        while (!text.isEmpty() && mc.font.width(text) * 0.7F > width - height - 4) {
             text = text.substring(1);
         }
 
@@ -52,7 +51,7 @@ public class SearchBarElement extends GuiElement implements Typeable {
             RenderUtils.drawText(context, getDefaultText(), x + height / 2 + 2, y + height / 3, 0.7F, false);
 
         if (selectionBlinking) {
-            int tx = (int)(x + height / 2 + 1 + mc.textRenderer.getWidth(text) * 0.7F);
+            int tx = (int)(x + height / 2 + 1 + mc.font.width(text) * 0.7F);
             int ty = y + 2;
             RenderUtils.drawVerLine(context, tx, ty, height - 4, 0xE0000000);
         }
@@ -60,7 +59,7 @@ public class SearchBarElement extends GuiElement implements Typeable {
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (mc.currentScreen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
+        if (mc.screen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
             screen.selected = this;
         }
         super.mouseClicked(mouseX, mouseY, button);
@@ -83,7 +82,7 @@ public class SearchBarElement extends GuiElement implements Typeable {
     public void onTick() {
         super.onTick();
 
-        if (mc.currentScreen instanceof GuiScreen screen) {
+        if (mc.screen instanceof GuiScreen screen) {
             if (screen.selected != this) {
                 selectionBlinking = false;
                 return;

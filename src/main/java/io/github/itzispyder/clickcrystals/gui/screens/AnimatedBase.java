@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 public abstract class AnimatedBase extends GuiScreen {
 
@@ -19,7 +19,7 @@ public abstract class AnimatedBase extends GuiScreen {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         boolean canAnimate = open ? canPlayOpenAnimation() : canPlayCloseAnimation();
         float scale = (float) animator.getAnimation();
 
@@ -29,14 +29,14 @@ public abstract class AnimatedBase extends GuiScreen {
 //            double scaleX = x / scale - x;
 //            double scaleY = y / scale - y;
 
-            context.getMatrices().pushMatrix();
-            context.getMatrices().scaleAround(scale, x, y);
+            context.pose().pushMatrix();
+            context.pose().scaleAround(scale, x, y);
         }
 
         super.render(context, mouseX, mouseY, delta);
 
         if (canAnimate)
-            context.getMatrices().popMatrix();
+            context.pose().popMatrix();
     }
 
     @Override
@@ -46,16 +46,16 @@ public abstract class AnimatedBase extends GuiScreen {
     }
 
     @Override
-    public void close() {
+    public void onClose() {
         if (!canPlayCloseAnimation()) {
-            super.close();
+            super.onClose();
             return;
         }
         if (!open)
             return;
 
         open = false;
-        system.scheduler.runDelayedTask(() -> mc.execute(super::close), animator.getLength());
+        system.scheduler.runDelayedTask(() -> mc.execute(super::onClose), animator.getLength());
     }
 
     public boolean canPlayCloseAnimation() {

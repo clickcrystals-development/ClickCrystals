@@ -9,9 +9,9 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.EnumSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.gui.screen.DeathScreen;
-import net.minecraft.item.Items;
-import net.minecraft.util.Hand;
+import net.minecraft.client.gui.screens.DeathScreen;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.Items;
 
 public class GhostTotem extends Module implements Listener {
 
@@ -42,21 +42,21 @@ public class GhostTotem extends Module implements Listener {
         if (e.getScreen() instanceof DeathScreen) {
             switch (renderMode.getVal()) {
                 case Both -> {
-                    totem(Hand.MAIN_HAND);
-                    totem(Hand.OFF_HAND);
+                    totem(InteractionHand.MAIN_HAND);
+                    totem(InteractionHand.OFF_HAND);
                 }
                 case MainHand -> {
-                    totem(Hand.MAIN_HAND);
+                    totem(InteractionHand.MAIN_HAND);
                 }
                 default -> {
-                    totem(Hand.OFF_HAND);
+                    totem(InteractionHand.OFF_HAND);
                 }
             }
         }
     }
 
-    private void totem(Hand hand) {
-        PlayerUtils.player().setStackInHand(hand, Items.TOTEM_OF_UNDYING.getDefaultStack());
+    private void totem(InteractionHand hand) {
+        PlayerUtils.player().setItemInHand(hand, Items.TOTEM_OF_UNDYING.getDefaultInstance());
     }
 
     public enum Mode {

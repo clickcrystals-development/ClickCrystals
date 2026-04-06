@@ -11,7 +11,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.EnumSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class TeamDetector extends ListenerModule {
 
@@ -49,7 +49,7 @@ public class TeamDetector extends ListenerModule {
     private void onPlayerAttackEntityEvent(PlayerAttackEntityEvent e) {
         if (!protectTeammates.getVal())
             return;
-        if (e.getEntity() instanceof PlayerEntity p && EntityUtils.isTeammate(p))
+        if (e.getEntity() instanceof Player p && EntityUtils.isTeammate(p))
             e.cancel();
     }
 
@@ -57,7 +57,7 @@ public class TeamDetector extends ListenerModule {
     private void onMiddleClick(MouseClickEvent e) {
         if (e.getButton() != 2 || e.getAction() != ClickType.CLICK || !e.isScreenNull())
             return;
-        if (!(mc.targetedEntity instanceof PlayerEntity player))
+        if (!(mc.crosshairPickEntity instanceof Player player))
             return;
 
         String playerName = player.getName().getString();

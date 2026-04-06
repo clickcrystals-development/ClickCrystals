@@ -1,16 +1,16 @@
 package io.github.itzispyder.clickcrystals.events.events.client;
 
 import io.github.itzispyder.clickcrystals.events.Event;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.item.ItemStack;
 
 public class RenderInventorySlotEvent extends Event {
 
-    private final DrawContext drawContext;
+    private final GuiGraphics drawContext;
     private final ItemStack item;
     private final int x, y, slotX, slotY;
 
-    public RenderInventorySlotEvent(DrawContext drawContext, ItemStack item, int x, int y, int slotX, int slotY) {
+    public RenderInventorySlotEvent(GuiGraphics drawContext, ItemStack item, int x, int y, int slotX, int slotY) {
         this.drawContext = drawContext;
         this.item = item;
         this.x = x;
@@ -39,7 +39,7 @@ public class RenderInventorySlotEvent extends Event {
         return slotY;
     }
 
-    public DrawContext getDrawContext() {
+    public GuiGraphics getDrawContext() {
         return drawContext;
     }
 }

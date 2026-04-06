@@ -12,20 +12,20 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.Click;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.input.KeyInput;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 
 public class HomeScreen extends AnimatedBase {
 
     public static boolean OPENED_BEFORE = false;
-    public final int windowWidth = MinecraftClient.getInstance().getWindow().getScaledWidth();
-    public final int windowHeight = MinecraftClient.getInstance().getWindow().getScaledHeight();
+    public final int windowWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+    public final int windowHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
     public final int baseWidth = 420;
     public final int baseHeight = 240;
     public final int baseX = (int)(windowWidth / 2.0 - baseWidth / 2.0);
@@ -68,12 +68,12 @@ public class HomeScreen extends AnimatedBase {
     }
 
     @Override
-    public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
         renderOpaqueBackground(context);
 
         // title card
-        context.getMatrices().pushMatrix();
-        context.getMatrices().translate(baseX, baseY);
+        context.pose().pushMatrix();
+        context.pose().translate(baseX, baseY);
 
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
         RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, 0xFF00B7FF, 0xFF00B7FF);
@@ -83,7 +83,7 @@ public class HomeScreen extends AnimatedBase {
         RenderUtils.drawRoundTexture(context, Tex.Backdrops.BACKDROP_HOME, 10, 10, baseWidth - 20, baseHeight / 2 + 40, 5);
         RenderUtils.fillRoundShadow(context,10, 10, baseWidth - 20, baseHeight / 2 + 40, 5, 5, 0xFF000000, 0x00000000);
 
-        context.getMatrices().popMatrix();
+        context.pose().popMatrix();
 
         // content
         if (!ClickCrystals.info.getMotd().trim().isEmpty()) {
@@ -100,7 +100,7 @@ public class HomeScreen extends AnimatedBase {
         searchBar.y = caret - titleTrans;
     }
 
-    public void renderMotd(DrawContext context) {
+    public void renderMotd(GuiGraphics context) {
         List<String> lines = TextUtils.wordWrap(ClickCrystals.info.getMotd(), 300 - 5 - 5, 0.9F);
         int i = 3;
         int x = baseX + baseWidth / 2 - 150;
@@ -114,13 +114,13 @@ public class HomeScreen extends AnimatedBase {
 
     @Override
     public void resize(int width, int height) {
-        client.setScreen(new HomeScreen());
+        minecraft.setScreen(new HomeScreen());
     }
 
     @Override
-    public boolean keyPressed(KeyInput e) {
+    public boolean keyPressed(KeyEvent e) {
         super.keyPressed(e);
-        if (e.getKeycode() == GLFW.GLFW_KEY_ENTER && this.selected == searchBar && !searchBar.getQuery().isEmpty()) {
+        if (e.input() == GLFW.GLFW_KEY_ENTER && this.selected == searchBar && !searchBar.getQuery().isEmpty()) {
             mc.setScreen(new SearchScreen() {{
                 this.searchbar.setQuery(HomeScreen.this.searchBar.getQuery());
                 this.filterByQuery(this.searchbar);
@@ -130,7 +130,7 @@ public class HomeScreen extends AnimatedBase {
     }
 
     @Override
-    public boolean mouseClicked(Click click, boolean doubled) {
+    public boolean mouseClicked(MouseButtonEvent click, boolean doubled) {
         if (!OPENED_BEFORE) {
             mc.setScreen(new DiscordInviteScreen());
             OPENED_BEFORE = true;

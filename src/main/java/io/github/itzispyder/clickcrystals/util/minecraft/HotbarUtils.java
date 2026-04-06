@@ -1,18 +1,17 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import io.github.itzispyder.clickcrystals.Global;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.Direction;
-
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import net.minecraft.core.Direction;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public final class HotbarUtils implements Global {
 
@@ -21,10 +20,10 @@ public final class HotbarUtils implements Global {
             return false;
         }
 
-        PlayerInventory inv = PlayerUtils.player().getInventory();
+        Inventory inv = PlayerUtils.player().getInventory();
 
         for (int i = 0; i <= 8; i ++) {
-            if (inv.getStack(i).isOf(item)) {
+            if (inv.getItem(i).is(item)) {
                 inv.setSelectedSlot(i);
                 return true;
             }
@@ -37,10 +36,10 @@ public final class HotbarUtils implements Global {
             return false;
         }
 
-        PlayerInventory inv = PlayerUtils.player().getInventory();
+        Inventory inv = PlayerUtils.player().getInventory();
 
         for (int i = 0; i <= 8; i ++) {
-            if (item.test(inv.getStack(i))) {
+            if (item.test(inv.getItem(i))) {
                 inv.setSelectedSlot(i);
                 return true;
             }
@@ -52,10 +51,10 @@ public final class HotbarUtils implements Global {
         if (PlayerUtils.invalid())
             return 0;
 
-        PlayerInventory inv = InvUtils.inv();
+        Inventory inv = InvUtils.inv();
         int count = 0;
         for (int i = 0; i < 9; i++)
-            if (item.test(inv.getStack(i)))
+            if (item.test(inv.getItem(i)))
                 count++;
         return count;
     }
@@ -64,10 +63,10 @@ public final class HotbarUtils implements Global {
         if (PlayerUtils.invalid())
             return -1;
 
-        PlayerInventory inv = PlayerUtils.player().getInventory();
+        Inventory inv = PlayerUtils.player().getInventory();
 
         for (int i = 0; i <= 8; i ++)
-            if (item.test(inv.getStack(i)))
+            if (item.test(inv.getItem(i)))
                 return i;
         return -1;
     }
@@ -76,9 +75,9 @@ public final class HotbarUtils implements Global {
         if (PlayerUtils.invalid())
             return ItemStack.EMPTY;
 
-        PlayerInventory inv = PlayerUtils.player().getInventory();
+        Inventory inv = PlayerUtils.player().getInventory();
         for (int i = 0; i <= 8; i ++) {
-            ItemStack currStack = inv.getStack(i);
+            ItemStack currStack = inv.getItem(i);
             if (item.test(currStack))
                 return currStack;
         }
@@ -90,10 +89,10 @@ public final class HotbarUtils implements Global {
             return false;
         }
 
-        PlayerInventory inv = PlayerUtils.player().getInventory();
+        Inventory inv = PlayerUtils.player().getInventory();
 
         for (int i = 0; i <= 8; i ++) {
-            if (inv.getStack(i).isOf(item)) return true;
+            if (inv.getItem(i).is(item)) return true;
         }
         return false;
     }
@@ -103,10 +102,10 @@ public final class HotbarUtils implements Global {
             return false;
         }
 
-        PlayerInventory inv = PlayerUtils.player().getInventory();
+        Inventory inv = PlayerUtils.player().getInventory();
 
         for (int i = 0; i <= 8; i ++) {
-            if (item.test(inv.getStack(i))) return true;
+            if (item.test(inv.getItem(i))) return true;
         }
         return false;
     }
@@ -116,46 +115,46 @@ public final class HotbarUtils implements Global {
             return false;
 
         for (int i = 0; i <= 8; i++)
-            if (item.test(InvUtils.inv().getStack(i)) && i != InvUtils.selected())
+            if (item.test(InvUtils.inv().getItem(i)) && i != InvUtils.selected())
                 return true;
         return false;
     }
 
     public static boolean isHolding(Item item) {
-        return isHolding(item,Hand.MAIN_HAND);
+        return isHolding(item,InteractionHand.MAIN_HAND);
     }
 
     public static ItemStack getHand() {
-        return getHand(Hand.MAIN_HAND);
+        return getHand(InteractionHand.MAIN_HAND);
     }
 
-    public static ItemStack getHand(Hand hand) {
+    public static ItemStack getHand(InteractionHand hand) {
         if (PlayerUtils.invalid()) {
             return ItemStack.EMPTY;
         }
 
-        ItemStack item = PlayerUtils.player().getStackInHand(hand);
+        ItemStack item = PlayerUtils.player().getItemInHand(hand);
         return item != null ? item : ItemStack.EMPTY;
     }
 
-    public static boolean isHolding(Item item, Hand hand) {
+    public static boolean isHolding(Item item, InteractionHand hand) {
         if (PlayerUtils.invalid()) {
             return false;
         }
-        return PlayerUtils.player().getStackInHand(hand).isOf(item);
+        return PlayerUtils.player().getItemInHand(hand).is(item);
     }
 
     public static boolean nameContains(String contains) {
-        return nameContains(contains,Hand.MAIN_HAND);
+        return nameContains(contains,InteractionHand.MAIN_HAND);
     }
 
-    public static boolean nameContains(String contains, Hand hand) {
+    public static boolean nameContains(String contains, InteractionHand hand) {
         if (PlayerUtils.invalid()) {
             return false;
         }
 
-        ItemStack item = PlayerUtils.player().getStackInHand(hand);
-        return item != null && item.getItem().getTranslationKey().toLowerCase().contains(contains.toLowerCase());
+        ItemStack item = PlayerUtils.player().getItemInHand(hand);
+        return item != null && item.getItem().getDescriptionId().toLowerCase().contains(contains.toLowerCase());
     }
 
     public static void forEachItem(Consumer<ItemStack> run) {
@@ -164,7 +163,7 @@ public final class HotbarUtils implements Global {
         }
 
         for (int i = 0; i < 9; i ++) {
-            ItemStack item = PlayerUtils.player().getInventory().getStack(i);
+            ItemStack item = PlayerUtils.player().getInventory().getItem(i);
             if (item == null) continue;
             if (item.isEmpty()) continue;
             run.accept(item);
@@ -177,7 +176,7 @@ public final class HotbarUtils implements Global {
         }
 
         for (int i = 0; i < 9; i ++) {
-            ItemStack item = PlayerUtils.player().getInventory().getStack(i);
+            ItemStack item = PlayerUtils.player().getInventory().getItem(i);
             if (item == null) continue;
             if (item.isEmpty()) continue;
             run.accept(i,item);
@@ -198,13 +197,13 @@ public final class HotbarUtils implements Global {
             return;
         }
 
-        PlayerActionC2SPacket.Action action = PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND;
-        PlayerActionC2SPacket swap = new PlayerActionC2SPacket(action, PlayerUtils.player().getBlockPos(), Direction.UP);
-        PlayerUtils.player().networkHandler.sendPacket(swap);
+        ServerboundPlayerActionPacket.Action action = ServerboundPlayerActionPacket.Action.SWAP_ITEM_WITH_OFFHAND;
+        ServerboundPlayerActionPacket swap = new ServerboundPlayerActionPacket(action, PlayerUtils.player().blockPosition(), Direction.UP);
+        PlayerUtils.player().connection.send(swap);
     }
 
     public static double getFullHealthRatio() {
-        PlayerEntity p = PlayerUtils.player();
+        Player p = PlayerUtils.player();
         return p == null ? 0.0 : p.getHealth() / p.getMaxHealth();
     }
 
@@ -217,8 +216,8 @@ public final class HotbarUtils implements Global {
             return false;
         }
 
-        ItemStack main = PlayerUtils.player().getStackInHand(Hand.MAIN_HAND);
-        ItemStack off = PlayerUtils.player().getStackInHand(Hand.OFF_HAND);
+        ItemStack main = PlayerUtils.player().getItemInHand(InteractionHand.MAIN_HAND);
+        ItemStack off = PlayerUtils.player().getItemInHand(InteractionHand.OFF_HAND);
 
         return (main != null && main.getItem() == item) || (off != null && off.getItem() == item);
     }
@@ -228,8 +227,8 @@ public final class HotbarUtils implements Global {
             return false;
         }
 
-        ItemStack main = PlayerUtils.player().getStackInHand(Hand.MAIN_HAND);
-        ItemStack off = PlayerUtils.player().getStackInHand(Hand.OFF_HAND);
+        ItemStack main = PlayerUtils.player().getItemInHand(InteractionHand.MAIN_HAND);
+        ItemStack off = PlayerUtils.player().getItemInHand(InteractionHand.OFF_HAND);
 
         return (main != null && item.test(main)) || (off != null && item.test(off));
     }

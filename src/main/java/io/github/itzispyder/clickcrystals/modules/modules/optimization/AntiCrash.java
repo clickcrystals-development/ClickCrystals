@@ -10,8 +10,8 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
-import net.minecraft.network.packet.s2c.play.ExplosionS2CPacket;
-import net.minecraft.network.packet.s2c.play.ParticleS2CPacket;
+import net.minecraft.network.protocol.game.ClientboundExplodePacket;
+import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
 
 public class AntiCrash extends Module implements Listener {
 
@@ -78,7 +78,7 @@ public class AntiCrash extends Module implements Listener {
 
     @EventHandler
     private void onReceiveParticle(PacketReceiveEvent e) {
-        if (e.getPacket() instanceof ParticleS2CPacket packet) {
+        if (e.getPacket() instanceof ClientboundLevelParticlesPacket packet) {
             int count = packet.getCount() - 1;
             double maxCount = maxParticleAmount.getVal();
 
@@ -87,10 +87,10 @@ public class AntiCrash extends Module implements Listener {
                 flag("§bLAG DETECTED: Particle spawned with count §7" + count + "§b, max §7" + maxCount + "§b!");
             }
         }
-        else if (e.getPacket() instanceof ExplosionS2CPacket packet) {
-            double x = packet.center().getX();
-            double y = packet.center().getY();
-            double z = packet.center().getZ();
+        else if (e.getPacket() instanceof ClientboundExplodePacket packet) {
+            double x = packet.center().x();
+            double y = packet.center().y();
+            double z = packet.center().z();
             double pX = 0;
             double pY = 0;
             double pZ = 0;

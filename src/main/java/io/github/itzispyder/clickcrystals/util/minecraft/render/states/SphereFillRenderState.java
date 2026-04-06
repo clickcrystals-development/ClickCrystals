@@ -1,18 +1,18 @@
 package io.github.itzispyder.clickcrystals.util.minecraft.render.states;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
-import net.minecraft.client.gui.ScreenRect;
-import net.minecraft.client.gui.render.state.SimpleGuiElementRenderState;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.texture.TextureSetup;
+import net.minecraft.client.gui.navigation.ScreenRectangle;
+import net.minecraft.client.gui.render.TextureSetup;
+import net.minecraft.client.gui.render.state.GuiElementRenderState;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 
-public class SphereFillRenderState implements SimpleGuiElementRenderState {
+public class SphereFillRenderState implements GuiElementRenderState {
 
-    private final TextureSetup texture = TextureSetup.empty();
+    private final TextureSetup texture = TextureSetup.noTexture();
     private final SphereState ss;
     private final int color;
 
@@ -22,7 +22,7 @@ public class SphereFillRenderState implements SimpleGuiElementRenderState {
     }
 
     @Override
-    public void setupVertices(VertexConsumer buf) {
+    public void buildVertices(VertexConsumer buf) {
         for (int pitch = 0; pitch < 360; pitch += ss.deltaTheta) {
             for (int yaw = 0; yaw < 180; yaw += ss.deltaTheta) {
                 Vector3d vec1 = MathUtils.toVector(pitch, yaw, ss.radius);
@@ -35,10 +35,10 @@ public class SphereFillRenderState implements SimpleGuiElementRenderState {
                 float[] vtx3 = MathUtils.projectVertex(vec3, ss.rotation, ss.focalLen);
                 float[] vtx4 = MathUtils.projectVertex(vec4, ss.rotation, ss.focalLen);
 
-                buf.vertex(ss.pose, ss.x + vtx1[0], ss.y + vtx1[1]).color(color);
-                buf.vertex(ss.pose, ss.x + vtx2[0], ss.y + vtx2[1]).color(color);
-                buf.vertex(ss.pose, ss.x + vtx3[0], ss.y + vtx3[1]).color(color);
-                buf.vertex(ss.pose, ss.x + vtx4[0], ss.y + vtx4[1]).color(color);
+                buf.addVertexWith2DPose(ss.pose, ss.x + vtx1[0], ss.y + vtx1[1]).setColor(color);
+                buf.addVertexWith2DPose(ss.pose, ss.x + vtx2[0], ss.y + vtx2[1]).setColor(color);
+                buf.addVertexWith2DPose(ss.pose, ss.x + vtx3[0], ss.y + vtx3[1]).setColor(color);
+                buf.addVertexWith2DPose(ss.pose, ss.x + vtx4[0], ss.y + vtx4[1]).setColor(color);
             }
         }
     }
@@ -55,13 +55,13 @@ public class SphereFillRenderState implements SimpleGuiElementRenderState {
 
     @Nullable
     @Override
-    public ScreenRect scissorArea() {
+    public ScreenRectangle scissorArea() {
         return ss.scissor;
     }
 
     @Nullable
     @Override
-    public ScreenRect bounds() {
+    public ScreenRectangle bounds() {
         return ss.bounds;
     }
 }

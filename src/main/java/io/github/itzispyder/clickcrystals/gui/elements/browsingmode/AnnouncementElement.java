@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class AnnouncementElement extends GuiElement {
 
@@ -29,7 +29,7 @@ public class AnnouncementElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         RenderUtils.fillRoundRect(context, x, y, width, height, 3, Shades.BLACK);
 
         int caret = y + 5;

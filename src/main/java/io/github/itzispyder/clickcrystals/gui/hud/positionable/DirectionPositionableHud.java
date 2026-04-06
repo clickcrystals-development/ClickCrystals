@@ -17,7 +17,7 @@ public class DirectionPositionableHud extends TextHud {
         String name = "UNKNOWN";
 
         if (PlayerUtils.valid()) {
-            name = StringUtils.capitalizeWords(PlayerUtils.player().getMovementDirection().name());
+            name = StringUtils.capitalizeWords(PlayerUtils.player().getMotionDirection().name());
         }
 
         return "Facing: " + name;

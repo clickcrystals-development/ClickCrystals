@@ -8,30 +8,29 @@ import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluati
 import io.github.itzispyder.clickcrystals.scripting.components.Conditional;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
-
 import java.awt.*;
 import java.util.function.Predicate;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 public class ConditionalHoveringOver implements Conditional, Global {
 
     @Override
     public ConditionEvaluationResult evaluate(ConditionEvaluationContext ctx) {
-        ClientPlayerEntity p = PlayerUtils.player();
+        LocalPlayer p = PlayerUtils.player();
         Predicate<ItemStack> item = ScriptParser.parseItemPredicate(ctx.get(0).toString());
-        if (p == null || p.currentScreenHandler == null || !(mc.currentScreen instanceof HandledScreen<?> handle))
+        if (p == null || p.containerMenu == null || !(mc.screen instanceof AbstractContainerScreen<?> handle))
             return ctx.end(false);
 
         AccessorHandledScreen screen = (AccessorHandledScreen) handle;
         Point cursor = InteractionUtils.getCursor();
 
-        for (Slot slot : p.currentScreenHandler.slots) {
+        for (Slot slot : p.containerMenu.slots) {
             if (!screen.isHovered(slot, cursor.x, cursor.y))
                 continue;
-            ItemStack stack = slot.getStack();
+            ItemStack stack = slot.getItem();
             if (stack == null || !item.test(stack))
                 continue;
             return ctx.end(true);

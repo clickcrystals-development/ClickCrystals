@@ -11,17 +11,17 @@ import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.PlayerSkinDrawer;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.network.PlayerListEntry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.PlayerFaceRenderer;
+import net.minecraft.client.multiplayer.PlayerInfo;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class TargetPositionableHud extends Hud {
 
-    private static PlayerEntity target;
+    private static Player target;
     private static long timer;
     private final Animator animator = new PollingAnimator(200, this::isTargetNaked);
 
@@ -30,12 +30,12 @@ public class TargetPositionableHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context, float tickDelta) {
+    public void render(GuiGraphics context, float tickDelta) {
         renderBackdrop(context);
 
-        if (target != null && !target.isDead() && timer > System.currentTimeMillis()) {
-            ClientPlayerEntity p = PlayerUtils.player();
-            PlayerListEntry targetEntry = p.networkHandler.getPlayerListEntry(target.getGameProfile().id());
+        if (target != null && !target.isDeadOrDying() && timer > System.currentTimeMillis()) {
+            LocalPlayer p = PlayerUtils.player();
+            PlayerInfo targetEntry = p.connection.getPlayerInfo(target.getGameProfile().id());
 
             if (targetEntry == null) {
                 target = null;
@@ -50,7 +50,7 @@ public class TargetPositionableHud extends Hud {
 
             // player head
             caret += g + 2;
-            PlayerSkinDrawer.draw(context, targetEntry.getSkinTextures(), margin, caret, 15);
+            PlayerFaceRenderer.draw(context, targetEntry.getSkin(), margin, caret, 15);
 
             // player name (next to player head)
             // and player ping and distance
@@ -68,8 +68,8 @@ public class TargetPositionableHud extends Hud {
                     RenderUtils.drawItem(context, item, margin, caret - 1, 13);
                     margin += 13;
                 }
-                RenderUtils.drawItem(context, target.getMainHandStack(), margin, caret - 1, 13);
-                RenderUtils.drawItem(context, target.getOffHandStack(), margin + 13, caret - 1, 13);
+                RenderUtils.drawItem(context, target.getMainHandItem(), margin, caret - 1, 13);
+                RenderUtils.drawItem(context, target.getOffhandItem(), margin + 13, caret - 1, 13);
                 margin = x + g + 2;
                 caret += 3;
             }
@@ -83,16 +83,16 @@ public class TargetPositionableHud extends Hud {
             HealthAsBar.render(context, margin, caret, maxHp, (int) hp, (int) hp, (int) ab, true);
 
             // totem indicator
-            ItemStack totem = Items.TOTEM_OF_UNDYING.getDefaultStack();
+            ItemStack totem = Items.TOTEM_OF_UNDYING.getDefaultInstance();
             String pops = "§c-" + Module.get(TotemPops.class).getPops(target);
             float scale = 1.8F;
             int tx = (int) ((margin + 80 + g) / scale - 1);
             int ty = (int) (y / scale + 5);
-            context.getMatrices().pushMatrix();
-            context.getMatrices().scale(scale);
-            context.drawItem(totem, tx, ty);
-            context.drawStackOverlay(mc.textRenderer, totem, tx, ty, pops);
-            context.getMatrices().popMatrix();
+            context.pose().pushMatrix();
+            context.pose().scale(scale);
+            context.renderItem(totem, tx, ty);
+            context.renderItemDecorations(mc.font, totem, tx, ty, pops);
+            context.pose().popMatrix();
 
             // end
             caret += g + 8;
@@ -107,11 +107,11 @@ public class TargetPositionableHud extends Hud {
         }
     }
 
-    public static PlayerEntity getTarget() {
+    public static Player getTarget() {
         return target;
     }
 
-    public static void setTarget(PlayerEntity target) {
+    public static void setTarget(Player target) {
         TargetPositionableHud.target = target;
         double stay = Module.getFrom(InGameHuds.class, m -> m.hudTargetStayTime.getVal());
         timer = System.currentTimeMillis() + (long)(stay * 1000);
@@ -121,7 +121,7 @@ public class TargetPositionableHud extends Hud {
     public boolean canRender() {
         boolean def = super.canRender() && Module.getFrom(InGameHuds.class, m -> m.hudTarget.getVal());
         boolean autoDisable = Module.getFrom(InGameHuds.class, m -> m.hudTargetDisableWhenNoCombat.getVal());
-        boolean targetValid = target != null && !target.isDead() && timer > System.currentTimeMillis();
+        boolean targetValid = target != null && !target.isDeadOrDying() && timer > System.currentTimeMillis();
         return def && !(!targetValid && autoDisable);
     }
 
@@ -134,7 +134,7 @@ public class TargetPositionableHud extends Hud {
         if (target == null) {
             return true;
         }
-        if (!target.getMainHandStack().isEmpty() || !target.getOffHandStack().isEmpty()) {
+        if (!target.getMainHandItem().isEmpty() || !target.getOffhandItem().isEmpty()) {
             return false;
         }
         for (ItemStack item : EntityUtils.getArmorItems(target))

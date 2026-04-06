@@ -5,8 +5,8 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.CameraClip;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.FreeLook;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoOverlay;
-import net.minecraft.block.enums.CameraSubmersionType;
-import net.minecraft.client.render.Camera;
+import net.minecraft.client.Camera;
+import net.minecraft.world.level.material.FogType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,14 +20,14 @@ public abstract class MixinCamera implements Global {
 
     @Unique private boolean bypassCameraClip;
 
-    @Inject(method = "getSubmersionType", at = @At("RETURN"), cancellable = true)
-    public void getSubmersionType(CallbackInfoReturnable<CameraSubmersionType> cir) {
+    @Inject(method = "getFluidInCamera", at = @At("RETURN"), cancellable = true)
+    public void getSubmersionType(CallbackInfoReturnable<FogType> cir) {
         if (Module.isEnabled(NoOverlay.class)) {
-            cir.setReturnValue(CameraSubmersionType.NONE);
+            cir.setReturnValue(FogType.NONE);
         }
     }
 
-    @Inject(method = "clipToSpace", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getMaxZoom", at = @At("HEAD"), cancellable = true)
     private void onClipToSpace(float f, CallbackInfoReturnable<Float> cir) {
         CameraClip clip = Module.get(CameraClip.class);
         if (bypassCameraClip) {
@@ -46,10 +46,10 @@ public abstract class MixinCamera implements Global {
         }
     }
 
-    @ModifyArgs(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;setRotation(FF)V"))
+    @ModifyArgs(method = "setup", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;setRotation(FF)V"))
     private void onUpdateSetRotationArgs(Args args) {
         FreeLook freeLook = Module.get(FreeLook.class);
-        if (freeLook.isEnabled() && mc.options.getPerspective() == freeLook.perspective.getVal().getPerspective()) {
+        if (freeLook.isEnabled() && mc.options.getCameraType() == freeLook.perspective.getVal().getPerspective()) {
             args.set(0, freeLook.cY);
             args.set(1, freeLook.cP);
         }

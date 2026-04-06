@@ -14,11 +14,11 @@ public class StringSetting extends ModuleSetting<String> {
         return new StringSettingElement(this, x, y);
     }
 
-    public static Builder create() {
-        return new Builder();
+    public static io.github.itzispyder.clickcrystals.modules.settings.StringSetting.Builder create() {
+        return new io.github.itzispyder.clickcrystals.modules.settings.StringSetting.Builder();
     }
 
-    public static class Builder extends SettingBuilder<String, Builder, StringSetting> {
+    public static class Builder extends SettingBuilder<String, io.github.itzispyder.clickcrystals.modules.settings.StringSetting.Builder, StringSetting> {
         @Override
         public StringSetting buildSetting() {
             return new StringSetting(name, description, def, getOrDef(val, def));

@@ -3,13 +3,12 @@ package io.github.itzispyder.clickcrystals.client.system;
 import com.mojang.authlib.GameProfile;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
-import net.minecraft.util.Identifier;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
+import net.minecraft.resources.Identifier;
 
 public class CapeManager {
 

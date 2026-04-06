@@ -1,20 +1,20 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.parts.ChamPart;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.parts.FadingChamPart;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class FadingChamRagDoll extends ChamRagDoll<FadingChamPart> {
 
-    public FadingChamRagDoll(PlayerEntity player, int maxAge) {
+    public FadingChamRagDoll(Player player, int maxAge) {
         super(player, maxAge);
     }
 
     @Override
-    protected void initializeParts(PlayerEntity player) {
+    protected void initializeParts(Player player) {
         FadingChamPart head = new FadingChamPart(-ChamPart.B4, ChamPart.B12 + ChamPart.B12, -ChamPart.B4, ChamPart.B4, ChamPart.B12 + ChamPart.B12 + ChamPart.B8, ChamPart.B4, 0.05f, 0.8f);
-        head.pitch = player.getPitch();
+        head.pitch = player.getXRot();
 
         parts.put("head", head);
         parts.put("bod", new FadingChamPart(-ChamPart.B4, ChamPart.B12, -ChamPart.B2, ChamPart.B4, ChamPart.B12 + ChamPart.B12, ChamPart.B2, 0.1f, 0.7f));
@@ -33,7 +33,7 @@ public class FadingChamRagDoll extends ChamRagDoll<FadingChamPart> {
     }
 
     @Override
-    protected void renderPart(FadingChamPart part, MatrixStack matrices, int color, float tickDelta) {
+    protected void renderPart(FadingChamPart part, PoseStack matrices, int color, float tickDelta) {
         part.render(matrices, color, tickDelta, age);
     }
 }

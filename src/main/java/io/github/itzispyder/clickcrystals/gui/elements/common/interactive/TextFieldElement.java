@@ -8,10 +8,6 @@ import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.text.OrderedText;
-import net.minecraft.text.StringVisitable;
-import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
@@ -19,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.util.FormattedCharSequence;
 
 public class TextFieldElement extends GuiElement implements Typeable {
 
@@ -56,12 +56,12 @@ public class TextFieldElement extends GuiElement implements Typeable {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
-        context.getMatrices().pushMatrix();
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        context.pose().pushMatrix();
         context.enableScissor(x, y, x + width, y + height);
 
         RenderUtils.fillRect(context, x, y, width, height, backgroundColor.getHex());
-        List<OrderedText> text = mc.textRenderer.wrapLines(StringVisitable.plain(styledContent), width - 25);
+        List<FormattedCharSequence> text = mc.font.split(FormattedText.of(styledContent), width - 25);
         textHeight = text.size() * 9;
 
         int caret = y + textY;
@@ -70,7 +70,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
         // lines indexes
         int max = Math.max(99, text.size());
         for (int i = 0; i < max; i++) {
-            Text index = Text.literal("" + (i + 1));
+            Component index = Component.literal("" + (i + 1));
             RenderUtils.drawDefaultScaledText(context, index, x + 5, caret + 1, 1.0F, false, color);
             caret += 9;
         }
@@ -78,11 +78,11 @@ public class TextFieldElement extends GuiElement implements Typeable {
         // text
         caret = y + textY;
         for (var it = text.iterator(); it.hasNext(); caret += 9) {
-            OrderedText line = it.next();
+            FormattedCharSequence line = it.next();
             if (selectedAll) {
-                RenderUtils.fillRect(context, x + 20, caret - 1, mc.textRenderer.getWidth(line), 9, 0xA07E75FF);
+                RenderUtils.fillRect(context, x + 20, caret - 1, mc.font.width(line), 9, 0xA07E75FF);
             }
-            context.drawText(mc.textRenderer, line, x + 20, caret, textColor.getHex(), false);
+            context.drawString(mc.font, line, x + 20, caret, textColor.getHex(), false);
         }
 
         if (selectionBlinking) {
@@ -92,14 +92,14 @@ public class TextFieldElement extends GuiElement implements Typeable {
         }
 
         context.disableScissor();
-        context.getMatrices().popMatrix();
+        context.pose().popMatrix();
     }
 
     @Override
     public void onTick() {
         super.onTick();
 
-        if (mc.currentScreen instanceof GuiScreen screen) {
+        if (mc.screen instanceof GuiScreen screen) {
             if (screen.selected != this) {
                 selectionBlinking = false;
                 return;
@@ -116,7 +116,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
 
     @Override
     public boolean onKey(int key, int scan) {
-        if (!(mc.currentScreen instanceof GuiScreen screen))
+        if (!(mc.screen instanceof GuiScreen screen))
             return false;
 
         if (key == GLFW.GLFW_KEY_ESCAPE) {
@@ -140,12 +140,12 @@ public class TextFieldElement extends GuiElement implements Typeable {
             return true;
         }
         else if (key == GLFW.GLFW_KEY_V && screen.ctrlKeyPressed) {
-            onInput(input -> insertInput(mc.keyboard.getClipboard()));
+            onInput(input -> insertInput(mc.keyboardHandler.getClipboard()));
             shiftRight();
             return true;
         }
         else if (key == GLFW.GLFW_KEY_C && screen.ctrlKeyPressed && selectedAll) {
-            mc.keyboard.setClipboard(content);
+            mc.keyboardHandler.setClipboard(content);
             return true;
         }
         else if (key == GLFW.GLFW_KEY_ENTER) {
@@ -247,13 +247,13 @@ public class TextFieldElement extends GuiElement implements Typeable {
 
     public void updateSelection() {
         String str = content.substring(0, MathUtils.clamp(selectionStart, 0, content.length()));
-        List<OrderedText> lines = mc.textRenderer.wrapLines(StringVisitable.plain(str), width - 25);
+        List<FormattedCharSequence> lines = mc.font.split(FormattedText.of(str), width - 25);
 
         if (lines == null || lines.isEmpty()) {
             selectedStartPoint.setLocation(0, 0);
             return;
         }
-        selectedStartPoint.x = mc.textRenderer.getWidth(lines.get(Math.max(0, lines.size() - 1)));
+        selectedStartPoint.x = mc.font.width(lines.get(Math.max(0, lines.size() - 1)));
         selectedStartPoint.y = lines.size() * 9 - 9;
     }
 

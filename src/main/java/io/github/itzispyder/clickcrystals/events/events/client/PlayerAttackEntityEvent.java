@@ -2,25 +2,25 @@ package io.github.itzispyder.clickcrystals.events.events.client;
 
 import io.github.itzispyder.clickcrystals.events.Cancellable;
 import io.github.itzispyder.clickcrystals.events.Event;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.hit.HitResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.HitResult;
 
 public class PlayerAttackEntityEvent extends Event implements Cancellable {
 
-    private final PlayerEntity player;
+    private final Player player;
     private final Entity entity;
     private final HitResult hitResult;
     private boolean cancelled;
 
-    public PlayerAttackEntityEvent(PlayerEntity player, Entity entity, HitResult hitResult) {
+    public PlayerAttackEntityEvent(Player player, Entity entity, HitResult hitResult) {
         this.player = player;
         this.entity = entity;
         this.hitResult = hitResult;
         this.cancelled = false;
     }
 
-    public PlayerEntity getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 

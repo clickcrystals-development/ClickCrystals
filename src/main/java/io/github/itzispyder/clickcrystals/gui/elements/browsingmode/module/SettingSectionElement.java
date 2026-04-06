@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class SettingSectionElement extends GuiElement {
 
@@ -34,11 +34,11 @@ public class SettingSectionElement extends GuiElement {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY) {
+    public void render(GuiGraphics context, int mouseX, int mouseY) {
         boolean isAnimating = animator != null && !animator.isFinished();
         if (isAnimating) {
-            context.getMatrices().pushMatrix();
-            context.getMatrices().translate(0, -(float)(width * 0.5 * animator.getAnimationReversed()));
+            context.pose().pushMatrix();
+            context.pose().translate(0, -(float)(width * 0.5 * animator.getAnimationReversed()));
         }
         else {
             animator = null;
@@ -48,12 +48,12 @@ public class SettingSectionElement extends GuiElement {
 
 
         if (isAnimating) {
-            context.getMatrices().popMatrix();
+            context.pose().popMatrix();
         }
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         RenderUtils.fillRoundRect(context, x, y, width, height, 3, Shades.TRANS_BLACK);
 
         String text;

@@ -8,10 +8,10 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.ScoreboardDisplayS2CPacket;
-import net.minecraft.network.packet.s2c.play.ScoreboardObjectiveUpdateS2CPacket;
-import net.minecraft.network.packet.s2c.play.ScoreboardScoreUpdateS2CPacket;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundSetDisplayObjectivePacket;
+import net.minecraft.network.protocol.game.ClientboundSetObjectivePacket;
+import net.minecraft.network.protocol.game.ClientboundSetScorePacket;
 
 public class NoScoreboard extends Module implements Listener {
 
@@ -41,7 +41,7 @@ public class NoScoreboard extends Module implements Listener {
     private void onReceivePacket(PacketReceiveEvent e) {
         if (cancelPackets.getVal()) {
             Packet<?> p = e.getPacket();
-            if (p instanceof ScoreboardScoreUpdateS2CPacket || p instanceof ScoreboardDisplayS2CPacket || p instanceof ScoreboardObjectiveUpdateS2CPacket) {
+            if (p instanceof ClientboundSetScorePacket || p instanceof ClientboundSetDisplayObjectivePacket || p instanceof ClientboundSetObjectivePacket) {
                 e.setCancelled(true);
             }
         }

@@ -4,11 +4,11 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.command.CommandSource;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 
 public class LookCommand extends Command {
 
@@ -17,7 +17,7 @@ public class LookCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<CommandSource> builder) {
+    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
         builder.then(literal("to")
                 .then(argument("x", IntegerArgumentType.integer())
                         .then(argument("y", IntegerArgumentType.integer())
@@ -41,7 +41,7 @@ public class LookCommand extends Command {
                 .then(literal("at")
                         .then(literal("nearest-player")
                                 .executes(context -> {
-                                    PlayerEntity player = PlayerUtils.getNearestPlayer(128, Entity::isAlive);
+                                    Player player = PlayerUtils.getNearestPlayer(128, Entity::isAlive);
                                     if (player != null) {
                                         info("Rotating to " + player.getGameProfile().name() + " from " + dist(player) + " blocks away");
                                         rotateTo(player);
@@ -54,7 +54,7 @@ public class LookCommand extends Command {
                                 .executes(context -> {
                                     Entity entity = PlayerUtils.getNearestEntity(128, Entity::isAlive);
                                     if (entity != null) {
-                                        info("Rotating to " + entity.getType().getName().getString() + " from " + dist(entity) + " blocks away");
+                                        info("Rotating to " + entity.getType().getDescription().getString() + " from " + dist(entity) + " blocks away");
                                         rotateTo(entity);
                                         return SINGLE_SUCCESS;
                                     }
@@ -66,7 +66,7 @@ public class LookCommand extends Command {
     private void rotateTo(int x, int y, int z) {
         if (PlayerUtils.valid()) {
             BlockPos pos = new BlockPos(x, y, z);
-            Vec3d dir = pos.toCenterPos().subtract(PlayerUtils.player().getEyePos());
+            Vec3 dir = pos.getCenter().subtract(PlayerUtils.player().getEyePosition());
 
             system.cameraRotator.ready()
                     .addTicket(dir)
@@ -92,6 +92,6 @@ public class LookCommand extends Command {
         if (PlayerUtils.invalid() || ent == null) {
             return 0;
         }
-        return (int)ent.getEntityPos().distanceTo(PlayerUtils.player().getEntityPos());
+        return (int)ent.position().distanceTo(PlayerUtils.player().position());
     }
 }

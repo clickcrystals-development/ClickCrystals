@@ -2,11 +2,10 @@ package io.github.itzispyder.clickcrystals.modules.modules.rendering.entityindic
 
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.Monster;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Enemy;
 
 public class EntityIndicatorSimulation {
 
@@ -26,8 +25,8 @@ public class EntityIndicatorSimulation {
         nearestEntity = null;
 
         PlayerUtils.runOnNearestEntity(range, entity -> {
-            boolean bl = entity instanceof MobEntity && entity.isAlive() && !entity.isInvisibleTo(player);
-            boolean bl2 = !(!(entity instanceof Monster) && onlyMonsters);
+            boolean bl = entity instanceof Mob && entity.isAlive() && !entity.isInvisibleTo(player);
+            boolean bl2 = !(!(entity instanceof Enemy) && onlyMonsters);
             if (bl && bl2) {
                 entities.add(new SimulationEntry(entity, player));
             }

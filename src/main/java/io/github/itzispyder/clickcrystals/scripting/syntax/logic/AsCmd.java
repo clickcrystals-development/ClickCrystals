@@ -7,10 +7,9 @@ import io.github.itzispyder.clickcrystals.scripting.syntax.TargetType;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 import io.github.itzispyder.clickcrystals.scripting.syntax.macros.DamageCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.hit.EntityHitResult;
-
 import java.util.function.Predicate;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.EntityHitResult;
 
 // @Format as (any_entity|target_entity|client) {}
 // @Format as nearest_entity <identifier> {}
@@ -47,7 +46,7 @@ public class AsCmd extends ScriptCommand implements ThenChainable {
                 read.executeThenChain(false);
             }
             case TARGET_ENTITY -> {
-                if (mc.crosshairTarget instanceof EntityHitResult hit)
+                if (mc.hitResult instanceof EntityHitResult hit)
                     currentReference = hit.getEntity();
                 referencing = true;
                 read.executeThenChain(false);

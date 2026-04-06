@@ -59,10 +59,10 @@ import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.TickScheduler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.gui.screen.ChatScreen;
-import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
-import net.minecraft.client.gui.screen.world.SelectWorldScreen;
+import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
+import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import org.lwjgl.glfw.GLFW;
 
 /**
@@ -101,7 +101,7 @@ public final class ClickCrystals implements ModInitializer, Global {
     public static final Keybind openModuleKeybind = Keybind.create()
             .id("open-clickcrystals-module-screen")
             .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
-            .condition((bind, screen) -> screen == null || screen instanceof TitleScreen || screen instanceof MultiplayerScreen || screen instanceof SelectWorldScreen)
+            .condition((bind, screen) -> screen == null || screen instanceof TitleScreen || screen instanceof JoinMultiplayerScreen || screen instanceof SelectWorldScreen)
             .onPress(bind -> UserInputListener.openPreviousScreen())
             .onChange(config::saveKeybind)
             .build();
@@ -113,7 +113,7 @@ public final class ClickCrystals implements ModInitializer, Global {
             .condition((bind, screen) -> screen == null)
             .onPress(bind -> {
                 if (Module.isEnabled(InGameHuds.class)) {
-                    mc.setScreenAndRender(new HudEditScreen());
+                    mc.setScreenAndShow(new HudEditScreen());
                 }
                 else {
                     ChatUtils.sendPrefixMessage("§cThe module §7InGameHuds §cis not enabled! Press this keybind again when it is.");

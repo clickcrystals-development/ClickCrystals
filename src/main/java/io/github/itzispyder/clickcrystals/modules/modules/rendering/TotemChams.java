@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.client.EntityDamageEvent;
 import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceiveEvent;
@@ -14,14 +15,12 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.E
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.FadingChamRagDoll;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
-
 import java.util.concurrent.ConcurrentLinkedQueue;
+import net.minecraft.network.protocol.game.ClientboundEntityEventPacket;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityEvent;
+import net.minecraft.world.entity.player.Player;
 
 public class TotemChams extends ListenerModule {
 
@@ -110,13 +109,13 @@ public class TotemChams extends ListenerModule {
     private void onEntityStatus(PacketReceiveEvent e) {
         if (PlayerUtils.invalid())
             return;
-        if (!(e.getPacket() instanceof EntityStatusS2CPacket packet))
+        if (!(e.getPacket() instanceof ClientboundEntityEventPacket packet))
             return;
-        if (packet.getStatus() != EntityStatuses.USE_TOTEM_OF_UNDYING)
+        if (packet.getEventId() != EntityEvent.PROTECTED_FROM_DEATH)
             return;
 
         Entity entity = packet.getEntity(PlayerUtils.getWorld());
-        if (entity instanceof PlayerEntity player)
+        if (entity instanceof Player player)
             if (player != mc.player || showSelf.getVal())
                 ragDolls.add(ragDollState.getVal().get(player));
     }
@@ -129,7 +128,7 @@ public class TotemChams extends ListenerModule {
         DamageSource source = e.getSource();
         Entity entity = e.getEntity();
 
-        if (!e.isSelf() && source.getAttacker() == PlayerUtils.player() && entity instanceof PlayerEntity player)
+        if (!e.isSelf() && source.getEntity() == PlayerUtils.player() && entity instanceof Player player)
             ragDolls.add(ragDollState.getVal().get(player));
     }
 
@@ -166,8 +165,8 @@ public class TotemChams extends ListenerModule {
         if (PlayerUtils.invalid())
             return;
 
-        MatrixStack matrices = e.getMatrices();
-        float tickDelta = e.getTickCounter().getTickProgress(true);
+        PoseStack matrices = e.getMatrices();
+        float tickDelta = e.getTickCounter().getGameTimeDeltaPartialTick(true);
 
         for (ChamRagDoll<?> doll : ragDolls)
             doll.render(matrices, getColor(), tickDelta);
@@ -187,10 +186,10 @@ public class TotemChams extends ListenerModule {
             this.clazz = clazz;
         }
 
-        public ChamRagDoll<?> get(PlayerEntity player) {
+        public ChamRagDoll<?> get(Player player) {
             try {
                 int maxAge = Module.get(TotemChams.class).maxAge.getVal().intValue() * 20;
-                return clazz.getConstructor(PlayerEntity.class, int.class).newInstance(player, maxAge);
+                return clazz.getConstructor(Player.class, int.class).newInstance(player, maxAge);
             }
             catch (Exception e) {
                 return null;

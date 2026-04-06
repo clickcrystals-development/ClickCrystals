@@ -6,10 +6,9 @@ import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluati
 import io.github.itzispyder.clickcrystals.scripting.components.Conditional;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.entity.Entity;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
+import net.minecraft.world.entity.Entity;
 
 public class ConditionalEntityInRange implements Conditional {
 

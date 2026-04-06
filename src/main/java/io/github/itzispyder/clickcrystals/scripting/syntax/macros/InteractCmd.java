@@ -8,17 +8,16 @@ import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.VectorParser;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-
 import java.util.function.Predicate;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 
 // @Format interact (nearest_entity|nearest_block) <identifier>
 // @Format interact (any_entity|target_entity|any_block)
@@ -31,7 +30,7 @@ public class InteractCmd extends ScriptCommand implements ThenChainable {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        if (mc.interactionManager == null) {
+        if (mc.gameMode == null) {
             return;
         }
 
@@ -41,42 +40,42 @@ public class InteractCmd extends ScriptCommand implements ThenChainable {
             case NEAREST_ENTITY -> {
                 Predicate<Entity> filter = ScriptParser.parseEntityPredicate(read.nextStr());
                 PlayerUtils.runOnNearestEntity(128, filter, entity -> {
-                    if (entity instanceof PlayerEntity player && EntityUtils.shouldCancelCcsAttack(player)) {
+                    if (entity instanceof Player player && EntityUtils.shouldCancelCcsAttack(player)) {
                         return; // Skip interacting with teammates
                     }
                     EntityHitResult hitResult = new EntityHitResult(entity, entity.getBoundingBox().getCenter());
-                    mc.interactionManager.interactEntityAtLocation(mc.player, entity, hitResult, Hand.MAIN_HAND);
-                    mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND);
+                    mc.gameMode.interactAt(mc.player, entity, hitResult, InteractionHand.MAIN_HAND);
+                    mc.gameMode.interact(mc.player, entity, InteractionHand.MAIN_HAND);
                 });
                 read.executeThenChain();
             }
             case ANY_ENTITY -> {
                 PlayerUtils.runOnNearestEntity(128, DamageCmd.ENTITY_EXISTS, entity -> {
-                    if (entity instanceof PlayerEntity player && EntityUtils.shouldCancelCcsAttack(player)) {
+                    if (entity instanceof Player player && EntityUtils.shouldCancelCcsAttack(player)) {
                         return; // Skip interacting with teammates
                     }
                     EntityHitResult hitResult = new EntityHitResult(entity, entity.getBoundingBox().getCenter());
-                    mc.interactionManager.interactEntityAtLocation(mc.player, entity, hitResult, Hand.MAIN_HAND);
-                    mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND);
+                    mc.gameMode.interactAt(mc.player, entity, hitResult, InteractionHand.MAIN_HAND);
+                    mc.gameMode.interact(mc.player, entity, InteractionHand.MAIN_HAND);
                 });
                 read.executeThenChain();
             }
             case NEAREST_BLOCK -> {
                 Predicate<BlockState> filter = ScriptParser.parseBlockPredicate(read.nextStr());
                 PlayerUtils.runOnNearestBlock(32, filter, (pos, state) -> {
-                    Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
-                    Direction face = Direction.getFacing(vector);
-                    BlockHitResult hit = new BlockHitResult(pos.toCenterPos(), face, pos, false);
-                    mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
+                    Vec3 vector = PlayerUtils.getEyes().subtract(pos.getCenter());
+                    Direction face = Direction.getApproximateNearest(vector);
+                    BlockHitResult hit = new BlockHitResult(pos.getCenter(), face, pos, false);
+                    mc.gameMode.useItemOn(mc.player, InteractionHand.MAIN_HAND, hit);
                 });
                 read.executeThenChain();
             }
             case ANY_BLOCK -> {
                 PlayerUtils.runOnNearestBlock(32, (pos, state) -> true, (pos, state) -> {
-                    Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
-                    Direction face = Direction.getFacing(vector);
-                    BlockHitResult hit = new BlockHitResult(pos.toCenterPos(), face, pos, false);
-                    mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
+                    Vec3 vector = PlayerUtils.getEyes().subtract(pos.getCenter());
+                    Direction face = Direction.getApproximateNearest(vector);
+                    BlockHitResult hit = new BlockHitResult(pos.getCenter(), face, pos, false);
+                    mc.gameMode.useItemOn(mc.player, InteractionHand.MAIN_HAND, hit);
                 });
                 read.executeThenChain();
             }
@@ -87,11 +86,11 @@ public class InteractCmd extends ScriptCommand implements ThenChainable {
                         read.nextStr(),
                         PlayerUtils.player()
                 );
-                BlockPos pos = BlockPos.ofFloored(parser.getVector());
-                Vec3d vector = PlayerUtils.getEyes().subtract(pos.toCenterPos());
-                Direction face = Direction.getFacing(vector);
-                BlockHitResult hit = new BlockHitResult(pos.toCenterPos(), face, pos, false);
-                mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
+                BlockPos pos = BlockPos.containing(parser.getVector());
+                Vec3 vector = PlayerUtils.getEyes().subtract(pos.getCenter());
+                Direction face = Direction.getApproximateNearest(vector);
+                BlockHitResult hit = new BlockHitResult(pos.getCenter(), face, pos, false);
+                mc.gameMode.useItemOn(mc.player, InteractionHand.MAIN_HAND, hit);
                 read.executeThenChain();
             }
             default -> throw new IllegalArgumentException("unsupported operation");

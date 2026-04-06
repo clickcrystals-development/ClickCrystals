@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class HealthAsBar extends Module {
 
@@ -33,11 +33,11 @@ public class HealthAsBar extends Module {
 
     }
 
-    public void renderHealthBar(DrawContext context, int x, int y, float maxHealth, int lastHealth, int health, int absorption) {
+    public void renderHealthBar(GuiGraphics context, int x, int y, float maxHealth, int lastHealth, int health, int absorption) {
         render(context, x, y, maxHealth, lastHealth, health, absorption, showValueText.getVal());
     }
 
-    public static void render(DrawContext context, int x, int y, float maxHealth, int lastHealth, int health, int absorption, boolean showValue) {
+    public static void render(GuiGraphics context, int x, int y, float maxHealth, int lastHealth, int health, int absorption, boolean showValue) {
         int height = 8;
         int width = height * 10;
 
@@ -62,7 +62,7 @@ public class HealthAsBar extends Module {
         if (showValue) {
             double hearts = MathUtils.round((lastHealth + absorption) / 2.0, 10);
             String text = hearts + "";
-            int textWidth = (int)(mc.textRenderer.getWidth(text) * 0.6);
+            int textWidth = (int)(mc.font.width(text) * 0.6);
             int textX = x + widthNormal - textWidth - 2;
 
             textX = Math.max(textX, x + 2);

@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class ScrollPanelElement extends GuiElement {
 
@@ -96,18 +96,18 @@ public class ScrollPanelElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
 
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY) {
+    public void render(GuiGraphics context, int mouseX, int mouseY) {
         boolean bl = canRender();
 
         float interpolatedDelta = (float)(interpolationLength * interpolation.getProgressClampedReversed());
         context.enableScissor(x, y, x + width, y + height);
-        context.getMatrices().pushMatrix();
-        context.getMatrices().translate(0, -interpolatedDelta);
+        context.pose().pushMatrix();
+        context.pose().translate(0, -interpolatedDelta);
 
         if (bl)
             onRender(context, mouseX, mouseY);
@@ -115,7 +115,7 @@ public class ScrollPanelElement extends GuiElement {
             if (child.y + child.height > this.y || child.y < this.y + this.height)
                 child.render(context, mouseX, mouseY);
 
-        context.getMatrices().popMatrix();
+        context.pose().popMatrix();
         context.disableScissor();
 
         if (Module.isEnabled(GuiBorders.class))
@@ -125,7 +125,7 @@ public class ScrollPanelElement extends GuiElement {
     }
 
     @Override
-    public void postRender(DrawContext context, int mouseX, int mouseY) {
+    public void postRender(GuiGraphics context, int mouseX, int mouseY) {
         if (!canScroll() || !canRender())
             return;
 

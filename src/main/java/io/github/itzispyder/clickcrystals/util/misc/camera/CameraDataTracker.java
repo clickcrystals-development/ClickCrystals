@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.util.misc.camera;
 
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.player.LocalPlayer;
 
 public class CameraDataTracker {
 
@@ -22,9 +22,9 @@ public class CameraDataTracker {
         if (PlayerUtils.invalid())
             return;
 
-        ClientPlayerEntity p = PlayerUtils.player();
-        float pitch = p.getPitch();
-        float yaw = p.getYaw();
+        LocalPlayer p = PlayerUtils.player();
+        float pitch = p.getXRot();
+        float yaw = p.getYRot();
         recordData(pitch, yaw);
     }
 

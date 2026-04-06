@@ -8,20 +8,19 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.scripting.components.conditionalcontexts.*;
 import io.github.itzispyder.clickcrystals.util.minecraft.*;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.world.GameMode;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 
 public class Conditionals implements Global {
 
@@ -306,7 +305,7 @@ public class Conditionals implements Global {
         TARGET_FLUID = register("target_fluid", ctx -> {
             Voidable<FluidState> state = EntityUtils.getTargetFluid(ctx.entity, true);
             Predicate<BlockState> test = ScriptParser.parseBlockPredicate(ctx.get(0).toString());
-            return ctx.end(true, state.isPresent() && test.test(state.get().getBlockState()));
+            return ctx.end(true, state.isPresent() && test.test(state.get().createLegacyBlock()));
         });
         TARGETING_BLOCK = register("targeting_block", ctx -> ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof BlockHitResult hit && !PlayerUtils.getWorld().getBlockState(hit.getBlockPos()).isAir()));
         TARGETING_ENTITY = register("targeting_entity", ctx -> ctx.end(true, EntityUtils.getTarget(ctx.entity) instanceof EntityHitResult hit && hit.getEntity().isAlive()));
@@ -329,17 +328,17 @@ public class Conditionals implements Global {
         ENTITY_IN_RANGE = register("entity_in_range", new ConditionalEntityInRange());
         BLOCK_IN_FOV = register("block_in_fov", new ConditionalBlockInFov());
         ENTITY_IN_FOV = register("entity_in_fov", new ConditionalEntityInFov());
-        ATTACK_PROGRESS = register("attack_progress", ctx -> ctx.assertClientPlayer().end(ctx.compareNumArg(0, PlayerUtils.player().getAttackCooldownProgress(1.0F))));
+        ATTACK_PROGRESS = register("attack_progress", ctx -> ctx.assertClientPlayer().end(ctx.compareNumArg(0, PlayerUtils.player().getAttackStrengthScale(1.0F))));
         HEALTH = register("health", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && ctx.compareNumArg(0, (int) liv.getHealth())));
-        HUNGER = register("hunger", ctx -> ctx.end(true, ctx.entity instanceof PlayerEntity liv && ctx.compareNumArg(0, liv.getHungerManager().getFoodLevel())));
+        HUNGER = register("hunger", ctx -> ctx.end(true, ctx.entity instanceof Player liv && ctx.compareNumArg(0, liv.getFoodData().getFoodLevel())));
         HURT_TIME = register("hurt_time", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && ctx.compareNumArg(0, liv.hurtTime)));
-        ARMOR = register("armor", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && ctx.compareNumArg(0, liv.getArmor())));
+        ARMOR = register("armor", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && ctx.compareNumArg(0, liv.getArmorValue())));
         POS_X = register("pos_x", ctx -> ctx.end(true, ctx.compareNumArg(0, (int) ctx.entity.getX())));
         POS_Y = register("pos_y", ctx -> ctx.end(true, ctx.compareNumArg(0, (int) ctx.entity.getY())));
         POS_Z = register("pos_z", ctx -> ctx.end(true, ctx.compareNumArg(0, (int) ctx.entity.getZ())));
-        VEL_X = register("vel_x", ctx -> ctx.end(true, ctx.compareNumArg(0, ctx.entity.getVelocity().getX())));
-        VEL_Y = register("vel_y", ctx -> ctx.end(true, ctx.compareNumArg(0, ctx.entity.getVelocity().getY())));
-        VEL_Z = register("vel_z", ctx -> ctx.end(true, ctx.compareNumArg(0, ctx.entity.getVelocity().getZ())));
+        VEL_X = register("vel_x", ctx -> ctx.end(true, ctx.compareNumArg(0, ctx.entity.getDeltaMovement().x())));
+        VEL_Y = register("vel_y", ctx -> ctx.end(true, ctx.compareNumArg(0, ctx.entity.getDeltaMovement().y())));
+        VEL_Z = register("vel_z", ctx -> ctx.end(true, ctx.compareNumArg(0, ctx.entity.getDeltaMovement().z())));
         MODULE_ENABLED = register("module_enabled", ctx -> {
             Module m = system.getModuleById(ctx.get(0).toString());
             return ctx.end(m != null && m.isEnabled());
@@ -360,30 +359,30 @@ public class Conditionals implements Global {
         });
         DIMENSION = register("dimension", new ConditionalDimension());
         EFFECT_AMPLIFIER = register("effect_amplifier", ctx -> {
-            StatusEffectInstance effect = EntityUtils.getEffect(ctx.entity, ScriptParser.parseStatusEffect(ctx.get(0).toString()));
+            MobEffectInstance effect = EntityUtils.getEffect(ctx.entity, ScriptParser.parseStatusEffect(ctx.get(0).toString()));
             return ctx.end(true, ctx.compareNumArg(1, effect.getAmplifier()));
         });
         EFFECT_DURATION = register("effect_duration", ctx -> {
-            StatusEffectInstance effect = EntityUtils.getEffect(ctx.entity, ScriptParser.parseStatusEffect(ctx.get(0).toString()));
+            MobEffectInstance effect = EntityUtils.getEffect(ctx.entity, ScriptParser.parseStatusEffect(ctx.get(0).toString()));
             return ctx.end(true, ctx.compareNumArg(1, effect.getDuration()));
         });
         IN_GAME = register("in_game", ctx -> ctx.end(PlayerUtils.valid()));
-        IN_SINGLEPLAYER = register("in_singleplayer", ctx -> ctx.end(mc.isInSingleplayer()));
-        PLAYING = register("playing", ctx -> ctx.end(PlayerUtils.valid() && mc.currentScreen == null));
-        IN_SCREEN = register("in_screen", ctx -> ctx.end(PlayerUtils.valid() && mc.currentScreen != null));
+        IN_SINGLEPLAYER = register("in_singleplayer", ctx -> ctx.end(mc.isLocalServer()));
+        PLAYING = register("playing", ctx -> ctx.end(PlayerUtils.valid() && mc.screen == null));
+        IN_SCREEN = register("in_screen", ctx -> ctx.end(PlayerUtils.valid() && mc.screen != null));
         CHANCE_OF = register("chance_of", ctx -> ctx.end(Math.random() * 100 < ctx.get(0).toDouble()));
         COLLIDING = register("colliding", ctx -> ctx.end(true, EntityUtils.isColliding(ctx.entity)));
         COLLIDING_HORIZONTALLY = register("colliding_horizontally", ctx -> ctx.end(true, EntityUtils.isCollidingHorizontally(ctx.entity)));
         COLLIDING_VERTICALLY = register("colliding_vertically", ctx -> ctx.end(true, EntityUtils.isCollidingVertically(ctx.entity)));
-        JUMPING = register("jumping", ctx -> ctx.end(true, PlayerUtils.valid() && mc.player.input.playerInput.jump() && !mc.player.isSubmergedInWater()));
+        JUMPING = register("jumping", ctx -> ctx.end(true, PlayerUtils.valid() && mc.player.input.keyPresses.jump() && !mc.player.isUnderWater()));
         MOVING = register("moving", ctx -> ctx.end(true, EntityUtils.isMoving(ctx.entity)));
         BLOCKING = register("blocking", ctx -> ctx.end(true, EntityUtils.isBlocking(ctx.entity)));
-        ON_GROUND = register("on_ground", ctx -> ctx.end(true, ctx.entity.isOnGround()));
+        ON_GROUND = register("on_ground", ctx -> ctx.end(true, ctx.entity.onGround()));
         ON_FIRE = register("on_fire", ctx -> ctx.end(true, ctx.entity.isOnFire()));
-        FROZEN = register("frozen", ctx -> ctx.end(true, ctx.entity.isFrozen()));
-        DEAD = register("dead", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && liv.isDead()));
+        FROZEN = register("frozen", ctx -> ctx.end(true, ctx.entity.isFullyFrozen()));
+        DEAD = register("dead", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && liv.isDeadOrDying()));
         ALIVE = register("alive", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && liv.isAlive()));
-        FALLING = register("falling", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && !liv.isOnGround() && liv.fallDistance > 0.0));
+        FALLING = register("falling", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && !liv.onGround() && liv.fallDistance > 0.0));
         CURSOR_ITEM = register("cursor_item", new ConditionalCursorItem());
         HOVERING_OVER = register("hovering_over", new ConditionalHoveringOver());
         REFERENCE_ENTITY = register("reference_entity", ctx -> {
@@ -398,26 +397,26 @@ public class Conditionals implements Global {
         });
         ITEM_DURABILITY = register("item_durability", ctx -> {
             ItemStack item = ScriptParser.parseItemStack(ctx.get(0).toString());
-            return ctx.end(item != null && ctx.compareNumArg(1, 1 - item.getDamage() / (double) item.getMaxDamage()));
+            return ctx.end(item != null && ctx.compareNumArg(1, 1 - item.getDamageValue() / (double) item.getMaxDamage()));
         });
         ITEM_COOLDOWN = register("item_cooldown", ctx -> {
-            if (!(ctx.entity instanceof PlayerEntity player))
+            if (!(ctx.entity instanceof Player player))
                 return ctx.end(true, false);
             ItemStack item = ScriptParser.parseItemStack(player, ctx.get(0).toString());
-            return ctx.end(true, item != null && ctx.compareNumArg(1, player.getItemCooldownManager().getCooldownProgress(item, 1.0F)));
+            return ctx.end(true, item != null && ctx.compareNumArg(1, player.getCooldowns().getCooldownPercent(item, 1.0F)));
         });
         GAMEMODE = register("gamemode", ctx -> {
-            GameMode gm = ctx.get(0).toEnum(GameMode.class);
-            return ctx.end(ctx.entity instanceof PlayerEntity p && p.getGameMode() == gm);
+            GameType gm = ctx.get(0).toEnum(GameType.class);
+            return ctx.end(ctx.entity instanceof Player p && p.gameMode() == gm);
         });
         PING = register("ping", ctx -> ctx.assertClientPlayer().end(ctx.compareNumArg(0, PlayerUtils.getPing())));
         FPS = register("fps", ctx -> ctx.assertClientPlayer().end(ctx.compareNumArg(0, PlayerUtils.getFps())));
-        LINE_OF_SIGHT = register("line_of_sight", ctx -> ctx.end(true, PlayerUtils.valid() && ctx.entity != PlayerUtils.player() && PlayerUtils.player().canSee(ctx.entity)));
+        LINE_OF_SIGHT = register("line_of_sight", ctx -> ctx.end(true, PlayerUtils.valid() && ctx.entity != PlayerUtils.player() && PlayerUtils.player().hasLineOfSight(ctx.entity)));
         FLYING = register("flying", ctx -> ctx.assertClientPlayer().end(PlayerUtils.valid() && PlayerUtils.player().getAbilities().flying));
-        SNEAKING = register("sneaking", ctx -> ctx.end(true, ctx.entity.isSneaking()));
+        SNEAKING = register("sneaking", ctx -> ctx.end(true, ctx.entity.isShiftKeyDown()));
         SPRINTING = register("sprinting", ctx -> ctx.end(true, ctx.entity.isSprinting()));
         SWIMMING = register("swimming", ctx -> ctx.end(true, ctx.entity.isSwimming()));
-        GLIDING = register("gliding", ctx -> ctx.end(true, ctx.entity instanceof PlayerEntity player && player.isGliding()));
+        GLIDING = register("gliding", ctx -> ctx.end(true, ctx.entity instanceof Player player && player.isFallFlying()));
         INVISIBLE = register("invisible", ctx -> ctx.end(true, ctx.entity.isInvisible()));
         INVENTORY_SLOT = register("inventory_slot", new ConditionalInventorySlot());
     }
