@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version "$loom_version"
+    id 'net.fabricmc.fabric-loom' version "$loom_version"
     id 'maven-publish'
     id 'org.jetbrains.kotlin.jvm'
 }
@@ -24,12 +24,11 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    mappings loom.officialMojangMappings()
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
     // Mod Menu, ClickCrystals Will Still run Without Mod Menu
-    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+    implementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
@@ -46,7 +45,7 @@ processResources {
     }
 }
 
-def targetJavaVersion = 21
+def targetJavaVersion = 25
 tasks.withType(JavaCompile).configureEach {
     // ensure that the encoding is set to UTF-8, no matter what the system default is
     // this fixes some edge cases with special characters not displaying correctly
@@ -97,5 +96,5 @@ publishing {
     }
 }
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(25)
 }

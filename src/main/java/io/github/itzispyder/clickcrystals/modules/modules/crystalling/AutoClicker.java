@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.modules.modules.crystalling;
 
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
-import io.github.itzispyder.clickcrystals.mixins.AccessorMinecraftClient;
+import io.github.itzispyder.clickcrystals.mixins.AccessorMinecraft;
 import io.github.itzispyder.clickcrystals.modrinth.ModrinthNoNo;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
@@ -273,7 +273,7 @@ public class AutoClicker extends ListenerModule {
         return !stopWhenTarget.getVal() || noTarget;
     }
 
-    public static AccessorMinecraftClient getInput() {
-        return (AccessorMinecraftClient)mc;
+    public static AccessorMinecraft getInput() {
+        return (AccessorMinecraft)mc;
     }
 }

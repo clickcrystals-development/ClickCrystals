@@ -4,8 +4,8 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "AccessorCamera",
-    "AccessorHandledScreen",
-    "AccessorMinecraftClient",
+    "AccessorAbstractContainerScreen",
+    "AccessorMinecraft",
     "MixinAbstractClientPlayer",
     "MixinHumanoidArmorLayer",
     "MixinBlockItem",

@@ -1,9 +1,11 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.CameraClip;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.FreeLook;
+import io.github.itzispyder.clickcrystals.modules.modules.misc.Zoom;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoOverlay;
 import net.minecraft.client.Camera;
 import net.minecraft.world.level.material.FogType;
@@ -18,7 +20,8 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(Camera.class)
 public abstract class MixinCamera implements Global {
 
-    @Unique private boolean bypassCameraClip;
+    @Unique
+    private boolean bypassCameraClip;
 
     @Inject(method = "getFluidInCamera", at = @At("RETURN"), cancellable = true)
     public void getSubmersionType(CallbackInfoReturnable<FogType> cir) {
@@ -37,8 +40,7 @@ public abstract class MixinCamera implements Global {
 
         if (clip.isEnabled() && clip.enableCameraClip.getVal()) {
             cir.setReturnValue(clip.clipDistance.getVal().floatValue());
-        }
-        else if (clip.isEnabled() && clip.clipDistance.getVal() > 0.0) {
+        } else if (clip.isEnabled() && clip.clipDistance.getVal() > 0.0) {
             bypassCameraClip = true;
             AccessorCamera ac = (AccessorCamera) this;
             float dist = ac.invokeClipToSpace(clip.clipDistance.getVal().floatValue());
@@ -46,12 +48,21 @@ public abstract class MixinCamera implements Global {
         }
     }
 
-    @ModifyArgs(method = "setup", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;setRotation(FF)V"))
-    private void onUpdateSetRotationArgs(Args args) {
+    @ModifyArgs(method = "alignWithEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;setRotation(FF)V"))
+    private void onAlignSetRotationArgs(Args args) {
         FreeLook freeLook = Module.get(FreeLook.class);
         if (freeLook.isEnabled() && mc.options.getCameraType() == freeLook.perspective.getVal().getPerspective()) {
             args.set(0, freeLook.cY);
             args.set(1, freeLook.cP);
+        }
+    }
+
+    @Inject(method = "getFov", at = @At("RETURN"), cancellable = true)
+    public void getFov(CallbackInfoReturnable<Float> cir) {
+        Zoom zoom = Module.get(Zoom.class);
+
+        if (zoom.isEnabled() && zoom.isZooming()) {
+            cir.setReturnValue(zoom.getZoomMultiplierValue(cir.getReturnValue()));
         }
     }
 }

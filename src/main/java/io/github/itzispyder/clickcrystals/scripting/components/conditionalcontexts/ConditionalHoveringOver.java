@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.scripting.components.conditionalcontexts;
 
 import io.github.itzispyder.clickcrystals.Global;
-import io.github.itzispyder.clickcrystals.mixins.AccessorHandledScreen;
+import io.github.itzispyder.clickcrystals.mixins.AccessorAbstractContainerScreen;
 import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluationContext;
 import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluationResult;
@@ -24,7 +24,7 @@ public class ConditionalHoveringOver implements Conditional, Global {
         if (p == null || p.containerMenu == null || !(mc.screen instanceof AbstractContainerScreen<?> handle))
             return ctx.end(false);
 
-        AccessorHandledScreen screen = (AccessorHandledScreen) handle;
+        AccessorAbstractContainerScreen screen = (AccessorAbstractContainerScreen) handle;
         Point cursor = InteractionUtils.getCursor();
 
         for (Slot slot : p.containerMenu.slots) {

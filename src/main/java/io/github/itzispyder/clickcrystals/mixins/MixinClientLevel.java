@@ -16,12 +16,12 @@ public abstract class MixinClientLevel {
     @Shadow @Final private ClientLevel.ClientLevelData clientLevelData;
 
     @Inject(method = "setTimeFromServer", at = @At("TAIL"), cancellable = true)
-    public void getTimeOfDay(long time, long timeOfDay, boolean shouldTickTimeOfDay, CallbackInfo ci) {
+    public void getTimeOfDay(long gameTime, CallbackInfo ci) {
         TimeChanger tc = Module.get(TimeChanger.class);
 
         if (tc.isEnabled()) {
             ci.cancel();
-            this.clientLevelData.setDayTime(tc.getTime());
+            this.clientLevelData.setGameTime(tc.getTime());
         }
     }
 }

@@ -28,14 +28,14 @@ public abstract class MixinMinecraft implements Global {
 
         if (event.isCancelled()) {
             ci.cancel();
-            AccessorMinecraftClient mc = (AccessorMinecraftClient) this;
+            AccessorMinecraft mc = (AccessorMinecraft) this;
             mc.invokeSetScreen(null);
         }
     }
 
     @Inject(method = "startAttack", at = @At("HEAD") ,cancellable = true)
     private void attack(CallbackInfoReturnable<Boolean> cir) {
-        AccessorMinecraftClient amc = (AccessorMinecraftClient) this;
+        AccessorMinecraft amc = (AccessorMinecraft) this;
         PlayerAttackEntityEvent evt = new PlayerAttackEntityEvent(mc.player, amc.accessTargetedEntity(), mc.hitResult);
         system.eventBus.passWithCallbackInfo(cir, evt);
     }

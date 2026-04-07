@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(AbstractContainerScreen.class)
-public interface AccessorHandledScreen {
+public interface AccessorAbstractContainerScreen {
 
     @Invoker("isHovering")
     boolean isHovered(Slot slot, double mouseX, double mouseY);
