@@ -24,7 +24,7 @@ public abstract class MixinHumanoidArmorLayer<S extends HumanoidRenderState, M e
     }
 
     @Inject(method = "renderArmorPiece", at = @At("HEAD"), cancellable = true)
-    private void onRenderArmor(PoseStack matrices, SubmitNodeCollector orderedRenderCommandQueue, ItemStack stack, EquipmentSlot slot, int light, S bipedEntityRenderState, CallbackInfo ci) {
+    private void onRenderArmor(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, ItemStack itemStack, EquipmentSlot slot, int lightCoords, S state, CallbackInfo ci) {
         NoArmorRender nar = Module.get(NoArmorRender.class);
 
         if (nar.isEnabled() && !nar.canRender(slot)) {

@@ -18,8 +18,8 @@ public abstract class MixinKeyboardHandler implements Global, AccessorKeyboard {
     @Shadow protected abstract void keyPress(long window, int action, KeyEvent input);
 
     @Inject(method = "keyPress", at = @At("HEAD"), cancellable = true)
-    public void onKeyPress(long window, int action, KeyEvent input, CallbackInfo ci) {
-        this.handleKeyPress(input.key(), input.scancode(), action, ci);
+    public void onKeyPress(long handle, int action, KeyEvent event, CallbackInfo ci) {
+        this.handleKeyPress(event.key(), event.scancode(), action, ci);
     }
 
     private void handleKeyPress(int key, int scancode, int action, CallbackInfo ci) {

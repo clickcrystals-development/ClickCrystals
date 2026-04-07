@@ -46,12 +46,12 @@ public abstract class MixinMinecraft implements Global {
     }
 
     @Inject(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;ZZ)V", at = @At("HEAD"))
-    public void disconnect(Screen disconnectionScreen, boolean transferring, boolean bl, CallbackInfo ci) {
+    public void disconnect(Screen screen, boolean keepResourcePacks, boolean stopSound, CallbackInfo ci) {
         system.eventBus.pass(new GameLeaveEvent());
     }
 
     @Inject(method = "disconnectFromWorld(Lnet/minecraft/network/chat/Component;)V", at = @At("HEAD"))
-    public void disconnect(Component reasonText, CallbackInfo ci) {
+    public void disconnect(Component message, CallbackInfo ci) {
         system.eventBus.pass(new GameLeaveEvent());
     }
 

@@ -11,6 +11,7 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -25,44 +26,44 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(Gui.class)
 public abstract class MixinGui implements Global {
 
-    @ModifyArgs(method = "renderArmor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
+    @ModifyArgs(method = "extractArmor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
     private static void renderArmor(Args args) {
         if (Module.isEnabled(HealthAsBar.class))
             args.set(3, Minecraft.getInstance().getWindow().getGuiScaledHeight() - 50);
     }
 
-    @Inject(method = "renderHearts", at = @At("HEAD"), cancellable = true)
-    public void renderHealthBar(GuiGraphics context, Player player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci) {
+    @Inject(method = "extractHearts", at = @At("HEAD"), cancellable = true)
+    public void renderHealthBar(GuiGraphicsExtractor graphics, Player player, int xLeft, int yLineBase, int healthRowHeight, int heartOffsetIndex, float maxHealth, int currentHealth, int oldHealth, int absorption, boolean blink, CallbackInfo ci) {
         HealthAsBar hpBar = Module.get(HealthAsBar.class);
         if (hpBar.isEnabled()) {
-            hpBar.renderHealthBar(context, x, y, maxHealth, lastHealth, health, absorption);
+            hpBar.renderHealthBar(graphics, xLeft, yLineBase, maxHealth, oldHealth, currentHealth, absorption);
             ci.cancel();
         }
     }
 
-    @Inject(method = "renderSpyglassOverlay", at = @At("HEAD"), cancellable = true)
-    public void renderSpyglassOverlay(GuiGraphics context, float scale, CallbackInfo ci) {
+    @Inject(method = "extractSpyglassOverlay", at = @At("HEAD"), cancellable = true)
+    public void renderSpyglassOverlay(GuiGraphicsExtractor graphics, float scale, CallbackInfo ci) {
         if (Module.isEnabled(NoOverlay.class)) ci.cancel();
     }
 
-    @Inject(method = "renderPortalOverlay", at = @At("HEAD"), cancellable = true)
-    public void renderPortalOverlay(GuiGraphics context, float nauseaStrength, CallbackInfo ci) {
+    @Inject(method = "extractPortalOverlay", at = @At("HEAD"), cancellable = true)
+    public void renderPortalOverlay(GuiGraphicsExtractor graphics, float alpha, CallbackInfo ci) {
         if (Module.isEnabled(NoOverlay.class)) ci.cancel();
     }
 
-    @Inject(method = "renderVignette", at = @At("HEAD"), cancellable = true)
-    public void renderVignetteOverlay(GuiGraphics context, Entity entity, CallbackInfo ci) {
+    @Inject(method = "extractVignette", at = @At("HEAD"), cancellable = true)
+    public void renderVignetteOverlay(GuiGraphicsExtractor graphics, Entity camera, CallbackInfo ci) {
         if (Module.isEnabled(NoOverlay.class)) ci.cancel();
     }
 
-    @Inject(method = "renderTextureOverlay", at = @At("HEAD"), cancellable = true)
-    public void renderOverlay(GuiGraphics context, Identifier texture, float opacity, CallbackInfo ci) {
+    @Inject(method = "extractTextureOverlay", at = @At("HEAD"), cancellable = true)
+    public void renderOverlay(GuiGraphicsExtractor graphics, Identifier texture, float alpha, CallbackInfo ci) {
         if (!texture.getPath().contains("pumpkinblur")) return;
         if (Module.isEnabled(NoOverlay.class)) ci.cancel();
     }
 
-    @Inject(method = "displayScoreboardSidebar(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/world/scores/Objective;)V", at = @At("HEAD"), cancellable = true)
-    public void renderOverlay(GuiGraphics context, Objective objective, CallbackInfo ci) {
+    @Inject(method = "displayScoreboardSidebar", at = @At("HEAD"), cancellable = true)
+    public void renderOverlay(GuiGraphicsExtractor graphics, Objective objective, CallbackInfo ci) {
         if (Module.isEnabled(NoScoreboard.class)) {
             ci.cancel();
         }

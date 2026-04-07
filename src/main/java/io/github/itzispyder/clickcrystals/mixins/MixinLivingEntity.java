@@ -35,9 +35,9 @@ public abstract class MixinLivingEntity {
     }
 
     @Inject(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;)Z", at = @At("HEAD"), cancellable = true)
-    private void addStatusEffect(MobEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
+    private void addStatusEffect(MobEffectInstance newEffect, CallbackInfoReturnable<Boolean> cir) {
         if (Module.get(NoOverlay.class).isEnabled()) {
-            if (effect.getEffect() == MobEffects.BLINDNESS || effect.getEffect() == MobEffects.DARKNESS) {
+            if (newEffect.getEffect() == MobEffects.BLINDNESS || newEffect.getEffect() == MobEffects.DARKNESS) {
                 cir.setReturnValue(false);
             }
         }

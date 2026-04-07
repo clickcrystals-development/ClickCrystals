@@ -35,7 +35,7 @@ public class MixinLocalPlayer implements Global {
         }
     }
     @Inject(method = "openTextEdit", at = @At("HEAD"), cancellable = true)
-    private void cancelOpenContainer(SignBlockEntity sign, boolean front, CallbackInfo ci) {
+    private void cancelOpenContainer(SignBlockEntity sign, boolean isFrontText, CallbackInfo ci) {
         NoInteractions noInteractions = Module.get(NoInteractions.class);
         if (noInteractions.isEnabled() && !noInteractions.allowSign.getVal()) {
             ci.cancel();

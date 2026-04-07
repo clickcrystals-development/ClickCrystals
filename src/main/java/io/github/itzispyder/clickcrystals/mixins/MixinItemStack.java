@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinItemStack {
 
     @Inject(method = "setPopTime", at = @At("HEAD"), cancellable = true)
-    public void setBobbingAnimationTime(int bobbingAnimationTime, CallbackInfo ci) {
+    public void setBobbingAnimationTime(int popTime, CallbackInfo ci) {
         if (Module.isEnabled(NoItemBounce.class)) {
             ci.cancel();
         }

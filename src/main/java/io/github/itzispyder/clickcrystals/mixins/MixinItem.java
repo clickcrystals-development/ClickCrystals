@@ -24,7 +24,7 @@ public abstract class MixinItem implements Global {
     @Unique private long itemConsumeCooldown = 0L;
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
-    public void use(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+    public void use(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (isItemUseOnCooldown()) {
             return;
         }
@@ -44,22 +44,22 @@ public abstract class MixinItem implements Global {
     }
 
     @Inject(method = "interactLivingEntity", at = @At("HEAD"), cancellable = true)
-    public void use(ItemStack stack, Player user, LivingEntity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+    public void use(ItemStack itemStack, Player player, LivingEntity target, InteractionHand type, CallbackInfoReturnable<InteractionResult> cir) {
         if (isItemUseOnCooldown()) {
             return;
         }
         resetItemUseCooldown();
-        ItemUseEvent event = new ItemUseEvent((Item)(Object)this, hand, ItemUseEvent.UseType.ENTITY);
+        ItemUseEvent event = new ItemUseEvent((Item)(Object)this, type, ItemUseEvent.UseType.ENTITY);
         system.eventBus.passWithCallbackInfo(cir, event);
     }
 
     @Inject(method = "finishUsingItem", at = @At("HEAD"), cancellable = true)
-    public void use(ItemStack stack, Level world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
+    public void use(ItemStack itemStack, Level level, LivingEntity entity, CallbackInfoReturnable<ItemStack> cir) {
         if (isItemConsumeOnCooldown()) {
             return;
         }
         resetItemConsumeCooldown();
-        ItemConsumeEvent event = new ItemConsumeEvent(world, user, stack);
+        ItemConsumeEvent event = new ItemConsumeEvent(level, entity, itemStack);
         system.eventBus.passWithCallbackInfo(cir, event);
     }
 

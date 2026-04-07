@@ -26,7 +26,7 @@ public abstract class MixinCommandSuggestions {
     @Shadow @Nullable private CompletableFuture<Suggestions> pendingSuggestions;
     @Shadow private boolean keepSuggestions;
     @Shadow @Final private EditBox input;
-    @Shadow protected abstract void updateUsageInfo();
+    @Shadow public abstract void updateCommandInfo();
 
     @Inject(method = "updateCommandInfo", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
     public void refresh(CallbackInfo ci, String string, StringReader reader) {
@@ -45,7 +45,7 @@ public abstract class MixinCommandSuggestions {
                 pendingSuggestions = Command.DISPATCHER.getCompletionSuggestions(currentParse, cursor);
                 pendingSuggestions.thenRun(() -> {
                     if (pendingSuggestions.isDone()) {
-                        updateUsageInfo();
+                        updateCommandInfo();
                     }
                 });
             }

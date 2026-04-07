@@ -22,15 +22,15 @@ public abstract class MixinMouseHandler implements Global, AccessorMouse {
     @Shadow protected abstract void onScroll(long window, double horizontal, double vertical);
 
     @Inject(method = "onButton", at = @At("HEAD"), cancellable = true)
-    public void onButton(long window, MouseButtonInfo input, int action, CallbackInfo ci) {
+    public void onButton(long handle, MouseButtonInfo rawButtonInfo, int action, CallbackInfo ci) {
         ClickType click = ClickType.of(action);
-        MouseClickEvent event = new MouseClickEvent(input.button(), click);
+        MouseClickEvent event = new MouseClickEvent(rawButtonInfo.button(), click);
         system.eventBus.passWithCallbackInfo(ci, event);
     }
 
     @Inject(method = "onScroll", at = @At("HEAD"), cancellable = true)
-    public void onScroll(long window, double horizontal, double vertical, CallbackInfo ci) {
-        MouseScrollEvent event = new MouseScrollEvent(horizontal, vertical);
+    public void onScroll(long handle, double xoffset, double yoffset, CallbackInfo ci) {
+        MouseScrollEvent event = new MouseScrollEvent(xoffset, yoffset);
         system.eventBus.passWithCallbackInfo(ci, event);
     }
 

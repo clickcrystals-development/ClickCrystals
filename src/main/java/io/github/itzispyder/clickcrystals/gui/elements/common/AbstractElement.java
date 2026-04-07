@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public class AbstractElement extends GuiElement {
 
@@ -33,7 +33,7 @@ public class AbstractElement extends GuiElement {
     }
 
     @Override
-    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         this.onRender.onRender(context, mouseX, mouseY, this);
     }
 

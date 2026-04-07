@@ -25,7 +25,7 @@
     "MixinGui",
     "MixinScreenEffectRenderer",
     "MixinKeyboardHandler",
-    "MixinLightTexture",
+    "MixinLightmap",
     "MixinMouseHandler",
     "MixinParticleEngine",
     "MixinScreen",

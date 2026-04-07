@@ -29,7 +29,7 @@ public interface Typeable extends Global {
         return false;
     }
 
-    default void onChar(char chr, int modifiers) {
+    default void onChar(char chr) {
         if (!Character.isISOControl(chr))
             onInput(input -> input.concat(String.valueOf(chr)));
     }

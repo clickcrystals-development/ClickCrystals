@@ -72,7 +72,7 @@ public class ItemHighlight extends ListenerModule {
             return;
 
         RenderUtils.fillRect(
-                e.getDrawContext(),
+                e.getGuiGraphicsExtractor(),
                 e.getSlotX(), e.getSlotY(), 16, 16,
                 getRarityColor(item.getRarity())
         );

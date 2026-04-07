@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinEntityRenderer<T extends Entity> {
 
     @Inject(method = "getBlockLightLevel", at = @At("RETURN"), cancellable = true)
-    public void getLight(T entity, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
+    public void getLight(T entity, BlockPos blockPos, CallbackInfoReturnable<Integer> cir) {
         GlowingEntities ge = Module.get(GlowingEntities.class);
 
         if (ge.isEnabled()) {
