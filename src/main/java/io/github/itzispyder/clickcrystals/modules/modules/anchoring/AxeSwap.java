@@ -30,7 +30,7 @@ public class AxeSwap extends Module implements Listener {
 
     @EventHandler
     private void onAttack(PlayerAttackEntityEvent e) {
-        if (e.getEntity() instanceof PlayerEntity p && EntityUtils.isBlocking(p)) {
+        if (e.getEntity() instanceof PlayerEntity p && p.isBlocking()) {
             if (HotbarUtils.nameContains("sword") && HotbarUtils.has(item -> item.getItem() instanceof AxeItem)) {
                 HotbarUtils.search(item -> item.getItem() instanceof AxeItem);
             }
