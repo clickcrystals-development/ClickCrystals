@@ -67,7 +67,6 @@ import org.lwjgl.glfw.GLFW;
 
 /**
  * ClickCrystals main
- * TODO: [] ./utils packets
  * TODO: [] ./utils entity-textures
  * TODO: [] Update mod "gradle.properties"
  * TODO: [] Update background texture (optional)
