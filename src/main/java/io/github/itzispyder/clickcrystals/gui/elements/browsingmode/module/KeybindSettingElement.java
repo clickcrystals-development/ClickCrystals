@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.function.Function;
@@ -25,7 +25,7 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
     }
 
     @Override
-    public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         this.renderSettingDetails(context);
         int drawW = 20;
         int drawH = 12;

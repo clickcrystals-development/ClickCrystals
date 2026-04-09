@@ -7,8 +7,8 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.decoration.EndCrystalEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
 
 public class ClientCryst extends Module implements Listener {
 
@@ -32,12 +32,12 @@ public class ClientCryst extends Module implements Listener {
 
         if (ent == null) return;
         if (PlayerUtils.invalid()) return;
-        if (mc.isInSingleplayer()) return;
+        if (mc.isLocalServer()) return;
         if (!InteractionUtils.canBreakCrystals()) return;
 
-        if (ent instanceof EndCrystalEntity crystal) {
+        if (ent instanceof EndCrystal crystal) {
             crystal.remove(Entity.RemovalReason.KILLED);
-            crystal.onRemoved();
+            crystal.onClientRemoval();
         }
     }
 }

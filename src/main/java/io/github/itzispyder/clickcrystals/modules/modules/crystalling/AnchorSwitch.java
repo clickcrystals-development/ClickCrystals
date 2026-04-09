@@ -11,13 +11,13 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RespawnAnchorBlock;
-import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RespawnAnchorBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 @ModrinthNoNo
 public class AnchorSwitch extends Module implements Listener {
@@ -45,33 +45,33 @@ public class AnchorSwitch extends Module implements Listener {
             e.cancel();
             HotbarUtils.search(Items.RESPAWN_ANCHOR);
             BlockUtils.interact(e.getPos(), Direction.UP);
-            PlayerUtils.player().swingHand(Hand.MAIN_HAND);
+            PlayerUtils.player().swing(InteractionHand.MAIN_HAND);
         }
     }
 
     @EventHandler
     private void onSendPacket(PacketSendEvent e) {
-        if (!(e.getPacket() instanceof PlayerInteractBlockC2SPacket p)) return;
-        BlockState state = mc.world.getBlockState(p.getBlockHitResult().getBlockPos());
+        if (!(e.getPacket() instanceof ServerboundUseItemOnPacket p)) return;
+        BlockState state = mc.level.getBlockState(p.getHitResult().getBlockPos());
 
         if (state.getBlock() != Blocks.RESPAWN_ANCHOR) return;
         if (!HotbarUtils.has(Items.GLOWSTONE) || !HotbarUtils.isHolding(Items.GLOWSTONE)) return;
 
-        if (state.get(RespawnAnchorBlock.CHARGES) > 0) {
+        if (state.getValue(RespawnAnchorBlock.CHARGE) > 0) {
             HotbarUtils.search(Items.RESPAWN_ANCHOR);
         }
     }
 
     @EventHandler
     private void onSentPacket(PacketSentEvent e) {
-        if (!(e.getPacket() instanceof PlayerInteractBlockC2SPacket p)) return;
+        if (!(e.getPacket() instanceof ServerboundUseItemOnPacket p)) return;
 
-        BlockState state = mc.world.getBlockState(p.getBlockHitResult().getBlockPos());
+        BlockState state = mc.level.getBlockState(p.getHitResult().getBlockPos());
 
         if (state.getBlock() != Blocks.RESPAWN_ANCHOR) return;
         if (!HotbarUtils.has(Items.GLOWSTONE)) return;
 
-        if (state.get(RespawnAnchorBlock.CHARGES) == 0) {
+        if (state.getValue(RespawnAnchorBlock.CHARGE) == 0) {
             HotbarUtils.search(Items.GLOWSTONE);
         }
     }

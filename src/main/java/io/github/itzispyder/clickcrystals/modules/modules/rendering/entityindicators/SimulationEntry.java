@@ -3,10 +3,10 @@ package io.github.itzispyder.clickcrystals.modules.modules.rendering.entityindic
 import io.github.itzispyder.clickcrystals.gui.misc.brushes.MobHeadBrush;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.Vec3;
 
 public class SimulationEntry {
 
@@ -14,12 +14,12 @@ public class SimulationEntry {
     private final Vec3 vecDifference;
     private final float yawDifference;
 
-    public SimulationEntry(Entity entity, ClientPlayerEntity client) {
+    public SimulationEntry(Entity entity, LocalPlayer client) {
         this.entityClass = entity.getClass();
         this.vecDifference = entity.position().subtract(client.position()).normalize();
 
         float[] rot = MathUtils.toPolar(vecDifference.x, vecDifference.y, vecDifference.z);
-        this.yawDifference = rot[1] - client.getYaw();
+        this.yawDifference = rot[1] - client.getYRot();
     }
 
     public Class<? extends Entity> getEntityClass() {

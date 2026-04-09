@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.modules.misc;
 
+import com.mojang.blaze3d.platform.Window;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.client.KeyPressEvent;
@@ -12,13 +13,12 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
-import net.minecraft.client.gui.screens.ingame.InventoryScreen;
-import net.minecraft.client.util.Window;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
-import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.util.Hand;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.lwjgl.glfw.GLFW;
 
 public class GuiCursor extends Module implements Listener {
@@ -56,34 +56,34 @@ public class GuiCursor extends Module implements Listener {
 
     public static void setCursor(int x, int y) {
         Window win = mc.getWindow();
-        int w1 = win.getWidth();
-        int w2 = win.getScaledWidth();
-        int h1 = win.getHeight();
-        int h2 = win.getScaledHeight();
+        int w1 = win.getScreenWidth();
+        int w2 = win.getGuiScaledWidth();
+        int h1 = win.getScreenHeight();
+        int h2 = win.getGuiScaledHeight();
         double ratW = (double)w2 / (double)w1;
         double ratH = (double)h2 / (double)h1;
-        GLFW.glfwSetCursorPos(win.getHandle(), x / ratW, y / ratH);
+        GLFW.glfwSetCursorPos(win.handle(), x / ratW, y / ratH);
     }
 
     public static double getCursorX(double x) {
         Window win = mc.getWindow();
-        int w1 = win.getWidth();
-        int w2 = win.getScaledWidth();
+        int w1 = win.getScreenWidth();
+        int w2 = win.getGuiScaledWidth();
         double ratW = (double)w2 / (double)w1;
         return x * ratW;
     }
 
     public static double getCursorY(double y) {
         Window win = mc.getWindow();
-        int h1 = win.getHeight();
-        int h2 = win.getScaledHeight();
+        int h1 = win.getScreenHeight();
+        int h2 = win.getGuiScaledHeight();
         double ratH = (double)h2 / (double)h1;
         return y * ratH;
     }
 
     public void centerFix() {
         Window win = mc.getWindow();
-        setCursor(win.getScaledWidth() / 2, win.getScaledHeight() / 2 + 10);
+        setCursor(win.getGuiScaledWidth() / 2, win.getGuiScaledHeight() / 2 + 10);
     }
 
     public void hoverTotem() {
@@ -100,7 +100,7 @@ public class GuiCursor extends Module implements Listener {
 
     @EventHandler
     private void renderInventoryItem(RenderInventorySlotEvent e) {
-        if (e.getItem().isOf(Items.TOTEM_OF_UNDYING) && listeningForNextDraw) {
+        if (e.getItem().is(Items.TOTEM_OF_UNDYING) && listeningForNextDraw) {
             setCursor(e.getX() + 8, e.getY() + 8);
             listeningForNextDraw = false;
         }
@@ -118,21 +118,21 @@ public class GuiCursor extends Module implements Listener {
 
     @EventHandler
     private void onClick(PacketSendEvent e) {
-        if (e.getPacket() instanceof ClickSlotC2SPacket packet) {
-            ItemStack stack = InvUtils.inv().getStack(packet.slot());
-            boolean clickedTotem = mc.screen instanceof InventoryScreen && stack.isOf(Items.TOTEM_OF_UNDYING) && totemShiftHolder.getVal();
-            boolean actionMatches = !shiftKeyDown && packet.actionType() == SlotActionType.PICKUP;
+        if (e.getPacket() instanceof ServerboundContainerClickPacket packet) {
+            ItemStack stack = InvUtils.inv().getItem(packet.slotNum());
+            boolean clickedTotem = mc.screen instanceof InventoryScreen && stack.is(Items.TOTEM_OF_UNDYING) && totemShiftHolder.getVal();
+            boolean actionMatches = !shiftKeyDown && packet.clickType() == ClickType.PICKUP;
 
             if (clickedTotem && actionMatches) {
-                int slot = packet.slot();
-                boolean offEmpty = HotbarUtils.getHand(Hand.OFF_HAND).isEmpty();
+                int slot = packet.slotNum();
+                boolean offEmpty = HotbarUtils.getHand(InteractionHand.OFF_HAND).isEmpty();
                 boolean mainEmpty = !HotbarUtils.has(Items.TOTEM_OF_UNDYING);
                 boolean slotValid = !InvUtils.isOffhand(slot) && !InvUtils.isHotbar(slot);
 
                 if (offEmpty && slotValid) {
                     e.cancel();
                     InvUtils.swapOffhand(slot);
-                    InvUtils.inv().updateItems();
+                    InvUtils.inv().tick();
 
                     if (mainEmpty) {
                         system.scheduler.runDelayedTask(this::hoverTotem, 50);
@@ -141,7 +141,7 @@ public class GuiCursor extends Module implements Listener {
                 else if (slotValid) {
                     e.cancel();
                     InvUtils.quickMove(slot);
-                    InvUtils.inv().updateItems();
+                    InvUtils.inv().tick();
                 }
             }
         }

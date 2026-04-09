@@ -329,9 +329,9 @@ public class Conditionals implements Global {
         ENTITY_IN_RANGE = register("entity_in_range", new ConditionalEntityInRange());
         BLOCK_IN_FOV = register("block_in_fov", new ConditionalBlockInFov());
         ENTITY_IN_FOV = register("entity_in_fov", new ConditionalEntityInFov());
-        ATTACK_PROGRESS = register("attack_progress", ctx -> ctx.assertClientPlayer().end(ctx.compareNumArg(0, PlayerUtils.player().getCurrentItemAttackStrengthDelay())));
+        ATTACK_PROGRESS = register("attack_progress", ctx -> ctx.assertClientPlayer().end(ctx.compareNumArg(0, PlayerUtils.player().getAttackStrengthScale(1.0F))));
         HEALTH = register("health", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && ctx.compareNumArg(0, (int) liv.getHealth())));
-        HUNGER = register("hunger", ctx -> ctx.end(true, ctx.entity instanceof Player liv && ctx.compareNumArg(0, liv.getFoodData().getSaturationLevel())));
+        HUNGER = register("hunger", ctx -> ctx.end(true, ctx.entity instanceof Player liv && ctx.compareNumArg(0, liv.getFoodData().getFoodLevel())));
         HURT_TIME = register("hurt_time", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && ctx.compareNumArg(0, liv.hurtTime)));
         ARMOR = register("armor", ctx -> ctx.end(true, ctx.entity instanceof LivingEntity liv && ctx.compareNumArg(0, liv.getArmorValue())));
         POS_X = register("pos_x", ctx -> ctx.end(true, ctx.compareNumArg(0, (int) ctx.entity.getX())));
@@ -368,7 +368,7 @@ public class Conditionals implements Global {
             return ctx.end(true, ctx.compareNumArg(1, effect.getDuration()));
         });
         IN_GAME = register("in_game", ctx -> ctx.end(PlayerUtils.valid()));
-        IN_SINGLEPLAYER = register("in_singleplayer", ctx -> ctx.end(mc.isSingleplayer()));
+        IN_SINGLEPLAYER = register("in_singleplayer", ctx -> ctx.end(mc.isLocalServer()));
         PLAYING = register("playing", ctx -> ctx.end(PlayerUtils.valid() && mc.screen == null));
         IN_SCREEN = register("in_screen", ctx -> ctx.end(PlayerUtils.valid() && mc.screen != null));
         CHANCE_OF = register("chance_of", ctx -> ctx.end(Math.random() * 100 < ctx.get(0).toDouble()));

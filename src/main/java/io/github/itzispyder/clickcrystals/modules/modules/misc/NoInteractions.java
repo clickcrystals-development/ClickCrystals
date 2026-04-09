@@ -4,8 +4,8 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.DummyModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 public class NoInteractions extends DummyModule {
 
@@ -52,7 +52,7 @@ public class NoInteractions extends DummyModule {
     }
 
     public boolean canInteract(Block b) {
-        String key = b.getTranslationKey();
+        String key = b.getDescriptionId();
 
         if (key.contains("chest")) {
             return allowChests.getVal();

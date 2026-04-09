@@ -67,7 +67,7 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void openUrl(String url) {
         try {
-            Util.getOperatingSystem().open(new URI(url));
+            Util.getPlatform().openUri(new URI(url));
         } 
         catch (URISyntaxException ex) {
             system.printErr("Failed to open url " + url);
@@ -77,7 +77,7 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void openFile(String path) {
         try {
-            Util.getOperatingSystem().open(new File(path));
+            Util.getPlatform().openFile(new File(path));
         } 
         catch (Exception ex) {
             system.printErr("Failed to open file " + path);
@@ -87,7 +87,7 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void closeCurrentScreen() {
         if (mc.screen != null)
-            mc.screen.close();
+            mc.screen.onClose();
     }
 
     public void addCommand(Command command) {

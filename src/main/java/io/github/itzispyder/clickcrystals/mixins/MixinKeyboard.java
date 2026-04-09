@@ -8,7 +8,6 @@ import net.minecraft.client.KeyboardHandler;
 import net.minecraft.client.input.KeyEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -16,15 +15,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(KeyboardHandler.class)
 public abstract class MixinKeyboard implements Global, AccessorKeyboard {
 
-    @Shadow
-    protected abstract void keyPress(long handle, @KeyEvent.Action int action, KeyEvent event);
+    @Shadow protected abstract void keyPress(long window, int action, KeyEvent input);
 
     @Inject(method = "keyPress", at = @At("HEAD"), cancellable = true)
-    public void onKeyPress(long handle, int action, KeyEvent event, CallbackInfo ci) {
-        this.handleKeyPress(event.key(), event.scancode(), action, ci);
+    public void onKeyPress(long window, int action, KeyEvent input, CallbackInfo ci) {
+        this.handleKeyPress(input.key(), input.scancode(), action, ci);
     }
 
-    @Unique
     private void handleKeyPress(int key, int scancode, int action, CallbackInfo ci) {
         ClickType a = ClickType.of(action);
         KeyPressEvent e = new KeyPressEvent(key, scancode, a);
@@ -32,7 +29,7 @@ public abstract class MixinKeyboard implements Global, AccessorKeyboard {
     }
 
     @Override
-    public void clickCrystals$pressKey(int key, int scan) {
+    public void pressKey(int key, int scan) {
         keyPress(mc.getWindow().handle(), 1, new KeyEvent(key, scan, 0));
         system.scheduler.runDelayedTask(() -> mc.execute(() -> {
             keyPress(mc.getWindow().handle(), 0, new KeyEvent(key, scan, 0));

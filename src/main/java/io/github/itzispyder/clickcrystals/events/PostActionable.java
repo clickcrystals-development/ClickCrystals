@@ -1,8 +1,8 @@
 package io.github.itzispyder.clickcrystals.events;
 
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -13,8 +13,8 @@ public interface PostActionable {
 
     default void action() {
         if (PlayerUtils.valid()) {
-            ClientPlayerEntity p = PlayerUtils.player();
-            MinecraftClient mc = MinecraftClient.getInstance();
+            LocalPlayer p = PlayerUtils.player();
+            Minecraft mc = Minecraft.getInstance();
             getActions().forEach(action -> action.trigger(mc, p));
         }
     }
@@ -39,6 +39,6 @@ public interface PostActionable {
 
     @FunctionalInterface
     interface PostAction {
-        void trigger(MinecraftClient client, ClientPlayerEntity player);
+        void trigger(Minecraft client, LocalPlayer player);
     }
 }

@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BlockItem.class)
 public abstract class MixinBlockItem implements Global {
 
-    @Inject(method = "placeBlock", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "placeBlock(Lnet/minecraft/world/item/context/BlockPlaceContext;Lnet/minecraft/world/level/block/state/BlockState;)Z", at = @At("HEAD"), cancellable = true)
     private void onPlace(BlockPlaceContext context, BlockState state, CallbackInfoReturnable<Boolean> ci) {
         system.eventBus.passWithCallbackInfo(ci, new BlockPlaceEvent(state, context.getClickedPos()));
     }

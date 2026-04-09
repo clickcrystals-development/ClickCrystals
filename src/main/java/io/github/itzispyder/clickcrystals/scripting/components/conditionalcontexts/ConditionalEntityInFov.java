@@ -6,9 +6,9 @@ import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluati
 import io.github.itzispyder.clickcrystals.scripting.components.Conditional;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
@@ -37,8 +37,8 @@ public class ConditionalEntityInFov implements Conditional {
     public static boolean isPointInFov(Vec3 cam, Vec3 dir, float fovDeg, Vec3 point) {
         Vec3 va = point.subtract(cam).normalize();
         Vec3 vb = dir.normalize();
-        double dot = va.dotProduct(vb); // dot product is the cosine of the angle between two unit vectors
-        double rot = MathHelper.cos(Math.toRadians(fovDeg * 0.5));
+        double dot = va.dot(vb); // dot product is the cosine of the angle between two unit vectors
+        double rot = Mth.cos(Math.toRadians(fovDeg * 0.5));
         return dot >= rot; // im flipping sign cuz cosine of bigger theta becomes smaller value
     }
 }

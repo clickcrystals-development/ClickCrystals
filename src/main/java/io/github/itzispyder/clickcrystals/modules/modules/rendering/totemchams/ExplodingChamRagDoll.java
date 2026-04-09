@@ -1,21 +1,21 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.parts.ChamPart;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.totemchams.parts.ExplodingChamPart;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class ExplodingChamRagDoll extends ChamRagDoll<ExplodingChamPart> {
 
-    public ExplodingChamRagDoll(PlayerEntity player, int maxAge) {
+    public ExplodingChamRagDoll(Player player, int maxAge) {
         super(player, maxAge);
     }
 
     @Override
-    protected void initializeParts(PlayerEntity player) {
+    protected void initializeParts(Player player) {
         ExplodingChamPart head = new ExplodingChamPart(-ChamPart.B4, ChamPart.B12 + ChamPart.B12, -ChamPart.B4, ChamPart.B4, ChamPart.B12 + ChamPart.B12 + ChamPart.B8, ChamPart.B4);
-        head.pitch = player.getPitch();
+        head.pitch = player.getXRot();
 
         parts.put("head", head);
         parts.put("bod", new ExplodingChamPart(-ChamPart.B4, ChamPart.B12, -ChamPart.B2, ChamPart.B4, ChamPart.B12 + ChamPart.B12, ChamPart.B2));
@@ -45,7 +45,7 @@ public class ExplodingChamRagDoll extends ChamRagDoll<ExplodingChamPart> {
     }
 
     @Override
-    protected void renderPart(ExplodingChamPart part, MatrixStack matrices, int color, float tickDelta) {
+    protected void renderPart(ExplodingChamPart part, PoseStack matrices, int color, float tickDelta) {
         part.render(matrices, color, tickDelta, age);
     }
 

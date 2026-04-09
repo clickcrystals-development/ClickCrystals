@@ -4,8 +4,8 @@ import io.github.itzispyder.clickcrystals.gui.hud.Hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.ArrayListHud;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class ModuleListTextHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context, float tickDelta) {
+    public void render(GuiGraphics context, float tickDelta) {
         if (!Module.isEnabled(ArrayListHud.class))
             return;
 
@@ -34,18 +34,18 @@ public class ModuleListTextHud extends Hud {
         lastRenderTime = currentTime;
         hue += (float) ((elapsedTime / 1000.0) * 30); // change color every 30 seconds
 
-        var tr = mc.textRenderer;
+        var tr = mc.font;
         List<Module> modules = new ArrayList<>(system.collectModules().stream()
                 .filter(Module::isEnabled)
-                .sorted(Comparator.comparing(module -> mc.textRenderer.getWidth(module.getId())))
+                .sorted(Comparator.comparing(module -> mc.font.width(module.getId())))
                 .toList());
 
-        int i = mc.getWindow().getScaledHeight() - modules.size() * 12;
+        int i = mc.getWindow().getGuiScaledHeight() - modules.size() * 12;
         for (Module module : modules) {
-            Text display = Text.literal(module.getName());
-            int x = mc.getWindow().getScaledWidth() - 1;
+            Component display = Component.literal(module.getName());
+            int x = mc.getWindow().getGuiScaledWidth() - 1;
             int y = i;
-            int length = tr.getWidth(display);
+            int length = tr.width(display);
             int paddingX = 5;
             int paddingY = 1;
 

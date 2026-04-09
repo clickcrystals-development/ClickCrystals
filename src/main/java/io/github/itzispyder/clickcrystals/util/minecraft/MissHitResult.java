@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.Vec3;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class MissHitResult extends HitResult {
 

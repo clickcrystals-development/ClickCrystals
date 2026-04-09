@@ -1,9 +1,9 @@
 package io.github.itzispyder.clickcrystals.util.misc;
 
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.dimension.DimensionTypes;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
+import net.minecraft.world.level.dimension.DimensionType;
 
 public enum Dimensions {
     OVERWORLD,
@@ -11,28 +11,28 @@ public enum Dimensions {
     THE_NETHER;
 
     public static boolean isOverworld() {
-        return check(DimensionTypes.OVERWORLD, DimensionTypes.OVERWORLD_CAVES);
+        return check(BuiltinDimensionTypes.OVERWORLD, BuiltinDimensionTypes.OVERWORLD_CAVES);
     }
 
     public static boolean isNether() {
-        return check(DimensionTypes.THE_NETHER);
+        return check(BuiltinDimensionTypes.NETHER);
     }
 
     public static boolean isEnd() {
-        return check(DimensionTypes.THE_END);
+        return check(BuiltinDimensionTypes.END);
     }
 
     @SafeVarargs
-    private static boolean check(RegistryKey<DimensionType>... dimKeys) {
+    private static boolean check(ResourceKey<DimensionType>... dimKeys) {
         if (PlayerUtils.invalid()) {
             return false;
         }
-        var entry = PlayerUtils.getWorld().getDimensionEntry().getKey();
+        var entry = PlayerUtils.getWorld().dimensionTypeRegistration().unwrapKey();
         if (entry.isEmpty())
             return false;
 
         var target = entry.get();
-        for (RegistryKey<DimensionType> key : dimKeys) {
+        for (ResourceKey<DimensionType> key : dimKeys) {
             if (key == target) {
                 return true;
             }

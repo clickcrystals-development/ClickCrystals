@@ -1,19 +1,19 @@
 package io.github.itzispyder.clickcrystals.util.minecraft.render.states;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
-import net.minecraft.client.gui.ScreenRect;
-import net.minecraft.client.gui.render.state.SimpleGuiElementRenderState;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.texture.TextureSetup;
+import net.minecraft.client.gui.navigation.ScreenRectangle;
+import net.minecraft.client.gui.render.TextureSetup;
+import net.minecraft.client.gui.render.state.GuiElementRenderState;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
 
-public class SphereWireframeRenderState implements SimpleGuiElementRenderState {
+public class SphereWireframeRenderState implements GuiElementRenderState {
 
-    private final TextureSetup texture = TextureSetup.empty();
+    private final TextureSetup texture = TextureSetup.noTexture();
     private final SphereState ss;
     private final int color;
 
@@ -23,7 +23,7 @@ public class SphereWireframeRenderState implements SimpleGuiElementRenderState {
     }
 
     @Override
-    public void setupVertices(VertexConsumer buf) {
+    public void buildVertices(VertexConsumer buf) {
         for (int pitch = 0; pitch < 360; pitch += ss.deltaTheta) {
             for (int yaw = 0; yaw < 180; yaw += ss.deltaTheta) {
                 Vector3d vec1 = MathUtils.toVector(pitch, yaw, ss.radius);
@@ -48,7 +48,7 @@ public class SphereWireframeRenderState implements SimpleGuiElementRenderState {
         }
 
         ss.simulation.getNearestEntity().accept(entity -> {
-            Vector3f vecDifference = entity.getVecDifference().multiply(ss.radius).toVector3f();
+            Vector3f vecDifference = entity.getVecDifference().scale(ss.radius).toVector3f();
             float[] vertex = MathUtils.projectVertex(vecDifference, ss.rotation, ss.focalLen);
 
             entity.getTexture().accept(texture -> {
@@ -70,10 +70,10 @@ public class SphereWireframeRenderState implements SimpleGuiElementRenderState {
         float length = (float) Math.sqrt(dx * dx + dy * dy);
 
         ss.pose.rotateAbout(angle, x1, y1);
-        buf.vertex(ss.pose, x1 - t, y1 - t).color(color);
-        buf.vertex(ss.pose, x1 + length + t, y1 - t).color(color);
-        buf.vertex(ss.pose, x1 + length + t, y1 + t).color(color);
-        buf.vertex(ss.pose, x1 - t, y1 + t).color(color);
+        buf.addVertexWith2DPose(ss.pose, x1 - t, y1 - t).setColor(color);
+        buf.addVertexWith2DPose(ss.pose, x1 + length + t, y1 - t).setColor(color);
+        buf.addVertexWith2DPose(ss.pose, x1 + length + t, y1 + t).setColor(color);
+        buf.addVertexWith2DPose(ss.pose, x1 - t, y1 + t).setColor(color);
 
         ss.pose.popMatrix();
     }
@@ -90,13 +90,13 @@ public class SphereWireframeRenderState implements SimpleGuiElementRenderState {
 
     @Nullable
     @Override
-    public ScreenRect scissorArea() {
+    public ScreenRectangle scissorArea() {
         return ss.scissor;
     }
 
     @Nullable
     @Override
-    public ScreenRect bounds() {
+    public ScreenRectangle bounds() {
         return ss.bounds;
     }
 }

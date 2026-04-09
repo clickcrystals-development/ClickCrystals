@@ -14,10 +14,10 @@ import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.NbtUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 @ModrinthNoNo
 public class StunSlam extends ListenerModule {
@@ -76,13 +76,13 @@ public class StunSlam extends ListenerModule {
     }
 
     private void performStunSlam() {
-        if (!isEnabled() || PlayerUtils.invalid() || !(mc.targetedEntity instanceof LivingEntity))
+        if (!isEnabled() || PlayerUtils.invalid() || !(mc.crosshairPickEntity instanceof LivingEntity))
             return;
         if (!isAxe(HotbarUtils.getHand()))
             return;
         if (awaitingBack)
             return;
-        if (onlyOnShield.getVal() && mc.targetedEntity instanceof PlayerEntity player && !isPlayerBlocking(player))
+        if (onlyOnShield.getVal() && mc.crosshairPickEntity instanceof Player player && !isPlayerBlocking(player))
             return;
 
         ItemStack mace = findDensityMace();
@@ -90,11 +90,11 @@ public class StunSlam extends ListenerModule {
             return;
         
         system.scheduler.runDelayedTask(() -> {
-            if (!HotbarUtils.search(item -> ItemStack.areEqual(item, mace)))
+            if (!HotbarUtils.search(item -> ItemStack.matches(item, mace)))
                 return;
             
             system.scheduler.runDelayedTask(() -> {
-                if (mc.targetedEntity instanceof LivingEntity) {
+                if (mc.crosshairPickEntity instanceof LivingEntity) {
                     InteractionUtils.leftClick();
                 }
                 if (autoSwitchBack.getVal()) {
@@ -105,17 +105,17 @@ public class StunSlam extends ListenerModule {
         }, 2);
     }
 
-    private boolean isPlayerBlocking(PlayerEntity player) {
-        return player.isBlocking() && player.getActiveItem().isOf(Items.SHIELD);
+    private boolean isPlayerBlocking(Player player) {
+        return player.isBlocking() && player.getUseItem().is(Items.SHIELD);
     }
 
     private boolean isAxe(ItemStack item) {
-        return item.getItem().getTranslationKey().contains("axe");
+        return item.getItem().getDescriptionId().contains("axe");
     }
 
     private ItemStack findDensityMace() {
         if (requireDensity.getVal())
-            return HotbarUtils.searchItem(item -> item.isOf(Items.MACE) && NbtUtils.hasEnchant(item, "density"));
-        return HotbarUtils.searchItem(item -> item.isOf(Items.MACE));
+            return HotbarUtils.searchItem(item -> item.is(Items.MACE) && NbtUtils.hasEnchant(item, "density"));
+        return HotbarUtils.searchItem(item -> item.is(Items.MACE));
     }
 }

@@ -11,12 +11,12 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.NbtUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -78,10 +78,10 @@ public class ToolSwitcher extends Module implements Listener {
 
     @EventHandler
     private void onPacketSend(PacketSendEvent e) {
-        if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
-            if (packet.getAction() == PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) {
+        if (e.getPacket() instanceof ServerboundPlayerActionPacket packet) {
+            if (packet.getAction() == ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK) {
                 final BlockPos pos = packet.getPos();
-                final BlockState state = mc.player.getEntityWorld().getBlockState(pos);
+                final BlockState state = mc.player.level().getBlockState(pos);
 
                 if (BlockUtils.canCrystalOn(pos)) return;
                 if (itemExcluded()) return;
@@ -103,7 +103,7 @@ public class ToolSwitcher extends Module implements Listener {
 
     private float calcWantedLvl(ItemStack item, BlockState state) {
         float lvl = 0;
-        lvl += item.getMiningSpeedMultiplier(state);
+        lvl += item.getDestroySpeed(state);
         lvl += NbtUtils.getEnchantLvL(item, Enchantments.EFFICIENCY);
         return lvl;
     }

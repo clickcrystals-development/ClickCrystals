@@ -9,8 +9,8 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.DisconnectionDetails;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.common.ClientboundDisconnectPacket;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
 import net.minecraft.world.entity.player.Player;
@@ -89,7 +89,7 @@ public class AutoDisconnect extends ListenerModule {
 
     private void disconnectPlayer(String reason) {
         Component text = Component.literal("§3Auto-Disconnect was triggered§r\n\n§c" + reason);
-        PlayerUtils.player().connection.onDisconnect(new DisconnectionDetails(text));
+        PlayerUtils.player().connection.handleDisconnect(new ClientboundDisconnectPacket(text));
         setAutoDisable();
     }
 

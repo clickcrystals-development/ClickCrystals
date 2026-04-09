@@ -10,11 +10,11 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.trajectories
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class Trajectories extends ListenerModule {
 
@@ -85,21 +85,21 @@ public class Trajectories extends ListenerModule {
         if (PlayerUtils.invalid())
             return;
 
-        ClientPlayerEntity p = PlayerUtils.player();
-        ItemStack active = p.getActiveItem();
+        LocalPlayer p = PlayerUtils.player();
+        ItemStack active = p.getUseItem();
         boolean using = p.isUsingItem();
-        int useTime = p.getItemUseTime();
+        int useTime = p.getTicksUsingItem();
         double renderOffset = this.renderOffset.getVal();
 
-        if (trackBows.getVal() && using && active.isOf(Items.BOW)) {
-            currentResult = BOW_SIM.simulate(100, BowItem.getPullProgress(useTime), tickDelta, renderOffset);
+        if (trackBows.getVal() && using && active.is(Items.BOW)) {
+            currentResult = BOW_SIM.simulate(100, BowItem.getPowerForTime(useTime), tickDelta, renderOffset);
             return;
         }
         if (trackCrossbows.getVal() && HotbarUtils.isHolding(Items.CROSSBOW) && CrossbowItem.isCharged(HotbarUtils.getHand())) {
             currentResult = CROSSBOW_SIM.simulate(100, 1.0F, tickDelta, renderOffset);
             return;
         }
-        if (trackTridents.getVal() && using && active.isOf(Items.TRIDENT)) {
+        if (trackTridents.getVal() && using && active.is(Items.TRIDENT)) {
             currentResult = TRIDENT_SIM.simulate(100, 1.0F, tickDelta, renderOffset);
             return;
         }
@@ -130,7 +130,7 @@ public class Trajectories extends ListenerModule {
 
     @EventHandler
     public void onRenderWorld(RenderWorldEvent e) {
-        tickDelta = e.getTickCounter().getTickProgress(true);
+        tickDelta = e.getTickCounter().getGameTimeDeltaPartialTick(true);
         if (currentResult != null)
             currentResult.draw(e, tickDelta);
     }

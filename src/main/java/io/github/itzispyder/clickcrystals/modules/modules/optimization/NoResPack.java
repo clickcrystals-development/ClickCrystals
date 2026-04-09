@@ -7,8 +7,8 @@ import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEve
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
-import net.minecraft.network.packet.c2s.common.ResourcePackStatusC2SPacket;
-import net.minecraft.network.packet.s2c.common.ResourcePackSendS2CPacket;
+import net.minecraft.network.protocol.common.ClientboundResourcePackPushPacket;
+import net.minecraft.network.protocol.common.ServerboundResourcePackPacket;
 
 public class NoResPack extends Module implements Listener {
 
@@ -28,7 +28,7 @@ public class NoResPack extends Module implements Listener {
 
     @EventHandler
     private void onResourceReceive(PacketReceiveEvent e) {
-        if (e.getPacket() instanceof ResourcePackSendS2CPacket packet) {
+        if (e.getPacket() instanceof ClientboundResourcePackPushPacket packet) {
             e.setCancelled(true);
             String status = packet.required() ? "forced" : "suggested";
             ChatUtils.sendPrefixMessage("Blocked 1 " + status + " resource pack");
@@ -37,7 +37,7 @@ public class NoResPack extends Module implements Listener {
 
     @EventHandler
     private void onResourceSend(PacketSendEvent e) {
-        if (e.getPacket() instanceof ResourcePackStatusC2SPacket packet) {
+        if (e.getPacket() instanceof ServerboundResourcePackPacket packet) {
             e.setCancelled(true);
         }
     }

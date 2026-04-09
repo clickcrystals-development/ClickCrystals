@@ -11,7 +11,11 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.minecraft.client.multiplayer.ClientSuggestionProvider;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.server.permissions.PermissionSet;
 
 public abstract class Command implements Global {
@@ -19,6 +23,8 @@ public abstract class Command implements Global {
     protected static final int COMMAND_FAIL = -1;
     protected static final int COMMAND_PASS = 0;
     protected static final int SINGLE_SUCCESS = 1;
+    public static final HolderLookup.Provider WRAPPER = VanillaRegistries.createLookup();
+    public static final CommandBuildContext REGISTRY = Commands.createValidationContext(WRAPPER);
     public static final CommandDispatcher<SharedSuggestionProvider> DISPATCHER = new CommandDispatcher<>();
     public static final SharedSuggestionProvider SOURCE = new ClientSuggestionProvider(null, mc, PermissionSet.NO_PERMISSIONS);
 

@@ -6,9 +6,8 @@ import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 
@@ -41,7 +40,7 @@ public class Notification implements Global {
         this.icon = icon;
     }
 
-    public void render(GuiGraphicsExtractor context) {
+    public void render(GuiGraphics context) {
         if (!showing.get()) {
             return;
         }
@@ -110,7 +109,7 @@ public class Notification implements Global {
     }
 
     public void ping(boolean in) {
-        SoundInstance sound = SimpleSoundInstance.forUI(in ? SoundEvents.UI_TOAST_IN : SoundEvents.UI_TOAST_OUT, 1, 10);
+        SimpleSoundInstance sound = SimpleSoundInstance.forUI(in ? SoundEvents.UI_TOAST_IN : SoundEvents.UI_TOAST_OUT, 1, 10);
         mc.execute(() -> mc.getSoundManager().play(sound));
     }
 

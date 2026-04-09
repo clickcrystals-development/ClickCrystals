@@ -51,7 +51,7 @@ public class HelpCommand extends Command {
         tooltip.append(Component.literal(command.getName()).withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD)).append("\n");
         tooltip.append(Component.literal("," + command.getName()).withStyle(ChatFormatting.GRAY)).append("\n\n");
         tooltip.append(Component.literal(command.getDescription()).withStyle(ChatFormatting.WHITE));
-
+        
         MutableComponent text = Component.literal(command.getName());
         var commandsList = system.commands().values().stream().toList();
         if (!commandsList.getLast().equals(command))
@@ -60,7 +60,7 @@ public class HelpCommand extends Command {
             .withHoverEvent(new HoverEvent.ShowText(tooltip))
             .withClickEvent(new ClickEvent.SuggestCommand("," + command.getName()))
         );
-
+        
         return text;
     }
 }

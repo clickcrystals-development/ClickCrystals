@@ -46,7 +46,7 @@ public class TickEventListener implements Listener, Global {
             shouldForward = true;
             system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldForward = false;
-                mc.options.forwardKey.setPressed(false);
+                mc.options.keyUp.setDown(false);
             }), millis);
         }
     }
@@ -56,7 +56,7 @@ public class TickEventListener implements Listener, Global {
             shouldBackward = true;
             system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldBackward = false;
-                mc.options.backKey.setPressed(false);
+                mc.options.keyDown.setDown(false);
             }), millis);
         }
     }
@@ -66,7 +66,7 @@ public class TickEventListener implements Listener, Global {
             shouldStrafeLeft = true;
             system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldStrafeLeft = false;
-                mc.options.leftKey.setPressed(false);
+                mc.options.keyLeft.setDown(false);
             }), millis);
         }
     }
@@ -76,7 +76,7 @@ public class TickEventListener implements Listener, Global {
             shouldStrafeRight = true;
             system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldStrafeRight = false;
-                mc.options.rightKey.setPressed(false);
+                mc.options.keyRight.setDown(false);
             }), millis);
         }
     }
@@ -86,7 +86,7 @@ public class TickEventListener implements Listener, Global {
             shouldSneak = true;
             system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldSneak = false;
-                mc.options.sneakKey.setPressed(false);
+                mc.options.keyShift.setDown(false);
             }), millis);
         }
     }
@@ -96,7 +96,7 @@ public class TickEventListener implements Listener, Global {
             shouldJump = true;
             system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldJump = false;
-                mc.options.jumpKey.setPressed(false);
+                mc.options.keyJump.setDown(false);
             }), millis);
         }
     }
@@ -106,7 +106,7 @@ public class TickEventListener implements Listener, Global {
             shouldAttack = true;
             system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldAttack = false;
-                mc.options.attackKey.setPressed(false);
+                mc.options.keyAttack.setDown(false);
             }), millis);
         }
     }
@@ -116,7 +116,7 @@ public class TickEventListener implements Listener, Global {
             shouldUse = true;
             system.scheduler.runDelayedTask(() -> mc.execute(() -> {
                 shouldUse = false;
-                mc.options.useKey.setPressed(false);
+                mc.options.keyUse.setDown(false);
             }), millis);
         }
     }
@@ -140,31 +140,31 @@ public class TickEventListener implements Listener, Global {
 
     private void handleAutoKeys() {
         if (shouldForward) {
-            mc.options.forwardKey.setPressed(true);
+            mc.options.keyUp.setDown(true);
         }
         if (shouldBackward) {
-            mc.options.backKey.setPressed(true);
+            mc.options.keyDown.setDown(true);
         }
         if (shouldStrafeLeft) {
-            mc.options.leftKey.setPressed(true);
+            mc.options.keyLeft.setDown(true);
         }
         if (shouldStrafeRight) {
-            mc.options.rightKey.setPressed(true);
+            mc.options.keyRight.setDown(true);
         }
         if (shouldSneak) {
-            mc.options.sneakKey.setPressed(true);
+            mc.options.keyShift.setDown(true);
         }
         if (shouldJump) {
-            mc.options.jumpKey.setPressed(true);
+            mc.options.keyJump.setDown(true);
         }
         if (shouldAttack) {
-            mc.options.attackKey.setPressed(true);
+            mc.options.keyAttack.setDown(true);
         }
         if (shouldUse) {
-            mc.options.useKey.setPressed(true);
+            mc.options.keyUse.setDown(true);
         }
 
         for (int heldKey: heldKeys)
-            ((AccessorKeyboard) mc.keyboard).clickCrystals$pressKey(heldKey, 42);
+            ((AccessorKeyboard) mc.keyboardHandler).pressKey(heldKey, 42);
     }
 }

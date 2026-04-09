@@ -10,7 +10,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 import org.lwjgl.glfw.GLFW;
 
 public class ProfilesScreen extends DefaultBase {
@@ -35,7 +35,7 @@ public class ProfilesScreen extends DefaultBase {
     }
 
     @Override
-    public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
         // default base
         this.renderDefaultBase(context);
 
@@ -49,7 +49,7 @@ public class ProfilesScreen extends DefaultBase {
 
     @Override
     public void resize(int width, int height) {
-        client.setScreen(new ProfilesScreen());
+        minecraft.setScreen(new ProfilesScreen());
     }
 
     private static class ProfileSelect extends ModuleElement {
@@ -82,7 +82,7 @@ public class ProfilesScreen extends DefaultBase {
         }
 
         @Override
-        public void onRender(DrawContext context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
                 RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
             }
@@ -148,7 +148,7 @@ public class ProfilesScreen extends DefaultBase {
         }
 
         @Override
-        public void onRender(DrawContext context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
                 RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
             }
@@ -157,7 +157,7 @@ public class ProfilesScreen extends DefaultBase {
             RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
 
             textField.y = y + height / 2 - textField.height / 2;
-            textField.x = (int)(x + 30 + (mc.textRenderer.getWidth(text) * 0.7));
+            textField.x = (int)(x + 30 + (mc.font.width(text) * 0.7));
         }
 
         @Override
@@ -178,7 +178,7 @@ public class ProfilesScreen extends DefaultBase {
         }
 
         @Override
-        public void onRender(DrawContext context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
                 RenderUtils.fillRect(context, x, y, width, height, 0x6000B7FF);
             }

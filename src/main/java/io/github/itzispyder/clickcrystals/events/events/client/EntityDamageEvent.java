@@ -13,7 +13,6 @@ public class EntityDamageEvent extends Event {
 
     public EntityDamageEvent(ClientboundDamageEventPacket packet) {
         var world = PlayerUtils.getWorld();
-
         this.source = packet.getSource(world);
         this.entity = world.getEntity(packet.entityId());
     }

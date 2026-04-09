@@ -145,10 +145,10 @@ public class DebugCommand extends Command {
             Component text = Component.literal("      §7- " + pre + StringUtils.capitalizeWords(secs[secs.length - 1]));
             MutableComponent msg = text.copy();
             Style style = text.getStyle();
-            HoverEvent.ShowItem content = new HoverEvent.ShowItem(stack.getCraftingRemainder());
+            HoverEvent.ShowItem content = new HoverEvent.ShowItem(stack);
 
-            msg.setStyle(style.withHoverEvent(content));
-            PlayerUtils.player().sendSystemMessage(msg);
+            msg.withStyle(style.withHoverEvent(content));
+            PlayerUtils.player().displayClientMessage(msg, false);
         }
     }
 }

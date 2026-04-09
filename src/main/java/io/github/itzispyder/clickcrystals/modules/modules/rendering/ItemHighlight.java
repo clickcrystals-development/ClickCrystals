@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.modules.modules.rendering;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.events.EventHandler;
 import io.github.itzispyder.clickcrystals.events.events.client.RenderInventorySlotEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.RenderWorldEvent;
@@ -11,12 +12,11 @@ import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils3d;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Rarity;
-import net.minecraft.util.math.Vec3;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +46,11 @@ public class ItemHighlight extends ListenerModule {
         if (!renderType.getVal().renderWorld() || !isEnabled())
             return;
 
-        MatrixStack matrices = e.getMatrices();
-        float tickDelta = e.getTickCounter().getTickProgress(true);
+        PoseStack matrices = e.getMatrices();
+        float tickDelta = e.getTickCounter().getGameTimeDeltaPartialTick(true);
 
         for (ItemEntity itemEntity : getItemEntities()) {
-            ItemStack item = itemEntity.getStack();
+            ItemStack item = itemEntity.getItem();
             Vec3 pos = e.getOffsetPos(MathUtils.lerpEntityPosVec(itemEntity, tickDelta));
             Rarity rarity = item.getRarity();
 
@@ -81,7 +81,7 @@ public class ItemHighlight extends ListenerModule {
 
     public List<ItemEntity> getItemEntities() {
         List<ItemEntity> list = new ArrayList<>();
-        for (Entity ent : PlayerUtils.getClientWorld().getEntities())
+        for (Entity ent : PlayerUtils.getClientWorld().entitiesForRendering())
             if (ent instanceof ItemEntity item)
                 list.add(item);
         return list;

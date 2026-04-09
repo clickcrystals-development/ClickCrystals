@@ -1,17 +1,17 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.PearlCustomizer;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
-import net.minecraft.client.render.entity.state.FlyingItemEntityRenderState;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.state.ThrownItemRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,21 +20,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.HashSet;
 import java.util.Set;
 
-@Mixin(FlyingItemEntityRenderer.class)
+@Mixin(ThrownItemRenderer.class)
 public class MixinFlyingItemEntityRenderer implements Global {
 
     @Mutable @Shadow @Final private float scale;
     @Unique private final Set<Entity> notifiedPearls = new HashSet<>();
 
-    @Inject(method = "render(Lnet/minecraft/client/render/entity/state/FlyingItemEntityRenderState;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/command/OrderedRenderCommandQueue;Lnet/minecraft/client/render/state/CameraRenderState;)V", at = @At("TAIL"))
-    public void renderUpdated(FlyingItemEntityRenderState flyingItemEntityRenderState, MatrixStack matrixStack, OrderedRenderCommandQueue orderedRenderCommandQueue, CameraRenderState cameraRenderState, CallbackInfo ci) {
+    @Inject(method = "submit(Lnet/minecraft/client/renderer/entity/state/ThrownItemRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V", at = @At("TAIL"))
+    public void renderUpdated(ThrownItemRenderState flyingItemEntityRenderState, PoseStack matrixStack, SubmitNodeCollector orderedRenderCommandQueue, CameraRenderState cameraRenderState, CallbackInfo ci) {
         PearlCustomizer pc = Module.get(PearlCustomizer.class);
         Entity entity = EntityUtils.getRenderStateOwner(flyingItemEntityRenderState);
 
         if (pc == null || !pc.isEnabled())
             return;
 
-        if (!(entity instanceof EnderPearlEntity pearl))
+        if (!(entity instanceof ThrownEnderpearl pearl))
             return;
 
         if (pc.pearlSize.getVal() != 0) {
@@ -43,10 +43,10 @@ public class MixinFlyingItemEntityRenderer implements Global {
             this.scale = 1.0f;
         }
 
-        if (pearl.age <= 2 && notifiedPearls.add(pearl) && pc.pearlSound.getVal())
+        if (pearl.tickCount <= 2 && notifiedPearls.add(pearl) && pc.pearlSound.getVal())
             ChatUtils.pingPlayer();
 
-        if (pearl.age > 200)
+        if (pearl.tickCount > 200)
             notifiedPearls.remove(pearl);
     }
 }

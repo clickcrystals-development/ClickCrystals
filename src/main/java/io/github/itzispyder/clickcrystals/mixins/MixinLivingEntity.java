@@ -3,9 +3,9 @@ package io.github.itzispyder.clickcrystals.mixins;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoOverlay;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.SlowSwing;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,28 +16,28 @@ import java.util.Collection;
 @Mixin(LivingEntity.class)
 public abstract class MixinLivingEntity {
 
-    @Inject(method = "getHandSwingDuration", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getCurrentSwingDuration", at = @At("RETURN"), cancellable = true)
     public void getHandSwingDuration(CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue(Module.isEnabled(SlowSwing.class) ? 12 : cir.getReturnValue());
     }
 
-    @Inject(method = "getStatusEffects", at = @At("HEAD"), cancellable = true)
-    private void getStatusEffects(CallbackInfoReturnable<Collection<StatusEffectInstance>> cir) {
+    @Inject(method = "getActiveEffects", at = @At("HEAD"), cancellable = true)
+    private void getStatusEffects(CallbackInfoReturnable<Collection<MobEffectInstance>> cir) {
         if (!Module.get(NoOverlay.class).isEnabled())
             return;
 
         AccessorLivingEntity ale = (AccessorLivingEntity) this;
         var activeStatusEffects = ale.accessActiveStatusEffects();
 
-        activeStatusEffects.remove(StatusEffects.BLINDNESS);
-        activeStatusEffects.remove(StatusEffects.DARKNESS);
+        activeStatusEffects.remove(MobEffects.BLINDNESS);
+        activeStatusEffects.remove(MobEffects.DARKNESS);
         cir.setReturnValue(activeStatusEffects.values());
     }
 
-    @Inject(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z", at = @At("HEAD"), cancellable = true)
-    private void addStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;)Z", at = @At("HEAD"), cancellable = true)
+    private void addStatusEffect(MobEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
         if (Module.get(NoOverlay.class).isEnabled()) {
-            if (effect.getEffectType() == StatusEffects.BLINDNESS || effect.getEffectType() == StatusEffects.DARKNESS) {
+            if (effect.getEffect() == MobEffects.BLINDNESS || effect.getEffect() == MobEffects.DARKNESS) {
                 cir.setReturnValue(false);
             }
         }

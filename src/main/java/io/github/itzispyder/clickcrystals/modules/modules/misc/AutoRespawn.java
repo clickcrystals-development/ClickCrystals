@@ -31,7 +31,7 @@ public class AutoRespawn extends Module implements Listener {
             return;
 
         if (e.getScreen() instanceof DeathScreen) {
-            mc.player.requestRespawn();
+            mc.player.respawn();
             mc.setScreen((Screen)null);
         }
     }

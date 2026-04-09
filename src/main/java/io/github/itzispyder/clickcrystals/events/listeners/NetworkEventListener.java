@@ -19,10 +19,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.common.ClientboundDisconnectPacket;
-import net.minecraft.network.protocol.game.ClientboundLoginPacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
-import net.minecraft.network.protocol.login.ClientboundLoginCompressionPacket;
+import net.minecraft.network.protocol.login.ClientboundHelloPacket;
 import net.minecraft.network.protocol.login.ClientboundLoginFinishedPacket;
+import net.minecraft.network.protocol.login.ServerboundHelloPacket;
+import net.minecraft.network.protocol.login.ServerboundKeyPacket;
 
 import java.net.URI;
 import java.util.UUID;
@@ -80,7 +81,7 @@ public class NetworkEventListener implements Listener {
                 system.cameraRotator.closeAllTickets(); // stops current rotator
 
                 // broadcasting joins
-                for (ClientboundPlayerInfoUpdatePacket.Entry entry : packet.entries()) {
+                for (ClientboundPlayerInfoUpdatePacket.Entry entry : packet.newEntries()) {
                     UUID id = entry.profile().id();
                     String name = entry.profile().name();
 
@@ -118,14 +119,14 @@ public class NetworkEventListener implements Listener {
 
     private void handlePixelArtStop(PacketReceiveEvent e) {
         Packet<?> p = e.getPacket();
-        if (p instanceof ClientboundDisconnectPacket || p instanceof ClientboundLoginPacket) {
+        if (p instanceof ClientboundDisconnectPacket || p instanceof ClientboundHelloPacket) {
             PixelArtGenerator.cancel();
         }
     }
 
     private void handlePixelArtStop(PacketSendEvent e) {
         Packet<?> p = e.getPacket();
-        if (p instanceof ClientboundLoginPacket || p instanceof ClientboundLoginFinishedPacket || p instanceof ClientboundLoginCompressionPacket) {
+        if (p instanceof ServerboundHelloPacket || p instanceof ServerboundKeyPacket) {
             PixelArtGenerator.cancel();
         }
     }

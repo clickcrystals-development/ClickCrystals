@@ -8,8 +8,8 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.input.KeyInput;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.input.KeyEvent;
 
 import java.util.Comparator;
 import java.util.List;
@@ -33,10 +33,10 @@ public class SearchScreen extends DefaultBase {
     }
 
     @Override
-    public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
         renderDefaultBase(context);
-        context.getMatrices().pushMatrix();
-        context.getMatrices().translate(baseX, baseY);
+        context.pose().pushMatrix();
+        context.pose().translate(baseX, baseY);
 
         // backdrop
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
@@ -71,7 +71,7 @@ public class SearchScreen extends DefaultBase {
         buttonSettings.x = baseX + 10;
         buttonSettings.y = baseY + caret - translation;
 
-        context.getMatrices().popMatrix();
+        context.pose().popMatrix();
 
         // content
         caret = contentY + 10;
@@ -110,7 +110,7 @@ public class SearchScreen extends DefaultBase {
     }
 
     @Override
-    public boolean keyPressed(KeyInput e) {
+    public boolean keyPressed(KeyEvent e) {
         super.keyPressed(e);
         filterByQuery(searchbar);
         return true;
@@ -118,6 +118,6 @@ public class SearchScreen extends DefaultBase {
 
     @Override
     public void resize(int width, int height) {
-        client.setScreen(new SearchScreen());
+        minecraft.setScreen(new SearchScreen());
     }
 }

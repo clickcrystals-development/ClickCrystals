@@ -10,14 +10,13 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorde
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import org.jspecify.annotations.NonNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -59,7 +58,7 @@ public abstract class GuiScreen extends Screen implements Global {
         return mc.screen != null && mc.screen.getClass() == type;
     }
 
-    public abstract void baseRender(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta);
+    public abstract void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta);
 
     @Override
     public void tick() {
@@ -69,24 +68,24 @@ public abstract class GuiScreen extends Screen implements Global {
     }
 
     @Override
-    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta) {
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         if (selected != null && selected.isDraggable()) {
             int dx = mouseX - cursor.left;
             int dy = mouseY - cursor.right;
             selected.move(dx, dy);
-            selected.boundIn(mc.getWindow().getGuiScaledWidth(), mc.getWindow().getGuiScaledHeight());
+            selected.boundIn(context.guiWidth(), context.guiHeight());
             this.cursor = Pair.of(mouseX, mouseY);
         }
 
-        super.extractRenderState(graphics, mouseX, mouseY, delta);
-        this.baseRender(graphics, mouseX, mouseY, delta);
+        super.render(context, mouseX, mouseY, delta);
+        this.baseRender(context, mouseX, mouseY, delta);
 
         try {
             for (GuiElement guiElement : children) {
-                guiElement.render(graphics, mouseX, mouseY);
+                guiElement.render(context, mouseX, mouseY);
             }
             for (ScreenRenderCallback callback : screenRenderListeners) {
-                callback.handleScreen(graphics, mouseX, mouseY, delta);
+                callback.handleScreen(context, mouseX, mouseY, delta);
             }
         }
         catch (ConcurrentModificationException ignore) {}
@@ -94,27 +93,32 @@ public abstract class GuiScreen extends Screen implements Global {
         Module guiBorders = Module.get(GuiBorders.class);
         GuiElement element = getHoveredElement(mouseX, mouseY);
 
-        if (guiBorders.isEnabled() && element != null) {
-            tagGuiElement(graphics, mouseX, mouseY, element);
+        if (guiBorders.isEnabled()) {
+            if (element != null) {
+                tagGuiElement(context, mouseX, mouseY, element);
+            }
         }
-
         if (hovered != element) {
             hovered = element;
             lastHover = System.currentTimeMillis();
         }
         else if (hovered != null && hovered.hasTooltip()) {
             if (System.currentTimeMillis() > lastHover + hovered.getTooltipDelay()) {
-                hovered.renderTooltip(graphics, mouseX, mouseY);
+                hovered.renderTooltip(context, mouseX, mouseY);
             }
         }
     }
 
-    @Override
-    public void extractBackground(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+    public void renderOpaqueBackground(GuiGraphics context) {
         if (PlayerUtils.invalid()) {
-            this.extractPanorama(graphics, a);
-            graphics.blit(RenderPipelines.GUI_TEXTURED, Tex.Defaults.OPTIONS_BACKGROUND, 0, 0, 0, 0, this.width, this.height, 32, 32);
+            renderPanorama(context,mc.getDeltaTracker().getGameTimeDeltaPartialTick(true));
+            context.blit(RenderPipelines.GUI_TEXTURED, Tex.Defaults.OPTIONS_BACKGROUND, 0, 0, 0, 0.0F, 0, this.width, this.height, 32, 32);
         }
+    }
+
+    @Override
+    public void renderBackground(GuiGraphics context, int mouseX, int mouseY, float delta) {
+
     }
 
     @Override
@@ -152,7 +156,7 @@ public abstract class GuiScreen extends Screen implements Global {
     @Override
     public boolean charTyped(CharacterEvent input) {
         if (selected instanceof Typeable typeable) {
-            typeable.onChar((char)input.codepoint());
+            typeable.onChar((char)input.codepoint(), input.modifiers());
             return true;
         }
         return super.charTyped(input);
@@ -230,7 +234,7 @@ public abstract class GuiScreen extends Screen implements Global {
 
     @Override
     public boolean keyPressed(KeyEvent input) {
-        int keyCode = input.key();
+        int keyCode = input.input();
         int scanCode = input.scancode();
         int modifiers = input.modifiers();
 
@@ -257,7 +261,7 @@ public abstract class GuiScreen extends Screen implements Global {
 
     @Override
     public boolean keyReleased(KeyEvent input) {
-        int keyCode = input.key();
+        int keyCode = input.input();
         int scanCode = input.scancode();
         int modifiers = input.modifiers();
 
@@ -289,7 +293,7 @@ public abstract class GuiScreen extends Screen implements Global {
         return children;
     }
 
-    public void clearChildren() {
+    public void clearWidgets() {
         children.clear();
     }
 
@@ -308,12 +312,12 @@ public abstract class GuiScreen extends Screen implements Global {
         children.remove(child);
     }
 
-    public void tagGuiElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, GuiElement element) {
+    public void tagGuiElement(GuiGraphics context, int mouseX, int mouseY, GuiElement element) {
         String name = element.getClass().getSimpleName();
         double textScale = 0.7;
         int width = mc.font.width(name) + 2;
-        RenderUtils.fillRect(graphics, mouseX, mouseY, (int)(width * textScale), 9, 0xFF000000);
-        RenderUtils.drawText(graphics, name, mouseX + 2, mouseY + (int)(9 * 0.33), 0.7F, true);
+        RenderUtils.fillRect(context, mouseX, mouseY, (int)(width * textScale), 9, 0xFF000000);
+        RenderUtils.drawText(context, name, mouseX + 2, mouseY + (int)(9 * 0.33), 0.7F, true);
     }
 
     public GuiElement getHoveredElement(double mouseX, double mouseY) {

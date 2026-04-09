@@ -7,10 +7,10 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
-import net.minecraft.client.renderer.state.gui.GuiElementRenderState;
+import net.minecraft.client.gui.render.state.GuiElementRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
@@ -40,9 +40,9 @@ public class ClickCrystalsRoundRectTexState implements GuiElementRenderState {
     public ClickCrystalsRoundRectTexState(Matrix3x2f pose, Identifier texture, float x, float y, float w, float h, float r, ScreenRectangle scissor) {
         this(ClickCrystalsRenderPipelines.PIPELINE_TEX_QUADS,
                 TextureSetup.singleTexture(Minecraft.getInstance()
-                                .getTextureManager()
-                                .getTexture(texture)
-                                .getTextureView(),
+                        .getTextureManager()
+                        .getTexture(texture)
+                        .getTextureView(),
                         RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST)),
                 pose,
                 x, y, w, h, (float) MathUtils.clamp(r, 0, Math.min(w, h) / 2),
@@ -53,10 +53,12 @@ public class ClickCrystalsRoundRectTexState implements GuiElementRenderState {
                 ));
     }
 
-    public ClickCrystalsRoundRectTexState(GuiGraphicsExtractor context, Identifier texture, float x, float y, float w, float h, float r) {
+    public ClickCrystalsRoundRectTexState(GuiGraphics context, Identifier texture, float x, float y, float w, float h, float r) {
         this(new Matrix3x2f(context.pose()), texture, x, y, w, h, r, context.scissorStack.peek());
     }
 
+    // squeezes entire quads into triangle fans for rounded rectangle
+    // ...yeah i know ...blame vibrant visuals
     @Override
     public void buildVertices(VertexConsumer buf) {
         float[][] corners = {

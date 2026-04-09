@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import net.minecraft.client.input.KeyInput;
+import net.minecraft.client.input.KeyEvent;
 
 public class AutoWalk extends ListenerModule {
 
@@ -27,20 +27,20 @@ public class AutoWalk extends ListenerModule {
     protected void onDisable() {
         super.onDisable();
         if (mc != null && mc.options != null) {
-            mc.options.forwardKey.setPressed(false);
-            mc.options.sprintKey.setPressed(false);
+            mc.options.keyUp.setDown(false);
+            mc.options.keySprint.setDown(false);
         }
     }
 
     @EventHandler
     private void onKey(KeyPressEvent e) {
         if (e.isScreenNull()) {
-            KeyInput input = new KeyInput(e.getKeycode(), e.getScancode(), 0);
-            if (mc.options.sprintKey.matchesKey(input) ||
-                    mc.options.forwardKey.matchesKey(input) ||
-                    mc.options.backKey.matchesKey(input) ||
-                    mc.options.leftKey.matchesKey(input) ||
-                    mc.options.rightKey.matchesKey(input)
+            KeyEvent input = new KeyEvent(e.getKeycode(), e.getScancode(), 0);
+            if (mc.options.keySprint.matches(input) ||
+                    mc.options.keyUp.matches(input) ||
+                    mc.options.keyDown.matches(input) ||
+                    mc.options.keyLeft.matches(input) ||
+                    mc.options.keyRight.matches(input)
             ) {
                 e.cancel();
             }
@@ -49,9 +49,9 @@ public class AutoWalk extends ListenerModule {
 
     @EventHandler
     private void onTick(ClientTickStartEvent e) {
-        mc.options.forwardKey.setPressed(true);
+        mc.options.keyUp.setDown(true);
         if (shouldSprint.getVal()) {
-            mc.options.sprintKey.setPressed(true);
+            mc.options.keySprint.setDown(true);
         }
     }
 }

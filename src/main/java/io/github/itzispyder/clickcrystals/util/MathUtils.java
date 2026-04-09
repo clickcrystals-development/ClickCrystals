@@ -1,9 +1,9 @@
 package io.github.itzispyder.clickcrystals.util;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
@@ -46,7 +46,7 @@ public final class MathUtils {
     }
 
     public static Vec3 forward(Vec3 pos, Vec3 dir, double dist) {
-        return pos.add(dir.normalize().multiply(dist));
+        return pos.add(dir.normalize().scale(dist));
     }
 
     public static double floorDiff(double a) {
@@ -62,11 +62,11 @@ public final class MathUtils {
     }
 
     public static Vec3 lerpEntityPosVec(Entity entity, float tickDelta) {
-        return lerpVec(entity.lastRenderX, entity.lastRenderY, entity.lastRenderZ, entity.getX(), entity.getY(), entity.getZ(), tickDelta);
+        return lerpVec(entity.xOld, entity.yOld, entity.zOld, entity.getX(), entity.getY(), entity.getZ(), tickDelta);
     }
 
     public static Vec3 lerpEntityEyeVec(LivingEntity entity, float tickDelta) {
-        return lerpVec(entity.lastRenderX, entity.lastRenderY, entity.lastRenderZ, entity.getX(), entity.getY(), entity.getZ(), tickDelta).add(0, entity.getStandingEyeHeight(), 0);
+        return lerpVec(entity.xOld, entity.yOld, entity.zOld, entity.getX(), entity.getY(), entity.getZ(), tickDelta).add(0, entity.getEyeHeight(), 0);
     }
 
     public static float[] toPolar(double x, double y, double z) {
@@ -122,9 +122,9 @@ public final class MathUtils {
     public static Vector3d toVector(float pitch, float yaw, float radius) {
         pitch = (float) Math.toRadians(pitch);
         yaw = (float) Math.toRadians(yaw);
-        double x = radius * MathHelper.cos(yaw) * MathHelper.cos(pitch);
-        double y = radius * MathHelper.sin(pitch);
-        double z = radius * MathHelper.sin(yaw) * MathHelper.cos(pitch);
+        double x = radius * Mth.cos(yaw) * Mth.cos(pitch);
+        double y = radius * Mth.sin(pitch);
+        double z = radius * Mth.sin(yaw) * Mth.cos(pitch);
         return new Vector3d(x, y, z);
     }
 

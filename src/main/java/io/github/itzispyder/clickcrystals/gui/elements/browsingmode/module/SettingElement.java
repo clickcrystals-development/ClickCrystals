@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 
 public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElement {
 
@@ -20,7 +20,7 @@ public abstract class SettingElement<T extends ModuleSetting<?>> extends GuiElem
         this.setting = setting;
     }
 
-    public void renderSettingDetails(GuiGraphicsExtractor context) {
+    public void renderSettingDetails(GuiGraphics context) {
         int caret = y + 5;
         RenderUtils.drawText(context, setting.getName(), x + 5, caret, 0.6F, false);
         for (String line : TextUtils.wordWrap(setting.getDescription(), (int)(width * 0.69), 0.6F)) {

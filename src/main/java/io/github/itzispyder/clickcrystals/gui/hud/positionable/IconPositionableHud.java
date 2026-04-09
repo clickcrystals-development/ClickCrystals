@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class IconPositionableHud extends Hud {
 
@@ -14,7 +14,7 @@ public class IconPositionableHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context, float tickDelta) {
+    public void render(GuiGraphics context, float tickDelta) {
         renderBackdrop(context);
 
         int ogw = getWidth();
@@ -26,12 +26,12 @@ public class IconPositionableHud extends Hud {
         int cx = getCenter().getX();
         int cy = getCenter().getY();
 
-        context.getMatrices().pushMatrix();
+        context.pose().pushMatrix();
 
-        context.getMatrices().rotateAbout((float)Math.toRadians(-10), cx, cy);
+        context.pose().rotateAbout((float)Math.toRadians(-10), cx, cy);
         RenderUtils.drawTexture(context,Tex.ICON, x, y, w, h);
 
-        context.getMatrices().popMatrix();
+        context.pose().popMatrix();
 
         setWidth(ogw);
         RenderUtils.drawText(context, "§l§oClickCrystals", getX() + getHeight(), getY() + (int)(getHeight() * 0.33), 1.0F, true);

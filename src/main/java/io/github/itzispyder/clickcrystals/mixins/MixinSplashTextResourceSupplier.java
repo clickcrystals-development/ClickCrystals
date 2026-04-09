@@ -1,9 +1,9 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.Global;
-import net.minecraft.client.gui.screens.SplashTextRenderer;
-import net.minecraft.client.resource.SplashTextResourceSupplier;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.components.SplashRenderer;
+import net.minecraft.client.resources.SplashManager;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -19,24 +19,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mixin(SplashTextResourceSupplier.class)
+@Mixin(SplashManager.class)
 public class MixinSplashTextResourceSupplier implements Global {
 
-    @Shadow private List<String> splashTexts;
+    @Shadow private List<String> splashes;
     @Unique private static final String SPLASH_URL = "https://raw.githubusercontent.com/clickcrystals-development/ClickCrystals-Plus-Pack/main/assets/minecraft/texts/splashes.txt";
     @Unique private static List<String> customSplashes = null;
 
-    @Inject(method = "get", at = @At("RETURN"), cancellable = true)
-    private void onGet(CallbackInfoReturnable<SplashTextRenderer> cir) {
-        if (splashTexts.isEmpty() || Math.random() < 0.2)
+    @Inject(method = "getSplash", at = @At("RETURN"), cancellable = true)
+    private void onGet(CallbackInfoReturnable<SplashRenderer> cir) {
+        if (splashes.isEmpty() || Math.random() < 0.2)
             return;
 
         List<String> custom = loadCustomSplashes();
         if (custom.isEmpty())
             return;
 
-        Text text = Text.literal(system.random.getRandomElement(custom));
-        SplashTextRenderer renderer = new SplashTextRenderer(text);
+        Component text = Component.literal(system.random.getRandomElement(custom));
+        SplashRenderer renderer = new SplashRenderer(text);
         cir.setReturnValue(renderer);
     }
 

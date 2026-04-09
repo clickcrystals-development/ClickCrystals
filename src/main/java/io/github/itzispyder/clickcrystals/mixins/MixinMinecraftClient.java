@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntityEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.SetScreenEvent;
@@ -39,7 +40,7 @@ public abstract class MixinMinecraftClient implements Global {
         system.eventBus.passWithCallbackInfo(cir, evt);
     }
 
-    @Inject(method = "stop", at = @At("HEAD"))
+    @Inject(method = "destroy", at = @At("HEAD"))
     public void stop(CallbackInfo ci) {
         system.onClientStopping();
     }
@@ -49,21 +50,15 @@ public abstract class MixinMinecraftClient implements Global {
         system.eventBus.pass(new GameLeaveEvent());
     }
 
-    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;Z)V", at = @At("HEAD"))
-    public void disconnect(Screen screen, boolean keepResourcePacks, CallbackInfo ci) {
+    @Inject(method = "disconnectFromWorld(Lnet/minecraft/network/chat/Component;)V", at = @At("HEAD"))
+    public void disconnect(Component reasonText, CallbackInfo ci) {
         system.eventBus.pass(new GameLeaveEvent());
     }
 
-    @Inject(method = "disconnectFromWorld", at = @At("HEAD"))
-    public void disconnectFromWorld(Component message, CallbackInfo ci) {
-        system.eventBus.pass(new GameLeaveEvent());
-    }
-
-    @Inject(method = "shouldEntityAppearGlowing", at = @At("RETURN"), cancellable = true)
-    private void hasOutline(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(Module.isEnabled(SelfGlow.class)
+    @ModifyReturnValue(method = "shouldEntityAppearGlowing", at = @At("RETURN"))
+    private boolean hasOutline(boolean original, Entity entity) {
+        return Module.isEnabled(SelfGlow.class)
                 ? entity == PlayerUtils.player()
-                : cir.getReturnValue()
-        );
+                : original;
     }
 }

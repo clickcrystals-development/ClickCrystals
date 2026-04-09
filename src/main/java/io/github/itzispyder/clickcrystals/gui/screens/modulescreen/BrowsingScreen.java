@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 import java.util.Comparator;
 import java.util.List;
@@ -34,7 +34,7 @@ public class BrowsingScreen extends DefaultBase {
     }
 
     @Override
-    public void baseRender(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
         // default base
         this.renderDefaultBase(context);
 
@@ -64,6 +64,6 @@ public class BrowsingScreen extends DefaultBase {
 
     @Override
     public void resize(int width, int height) {
-        client.setScreen(new BrowsingScreen());
+        minecraft.setScreen(new BrowsingScreen());
     }
 }

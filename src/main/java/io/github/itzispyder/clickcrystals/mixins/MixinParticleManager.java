@@ -16,12 +16,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ParticleEngine.class)
 public abstract class MixinParticleManager implements Global {
 
-    @Inject(method = "makeParticle", at = @At("HEAD"), cancellable = true)
-    public <T extends ParticleOptions> void addParticle(T p, double x, double y, double z, double xa, double ya, double za, CallbackInfoReturnable<Particle> cir) {
-        ParticleReceiveEvent event = new ParticleReceiveEvent(p.getType(), x, y, z, xa, ya, za);
+    @Inject(method = "createParticle(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)Lnet/minecraft/client/particle/Particle;", at = @At("HEAD"), cancellable = true)
+    public void addParticle(ParticleOptions parameters, double x, double y, double z, double velocityX, double velocityY, double velocityZ, CallbackInfoReturnable<Particle> cir) {
+        ParticleReceiveEvent event = new ParticleReceiveEvent(parameters.getType(), x, y, z, velocityX, velocityY, velocityZ);
         system.eventBus.passWithCallbackInfo(cir, event);
 
-        if (p.getType() == ParticleTypes.TOTEM_OF_UNDYING && Module.isEnabled(TotemChams.class))
+        if (parameters.getType() == ParticleTypes.TOTEM_OF_UNDYING && Module.isEnabled(TotemChams.class))
             cir.cancel();
     }
 }

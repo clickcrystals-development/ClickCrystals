@@ -9,6 +9,7 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.client.system.ClickCrystalsSystem;
+import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
 
@@ -48,7 +49,7 @@ public class CommandArgumentType implements ArgumentType<Command> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        return SharedSuggestionProvider.suggest(system.commands().values().stream().map(Command::getName), builder);
+        return SharedSuggestionProvider.suggest(ArrayUtils.toNewList(system.commands().values(), Command::getName), builder);
     }
 
     @Override

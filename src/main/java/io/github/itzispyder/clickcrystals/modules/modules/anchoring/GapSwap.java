@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modrinth.ModrinthNoNo;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Items;
 
 // CREDITS TO: TutlaMc
 @ModrinthNoNo

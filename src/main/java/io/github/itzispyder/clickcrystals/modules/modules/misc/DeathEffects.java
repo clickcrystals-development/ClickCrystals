@@ -11,13 +11,13 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
-import net.minecraft.component.type.FireworkExplosionComponent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LightningEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
+import net.minecraft.network.protocol.game.ClientboundEntityEventPacket;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityEvent;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.component.FireworkExplosion;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -40,10 +40,10 @@ public class DeathEffects extends ListenerModule {
             .def(Entities.BOTH)
             .build()
     );
-    public final ModuleSetting<FireworkExplosionComponent.Type> shape = scGeneral.add(EnumSetting.create(FireworkExplosionComponent.Type.class)
+    public final ModuleSetting<FireworkExplosion.Shape> shape = scGeneral.add(EnumSetting.create(FireworkExplosion.Shape.class)
             .name("rocket-shape")
             .description("Decide what will be the rocket shape")
-            .def(FireworkExplosionComponent.Type.BURST)
+            .def(FireworkExplosion.Shape.BURST)
             .build()
     );
     public final ModuleSetting<Integer> vRocket = scGeneral.add(createIntSetting()
@@ -91,11 +91,11 @@ public class DeathEffects extends ListenerModule {
 
     @EventHandler
     private void onReceivePacket(PacketReceiveEvent event) {
-        if (!(event.getPacket() instanceof EntityStatusS2CPacket packet)) {
+        if (!(event.getPacket() instanceof ClientboundEntityEventPacket packet)) {
             return;
         }
 
-        if (packet.getStatus() != EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
+        if (packet.getEventId() != EntityEvent.DEATH) {
             return;
         }
 
@@ -129,14 +129,14 @@ public class DeathEffects extends ListenerModule {
         colors.add(rocketColor());
         IntList fadeColors = new IntArrayList();
         fadeColors.add(fadeColor(rocketColor()));
-        FireworkExplosionComponent fireworkExplosion = new FireworkExplosionComponent(shape.getVal(),colors,fadeColors,true,true);
-        mc.world.addFireworkParticle(ent.getX(),ent.getY(),ent.getZ(),0,vRocket.getVal(),0, Collections.singletonList(fireworkExplosion));
+        FireworkExplosion fireworkExplosion = new FireworkExplosion(shape.getVal(),colors,fadeColors,true,true);
+        mc.level.createFireworks(ent.getX(),ent.getY(),ent.getZ(),0,vRocket.getVal(),0, Collections.singletonList(fireworkExplosion));
     }
 
     private void spawnLightning(Entity ent) {
-        LightningEntity lightningEntity = new LightningEntity(EntityType.LIGHTNING_BOLT, mc.world);
-        lightningEntity.refreshPositionAfterTeleport(ent.getX(), ent.getY(), ent.getZ());
-        mc.world.addEntity(lightningEntity);
+        LightningBolt lightningEntity = new LightningBolt(EntityType.LIGHTNING_BOLT, mc.level);
+        lightningEntity.snapTo(ent.getX(), ent.getY(), ent.getZ());
+        mc.level.addEntity(lightningEntity);
         lightningRender.put(ent, System.currentTimeMillis());
     }
 
@@ -154,8 +154,8 @@ public class DeathEffects extends ListenerModule {
 
     public boolean shouldApplyEffect(Entity entity) {
         return switch (entitySelection.getVal()) {
-            case PLAYERS -> entity instanceof PlayerEntity;
-            case ENTITIES -> !(entity instanceof PlayerEntity);
+            case PLAYERS -> entity instanceof Player;
+            case ENTITIES -> !(entity instanceof Player);
             case BOTH -> true;
         };
     }

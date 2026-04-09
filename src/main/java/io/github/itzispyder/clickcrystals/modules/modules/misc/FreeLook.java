@@ -8,8 +8,8 @@ import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.EnumSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.client.option.Perspective;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.CameraType;
+import net.minecraft.util.Mth;
 
 public class FreeLook extends ListenerModule {
 
@@ -45,36 +45,36 @@ public class FreeLook extends ListenerModule {
     @Override
     public void onEnable() {
         if (PlayerUtils.invalid()) return;
-        cY = PlayerUtils.player().getYaw();
-        cP = PlayerUtils.player().getPitch();
-        if (changeToPov.getVal()) mc.options.setPerspective(perspective.getVal().getPerspective());
+        cY = PlayerUtils.player().getYRot();
+        cP = PlayerUtils.player().getXRot();
+        if (changeToPov.getVal()) mc.options.setCameraType(perspective.getVal().getPerspective());
     }
 
     @Override
     public void onDisable() {
         if (PlayerUtils.invalid()) return;
-        if (changeToPov.getVal()) mc.options.setPerspective(Perspective.FIRST_PERSON);
+        if (changeToPov.getVal()) mc.options.setCameraType(CameraType.FIRST_PERSON);
     }
 
 
     @EventHandler
     private void onTick(ClientTickEndEvent e) {
-        PlayerUtils.player().setPitch(MathHelper.clamp(PlayerUtils.player().getPitch(), freeLookPerspective.getVal() - 180, freeLookPerspective.getVal()));
-        cP = MathHelper.clamp(cP, freeLookPerspective.getVal() - 180, freeLookPerspective.getVal());
+        PlayerUtils.player().setXRot(Mth.clamp(PlayerUtils.player().getXRot(), freeLookPerspective.getVal() - 180, freeLookPerspective.getVal()));
+        cP = Mth.clamp(cP, freeLookPerspective.getVal() - 180, freeLookPerspective.getVal());
     }
 
     public enum POV {
-        FIRST_PERSON_FOV(Perspective.FIRST_PERSON),
-        SECOND_PERSON_FOV(Perspective.THIRD_PERSON_BACK),
-        THIRD_PERSON_FOV(Perspective.THIRD_PERSON_FRONT);
+        FIRST_PERSON_FOV(CameraType.FIRST_PERSON),
+        SECOND_PERSON_FOV(CameraType.THIRD_PERSON_BACK),
+        THIRD_PERSON_FOV(CameraType.THIRD_PERSON_FRONT);
 
-        private final Perspective perspective;
+        private final CameraType perspective;
 
-        POV(Perspective perspective) {
+        POV(CameraType perspective) {
             this.perspective = perspective;
         }
 
-        public Perspective getPerspective() {
+        public CameraType getPerspective() {
             return perspective;
         }
     }

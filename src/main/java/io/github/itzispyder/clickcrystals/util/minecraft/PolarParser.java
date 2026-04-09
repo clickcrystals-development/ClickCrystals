@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 
@@ -48,7 +49,7 @@ public class PolarParser {
         this.yaw = argYaw;
     }
 
-    public PolarParser(String arg1, String arg2, net.minecraft.world.entity.Entity relativeTo) {
+    public PolarParser(String arg1, String arg2, Entity relativeTo) {
         this(arg1, arg2, relativeTo.getRotationVector());
     }
 

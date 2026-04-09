@@ -18,7 +18,7 @@ public class TextUtils implements Global {
 
     public static List<String> wordWrap(String input, int width, float textScale) {
         List<String> result = new ArrayList<>();
-        var tr = mc.textRenderer;
+        var tr = mc.font;
 
         if (input == null || input.isEmpty() || tr == null || width <= 0) {
             return result;
@@ -28,7 +28,7 @@ public class TextUtils implements Global {
             StringBuilder current = new StringBuilder();
 
             for (String word : line.split(" ")) {
-                int nextWidth = (int)(tr.getWidth(current + " " + word) * textScale);
+                int nextWidth = (int)(tr.width(current + " " + word) * textScale);
                 if (nextWidth == width) {
                     result.add(current + word);
                     current = new StringBuilder();
@@ -48,7 +48,7 @@ public class TextUtils implements Global {
 
     public static List<String> charWrap(String input, int width, float textScale) {
         List<String> result = new ArrayList<>();
-        var tr = mc.textRenderer;
+        var tr = mc.font;
 
         if (input == null || input.isEmpty() || tr == null || width <= 0) {
             return result;
@@ -57,7 +57,7 @@ public class TextUtils implements Global {
         for (String line : StringUtils.lines(input)) {
             StringBuilder current = new StringBuilder();
             for (char c : line.toCharArray()) {
-                if (tr.getWidth(current + String.valueOf(c)) * textScale > width) {
+                if (tr.width(current + String.valueOf(c)) * textScale > width) {
                     result.add(current.toString());
                     current = new StringBuilder();
                 }
@@ -70,19 +70,19 @@ public class TextUtils implements Global {
     }
 
     public static int getSelectionMax(String input, int toWidth) {
-        var tr = mc.textRenderer;
+        var tr = mc.font;
 
         if (tr == null || input.isEmpty()) {
             return 0;
         }
-        if (tr.getWidth(input) <= toWidth) {
+        if (tr.width(input) <= toWidth) {
             return input.length();
         }
 
         StringBuilder current = new StringBuilder();
         for (char c : input.toCharArray()) {
             current.append(c);
-            if (tr.getWidth(current.toString()) >= toWidth) {
+            if (tr.width(current.toString()) >= toWidth) {
                 return current.length();
             }
         }

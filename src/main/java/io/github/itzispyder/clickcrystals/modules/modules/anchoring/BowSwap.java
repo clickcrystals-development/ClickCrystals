@@ -10,8 +10,8 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.NbtUtils;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
 
 @ModrinthNoNo
 public class BowSwap extends Module implements Listener {
@@ -28,7 +28,7 @@ public class BowSwap extends Module implements Listener {
             HotbarUtils.search(BowSwap::isFlameBow);
 
             if (pull.getVal()) {
-                mc.options.useKey.setPressed(true);
+                mc.options.keyUse.setDown(true);
             }
         }
     };

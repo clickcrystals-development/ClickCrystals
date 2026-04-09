@@ -252,8 +252,8 @@ public class ScriptParser {
         }
         else if (arg.matches("^[:#].*$")) {
             Predicate<ItemStack> test = parseItemPredicate(arg);
-            for (InteractionHand InteractionHand : InteractionHand.values()) {
-                ItemStack item = player.getItemInHand(InteractionHand);
+            for (InteractionHand hand : InteractionHand.values()) {
+                ItemStack item = player.getItemInHand(hand);
                 if (test.test(item))
                     return item;
             }
@@ -268,7 +268,7 @@ public class ScriptParser {
             if (defaultedItemPredicates.containsKey(node.name))
                 return defaultedItemPredicates.get(node.name);
             else
-                return state -> state.getItem() == BuiltInRegistries.ITEM.getValue(Identifier.parse(node.name));
+                return state -> state.getItem() == BuiltInRegistries.ITEM.getValue(Identifier.withDefaultNamespace(node.name));
         });
         selection.setNodeTagsStrategy(node -> item -> node.tags.stream().allMatch(tag -> NbtUtils.hasPotionOrEnchant(item, tag)));
         return selection.getIdentifierPredicate();
@@ -281,7 +281,7 @@ public class ScriptParser {
             if (defaultedBlockPredicates.containsKey(node.name))
                 return defaultedBlockPredicates.get(node.name);
             else
-                return state -> state.getBlock() == BuiltInRegistries.BLOCK.getValue(Identifier.parse(node.name));
+                return state -> state.getBlock() == BuiltInRegistries.BLOCK.getValue(Identifier.withDefaultNamespace(node.name));
         });
         return selection.getIdentifierPredicate();
     }
@@ -289,14 +289,14 @@ public class ScriptParser {
     public static Predicate<Entity> parseEntityPredicate(String arg) {
         IdentifierSelection<Entity> selection = IdentifierSelection.parse(arg, Entity.class);
         selection.setContainsStrategy(node -> ent -> ent.getType().getDescriptionId().contains(node.name));
-        selection.setEqualsStrategy(node -> ent -> ent.getType() == BuiltInRegistries.ENTITY_TYPE.getValue(Identifier.parse(node.name)));
+        selection.setEqualsStrategy(node -> ent -> ent.getType() == BuiltInRegistries.ENTITY_TYPE.getValue(Identifier.withDefaultNamespace(node.name)));
         return selection.getIdentifierPredicate();
     }
 
     public static Predicate<SoundInstance> parseSoundInstancePredicate(String arg) {
         IdentifierSelection<SoundInstance> selection = IdentifierSelection.parse(arg, SoundInstance.class);
         selection.setContainsStrategy(node -> sound -> sound.getIdentifier().toLanguageKey().replace('.', '_').contains(node.name));
-        selection.setEqualsStrategy(node -> sound -> sound.getIdentifier().equals(Identifier.parse(node.name)));
+        selection.setEqualsStrategy(node -> sound -> sound.getIdentifier().equals(Identifier.withDefaultNamespace(node.name)));
         return selection.getIdentifierPredicate();
     }
 
@@ -311,7 +311,7 @@ public class ScriptParser {
                 return result == null ? null : BuiltInRegistries.SOUND_EVENT.getValue(result);
             }
             case EQUALS -> {
-                return BuiltInRegistries.SOUND_EVENT.getValue(Identifier.parse(node.name));
+                return BuiltInRegistries.SOUND_EVENT.getValue(Identifier.withDefaultNamespace(node.name));
             }
         }
         return null;
@@ -328,7 +328,7 @@ public class ScriptParser {
                 return result == null ? null : BuiltInRegistries.MOB_EFFECT.getValue(result);
             }
             case EQUALS -> {
-                return BuiltInRegistries.MOB_EFFECT.getValue(Identifier.parse(node.name));
+                return BuiltInRegistries.MOB_EFFECT.getValue(Identifier.withDefaultNamespace(node.name));
             }
         }
         return null;

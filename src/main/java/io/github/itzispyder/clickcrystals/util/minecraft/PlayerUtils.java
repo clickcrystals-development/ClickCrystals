@@ -71,7 +71,7 @@ public final class PlayerUtils implements Global {
     }
 
     public static Vec3 getDir() {
-        return player().getViewVector(1.0F);
+        return player().getLookAngle();
     }
 
     public static MultiPlayerGameMode getInteractionManager() {
@@ -79,7 +79,8 @@ public final class PlayerUtils implements Global {
     }
 
     public static float getEntityNameLabelHeight(Entity entity, float tickDelta) {
-        Vec3 vec = entity.getAttachments().getNullable(EntityAttachment.NAME_TAG, 0, entity.getViewYRot(tickDelta));
+        float yaw = entity.getViewYRot(tickDelta);
+        Vec3 vec = entity.getAttachments().getNullable(EntityAttachment.NAME_TAG, 0, yaw);
         return (float) (vec == null ? 0.5 : vec.y + 0.5);
     }
 
@@ -144,7 +145,7 @@ public final class PlayerUtils implements Global {
         for (double x = box.minX; x <= box.maxX; x++) {
             for (double y = box.minY; y <= box.maxY; y++) {
                 for (double z = box.minZ; z <= box.maxZ; z++) {
-                    BlockPos pos = BlockPos.containing(x, y, z);
+                    BlockPos pos = new BlockPos((int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
                     BlockState state = world.getBlockState(pos);
 
                     if (state == null || state.isAir()) {
@@ -157,7 +158,7 @@ public final class PlayerUtils implements Global {
     }
 
     public static Entity getNearestEntity(Level world, Entity exclude, Vec3 at, double range, Predicate<Entity> filter) {
-        List<Entity> candidates = world.getEntities(exclude, new AABB(at, at).inflate(range), filter).stream()
+        List<Entity> candidates = world.getEntities(exclude, AABB.unitCubeFromLowerCorner(at).inflate(range), filter).stream()
                 .sorted(Comparator.comparing(entity -> entity.position().distanceTo(at)))
                 .toList();
 
@@ -194,7 +195,7 @@ public final class PlayerUtils implements Global {
         Level world = getWorld();
 
         PlayerUtils.boxIterator(world, box, (pos, state) -> {
-            if (filter.test(pos, state) && pos.distToCenterSqr(player) < nearestDist.get() * nearestDist.get()) {
+            if (filter.test(pos, state) && pos.closerToCenterThan(player, nearestDist.get())) {
                 nearestDist.set(Math.sqrt(pos.distToCenterSqr(player)));
                 nearestPos.set(pos);
                 nearestState.set(state);
@@ -238,7 +239,7 @@ public final class PlayerUtils implements Global {
         Level world = getWorld();
 
         boxIterator(world, box, (pos, state) -> {
-            if (filter.test(state) && pos.distToCenterSqr(playerPos) < nearestDist.get() * nearestDist.get()) {
+            if (filter.test(state) && pos.closerToCenterThan(playerPos, nearestDist.get())) {
                 double distance = Math.sqrt(pos.distToCenterSqr(playerPos));
                 if (distance < nearestDist.get()) {
                     nearestDist.set(distance);

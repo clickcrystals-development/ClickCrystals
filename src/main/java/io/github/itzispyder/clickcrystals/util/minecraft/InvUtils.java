@@ -7,7 +7,7 @@ import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -32,15 +32,15 @@ public final class InvUtils implements Global {
     }
 
     public static boolean swapOffhand(int slot) {
-        return sendSlotPacket(slot, 40, ContainerInput.SWAP);
+        return sendSlotPacket(slot, 40, ClickType.SWAP);
     }
 
     public static boolean quickMove(int slot) {
-        return sendSlotPacket(slot, 0, ContainerInput.QUICK_MOVE);
+        return sendSlotPacket(slot, 0, ClickType.QUICK_MOVE);
     }
 
     public static boolean dropSlot(int slot, boolean full) {
-        return sendSlotPacket(slot, full ? 1 : 0, ContainerInput.THROW);
+        return sendSlotPacket(slot, full ? 1 : 0, ClickType.THROW);
     }
 
     public static boolean isHotbar(int slot) {
@@ -143,7 +143,7 @@ public final class InvUtils implements Global {
 
         for (int i = 0; i < inv().getNonEquipmentItems().size(); i++) {
             ItemStack stack = inv().getItem(i);
-            if (stack.is(item))
+            if (stack != null && stack.is(item))
                 return true;
         }
 
@@ -155,21 +155,21 @@ public final class InvUtils implements Global {
 
         for (int i = 0; i < inv().getNonEquipmentItems().size(); i++) {
             ItemStack stack = inv().getItem(i);
-            if (item.test(stack))
+            if (stack != null && item.test(stack))
                 return true;
         }
 
         return false;
     }
 
-    public static boolean sendSlotPacket(int slot, int button, ContainerInput action) {
+    public static boolean sendSlotPacket(int slot, int button, ClickType action) {
         ItemStack stack = inv().getItem(slot);
 
         if (slot <= 8) {
             slot += 36;
         }
 
-        if (PlayerUtils.invalid()) return false;
+        if (stack == null || PlayerUtils.invalid()) return false;
 
         int hashSlot = slot;
         HashedStack hash = HashedStack.create(stack, component -> hashSlot);

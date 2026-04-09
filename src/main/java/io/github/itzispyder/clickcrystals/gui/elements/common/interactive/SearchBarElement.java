@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.Typeable;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.callbacks.KeyPressCallback;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class SearchBarElement extends GuiElement implements Typeable {
     }
 
     @Override
-    public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         RenderUtils.fillRoundHoriLine(context, x, y, width, height, Shades.LIGHT);
 
         if (!(mc.screen instanceof GuiScreen screen))

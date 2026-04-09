@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -25,11 +26,10 @@ public abstract class MixinChatInputSuggestor {
     @Shadow @Nullable private CompletableFuture<Suggestions> pendingSuggestions;
     @Shadow private boolean keepSuggestions;
     @Shadow @Final private EditBox input;
-    @Shadow public abstract void showSuggestions(boolean immediateNarration);
+    @Shadow protected abstract void updateUsageInfo();
 
-    @Inject(method = "updateCommandInfo", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false), cancellable = true)
-    public void refresh(CallbackInfo ci) {
-        StringReader reader = new StringReader(this.input.getValue());
+    @Inject(method = "updateCommandInfo", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
+    public void refresh(CallbackInfo ci, String string, StringReader reader) {
         String prefix = ClickCrystals.commandPrefix.getKeyName();
         int len = prefix.length();
 
@@ -45,7 +45,7 @@ public abstract class MixinChatInputSuggestor {
                 pendingSuggestions = Command.DISPATCHER.getCompletionSuggestions(currentParse, cursor);
                 pendingSuggestions.thenRun(() -> {
                     if (pendingSuggestions.isDone()) {
-                        this.showSuggestions(false);
+                        updateUsageInfo();
                     }
                 });
             }

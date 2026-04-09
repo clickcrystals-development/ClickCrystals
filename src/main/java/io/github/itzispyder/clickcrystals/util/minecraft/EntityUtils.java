@@ -4,10 +4,12 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.TeamDetector;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -36,7 +38,7 @@ import java.util.function.Predicate;
 public class EntityUtils implements Global {
 
     public static boolean isTargetValid() {
-        return mc.hitResult instanceof EntityHitResult;
+        return mc.crosshairPickEntity != null;
     }
 
     public static boolean isMoving(Entity ref) {
@@ -50,15 +52,16 @@ public class EntityUtils implements Global {
             return false;
         if (!liv.isBlocking())
             return false;
-
+            
+        // Check if shield is facing the attacker
         if (PlayerUtils.invalid())
             return true;
-
-        Vec3 targetLook = liv.getViewVector(1.0F).normalize();
-        Vec3 toAttacker = PlayerUtils.getPos().subtract(ref.position()).normalize();
+            
+        Vec3 targetLook = liv.getLookAngle().normalize();
+        Vec3 toAttacker = PlayerUtils.player().position().subtract(liv.position()).normalize();
         double dot = targetLook.dot(toAttacker);
-
-        return dot > 0.3;
+        
+        return dot > 0.3; // Shield blocks if target is facing attacker
     }
 
     public static boolean isColliding(Entity ref) {
@@ -74,11 +77,11 @@ public class EntityUtils implements Global {
     }
 
     public static MobEffectInstance getEffect(Entity ref, MobEffect effect) {
-        var entry = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect);
+        var statusEffect = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect);
         if (!(ref instanceof LivingEntity liv))
-            return new MobEffectInstance(entry);
-        MobEffectInstance effectInstance = liv.getEffect(entry);
-        return effectInstance != null ? effectInstance : new MobEffectInstance(entry);
+            return new MobEffectInstance(statusEffect);
+        MobEffectInstance effectInstance = liv.getEffect(statusEffect);
+        return effectInstance != null ? effectInstance : new MobEffectInstance(statusEffect);
     }
 
     public static boolean isHolding(Entity ref, Predicate<ItemStack> item) {
@@ -123,7 +126,7 @@ public class EntityUtils implements Global {
     public static Entity getRenderStateOwner(EntityRenderState state) {
         if (PlayerUtils.invalid())
             return null;
-        for (Entity entity : PlayerUtils.getClientWorld().entitiesForRendering())
+        for (Entity entity: PlayerUtils.getClientWorld().entitiesForRendering())
             if (state.distanceToCameraSq == entity.distanceToSqr(mc.gameRenderer.getMainCamera().position()))
                 return entity;
         return null;
@@ -135,22 +138,28 @@ public class EntityUtils implements Global {
 
         double rangeB = 5.0;
         double rangeE = 3.0;
-        Vec3 cameraPos = ref.getEyePosition();
-        HitResult hitResult = ref.pick(rangeB, 1.0F, false);
-        double distSq = hitResult.getLocation().distanceToSqr(cameraPos);
+        double d = rangeB;
+        double e = Mth.square(d);
+        Vec3 vec3d = ref.getEyePosition(1.0F);
+        HitResult hitResult = ref.pick(d, 1.0F, false);
+        double f = hitResult.getLocation().distanceToSqr(vec3d);
 
-        Vec3 viewVec = ref.getViewVector(1.0F);
-        Vec3 endVec = cameraPos.add(viewVec.x * rangeB, viewVec.y * rangeB, viewVec.z * rangeB);
-        AABB aabb = ref.getBoundingBox().expandTowards(viewVec.scale(rangeB)).inflate(1.0);
+        if (hitResult.getType() != HitResult.Type.MISS) {
+            e = f;
+            d = Math.sqrt(f);
+        }
 
-        EntityHitResult entHit = ProjectileUtil.getEntityHitResult(ref, cameraPos, endVec, aabb, ent -> !ent.isSpectator() && ent.isPickable(), distSq);
-        return entHit != null && entHit.getLocation().distanceToSqr(cameraPos) < distSq ? ensureTargetInRange(entHit, cameraPos, rangeE) : ensureTargetInRange(hitResult, cameraPos, rangeB);
+        Vec3 rot = ref.getViewVector(1.0F);
+        Vec3 vec = vec3d.add(rot.x * d, rot.y * d, rot.z * d);
+        AABB box = ref.getBoundingBox().expandTowards(rot.scale(d)).inflate(1.0, 1.0, 1.0);
+        EntityHitResult entHit = ProjectileUtil.getEntityHitResult(ref, vec3d, vec, box, ent -> !ent.isSpectator() && ent.isPickable(), e);
+        return entHit != null && entHit.getLocation().distanceToSqr(vec3d) < f ? ensureTargetInRange(entHit, vec3d, rangeE) : ensureTargetInRange(hitResult, vec3d, rangeB);
     }
 
     public static Voidable<FluidState> getTargetFluid(Entity ref, boolean prioritizeSource) {
         Level world = ref.level();
         Vec3 eye = ref.getEyePosition();
-        Vec3 dir = ref.getViewVector(1.0F).normalize();
+        Vec3 dir = ref.getLookAngle().normalize();
         FluidState targetState = null;
 
         for (double dist = 0; dist < 5; dist += 0.1) {
@@ -176,9 +185,11 @@ public class EntityUtils implements Global {
     }
 
     private static HitResult ensureTargetInRange(HitResult hitResult, Vec3 cameraPos, double interactionRange) {
-        Vec3 loc = hitResult.getLocation();
-        if (loc.distanceToSqr(cameraPos) > interactionRange * interactionRange) {
-            return BlockHitResult.miss(loc, Direction.getApproximateNearest(loc.x - cameraPos.x, loc.y - cameraPos.y, loc.z - cameraPos.z), BlockPos.containing(loc));
+        Vec3 vec = hitResult.getLocation();
+        if (!vec.closerThan(cameraPos, interactionRange)) {
+            Vec3 hit = hitResult.getLocation();
+            Direction direction = Direction.getApproximateNearest(hit.x - cameraPos.x, hit.y - cameraPos.y, hit.z - cameraPos.z);
+            return BlockHitResult.miss(hit, direction, BlockPos.containing(hit));
         }
         return hitResult;
     }
@@ -186,16 +197,20 @@ public class EntityUtils implements Global {
     public static Entity getNearestEntity(Entity ref, double range, Predicate<Entity> filter) {
         Vec3 at = ref.position();
         List<Entity> candidates = ref.level()
-                .getEntities(PlayerUtils.player(), new AABB(at, at).inflate(range), ent -> ent != ref && filter.test(ent)).stream()
+                .getEntities(PlayerUtils.player(), AABB.unitCubeFromLowerCorner(at).inflate(range), ent -> ent != ref && filter.test(ent)).stream()
                 .sorted(Comparator.comparing(entity -> entity.position().distanceTo(at)))
                 .toList();
 
-        return candidates.isEmpty() ? null : candidates.get(0);
+        if (candidates.isEmpty()) {
+            return null;
+        }
+        return candidates.get(0);
     }
 
     public static void runOnNearestBlock(Entity ref, double range, BiPredicate<BlockPos, BlockState> filter, BiConsumer<BlockPos, BlockState> function) {
-        if (PlayerUtils.invalid())
+        if (PlayerUtils.invalid()) {
             return;
+        }
 
         AtomicReference<Double> nearestDist = new AtomicReference<>(64.0);
         AtomicReference<BlockPos> nearestPos = new AtomicReference<>();
@@ -205,7 +220,7 @@ public class EntityUtils implements Global {
         Level world = ref.level();
 
         PlayerUtils.boxIterator(world, box, (pos, state) -> {
-            if (filter.test(pos, state) && pos.distToCenterSqr(player) < nearestDist.get() * nearestDist.get()) {
+            if (filter.test(pos, state) && pos.closerToCenterThan(player, nearestDist.get())) {
                 nearestDist.set(Math.sqrt(pos.distToCenterSqr(player)));
                 nearestPos.set(pos);
                 nearestState.set(state);
@@ -236,10 +251,16 @@ public class EntityUtils implements Global {
         if (!teamDetector.isEnabled())
             return false;
 
+        // Check manual list first
+        String[] names = teamDetector.playerNames.getVal().split(",");
         String targetName = target.getName().getString();
-        if (teamDetector.playerNames.getVal().toLowerCase().contains(targetName.toLowerCase()))
-            return true;
+        for (String name : names) {
+            if (name.trim().equalsIgnoreCase(targetName)) {
+                return true;
+            }
+        }
 
+        // Check automatic detection
         if (teamDetector.teamFindingMethod.getVal() == TeamDetector.TeamsMethod.SCOREBOARD)
             return isSameScoreboardTeam(target);
         else if (teamDetector.teamFindingMethod.getVal() == TeamDetector.TeamsMethod.COLOR_NAME)
@@ -251,16 +272,18 @@ public class EntityUtils implements Global {
         TeamDetector teamDetector = Module.get(TeamDetector.class);
         return teamDetector.isEnabled() && teamDetector.cancelCcs.getVal() && isTeammate(target);
     }
-
+  
     public static boolean isSameScoreboardTeam(Player player) {
         Scoreboard scoreboard = PlayerUtils.getWorld().getScoreboard();
-        PlayerTeam playerTeam = scoreboard.getPlayersTeam(PlayerUtils.player().getScoreboardName());
-        PlayerTeam otherTeam = scoreboard.getPlayersTeam(player.getScoreboardName());
-        return playerTeam != null && playerTeam.equals(otherTeam);
+        PlayerTeam playerTeam = scoreboard.getPlayerTeam(PlayerUtils.player().getName().getString());
+        PlayerTeam otherPlayerTeam = scoreboard.getPlayerTeam(player.getName().getString());
+        return playerTeam != null && playerTeam.equals(otherPlayerTeam);
     }
 
     public static boolean isSameColorNameTeam(Player player) {
-        return PlayerUtils.player().getTeamColor() == player.getTeamColor();
+        int playerColor = PlayerUtils.player().getTeamColor();
+        int targetColor = player.getTeamColor();
+        return playerColor == targetColor && playerColor != ChatFormatting.WHITE.getChar();
     }
 
     public static List<Entity> getEntitiesAt(BlockPos pos) {
@@ -268,6 +291,7 @@ public class EntityUtils implements Global {
             return new ArrayList<>();
 
         List<Entity> list = new ArrayList<>();
+
         for (Entity ent : PlayerUtils.getClientWorld().entitiesForRendering())
             if (ent != null && ent.isAlive() && pos.equals(ent.blockPosition()))
                 list.add(ent);

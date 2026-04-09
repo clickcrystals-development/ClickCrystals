@@ -11,10 +11,10 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 
 @ModrinthNoNo
 public class CrystSwitch extends Module implements Listener {
@@ -80,10 +80,10 @@ public class CrystSwitch extends Module implements Listener {
 
     @EventHandler
     private void onSendPacket(PacketSendEvent e) {
-        if (e.getPacket() instanceof PlayerActionC2SPacket packet) {
+        if (e.getPacket() instanceof ServerboundPlayerActionPacket packet) {
             final BlockPos pos = packet.getPos();
 
-            if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
+            if (packet.getAction() != ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK) return;
             if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
 
             if (canUse() && isCrystallable(pos)) {

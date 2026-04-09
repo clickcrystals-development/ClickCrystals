@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;
@@ -47,7 +47,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
     }
 
     @Override
-    public void onChar(char chr) {
+    public void onChar(char chr, int modifiers) {
         if (Character.isISOControl(chr)) {
             return;
         }
@@ -56,12 +56,12 @@ public class TextFieldElement extends GuiElement implements Typeable {
     }
 
     @Override
-    public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         context.pose().pushMatrix();
         context.enableScissor(x, y, x + width, y + height);
 
         RenderUtils.fillRect(context, x, y, width, height, backgroundColor.getHex());
-        var text = mc.font.split(FormattedText.of(styledContent), width - 25);
+        List<FormattedCharSequence> text = mc.font.split(FormattedText.of(styledContent), width - 25);
         textHeight = text.size() * 9;
 
         int caret = y + textY;
@@ -82,7 +82,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
             if (selectedAll) {
                 RenderUtils.fillRect(context, x + 20, caret - 1, mc.font.width(line), 9, 0xA07E75FF);
             }
-            context.text(mc.font, line, x + 20, caret, textColor.getHex(), false);
+            context.drawString(mc.font, line, x + 20, caret, textColor.getHex(), false);
         }
 
         if (selectionBlinking) {
@@ -249,7 +249,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
         String str = content.substring(0, MathUtils.clamp(selectionStart, 0, content.length()));
         List<FormattedCharSequence> lines = mc.font.split(FormattedText.of(str), width - 25);
 
-        if (lines.isEmpty()) {
+        if (lines == null || lines.isEmpty()) {
             selectedStartPoint.setLocation(0, 0);
             return;
         }

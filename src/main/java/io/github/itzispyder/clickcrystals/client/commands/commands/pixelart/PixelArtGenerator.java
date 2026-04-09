@@ -9,8 +9,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -70,7 +70,7 @@ public class PixelArtGenerator {
 
     public synchronized CompletableFuture<Void> generateAt(LivingEntity ent) {
         Level world = ent.level();
-        BlockPos pos = ent.getOnPos();
+        BlockPos pos = ent.blockPosition();
         Facing facing = Facing.fromDirection(ent.getMotionDirection());
 
         running.set(true);
@@ -189,7 +189,7 @@ public class PixelArtGenerator {
                 "command"
         );
 
-        public synchronized Block getBlock(LevelAccessor view, BlockPos pos, Facing facing) {
+        public synchronized Block getBlock(BlockGetter view, BlockPos pos, Facing facing) {
             Block mostSimilar = Blocks.AIR;
             double similarity = 999999999.0;
             int x = facing == Facing.NORTH_SOUTH ? pos.getX() + this.x : pos.getX();
@@ -209,9 +209,9 @@ public class PixelArtGenerator {
             return mostSimilar;
         }
 
-        private boolean isValid(Block b, LevelAccessor v, BlockPos p) {
+        private boolean isValid(Block b, BlockGetter v, BlockPos p) {
             BlockState state = b.defaultBlockState();
-            boolean full = !state.canOcclude() && state.isCollisionShapeFullBlock(v, p);
+            boolean full = !state.propagatesSkylightDown() && state.isCollisionShapeFullBlock(v, p);
             boolean type = !BLACKLIST.contains(b);
             boolean keys = BLACKLIST_KEYS.stream().noneMatch(b.getDescriptionId()::contains);
             return full && type && keys;
@@ -269,7 +269,7 @@ public class PixelArtGenerator {
 
         PixelArtGenerator gen = new PixelArtGenerator(e, delay);
         Timer timer = Timer.start();
-        Command.info("&bGenerating &7" + a + "&b blocks &7(" + w + " x " + h + ")&b at position &7[" + p.getOnPos().toShortString() + "]");
+        Command.info("&bGenerating &7" + a + "&b blocks &7(" + w + " x " + h + ")&b at position &7[" + p.blockPosition().toShortString() + "]");
         CompletableFuture<Void> future = gen.generateAt(p);
 
         future.thenRun(() -> {

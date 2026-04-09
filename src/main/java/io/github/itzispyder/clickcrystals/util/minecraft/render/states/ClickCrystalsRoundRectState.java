@@ -4,10 +4,10 @@ import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
-import net.minecraft.client.renderer.state.gui.GuiElementRenderState;
+import net.minecraft.client.gui.render.state.GuiElementRenderState;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix3x2f;
@@ -50,14 +50,16 @@ public class ClickCrystalsRoundRectState implements GuiElementRenderState {
                 ));
     }
 
-    public ClickCrystalsRoundRectState(GuiGraphicsExtractor context, float x, float y, float w, float h, float r, int color1, int color2, int color3, int color4, int colorCenter) {
+    public ClickCrystalsRoundRectState(GuiGraphics context, float x, float y, float w, float h, float r, int color1, int color2, int color3, int color4, int colorCenter) {
         this(new Matrix3x2f(context.pose()), x, y, w, h, r, color1, color2, color3, color4, colorCenter, context.scissorStack.peek());
     }
 
-    public ClickCrystalsRoundRectState(GuiGraphicsExtractor context, float x, float y, float w, float h, float r, int color) {
+    public ClickCrystalsRoundRectState(GuiGraphics context, float x, float y, float w, float h, float r, int color) {
         this(context, x, y, w, h, r, color, color, color, color, color);
     }
 
+    // squeezes entire quads into triangle fans for rounded rectangle
+    // ...yeah i know ...blame vibrant visuals
     @Override
     public void buildVertices(VertexConsumer buf) {
         float[][] corners = {
@@ -89,7 +91,6 @@ public class ClickCrystalsRoundRectState implements GuiElementRenderState {
             buf.addVertexWith2DPose(pose, x3, y3).setColor(colors[corner]);
         }
 
-        // Using addVertexWith2DPose and setColor as per 26.1 ledger
         buf.addVertexWith2DPose(pose, x1, y1).setColor(colorCenter);
         buf.addVertexWith2DPose(pose, x1, y1).setColor(colorCenter);
         buf.addVertexWith2DPose(pose, x + w - r, y + h).setColor(colors[0]);
@@ -134,7 +135,6 @@ public class ClickCrystalsRoundRectState implements GuiElementRenderState {
     }
 
     private static ScreenRectangle createBounds(Matrix3x2f pose, ScreenRectangle scissor, float x, float y, float w, float h) {
-        // Updated to use transformMaxBounds for 26.1 ScreenRectangle
         ScreenRectangle bounds = new ScreenRectangle((int) x, (int) y, (int) w, (int) h).transformMaxBounds(pose);
         return scissor == null ? bounds : scissor.intersection(bounds);
     }

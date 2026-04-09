@@ -8,10 +8,10 @@ import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorMouse;
 import io.github.itzispyder.clickcrystals.mixins.AccessorMinecraftClient;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.GuiCursor;
-import net.minecraft.client.gui.screens.ingame.InventoryScreen;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.ItemStack;
 
 import java.awt.*;
 import java.util.function.Predicate;
@@ -95,9 +95,9 @@ public final class InteractionUtils implements Global {
     }
 
     public static void inputToggleSprint() {
-        mc.options.getSprintToggled().setValue(true);
-        if (!mc.options.sprintKey.isPressed()) {
-            mc.options.sprintKey.setPressed(true);
+        mc.options.toggleSprint().set(true);
+        if (!mc.options.keySprint.isDown()) {
+            mc.options.keySprint.setDown(true);
         }
     }
 
@@ -107,7 +107,7 @@ public final class InteractionUtils implements Global {
         }
 
         if (mc.screen instanceof InventoryScreen inv) {
-            mc.execute(inv::close);
+            mc.execute(inv::onClose);
         }
         else {
             mc.execute(() -> mc.setScreen(new InventoryScreen(PlayerUtils.player())));
@@ -119,8 +119,8 @@ public final class InteractionUtils implements Global {
             return false;
         var p = PlayerUtils.player();
 
-        StatusEffectInstance s = p.getStatusEffect(StatusEffects.STRENGTH);
-        StatusEffectInstance w = p.getStatusEffect(StatusEffects.WEAKNESS);
+        MobEffectInstance s = p.getEffect(MobEffects.STRENGTH);
+        MobEffectInstance w = p.getEffect(MobEffects.WEAKNESS);
 
         if (s == null && w == null) {
             return true;
@@ -148,27 +148,27 @@ public final class InteractionUtils implements Global {
     }
 
     public static Point getCursor() {
-        return new Point((int)GuiCursor.getCursorX(mc.mouse.getX()), (int)GuiCursor.getCursorY(mc.mouse.getY()));
+        return new Point((int)GuiCursor.getCursorX(mc.mouseHandler.xpos()), (int)GuiCursor.getCursorY(mc.mouseHandler.ypos()));
     }
 
     public static void leftClick() {
-        ((AccessorMouse) mc.mouse).leftClick();
+        ((AccessorMouse) mc.mouseHandler).leftClick();
     }
 
     public static void rightClick() {
-        ((AccessorMouse) mc.mouse).rightClick();
+        ((AccessorMouse) mc.mouseHandler).rightClick();
     }
 
     public static void middleClick() {
-        ((AccessorMouse) mc.mouse).middleClick();
+        ((AccessorMouse) mc.mouseHandler).middleClick();
     }
 
     public static void mouseScroll(double amount) {
-        ((AccessorMouse) mc.mouse).scroll(amount);
+        ((AccessorMouse) mc.mouseHandler).scroll(amount);
     }
 
     public static void pressKey(int key, int scan) {
-        ((AccessorKeyboard) mc.keyboard).clickCrystals$pressKey(key, scan);
+        ((AccessorKeyboard) mc.keyboardHandler).pressKey(key, scan);
     }
 
     public static void pressKeyExtendedName(String name) {

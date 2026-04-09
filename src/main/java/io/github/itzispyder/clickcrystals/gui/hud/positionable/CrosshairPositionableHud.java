@@ -6,11 +6,11 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHu
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 
 public class CrosshairPositionableHud extends Hud {
 
@@ -19,28 +19,28 @@ public class CrosshairPositionableHud extends Hud {
     }
 
     @Override
-    public void render(DrawContext context, float tickDelta) {
+    public void render(GuiGraphics context, float tickDelta) {
         renderBackdrop(context);
 
-        if (mc.crosshairTarget instanceof EntityHitResult hit) {
-            String name = "Target: " + StringUtils.capitalizeWords(getKeyOf(hit.getEntity().getType().getTranslationKey()));
-            setWidth(mc.textRenderer.getWidth(name) + 6);
+        if (mc.hitResult instanceof EntityHitResult hit) {
+            String name = "Target: " + StringUtils.capitalizeWords(getKeyOf(hit.getEntity().getType().getDescriptionId()));
+            setWidth(mc.font.width(name) + 6);
 
             int x = getX() + getWidth() / 2;
             int y = getY() + (int)(getHeight() * 0.33);
             RenderUtils.drawCenteredText(context, name, x, y, 1.0F, true);
         }
-        else if (mc.crosshairTarget != null && mc.crosshairTarget.getType() == HitResult.Type.MISS) {
+        else if (mc.hitResult != null && mc.hitResult.getType() == HitResult.Type.MISS) {
             String name = "Target: §8Air";
-            setWidth(mc.textRenderer.getWidth(name) + 6);
+            setWidth(mc.font.width(name) + 6);
 
             int x = getX() + getWidth() / 2;
             int y = getY() + (int)(getHeight() * 0.33);
             RenderUtils.drawCenteredText(context, name, x, y, 1.0F, true);
         }
-        else if (mc.crosshairTarget instanceof BlockHitResult hit) {
+        else if (mc.hitResult instanceof BlockHitResult hit) {
             setWidth(60);
-            BlockState state = PlayerUtils.player().getEntityWorld().getBlockState(hit.getBlockPos());
+            BlockState state = PlayerUtils.player().level().getBlockState(hit.getBlockPos());
             int x = getX() + 3;
             int y = getY() + (int)(getHeight() * 0.33);
             RenderUtils.drawText(context, "Target: ", x, y, 1.0F, true);
@@ -48,10 +48,10 @@ public class CrosshairPositionableHud extends Hud {
             float scale = 0.8F;
             x = (int)((getX() + getWidth() * 0.75) / scale);
             y = (int)(getY() / scale);
-            context.getMatrices().pushMatrix();
-            context.getMatrices().scale(scale);
-            context.drawItem(state.getBlock().asItem().getDefaultStack(), x, y);
-            context.getMatrices().popMatrix();
+            context.pose().pushMatrix();
+            context.pose().scale(scale);
+            context.renderItem(state.getBlock().asItem().getDefaultInstance(), x, y);
+            context.pose().popMatrix();
         }
     }
 

@@ -11,7 +11,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHu
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 
 @Environment(EnvType.CLIENT)
 public abstract class Hud implements Positionable, Global {
@@ -49,9 +49,9 @@ public abstract class Hud implements Positionable, Global {
         this(id, new Dimension());
     }
 
-    public abstract void render(GuiGraphicsExtractor context, float tickDelta);
+    public abstract void render(GuiGraphics context, float tickDelta);
 
-    public void renderBackdrop(GuiGraphicsExtractor context) {
+    public void renderBackdrop(GuiGraphics context) {
         RenderUtils.fillRoundRect(context, getX(), getY(), getWidth(), getHeight(), 5, getArgb());
     }
 

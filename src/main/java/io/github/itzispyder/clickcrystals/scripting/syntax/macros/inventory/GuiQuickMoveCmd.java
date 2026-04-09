@@ -4,8 +4,8 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Predicate;
 
@@ -25,7 +25,7 @@ public class GuiQuickMoveCmd extends ScriptCommand {
             if (args.getSize() == 1)
                 InvUtils.quickMove(slot);
             if (args.getSize() > 1) {
-                InvUtils.sendSlotPacket(slot, args.get(1).toInt() - 1, SlotActionType.SWAP);
+                InvUtils.sendSlotPacket(slot, args.get(1).toInt() - 1, ClickType.SWAP);
                 if (args.match(2, "then"))
                     args.executeAll(3);
             }

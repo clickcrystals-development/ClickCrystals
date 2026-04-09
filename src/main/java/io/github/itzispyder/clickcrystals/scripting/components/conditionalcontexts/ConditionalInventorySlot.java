@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluati
 import io.github.itzispyder.clickcrystals.scripting.components.Conditional;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Predicate;
 
@@ -19,7 +19,7 @@ public class ConditionalInventorySlot implements Conditional {
 
         int slot = context.get(0).toInt();
         Predicate<ItemStack> item = ScriptParser.parseItemPredicate(context.get(1).toString());
-        ItemStack stack = InvUtils.inv().getStack(slot);
+        ItemStack stack = InvUtils.inv().getItem(slot);
         return context.assertClientPlayer().end(item.test(stack));
     }
 }

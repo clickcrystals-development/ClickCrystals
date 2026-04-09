@@ -253,7 +253,7 @@ public class AutoClicker extends ListenerModule {
             return false;
         if (noBabies.getVal() && isBaby)
             return false;
-        if (maxAttackCooldown.getVal() > 0 && p.getCurrentItemAttackStrengthDelay() < maxAttackCooldown.getVal())
+        if (maxAttackCooldown.getVal() > 0 && p.getAttackStrengthScale(1.0F) < maxAttackCooldown.getVal())
             return false;
         if (stopWhenDamage.getVal() && p.getHealth() < hp) {
             if (left.getVal() || right.getVal()) {

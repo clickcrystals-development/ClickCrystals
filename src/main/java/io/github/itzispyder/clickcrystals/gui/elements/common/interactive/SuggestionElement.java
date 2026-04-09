@@ -3,8 +3,8 @@ package io.github.itzispyder.clickcrystals.gui.elements.common.interactive;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.Consumer;
 
@@ -22,7 +22,7 @@ public class SuggestionElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         int fill = isHovered(mouseX, mouseY) ? Shades.LIGHT_GRAY : Shades.GRAY;
         RenderUtils.fillRoundRect(context, x, y, width, height, 3, fill);
         RenderUtils.drawTexture(context, texture, x + 5, y + 5, width - 10, height - 10);

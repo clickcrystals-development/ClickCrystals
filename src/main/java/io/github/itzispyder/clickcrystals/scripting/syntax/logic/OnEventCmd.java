@@ -9,6 +9,7 @@ import io.github.itzispyder.clickcrystals.scripting.*;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 import io.github.itzispyder.clickcrystals.scripting.syntax.client.ModuleCmd;
 import io.github.itzispyder.clickcrystals.scripting.syntax.listeners.TickListener;
+import net.minecraft.client.resources.sounds.SoundInstance;
 
 import java.util.function.Predicate;
 
@@ -139,11 +140,11 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         ModuleCmd.runOnCurrentScriptModule(m -> m.moveListeners.add(event -> {
             switch (eventType) {
                 case MOVE_LOOK -> {
-                    if (event.changesLook())
+                    if (event.hasRotation())
                         read.executeThenChain(false);
                 }
                 case MOVE_POS -> {
-                    if (event.changesPosition())
+                    if (event.hasPosition())
                         read.executeThenChain(false);
                 }
             }

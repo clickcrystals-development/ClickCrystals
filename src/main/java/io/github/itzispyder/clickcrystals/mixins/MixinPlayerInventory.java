@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Inventory.class)
 public abstract class MixinPlayerInventory implements Global {
 
-    @Inject(method = "add(ILnet/minecraft/world/item/ItemStack;)Z", at = @At("HEAD"))
+    @Inject(method = "addResource(ILnet/minecraft/world/item/ItemStack;)I", at = @At("HEAD"))
     public void addStack(int slot, ItemStack stack, CallbackInfoReturnable<Integer> cir) {
         system.eventBus.pass(new InventoryAddItemEvent(slot, stack));
     }

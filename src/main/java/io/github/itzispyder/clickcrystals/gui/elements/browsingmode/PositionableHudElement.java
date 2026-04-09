@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.browsingmode;
 
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class PositionableHudElement extends GuiElement {
 
@@ -15,7 +15,7 @@ public class PositionableHudElement extends GuiElement {
     }
 
     @Override
-    public void onRender(DrawContext context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
         hud.setX(x);
         hud.setY(y);
         hud.render(context, 1.0F);

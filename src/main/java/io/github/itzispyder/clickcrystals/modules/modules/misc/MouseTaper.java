@@ -11,12 +11,12 @@ import io.github.itzispyder.clickcrystals.modules.modules.ListenerModule;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.block.Block;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 public class MouseTaper extends ListenerModule {
 
@@ -71,12 +71,12 @@ public class MouseTaper extends ListenerModule {
     protected void onEnable() {
         super.onEnable();
         if (mc.screen != null)
-            mc.screen.close();
+            mc.screen.onClose();
 
         // checks (disable module if fail)
         Mode mode = this.mode.getVal();
         if (mode.requiresTarget() && PlayerUtils.valid()) {
-            if (mc.crosshairTarget instanceof BlockHitResult hit && mc.crosshairTarget.getType() != HitResult.Type.MISS) {
+            if (mc.hitResult instanceof BlockHitResult hit && mc.hitResult.getType() != HitResult.Type.MISS) {
                 if (mode == Mode.One_Pos && targetPos == null) {
                     targetPos = hit.getBlockPos();
                     ChatUtils.sendPrefixMessage("Target set to §7" + targetPos.toShortString());
@@ -119,13 +119,13 @@ public class MouseTaper extends ListenerModule {
         if (shouldLockCursor.getVal()) {
             system.cameraRotator.lockCursor();
         }
-        if (!(mc.crosshairTarget instanceof BlockHitResult hit)) {
+        if (!(mc.hitResult instanceof BlockHitResult hit)) {
             this.unpressAll();
             return;
         }
 
         Mode mode = this.mode.getVal();
-        World w = PlayerUtils.getWorld();
+        Level w = PlayerUtils.getWorld();
 
         // checks (skip if fail)
         if ((mode == Mode.One_Pos && targetPos == null) || (mode == Mode.One_Type && targetType == null)) {
@@ -151,7 +151,7 @@ public class MouseTaper extends ListenerModule {
         }
 
         // finally, do this
-        if (!mc.options.attackKey.isPressed()) {
+        if (!mc.options.keyAttack.isDown()) {
             this.press();
         }
     }
@@ -171,13 +171,13 @@ public class MouseTaper extends ListenerModule {
     }
 
     public void unpressAll() {
-        mc.options.attackKey.setPressed(false);
-        mc.options.useKey.setPressed(false);
+        mc.options.keyAttack.setDown(false);
+        mc.options.keyUse.setDown(false);
     }
 
     public void press() {
-        KeyBinding bind = button.getVal() == Button.Left ? mc.options.attackKey : mc.options.useKey;
-        bind.setPressed(true);
+        KeyMapping bind = button.getVal() == Button.Left ? mc.options.keyAttack : mc.options.keyUse;
+        bind.setDown(true);
     }
 
     public enum Button {

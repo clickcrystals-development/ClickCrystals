@@ -122,40 +122,40 @@ public final class HotbarUtils implements Global {
     }
 
     public static boolean isHolding(Item item) {
-        return isHolding(item, InteractionHand.MAIN_HAND);
+        return isHolding(item,InteractionHand.MAIN_HAND);
     }
 
     public static ItemStack getHand() {
         return getHand(InteractionHand.MAIN_HAND);
     }
 
-    public static ItemStack getHand(InteractionHand InteractionHand) {
+    public static ItemStack getHand(InteractionHand hand) {
         if (PlayerUtils.invalid()) {
             return ItemStack.EMPTY;
         }
 
-        ItemStack item = PlayerUtils.player().getItemInHand(InteractionHand);
-        return item;
+        ItemStack item = PlayerUtils.player().getItemInHand(hand);
+        return item != null ? item : ItemStack.EMPTY;
     }
 
-    public static boolean isHolding(Item item, InteractionHand InteractionHand) {
+    public static boolean isHolding(Item item, InteractionHand hand) {
         if (PlayerUtils.invalid()) {
             return false;
         }
-        return PlayerUtils.player().getItemInHand(InteractionHand).is(item);
+        return PlayerUtils.player().getItemInHand(hand).is(item);
     }
 
     public static boolean nameContains(String contains) {
         return nameContains(contains,InteractionHand.MAIN_HAND);
     }
 
-    public static boolean nameContains(String contains, InteractionHand InteractionHand) {
+    public static boolean nameContains(String contains, InteractionHand hand) {
         if (PlayerUtils.invalid()) {
             return false;
         }
 
-        ItemStack item = PlayerUtils.player().getItemInHand(InteractionHand);
-        return item.getItem().getDescriptionId().toLowerCase().contains(contains.toLowerCase());
+        ItemStack item = PlayerUtils.player().getItemInHand(hand);
+        return item != null && item.getItem().getDescriptionId().toLowerCase().contains(contains.toLowerCase());
     }
 
     public static void forEachItem(Consumer<ItemStack> run) {
@@ -178,6 +178,7 @@ public final class HotbarUtils implements Global {
 
         for (int i = 0; i < 9; i ++) {
             ItemStack item = PlayerUtils.player().getInventory().getItem(i);
+            if (item == null) continue;
             if (item.isEmpty()) continue;
             run.accept(i,item);
         }
@@ -198,8 +199,8 @@ public final class HotbarUtils implements Global {
         }
 
         ServerboundPlayerActionPacket.Action action = ServerboundPlayerActionPacket.Action.SWAP_ITEM_WITH_OFFHAND;
-        ServerboundPlayerActionPacket swap = new ServerboundPlayerActionPacket(action, PlayerUtils.player().getOnPos(), Direction.UP);
-        PlayerUtils.sendPacket(swap);
+        ServerboundPlayerActionPacket swap = new ServerboundPlayerActionPacket(action, PlayerUtils.player().blockPosition(), Direction.UP);
+        PlayerUtils.player().connection.send(swap);
     }
 
     public static double getFullHealthRatio() {
@@ -219,7 +220,7 @@ public final class HotbarUtils implements Global {
         ItemStack main = PlayerUtils.player().getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack off = PlayerUtils.player().getItemInHand(InteractionHand.OFF_HAND);
 
-        return main.getItem() == item || off.getItem() == item;
+        return (main != null && main.getItem() == item) || (off != null && off.getItem() == item);
     }
 
     public static boolean isHoldingEitherHand(Predicate<ItemStack> item) {

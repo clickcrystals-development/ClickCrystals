@@ -13,8 +13,8 @@ import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 @ModrinthNoNo
 public class ElytraSwitch extends DummyModule implements Listener, Global {
@@ -64,7 +64,7 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
         if (PlayerUtils.invalid())
             return;
 
-        boolean bl = PlayerUtils.player().isGliding();
+        boolean bl = PlayerUtils.player().isFallFlying();
         if (bl && !fallFlying && !onGlide) {
             fallFlying = true;
             onDeparture();
@@ -82,7 +82,7 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
      **/
     public void onGlide() {
         onGlide = false;
-        if (PlayerUtils.invalid() || !infiniteDurability.getVal() || !PlayerUtils.player().isGliding() || PlayerUtils.player().isSwimming())
+        if (PlayerUtils.invalid() || !infiniteDurability.getVal() || !PlayerUtils.player().isFallFlying() || PlayerUtils.player().isSwimming())
             return;
         onGlide = true;
         if (InvUtils.isWearing(Items.ELYTRA)) {
@@ -118,6 +118,6 @@ public class ElytraSwitch extends DummyModule implements Listener, Global {
     }
 
     public boolean isChestplate(ItemStack stack) {
-        return stack.getItem().getTranslationKey().toLowerCase().contains("chestplate");
+        return stack.getItem().getDescriptionId().toLowerCase().contains("chestplate");
     }
 }

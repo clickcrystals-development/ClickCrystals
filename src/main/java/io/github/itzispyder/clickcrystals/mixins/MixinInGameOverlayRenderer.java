@@ -2,16 +2,16 @@ package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.TotemPopScale;
-import net.minecraft.client.gui.hud.InGameOverlayRenderer;
+import net.minecraft.client.renderer.ScreenEffectRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-@Mixin(InGameOverlayRenderer.class)
+@Mixin(ScreenEffectRenderer.class)
 public class MixinInGameOverlayRenderer {
 
-    @ModifyArgs(method = "renderFloatingItem", at = @At(target = "Lnet/minecraft/client/util/math/MatrixStack;scale(FFF)V", value = "INVOKE"))
+    @ModifyArgs(method = "renderItemActivationAnimation", at = @At(target = "Lcom/mojang/blaze3d/vertex/PoseStack;scale(FFF)V", value = "INVOKE"))
     public void renderFloatingItemScaled(Args args) {
         if (!Module.isEnabled(TotemPopScale.class)) {
             return;
@@ -24,7 +24,7 @@ public class MixinInGameOverlayRenderer {
         args.set(2, (float)args.get(2) * f);
     }
 
-    @ModifyArgs(method = "renderFloatingItem", at = @At(target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V", value = "INVOKE"))
+    @ModifyArgs(method = "renderItemActivationAnimation", at = @At(target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V", value = "INVOKE"))
     public void renderFloatingItemTranslated(Args args) {
         if (!Module.isEnabled(TotemPopScale.class)) {
             return;

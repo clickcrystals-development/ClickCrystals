@@ -16,10 +16,10 @@ public interface AccessorMinecraftClient {
     @Invoker("setScreen")
     void invokeSetScreen(Screen screen);
 
-    @Invoker("doAttack")
+    @Invoker("startAttack")
     @SuppressWarnings("all")
     boolean inputAttack();
 
-    @Invoker("doItemUse")
+    @Invoker("startUseItem")
     void inputUse();
 }

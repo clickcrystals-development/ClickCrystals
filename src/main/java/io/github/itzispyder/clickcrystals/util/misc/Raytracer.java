@@ -1,13 +1,13 @@
 package io.github.itzispyder.clickcrystals.util.misc;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 public class Raytracer {
 
-    public static Pair<BlockPos, BlockState> trace(World world, Vec3 start, Vec3 dir, double dist, HitCondition predicate) {
+    public static Pair<BlockPos, BlockState> trace(Level world, Vec3 start, Vec3 dir, double dist, HitCondition predicate) {
         BlockPos prev = null;
         for (double curDist = 0.0; curDist <= dist; curDist += 0.5) {
             Vec3 point = start.add(dir.x * curDist, dir.y * curDist, dir.z * curDist);

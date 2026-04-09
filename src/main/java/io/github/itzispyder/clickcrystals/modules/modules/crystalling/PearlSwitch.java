@@ -11,9 +11,9 @@ import io.github.itzispyder.clickcrystals.modules.modules.anchoring.ShieldSwitch
 import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
-import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
-import net.minecraft.util.Hand;
+import net.minecraft.network.protocol.game.ServerboundUseItemPacket;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.Items;
 
 @ModrinthNoNo
 public class PearlSwitch extends Module implements Listener {
@@ -50,7 +50,7 @@ public class PearlSwitch extends Module implements Listener {
 
     @EventHandler
     private void onRightClick(PacketSendEvent e) {
-        if (e.getPacket() instanceof PlayerInteractItemC2SPacket) {
+        if (e.getPacket() instanceof ServerboundUseItemPacket) {
             final Module shieldSwitch = Module.get(ShieldSwitch.class);
 
             if (shieldSwitch != null && shieldSwitch.isEnabled()) return;
@@ -65,7 +65,7 @@ public class PearlSwitch extends Module implements Listener {
 
                 e.setCancelled(true);
                 HotbarUtils.search(Items.ENDER_PEARL);
-                mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
+                mc.gameMode.useItem(mc.player, InteractionHand.MAIN_HAND);
             }
         }
     }

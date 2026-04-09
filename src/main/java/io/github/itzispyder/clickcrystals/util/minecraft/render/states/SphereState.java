@@ -1,8 +1,8 @@
 package io.github.itzispyder.clickcrystals.util.minecraft.render.states;
 
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.entityindicators.EntityIndicatorSimulation;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.ScreenRect;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.navigation.ScreenRectangle;
 import org.joml.Matrix3x2fStack;
 import org.joml.Quaternionf;
 
@@ -12,11 +12,11 @@ public class SphereState {
     public Quaternionf rotation;
     public float x, y, radius, focalLen;
     public int deltaTheta, color;
-    public ScreenRect bounds, scissor;
+    public ScreenRectangle bounds, scissor;
     public EntityIndicatorSimulation simulation;
 
-    public SphereState(DrawContext context, Quaternionf rotation, float x, float y, float radius, float focalLen, int deltaTheta, int color, EntityIndicatorSimulation simulation) {
-        this.pose = context.getMatrices();
+    public SphereState(GuiGraphics context, Quaternionf rotation, float x, float y, float radius, float focalLen, int deltaTheta, int color, EntityIndicatorSimulation simulation) {
+        this.pose = context.pose();
         this.rotation = rotation;
         this.x = x;
         this.y = y;
@@ -24,9 +24,9 @@ public class SphereState {
         this.focalLen = focalLen;
         this.deltaTheta = deltaTheta;
         this.color = color;
-        this.scissor = context.scissorStack.peekLast();
+        this.scissor = context.scissorStack.peek();
 
-        ScreenRect bounds = new ScreenRect((int)(x - radius), (int)(y - radius), (int)(radius * 2), (int)(radius * 2)).transformEachVertex(pose);
+        ScreenRectangle bounds = new ScreenRectangle((int)(x - radius), (int)(y - radius), (int)(radius * 2), (int)(radius * 2)).transformMaxBounds(pose);
         this.bounds = scissor == null ? bounds : scissor.intersection(bounds);
 
         this.simulation = simulation;
