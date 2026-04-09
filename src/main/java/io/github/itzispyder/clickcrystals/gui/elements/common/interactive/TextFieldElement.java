@@ -47,7 +47,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
     }
 
     @Override
-    public void onChar(char chr, int modifiers) {
+    public void onChar(char chr) {
         if (Character.isISOControl(chr)) {
             return;
         }

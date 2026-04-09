@@ -2,11 +2,11 @@ package io.github.itzispyder.clickcrystals.mixininterfaces;
 
 public interface AccessorMouse {
 
-    void leftClick();
+    void clickCrystals$leftClick();
 
-    void rightClick();
+    void clickCrystals$rightClick();
 
-    void middleClick();
+    void clickCrystals$middleClick();
 
-    void scroll(double amount);
+    void clickCrystals$scroll(double amount);
 }

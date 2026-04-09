@@ -152,23 +152,23 @@ public final class InteractionUtils implements Global {
     }
 
     public static void leftClick() {
-        ((AccessorMouse) mc.mouseHandler).leftClick();
+        ((AccessorMouse) mc.mouseHandler).clickCrystals$leftClick();
     }
 
     public static void rightClick() {
-        ((AccessorMouse) mc.mouseHandler).rightClick();
+        ((AccessorMouse) mc.mouseHandler).clickCrystals$rightClick();
     }
 
     public static void middleClick() {
-        ((AccessorMouse) mc.mouseHandler).middleClick();
+        ((AccessorMouse) mc.mouseHandler).clickCrystals$middleClick();
     }
 
     public static void mouseScroll(double amount) {
-        ((AccessorMouse) mc.mouseHandler).scroll(amount);
+        ((AccessorMouse) mc.mouseHandler).clickCrystals$scroll(amount);
     }
 
     public static void pressKey(int key, int scan) {
-        ((AccessorKeyboard) mc.keyboardHandler).pressKey(key, scan);
+        ((AccessorKeyboard) mc.keyboardHandler).clickCrystals$pressKey(key, scan);
     }
 
     public static void pressKeyExtendedName(String name) {

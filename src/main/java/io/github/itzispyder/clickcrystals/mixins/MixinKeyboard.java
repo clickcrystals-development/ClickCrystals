@@ -29,7 +29,7 @@ public abstract class MixinKeyboard implements Global, AccessorKeyboard {
     }
 
     @Override
-    public void pressKey(int key, int scan) {
+    public void clickCrystals$pressKey(int key, int scan) {
         keyPress(mc.getWindow().handle(), 1, new KeyEvent(key, scan, 0));
         system.scheduler.runDelayedTask(() -> mc.execute(() -> {
             keyPress(mc.getWindow().handle(), 0, new KeyEvent(key, scan, 0));

@@ -165,6 +165,6 @@ public class TickEventListener implements Listener, Global {
         }
 
         for (int heldKey: heldKeys)
-            ((AccessorKeyboard) mc.keyboardHandler).pressKey(heldKey, 42);
+            ((AccessorKeyboard) mc.keyboardHandler).clickCrystals$pressKey(heldKey, 42);
     }
 }

@@ -156,7 +156,7 @@ public abstract class GuiScreen extends Screen implements Global {
     @Override
     public boolean charTyped(CharacterEvent input) {
         if (selected instanceof Typeable typeable) {
-            typeable.onChar((char)input.codepoint(), input.modifiers());
+            typeable.onChar((char)input.codepoint());
             return true;
         }
         return super.charTyped(input);
