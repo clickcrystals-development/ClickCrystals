@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public class HealthAsBar extends Module {
 
@@ -33,11 +33,11 @@ public class HealthAsBar extends Module {
 
     }
 
-    public void renderHealthBar(GuiGraphics context, int x, int y, float maxHealth, int lastHealth, int health, int absorption) {
+    public void renderHealthBar(GuiGraphicsExtractor context, int x, int y, float maxHealth, int lastHealth, int health, int absorption) {
         render(context, x, y, maxHealth, lastHealth, health, absorption, showValueText.getVal());
     }
 
-    public static void render(GuiGraphics context, int x, int y, float maxHealth, int lastHealth, int health, int absorption, boolean showValue) {
+    public static void render(GuiGraphicsExtractor context, int x, int y, float maxHealth, int lastHealth, int health, int absorption, boolean showValue) {
         int height = 8;
         int width = height * 10;
 

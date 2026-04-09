@@ -13,7 +13,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.input.MouseButtonEvent;
 
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class OverviewScreen extends GuiScreen {
     }
 
     @Override
-    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         renderOpaqueBackground(context);
 
         RenderUtils.fillRect(context, 0, 0, RenderUtils.width(), 20, 0x90000000);

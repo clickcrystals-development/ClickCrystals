@@ -9,7 +9,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;
@@ -32,12 +32,12 @@ public class BanScreen extends GuiScreen {
     }
 
     @Override
-    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         if (PlayerUtils.invalid()) {
-            this.renderPanorama(context, delta);
+            this.extractPanorama(context, delta);
         }
-        this.renderBlurredBackground(context);
-        this.renderMenuBackground(context);
+        this.extractBlurredBackground(context);
+        this.extractMenuBackground(context);
         //RenderUtils.fillGradient(context, 0, 0, windowWidth, windowHeight, 0xA0000000, 0xA0FF4538);
 
         int cX = baseX + baseWidth / 2;
@@ -57,7 +57,7 @@ public class BanScreen extends GuiScreen {
         text = StringUtils.color("&cReason:\n&7%s".formatted(ses.isPresent() ? ses.get().reason() : "Unspecified reason."));
         var lines = mc.font.split(FormattedText.of(text), baseWidth);
         for (FormattedCharSequence line : lines) {
-            context.drawCenteredString(mc.font, line, cX, cY, 0xFFFFFFFF);
+            context.centeredText(mc.font, line, cX, cY, 0xFFFFFFFF);
             cY += 10;
         }
 

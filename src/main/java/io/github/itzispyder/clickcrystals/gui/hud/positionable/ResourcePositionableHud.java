@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -16,7 +16,7 @@ public class ResourcePositionableHud extends Hud {
     }
 
     @Override
-    public void render(GuiGraphics context, float tickDelta) {
+    public void render(GuiGraphicsExtractor context, float tickDelta) {
         renderBackdrop(context);
 
         int y = getY();
@@ -39,7 +39,7 @@ public class ResourcePositionableHud extends Hud {
         setHeight(caret - y);
     }
 
-    private void drawItem(GuiGraphics context, Item item, int x, int y) {
+    private void drawItem(GuiGraphicsExtractor context, Item item, int x, int y) {
         RenderUtils.drawItem(context, item.getDefaultInstance(), x, y, 1.0F, InvUtils.count(item) + "");
     }
 

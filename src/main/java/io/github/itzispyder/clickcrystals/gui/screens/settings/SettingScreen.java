@@ -12,7 +12,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScree
 import io.github.itzispyder.clickcrystals.gui.screens.profiles.ProfilesScreen;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
 
@@ -44,7 +44,7 @@ public class SettingScreen extends DefaultBase {
     }
 
     @Override
-    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         // default base
         this.renderDefaultBase(context);
 
@@ -85,7 +85,7 @@ public class SettingScreen extends DefaultBase {
         }
 
         @Override
-        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY) && check.getAsBoolean()) {
                 RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
             }

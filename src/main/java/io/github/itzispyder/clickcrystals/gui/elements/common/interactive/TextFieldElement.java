@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;
@@ -56,7 +56,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
     }
 
     @Override
-    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         context.pose().pushMatrix();
         context.enableScissor(x, y, x + width, y + height);
 
@@ -82,7 +82,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
             if (selectedAll) {
                 RenderUtils.fillRect(context, x + 20, caret - 1, mc.font.width(line), 9, 0xA07E75FF);
             }
-            context.drawString(mc.font, line, x + 20, caret, textColor.getHex(), false);
+            context.text(mc.font, line, x + 20, caret, textColor.getHex(), false);
         }
 
         if (selectionBlinking) {

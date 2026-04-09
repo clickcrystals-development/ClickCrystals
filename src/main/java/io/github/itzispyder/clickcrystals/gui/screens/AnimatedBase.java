@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animations;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public abstract class AnimatedBase extends GuiScreen {
 
@@ -19,7 +19,7 @@ public abstract class AnimatedBase extends GuiScreen {
     }
 
     @Override
-    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         boolean canAnimate = open ? canPlayOpenAnimation() : canPlayCloseAnimation();
         float scale = (float) animator.getAnimation();
 
@@ -33,7 +33,7 @@ public abstract class AnimatedBase extends GuiScreen {
             context.pose().scaleAround(scale, x, y);
         }
 
-        super.render(context, mouseX, mouseY, delta);
+        super.extractRenderState(context, mouseX, mouseY, delta);
 
         if (canAnimate)
             context.pose().popMatrix();

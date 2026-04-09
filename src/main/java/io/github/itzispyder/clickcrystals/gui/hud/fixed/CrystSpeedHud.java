@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.CrystPerSec;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.Items;
 
 public class CrystSpeedHud extends Hud {
@@ -17,7 +17,7 @@ public class CrystSpeedHud extends Hud {
     }
 
     @Override
-    public void render(GuiGraphics context, float tickDelta) {
+    public void render(GuiGraphicsExtractor context, float tickDelta) {
         Module cpsHud = Module.get(CrystPerSec.class);
         if (!cpsHud.isEnabled()) return;
         String text = "§f" + CrystPerSec.getCrystalPerSecond() + " §7c/s";

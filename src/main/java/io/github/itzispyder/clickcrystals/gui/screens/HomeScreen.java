@@ -13,7 +13,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import org.lwjgl.glfw.GLFW;
@@ -68,7 +68,7 @@ public class HomeScreen extends AnimatedBase {
     }
 
     @Override
-    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         renderOpaqueBackground(context);
 
         // title card
@@ -100,7 +100,7 @@ public class HomeScreen extends AnimatedBase {
         searchBar.y = caret - titleTrans;
     }
 
-    public void renderMotd(GuiGraphics context) {
+    public void renderMotd(GuiGraphicsExtractor context) {
         List<String> lines = TextUtils.wordWrap(ClickCrystals.info.getMotd(), 300 - 5 - 5, 0.9F);
         int i = 3;
         int x = baseX + baseWidth / 2 - 150;

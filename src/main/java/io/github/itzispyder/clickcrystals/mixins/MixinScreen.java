@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.ScreenInitEvent;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.NoGuiBackground;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,15 +21,15 @@ public abstract class MixinScreen implements Global {
         system.eventBus.pass(event);
     }
 
-    @Inject(method = "renderTransparentBackground", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "extractTransparentBackground", at = @At("HEAD"), cancellable = true)
     private void renderInGameBackground(CallbackInfo info) {
         NoGuiBackground gui = Module.get(NoGuiBackground.class);
         if (gui.isEnabled() && gui.noOverlay.getVal()) {
             info.cancel();
         }
     }
-    @Inject(at = @At("HEAD"), method = "renderBackground(Lnet/minecraft/client/gui/GuiGraphics;IIF)V", cancellable = true)
-    public void onRenderBackground(GuiGraphics context, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
+    @Inject(at = @At("HEAD"), method = "extractBackground", cancellable = true)
+    public void onRenderBackground(GuiGraphicsExtractor context, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         NoGuiBackground gui = Module.get(NoGuiBackground.class);
         if (gui.isEnabled() && mc.level != null) {
             ci.cancel();

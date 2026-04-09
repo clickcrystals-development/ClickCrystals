@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorders;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public class ScrollPanelElement extends GuiElement {
 
@@ -96,12 +96,12 @@ public class ScrollPanelElement extends GuiElement {
     }
 
     @Override
-    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
 
     }
 
     @Override
-    public void render(GuiGraphics context, int mouseX, int mouseY) {
+    public void render(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         boolean bl = canRender();
 
         float interpolatedDelta = (float)(interpolationLength * interpolation.getProgressClampedReversed());
@@ -125,7 +125,7 @@ public class ScrollPanelElement extends GuiElement {
     }
 
     @Override
-    public void postRender(GuiGraphics context, int mouseX, int mouseY) {
+    public void postRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         if (!canScroll() || !canRender())
             return;
 

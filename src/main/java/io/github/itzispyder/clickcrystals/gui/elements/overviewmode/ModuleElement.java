@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScree
 import io.github.itzispyder.clickcrystals.modrinth.ModrinthSupport;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public class ModuleElement extends GuiElement {
 
@@ -26,7 +26,7 @@ public class ModuleElement extends GuiElement {
     }
 
     @Override
-    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         int color = Shades.TRANS_DARK_GRAY;
 
         if (module.isEnabled()) {

@@ -10,7 +10,7 @@ import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.network.HashedStack;
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
 import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
@@ -60,12 +60,12 @@ public class ChestSorter extends ListenerModule {
     }
 
     private void swapSlots(ChestMenu handler, Slot slot1, Slot slot2) {
-        sendSlotPacket(handler, slot1, 40, ClickType.SWAP);
-        sendSlotPacket(handler, slot2, 40, ClickType.SWAP);
-        sendSlotPacket(handler, slot1, 40, ClickType.SWAP);
+        sendSlotPacket(handler, slot1, 40, ContainerInput.SWAP);
+        sendSlotPacket(handler, slot2, 40, ContainerInput.SWAP);
+        sendSlotPacket(handler, slot1, 40, ContainerInput.SWAP);
     }
 
-    private void sendSlotPacket(ChestMenu handler, Slot slot, int button, ClickType action) {
+    private void sendSlotPacket(ChestMenu handler, Slot slot, int button, ContainerInput action) {
         ItemStack stack = slot.getItem();
         HashedStack hash = HashedStack.create(stack, component -> slot.index);
 

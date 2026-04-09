@@ -19,7 +19,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
@@ -63,7 +63,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
     }
 
     @Override
-    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         // default base
         this.renderDefaultBase(context);
 
@@ -179,7 +179,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         }
 
         @Override
-        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             Animator animator = this.getAnimator();
             boolean isAnimating = animator != null && !animator.isFinished();
             if (isAnimating) {
@@ -218,7 +218,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         }
 
         @Override
-        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
                 RenderUtils.fillRect(context, x, y, width, height, 0x6000B7FF);
             }
@@ -241,7 +241,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         }
 
         @Override
-        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
                 RenderUtils.fillRect(context, x, y, width, height, 0x6000B7FF);
             }
@@ -263,7 +263,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         }
 
         @Override
-        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             String text = "§7To manually reload scripts, execute chat command §f%sreload".formatted(ClickCrystals.commandPrefix.getKeyName());
             RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
         }
@@ -378,7 +378,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         }
 
         @Override
-        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
                 RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
             }

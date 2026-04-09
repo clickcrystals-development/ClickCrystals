@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import static io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils.*;
 
@@ -73,7 +73,7 @@ public class DiscordInviteScreen extends GuiScreen {
     }
 
     @Override
-    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         renderOpaqueBackground(context);
         drawRoundTexture(context, Tex.Backdrops.BACKDROP_INV, baseX, baseY, baseWidth, baseHeight, 10);
         RenderUtils.fillRoundShadow(context, baseX, baseY, baseWidth, baseHeight, 35, 1, 0xFFE860FC, 0xFFE860FC);

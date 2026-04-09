@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LoadingOverlay;
 import net.minecraft.util.Mth;
 import org.joml.Matrix3x2fStack;
@@ -22,7 +22,7 @@ public abstract class MixinSplashOverlay implements Global {
 
     @Shadow private float currentProgress;
 
-    @ModifyArgs(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;fill(IIIII)V"))
+    @ModifyArgs(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;fill(IIIII)V"))
     public void renderLoading(Args args) {
         if (ClickCrystals.config.isDisableCustomLoading())
             return;
@@ -47,8 +47,8 @@ public abstract class MixinSplashOverlay implements Global {
 //        args.set(3, a);
 //    }
 
-    @Inject(method = "drawProgressBar", at = @At("TAIL"))
-    public void renderProgressBar(GuiGraphics context, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
+    @Inject(method = "extractProgressBar", at = @At("TAIL"))
+    public void renderProgressBar(GuiGraphicsExtractor context, int minX, int minY, int maxX, int maxY, float opacity, CallbackInfo ci) {
         if (ClickCrystals.config.isDisableCustomLoading())
             return;
 

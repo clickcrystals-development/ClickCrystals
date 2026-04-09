@@ -3,7 +3,7 @@ package io.github.itzispyder.clickcrystals.gui.hud;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public abstract class TextHud extends Hud {
 
@@ -14,7 +14,7 @@ public abstract class TextHud extends Hud {
     public abstract String getText();
 
     @Override
-    public void render(GuiGraphics context, float tickDelta) {
+    public void render(GuiGraphicsExtractor context, float tickDelta) {
         renderBackdrop(context);
 
         String text = getText();

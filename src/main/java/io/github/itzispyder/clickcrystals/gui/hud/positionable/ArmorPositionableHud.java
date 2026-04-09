@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHu
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.item.ItemStack;
 
@@ -17,7 +17,7 @@ public class ArmorPositionableHud extends Hud {
     }
 
     @Override
-    public void render(GuiGraphics context, float tickDelta) {
+    public void render(GuiGraphicsExtractor context, float tickDelta) {
         if (PlayerUtils.player() != null) {
             renderBackdrop(context);
 
@@ -28,7 +28,7 @@ public class ArmorPositionableHud extends Hud {
         }
     }
 
-    private void onRender(GuiGraphics context, int x, int y) {
+    private void onRender(GuiGraphicsExtractor context, int x, int y) {
         if (PlayerUtils.invalid()) return;
 
         LocalPlayer player = PlayerUtils.player();

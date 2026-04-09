@@ -11,7 +11,7 @@ import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,12 +103,12 @@ public abstract class DefaultBase extends AnimatedBase {
     }
 
     @Override
-    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
-        super.render(context, mouseX, mouseY, delta);
+    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
+        super.extractRenderState(context, mouseX, mouseY, delta);
         this.renderAnnouncementPing(context);
     }
 
-    public void renderDefaultBase(GuiGraphics context) {
+    public void renderDefaultBase(GuiGraphicsExtractor context) {
         renderOpaqueBackground(context);
 
         context.pose().pushMatrix();
@@ -171,7 +171,7 @@ public abstract class DefaultBase extends AnimatedBase {
         context.pose().popMatrix();
     }
 
-    private void renderAnnouncementPing(GuiGraphics context) {
+    private void renderAnnouncementPing(GuiGraphicsExtractor context) {
         if (this instanceof SearchScreen) // looks ugly with search
             return;
         if (unreadAnnouncementsCount <= 0)

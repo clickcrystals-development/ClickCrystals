@@ -31,9 +31,8 @@ public class InteractCmd extends ScriptCommand implements ThenChainable {
 
     @Override
     public void onCommand(ScriptCommand command, String line, ScriptArgs args) {
-        if (mc.gameMode == null) {
+        if (mc.gameMode == null || mc.player == null)
             return;
-        }
 
         var read = args.getReader();
 
@@ -45,8 +44,7 @@ public class InteractCmd extends ScriptCommand implements ThenChainable {
                         return; // Skip interacting with teammates
                     }
                     EntityHitResult hitResult = new EntityHitResult(entity, entity.getBoundingBox().getCenter());
-                    mc.gameMode.interactAt(mc.player, entity, hitResult, InteractionHand.MAIN_HAND);
-                    mc.gameMode.interact(mc.player, entity, InteractionHand.MAIN_HAND);
+                    mc.gameMode.interact(mc.player, entity, hitResult, InteractionHand.MAIN_HAND);
                 });
                 read.executeThenChain();
             }
@@ -56,8 +54,7 @@ public class InteractCmd extends ScriptCommand implements ThenChainable {
                         return; // Skip interacting with teammates
                     }
                     EntityHitResult hitResult = new EntityHitResult(entity, entity.getBoundingBox().getCenter());
-                    mc.gameMode.interactAt(mc.player, entity, hitResult, InteractionHand.MAIN_HAND);
-                    mc.gameMode.interact(mc.player, entity, InteractionHand.MAIN_HAND);
+                    mc.gameMode.interact(mc.player, entity, hitResult, InteractionHand.MAIN_HAND);
                 });
                 read.executeThenChain();
             }

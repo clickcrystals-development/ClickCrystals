@@ -4,10 +4,10 @@ import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
-import net.minecraft.client.gui.render.state.GuiElementRenderState;
+import net.minecraft.client.renderer.state.gui.GuiElementRenderState;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix3x2f;
@@ -54,15 +54,15 @@ public class ClickCrystalsRoundRectWireframeState implements GuiElementRenderSta
                 ));
     }
 
-    public ClickCrystalsRoundRectWireframeState(GuiGraphics context, float x, float y, float w, float h, float r, float thickness, int colorInner1, int colorOuter1, int colorInner2, int colorOuter2, int colorInner3, int colorOuter3, int colorInner4, int colorOuter4) {
+    public ClickCrystalsRoundRectWireframeState(GuiGraphicsExtractor context, float x, float y, float w, float h, float r, float thickness, int colorInner1, int colorOuter1, int colorInner2, int colorOuter2, int colorInner3, int colorOuter3, int colorInner4, int colorOuter4) {
         this(new Matrix3x2f(context.pose()), x, y, w, h, r, thickness, colorInner1, colorOuter1, colorInner2, colorOuter2, colorInner3, colorOuter3, colorInner4, colorOuter4, context.scissorStack.peek());
     }
 
-    public ClickCrystalsRoundRectWireframeState(GuiGraphics context, float x, float y, float w, float h, float r, float thickness, int colorInner, int colorOuter) {
+    public ClickCrystalsRoundRectWireframeState(GuiGraphicsExtractor context, float x, float y, float w, float h, float r, float thickness, int colorInner, int colorOuter) {
         this(new Matrix3x2f(context.pose()), x, y, w, h, r, thickness, colorInner, colorOuter, colorInner, colorOuter, colorInner, colorOuter, colorInner, colorOuter, context.scissorStack.peek());
     }
 
-    public ClickCrystalsRoundRectWireframeState(GuiGraphics context, float x, float y, float w, float h, float r, float thickness, int color) {
+    public ClickCrystalsRoundRectWireframeState(GuiGraphicsExtractor context, float x, float y, float w, float h, float r, float thickness, int color) {
         this(context, x, y, w, h, r, thickness, color, color);
     }
 

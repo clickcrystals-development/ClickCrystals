@@ -10,7 +10,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorde
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
@@ -58,7 +58,7 @@ public abstract class GuiScreen extends Screen implements Global {
         return mc.screen != null && mc.screen.getClass() == type;
     }
 
-    public abstract void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta);
+    public abstract void baseRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta);
 
     @Override
     public void tick() {
@@ -68,7 +68,7 @@ public abstract class GuiScreen extends Screen implements Global {
     }
 
     @Override
-    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         if (selected != null && selected.isDraggable()) {
             int dx = mouseX - cursor.left;
             int dy = mouseY - cursor.right;
@@ -77,7 +77,7 @@ public abstract class GuiScreen extends Screen implements Global {
             this.cursor = Pair.of(mouseX, mouseY);
         }
 
-        super.render(context, mouseX, mouseY, delta);
+        super.extractRenderState(context, mouseX, mouseY, delta);
         this.baseRender(context, mouseX, mouseY, delta);
 
         try {
@@ -109,15 +109,15 @@ public abstract class GuiScreen extends Screen implements Global {
         }
     }
 
-    public void renderOpaqueBackground(GuiGraphics context) {
+    public void renderOpaqueBackground(GuiGraphicsExtractor context) {
         if (PlayerUtils.invalid()) {
-            renderPanorama(context,mc.getDeltaTracker().getGameTimeDeltaPartialTick(true));
+            extractPanorama(context,mc.getDeltaTracker().getGameTimeDeltaPartialTick(true));
             context.blit(RenderPipelines.GUI_TEXTURED, Tex.Defaults.OPTIONS_BACKGROUND, 0, 0, 0, 0.0F, 0, this.width, this.height, 32, 32);
         }
     }
 
     @Override
-    public void renderBackground(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 
     }
 
@@ -312,7 +312,7 @@ public abstract class GuiScreen extends Screen implements Global {
         children.remove(child);
     }
 
-    public void tagGuiElement(GuiGraphics context, int mouseX, int mouseY, GuiElement element) {
+    public void tagGuiElement(GuiGraphicsExtractor context, int mouseX, int mouseY, GuiElement element) {
         String name = element.getClass().getSimpleName();
         double textScale = 0.7;
         int width = mc.font.width(name) + 2;

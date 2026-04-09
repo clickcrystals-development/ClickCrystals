@@ -4,10 +4,10 @@ import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
-import net.minecraft.client.gui.render.state.GuiElementRenderState;
+import net.minecraft.client.renderer.state.gui.GuiElementRenderState;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix3x2f;
@@ -50,11 +50,11 @@ public class ClickCrystalsRoundRectState implements GuiElementRenderState {
                 ));
     }
 
-    public ClickCrystalsRoundRectState(GuiGraphics context, float x, float y, float w, float h, float r, int color1, int color2, int color3, int color4, int colorCenter) {
+    public ClickCrystalsRoundRectState(GuiGraphicsExtractor context, float x, float y, float w, float h, float r, int color1, int color2, int color3, int color4, int colorCenter) {
         this(new Matrix3x2f(context.pose()), x, y, w, h, r, color1, color2, color3, color4, colorCenter, context.scissorStack.peek());
     }
 
-    public ClickCrystalsRoundRectState(GuiGraphics context, float x, float y, float w, float h, float r, int color) {
+    public ClickCrystalsRoundRectState(GuiGraphicsExtractor context, float x, float y, float w, float h, float r, int color) {
         this(context, x, y, w, h, r, color, color, color, color, color);
     }
 

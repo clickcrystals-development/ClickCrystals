@@ -30,6 +30,6 @@ public class InvPackets extends ListenerModule {
                     &7actionType:&f %s
                     &7itemStack:&f %s
                     &7modifiedItems:&f %s
-                """.formatted(++sequence, packet.containerId(), packet.stateId(), packet.slotNum(), packet.buttonNum(), packet.clickType(), packet.carriedItem(), packet.changedSlots())));
+                """.formatted(++sequence, packet.containerId(), packet.stateId(), packet.slotNum(), packet.buttonNum(), packet.containerInput(), packet.carriedItem(), packet.changedSlots())));
     }
 }

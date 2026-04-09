@@ -21,6 +21,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.Level;
 
 import java.util.Arrays;
@@ -145,10 +146,11 @@ public class DebugCommand extends Command {
             Component text = Component.literal("      §7- " + pre + StringUtils.capitalizeWords(secs[secs.length - 1]));
             MutableComponent msg = text.copy();
             Style style = text.getStyle();
-            HoverEvent.ShowItem content = new HoverEvent.ShowItem(stack);
+            ItemStackTemplate template = new ItemStackTemplate(item, stack.getComponentsPatch());
+            HoverEvent.ShowItem content = new HoverEvent.ShowItem(template);
 
             msg.withStyle(style.withHoverEvent(content));
-            PlayerUtils.player().displayClientMessage(msg, false);
+            PlayerUtils.player().sendSystemMessage(msg);
         }
     }
 }

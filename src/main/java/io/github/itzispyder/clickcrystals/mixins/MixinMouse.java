@@ -48,7 +48,7 @@ public abstract class MixinMouse implements Global, AccessorMouse {
     }
 
     @Override
-    public void clickCrystals$leftClick() {
+    public void leftClick() {
         onButton(mc.getWindow().handle(), new MouseButtonInfo(0, 0), 1);
         system.scheduler.runDelayedTask(() -> mc.execute(() -> {
             onButton(mc.getWindow().handle(), new MouseButtonInfo(0, 0), 0);
@@ -72,7 +72,7 @@ public abstract class MixinMouse implements Global, AccessorMouse {
     }
 
     @Override
-    public void clickCrystals$scroll(double amount) {
+    public void scroll(double amount) {
         onScroll(mc.getWindow().handle(), 0, amount);
     }
 }

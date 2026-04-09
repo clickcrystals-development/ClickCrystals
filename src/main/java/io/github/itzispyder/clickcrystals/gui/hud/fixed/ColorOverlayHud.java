@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.TotemOverlay
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.Items;
 
 public class ColorOverlayHud extends Hud {
@@ -19,7 +19,7 @@ public class ColorOverlayHud extends Hud {
     }
 
     @Override
-    public void render(GuiGraphics context, float tickDelta) {
+    public void render(GuiGraphicsExtractor context, float tickDelta) {
         TotemOverlay totemOverlay = Module.get(TotemOverlay.class);
         Window win = mc.getWindow();
 
@@ -39,7 +39,7 @@ public class ColorOverlayHud extends Hud {
         }
     }
 
-    private void renderColor(GuiGraphics context, int color) {
+    private void renderColor(GuiGraphicsExtractor context, int color) {
         final Window win = mc.getWindow();
         context.fill(0, 0, win.getScreenWidth(), win.getScreenHeight(), color);
     }

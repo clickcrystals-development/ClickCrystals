@@ -20,7 +20,7 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.joml.Matrix3x2f;
 
 import java.io.File;
@@ -80,7 +80,7 @@ public class DownloadScriptScreen extends AnimatedBase {
     }
 
     @Override
-    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         renderOpaqueBackground(context);
 
         // backdrop
@@ -100,7 +100,7 @@ public class DownloadScriptScreen extends AnimatedBase {
         this.searchbar.y = caret;
     }
 
-    public void renderTitle(GuiGraphics context, int caret) {
+    public void renderTitle(GuiGraphicsExtractor context, int caret) {
         String titleText = "ClickCrystals Scripting Archive";
         int textW = mc.font.width(titleText) + 20;
         int textX = baseX + (baseWidth - textW) / 2;
@@ -168,7 +168,7 @@ public class DownloadScriptScreen extends AnimatedBase {
         }
 
         @Override
-        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             int fill = Color.WHITE.getHexCustomAlpha(0.5 * animator.getAnimation());
             RenderUtils.fillRoundRect(context, x, y, width, height, 3, fill);
             RenderUtils.drawCenteredText(context, name, x + width / 2, y + (height - 6) / 2, 0.9F, false);
@@ -355,7 +355,7 @@ public class DownloadScriptScreen extends AnimatedBase {
         }
 
         @Override
-        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             int caret = y;
             int margin = x;
             double hoverDelta = owned ? 0.0 : animator.getAnimation();
@@ -430,7 +430,7 @@ public class DownloadScriptScreen extends AnimatedBase {
 
         }
 
-        public void renderStatus(GuiGraphics context) {
+        public void renderStatus(GuiGraphicsExtractor context) {
             int caret = y + height - 15;
             int margin = x + width - 15;
             var tex = owned ? Tex.Icons.RESET : Tex.Icons.DOWNLOAD;

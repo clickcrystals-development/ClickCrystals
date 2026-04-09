@@ -11,8 +11,8 @@ import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.PlayerFaceRenderer;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.PlayerFaceExtractor;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -30,7 +30,7 @@ public class TargetPositionableHud extends Hud {
     }
 
     @Override
-    public void render(GuiGraphics context, float tickDelta) {
+    public void render(GuiGraphicsExtractor context, float tickDelta) {
         renderBackdrop(context);
 
         if (target != null && !target.isDeadOrDying() && timer > System.currentTimeMillis()) {
@@ -50,7 +50,7 @@ public class TargetPositionableHud extends Hud {
 
             // player head
             caret += g + 2;
-            PlayerFaceRenderer.draw(context, targetEntry.getSkin(), margin, caret, 15);
+            PlayerFaceExtractor.extractRenderState(context, targetEntry.getSkin(), margin, caret, 15);
 
             // player name (next to player head)
             // and player ping and distance
@@ -90,8 +90,8 @@ public class TargetPositionableHud extends Hud {
             int ty = (int) (y / scale + 5);
             context.pose().pushMatrix();
             context.pose().scale(scale);
-            context.renderItem(totem, tx, ty);
-            context.renderItemDecorations(mc.font, totem, tx, ty, pops);
+            context.item(totem, tx, ty);
+            context.itemDecorations(mc.font, totem, tx, ty, pops);
             context.pose().popMatrix();
 
             // end

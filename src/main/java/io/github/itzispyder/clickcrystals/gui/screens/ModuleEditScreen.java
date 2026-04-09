@@ -11,7 +11,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.crystalling.ClickCryst
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.input.MouseButtonEvent;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class ModuleEditScreen extends DefaultBase {
     }
 
     @Override
-    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         // default base
         this.renderDefaultBase(context);
 
@@ -85,7 +85,7 @@ public class ModuleEditScreen extends DefaultBase {
         return true;
     }
 
-    private void renderDescription(GuiGraphics context, int mouseX, int mouseY) {
+    private void renderDescription(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         List<String> lines = TextUtils.wordWrap(module.getDescription(), 250 - 2 - 2, 0.7F);
         int height = lines.size() * 8;
         int caret = mouseY - height + 1;

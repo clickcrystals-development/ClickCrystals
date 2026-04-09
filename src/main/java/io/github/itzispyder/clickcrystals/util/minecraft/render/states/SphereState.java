@@ -1,7 +1,7 @@
 package io.github.itzispyder.clickcrystals.util.minecraft.render.states;
 
 import io.github.itzispyder.clickcrystals.modules.modules.rendering.entityindicators.EntityIndicatorSimulation;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import org.joml.Matrix3x2fStack;
 import org.joml.Quaternionf;
@@ -15,7 +15,7 @@ public class SphereState {
     public ScreenRectangle bounds, scissor;
     public EntityIndicatorSimulation simulation;
 
-    public SphereState(GuiGraphics context, Quaternionf rotation, float x, float y, float radius, float focalLen, int deltaTheta, int color, EntityIndicatorSimulation simulation) {
+    public SphereState(GuiGraphicsExtractor context, Quaternionf rotation, float x, float y, float radius, float focalLen, int deltaTheta, int color, EntityIndicatorSimulation simulation) {
         this.pose = context.pose();
         this.rotation = rotation;
         this.x = x;

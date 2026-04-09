@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.PollingAnimator;
 import io.github.itzispyder.clickcrystals.util.minecraft.InteractionUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 
 import java.util.function.Function;
@@ -47,7 +47,7 @@ public class ButtonElement extends GuiElement {
     }
 
     @Override
-    public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+    public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         int color = Color.lerp(fillColor, hoverColor, animator.getAnimation());
         int clickColor = new Color(hoverColor).darker(2).getHex();
         RenderUtils.fillRoundRect(context, x, y, width, height, borderRadius, mouseDown ? clickColor : color);

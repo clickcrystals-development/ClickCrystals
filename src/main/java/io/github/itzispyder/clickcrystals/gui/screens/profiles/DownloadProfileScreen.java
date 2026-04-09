@@ -10,7 +10,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.AnimatedBase;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -82,7 +82,7 @@ public class DownloadProfileScreen extends AnimatedBase {
     }
 
     @Override
-    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         renderOpaqueBackground(context);
 
         context.pose().pushMatrix();
@@ -135,7 +135,7 @@ public class DownloadProfileScreen extends AnimatedBase {
         }
 
         @Override
-        public void onRender(GuiGraphics context, int mx, int my) {
+        public void onRender(GuiGraphicsExtractor context, int mx, int my) {
             int bg1 = Shades.TRANS_GRAY;
             int bg2 = Shades.TRANS_GENERIC_LOW;
             int bg3 = Shades.TRANS_GENERIC;

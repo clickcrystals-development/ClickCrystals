@@ -3,10 +3,10 @@ package io.github.itzispyder.clickcrystals.util.minecraft.render.states;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
-import net.minecraft.client.gui.render.state.GuiElementRenderState;
+import net.minecraft.client.renderer.state.gui.GuiElementRenderState;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix3x2f;
 
@@ -56,15 +56,15 @@ public class ClickCrystalsQuadState implements GuiElementRenderState {
                 ));
     }
 
-    public ClickCrystalsQuadState(GuiGraphics context, float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, int color1, int color2, int color3, int color4) {
+    public ClickCrystalsQuadState(GuiGraphicsExtractor context, float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, int color1, int color2, int color3, int color4) {
         this(new Matrix3x2f(context.pose()), x1, y1, x2, y2, x3, y3, x4, y4, color1, color2, color3, color4, context.scissorStack.peek());
     }
 
-    public ClickCrystalsQuadState(GuiGraphics context, float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, int color) {
+    public ClickCrystalsQuadState(GuiGraphicsExtractor context, float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, int color) {
         this(new Matrix3x2f(context.pose()), x1, y1, x2, y2, x3, y3, x4, y4, color, color, color, color, context.scissorStack.peek());
     }
 
-    public ClickCrystalsQuadState(GuiGraphics context, float x, float y, float w, float h, int color1, int color2, int color3, int color4) {
+    public ClickCrystalsQuadState(GuiGraphicsExtractor context, float x, float y, float w, float h, int color1, int color2, int color3, int color4) {
         this(context,
                 x, y,
                 x + w, y,
@@ -73,7 +73,7 @@ public class ClickCrystalsQuadState implements GuiElementRenderState {
                 color1, color2, color3, color4);
     }
 
-    public ClickCrystalsQuadState(GuiGraphics context, float x, float y, float w, float h, int color) {
+    public ClickCrystalsQuadState(GuiGraphicsExtractor context, float x, float y, float w, float h, int color) {
         this(context,
                 x, y,
                 x + w, y,

@@ -16,7 +16,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.lwjgl.glfw.GLFW;
@@ -121,7 +121,7 @@ public class GuiCursor extends Module implements Listener {
         if (e.getPacket() instanceof ServerboundContainerClickPacket packet) {
             ItemStack stack = InvUtils.inv().getItem(packet.slotNum());
             boolean clickedTotem = mc.screen instanceof InventoryScreen && stack.is(Items.TOTEM_OF_UNDYING) && totemShiftHolder.getVal();
-            boolean actionMatches = !shiftKeyDown && packet.clickType() == ClickType.PICKUP;
+            boolean actionMatches = !shiftKeyDown && packet.containerInput() == ContainerInput.PICKUP;
 
             if (clickedTotem && actionMatches) {
                 int slot = packet.slotNum();

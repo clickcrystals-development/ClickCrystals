@@ -11,7 +11,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.entityindica
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
 import org.joml.Quaternionf;
@@ -24,7 +24,7 @@ public class EntityIndicatorHud extends Hud {
     }
 
     @Override
-    public void render(GuiGraphics context, float tickDelta) {
+    public void render(GuiGraphicsExtractor context, float tickDelta) {
         EntityIndicator m = Module.get(EntityIndicator.class);
         if (!m.isEnabled() || PlayerUtils.invalid())
             return;
@@ -44,7 +44,7 @@ public class EntityIndicatorHud extends Hud {
             this.render3D(context, m, cx, cy, radius, tickDelta); // render 3d
     }
 
-    private void render3D(GuiGraphics context, EntityIndicator module, int cx, int cy, int radius, float tickDelta) {
+    private void render3D(GuiGraphicsExtractor context, EntityIndicator module, int cx, int cy, int radius, float tickDelta) {
         EntityIndicatorSimulationRenderer renderer = module.getSimulation().getRenderer();
         LocalPlayer client = PlayerUtils.player();
 
@@ -59,7 +59,7 @@ public class EntityIndicatorHud extends Hud {
         renderer.setFocalLen(100);
     }
 
-    private void render2D(GuiGraphics context, EntityIndicator module, int cx, int cy, int radius, Voidable<SimulationEntry> nearest) {
+    private void render2D(GuiGraphicsExtractor context, EntityIndicator module, int cx, int cy, int radius, Voidable<SimulationEntry> nearest) {
         int size = module.spriteSize.getVal();
 
         nearest.accept(display -> {

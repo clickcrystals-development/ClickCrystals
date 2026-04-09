@@ -8,7 +8,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.input.MouseButtonEvent;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class HudEditScreen extends GuiScreen {
     }
 
     @Override
-    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         RenderUtils.fillRect(context, 0, 0, this.width, this.height, 0x90000000);
 
         RenderUtils.drawHorLine(context, 0, context.guiHeight() / 2, context.guiWidth(), 0xFF8C8C8C);

@@ -12,7 +12,7 @@ public final class ChatUtils implements Global {
 
     public static void sendMessage(String message) {
         if (message != null && PlayerUtils.valid()) {
-            PlayerUtils.player().displayClientMessage(Component.literal(message),false);
+            PlayerUtils.player().sendSystemMessage(Component.literal(message));
         }
     }
 
@@ -26,7 +26,7 @@ public final class ChatUtils implements Global {
 
     public static void sendRawText(Component text) {
         if (PlayerUtils.valid() && text != null) {
-            PlayerUtils.player().displayClientMessage(text,false);
+            PlayerUtils.player().sendSystemMessage(text);
         }
     }
 
@@ -59,7 +59,7 @@ public final class ChatUtils implements Global {
     public static void pingPlayer() {
         SoundManager sm = mc.getSoundManager();
         SoundEvent event = SoundEvents.EXPERIENCE_ORB_PICKUP;
-        SoundInstance sound = SimpleSoundInstance.forUI(event, 0.1F, 10.0F);
+        SoundInstance sound = SimpleSoundInstance.forUI(event, 10.0F, 0.1F);
         mc.execute(() -> sm.play(sound));
     }
 }

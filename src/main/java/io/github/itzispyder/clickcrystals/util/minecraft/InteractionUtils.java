@@ -152,7 +152,7 @@ public final class InteractionUtils implements Global {
     }
 
     public static void leftClick() {
-        ((AccessorMouse) mc.mouseHandler).clickCrystals$leftClick();
+        ((AccessorMouse) mc.mouseHandler).leftClick();
     }
 
     public static void rightClick() {
@@ -164,7 +164,7 @@ public final class InteractionUtils implements Global {
     }
 
     public static void mouseScroll(double amount) {
-        ((AccessorMouse) mc.mouseHandler).clickCrystals$scroll(amount);
+        ((AccessorMouse) mc.mouseHandler).scroll(amount);
     }
 
     public static void pressKey(int key, int scan) {

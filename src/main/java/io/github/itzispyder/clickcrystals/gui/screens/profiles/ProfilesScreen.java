@@ -10,7 +10,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.lwjgl.glfw.GLFW;
 
 public class ProfilesScreen extends DefaultBase {
@@ -35,7 +35,7 @@ public class ProfilesScreen extends DefaultBase {
     }
 
     @Override
-    public void baseRender(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void baseRender(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
         // default base
         this.renderDefaultBase(context);
 
@@ -82,7 +82,7 @@ public class ProfilesScreen extends DefaultBase {
         }
 
         @Override
-        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
                 RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
             }
@@ -148,7 +148,7 @@ public class ProfilesScreen extends DefaultBase {
         }
 
         @Override
-        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
                 RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
             }
@@ -178,7 +178,7 @@ public class ProfilesScreen extends DefaultBase {
         }
 
         @Override
-        public void onRender(GuiGraphics context, int mouseX, int mouseY) {
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
                 RenderUtils.fillRect(context, x, y, width, height, 0x6000B7FF);
             }

@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.states.SphereFillRenderState;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.states.SphereState;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.states.SphereWireframeRenderState;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -29,20 +29,20 @@ public class EntityIndicatorSimulationRenderer {
         this.transitionAnimation = new PollingAnimator(300, this.simulation::notEmpty, Animations.FADE_IN_AND_OUT);
     }
 
-    public void render(GuiGraphics context, int x, int y, int hudSize, Quaternionf rotation, int color) {
+    public void render(GuiGraphicsExtractor context, int x, int y, int hudSize, Quaternionf rotation, int color) {
         float radius = (int)(hudSize * transitionAnimation.getAnimation());
         if (radius <= 0)
             return;
 
         SphereState sphere = new SphereState(context, rotation, x, y, radius, focalLen, deltaTheta, color, simulation);
-        context.guiRenderState.submitGuiElement(new SphereFillRenderState(sphere));
+        context.guiRenderState.addGuiElement(new SphereFillRenderState(sphere));
         sphere.color = 0x20000000 | (sphere.color & 0x00FFFFFF); // change color opacity to make lines stand out
-        context.guiRenderState.submitGuiElement(new SphereWireframeRenderState(sphere));
+        context.guiRenderState.addGuiElement(new SphereWireframeRenderState(sphere));
 
         this.renderEntities(context, x, y, radius, rotation);
     }
 
-    private void renderEntities(GuiGraphics context, int cx, int cy, float radius, Quaternionf rotation) {
+    private void renderEntities(GuiGraphicsExtractor context, int cx, int cy, float radius, Quaternionf rotation) {
         int spriteSize = 8;
         for (SimulationEntry entity : simulation.getEntities()) {
             Vector3f vecDifference = entity.getVecDifference().scale(radius).toVector3f();
@@ -66,7 +66,7 @@ public class EntityIndicatorSimulationRenderer {
         });
     }
 
-    private void drawSprite(GuiGraphics context, Identifier texture, int cx, int cy, int size, boolean highlight) {
+    private void drawSprite(GuiGraphicsExtractor context, Identifier texture, int cx, int cy, int size, boolean highlight) {
         int x = cx - size / 2;
         int y = cy - size / 2;
 

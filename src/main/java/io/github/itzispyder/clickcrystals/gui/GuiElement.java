@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.GuiBorde
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.TextUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public abstract class GuiElement implements Positionable, Global {
         this.isContainer = false;
     }
 
-    public void render(GuiGraphics context, int mouseX, int mouseY) {
+    public void render(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         boolean bl = canRender();
         if (bl) {
             onRender(context, mouseX, mouseY);
@@ -60,7 +60,7 @@ public abstract class GuiElement implements Positionable, Global {
     /**
      * Should always call hasTooltip() before calling this method
      */
-    public void renderTooltip(GuiGraphics context, int x, int y) {
+    public void renderTooltip(GuiGraphicsExtractor context, int x, int y) {
         List<String> lines = TextUtils.wordWrap(getTooltip(), 150 - 6 - 6, 0.7F);
         int height = lines.size() * 8;
         int caret = y + 2;
@@ -73,7 +73,7 @@ public abstract class GuiElement implements Positionable, Global {
         }
     }
 
-    public abstract void onRender(GuiGraphics context, int mouseX, int mouseY);
+    public abstract void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY);
 
     public void onClick(double mouseX, double mouseY, int button) {
 
@@ -83,7 +83,7 @@ public abstract class GuiElement implements Positionable, Global {
 
     }
 
-    public void postRender(GuiGraphics context, int mouseX, int mouseY) {
+    public void postRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
 
     }
 

@@ -14,7 +14,7 @@ import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -116,7 +116,7 @@ public class AutoReplenish extends ListenerModule {
             return;
 
         if (count <= 1)
-            InvUtils.sendSlotPacket(slot, InvUtils.selected(), ClickType.SWAP);
+            InvUtils.sendSlotPacket(slot, InvUtils.selected(), ContainerInput.SWAP);
         else
             InvUtils.quickMove(slot);
     }

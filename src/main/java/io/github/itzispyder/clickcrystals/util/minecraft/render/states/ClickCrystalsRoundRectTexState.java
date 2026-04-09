@@ -7,10 +7,10 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
-import net.minecraft.client.gui.render.state.GuiElementRenderState;
+import net.minecraft.client.renderer.state.gui.GuiElementRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
@@ -53,7 +53,7 @@ public class ClickCrystalsRoundRectTexState implements GuiElementRenderState {
                 ));
     }
 
-    public ClickCrystalsRoundRectTexState(GuiGraphics context, Identifier texture, float x, float y, float w, float h, float r) {
+    public ClickCrystalsRoundRectTexState(GuiGraphicsExtractor context, Identifier texture, float x, float y, float w, float h, float r) {
         this(new Matrix3x2f(context.pose()), texture, x, y, w, h, r, context.scissorStack.peek());
     }
 

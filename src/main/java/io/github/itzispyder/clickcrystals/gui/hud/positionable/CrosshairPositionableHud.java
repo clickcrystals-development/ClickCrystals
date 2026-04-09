@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHu
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -19,7 +19,7 @@ public class CrosshairPositionableHud extends Hud {
     }
 
     @Override
-    public void render(GuiGraphics context, float tickDelta) {
+    public void render(GuiGraphicsExtractor context, float tickDelta) {
         renderBackdrop(context);
 
         if (mc.hitResult instanceof EntityHitResult hit) {
@@ -50,7 +50,7 @@ public class CrosshairPositionableHud extends Hud {
             y = (int)(getY() / scale);
             context.pose().pushMatrix();
             context.pose().scale(scale);
-            context.renderItem(state.getBlock().asItem().getDefaultInstance(), x, y);
+            context.item(state.getBlock().asItem().getDefaultInstance(), x, y);
             context.pose().popMatrix();
         }
     }
