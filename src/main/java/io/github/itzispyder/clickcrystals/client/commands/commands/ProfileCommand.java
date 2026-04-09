@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.client.commands.arguments.ProfileArgum
 import io.github.itzispyder.clickcrystals.gui.screens.profiles.ProfilesScreen;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
-import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +19,7 @@ public class ProfileCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
+    public void build(LiteralArgumentBuilder<ClientSuggestionProvider> builder) {
         builder.executes(cxt -> {
                     system.scheduler.runDelayedTask(() -> {
                         mc.execute(() -> mc.setScreen(new ProfilesScreen()));

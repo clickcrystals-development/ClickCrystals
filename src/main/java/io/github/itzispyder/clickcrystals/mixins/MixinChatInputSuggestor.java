@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import net.minecraft.client.gui.components.CommandSuggestions;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,11 +22,11 @@ import java.util.concurrent.CompletableFuture;
 @Mixin(CommandSuggestions.class)
 public abstract class MixinChatInputSuggestor {
 
-    @Shadow @Nullable private ParseResults<SharedSuggestionProvider> currentParse;
+    @Shadow @Nullable private ParseResults<ClientSuggestionProvider> currentParse;
     @Shadow @Nullable private CompletableFuture<Suggestions> pendingSuggestions;
     @Shadow private boolean keepSuggestions;
     @Shadow @Final private EditBox input;
-    @Shadow public abstract void updateCommandInfo();
+    @Shadow protected abstract void updateUsageInfo(ParseResults<ClientSuggestionProvider> currentParse, Suggestions suggestions);
 
     @Inject(method = "updateCommandInfo", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
     public void refresh(CallbackInfo ci, String string, StringReader reader) {
@@ -43,9 +43,9 @@ public abstract class MixinChatInputSuggestor {
             int cursor = input.getCursorPosition();
             if (!keepSuggestions && cursor >= 1) {
                 pendingSuggestions = Command.DISPATCHER.getCompletionSuggestions(currentParse, cursor);
-                pendingSuggestions.thenRun(() -> {
+                pendingSuggestions.thenAccept(suggestions -> {
                     if (pendingSuggestions.isDone()) {
-                        updateCommandInfo();
+                        updateUsageInfo(currentParse, suggestions);
                     }
                 });
             }

@@ -197,14 +197,16 @@
 package io.github.itzispyder.clickcrystals.client.networking;
 
 
+import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.minecraft.network.protocol.Packet;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -219,42 +221,71 @@ public class PacketMapper {
     public record Info(String id, String className) {}
 
     static {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        URL resource = classLoader.getResource("net/minecraft/network");
+        init();
+    }
 
-        if (resource == null)
-            throw new RuntimeException("Failed to load PacketMapper resources");
+    public static void init() {
+        try {
+            ClassLoader classLoader = PacketMapper.class.getClassLoader();
+            String pathString = "net/minecraft/network";
+            Enumeration<URL> en = classLoader.getResources(pathString);
 
-        Path path = Paths.get(resource.getPath());
-        Pattern packetClassPattern = Pattern.compile("(?<name>(Server|Client)Bound(?<id>.*))\\.class");
-        try (Stream<Path> stream = Files.walk(path, FileVisitOption.FOLLOW_LINKS)) {
-            stream.filter(p -> p.endsWith(".class")).forEach(p -> {
+            while (en.hasMoreElements()) {
+                URL url = en.nextElement();
+                Path path = Paths.get(url.toURI());
+                scanPath(path, classLoader);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    private static void scanPath(Path root, ClassLoader classLoader) throws IOException {
+        try (Stream<Path> stream = Files.walk(root)) {
+            Pattern packetClassPattern = Pattern.compile("(?<name>(Server|Client)bound(?<id>.*))\\.class");
+            stream.filter(p -> p.toString().endsWith(".class")).forEach(p -> {
                 Matcher matcher = packetClassPattern.matcher(p.getFileName().toString());
                 if (!matcher.matches())
                     return;
 
                 String name = matcher.group("name");
-                String id = matcher.group("id");
+                String id = matcher.group("id").toLowerCase();
                 Info info = new Info(name, id);
 
-                if (p.startsWith("ServerBound"))
+                ChatUtils.sendMessage(p.getFileName().toString());
+
+                if (name.startsWith("Serverbound"))
                     loadInfo(C2S, classLoader, p, info);
-                else if (p.startsWith("ClientBound"))
+                else if (name.startsWith("Clientbound"))
                     loadInfo(S2C, classLoader, p, info);
             });
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
     private static <T extends Class<? extends Packet<?>>> void loadInfo(Map<T, Info> targetMapping, ClassLoader classLoader, Path classPath, Info info) {
         try {
-            T packetClass = (T) classLoader.loadClass(classPath.getFileName().toString());
+            String className = classPath.toString()
+                    .replace(File.separatorChar, '.')
+                    .replace('/', '.')
+                    .substring(1, classPath.toString().length() - ".class".length());
+            T packetClass = (T) classLoader.loadClass(className);
             targetMapping.put(packetClass, info);
         }
         catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void debugPrint() {
+        ChatUtils.sendBlank(2);
+        ChatUtils.sendPrefixMessage("Server Bound C2S (%s) Packets".formatted(C2S.size()));
+        C2S.forEach((key, info) ->
+                ChatUtils.sendMessage("%s: %s".formatted(info.id, info.className)));
+        ChatUtils.sendBlank(1);
+        ChatUtils.sendPrefixMessage("Client Bound S2C (%s) Packets".formatted(S2C.size()));
+        S2C.forEach((key, info) ->
+                ChatUtils.sendMessage("%s: %s".formatted(info.id, info.className)));
+        ChatUtils.sendBlank(2);
     }
 }

@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.client.commands.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
-import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 
 import java.util.stream.Collectors;
 
@@ -14,7 +14,7 @@ public class TableGenerator extends Command {
 
 
     @Override
-    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
+    public void build(LiteralArgumentBuilder<ClientSuggestionProvider> builder) {
         builder.then(literal("modules")
                 .executes(context -> {
                     generateModulesTable();

@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.client.system.Notification;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
-import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 
 public class VersionCommand extends Command {
 
@@ -15,7 +15,7 @@ public class VersionCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
+    public void build(LiteralArgumentBuilder<ClientSuggestionProvider> builder) {
         builder.executes(cxt -> {
             String ccVer = Global.version.toString();
             String mcVer = getMinecraftVersionNumber();

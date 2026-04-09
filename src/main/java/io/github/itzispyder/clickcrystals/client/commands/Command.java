@@ -13,7 +13,6 @@ import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.server.permissions.PermissionSet;
@@ -25,8 +24,8 @@ public abstract class Command implements Global {
     protected static final int SINGLE_SUCCESS = 1;
     public static final HolderLookup.Provider WRAPPER = VanillaRegistries.createLookup();
     public static final CommandBuildContext REGISTRY = Commands.createValidationContext(WRAPPER);
-    public static final CommandDispatcher<SharedSuggestionProvider> DISPATCHER = new CommandDispatcher<>();
-    public static final SharedSuggestionProvider SOURCE = new ClientSuggestionProvider(null, mc, PermissionSet.NO_PERMISSIONS);
+    public static final CommandDispatcher<ClientSuggestionProvider> DISPATCHER = new CommandDispatcher<>();
+    public static final ClientSuggestionProvider SOURCE = new ClientSuggestionProvider(null, mc, PermissionSet.NO_PERMISSIONS);
 
     private final String name, description, usage;
     private final String[] aliases;
@@ -54,7 +53,7 @@ public abstract class Command implements Global {
         return aliases;
     }
 
-    public abstract void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder);
+    public abstract void build(LiteralArgumentBuilder<ClientSuggestionProvider> builder);
 
     public void register() {
         registerToDispatcher(name);
@@ -64,21 +63,21 @@ public abstract class Command implements Global {
     }
 
     public void registerToDispatcher(String name) {
-        LiteralArgumentBuilder<SharedSuggestionProvider> builder = literal(name);
+        LiteralArgumentBuilder<ClientSuggestionProvider> builder = literal(name);
         build(builder);
         DISPATCHER.register(builder);
     }
 
-    protected static LiteralArgumentBuilder<SharedSuggestionProvider> literal(String literal) {
+    protected static LiteralArgumentBuilder<ClientSuggestionProvider> literal(String literal) {
         return LiteralArgumentBuilder.literal(literal);
     }
 
-    protected static <T> RequiredArgumentBuilder<SharedSuggestionProvider, T> argument(String name, ArgumentType<T> argument) {
+    protected static <T> RequiredArgumentBuilder<ClientSuggestionProvider, T> argument(String name, ArgumentType<T> argument) {
         return RequiredArgumentBuilder.argument(name, argument);
     }
 
     public static void dispatch(String line) throws CommandSyntaxException {
-        ParseResults<SharedSuggestionProvider> results = DISPATCHER.parse(line, SOURCE);
+        ParseResults<ClientSuggestionProvider> results = DISPATCHER.parse(line, SOURCE);
         DISPATCHER.execute(results);
     }
 

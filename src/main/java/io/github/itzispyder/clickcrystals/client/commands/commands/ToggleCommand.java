@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.client.commands.arguments.ModuleArgume
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.SilkTouch;
-import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 
 public class ToggleCommand extends Command {
 
@@ -15,7 +15,7 @@ public class ToggleCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
+    public void build(LiteralArgumentBuilder<ClientSuggestionProvider> builder) {
         builder.executes(context -> {
                     system.scheduler.runDelayedTask(UserInputListener::openModulesScreen, 5 * 50);
                     return SINGLE_SUCCESS;

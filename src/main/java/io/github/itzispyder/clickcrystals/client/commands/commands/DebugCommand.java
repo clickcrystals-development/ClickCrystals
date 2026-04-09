@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.client.commands.commands;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.client.commands.arguments.PlayerArgumentType;
+import io.github.itzispyder.clickcrystals.client.networking.PacketMapper;
 import io.github.itzispyder.clickcrystals.client.system.Notification;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.scripting.ClickScript;
@@ -11,9 +12,9 @@ import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
@@ -34,12 +35,12 @@ public class DebugCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
+    public void build(LiteralArgumentBuilder<ClientSuggestionProvider> builder) {
         builder.executes(context -> {
                     ChatUtils.sendPrefixMessage(StringUtils.color("&cPlease provide an item!"));
                     return SINGLE_SUCCESS;
                 })
-                .then(literal("script-scripts")
+                .then(literal("scripts")
                         .executes(context -> {
                             List<String> scriptCommands = Arrays.asList(ClickScript.collectNames());
 
@@ -48,6 +49,12 @@ public class DebugCommand extends Command {
                             ChatUtils.sendBlank(1);
                             ChatUtils.sendMessage("Script scripts (" + scriptCommands.size() + "): " + ArrayUtils.list2string(scriptCommands));
                             ChatUtils.sendBlank(2);
+                            return SINGLE_SUCCESS;
+                        }))
+                .then(literal("packets")
+                        .executes(context -> {
+                            PacketMapper.init();
+                            PacketMapper.debugPrint();
                             return SINGLE_SUCCESS;
                         }))
                 .then(literal("listeners")

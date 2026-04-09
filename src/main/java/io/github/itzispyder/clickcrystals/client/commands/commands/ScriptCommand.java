@@ -11,7 +11,7 @@ import io.github.itzispyder.clickcrystals.scripting.ClickScript;
 import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.scripting.syntax.logic.AsCmd;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
-import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 import net.minecraft.world.entity.Entity;
 
 import java.io.File;
@@ -23,7 +23,7 @@ public class ScriptCommand extends Command {
     }
 
     @Override
-    public void build(LiteralArgumentBuilder<SharedSuggestionProvider> builder) {
+    public void build(LiteralArgumentBuilder<ClientSuggestionProvider> builder) {
         builder.executes(cxt -> {
                     system.scheduler.runDelayedTask(() -> {
                         BrowsingScreen.currentCategory = Categories.SCRIPTED;
