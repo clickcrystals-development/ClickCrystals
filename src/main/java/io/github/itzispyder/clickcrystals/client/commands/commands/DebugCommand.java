@@ -53,7 +53,6 @@ public class DebugCommand extends Command {
                         }))
                 .then(literal("packets")
                         .executes(context -> {
-                            PacketMapper.init();
                             PacketMapper.debugPrint();
                             return SINGLE_SUCCESS;
                         }))

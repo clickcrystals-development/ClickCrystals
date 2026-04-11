@@ -27,6 +27,7 @@ public class Config implements JsonSerializable<Config>, Global {
     public static final String PATH_CONFIG_PROFILE = PATH + "profiles.json";
     public static final String PATH_CONFIG = PATH + "config.json";
     public static final String PATH_LOG = PATH + "current.log";
+    public static final String PATH_DATA = PATH + ".data/";
 
     private boolean hasPlayedBefore;
     private boolean overviewMode;
