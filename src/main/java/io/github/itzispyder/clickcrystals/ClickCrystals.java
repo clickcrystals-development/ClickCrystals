@@ -68,6 +68,7 @@ import org.lwjgl.glfw.GLFW;
 
 /**
  * ClickCrystals main
+ * TODO: [] launch game & drag network_packets.md to DOCUMENTATION
  * TODO: [] ./utils entity-textures
  * TODO: [] Update mod "gradle.properties"
  * TODO: [] Update background texture (optional)
@@ -370,7 +371,7 @@ public final class ClickCrystals implements ModInitializer, Global {
 
     @SuppressWarnings("all")
     public static boolean matchLatestVersion() {
-        return version.isUpToDate(getLatestVersion());
+        return version.isNewerOrEqualTo(getLatestVersion());
     }
 
     public static Version getLatestVersion() {

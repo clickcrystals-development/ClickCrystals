@@ -4,93 +4,91 @@ import io.github.itzispyder.clickcrystals.Global;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Version implements Global {
 
-    private final int[] digits;
+    private static final Pattern PATTERN =
+            Pattern.compile("(?<vmajor>\\d+)\\.(?<vminor>\\d+)(\\.(?<vpatch>\\d+))?");
 
-    public Version(String versionString) {
-        String[] i = versionString.replaceAll("[^0-9.]", "").split("\\.");
-        this.digits = new int[i.length];
-        for (int j = 0; j < i.length; j++) {
-            digits[j] = Integer.parseInt(i[j]);
-        }
+    private final int vmajor, vminor, vpatch;
+
+    public Version(int vmajor, int vminor, int vpatch) {
+        this.vmajor = vmajor;
+        this.vminor = vminor;
+        this.vpatch = vpatch;
     }
 
-    public static Version ofString(String s) {
-        return new Version(s);
+    public Version(int vmajor, int vminor) {
+        this(vmajor, vminor, 0);
     }
 
-    public static Version ofInt(int... i) {
-        StringBuilder b = new StringBuilder();
-        for (int x : i) {
-            b.append(x).append(".");
-        }
-        return ofString(b.substring(0, b.length() - 1));
+    public static Version ofString(String versionString) {
+        Matcher matcher = PATTERN.matcher(versionString);
+        if (!matcher.matches())
+            return null;
+
+        String major = matcher.group("vmajor");
+        String minor = matcher.group("vminor");
+        String patch = matcher.group("vpatch");
+
+        if (patch == null)
+            return new Version(
+                    Integer.parseInt(major),
+                    Integer.parseInt(minor)
+            );
+
+        return new Version(
+                Integer.parseInt(major),
+                Integer.parseInt(minor),
+                Integer.parseInt(patch)
+        );
     }
 
-    public static Version ofAnother(Version v) {
-        return new Version(v.getVersionString());
+    public boolean isNewerThan(Version other) {
+        return vComp(other, (us, them) -> us > them);
+    }
+
+    public boolean isNewerOrEqualTo(Version other) {
+        return vComp(other, (us, them) -> us >= them);
+    }
+
+    public boolean isSameAs(Version other) {
+        return vComp(other, (us, them) -> us == them);
+    }
+
+    public boolean isOlderThan(Version other) {
+        return vComp(other, (us, them) -> us < them);
+    }
+
+    public boolean isOlderOrEqualTo(Version other) {
+        return vComp(other, (us, them) -> us <= them);
+    }
+
+    private boolean vComp(Version other, VComp comp) {
+        if (this.vmajor != other.vmajor)
+            return comp.comp(this.vmajor, other.vmajor);
+        if (this.vminor != other.vminor)
+            return comp.comp(this.vminor, other.vminor);
+        return comp.comp(this.vpatch, other.vpatch);
     }
 
     public String getVersionString() {
-        StringBuilder b = new StringBuilder();
-        for (int d : digits) {
-            b.append(d).append(".");
-        }
-        return b.substring(0, b.length() - 1);
-    }
-
-    public int[] getDigits() {
-        return digits;
-    }
-
-    public boolean isNewerThan(Version another) {
-        int[] cur = getDigits();
-        int[] oth = another.getDigits();
-
-        for (int i = 0; i < cur.length; i++) {
-            if (cur[i] > oth[i]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isSameAs(Version another) {
-        int[] cur = getDigits();
-        int[] oth = another.getDigits();
-
-        for (int i = 0; i < cur.length; i++) {
-            if (cur[i] != oth[i]) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public boolean isOlderThan(Version another) {
-        return !isNewerThan(another) && !isSameAs(another);
-    }
-
-    public boolean isUpToDate(Version latest) {
-        return isSameAs(latest) || isNewerThan(latest);
+        return toString();
     }
 
     @Override
     public String toString() {
-        return getVersionString();
+        return "%s.%s.%s".formatted(vmajor, vminor, vpatch);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Version v)) {
-            return false;
-        }
-        return isSameAs(v);
+    @FunctionalInterface
+    public interface VComp {
+        boolean comp(int us, int them);
     }
 
-    public static String getModVersion() {
+    public static String fetchModVersion() {
         ModContainer mod = FabricLoader.getInstance().getModContainer(modId)
                 .orElseThrow(() -> new IllegalArgumentException("ClickCrystals has not been loaded"));
         String ver = mod.getMetadata().getVersion().getFriendlyString();
