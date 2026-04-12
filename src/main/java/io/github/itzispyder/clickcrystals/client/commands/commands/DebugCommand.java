@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.client.commands.arguments.PlayerArgumentType;
 import io.github.itzispyder.clickcrystals.client.networking.PacketMapper;
 import io.github.itzispyder.clickcrystals.client.system.Notification;
+import io.github.itzispyder.clickcrystals.gui.misc.brushes.MobHeadBrush;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.scripting.ClickScript;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
@@ -54,6 +55,7 @@ public class DebugCommand extends Command {
                 .then(literal("packets")
                         .executes(context -> {
                             PacketMapper.debugPrint();
+                            ChatUtils.sendPrefixMessage("" + MobHeadBrush.REGISTRY.size());
                             return SINGLE_SUCCESS;
                         }))
                 .then(literal("listeners")

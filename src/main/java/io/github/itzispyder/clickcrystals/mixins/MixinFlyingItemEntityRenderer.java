@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Mixin(ThrownItemRenderer.class)
-public class MixinFlyingItemEntityRenderer implements Global {
+public abstract class MixinFlyingItemEntityRenderer implements Global {
 
     @Mutable @Shadow @Final private float scale;
     @Unique private final Set<Entity> notifiedPearls = new HashSet<>();

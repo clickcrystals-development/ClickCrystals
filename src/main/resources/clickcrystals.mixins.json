@@ -43,6 +43,7 @@
     "AccessorLivingEntity",
     "MixinBlock",
     "MixinEntity",
+    "MixinEntityType",
     "MixinItem",
     "MixinItemStack",
     "MixinLivingEntity",

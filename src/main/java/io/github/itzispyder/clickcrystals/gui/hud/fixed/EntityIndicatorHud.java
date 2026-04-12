@@ -73,7 +73,7 @@ public class EntityIndicatorHud extends Hud {
             float θ = display.getYawDifference(); // TheTrouper gave me this Unicode LOL (the real theta)
             int x = (int)(cx + Mth.cos(Math.toRadians(θ - 90)) * radius);
             int y = (int)(cy + Mth.sin(Math.toRadians(θ - 90)) * radius);
-            MobHeadBrush.drawHead(context, display.getEntityClass(), x - size / 2, y - size / 2, size);
+            MobHeadBrush.drawHead(context, display.getEntityType(), x - size / 2, y - size / 2, size);
         }
 
         nearest.accept(display -> {
@@ -83,7 +83,7 @@ public class EntityIndicatorHud extends Hud {
             int bigger = size + 2;
 
             RenderUtils.fillRect(context, x - bigger / 2 - 1, y - bigger / 2 - 1, bigger + 2, bigger + 2, 0xFFFFFFFF);
-            MobHeadBrush.drawHead(context, display.getEntityClass(), x - bigger / 2, y - bigger / 2, bigger);
+            MobHeadBrush.drawHead(context, display.getEntityType(), x - bigger / 2, y - bigger / 2, bigger);
         });
     }
 }

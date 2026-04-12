@@ -5,21 +5,16 @@ import io.github.itzispyder.clickcrystals.client.system.Config;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
 import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.ReflectUtils;
 import net.minecraft.network.protocol.Packet;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 public class PacketMapper {
 
@@ -32,8 +27,6 @@ public class PacketMapper {
         init();
         generatePacketLogFile();
     }
-
-    public static void touch() {}
 
     private static void generatePacketLogFile() {
         File file = new File(Config.PATH_DATA, "network_packets.md");
@@ -81,51 +74,32 @@ public class PacketMapper {
     }
 
     private static void init() {
-        try {
-            ClassLoader classLoader = PacketMapper.class.getClassLoader();
-            Enumeration<URL> en = classLoader.getResources("net/minecraft/network");
+        ClassLoader classLoader = PacketMapper.class.getClassLoader();
+        String packagePath = "net/minecraft/network";
+        Pattern packetClassPattern = Pattern.compile("(?<name>(Server|Client)bound(?<id>.*))\\.class");
 
-            while (en.hasMoreElements()) {
-                URL url = en.nextElement();
-                Path path = Paths.get(url.toURI());
-                scanPath(path, classLoader);
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-    }
+        ReflectUtils.reflectWalkClasses(classLoader, packagePath, it -> {
+            String fileName = it.getFileName().toString();
+            Matcher matcher = packetClassPattern.matcher(fileName);
+            if (!matcher.matches())
+                return;
 
-    private static void scanPath(Path root, ClassLoader classLoader) throws IOException {
-        try (Stream<Path> stream = Files.walk(root)) {
-            Pattern packetClassPattern = Pattern.compile("(?<name>(Server|Client)bound(?<id>.*))\\.class");
-            stream.filter(p -> p.toString().endsWith(".class")).forEach(p -> {
-                Matcher matcher = packetClassPattern.matcher(p.getFileName().toString());
-                if (!matcher.matches())
-                    return;
+            String name = matcher.group("name");
+            String id = matcher.group("id");
+            id = id.substring(0, 1).toLowerCase() + id.substring(1);
+            id = id.replaceAll("(Packet)|[$]", "");
+            Info info = new Info(id, name);
 
-                String name = matcher.group("name");
-                String id = matcher.group("id");
-                id = id.substring(0, 1).toLowerCase() + id.substring(1);
-                id = id.replaceAll("(Packet)|[$]", "");
-                Info info = new Info(id, name);
-
-//                ChatUtils.sendMessage(p.getFileName().toString());
-
-                if (name.startsWith("Serverbound"))
-                    loadInfo(C2S, classLoader, p, info);
-                else if (name.startsWith("Clientbound"))
-                    loadInfo(S2C, classLoader, p, info);
-            });
-        }
+            if (name.startsWith("Serverbound"))
+                loadInfo(C2S, classLoader, it, info);
+            else if (name.startsWith("Clientbound"))
+                loadInfo(S2C, classLoader, it, info);
+        });
     }
 
     private static <T extends Class<? extends Packet<?>>> void loadInfo(Map<T, Info> packetMapping, ClassLoader classLoader, Path classPath, Info packetInfo) {
         try {
-            String className = classPath.toString()
-                    .replace(File.separatorChar, '.')
-                    .replace('/', '.')
-                    .substring(1, classPath.toString().length() - ".class".length());
+            String className = ReflectUtils.pathAsClassLoaderString(classPath);
             T packetClass = (T) classLoader.loadClass(className);
             packetMapping.put(packetClass, packetInfo);
         }

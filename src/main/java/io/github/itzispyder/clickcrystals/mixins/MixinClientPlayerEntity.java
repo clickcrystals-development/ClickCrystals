@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static net.minecraft.world.item.Items.ELYTRA;
 
 @Mixin(LocalPlayer.class)
-public class MixinClientPlayerEntity implements Global {
+public abstract class MixinClientPlayerEntity implements Global {
 
     @Inject(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;tryToStartFallFlying()Z", shift = At.Shift.BEFORE))
     public void swapToElytra(CallbackInfo callbackInfo) {

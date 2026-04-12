@@ -26,7 +26,6 @@ package io.github.itzispyder.clickcrystals;
 import com.google.gson.Gson;
 import io.github.itzispyder.clickcrystals.client.commands.commands.*;
 import io.github.itzispyder.clickcrystals.client.commands.commands.pixelart.PixelArtCommand;
-import io.github.itzispyder.clickcrystals.client.networking.PacketMapper;
 import io.github.itzispyder.clickcrystals.client.system.*;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickStartEvent;
@@ -143,7 +142,6 @@ public final class ClickCrystals implements ModInitializer, Global {
 
         system.println("-> loading scripts...");
         this.initClickScript();
-        PacketMapper.touch();
         system.println("-> initializing...");
         this.init();
         this.startTicking();

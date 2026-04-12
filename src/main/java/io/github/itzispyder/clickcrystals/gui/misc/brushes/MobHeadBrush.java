@@ -4,187 +4,39 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ambient.AmbientCreature;
-import net.minecraft.world.entity.ambient.Bat;
-import net.minecraft.world.entity.animal.AgeableWaterCreature;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.allay.Allay;
-import net.minecraft.world.entity.animal.armadillo.Armadillo;
-import net.minecraft.world.entity.animal.axolotl.Axolotl;
-import net.minecraft.world.entity.animal.bee.Bee;
-import net.minecraft.world.entity.animal.camel.Camel;
-import net.minecraft.world.entity.animal.chicken.Chicken;
-import net.minecraft.world.entity.animal.cow.Cow;
-import net.minecraft.world.entity.animal.cow.MushroomCow;
-import net.minecraft.world.entity.animal.dolphin.Dolphin;
-import net.minecraft.world.entity.animal.equine.*;
-import net.minecraft.world.entity.animal.feline.Cat;
-import net.minecraft.world.entity.animal.feline.Ocelot;
-import net.minecraft.world.entity.animal.fish.*;
-import net.minecraft.world.entity.animal.fox.Fox;
-import net.minecraft.world.entity.animal.frog.Frog;
-import net.minecraft.world.entity.animal.frog.Tadpole;
-import net.minecraft.world.entity.animal.goat.Goat;
-import net.minecraft.world.entity.animal.golem.AbstractGolem;
-import net.minecraft.world.entity.animal.golem.IronGolem;
-import net.minecraft.world.entity.animal.golem.SnowGolem;
-import net.minecraft.world.entity.animal.happyghast.HappyGhast;
-import net.minecraft.world.entity.animal.panda.Panda;
-import net.minecraft.world.entity.animal.parrot.Parrot;
-import net.minecraft.world.entity.animal.parrot.ShoulderRidingEntity;
-import net.minecraft.world.entity.animal.pig.Pig;
-import net.minecraft.world.entity.animal.polarbear.PolarBear;
-import net.minecraft.world.entity.animal.rabbit.Rabbit;
-import net.minecraft.world.entity.animal.sheep.Sheep;
-import net.minecraft.world.entity.animal.sniffer.Sniffer;
-import net.minecraft.world.entity.animal.squid.GlowSquid;
-import net.minecraft.world.entity.animal.squid.Squid;
-import net.minecraft.world.entity.animal.turtle.Turtle;
-import net.minecraft.world.entity.animal.wolf.Wolf;
-import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
-import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.entity.monster.*;
-import net.minecraft.world.entity.monster.breeze.Breeze;
-import net.minecraft.world.entity.monster.creaking.Creaking;
-import net.minecraft.world.entity.monster.hoglin.Hoglin;
-import net.minecraft.world.entity.monster.illager.*;
-import net.minecraft.world.entity.monster.piglin.Piglin;
-import net.minecraft.world.entity.monster.piglin.PiglinBrute;
-import net.minecraft.world.entity.monster.skeleton.Bogged;
-import net.minecraft.world.entity.monster.skeleton.Skeleton;
-import net.minecraft.world.entity.monster.skeleton.Stray;
-import net.minecraft.world.entity.monster.skeleton.WitherSkeleton;
-import net.minecraft.world.entity.monster.spider.CaveSpider;
-import net.minecraft.world.entity.monster.spider.Spider;
-import net.minecraft.world.entity.monster.warden.Warden;
-import net.minecraft.world.entity.monster.zombie.*;
-import net.minecraft.world.entity.npc.villager.AbstractVillager;
-import net.minecraft.world.entity.npc.villager.Villager;
-import net.minecraft.world.entity.npc.wanderingtrader.WanderingTrader;
-import net.minecraft.world.entity.projectile.EvokerFangs;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class MobHeadBrush implements Global {
 
-    public static final Map<Class<? extends Entity>, Identifier> REGISTRY = new HashMap<>() {{
-        this.put(EnderDragon.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/ender_dragon.png"));
-        this.put(WitherBoss.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/wither.png"));
-        this.put(AmbientCreature.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/ambient.png"));
-        this.put(Blaze.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/blaze.png"));
-        this.put(Bogged.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/bogged.png"));
-        this.put(Breeze.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/breeze.png"));
-        this.put(CaveSpider.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/cave_spider.png"));
-        this.put(Creaking.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/creaking.png"));
-        this.put(Creeper.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/creeper.png"));
-        this.put(Drowned.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/drowned.png"));
-        this.put(ElderGuardian.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/elder_guardian.png"));
-        this.put(EnderMan.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/enderman.png"));
-        this.put(Endermite.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/endermite.png"));
-        this.put(Evoker.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/evoker.png"));
-        this.put(EvokerFangs.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/evoker_fangs.png"));
-        this.put(Ghast.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/ghast.png"));
-        this.put(Giant.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/giant.png"));
-        this.put(Guardian.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/guardian.png"));
-        this.put(Hoglin.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/hoglin.png"));
-        this.put(Monster.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/hostile.png"));
-        this.put(Husk.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/husk.png"));
-        this.put(AbstractIllager.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/illager.png"));
-        this.put(Illusioner.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/illusioner.png"));
-        this.put(MagmaCube.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/magma_cube.png"));
-        this.put(Mob.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/mob.png"));
-        this.put(PathfinderMob.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/path_aware.png"));
-        this.put(Phantom.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/phantom.png"));
-        this.put(PiglinBrute.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/piglin_brute.png"));
-        this.put(Piglin.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/piglin.png"));
-        this.put(Pillager.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/pillager.png"));
-        this.put(Ravager.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/ravager.png"));
-        this.put(Shulker.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/shulker.png"));
-        this.put(Silverfish.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/silverfish.png"));
-        this.put(Skeleton.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/skeleton.png"));
-        this.put(SkeletonHorse.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/skeleton_horse.png"));
-        this.put(Slime.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/slime.png"));
-        this.put(SpellcasterIllager.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/spellcasting_illager.png"));
-        this.put(Spider.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/spider.png"));
-        this.put(Stray.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/stray.png"));
-        this.put(Vex.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/vex.png"));
-        this.put(Vindicator.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/vindicator.png"));
-        this.put(Warden.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/warden.png"));
-        this.put(WaterAnimal.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/water_creature.png"));
-        this.put(Witch.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/witch.png"));
-        this.put(WitherSkeleton.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/wither_skeleton.png"));
-        this.put(Zoglin.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/zoglin.png"));
-        this.put(Zombie.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/zombie.png"));
-        this.put(ZombieHorse.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/zombie_horse.png"));
-        this.put(ZombieVillager.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/zombie_villager.png"));
-        this.put(ZombifiedPiglin.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/zombified_piglin.png"));
-        this.put(Allay.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/allay.png"));
-        this.put(Animal.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/animal.png"));
-        this.put(Armadillo.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/armadillo.png"));
-        this.put(Axolotl.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/axolotl.png"));
-        this.put(Bat.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/bat.png"));
-        this.put(Bee.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/bee.png"));
-        this.put(Camel.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/camel.png"));
-        this.put(Cat.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/cat.png"));
-        this.put(Chicken.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/chicken.png"));
-        this.put(Cod.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/cod.png"));
-        this.put(Cow.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/cow.png"));
-        this.put(Dolphin.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/dolphin.png"));
-        this.put(Donkey.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/donkey.png"));
-        this.put(AbstractFish.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/fish.png"));
-        this.put(Fox.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/fox.png"));
-        this.put(Frog.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/frog.png"));
-        this.put(GlowSquid.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/glow_squid.png"));
-        this.put(Goat.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/goat.png"));
-        this.put(AbstractGolem.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/golem.png"));
-        this.put(HappyGhast.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/happy_ghast.png"));
-        this.put(Horse.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/horse.png"));
-        this.put(IronGolem.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/iron_golem.png"));
-        this.put(Llama.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/llama.png"));
-        this.put(AbstractVillager.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/merchant.png"));
-        this.put(MushroomCow.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/mooshroom.png"));
-        this.put(Mule.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/mule.png"));
-        this.put(Ocelot.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/ocelot.png"));
-        this.put(Panda.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/panda.png"));
-        this.put(Parrot.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/parrot.png"));
-        this.put(AgeableMob.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/passive.png"));
-        this.put(Pig.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/pig.png"));
-        this.put(PolarBear.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/polar_bear.png"));
-        this.put(Pufferfish.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/pufferfish.png"));
-        this.put(Rabbit.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/rabbit.png"));
-        this.put(Salmon.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/salmon.png"));
-        this.put(AbstractSchoolingFish.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/schooling_fish.png"));
-        this.put(Sheep.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/sheep.png"));
-        this.put(Sniffer.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/sniffer.png"));
-        this.put(SnowGolem.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/snow_golem.png"));
-        this.put(Squid.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/squid.png"));
-        this.put(Strider.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/strider.png"));
-        this.put(Tadpole.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/tadpole.png"));
-        this.put(TamableAnimal.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/tameable.png"));
-        this.put(ShoulderRidingEntity.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/tameable_shoulder.png"));
-        this.put(TraderLlama.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/trader_llama.png"));
-        this.put(TropicalFish.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/tropical_fish.png"));
-        this.put(Turtle.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/turtle.png"));
-        this.put(Villager.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/villager.png"));
-        this.put(WanderingTrader.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/wandering_trader.png"));
-        this.put(AgeableWaterCreature.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/water_animal.png"));
-        this.put(Wolf.class, Identifier.fromNamespaceAndPath(modId, "textures/display/icons/entities/wolf.png"));
-    }};
+    public static final Map<EntityType<?>, Identifier> REGISTRY = new HashMap<>();
 
-    public static Identifier getIdentifier(Class<? extends Entity> entity) {
+    public static void init(EntityType<?> type, String vanillaId) {
+        String path = "textures/display/icons/entities/%s.png".formatted(vanillaId);
+        Identifier identifier = Identifier.fromNamespaceAndPath(modId, path);
+        REGISTRY.put(type, identifier);
+    }
+
+    public static Identifier getIdentifier(Entity entity) {
+        return REGISTRY.get(entity.getType());
+    }
+
+    public static Identifier getIdentifier(EntityType<?> entity) {
         return REGISTRY.get(entity);
     }
 
-    public static void drawHead(GuiGraphicsExtractor context, Class<? extends Entity> entity, int x, int y, int size) {
+    public static void drawHead(GuiGraphicsExtractor context, Entity entity, int x, int y, int size) {
         Identifier tex = getIdentifier(entity);
-        if (tex != null) {
-            RenderUtils.drawTexture(context,tex, x, y, size, size);
-        }
+        if (tex != null)
+            RenderUtils.drawTexture(context, tex, x, y, size, size);
     }
 
-    public static void drawHead(GuiGraphicsExtractor context, Entity entity, int x, int y, int size) {
-        drawHead(context, entity.getClass(), x, y, size);
+    public static void drawHead(GuiGraphicsExtractor context, EntityType<?> entity, int x, int y, int size) {
+        Identifier tex = getIdentifier(entity);
+        if (tex != null)
+            RenderUtils.drawTexture(context, tex, x, y, size, size);
     }
 }
