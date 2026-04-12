@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Lightmap.class)
-public abstract class MixinLightmapTextureManager implements Global {
+public abstract class MixinLightmap implements Global {
 
     @Shadow @Final private GpuTexture texture;
 

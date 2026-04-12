@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractContainerScreen.class)
-public abstract class MixinHandledScreen implements Global {
+public abstract class MixinAbstractContainerScreen implements Global {
 
     @Shadow protected int leftPos;
     @Shadow protected int topPos;

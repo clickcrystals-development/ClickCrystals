@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.events.Listener;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickEndEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.ClientTickStartEvent;
 import io.github.itzispyder.clickcrystals.events.events.world.RenderWorldEvent;
-import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorKeyboard;
+import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorKeyboardHandler;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -165,6 +165,6 @@ public class TickEventListener implements Listener, Global {
         }
 
         for (int heldKey: heldKeys)
-            ((AccessorKeyboard) mc.keyboardHandler).clickCrystals$pressKey(heldKey, 42);
+            ((AccessorKeyboardHandler) mc.keyboardHandler).clickCrystals$pressKey(heldKey, 42);
     }
 }

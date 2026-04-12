@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(LoadingOverlay.class)
-public abstract class MixinSplashOverlay implements Global {
+public abstract class MixinLoadingOverlay implements Global {
 
     @Shadow private float currentProgress;
 

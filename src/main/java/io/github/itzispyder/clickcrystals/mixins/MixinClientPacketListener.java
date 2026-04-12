@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPacketListener.class)
-public abstract class MixinClientPlayNetworkHandler implements Global {
+public abstract class MixinClientPacketListener implements Global {
 
     @Shadow
     public abstract void sendChat(String content);
