@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.gui.misc.ChatColor;
 import net.minecraft.client.gui.components.SplashRenderer;
 import net.minecraft.client.resources.SplashManager;
 import net.minecraft.network.chat.Component;
@@ -35,7 +36,7 @@ public class MixinSplashTextResourceSupplier implements Global {
         if (custom.isEmpty())
             return;
 
-        Component text = Component.literal(system.random.getRandomElement(custom));
+        Component text = Component.literal(system.random.getRandomElement(ChatColor.values()) + system.random.getRandomElement(custom));
         SplashRenderer renderer = new SplashRenderer(text);
         cir.setReturnValue(renderer);
     }
