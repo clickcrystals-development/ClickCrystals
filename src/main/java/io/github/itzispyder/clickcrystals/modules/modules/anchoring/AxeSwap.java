@@ -6,6 +6,8 @@ import io.github.itzispyder.clickcrystals.events.events.client.PlayerAttackEntit
 import io.github.itzispyder.clickcrystals.modrinth.ModrinthNoNo;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
+import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +15,12 @@ import net.minecraft.world.item.AxeItem;
 
 @ModrinthNoNo
 public class AxeSwap extends Module implements Listener {
+
+    public final ModuleSetting<Boolean> allowBackstab = getGeneralSection().add(BooleanSetting.create()
+            .name("Directional Shield")
+            .description("Only trigger if the enemy is facing you")
+            .def(true)
+            .build());
 
     public AxeSwap() {
         super("axe-swap", Categories.PVP, "Switch to axe if hitting a shielding opponent with a sword");
@@ -30,7 +38,7 @@ public class AxeSwap extends Module implements Listener {
 
     @EventHandler
     private void onAttack(PlayerAttackEntityEvent e) {
-        if (e.getEntity() instanceof Player p && EntityUtils.isBlocking(p)) {
+        if (e.getEntity() instanceof Player p && EntityUtils.isBlocking(p, allowBackstab.getVal())) {
             if (HotbarUtils.nameContains("sword") && HotbarUtils.has(item -> item.getItem() instanceof AxeItem)) {
                 HotbarUtils.search(item -> item.getItem() instanceof AxeItem);
             }

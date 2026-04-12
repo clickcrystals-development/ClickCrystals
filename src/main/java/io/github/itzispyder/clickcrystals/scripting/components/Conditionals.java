@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.scripting.components;
 
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.modules.Module;
+import io.github.itzispyder.clickcrystals.modules.modules.anchoring.AxeSwap;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgs;
 import io.github.itzispyder.clickcrystals.scripting.ScriptArgsReader;
 import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
@@ -377,7 +378,11 @@ public class Conditionals implements Global {
         COLLIDING_VERTICALLY = register("colliding_vertically", ctx -> ctx.end(true, EntityUtils.isCollidingVertically(ctx.entity)));
         JUMPING = register("jumping", ctx -> ctx.end(true, PlayerUtils.valid() && mc.player.input.keyPresses.jump() && !mc.player.isUnderWater()));
         MOVING = register("moving", ctx -> ctx.end(true, EntityUtils.isMoving(ctx.entity)));
-        BLOCKING = register("blocking", ctx -> ctx.end(true, EntityUtils.isBlocking(ctx.entity)));
+        BLOCKING = register("blocking", ctx -> {
+            AxeSwap axeSwap = Module.get(AxeSwap.class);
+            boolean directional = axeSwap != null && axeSwap.allowBackstab.getVal();
+            return ctx.end(true, EntityUtils.isBlocking(ctx.entity, directional));
+        });
         ON_GROUND = register("on_ground", ctx -> ctx.end(true, ctx.entity.onGround()));
         ON_FIRE = register("on_fire", ctx -> ctx.end(true, ctx.entity.isOnFire()));
         FROZEN = register("frozen", ctx -> ctx.end(true, ctx.entity.isFullyFrozen()));

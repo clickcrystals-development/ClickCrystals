@@ -48,20 +48,24 @@ public class EntityUtils implements Global {
     }
 
     public static boolean isBlocking(Entity ref) {
+        return isBlocking(ref, false);
+    }
+
+    public static boolean isBlocking(Entity ref, boolean directional) {
         if (!(ref instanceof LivingEntity liv))
             return false;
         if (!liv.isBlocking())
             return false;
-            
-        // Check if shield is facing the attacker
+        if (!directional)
+            return true;
+
+        // shield only counts if they're facing you
         if (PlayerUtils.invalid())
             return true;
-            
+
         Vec3 targetLook = liv.getLookAngle().normalize();
         Vec3 toAttacker = PlayerUtils.player().position().subtract(liv.position()).normalize();
-        double dot = targetLook.dot(toAttacker);
-        
-        return dot > 0.3; // Shield blocks if target is facing attacker
+        return targetLook.dot(toAttacker) > 0.3;
     }
 
     public static boolean isColliding(Entity ref) {
