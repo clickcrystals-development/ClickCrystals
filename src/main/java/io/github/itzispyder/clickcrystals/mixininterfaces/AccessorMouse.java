@@ -9,4 +9,6 @@ public interface AccessorMouse {
     void clickCrystals$middleClick();
 
     void scroll(double amount);
+
+    void setCursorPos(double x, double y);
 }

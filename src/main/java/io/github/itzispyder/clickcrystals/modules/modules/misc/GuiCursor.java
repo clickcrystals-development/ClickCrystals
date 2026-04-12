@@ -18,6 +18,7 @@ import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
+import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorMouse;
 import net.minecraft.world.item.Items;
 import org.lwjgl.glfw.GLFW;
 
@@ -62,7 +63,12 @@ public class GuiCursor extends Module implements Listener {
         int h2 = win.getGuiScaledHeight();
         double ratW = (double)w2 / (double)w1;
         double ratH = (double)h2 / (double)h1;
-        GLFW.glfwSetCursorPos(win.handle(), x / ratW, y / ratH);
+        double rawX = x / ratW;
+        double rawY = y / ratH;
+        GLFW.glfwSetCursorPos(win.handle(), rawX, rawY);
+        // Update internal mouse state directly for Wayland compatibility,
+        // where glfwSetCursorPos silently fails in normal cursor mode
+        ((AccessorMouse) mc.mouseHandler).setCursorPos(rawX, rawY);
     }
 
     public static double getCursorX(double x) {

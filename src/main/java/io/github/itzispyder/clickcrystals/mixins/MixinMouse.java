@@ -18,6 +18,8 @@ public abstract class MixinMouse implements Global, AccessorMouse {
 
     @Shadow private double accumulatedDY;
     @Shadow private double accumulatedDX;
+    @Shadow private double xpos;
+    @Shadow private double ypos;
     @Shadow protected abstract void onButton(long window, MouseButtonInfo input, int action);
     @Shadow protected abstract void onScroll(long window, double horizontal, double vertical);
 
@@ -74,5 +76,11 @@ public abstract class MixinMouse implements Global, AccessorMouse {
     @Override
     public void scroll(double amount) {
         onScroll(mc.getWindow().handle(), 0, amount);
+    }
+
+    @Override
+    public void setCursorPos(double x, double y) {
+        this.xpos = x;
+        this.ypos = y;
     }
 }
