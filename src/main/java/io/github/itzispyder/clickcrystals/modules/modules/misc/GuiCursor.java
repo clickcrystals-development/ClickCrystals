@@ -13,7 +13,7 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
-import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorMouse;
+import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorMouseHandler;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
 import net.minecraft.world.InteractionHand;
@@ -22,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.lwjgl.glfw.GLFW;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -43,13 +44,13 @@ public class GuiCursor extends Module implements Listener {
     );
     public final ModuleSetting<Boolean> closestTotemSlot = scGeneral.add(createBoolSetting()
             .name("closest-totem-slot")
-            .description("Picks the totem slot closest to the center of the inventory instead of the first one found.")
+            .description("Picks the totem slot closest to the center of the inventory instead of the first one found. Requires cursor-action to be HOVER_TOTEM.")
             .def(true)
             .build()
     );
 
-    private final List<int[]> totemSlots = new ArrayList<>();
-    private final List<int[]> allSlots = new ArrayList<>();
+    private final List<Point> totemSlots = new ArrayList<>();
+    private final List<Point> allSlots = new ArrayList<>();
     private int collectState = -1; // -1 idle, 0 waiting, 1 collecting
     private boolean shiftKeyDown;
 
@@ -86,7 +87,7 @@ public class GuiCursor extends Module implements Listener {
         GLFW.glfwSetCursorPos(win.handle(), rawX, rawY);
         // Update internal mouse state directly for Wayland compatibility,
         // where glfwSetCursorPos silently fails in normal cursor mode
-        ((AccessorMouse) mc.mouseHandler).setCursorPos(rawX, rawY);
+        ((AccessorMouseHandler) mc.mouseHandler).setCursorPos(rawX, rawY);
     }
 
     public static double getCursorX(double x) {
@@ -125,20 +126,24 @@ public class GuiCursor extends Module implements Listener {
     private void pickAndMoveCursor() {
         if (totemSlots.isEmpty()) return;
 
-        if (!closestTotemSlot.getVal() || allSlots.isEmpty()) {
-            setCursor(totemSlots.getFirst()[0], totemSlots.getFirst()[1]);
+        boolean useClosest = cursorAction.getVal() == Mode.HOVER_TOTEM
+                && closestTotemSlot.getVal()
+                && !allSlots.isEmpty();
+
+        if (!useClosest) {
+            Point first = totemSlots.getFirst();
+            setCursor(first.x, first.y);
             return;
         }
 
-        // average all slot centers to get the inv center without touching protected fields
-        double cx = allSlots.stream().mapToInt(s -> s[0]).average().orElse(0);
-        double cy = allSlots.stream().mapToInt(s -> s[1]).average().orElse(0);
+        double cx = allSlots.stream().mapToInt(p -> p.x).average().orElse(0);
+        double cy = allSlots.stream().mapToInt(p -> p.y).average().orElse(0);
 
-        int[] chosen = totemSlots.stream()
-                .min(Comparator.comparingDouble(a -> Math.hypot(a[0] - cx, a[1] - cy)))
+        Point chosen = totemSlots.stream()
+                .min(Comparator.comparingDouble(p -> Math.hypot(p.x - cx, p.y - cy)))
                 .orElse(totemSlots.getFirst());
 
-        setCursor(chosen[0], chosen[1]);
+        setCursor(chosen.x, chosen.y);
     }
 
     @EventHandler
@@ -160,10 +165,10 @@ public class GuiCursor extends Module implements Listener {
             collectState = 1;
         }
 
-        allSlots.add(new int[]{sx, sy});
+        allSlots.add(new Point(sx, sy));
 
         if (e.getItem().is(Items.TOTEM_OF_UNDYING))
-            totemSlots.add(new int[]{sx, sy});
+            totemSlots.add(new Point(sx, sy));
     }
 
     @EventHandler
