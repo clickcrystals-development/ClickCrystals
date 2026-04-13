@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Inventory.class)
-public abstract class MixinPlayerInventory implements Global {
+public abstract class MixinInventory implements Global {
 
     @Inject(method = "addResource(ILnet/minecraft/world/item/ItemStack;)I", at = @At("HEAD"))
     public void addStack(int slot, ItemStack stack, CallbackInfoReturnable<Integer> cir) {

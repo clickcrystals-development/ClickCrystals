@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ChatComponent.class)
-public abstract class MixinChatHud implements Global {
+public abstract class MixinChatComponent implements Global {
 
     @Inject(method = "addMessage",at = @At("HEAD"), cancellable = true)
     public void addMessage(Component contents, MessageSignature signature, GuiMessageSource source, GuiMessageTag tag, CallbackInfo ci) {

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SoundEngine.class)
-public abstract class MixinSoundSystem implements Global {
+public abstract class MixinSoundEngine implements Global {
 
     @Inject(method = "play(Lnet/minecraft/client/resources/sounds/SoundInstance;)Lnet/minecraft/client/sounds/SoundEngine$PlayResult;", at = @At("HEAD"), cancellable = true)
     public void play(SoundInstance sound, CallbackInfoReturnable<SoundEngine.PlayResult> cir) {

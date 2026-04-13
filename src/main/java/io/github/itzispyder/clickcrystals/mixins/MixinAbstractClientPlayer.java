@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractClientPlayer.class)
-public abstract class MixinAbstractClientPlayerEntity implements Global {
+public abstract class MixinAbstractClientPlayer implements Global {
 
     @Shadow @Nullable protected abstract PlayerInfo getPlayerInfo();
 
