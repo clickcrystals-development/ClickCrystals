@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(ItemInHandRenderer.class)
-public abstract class MixinHeldItemRenderer implements Global {
+public abstract class MixinItemInHandRenderer implements Global {
 
     @Inject(method = "renderArmWithItem", at = @At("HEAD"))
     public void renderFirstPersonItemInvoke(AbstractClientPlayer player, float tickProgress, float pitch, InteractionHand hand, float swingProgress, ItemStack item, float equipProgress, PoseStack matrices, SubmitNodeCollector orderedRenderCommandQueue, int light, CallbackInfo ci) {

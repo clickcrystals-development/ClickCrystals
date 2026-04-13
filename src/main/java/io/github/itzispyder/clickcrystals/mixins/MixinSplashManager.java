@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(SplashManager.class)
-public class MixinSplashTextResourceSupplier implements Global {
+public class MixinSplashManager implements Global {
 
     @Shadow private List<String> splashes;
     @Unique private static final String SPLASH_URL = "https://raw.githubusercontent.com/clickcrystals-development/ClickCrystals-Plus-Pack/main/assets/minecraft/texts/splashes.txt";

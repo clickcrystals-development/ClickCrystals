@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MultiPlayerGameMode.class)
-public abstract class MixinClientPlayerInteractionManager implements Global {
+public abstract class MixinMultiPlayerGameMode implements Global {
 
     @Shadow private int destroyDelay;
 

@@ -3,8 +3,8 @@ package io.github.itzispyder.clickcrystals.util.minecraft;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
-import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorKeyboard;
-import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorMouse;
+import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorKeyboardHandler;
+import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorMouseHandler;
 import io.github.itzispyder.clickcrystals.mixins.AccessorMinecraftClient;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.GuiCursor;
@@ -152,23 +152,23 @@ public final class InteractionUtils implements Global {
     }
 
     public static void leftClick() {
-        ((AccessorMouse) mc.mouseHandler).leftClick();
+        ((AccessorMouseHandler) mc.mouseHandler).leftClick();
     }
 
     public static void rightClick() {
-        ((AccessorMouse) mc.mouseHandler).clickCrystals$rightClick();
+        ((AccessorMouseHandler) mc.mouseHandler).clickCrystals$rightClick();
     }
 
     public static void middleClick() {
-        ((AccessorMouse) mc.mouseHandler).clickCrystals$middleClick();
+        ((AccessorMouseHandler) mc.mouseHandler).clickCrystals$middleClick();
     }
 
     public static void mouseScroll(double amount) {
-        ((AccessorMouse) mc.mouseHandler).scroll(amount);
+        ((AccessorMouseHandler) mc.mouseHandler).scroll(amount);
     }
 
     public static void pressKey(int key, int scan) {
-        ((AccessorKeyboard) mc.keyboardHandler).clickCrystals$pressKey(key, scan);
+        ((AccessorKeyboardHandler) mc.keyboardHandler).clickCrystals$pressKey(key, scan);
     }
 
     public static void pressKeyExtendedName(String name) {

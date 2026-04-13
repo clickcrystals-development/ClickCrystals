@@ -4,7 +4,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.events.events.client.MouseScrollEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
-import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorMouse;
+import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorMouseHandler;
 import net.minecraft.client.MouseHandler;
 import net.minecraft.client.input.MouseButtonInfo;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MouseHandler.class)
-public abstract class MixinMouse implements Global, AccessorMouse {
+public abstract class MixinMouseHandlerHandler implements Global, AccessorMouseHandler {
 
     @Shadow private double accumulatedDY;
     @Shadow private double accumulatedDX;

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientLevel.class)
-public abstract class MixinClientWorld {
+public abstract class MixinClientLevel {
 
     @Shadow @Final private ClientLevel.ClientLevelData clientLevelData;
 
