@@ -48,7 +48,7 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
 
     @Override
     public void setEnabled(boolean enabled) {
-        this.setEnabled(enabled,true);
+        this.setEnabled(enabled, true);
     }
 
     public void setEnabled(boolean enabled, boolean sendFeedback) {
@@ -71,7 +71,8 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
     }
 
     public String getDescriptionLimited() {
-        if (description.length() <= 35) return description;
+        if (description.length() <= 35)
+            return description;
         return description.substring(0, 35) + "...";
     }
 
@@ -96,7 +97,8 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
     }
 
     public String getNameLimited() {
-        if (name.length() <= 14) return name;
+        if (name.length() <= 14)
+            return name;
         return name.substring(0, 14) + "...";
     }
 
@@ -106,12 +108,12 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
 
     public String getHelp() {
         return """
-        
-        %s§f%s
-        §3Category: §b%s
-        §7%s
-        
-        """.formatted(starter, name, category.name(), description);
+
+                %s§f%s
+                §3Category: §b%s
+                §7%s
+
+                """.formatted(starter, name, category.name(), description);
     }
 
     public void sendUpdateInfo() {
@@ -126,13 +128,14 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
     }
 
     public String getSearchQuery() {
-        String norm = id.toLowerCase() + ";" + name.toLowerCase() + ";" + description.toLowerCase().replaceAll("[^a-z0-9 ]"," ");
+        String norm = id.toLowerCase() + ";" + name.toLowerCase() + ";"
+                + description.toLowerCase().replaceAll("[^a-z0-9 ]", " ");
         return norm + ";" + norm.replaceAll(" ", "").trim();
     }
 
     @SuppressWarnings("unchecked")
     public static <T extends Module> T get(Class<T> moduleClass) {
-        return (T)system.modules().get(moduleClass);
+        return (T) system.modules().get(moduleClass);
     }
 
     public static <T extends Module> void acceptFor(Class<T> moduleClass, Consumer<T> action) {
@@ -152,8 +155,7 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
 
         if (module == null) {
             return null;
-        }
-        else {
+        } else {
             return action.apply(module);
         }
     }

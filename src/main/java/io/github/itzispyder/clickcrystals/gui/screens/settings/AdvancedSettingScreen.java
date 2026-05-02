@@ -32,18 +32,17 @@ public class AdvancedSettingScreen extends DefaultBase {
                     }
                 }), 200);
             })
-            .build()
-    );
+            .build());
     public final ModuleSetting<Boolean> modMenu = scGui.add(scGui.createBoolSetting()
             .name("disable-mod-menu-integration")
-            .description("Disable accessing the ClickCrystals GUI using Mod Menu (the button won't appear after re-launch)")
+            .description(
+                    "Disable accessing the ClickCrystals GUI using Mod Menu (the button won't appear after re-launch)")
             .def(ClickCrystals.config.isDisableModMenuIntegration())
             .onSettingChange(setting -> {
                 ClickCrystals.config.setDisableModMenuIntegration(setting.getVal());
                 ClickCrystals.config.save();
             })
-            .build()
-    );
+            .build());
     public final ModuleSetting<Boolean> disableCustomLoading = scGui.add(scGui.createBoolSetting()
             .name("disable-custom-loading-screen")
             .description("Disable the custom ClickCrystals resource loading screen!")
@@ -52,8 +51,7 @@ public class AdvancedSettingScreen extends DefaultBase {
                 ClickCrystals.config.setDisableCustomLoading(setting.getVal());
                 ClickCrystals.config.save();
             })
-            .build()
-    );
+            .build());
     public final ModuleSetting<Boolean> disableModuleToggleBroadcast = scGui.add(scGui.createBoolSetting()
             .name("disable-module-toggle-broadcast")
             .description("Disable chat broadcasts when you toggle a ClickCrystals feature/module")
@@ -62,8 +60,7 @@ public class AdvancedSettingScreen extends DefaultBase {
                 ClickCrystals.config.setDisableModuleToggleBroadcast(setting.getVal());
                 ClickCrystals.config.save();
             })
-            .build()
-    );
+            .build());
     public final ModuleSetting<Boolean> debugMode = scGui.add(scGui.createBoolSetting()
             .name("debug-mode")
             .description("Useful while developing, for devs only ;)")
@@ -72,11 +69,10 @@ public class AdvancedSettingScreen extends DefaultBase {
                 ClickCrystals.config.setDevMode(setting.getVal());
                 ClickCrystals.config.save();
             })
-            .build()
-    );
+            .build());
 
     // ------------------------------------------------------------------
-    //  Client Theme section
+    // Client Theme section
     // ------------------------------------------------------------------
     private final SettingSection scTheme = new SettingSection("client-theme");
     public final ModuleSetting<String> themeColor = scTheme.add(scTheme.createStringSetting()
@@ -88,7 +84,8 @@ public class AdvancedSettingScreen extends DefaultBase {
             .onSettingChange(setting -> {
                 String input = setting.getVal().trim();
                 // Normalise: accept 'RRGGBB' without leading #
-                if (!input.startsWith("#")) input = "#" + input;
+                if (!input.startsWith("#"))
+                    input = "#" + input;
                 Color parsed = Color.parse(input);
                 // Fall back to default if the string is invalid
                 int argb = parsed.getHexOpaque();
@@ -101,13 +98,13 @@ public class AdvancedSettingScreen extends DefaultBase {
                 ClickCrystals.config.setClientThemeColor(ClientTheme.getThemeHex());
                 ClickCrystals.config.save();
             })
-            .build()
-    );
+            .build());
 
     public AdvancedSettingScreen() {
         super("Advanced Settings Screen");
 
-        ScrollPanelElement panel = new ScrollPanelElement(this, contentX + 5, contentY + 21, contentWidth - 5, contentHeight - 21);
+        ScrollPanelElement panel = new ScrollPanelElement(this, contentX + 5, contentY + 21, contentWidth - 5,
+                contentHeight - 21);
         int caret = contentY + 25;
         int margin = contentX + 5;
 

@@ -19,18 +19,23 @@ public abstract class Hud implements Positionable, Global {
 
     public static Color DEFAULT_COLOR = new Color(0x4007CDDF);
 
-    /** Sync DEFAULT_COLOR alpha with the current theme primary. Called by ClientTheme.syncShades(). */
+    /**
+     * Sync DEFAULT_COLOR alpha with the current theme primary. Called by
+     * ClientTheme.syncShades().
+     */
     public static void syncDefaultColor() {
         int alpha = DEFAULT_COLOR.getAlpha();
         int rgb = ClientTheme.primary() & 0x00FFFFFF;
         DEFAULT_COLOR = new Color((alpha << 24) | rgb);
     }
+
     private final Dimension defaultDimension;
     private int x, y, width, height, argb;
     private boolean fixed;
     private final String id;
 
-    public Hud(String id, int x, int y, int width, int height, Dimension defaultDimension, int argb, boolean renderBorder) {
+    public Hud(String id, int x, int y, int width, int height, Dimension defaultDimension, int argb,
+            boolean renderBorder) {
         this.x = x;
         this.y = y;
         this.width = width;

@@ -40,33 +40,38 @@ import static io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUti
 
 public class ClickScriptIDE extends DefaultBase {
 
-    public static final TextFieldElement.TextHighlighter CLICKSCRIPT_HIGHLIGHTER = new TextFieldElement.TextHighlighter() {{
-        ChatColor og = getOriginalColor();
-        Function<ChatColor, Function<String, String>> applyColor = c -> s -> "%s%s%s".formatted(c, s, og);
-        Function<ChatColor, Function<String, String>> applyUnderline = c -> s -> "%s§n%s§r%s".formatted(c, s, og);
-        Function<ChatColor, Function<String, String>> applyItalic = c -> s -> "%s§o%s§r%s".formatted(c, s, og);
+    public static final TextFieldElement.TextHighlighter CLICKSCRIPT_HIGHLIGHTER = new TextFieldElement.TextHighlighter() {
+        {
+            ChatColor og = getOriginalColor();
+            Function<ChatColor, Function<String, String>> applyColor = c -> s -> "%s%s%s".formatted(c, s, og);
+            Function<ChatColor, Function<String, String>> applyUnderline = c -> s -> "%s§n%s§r%s".formatted(c, s, og);
+            Function<ChatColor, Function<String, String>> applyItalic = c -> s -> "%s§o%s§r%s".formatted(c, s, og);
 
-        // special
-        this.put(s -> StringUtils.startsWithAny(s, ":", "#"), applyColor.apply(ChatColor.DARK_GREEN));
-        this.put(s -> s.replaceAll("[0-9><=!.+~-]", "").isEmpty(), applyColor.apply(ChatColor.DARK_AQUA));
-        this.put(ChatColor.GRAY, "then", "back", "all");
-        // enums-leading
-        this.put(s -> ArrayUtils.enumContains(OnEventCmd.EventType.class, s), applyUnderline.apply(ChatColor.YELLOW));
-        this.put(Conditionals::isRegistered, applyItalic.apply(ChatColor.YELLOW));
-        this.put(ChatColor.YELLOW, Arrays.stream(InputType.values()).map(e -> e.name().toLowerCase()).toList());
-        this.put(ChatColor.YELLOW, Arrays.stream(ModuleCmd.Action.values()).map(e -> e.name().toLowerCase()).toList());
-        this.put(ChatColor.YELLOW, Arrays.stream(TargetType.values()).map(e -> e.name().toLowerCase()).toList());
-        this.put(ChatColor.YELLOW, Arrays.stream(ConfigCmd.Type.values()).map(e -> e.name().toLowerCase()).toList());
-        this.put(ChatColor.YELLOW, Arrays.stream(DefineCmd.Type.values()).map(e -> e.name().toLowerCase()).toList());
-        // enums-trailing
-        this.put(ChatColor.YELLOW, Arrays.stream(Dimensions.values()).map(e -> e.name().toLowerCase()).toList());
-        // main keywords
-        this.put(ChatColor.ORANGE, ClickScript.collectNames());
-    }};
+            // special
+            this.put(s -> StringUtils.startsWithAny(s, ":", "#"), applyColor.apply(ChatColor.DARK_GREEN));
+            this.put(s -> s.replaceAll("[0-9><=!.+~-]", "").isEmpty(), applyColor.apply(ChatColor.DARK_AQUA));
+            this.put(ChatColor.GRAY, "then", "back", "all");
+            // enums-leading
+            this.put(s -> ArrayUtils.enumContains(OnEventCmd.EventType.class, s),
+                    applyUnderline.apply(ChatColor.YELLOW));
+            this.put(Conditionals::isRegistered, applyItalic.apply(ChatColor.YELLOW));
+            this.put(ChatColor.YELLOW, Arrays.stream(InputType.values()).map(e -> e.name().toLowerCase()).toList());
+            this.put(ChatColor.YELLOW,
+                    Arrays.stream(ModuleCmd.Action.values()).map(e -> e.name().toLowerCase()).toList());
+            this.put(ChatColor.YELLOW, Arrays.stream(TargetType.values()).map(e -> e.name().toLowerCase()).toList());
+            this.put(ChatColor.YELLOW,
+                    Arrays.stream(ConfigCmd.Type.values()).map(e -> e.name().toLowerCase()).toList());
+            this.put(ChatColor.YELLOW,
+                    Arrays.stream(DefineCmd.Type.values()).map(e -> e.name().toLowerCase()).toList());
+            // enums-trailing
+            this.put(ChatColor.YELLOW, Arrays.stream(Dimensions.values()).map(e -> e.name().toLowerCase()).toList());
+            // main keywords
+            this.put(ChatColor.ORANGE, ClickScript.collectNames());
+        }
+    };
     private final String filename, filepath;
     private final LoadingIconElement loading;
-    private final AbstractElement
-            saveButton,
+    private final AbstractElement saveButton,
             saveAndCloseButton,
             closeButton,
             discardChangesButton,
@@ -74,10 +79,13 @@ public class ClickScriptIDE extends DefaultBase {
             openScriptsButton,
             deleteButton;
 
-    public TextFieldElement textField = new TextFieldElement(contentX, contentY + 21, contentWidth, contentHeight - 21) {{
-        this.setHighlighter(CLICKSCRIPT_HIGHLIGHTER);
-        this.setBackgroundColor(ChatColor.RESET);
-    }};
+    public TextFieldElement textField = new TextFieldElement(contentX, contentY + 21, contentWidth,
+            contentHeight - 21) {
+        {
+            this.setHighlighter(CLICKSCRIPT_HIGHLIGHTER);
+            this.setBackgroundColor(ChatColor.RESET);
+        }
+    };
 
     public ClickScriptIDE(ScriptedModule module) {
         this(new File(module.filepath));
@@ -182,9 +190,12 @@ public class ClickScriptIDE extends DefaultBase {
 
         // backdrop
         fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, ClientTheme.primary(), ClientTheme.primary());
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, ClientTheme.primary(),
+                ClientTheme.primary());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, ClientTheme.primaryHalf(),
+                ClientTheme.primaryClear());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, ClientTheme.primaryHalf(),
+                ClientTheme.primaryClear());
         fillRoundTabTop(context, 110, 10, 300, 230, 10, Shades.DARK_GRAY);
 
         // navbar
@@ -238,7 +249,6 @@ public class ClickScriptIDE extends DefaultBase {
 
         context.pose().popMatrix();
 
-
         // content
         caret = contentY + 10;
         drawTexture(context, Tex.ICON_CLICKSCRIPT, contentX + 10, caret - 7, 15, 15);
@@ -273,8 +283,7 @@ public class ClickScriptIDE extends DefaultBase {
                     textField.onInput(input -> textField.insertInput(finalStr));
                     textField.shiftEnd();
                 });
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 system.printErr("Failed to load IDE contents: " + ex.getMessage());
                 // On first load failure, just show empty editor instead of navigating away
                 mc.execute(() -> {
@@ -307,8 +316,7 @@ public class ClickScriptIDE extends DefaultBase {
                 if (mc.screen instanceof ScriptsBrowsingScreen) {
                     mc.setScreen(new ScriptsBrowsingScreen());
                 }
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 system.printErr("Error: IDE failed to save script");
                 UserInputListener.openPreviousScreen();
             }
@@ -322,12 +330,10 @@ public class ClickScriptIDE extends DefaultBase {
             File file = new File(filepath);
             if (file.delete()) {
                 ReloadCommand.reload();
-            }
-            else {
+            } else {
                 throw new IllegalStateException("file refused");
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             system.printErr("Error: cannot delete script");
             system.printErr(ex.getMessage());
         }

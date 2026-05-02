@@ -76,7 +76,8 @@ public class DownloadScriptScreen extends AnimatedBase {
         this.addChild(this.grid.getPanel());
         this.filterQuery(true);
 
-        ButtonElement backButton = new ButtonElement("< Back", baseX + baseWidth - 50 - 10, baseY + 10, 50, 15, (mx, my, self) -> UserInputListener.openModulesScreen());
+        ButtonElement backButton = new ButtonElement("< Back", baseX + baseWidth - 50 - 10, baseY + 10, 50, 15,
+                (mx, my, self) -> UserInputListener.openModulesScreen());
         this.addChild(backButton);
     }
 
@@ -86,8 +87,10 @@ public class DownloadScriptScreen extends AnimatedBase {
 
         // backdrop
         RenderUtils.fillRoundRect(context, baseX, baseY, baseWidth, baseHeight, 10, 0xFF202020);
-        RenderUtils.fillRoundShadow(context, baseX, baseY, baseWidth, baseHeight, 10, 1, ClientTheme.primary(), ClientTheme.primary());
-        RenderUtils.fillRoundShadow(context, baseX, baseY, baseWidth, baseHeight, 10, 10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
+        RenderUtils.fillRoundShadow(context, baseX, baseY, baseWidth, baseHeight, 10, 1, ClientTheme.primary(),
+                ClientTheme.primary());
+        RenderUtils.fillRoundShadow(context, baseX, baseY, baseWidth, baseHeight, 10, 10, ClientTheme.primaryHalf(),
+                ClientTheme.primaryClear());
 
         // content
         // navbar
@@ -107,8 +110,9 @@ public class DownloadScriptScreen extends AnimatedBase {
         int textX = baseX + (baseWidth - textW) / 2;
 
         Matrix3x2f matrices = context.pose().pushMatrix();
-//        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-12), textX, caret, 0);
-        matrices.rotateAbout((float)Math.toRadians(-12), textX, caret);
+        // matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-12), textX, caret,
+        // 0);
+        matrices.rotateAbout((float) Math.toRadians(-12), textX, caret);
         RenderUtils.drawTexture(context, Tex.ICON, textX - 12, caret - 7, 20, 20);
         context.pose().popMatrix();
 
@@ -181,7 +185,7 @@ public class DownloadScriptScreen extends AnimatedBase {
 
         @Override
         public void mouseClicked(double mouseX, double mouseY, int button) {
-            if (isHovered((int)mouseX, (int)mouseY)) {
+            if (isHovered((int) mouseX, (int) mouseY)) {
                 currentFilter = filter;
                 filterQuery(true);
             }
@@ -201,7 +205,8 @@ public class DownloadScriptScreen extends AnimatedBase {
         TOTEM;
 
         public String getURL() {
-            return "https://itzispyder.github.io/clickcrystals/scripts/content/%s.category".formatted(this.name().toLowerCase());
+            return "https://itzispyder.github.io/clickcrystals/scripts/content/%s.category"
+                    .formatted(this.name().toLowerCase());
         }
     }
 
@@ -232,14 +237,12 @@ public class DownloadScriptScreen extends AnimatedBase {
                     line = StringUtils.capitalizeWords(line);
                     name = line;
                     hasName = true;
-                }
-                else if (line.matches(".*(def description|def desc|description|desc).*")) {
+                } else if (line.matches(".*(def description|def desc|description|desc).*")) {
                     line = line.replaceAll(".*(def description|def desc|description|desc)\\s+", "");
                     line = line.replaceAll("(^\\\")|(\\\"$)", "");
                     desc = line;
                     hasDesc = true;
-                }
-                else if (line.matches("^\\s*(\\/{2})\\s*@\\s*.*$")) {
+                } else if (line.matches("^\\s*(\\/{2})\\s*@\\s*.*$")) {
                     line = line.replaceAll("^\\s*(\\/{2})\\s*@\\s*", "");
                     line = StringUtils.capitalizeWords(line);
                     author = line;
@@ -270,8 +273,7 @@ public class DownloadScriptScreen extends AnimatedBase {
                         .map(ScriptObject::parse)
                         .toList());
                 return list;
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 system.printErrF("An error occurred while downloading online scripts: %s", ex.getMessage());
                 return list;
             }
@@ -293,9 +295,9 @@ public class DownloadScriptScreen extends AnimatedBase {
             try {
                 File file = new File(toLocalPath());
                 FileValidationUtils.quickWrite(file, contents);
-            }
-            catch (Exception ex) {
-                system.printErrF("An error occurred while trying to download script '%s': %s", toLocalPath(), ex.getMessage());
+            } catch (Exception ex) {
+                system.printErrF("An error occurred while trying to download script '%s': %s", toLocalPath(),
+                        ex.getMessage());
             }
         }
 
@@ -367,8 +369,7 @@ public class DownloadScriptScreen extends AnimatedBase {
                     shade1,
                     0xFF323232,
                     0xFF323232,
-                    shade2
-            );
+                    shade2);
 
             // title and author
             caret += 10;
@@ -382,7 +383,7 @@ public class DownloadScriptScreen extends AnimatedBase {
             caret += 15;
             for (String line : TextUtils.wordWrap(script.desc, width - 10, 0.8F)) {
                 RenderUtils.drawText(context, line, margin, caret, 0.8F, false);
-                caret = (int)(caret + mc.font.lineHeight * 0.8F);
+                caret = (int) (caret + mc.font.lineHeight * 0.8F);
             }
 
             // content
@@ -400,7 +401,7 @@ public class DownloadScriptScreen extends AnimatedBase {
             for (int i = 0; i < max; i++) {
                 String line = lines.get(i);
                 RenderUtils.drawText(context, line, margin, caret, 0.4F, false);
-                caret = (int)(caret + mc.font.lineHeight * 0.4F);
+                caret = (int) (caret + mc.font.lineHeight * 0.4F);
             }
             context.disableScissor();
             context.pose().popMatrix();
@@ -413,7 +414,7 @@ public class DownloadScriptScreen extends AnimatedBase {
 
         @Override
         public void mouseClicked(double mouseX, double mouseY, int button) {
-            if (!isHovered((int)mouseX, (int)mouseY))
+            if (!isHovered((int) mouseX, (int) mouseY))
                 return;
             if (button != 0 || downloadStatus.isRendering() || owned)
                 return;

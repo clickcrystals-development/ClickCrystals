@@ -38,7 +38,8 @@ public class HudEditScreen extends GuiScreen {
                 .pos(mc.getWindow().getGuiScaledWidth() - 30, 11)
                 .dimensions(20, 20)
                 .onRender((context, mouseX, mouseY, button) -> {
-                    RenderUtils.drawTexture(context,Tex.Icons.SETTINGS, button.x, button.y,button.width, button.height);
+                    RenderUtils.drawTexture(context, Tex.Icons.SETTINGS, button.x, button.y, button.width,
+                            button.height);
                 })
                 .onPress(button -> {
                     mc.setScreenAndShow(new ModuleEditScreen(Module.get(InGameHuds.class)));
@@ -62,8 +63,10 @@ public class HudEditScreen extends GuiScreen {
         if (selected != null) {
             RenderUtils.drawHorLine(context, 0, selected.y, context.guiWidth(), ClientTheme.primary());
             RenderUtils.drawVerLine(context, selected.x, 0, context.guiHeight(), ClientTheme.primary());
-            RenderUtils.drawHorLine(context, 0, selected.y + selected.height - 1, context.guiWidth(), ClientTheme.primary());
-            RenderUtils.drawVerLine(context, selected.x + selected.width - 1, 0, context.guiHeight(), ClientTheme.primary());
+            RenderUtils.drawHorLine(context, 0, selected.y + selected.height - 1, context.guiWidth(),
+                    ClientTheme.primary());
+            RenderUtils.drawVerLine(context, selected.x + selected.width - 1, 0, context.guiHeight(),
+                    ClientTheme.primary());
         }
     }
 

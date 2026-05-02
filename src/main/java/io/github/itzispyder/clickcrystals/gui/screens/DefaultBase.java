@@ -23,8 +23,8 @@ public abstract class DefaultBase extends AnimatedBase {
     public final int windowHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
     public final int baseWidth = 420;
     public final int baseHeight = 240;
-    public final int baseX = (int)(windowWidth / 2.0 - baseWidth / 2.0);
-    public final int baseY = (int)(windowHeight / 2.0 - baseHeight / 2.0);
+    public final int baseX = (int) (windowWidth / 2.0 - baseWidth / 2.0);
+    public final int baseY = (int) (windowHeight / 2.0 - baseHeight / 2.0);
     public final int navWidth = 90;
     public final int contentWidth = 300;
     public final int contentHeight = 230;
@@ -54,7 +54,8 @@ public abstract class DefaultBase extends AnimatedBase {
                 .onPress(button -> mc.setScreen(new SearchScreen()))
                 .onRender((context, mouseX, mouseY, button) -> {
                     RenderUtils.fillRoundHoriLine(context, button.x, button.y, navWidth, 12, Shades.LIGHT);
-                    RenderUtils.drawText(context, "§7Search module i.e.", button.x + 7, button.y + button.height / 3, 0.7F, false);
+                    RenderUtils.drawText(context, "§7Search module i.e.", button.x + 7, button.y + button.height / 3,
+                            0.7F, false);
                 }).build();
         buttonHome = AbstractElement.create().dimensions(navWidth, 10)
                 .tooltip("Back to Home")
@@ -63,8 +64,10 @@ public abstract class DefaultBase extends AnimatedBase {
                     if (button.isHovered(mouseX, mouseY)) {
                         RenderUtils.fillRoundHoriLine(context, button.x, button.y, navWidth, 10, Shades.LIGHT_GRAY);
                     }
-                    RenderUtils.drawTexture(context, Tex.Icons.HOME, button.x + 2, button.y, button.height, button.height);
-                    RenderUtils.drawText(context, "Home", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
+                    RenderUtils.drawTexture(context, Tex.Icons.HOME, button.x + 2, button.y, button.height,
+                            button.height);
+                    RenderUtils.drawText(context, "Home", button.x + button.height + 7, button.y + button.height / 3,
+                            0.7F, false);
                 }).build();
         buttonModules = AbstractElement.create().dimensions(navWidth, 10)
                 .tooltip("Browse modules")
@@ -73,8 +76,10 @@ public abstract class DefaultBase extends AnimatedBase {
                     if (button.isHovered(mouseX, mouseY)) {
                         RenderUtils.fillRoundHoriLine(context, button.x, button.y, navWidth, 10, Shades.LIGHT_GRAY);
                     }
-                    RenderUtils.drawTexture(context, Tex.Icons.MODULES, button.x + 2, button.y, button.height, button.height);
-                    RenderUtils.drawText(context, "Modules", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
+                    RenderUtils.drawTexture(context, Tex.Icons.MODULES, button.x + 2, button.y, button.height,
+                            button.height);
+                    RenderUtils.drawText(context, "Modules", button.x + button.height + 7, button.y + button.height / 3,
+                            0.7F, false);
                 }).build();
         buttonNews = AbstractElement.create().dimensions(navWidth, 10)
                 .tooltip("View announcements")
@@ -83,8 +88,10 @@ public abstract class DefaultBase extends AnimatedBase {
                     if (button.isHovered(mouseX, mouseY)) {
                         RenderUtils.fillRoundHoriLine(context, button.x, button.y, navWidth, 10, Shades.LIGHT_GRAY);
                     }
-                    RenderUtils.drawTexture(context, Tex.Icons.ANNOUNCE, button.x + 2, button.y, button.height, button.height);
-                    RenderUtils.drawText(context, "What's New?", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
+                    RenderUtils.drawTexture(context, Tex.Icons.ANNOUNCE, button.x + 2, button.y, button.height,
+                            button.height);
+                    RenderUtils.drawText(context, "What's New?", button.x + button.height + 7,
+                            button.y + button.height / 3, 0.7F, false);
                 }).build();
         buttonSettings = AbstractElement.create().dimensions(navWidth, 10)
                 .tooltip("Browse settings")
@@ -93,8 +100,10 @@ public abstract class DefaultBase extends AnimatedBase {
                     if (button.isHovered(mouseX, mouseY)) {
                         RenderUtils.fillRoundHoriLine(context, button.x, button.y, navWidth, 10, Shades.LIGHT_GRAY);
                     }
-                    RenderUtils.drawTexture(context, Tex.Icons.SETTINGS, button.x + 2, button.y, button.height, button.height);
-                    RenderUtils.drawText(context, "Settings", button.x + button.height + 7, button.y + button.height / 3, 0.7F, false);
+                    RenderUtils.drawTexture(context, Tex.Icons.SETTINGS, button.x + 2, button.y, button.height,
+                            button.height);
+                    RenderUtils.drawText(context, "Settings", button.x + button.height + 7,
+                            button.y + button.height / 3, 0.7F, false);
                 }).build();
         this.addChild(buttonSearch);
         this.addChild(buttonHome);
@@ -117,9 +126,12 @@ public abstract class DefaultBase extends AnimatedBase {
 
         // backdrop
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, ClientTheme.primary(), ClientTheme.primary());
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, ClientTheme.primary(),
+                ClientTheme.primary());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, ClientTheme.primaryHalf(),
+                ClientTheme.primaryClear());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, ClientTheme.primaryHalf(),
+                ClientTheme.primaryClear());
         RenderUtils.fillRoundTabTop(context, 110, 10, 300, 230, 10, Shades.TRANS_DARK_GRAY);
 
         // navbar
@@ -181,7 +193,7 @@ public abstract class DefaultBase extends AnimatedBase {
         int pingX = contentX - 40;
         int pingY = contentY + 156;
         String pingLabel = unreadAnnouncementsCount + " Unread";
-        int pingLabelWidth = 3 + (int)(font.width(pingLabel) * 0.6F) + 3;
+        int pingLabelWidth = 3 + (int) (font.width(pingLabel) * 0.6F) + 3;
         RenderUtils.fillRoundRect(context, pingX, pingY, pingLabelWidth, 10, 5, 0xFFFF3030);
         RenderUtils.drawText(context, pingLabel, pingX + 3, pingY + 3, 0.6F, false);
     }

@@ -53,12 +53,12 @@ public class ModuleListTextHud extends Hud {
             int randomColor = Color.HSBtoRGB(hue / 360f, 0.7f, 1.0f);
             randomColor = (randomColor & 0x00FFFFFF) | 0xAA000000; // reduce alpha by 40%
 
-            int dimColor    = (ClientTheme.primaryDim()   & 0x00FFFFFF) | 0xA6000000;
-            int lightColor  = (ClientTheme.primaryLight() & 0x00FFFFFF) | 0xA6000000;
-            RenderUtils.fillRoundRectGradient(context, x - length - paddingX, y - paddingY, length + 2 * paddingX, 10 + 2 * paddingY, 4, randomColor, dimColor, dimColor, randomColor, lightColor);
+            int dimColor = (ClientTheme.primaryDim() & 0x00FFFFFF) | 0xA6000000;
+            int lightColor = (ClientTheme.primaryLight() & 0x00FFFFFF) | 0xA6000000;
+            RenderUtils.fillRoundRectGradient(context, x - length - paddingX, y - paddingY, length + 2 * paddingX,
+                    10 + 2 * paddingY, 4, randomColor, dimColor, dimColor, randomColor, lightColor);
             RenderUtils.drawRightText(context, display, x, y + 1, true);
             i += 12;
         }
     }
 }
-

@@ -59,11 +59,14 @@ public class ProfilesScreen extends DefaultBase {
                 .pos(0, 0)
                 .dimensions(50, 12)
                 .onRender((context, mouseX, mouseY, button) -> {
-                    RenderUtils.fillRoundHoriLine(context, button.x, button.y, button.width, button.height, Shades.GENERIC_LOW);
+                    RenderUtils.fillRoundHoriLine(context, button.x, button.y, button.width, button.height,
+                            Shades.GENERIC_LOW);
                     if (!ProfileSelect.this.isHovered(mouseX, mouseY)) {
-                        RenderUtils.fillRoundHoriLine(context, button.x + 1, button.y + 1, button.width - 2, button.height - 2, Shades.DARK_GRAY);
+                        RenderUtils.fillRoundHoriLine(context, button.x + 1, button.y + 1, button.width - 2,
+                                button.height - 2, Shades.DARK_GRAY);
                     }
-                    RenderUtils.drawCenteredText(context, "Delete", button.x + button.width / 2, button.y + button.height / 3, 0.7F, false);
+                    RenderUtils.drawCenteredText(context, "Delete", button.x + button.width / 2,
+                            button.y + button.height / 3, 0.7F, false);
                 })
                 .build();
 
@@ -88,7 +91,9 @@ public class ProfilesScreen extends DefaultBase {
                 RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
             }
 
-            String text = "§7 -    " + (system.profiles.profileConfig.getCurrentProfileName().equals(displayName) ? "§7> §b" : "§7") + displayName;
+            String text = "§7 -    "
+                    + (system.profiles.profileConfig.getCurrentProfileName().equals(displayName) ? "§7> §b" : "§7")
+                    + displayName;
             RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
 
             deleteButton.y = y + height / 2 - deleteButton.height / 2;
@@ -97,15 +102,14 @@ public class ProfilesScreen extends DefaultBase {
 
         @Override
         public void mouseClicked(double mouseX, double mouseY, int button) {
-            if (!isHovered((int)mouseX, (int)mouseY)) {
+            if (!isHovered((int) mouseX, (int) mouseY)) {
                 super.mouseClicked(mouseX, mouseY, button);
                 return;
             }
 
-            if (!deleteButton.isHovered((int)mouseX, (int)mouseY)) {
+            if (!deleteButton.isHovered((int) mouseX, (int) mouseY)) {
                 system.profiles.switchProfile(profileId);
-            }
-            else {
+            } else {
                 while (system.profiles.hasProfile(profileId))
                     system.profiles.deleteProfile(profileId);
                 mc.setScreen(new ProfilesScreen());
@@ -129,8 +133,7 @@ public class ProfilesScreen extends DefaultBase {
 
                 if (getQuery().isEmpty()) {
                     screen.selected = null;
-                }
-                else {
+                } else {
                     String name = getQuery().trim()
                             .toLowerCase()
                             .replace(' ', '-')
@@ -158,12 +161,12 @@ public class ProfilesScreen extends DefaultBase {
             RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
 
             textField.y = y + height / 2 - textField.height / 2;
-            textField.x = (int)(x + 30 + (mc.font.width(text) * 0.7));
+            textField.x = (int) (x + 30 + (mc.font.width(text) * 0.7));
         }
 
         @Override
         public void mouseClicked(double mouseX, double mouseY, int button) {
-            if (mc.screen instanceof GuiScreen screen && isHovered((int)mouseX, (int)mouseY)) {
+            if (mc.screen instanceof GuiScreen screen && isHovered((int) mouseX, (int) mouseY)) {
                 textField.setDefaultText("§c*Enter profile name*");
                 screen.selected = textField;
             }
@@ -190,7 +193,7 @@ public class ProfilesScreen extends DefaultBase {
 
         @Override
         public void mouseClicked(double mouseX, double mouseY, int button) {
-            if (isHovered((int)mouseX, (int)mouseY)) {
+            if (isHovered((int) mouseX, (int) mouseY)) {
                 mc.setScreen(new DownloadProfileScreen());
             }
             super.mouseClicked(mouseX, mouseY, button);

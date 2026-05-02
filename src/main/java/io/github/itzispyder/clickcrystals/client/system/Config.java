@@ -75,8 +75,7 @@ public class Config implements JsonSerializable<Config>, Global {
         for (GuiElement child : screen.getChildren()) {
             if (child instanceof CategoryElement e) {
                 overviewScreenEntries.put(e.getCategory().name(), Pair.of(e.getDimensions(), e.isCollapsed()));
-            }
-            else if (child instanceof SearchCategoryElement e) {
+            } else if (child instanceof SearchCategoryElement e) {
                 overviewScreenEntries.put("search-category-element", Pair.of(e.getDimensions(), false));
             }
         }
@@ -135,8 +134,7 @@ public class Config implements JsonSerializable<Config>, Global {
                     e.moveTo(d.left.x, d.left.y);
                     e.setCollapsed(d.right);
                 }
-            }
-            else if (child instanceof SearchCategoryElement e) {
+            } else if (child instanceof SearchCategoryElement e) {
                 var d = overviewScreenEntries.get("search-category-element");
                 if (d != null) {
                     e.moveTo(d.left.x, d.left.y);
@@ -150,8 +148,7 @@ public class Config implements JsonSerializable<Config>, Global {
 
         if (f == null) {
             throw new IllegalStateException("Failed to load module '%s'".formatted(module.getId()));
-        }
-        else {
+        } else {
             ModuleData data = module.getData();
             for (SettingSection section : data.getSettingSections()) {
                 for (ModuleSetting<?> setting : section.getSettings()) {
@@ -162,7 +159,7 @@ public class Config implements JsonSerializable<Config>, Global {
     }
 
     // ------------------------------------------------------------------
-    //  Theme
+    // Theme
     // ------------------------------------------------------------------
 
     public String getClientThemeColor() {

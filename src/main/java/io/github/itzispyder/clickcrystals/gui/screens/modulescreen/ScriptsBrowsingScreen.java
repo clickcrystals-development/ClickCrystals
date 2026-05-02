@@ -44,7 +44,6 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         parentFolder = PATH_SCRIPTS;
     }
 
-
     private final ButtonElement backButton;
 
     public static boolean isRootFolder() {
@@ -54,12 +53,13 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
     public ScriptsBrowsingScreen() {
         super();
 
-        this.backButton = new ButtonElement("< Back", baseX + baseWidth - 50 - 10, baseY + 10, 50, 15, (mx, my, self) -> {
-            File parent = new File(parentFolder).getParentFile();
-            parentFolder = parent.getPath();
-            mc.execute(() -> mc.setScreen(new ScriptsBrowsingScreen()));
-            this.removeChild(self);
-        });
+        this.backButton = new ButtonElement("< Back", baseX + baseWidth - 50 - 10, baseY + 10, 50, 15,
+                (mx, my, self) -> {
+                    File parent = new File(parentFolder).getParentFile();
+                    parentFolder = parent.getPath();
+                    mc.execute(() -> mc.setScreen(new ScriptsBrowsingScreen()));
+                    this.removeChild(self);
+                });
         updateButtonDisplay();
     }
 
@@ -121,7 +121,8 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
         File[] children = file.listFiles();
         boolean childrenValid = (children != null && children.length > 0);
-        boolean scriptLoaded = system.scriptedModules().values().stream().anyMatch(m -> m.parentFolder.equals(file.getPath()));
+        boolean scriptLoaded = system.scriptedModules().values().stream()
+                .anyMatch(m -> m.parentFolder.equals(file.getPath()));
 
         if (scriptLoaded)
             return true;
@@ -159,7 +160,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
             if (children == null)
                 return "Empty";
-            for (File child: children) {
+            for (File child : children) {
                 if (child.isDirectory())
                     childrenDir++;
                 else if (child.getPath().endsWith(".ccs") || child.getPath().endsWith(".txt"))
@@ -185,9 +186,8 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
             boolean isAnimating = animator != null && !animator.isFinished();
             if (isAnimating) {
                 context.pose().pushMatrix();
-                context.pose().translate(-(float)(width * 0.5 * animator.getAnimationReversed()), 0);
-            }
-            else {
+                context.pose().translate(-(float) (width * 0.5 * animator.getAnimationReversed()), 0);
+            } else {
                 this.setAnimator(null);
             }
 
@@ -230,7 +230,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
         @Override
         public void onClick(double mouseX, double mouseY, int button) {
-//            mc.setScreen(new DownloadScriptScreenOld());
+            // mc.setScreen(new DownloadScriptScreenOld());
             mc.setScreen(new DownloadScriptScreen());
         }
     }
@@ -247,7 +247,8 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
                 RenderUtils.fillRect(context, x, y, width, height, (ClientTheme.primary() & 0x00FFFFFF) | 0x60000000);
             }
 
-            String text = "§7Read the full Scripting Documentation and Wiki " + ClientTheme.themedChatCode() + "Here ->";
+            String text = "§7Read the full Scripting Documentation and Wiki " + ClientTheme.themedChatCode()
+                    + "Here ->";
             RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
         }
 
@@ -265,7 +266,8 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
         @Override
         public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
-            String text = "§7To manually reload scripts, execute chat command §f%sreload".formatted(ClickCrystals.commandPrefix.getKeyName());
+            String text = "§7To manually reload scripts, execute chat command §f%sreload"
+                    .formatted(ClickCrystals.commandPrefix.getKeyName());
             RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
         }
 
@@ -277,17 +279,17 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
     private static class ScriptCreateNew extends ModuleElement {
         private static final String newModule = """
-                    def module %s
-                    def desc "Custom Scripted Module"
-                    
-                    on module_enable {
-                        
-                    }
-                    
-                    on module_disable {
-                        
-                    }
-                    """;
+                def module %s
+                def desc "Custom Scripted Module"
+
+                on module_enable {
+
+                }
+
+                on module_disable {
+
+                }
+                """;
 
         private final SearchBarElement textField = new SearchBarElement(0, 0) {
             {
@@ -335,10 +337,12 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
                     .text("§eYour clipboard was invalid. Please copy a script first!")
                     .stayTime(1000 * 3)
                     .build();
-            Runnable notify = () -> { if (PlayerUtils.valid()) {
-                system.closeCurrentScreen();
-                notification.sendToClient();
-            }};
+            Runnable notify = () -> {
+                if (PlayerUtils.valid()) {
+                    system.closeCurrentScreen();
+                    notification.sendToClient();
+                }
+            };
 
             if (script == null || script.isBlank() || script.length() > 50000) {
                 notify.run();
@@ -346,7 +350,8 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
             }
 
             try {
-                Pattern pattern = Pattern.compile(".*(define module|def module|module create) (\\S*).*", Pattern.DOTALL);
+                Pattern pattern = Pattern.compile(".*(define module|def module|module create) (\\S*).*",
+                        Pattern.DOTALL);
                 Matcher matcher = pattern.matcher(script.substring(0, Math.min(script.length(), 1000)));
 
                 if (!matcher.matches()) {
@@ -356,8 +361,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
                 String name = matcher.group(2);
                 ScriptCreateNew.createScriptWithPretext(name, script);
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 notify.run();
             }
         }
@@ -387,7 +391,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
             String text = "§7Create new with ClickScript IDE - §eBETA";
             RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
 
-            int margin = (int)(x + 20 + (mc.font.width(text) * 0.7));
+            int margin = (int) (x + 20 + (mc.font.width(text) * 0.7));
 
             textField.y = y + height / 2 - textField.height / 2;
             textField.x = margin;

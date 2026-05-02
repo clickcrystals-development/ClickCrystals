@@ -14,10 +14,13 @@ import net.minecraft.sounds.SoundEvents;
 
 public final class ChatUtils implements Global {
 
-    /** Builds the {@code [ClickCrystals]} chat prefix as a Component using the current theme color. */
+    /**
+     * Builds the {@code [ClickCrystals]} chat prefix as a Component using the
+     * current theme color.
+     */
     private static MutableComponent buildPrefix() {
         int primary = ClientTheme.primary() & 0x00FFFFFF;
-        int dim     = ClientTheme.primaryDim() & 0x00FFFFFF;
+        int dim = ClientTheme.primaryDim() & 0x00FFFFFF;
         return Component.literal("[")
                 .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x777777)))
                 .append(Component.literal("Click")
@@ -42,7 +45,8 @@ public final class ChatUtils implements Global {
 
     public static void sendWarningMessage(String message) {
         if (message != null && PlayerUtils.valid()) {
-            PlayerUtils.player().sendSystemMessage(buildPrefix().append(Component.literal("§8(§eWarning§8)§r " + message)));
+            PlayerUtils.player()
+                    .sendSystemMessage(buildPrefix().append(Component.literal("§8(§eWarning§8)§r " + message)));
         }
     }
 
@@ -54,7 +58,8 @@ public final class ChatUtils implements Global {
 
     public static void sendSevereMessage(String message) {
         if (message != null && PlayerUtils.valid()) {
-            PlayerUtils.player().sendSystemMessage(buildPrefix().append(Component.literal("§8(§c§lError§8)§r " + message)));
+            PlayerUtils.player()
+                    .sendSystemMessage(buildPrefix().append(Component.literal("§8(§c§lError§8)§r " + message)));
         }
     }
 

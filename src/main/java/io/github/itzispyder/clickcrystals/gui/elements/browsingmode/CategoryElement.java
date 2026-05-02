@@ -23,9 +23,9 @@ public class CategoryElement extends GuiElement {
     public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         if (BrowsingScreen.currentCategory == category && mc.screen instanceof BrowsingScreen) {
             RenderUtils.fillRoundHoriLine(context, x, y, width, height, Shades.GENERIC_LOW);
-            RenderUtils.fillRoundShadow(context, x, y, width, height, height / 2, 3, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
-        }
-        else if (isHovered(mouseX, mouseY)) {
+            RenderUtils.fillRoundShadow(context, x, y, width, height, height / 2, 3, ClientTheme.primaryHalf(),
+                    ClientTheme.primaryClear());
+        } else if (isHovered(mouseX, mouseY)) {
             RenderUtils.fillRoundHoriLine(context, x, y, width, height, Shades.LIGHT_GRAY);
         }
         RenderUtils.drawTexture(context, category.texture(), 10 + x + 1, y + 1, 8, 8);
@@ -34,7 +34,7 @@ public class CategoryElement extends GuiElement {
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (isHovered((int)mouseX, (int)mouseY)) {
+        if (isHovered((int) mouseX, (int) mouseY)) {
             BrowsingScreen.currentCategory = category;
             UserInputListener.openModulesScreen();
         }
