@@ -51,8 +51,7 @@ public class DownloadProfileScreen extends AnimatedBase {
                     drawCenteredText(context, "<- Go Back", b.x + b.width / 2, b.y + (b.height - 7) / 2, false);
                 })
                 .onPress(button -> mc.execute(() -> mc.setScreen(new ProfilesScreen())))
-                .build()
-        );
+                .build());
 
         CompletableFuture<Void> f = ProfileInfo.request();
         this.panel = new GridOrganizer(baseX + 15, baseY + 60, 120, 120, 3, 10);
@@ -62,8 +61,7 @@ public class DownloadProfileScreen extends AnimatedBase {
         f.thenRun(() -> {
             if (f.isDone() && ProfileInfo.hasCurrent()) {
                 this.info = ProfileInfo.getCurrent();
-            }
-            else {
+            } else {
                 this.info = ProfileInfo.createNull();
             }
             if (info.configs().length == 0) {
@@ -91,9 +89,12 @@ public class DownloadProfileScreen extends AnimatedBase {
 
         // backdrop
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, ClientTheme.primary(), ClientTheme.primary());
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, ClientTheme.primary(),
+                ClientTheme.primary());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, ClientTheme.primaryHalf(),
+                ClientTheme.primaryClear());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, ClientTheme.primaryHalf(),
+                ClientTheme.primaryClear());
 
         int margin = 15;
         int caret = 10;
@@ -101,7 +102,6 @@ public class DownloadProfileScreen extends AnimatedBase {
         margin += 25;
         caret += 6;
         drawText(context, "Online Configuration Profiles", margin, caret, 1.3F, false);
-
 
         context.pose().popMatrix();
     }
@@ -169,7 +169,7 @@ public class DownloadProfileScreen extends AnimatedBase {
 
         @Override
         public void mouseClicked(double mouseX, double mouseY, int button) {
-            if (!isHovered((int)mouseX, (int)mouseY))
+            if (!isHovered((int) mouseX, (int) mouseY))
                 return;
             if (button != 0 || loading.isRendering() || owned)
                 return;
