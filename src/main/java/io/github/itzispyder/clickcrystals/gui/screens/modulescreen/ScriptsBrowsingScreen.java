@@ -8,6 +8,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElemen
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ButtonElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
@@ -220,10 +221,10 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         @Override
         public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
-                RenderUtils.fillRect(context, x, y, width, height, 0x6000B7FF);
+                RenderUtils.fillRect(context, x, y, width, height, (ClientTheme.primary() & 0x00FFFFFF) | 0x60000000);
             }
 
-            String text = "Need pre-made scripts? §bDownload here ->";
+            String text = "Need pre-made scripts? " + ClientTheme.themedChatCode() + "Download here ->";
             RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
         }
 
@@ -243,10 +244,10 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         @Override
         public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
-                RenderUtils.fillRect(context, x, y, width, height, 0x6000B7FF);
+                RenderUtils.fillRect(context, x, y, width, height, (ClientTheme.primary() & 0x00FFFFFF) | 0x60000000);
             }
 
-            String text = "§7Read the full Scripting Documentation and Wiki §bHere ->";
+            String text = "§7Read the full Scripting Documentation and Wiki " + ClientTheme.themedChatCode() + "Here ->";
             RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
         }
 

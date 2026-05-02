@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.elements.browsingmode;
 
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.gui.GuiElement;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.BrowsingScreen;
 import io.github.itzispyder.clickcrystals.modules.Category;
@@ -22,7 +23,7 @@ public class CategoryElement extends GuiElement {
     public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         if (BrowsingScreen.currentCategory == category && mc.screen instanceof BrowsingScreen) {
             RenderUtils.fillRoundHoriLine(context, x, y, width, height, Shades.GENERIC_LOW);
-            RenderUtils.fillRoundShadow(context, x, y, width, height, height / 2, 3, 0x8000B7FF, 0x0000B7FF);
+            RenderUtils.fillRoundShadow(context, x, y, width, height, height / 2, 3, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
         }
         else if (isHovered(mouseX, mouseY)) {
             RenderUtils.fillRoundHoriLine(context, x, y, width, height, Shades.LIGHT_GRAY);

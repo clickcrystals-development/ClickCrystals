@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ButtonElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
 import io.github.itzispyder.clickcrystals.gui.misc.Color;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
@@ -85,8 +86,8 @@ public class DownloadScriptScreen extends AnimatedBase {
 
         // backdrop
         RenderUtils.fillRoundRect(context, baseX, baseY, baseWidth, baseHeight, 10, 0xFF202020);
-        RenderUtils.fillRoundShadow(context, baseX, baseY, baseWidth, baseHeight, 10, 1, 0xFF00B7FF, 0xFF00B7FF);
-        RenderUtils.fillRoundShadow(context, baseX, baseY, baseWidth, baseHeight, 10, 10, 0x8000B7FF, 0x0000B7FF);
+        RenderUtils.fillRoundShadow(context, baseX, baseY, baseWidth, baseHeight, 10, 1, ClientTheme.primary(), ClientTheme.primary());
+        RenderUtils.fillRoundShadow(context, baseX, baseY, baseWidth, baseHeight, 10, 10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
 
         // content
         // navbar

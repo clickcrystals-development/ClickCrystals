@@ -6,6 +6,8 @@ import io.github.itzispyder.clickcrystals.gui.Positionable;
 import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.CategoryElement;
 import io.github.itzispyder.clickcrystals.gui.elements.overviewmode.SearchCategoryElement;
 import io.github.itzispyder.clickcrystals.gui.hud.Hud;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
+import io.github.itzispyder.clickcrystals.gui.misc.Color;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.ModuleData;
@@ -36,6 +38,8 @@ public class Config implements JsonSerializable<Config>, Global {
     private boolean modMenuIntegration;
     private boolean devMode;
     private int readAnnouncementCount;
+    /** Persisted as "#RRGGBB". Defaults to the original ClickCrystals blue. */
+    private String clientThemeColor = ClientTheme.getThemeHex();
     private final Map<String, Integer> keybindEntries;
     private final Map<String, Positionable.Dimension> positionEntries;
     private final Map<String, Pair<Positionable.Dimension, Boolean>> overviewScreenEntries;
@@ -157,7 +161,35 @@ public class Config implements JsonSerializable<Config>, Global {
         }
     }
 
+    // ------------------------------------------------------------------
+    //  Theme
+    // ------------------------------------------------------------------
+
+    public String getClientThemeColor() {
+        return clientThemeColor != null ? clientThemeColor : ClientTheme.getThemeHex();
+    }
+
+    public void setClientThemeColor(String hex) {
+        this.clientThemeColor = hex;
+    }
+
+    /** Apply the stored theme color to {@link ClientTheme}. */
+    public void loadTheme() {
+        String hex = getClientThemeColor();
+        Color parsed = Color.parse(hex);
+        // Color.parse returns BLACK for invalid input; guard against that
+        // so we fall back to the default rather than forcing a black theme.
+        int argb = parsed.getHexOpaque();
+        if (argb == Color.BLACK.getHexOpaque() && !hex.equalsIgnoreCase("#000000") && !hex.equalsIgnoreCase("black")) {
+            argb = ClientTheme.DEFAULT_PRIMARY;
+        }
+        ClientTheme.setTheme(argb);
+    }
+
+    // ------------------------------------------------------------------
+
     public void loadEntireConfig() {
+        this.loadTheme();
         this.loadKeybinds();
         this.loadHuds();
         this.loadModules();

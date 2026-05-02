@@ -3,6 +3,8 @@ package io.github.itzispyder.clickcrystals.gui.screens.settings;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.module.SettingSectionElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.ScrollPanelElement;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
+import io.github.itzispyder.clickcrystals.gui.misc.Color;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.OverviewScreen;
@@ -73,6 +75,35 @@ public class AdvancedSettingScreen extends DefaultBase {
             .build()
     );
 
+    // ------------------------------------------------------------------
+    //  Client Theme section
+    // ------------------------------------------------------------------
+    private final SettingSection scTheme = new SettingSection("client-theme");
+    public final ModuleSetting<String> themeColor = scTheme.add(scTheme.createStringSetting()
+            .name("theme-color")
+            .description("Primary accent color for the entire ClickCrystals UI. "
+                    + "Enter any hex value in #RRGGBB format (e.g. #00B7FF). "
+                    + "Default #00B7FF is the original ClickCrystals blue.")
+            .def(ClickCrystals.config.getClientThemeColor())
+            .onSettingChange(setting -> {
+                String input = setting.getVal().trim();
+                // Normalise: accept 'RRGGBB' without leading #
+                if (!input.startsWith("#")) input = "#" + input;
+                Color parsed = Color.parse(input);
+                // Fall back to default if the string is invalid
+                int argb = parsed.getHexOpaque();
+                if (argb == Color.BLACK.getHexOpaque()
+                        && !input.equalsIgnoreCase("#000000")
+                        && !input.equalsIgnoreCase("#000")) {
+                    argb = ClientTheme.DEFAULT_PRIMARY;
+                }
+                ClientTheme.setTheme(argb);
+                ClickCrystals.config.setClientThemeColor(ClientTheme.getThemeHex());
+                ClickCrystals.config.save();
+            })
+            .build()
+    );
+
     public AdvancedSettingScreen() {
         super("Advanced Settings Screen");
 
@@ -81,10 +112,12 @@ public class AdvancedSettingScreen extends DefaultBase {
         int margin = contentX + 5;
 
         // setting groups
-        // gui group
+        SettingSectionElement themeElement = new SettingSectionElement(scTheme, margin, caret);
+        caret += themeElement.height + 5;
         SettingSectionElement guiElement = new SettingSectionElement(scGui, margin, caret);
 
         // add groups to screen
+        panel.addChild(themeElement);
         panel.addChild(guiElement);
         this.addChild(panel);
     }

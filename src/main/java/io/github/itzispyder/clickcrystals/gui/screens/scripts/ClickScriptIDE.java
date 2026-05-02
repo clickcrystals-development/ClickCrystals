@@ -7,6 +7,7 @@ import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.TextFieldElement;
 import io.github.itzispyder.clickcrystals.gui.misc.ChatColor;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
@@ -181,9 +182,9 @@ public class ClickScriptIDE extends DefaultBase {
 
         // backdrop
         fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, 0xFF00B7FF, 0xFF00B7FF);
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, 0x8000B7FF, 0x0000B7FF);
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, 0x8000B7FF, 0x0000B7FF);
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, ClientTheme.primary(), ClientTheme.primary());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
         fillRoundTabTop(context, 110, 10, 300, 230, 10, Shades.DARK_GRAY);
 
         // navbar

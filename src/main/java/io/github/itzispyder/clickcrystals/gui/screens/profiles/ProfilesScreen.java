@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
@@ -180,10 +181,10 @@ public class ProfilesScreen extends DefaultBase {
         @Override
         public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
             if (isHovered(mouseX, mouseY)) {
-                RenderUtils.fillRect(context, x, y, width, height, 0x6000B7FF);
+                RenderUtils.fillRect(context, x, y, width, height, (ClientTheme.primary() & 0x00FFFFFF) | 0x60000000);
             }
 
-            String text = "Need pre-made profiles? §bDownload here ->";
+            String text = "Need pre-made profiles? " + ClientTheme.themedChatCode() + "Download here ->";
             RenderUtils.drawText(context, text, x + 10, y + height / 3, 0.7F, false);
         }
 

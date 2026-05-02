@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.Window;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.Positionable;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
 import io.github.itzispyder.clickcrystals.gui.misc.Color;
 import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -16,7 +17,14 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 @Environment(EnvType.CLIENT)
 public abstract class Hud implements Positionable, Global {
 
-    public static final Color DEFAULT_COLOR = new Color(0x4007CDDF);
+    public static Color DEFAULT_COLOR = new Color(0x4007CDDF);
+
+    /** Sync DEFAULT_COLOR alpha with the current theme primary. Called by ClientTheme.syncShades(). */
+    public static void syncDefaultColor() {
+        int alpha = DEFAULT_COLOR.getAlpha();
+        int rgb = ClientTheme.primary() & 0x00FFFFFF;
+        DEFAULT_COLOR = new Color((alpha << 24) | rgb);
+    }
     private final Dimension defaultDimension;
     private int x, y, width, height, argb;
     private boolean fixed;

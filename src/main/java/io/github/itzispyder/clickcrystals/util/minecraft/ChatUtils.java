@@ -1,14 +1,32 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 
 public final class ChatUtils implements Global {
+
+    /** Builds the {@code [ClickCrystals]} chat prefix as a Component using the current theme color. */
+    private static MutableComponent buildPrefix() {
+        int primary = ClientTheme.primary() & 0x00FFFFFF;
+        int dim     = ClientTheme.primaryDim() & 0x00FFFFFF;
+        return Component.literal("[")
+                .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x777777)))
+                .append(Component.literal("Click")
+                        .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(primary))))
+                .append(Component.literal("Crystals")
+                        .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(dim))))
+                .append(Component.literal("] ")
+                        .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x777777))));
+    }
 
     public static void sendMessage(String message) {
         if (message != null && PlayerUtils.valid()) {
@@ -17,11 +35,15 @@ public final class ChatUtils implements Global {
     }
 
     public static void sendPrefixMessage(String message) {
-        sendMessage(starter + message);
+        if (message != null && PlayerUtils.valid()) {
+            PlayerUtils.player().sendSystemMessage(buildPrefix().append(Component.literal(message)));
+        }
     }
 
     public static void sendWarningMessage(String message) {
-        sendMessage(starter + "§8(§eWarning§8)§r " + message);
+        if (message != null && PlayerUtils.valid()) {
+            PlayerUtils.player().sendSystemMessage(buildPrefix().append(Component.literal("§8(§eWarning§8)§r " + message)));
+        }
     }
 
     public static void sendRawText(Component text) {
@@ -31,7 +53,9 @@ public final class ChatUtils implements Global {
     }
 
     public static void sendSevereMessage(String message) {
-        sendMessage(starter + "§8(§c§lError§8)§r " + message);
+        if (message != null && PlayerUtils.valid()) {
+            PlayerUtils.player().sendSystemMessage(buildPrefix().append(Component.literal("§8(§c§lError§8)§r " + message)));
+        }
     }
 
     public static void sendChatCommand(String cmd) {

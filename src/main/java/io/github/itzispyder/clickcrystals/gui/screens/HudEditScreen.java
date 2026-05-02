@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.gui.GuiScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.PositionableHudElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.modules.clickcrystals.InGameHuds;
@@ -59,10 +60,10 @@ public class HudEditScreen extends GuiScreen {
         RenderUtils.drawVerLine(context, 10, 0, context.guiHeight(), 0xFF8C8C8C);
 
         if (selected != null) {
-            RenderUtils.drawHorLine(context, 0, selected.y, context.guiWidth(), 0xFFFFFFFF);
-            RenderUtils.drawVerLine(context, selected.x, 0, context.guiHeight(), 0xFFFFFFFF);
-            RenderUtils.drawHorLine(context, 0, selected.y + selected.height - 1, context.guiWidth(), 0xFFFFFFFF);
-            RenderUtils.drawVerLine(context, selected.x + selected.width - 1, 0, context.guiHeight(), 0xFFFFFFFF);
+            RenderUtils.drawHorLine(context, 0, selected.y, context.guiWidth(), ClientTheme.primary());
+            RenderUtils.drawVerLine(context, selected.x, 0, context.guiHeight(), ClientTheme.primary());
+            RenderUtils.drawHorLine(context, 0, selected.y + selected.height - 1, context.guiWidth(), ClientTheme.primary());
+            RenderUtils.drawVerLine(context, selected.x + selected.width - 1, 0, context.guiHeight(), ClientTheme.primary());
         }
     }
 

@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.gui.elements.browsingmode.ModuleElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
@@ -40,9 +41,9 @@ public class SearchScreen extends DefaultBase {
 
         // backdrop
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, 0xFF00B7FF, 0xFF00B7FF);
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, 0x8000B7FF, 0x0000B7FF);
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, 0x8000B7FF, 0x0000B7FF);
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, ClientTheme.primary(), ClientTheme.primary());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
         RenderUtils.fillRoundTabTop(context, 110, 10, 300, 230, 10, Shades.TRANS_DARK_GRAY);
 
         // navbar

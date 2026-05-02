@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.gui.GuiElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.AbstractElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.display.LoadingIconElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
 import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.organizers.GridOrganizer;
@@ -42,8 +43,8 @@ public class DownloadProfileScreen extends AnimatedBase {
                 .onRender((context, mx, my, b) -> {
                     boolean bl = b.isHovered(mx, my);
                     int r = b.height / 2;
-                    int c1 = 0xFF00B7FF;
-                    int c2 = 0x0000B7FF;
+                    int c1 = ClientTheme.primary();
+                    int c2 = ClientTheme.primaryClear();
                     if (bl)
                         fillRoundShadow(context, b.x, b.y, b.width, b.height, r, 5, c1, c2);
                     fillRoundRect(context, b.x, b.y, b.width, b.height, r, c1);
@@ -90,9 +91,9 @@ public class DownloadProfileScreen extends AnimatedBase {
 
         // backdrop
         RenderUtils.fillRoundRect(context, 0, 0, baseWidth, baseHeight, 10, Shades.TRANS_BLACK);
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, 0xFF00B7FF, 0xFF00B7FF);
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, 0x8000B7FF, 0x0000B7FF);
-        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, 0x8000B7FF, 0x0000B7FF);
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 1, ClientTheme.primary(), ClientTheme.primary());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, -10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
+        RenderUtils.fillRoundShadow(context, 0, 0, baseWidth, baseHeight, 10, 10, ClientTheme.primaryHalf(), ClientTheme.primaryClear());
 
         int margin = 15;
         int caret = 10;

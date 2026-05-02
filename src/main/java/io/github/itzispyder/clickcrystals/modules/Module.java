@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.modules;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.gui.misc.ClientTheme;
 import io.github.itzispyder.clickcrystals.modrinth.ModrinthSupport;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingContainer;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
@@ -114,12 +115,14 @@ public abstract class Module implements Toggleable, Global, SettingContainer {
     }
 
     public void sendUpdateInfo() {
-        if (!ClickCrystals.config.isDisableModuleToggleBroadcast())
-            ChatUtils.sendPrefixMessage("§b" + name + " §3is now toggled " + getOnOrOff());
+        if (!ClickCrystals.config.isDisableModuleToggleBroadcast()) {
+            String code = ClientTheme.themedChatCode();
+            ChatUtils.sendPrefixMessage(code + name + " §3is now toggled " + getOnOrOff());
+        }
     }
 
     public String getOnOrOff() {
-        return isEnabled() ? "§bon" : "§7off";
+        return isEnabled() ? ClientTheme.themedChatCode() + "on" : "§7off";
     }
 
     public String getSearchQuery() {
