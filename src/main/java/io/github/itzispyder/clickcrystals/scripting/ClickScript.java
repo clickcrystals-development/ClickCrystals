@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.scripting;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.client.system.Config;
+import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.scripting.components.CommandLine;
 import io.github.itzispyder.clickcrystals.scripting.exceptions.ScriptNotFoundException;
 import io.github.itzispyder.clickcrystals.scripting.exceptions.UnknownCommandException;
@@ -24,6 +25,8 @@ public class ClickScript implements Global {
     private final Map<String, String> functions;
     private final String path;
     private final File file;
+    private String caughtError = null;
+    private boolean dryRun = false;
 
     private ClickScript(File file, String path) {
         this.file = file;
@@ -97,6 +100,20 @@ public class ClickScript implements Global {
         }
     }
 
+    public String tryExecute() {
+        dryRun = true;
+        execute();
+        dryRun = false;
+        String error = caughtError;
+        caughtError = null;
+        if (error != null) {
+            ScriptedModule partial = system.getModuleByFile(file);
+            if (partial != null)
+                system.unloadModule(partial);
+        }
+        return error;
+    }
+
     public void execute() {
         try {
             if (!file.exists() || !(path.endsWith(".ccs") || path.endsWith(".txt"))) {
@@ -126,6 +143,10 @@ public class ClickScript implements Global {
     }
 
     public void printErrorDetails(Exception ex, String cmd) {
+        if (dryRun) {
+            caughtError = "%s: %s".formatted(ex.getClass().getSimpleName(), ex.getMessage());
+            return;
+        }
         String error = getErrorDetails(ex, cmd);
         if (PlayerUtils.invalid()) {
             system.printErr(error);
@@ -174,6 +195,10 @@ public class ClickScript implements Global {
 
     public File getFile() {
         return file;
+    }
+
+    public static boolean isRegistered(String name) {
+        return REGISTRATION.containsKey(name);
     }
 
     public static String[] collectNames() {

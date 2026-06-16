@@ -31,6 +31,8 @@ public class ModuleElement extends GuiElement {
         this.blacklisted = ModrinthSupport.active && ModrinthSupport.isBlacklisted(module);
         if (blacklisted)
             setTooltip(ModrinthSupport.warning);
+        else if (module instanceof ScriptedModule sm && sm.loadState == ScriptedModule.LoadState.FAILED)
+            setTooltip("This script has an error: " + sm.failReason + ". Middle-click to edit.");
         else if (module instanceof ScriptedModule)
             setTooltip(getTooltip().concat(", §6MIDDLE-CLICK§7 to open IDE"));
     }
@@ -67,13 +69,20 @@ public class ModuleElement extends GuiElement {
         if (blacklisted) {
             RenderUtils.fillRect(context, x, y, width, height, 0x60000000);
         }
+        if (module instanceof ScriptedModule sm && sm.loadState == ScriptedModule.LoadState.FAILED) {
+            RenderUtils.fillRect(context, x, y, width, height, 0x60000000);
+        }
     }
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
         if (blacklisted)
             return;
-
+        if (module instanceof ScriptedModule sm && sm.loadState == ScriptedModule.LoadState.FAILED) {
+            if (button == 2)
+                mc.setScreen(new ClickScriptIDE(sm));
+            return;
+        }
         if (button == 0) {
             module.setEnabled(!module.isEnabled(), false);
         }

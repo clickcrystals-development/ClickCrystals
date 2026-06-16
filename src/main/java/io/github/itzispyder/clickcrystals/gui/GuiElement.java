@@ -64,9 +64,10 @@ public abstract class GuiElement implements Positionable, Global {
         List<String> lines = TextUtils.wordWrap(getTooltip(), 150 - 6 - 6, 0.7F);
         int height = lines.size() * 8;
         int caret = y + 2;
-        int margin = x + 6;
+        int drawX = Math.min(x, mc.getWindow().getGuiScaledWidth() - 150);
+        int margin = drawX + 6;
 
-        RenderUtils.fillRect(context, x, y, 150, height + 2, 0xD0000000);
+        RenderUtils.fillRect(context, drawX, y, 150, height + 2, 0xD0000000);
         for (String line : lines) {
             RenderUtils.drawText(context, "§7" + line, margin, caret, 0.7F, false);
             caret += 8;

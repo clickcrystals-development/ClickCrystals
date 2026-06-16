@@ -11,6 +11,7 @@ import io.github.itzispyder.clickcrystals.events.events.networking.PacketSendEve
 import io.github.itzispyder.clickcrystals.events.events.world.*;
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.scripting.ClickScript;
+import io.github.itzispyder.clickcrystals.scripting.ScriptParser;
 import io.github.itzispyder.clickcrystals.scripting.syntax.listeners.*;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Timer;
@@ -26,6 +27,10 @@ import java.util.Set;
 
 public class ScriptedModule extends ListenerModule {
 
+    public enum LoadState { LOADED, FAILED }
+
+    public LoadState loadState = LoadState.LOADED;
+    public String failReason = null;
     public final List<ClickListener> clickListeners = new ArrayList<>();
     public final List<KeyListener> keyListeners = new ArrayList<>();
     public final List<MoveListener> moveListeners = new ArrayList<>();
@@ -331,7 +336,20 @@ public class ScriptedModule extends ListenerModule {
         system.printf("-> executing scripts (%s)...", total);
         for (int i = 0; i < files.size(); i++) {
             File file = files.get(i);
-            new ClickScript(file).execute();
+            ClickScript script = new ClickScript(file);
+            String error = script.tryExecute();
+
+            if (error != null) {
+                String name = file.getName().replaceFirst("\\.[^.]+$", "");
+                ScriptedModule ghost = new ScriptedModule(name, "", file);
+                ghost.loadState = LoadState.FAILED;
+                ghost.failReason = error;
+                system.addModule(ghost);
+                system.printErr("Script '" + file.getName() + "' failed to load: " + error);
+            } else {
+                new ClickScript(file).execute();
+            }
+
             system.printf("<- [%s/%s] '%s'", i + 1, total, file.getName());
         }
         system.printf("<- [done] executed (%s) scripts in %s", total, timer.end().getStampPrecise());

@@ -180,6 +180,15 @@ public class ClickCrystalsSystem implements Serializable {
         return null;
     }
 
+    public ScriptedModule getModuleByFile(File file) {
+        if (file == null) return null;
+        for (ScriptedModule m : scriptedModules.values()) {
+            if (m.filepath.equals(file.getPath()))
+                return m;
+        }
+        return null;
+    }
+
     public void runModuleById(String id, Consumer<Module> action) {
         Module m = getModuleById(id);
         if (m != null) {
@@ -196,7 +205,9 @@ public class ClickCrystalsSystem implements Serializable {
             modules.remove(module.getClass());
         }
 
-        if (module instanceof Listener listener) {
+        boolean isFailed = module instanceof ScriptedModule sm
+                && sm.loadState == ScriptedModule.LoadState.FAILED;
+        if (!isFailed && module instanceof Listener listener) {
             removeListener(listener);
         }
         keybinds.remove(module.getData().getBind());
