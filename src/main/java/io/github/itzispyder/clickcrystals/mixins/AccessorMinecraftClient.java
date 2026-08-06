@@ -1,7 +1,6 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
@@ -12,9 +11,6 @@ public interface AccessorMinecraftClient {
 
     @Accessor("crosshairPickEntity")
     Entity accessTargetedEntity();
-
-    @Invoker("setScreenAndShow")
-    void invokeSetScreenAndShow(Screen screen);
 
     @Invoker("startAttack")
     @SuppressWarnings("all")

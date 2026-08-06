@@ -19,8 +19,7 @@ public abstract class MixinGui implements Global {
 
         if (event.isCancelled()) {
             ci.cancel();
-            AccessorMinecraftClient mc = (AccessorMinecraftClient) this;
-            mc.invokeSetScreenAndShow(null);
+            mc.gui.setScreen(null);
         }
     }
 }
