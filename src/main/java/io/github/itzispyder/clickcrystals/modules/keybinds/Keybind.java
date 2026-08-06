@@ -92,6 +92,11 @@ public class Keybind implements Global {
     }
 
     public String getKeyName() {
+        // glfwGetKeyName renames printable keys after the system layout, key code stays put
+        if (key >= GLFW.GLFW_KEY_APOSTROPHE && key <= GLFW.GLFW_KEY_GRAVE_ACCENT) {
+            return String.valueOf((char)key).toLowerCase();
+        }
+
         String name = GLFW.glfwGetKeyName(key, 32);
         if (name == null) {
             name = EXTRAS.getOrDefault(key, "NONE");
