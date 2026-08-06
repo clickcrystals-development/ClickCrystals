@@ -26,12 +26,16 @@ import net.minecraft.network.protocol.login.ServerboundHelloPacket;
 import net.minecraft.network.protocol.login.ServerboundKeyPacket;
 
 import java.net.URI;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static io.github.itzispyder.clickcrystals.ClickCrystals.commandPrefix;
 import static io.github.itzispyder.clickcrystals.ClickCrystals.config;
 
 public class NetworkEventListener implements Listener {
+
+    private final Set<UUID> seenPlayers = ConcurrentHashMap.newKeySet();
 
     @EventHandler
     public void onPacketSend(PacketSendEvent e) {
@@ -69,6 +73,7 @@ public class NetworkEventListener implements Listener {
     public void onGameLeave(GameLeaveEvent e) {
         try {
             Notification.clearNotifications();
+            seenPlayers.clear();
             BulletinBoard.request();
             system.cameraRotator.closeAllTickets();
         }
@@ -84,6 +89,11 @@ public class NetworkEventListener implements Listener {
                 for (ClientboundPlayerInfoUpdatePacket.Entry entry : packet.newEntries()) {
                     UUID id = entry.profile().id();
                     String name = entry.profile().name();
+
+                    // servers re-add the same players on tab list refreshes and lobby switches
+                    if (!seenPlayers.add(id)) {
+                        continue;
+                    }
 
                     if (ClickCrystals.info.getOwner(id) != null) {
                         Notification.create()
