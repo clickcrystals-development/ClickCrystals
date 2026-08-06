@@ -6,7 +6,7 @@ import io.github.itzispyder.clickcrystals.events.events.networking.PacketReceive
 import io.github.itzispyder.clickcrystals.modules.Categories;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
-import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import net.minecraft.client.multiplayer.ClientCommonPacketListenerImpl;
 import net.minecraft.network.protocol.common.ClientboundResourcePackPushPacket;
 import net.minecraft.network.protocol.common.ServerboundResourcePackPacket;
 import net.minecraft.network.protocol.common.ServerboundResourcePackPacket.Action;
@@ -31,22 +31,25 @@ public class NoResPack extends Module implements Listener {
 
     @EventHandler
     private void onResourceReceive(PacketReceiveEvent e) {
-        if (!(e.getPacket() instanceof ClientboundResourcePackPushPacket packet) || PlayerUtils.invalid())
+        // packs are pushed while configuring too, so the listener is answered, not the player
+        if (!(e.getPacket() instanceof ClientboundResourcePackPushPacket packet)
+                || !(e.getListener() instanceof ClientCommonPacketListenerImpl listener))
             return;
 
         // drop the pack (never download it), but spoof the full accept/load handshake so the
         // server thinks we loaded it and doesn't hang or kick us off forced packs
         e.setCancelled(true);
         UUID id = packet.id();
-        respond(id, Action.ACCEPTED);
-        respond(id, Action.DOWNLOADED);
-        respond(id, Action.SUCCESSFULLY_LOADED);
+        respond(listener, id, Action.ACCEPTED);
+        respond(listener, id, Action.DOWNLOADED);
+        respond(listener, id, Action.SUCCESSFULLY_LOADED);
 
+        // packets are read on the network thread, so the chat line waits for the client one
         String status = packet.required() ? "forced" : "suggested";
-        ChatUtils.sendPrefixMessage("Blocked 1 " + status + " resource pack");
+        mc.execute(() -> ChatUtils.sendPrefixMessage("Blocked 1 " + status + " resource pack"));
     }
 
-    private void respond(UUID id, Action action) {
-        PlayerUtils.player().connection.send(new ServerboundResourcePackPacket(id, action));
+    private void respond(ClientCommonPacketListenerImpl listener, UUID id, Action action) {
+        listener.send(new ServerboundResourcePackPacket(id, action));
     }
 }

@@ -32,15 +32,16 @@ public abstract class MixinConnection implements Global {
 
     @Inject(method = "genericsFtw", at = @At("HEAD"), cancellable = true)
     private static void onPacketRead(Packet<?> packet, PacketListener listener, CallbackInfo ci) {
-        if (PlayerUtils.invalid())
-            return;
+        if (PlayerUtils.valid()) {
+            if (packet instanceof ClientboundLoginFinishedPacket) {
+                system.eventBus.pass(new GameJoinEvent());
+            }
+            if (packet instanceof ClientboundDamageEventPacket p) {
+                system.eventBus.pass(new EntityDamageEvent(p));
+            }
+        }
 
-        if (packet instanceof ClientboundLoginFinishedPacket) {
-            system.eventBus.pass(new GameJoinEvent());
-        }
-        if (packet instanceof ClientboundDamageEventPacket p) {
-            system.eventBus.pass(new EntityDamageEvent(p));
-        }
-        system.eventBus.passWithCallbackInfo(ci, new PacketReceiveEvent(packet));
+        // passed on with no player around too, the client still gets packets while configuring
+        system.eventBus.passWithCallbackInfo(ci, new PacketReceiveEvent(packet, listener));
     }
 }
