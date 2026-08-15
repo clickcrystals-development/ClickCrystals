@@ -11,9 +11,9 @@ import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
-import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
-import io.github.itzispyder.clickcrystals.util.misc.TickScheduler;
 import io.github.itzispyder.clickcrystals.util.misc.camera.CameraRotator;
+import io.github.itzispyder.clickcrystals.util.misc.scheduler.Scheduler;
+import io.github.itzispyder.clickcrystals.util.misc.scheduler.TickScheduler;
 import net.minecraft.util.Util;
 
 import java.io.File;
@@ -250,6 +250,9 @@ public class ClickCrystalsSystem implements Serializable {
 
         println("<- saving config...");
         ClickCrystals.config.save();
+
+        println("<- stopping clickcrystals scheduler...");
+        scheduler.cancelAllTasks();
     }
 
     public void println(String msg) {

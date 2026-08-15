@@ -40,7 +40,7 @@ public class RailSwap extends Module implements Listener {
     @EventHandler
     private void onShootBow(MouseClickEvent e) {
         if (e.getAction().isRelease() && e.isScreenNull() && HotbarUtils.isHoldingEitherHand(Items.BOW) && HotbarUtils.has(RailSwap::isRail)) {
-            system.scheduler.runDelayedTask(() -> {
+            system.scheduler.runDelayedTask(self -> {
                 HotbarUtils.search(RailSwap::isRail);
             }, 50);
         }

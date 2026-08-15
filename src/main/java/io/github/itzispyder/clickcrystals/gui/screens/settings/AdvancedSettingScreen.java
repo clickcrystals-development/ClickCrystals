@@ -24,7 +24,7 @@ public class AdvancedSettingScreen extends DefaultBase {
                 ClickCrystals.config.setOverviewMode(setting.getVal());
                 ClickCrystals.config.save();
 
-                system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+                system.scheduler.runDelayedTask(self -> mc.execute(() -> {
                     if (setting.getVal() && PlayerUtils.valid()) {
                         mc.gui.setScreen(new OverviewScreen());
                     }

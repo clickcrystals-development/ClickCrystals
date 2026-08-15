@@ -55,7 +55,7 @@ public class TntSwap extends Module implements Listener, PostActionable {
             HotbarUtils.search(Items.TNT_MINECART);
 
             if (instant.getVal()) {
-                system.scheduler.runDelayedTask(() -> {
+                system.scheduler.runDelayedTask(self -> {
                     BlockUtils.interact(e.getPos(), Direction.UP);
                     this.action();
                 }, 50);

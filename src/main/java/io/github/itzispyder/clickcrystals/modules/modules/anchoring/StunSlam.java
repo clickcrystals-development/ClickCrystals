@@ -89,11 +89,11 @@ public class StunSlam extends ListenerModule {
         if (mace.isEmpty())
             return;
         
-        system.scheduler.runDelayedTask(() -> {
+        system.scheduler.runDelayedTask(self -> {
             if (!HotbarUtils.search(item -> ItemStack.matches(item, mace)))
                 return;
             
-            system.scheduler.runDelayedTask(() -> {
+            system.scheduler.runDelayedTask(self0 -> {
                 if (mc.crosshairPickEntity instanceof LivingEntity) {
                     InteractionUtils.leftClick();
                 }

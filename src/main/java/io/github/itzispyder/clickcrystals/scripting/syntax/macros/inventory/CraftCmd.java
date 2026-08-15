@@ -93,7 +93,7 @@ public class CraftCmd extends ScriptCommand implements Global {
     // Runs a craft step on the main thread after a human-like delay. Aborts if the menu closed and
     // always clears the busy flag on failure, so a dropped/throwing step can never wedge the command.
     private void step(AbstractCraftingMenu menu, long delay, Runnable body) {
-        system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+        system.scheduler.runDelayedTask(self -> mc.execute(() -> {
             try {
                 if (PlayerUtils.invalid() || mc.player.containerMenu != menu) {
                     crafting = false;

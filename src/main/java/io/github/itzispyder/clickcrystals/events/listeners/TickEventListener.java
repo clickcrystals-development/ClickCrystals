@@ -53,7 +53,7 @@ public class TickEventListener implements Listener, Global {
     public static void forward(long millis) {
         if (!shouldForward) {
             shouldForward = true;
-            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+            system.scheduler.runDelayedTask(self -> mc.execute(() -> {
                 shouldForward = false;
                 mc.options.keyUp.setDown(false);
             }), millis);
@@ -63,7 +63,7 @@ public class TickEventListener implements Listener, Global {
     public static void backward(long millis) {
         if (!shouldBackward) {
             shouldBackward = true;
-            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+            system.scheduler.runDelayedTask(self -> mc.execute(() -> {
                 shouldBackward = false;
                 mc.options.keyDown.setDown(false);
             }), millis);
@@ -73,7 +73,7 @@ public class TickEventListener implements Listener, Global {
     public static void strafeLeft(long millis) {
         if (!shouldStrafeLeft) {
             shouldStrafeLeft = true;
-            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+            system.scheduler.runDelayedTask(self -> mc.execute(() -> {
                 shouldStrafeLeft = false;
                 mc.options.keyLeft.setDown(false);
             }), millis);
@@ -83,7 +83,7 @@ public class TickEventListener implements Listener, Global {
     public static void strafeRight(long millis) {
         if (!shouldStrafeRight) {
             shouldStrafeRight = true;
-            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+            system.scheduler.runDelayedTask(self -> mc.execute(() -> {
                 shouldStrafeRight = false;
                 mc.options.keyRight.setDown(false);
             }), millis);
@@ -93,7 +93,7 @@ public class TickEventListener implements Listener, Global {
     public static void sneak(long millis) {
         if (!shouldSneak) {
             shouldSneak = true;
-            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+            system.scheduler.runDelayedTask(self -> mc.execute(() -> {
                 shouldSneak = false;
                 mc.options.keyShift.setDown(false);
             }), millis);
@@ -103,7 +103,7 @@ public class TickEventListener implements Listener, Global {
     public static void jump(long millis) {
         if (!shouldJump) {
             shouldJump = true;
-            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+            system.scheduler.runDelayedTask(self -> mc.execute(() -> {
                 shouldJump = false;
                 mc.options.keyJump.setDown(false);
             }), millis);
@@ -113,7 +113,7 @@ public class TickEventListener implements Listener, Global {
     public static void attack(long millis) {
         if (!shouldAttack) {
             shouldAttack = true;
-            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+            system.scheduler.runDelayedTask(self -> mc.execute(() -> {
                 shouldAttack = false;
                 mc.options.keyAttack.setDown(false);
             }), millis);
@@ -123,7 +123,7 @@ public class TickEventListener implements Listener, Global {
     public static void use(long millis) {
         if (!shouldUse) {
             shouldUse = true;
-            system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+            system.scheduler.runDelayedTask(self -> mc.execute(() -> {
                 shouldUse = false;
                 mc.options.keyUse.setDown(false);
             }), millis);
@@ -142,7 +142,7 @@ public class TickEventListener implements Listener, Global {
             return;
 
         heldKeys.add(keyCode);
-        system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+        system.scheduler.runDelayedTask(self -> mc.execute(() -> {
             heldKeys.remove(keyCode);
         }), millis);
     }

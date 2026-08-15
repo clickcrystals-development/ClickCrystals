@@ -55,7 +55,7 @@ public abstract class AnimatedBase extends GuiScreen {
             return;
 
         open = false;
-        system.scheduler.runDelayedTask(() -> mc.execute(super::onClose), animator.getLength());
+        system.scheduler.runDelayedTask(self -> mc.execute(super::onClose), animator.getLength());
     }
 
     public boolean canPlayCloseAnimation() {

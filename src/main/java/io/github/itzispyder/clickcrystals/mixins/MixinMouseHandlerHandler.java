@@ -67,7 +67,7 @@ public abstract class MixinMouseHandlerHandler implements Global, AccessorMouseH
     @Override
     public void clickCrystals$leftClick() {
         onButton(mc.getWindow().handle(), new MouseButtonInfo(0, 0), 1);
-        system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+        system.scheduler.runDelayedTask(self -> mc.execute(() -> {
             onButton(mc.getWindow().handle(), new MouseButtonInfo(0, 0), 0);
         }), 50);
     }
@@ -75,7 +75,7 @@ public abstract class MixinMouseHandlerHandler implements Global, AccessorMouseH
     @Override
     public void clickCrystals$rightClick() {
         onButton(mc.getWindow().handle(), new MouseButtonInfo(1, 0), 1);
-        system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+        system.scheduler.runDelayedTask(self -> mc.execute(() -> {
             onButton(mc.getWindow().handle(), new MouseButtonInfo(1, 0), 0);
         }), 50);
     }
@@ -83,7 +83,7 @@ public abstract class MixinMouseHandlerHandler implements Global, AccessorMouseH
     @Override
     public void clickCrystals$middleClick() {
         onButton(mc.getWindow().handle(), new MouseButtonInfo(2, 0), 1);
-        system.scheduler.runDelayedTask(() -> mc.execute(() -> {
+        system.scheduler.runDelayedTask(self -> mc.execute(() -> {
             onButton(mc.getWindow().handle(), new MouseButtonInfo(2, 0), 0);
         }), 50);
     }

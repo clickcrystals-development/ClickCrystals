@@ -42,7 +42,7 @@ public class NextBlock extends Module implements Listener {
     private BlockPos lastTouchedPosition;
     private boolean wasAborted;
     private final CameraFinalizerCallback REPOSITION_TARGET = (pitch, yaw, cameraRotator) -> {
-        system.scheduler.runDelayedTask(() -> {
+        system.scheduler.runDelayedTask(self -> {
             if (mc.hitResult == null || mc.hitResult.getType() == HitResult.Type.MISS) {
                 targetNextBlock();
             }

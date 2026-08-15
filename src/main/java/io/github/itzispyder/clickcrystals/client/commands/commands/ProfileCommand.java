@@ -21,7 +21,7 @@ public class ProfileCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<ClientSuggestionProvider> builder) {
         builder.executes(cxt -> {
-                    system.scheduler.runDelayedTask(() -> {
+                    system.scheduler.runDelayedTask(self -> {
                         mc.execute(() -> mc.gui.setScreen(new ProfilesScreen()));
                     }, 5 * 50);
                     return SINGLE_SUCCESS;

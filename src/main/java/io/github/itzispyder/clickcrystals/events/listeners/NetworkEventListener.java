@@ -144,7 +144,7 @@ public class NetworkEventListener implements Listener {
     private void handleCheckUpdates() {
         ClickCrystalsGate gate = new ClickCrystalsGate();
         if (gate.isBanned()) {
-            system.scheduler.runDelayedTask(gate::banishCurrentSession, 1000);
+            system.scheduler.runDelayedTask(self -> gate.banishCurrentSession(), 1000);
             return;
         }
 
@@ -171,7 +171,7 @@ public class NetworkEventListener implements Listener {
                     .startChain();
         }
         else if (!config.hasPlayedBefore()) {
-            system.scheduler.runDelayedTask(this::notifyOpenMenu, 2 * 1000);
+            system.scheduler.runDelayedTask(self -> this.notifyOpenMenu(), 2 * 1000);
         }
     }
 

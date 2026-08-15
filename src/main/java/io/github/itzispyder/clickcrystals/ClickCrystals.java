@@ -54,7 +54,7 @@ import io.github.itzispyder.clickcrystals.scripting.syntax.macros.camera.SnapToC
 import io.github.itzispyder.clickcrystals.scripting.syntax.macros.camera.TurnToCmd;
 import io.github.itzispyder.clickcrystals.scripting.syntax.macros.inventory.*;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
-import io.github.itzispyder.clickcrystals.util.misc.TickScheduler;
+import io.github.itzispyder.clickcrystals.util.misc.scheduler.TickScheduler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.gui.screens.ChatScreen;

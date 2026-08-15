@@ -216,7 +216,7 @@ public class GuiCursor extends Module implements Listener {
             InvUtils.swapOffhand(slot);
             InvUtils.inv().tick();
             if (mainEmpty)
-                system.scheduler.runDelayedTask(this::hoverTotem, 50);
+                system.scheduler.runDelayedTask(self -> hoverTotem(), 50);
         } else if (slotValid) {
             e.cancel();
             InvUtils.quickMove(slot);

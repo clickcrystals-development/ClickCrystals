@@ -5,10 +5,8 @@ import io.github.itzispyder.clickcrystals.scripting.ScriptCommand;
 import io.github.itzispyder.clickcrystals.scripting.components.ConditionEvaluationResult;
 import io.github.itzispyder.clickcrystals.scripting.components.Conditionals;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
-import io.github.itzispyder.clickcrystals.util.misc.Scheduler;
+import io.github.itzispyder.clickcrystals.util.misc.scheduler.Scheduler;
 import net.minecraft.world.entity.Entity;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 public class WhileNotCmd extends ScriptCommand implements ThenChainable {
 
@@ -31,20 +29,17 @@ public class WhileNotCmd extends ScriptCommand implements ThenChainable {
         }
 
         Entity ref = AsCmd.getCurrentReferenceEntity();
-        AtomicReference<Scheduler.Task> task = new AtomicReference<>();
-        task.set(system.scheduler.runRepeatingTask(() -> {
+        system.scheduler.runRepeatingTask(self -> {
             try {
                 ScriptArgs copy = new ScriptArgs(args.getExecutor(), args.args());
                 ConditionEvaluationResult condition = Conditionals.evaluate(ref, copy, beginIndex);
-                if (!condition.getValue()) {
+                if (!condition.getValue())
                     executeOnClient(copy);
-                }
-                else if (task.get() != null) {
-                    task.get().cancel();
-                }
+                else if (self != null)
+                    self.cancel(true);
             }
             catch (Exception ignore) {}
-        }, 0, period, Scheduler.INFINITE_ITERATIONS));
+        }, 0, period, Scheduler.INFINITE_ITERATIONS);
     }
 
     private void executeOnClient(ScriptArgs args) {

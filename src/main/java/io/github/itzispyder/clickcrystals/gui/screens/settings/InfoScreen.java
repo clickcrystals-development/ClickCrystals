@@ -39,7 +39,7 @@ public class InfoScreen extends DefaultBase {
             isLatest = ClickCrystals.matchLatestVersion();
 
             if (isBanned) {
-                system.scheduler.runDelayedTask(gate::banishCurrentSession, 3000);
+                system.scheduler.runDelayedTask(self -> gate.banishCurrentSession(), 3000);
             }
 
             initPanel(panel);

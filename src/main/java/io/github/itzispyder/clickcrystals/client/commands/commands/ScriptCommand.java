@@ -25,7 +25,7 @@ public class ScriptCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<ClientSuggestionProvider> builder) {
         builder.executes(cxt -> {
-                    system.scheduler.runDelayedTask(() -> {
+                    system.scheduler.runDelayedTask(self -> {
                         BrowsingScreen.currentCategory = Categories.SCRIPTED;
                         mc.execute(() -> mc.gui.setScreen(new BrowsingScreen()));
                     }, 5 * 50);

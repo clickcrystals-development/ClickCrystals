@@ -1,4 +1,4 @@
-package io.github.itzispyder.clickcrystals.util.misc;
+package io.github.itzispyder.clickcrystals.util.misc.scheduler;
 
 import java.util.*;
 

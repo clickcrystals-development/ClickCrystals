@@ -133,7 +133,7 @@ public class UserInputListener implements Listener {
     public static void queueGuiItemSearch(Predicate<ItemStack> item) {
         var q = new QueuedGuiItemSearchListener(item);
         guiItemSearchQueue.add(q);
-        system.scheduler.runDelayedTask(() -> guiItemSearchQueue.remove(q), 50);
+        system.scheduler.runDelayedTask(self -> guiItemSearchQueue.remove(q), 50);
     }
 
     private void handleScreenManagement(SetScreenEvent e) {

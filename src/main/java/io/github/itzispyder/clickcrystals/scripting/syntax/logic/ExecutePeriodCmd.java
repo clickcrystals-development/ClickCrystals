@@ -30,7 +30,7 @@ public class ExecutePeriodCmd extends ScriptCommand {
         if (lines.isEmpty())
             return;
 
-        system.scheduler.runRepeatingTask(() -> executeOnClient(args, lines.poll()), 0, period, lines.size());
+        system.scheduler.runRepeatingTask(self -> executeOnClient(args, lines.poll()), 0, period, lines.size());
     }
 
     private void executeOnClient(ScriptArgs args, CommandLine script) {

@@ -17,7 +17,7 @@ public class ToggleCommand extends Command {
     @Override
     public void build(LiteralArgumentBuilder<ClientSuggestionProvider> builder) {
         builder.executes(context -> {
-                    system.scheduler.runDelayedTask(UserInputListener::openModulesScreen, 5 * 50);
+                    system.scheduler.runDelayedTask(self -> UserInputListener.openModulesScreen(), 5 * 50);
                     return SINGLE_SUCCESS;
                 })
                 .then(literal("#ALL")
