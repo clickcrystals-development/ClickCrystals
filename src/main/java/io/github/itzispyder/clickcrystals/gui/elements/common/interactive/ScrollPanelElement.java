@@ -81,6 +81,12 @@ public class ScrollPanelElement extends GuiElement {
         child.scrollOnPanel(this, 0);
     }
 
+    @Override
+    public void clearChildren() {
+        super.clearChildren();
+        recalculatePositions();
+    }
+
     public void updateBounds(GuiElement child) {
         if (child.y < limitTop) {
             limitTop = child.y;
