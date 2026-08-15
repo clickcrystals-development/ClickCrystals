@@ -1,18 +1,20 @@
 package io.github.itzispyder.clickcrystals.util.misc.scheduler;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.scripting.exceptions.ScriptException;
+import net.minecraft.client.Minecraft;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Scheduler implements Global {
 
     public static final int INFINITE_ITERATIONS = -1;
 
-    private static final AtomicInteger activeTasks = new AtomicInteger(0);
+    private static final Thread MAIN_THREAD = Thread.currentThread();
 
     private final ScheduledExecutorService worker;
 
@@ -25,7 +27,7 @@ public class Scheduler implements Global {
     }
 
     public int count() {
-        return activeTasks.get();
+        return ((ScheduledThreadPoolExecutor) worker).getQueue().size();
     }
 
     public SchedulerChain runChainTask() {
@@ -33,20 +35,14 @@ public class Scheduler implements Global {
     }
 
     public SchedulerResult runDelayedTask(Task task, long delayMillis) {
-        activeTasks.incrementAndGet();
         AtomicReference<SchedulerResult> futureReference = new AtomicReference<>();
-        futureReference.set(new SchedulerResult(
-                worker.schedule(task.asRunnable(futureReference, activeTasks::decrementAndGet), delayMillis, TimeUnit.MILLISECONDS),
-                activeTasks::decrementAndGet));
+        futureReference.set(new SchedulerResult(worker.schedule(task.asRunnable(futureReference), delayMillis, TimeUnit.MILLISECONDS)));
         return futureReference.get();
     }
 
     public SchedulerResult runRepeatingTask(Task task, long delayMillis, long periodMillis) {
-        activeTasks.incrementAndGet();
         AtomicReference<SchedulerResult> futureReference = new AtomicReference<>();
-        futureReference.set(new SchedulerResult(
-                worker.scheduleAtFixedRate(task.asRunnable(futureReference), delayMillis, periodMillis, TimeUnit.MILLISECONDS),
-                activeTasks::decrementAndGet));
+        futureReference.set(new SchedulerResult(worker.scheduleAtFixedRate(task.asRunnable(futureReference), delayMillis, periodMillis, TimeUnit.MILLISECONDS)));
         return futureReference.get();
     }
 
@@ -54,7 +50,6 @@ public class Scheduler implements Global {
         if (iterations == INFINITE_ITERATIONS)
             return runRepeatingTask(task, delayMillis, periodMillis);
 
-        activeTasks.incrementAndGet();
         AtomicReference<SchedulerResult> futureReference = new AtomicReference<>();
         futureReference.set(new SchedulerResult(worker.scheduleAtFixedRate(new Runnable() {
             private int iterationCount;
@@ -66,28 +61,36 @@ public class Scheduler implements Global {
                 }
                 else {
                     futureReference.get().cancel();
-                    activeTasks.decrementAndGet();
                 }
             }
-        }, delayMillis, periodMillis, TimeUnit.MILLISECONDS), activeTasks::decrementAndGet));
+        }, delayMillis, periodMillis, TimeUnit.MILLISECONDS)));
         return futureReference.get();
+    }
+
+    public static void throwOnMainThread(Throwable throwable) {
+        Minecraft.getInstance().execute(() -> {
+            if (throwable instanceof RuntimeException e)
+                throw e;
+            throw new RuntimeException(throwable);
+        });
     }
 
     @FunctionalInterface
     public interface Task {
         void run(AtomicReference<SchedulerResult> self);
 
-        default Runnable asRunnable(AtomicReference<SchedulerResult> self, Runnable onFinish) {
-            return () -> {
-                run(self);
-                
-                if (onFinish != null)
-                    onFinish.run();
-            };
-        }
-
         default Runnable asRunnable(AtomicReference<SchedulerResult> self) {
-            return asRunnable(self, null);
+            return () -> {
+                try {
+                    run(self);
+                }
+                catch (ScriptException e) {
+                    e.getExecutor().printErrorDetails(e, e.getLine());
+                }
+                catch (Exception e) {
+                    throwOnMainThread(e);
+                }
+            };
         }
     }
 }

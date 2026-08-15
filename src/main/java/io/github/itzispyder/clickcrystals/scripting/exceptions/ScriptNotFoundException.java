@@ -2,7 +2,7 @@ package io.github.itzispyder.clickcrystals.scripting.exceptions;
 
 import io.github.itzispyder.clickcrystals.scripting.ClickScript;
 
-public class ScriptNotFoundException extends RuntimeException {
+public class ScriptNotFoundException extends ScriptException {
 
     public ScriptNotFoundException(ClickScript script) {
         super("Script [%s] does not exist!".formatted(script.getPath()));

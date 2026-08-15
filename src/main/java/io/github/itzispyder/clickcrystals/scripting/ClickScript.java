@@ -5,6 +5,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.client.system.Config;
 import io.github.itzispyder.clickcrystals.scripting.components.CommandLine;
+import io.github.itzispyder.clickcrystals.scripting.exceptions.ScriptException;
 import io.github.itzispyder.clickcrystals.scripting.exceptions.ScriptNotFoundException;
 import io.github.itzispyder.clickcrystals.scripting.exceptions.UnknownCommandException;
 import io.github.itzispyder.clickcrystals.util.ArrayUtils;
@@ -88,7 +89,12 @@ public class ClickScript implements Global {
     }
 
     public static void executeSingle(ClickScript executor, String commandLine) {
-        executor.executeLine(commandLine);
+        try {
+            executor.executeLine(commandLine);
+        }
+        catch (ScriptException e) {
+            executor.printErrorDetails(e, commandLine);
+        }
     }
 
     public static void register(ScriptCommand command) {
@@ -112,7 +118,10 @@ public class ClickScript implements Global {
     }
 
     private synchronized void executeLine(String line) {
-        if (line != null && !line.trim().isEmpty() && !line.startsWith("//")) {
+        if (line == null || line.trim().isEmpty() || line.startsWith("//"))
+            return;
+
+        try {
             ScriptArgsReader sar = new ScriptArgs(this, line.split(" ")).getReader();
             String name = sar.next(REGISTRATION.keySet());
             ScriptCommand cmd = REGISTRATION.get(name);
@@ -124,6 +133,9 @@ public class ClickScript implements Global {
                 printErrorDetails(new UnknownCommandException("No such command found"), line);
             }
         }
+        catch (Exception ex) {
+            throw new ScriptException(ex, this, line);
+        }
     }
 
     public void printErrorDetails(Exception ex, String cmd) {
@@ -132,7 +144,7 @@ public class ClickScript implements Global {
             system.printErr(error);
         }
         else {
-            Command.error(error);
+            mc.execute(() -> Command.error(error));
         }
     }
 
