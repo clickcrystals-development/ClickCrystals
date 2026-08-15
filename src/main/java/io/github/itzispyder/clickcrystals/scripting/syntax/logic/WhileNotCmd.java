@@ -35,8 +35,8 @@ public class WhileNotCmd extends ScriptCommand implements ThenChainable {
                 ConditionEvaluationResult condition = Conditionals.evaluate(ref, copy, beginIndex);
                 if (!condition.getValue())
                     executeOnClient(copy);
-                else if (self != null)
-                    self.cancel(true);
+                else
+                    self.get().cancel();
             }
             catch (Exception ignore) {}
         }, 0, period, Scheduler.INFINITE_ITERATIONS);

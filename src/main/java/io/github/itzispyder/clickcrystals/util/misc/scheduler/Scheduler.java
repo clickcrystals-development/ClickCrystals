@@ -4,7 +4,6 @@ import io.github.itzispyder.clickcrystals.Global;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -33,57 +32,62 @@ public class Scheduler implements Global {
         return new SchedulerChain(this);
     }
 
-    public ScheduledFuture<?> runDelayedTask(Task task, long delayMillis) {
+    public SchedulerResult runDelayedTask(Task task, long delayMillis) {
         activeTasks.incrementAndGet();
-        AtomicReference<ScheduledFuture<?>> futureReference = new AtomicReference<>();
-        futureReference.set(worker.schedule(task.asRunnable(futureReference), delayMillis, TimeUnit.MILLISECONDS));
+        AtomicReference<SchedulerResult> futureReference = new AtomicReference<>();
+        futureReference.set(new SchedulerResult(
+                worker.schedule(task.asRunnable(futureReference, activeTasks::decrementAndGet), delayMillis, TimeUnit.MILLISECONDS),
+                activeTasks::decrementAndGet));
         return futureReference.get();
     }
 
-    public ScheduledFuture<?> runRepeatingTask(Task task, long delayMillis, long periodMillis) {
+    public SchedulerResult runRepeatingTask(Task task, long delayMillis, long periodMillis) {
         activeTasks.incrementAndGet();
-        AtomicReference<ScheduledFuture<?>> futureReference = new AtomicReference<>();
-        futureReference.set(worker.scheduleAtFixedRate(task.asRunnable(futureReference), delayMillis, periodMillis, TimeUnit.MILLISECONDS));
+        AtomicReference<SchedulerResult> futureReference = new AtomicReference<>();
+        futureReference.set(new SchedulerResult(
+                worker.scheduleAtFixedRate(task.asRunnable(futureReference), delayMillis, periodMillis, TimeUnit.MILLISECONDS),
+                activeTasks::decrementAndGet));
         return futureReference.get();
     }
 
-    public ScheduledFuture<?> runRepeatingTask(Task task, long delayMillis, long periodMillis, int iterations) {
-        activeTasks.incrementAndGet();
+    public SchedulerResult runRepeatingTask(Task task, long delayMillis, long periodMillis, int iterations) {
         if (iterations == INFINITE_ITERATIONS)
             return runRepeatingTask(task, delayMillis, periodMillis);
 
-        AtomicReference<ScheduledFuture<?>> futureReference = new AtomicReference<>();
-        futureReference.set(worker.scheduleAtFixedRate(new Runnable() {
+        activeTasks.incrementAndGet();
+        AtomicReference<SchedulerResult> futureReference = new AtomicReference<>();
+        futureReference.set(new SchedulerResult(worker.scheduleAtFixedRate(new Runnable() {
             private int iterationCount;
 
             @Override
             public void run() {
-                if (iterationCount++ < iterations)
+                if (iterationCount++ < iterations) {
                     task.run(futureReference);
-                else
-                    futureReference.get().cancel(true);
+                }
+                else {
+                    futureReference.get().cancel();
+                    activeTasks.decrementAndGet();
+                }
             }
-        }, delayMillis, periodMillis, TimeUnit.MILLISECONDS));
+        }, delayMillis, periodMillis, TimeUnit.MILLISECONDS), activeTasks::decrementAndGet));
         return futureReference.get();
     }
 
     @FunctionalInterface
     public interface Task {
-        void run(ScheduledFuture<?> self);
+        void run(AtomicReference<SchedulerResult> self);
 
-        default void run(AtomicReference<ScheduledFuture<?>> self) {
-            run(self.get());
-        }
-
-        default Runnable asRunnable(ScheduledFuture<?> self) {
+        default Runnable asRunnable(AtomicReference<SchedulerResult> self, Runnable onFinish) {
             return () -> {
                 run(self);
-                activeTasks.decrementAndGet();
+                
+                if (onFinish != null)
+                    onFinish.run();
             };
         }
 
-        default Runnable asRunnable(AtomicReference<ScheduledFuture<?>> self) {
-            return asRunnable(self.get());
+        default Runnable asRunnable(AtomicReference<SchedulerResult> self) {
+            return asRunnable(self, null);
         }
     }
 }
