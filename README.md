@@ -33,7 +33,7 @@ Happy coding and cpvping!
 | What You Have | What to get                                                                                                                 |
 |:--------------|:----------------------------------------------------------------------------------------------------------------------------|
 | higher..      | how is that even possible?                                                                                                  |
-| 26.2          | [ClickCrystals-26.2-1.4.1.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.1) *recommended |
+| 26.2          | [ClickCrystals-26.2-1.4.2.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.2) *recommended |
 | 26.1.2        | [ClickCrystals-26.1-1.4.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.0)              |
 | 26.1.1        | [ClickCrystals-26.1-1.4.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.0)              |
 | 26.1          | [ClickCrystals-26.1-1.4.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.0)              |
@@ -49,7 +49,9 @@ Happy coding and cpvping!
 | 1.21.2        | not supported                                                                                                               |
 | 1.21.1        | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
 | 1.21          | [ClickCrystals-1.21-1.2.9.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.2.9)              |
-| ..lower       | cry                                                                                                                         | 
+| ..lower       | cry                                                                                                                         |
+
+
 
 ### Can't Find The Version You're Looking For?
 There's still a chance for you to access latest script syntax!
@@ -58,34 +60,21 @@ Take a look in latest releases for [experimental versions](https://github.com/it
 
 ## Newest Changes
 ```yml
-Version: 1.4.1
+Version: 1.4.2
 
-Compatibility:
-- updated to Minecraft 26.2
+Patches:
+- fix join crashes from NoLoadScreen # i-no-am
+- fix NoServerPacks not working # i-no-am
+- fix bug where custom commands get sent as chat messages for certain prefixes # i-no-am
+- home screen animation render bug caused by scheduler # letmepractice
+- stop the scroll panels from scrolling past their content # i-no-am
 
-Scripting:
-- added if target_block_face <direction>
-- added toggle_input <input> <boolean>
-- added craft <item> [delay] [amount] # i-no-am
-- improved scripting autocomplete and syntax highlighting # i-no-am
-- made autocomplete appear only while typing # i-no-am
-
-User Interface:
-- made InGameHuds warning messages clickable # i-no-am
-- made the scripting editor operate much like VSCode # i-no-am
-- added animated conditional visibility for module settings # i-no-am
-- added an option to hide scripting errors from chat # i-no-am
-- fixed custom splash frequency # i-no-am
-- fixed keybind navigation opening the home screen first
-
-Modules:
-- improved GuiCursor speed and logic # i-no-am
-- made GuiCursor ignore the offhand slot # i-no-am
-- added a directional shield toggle for AxeSwap
-- added Rising and Vortex modes to TotemChams # i-no-am
-- improved TeamDetector manual-player handling # i-no-am
-- fixed NoResPack causing hangs or kicks on forced packs # i-no-am
+Tweaks:
+- make EntityIndicatorHud render spawn egg textures instead of relying on a third party repository for mob head textures
+- removed staff join notification spam # i-no-am
 ```
+
+
 
 ![demo](https://cdn.modrinth.com/data/YDYPZdGj/images/d4ad4320aaf5d8589829e3d1691ec5755422a778.png)
 
