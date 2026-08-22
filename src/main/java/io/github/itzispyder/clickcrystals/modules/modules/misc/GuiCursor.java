@@ -21,7 +21,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -86,9 +86,9 @@ public class GuiCursor extends Module implements Listener {
         Window win = mc.getWindow();
         double ratW = (double) win.getGuiScaledWidth() / win.getScreenWidth();
         double ratH = (double) win.getGuiScaledHeight() / win.getScreenHeight();
-        GLFW.glfwSetCursorPos(win.handle(), x / ratW, y / ratH);
+        InputConstants.grabOrReleaseMouse(win, InputConstants.CURSOR_NORMAL, x / ratW, y / ratH);
         // Update internal mouse state directly for Wayland compatibility,
-        // where glfwSetCursorPos silently fails in normal cursor mode
+        // where cursor positioning silently fails in normal cursor mode
         ((AccessorMouseHandler) mc.mouseHandler).clickCrystals$setCursorPos(x / ratW, y / ratH);
     }
 
@@ -163,7 +163,7 @@ public class GuiCursor extends Module implements Listener {
 
     @EventHandler
     private void onKey(KeyPressEvent e) {
-        if (e.getKeycode() == GLFW.GLFW_KEY_LEFT_SHIFT)
+        if (e.getKeycode() == InputConstants.KEY_LSHIFT)
             shiftKeyDown = e.getAction().isDown();
     }
 

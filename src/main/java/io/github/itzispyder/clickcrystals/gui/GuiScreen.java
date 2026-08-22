@@ -17,7 +17,7 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -238,13 +238,13 @@ public abstract class GuiScreen extends Screen implements Global {
         int scanCode = input.scancode();
         int modifiers = input.modifiers();
 
-        if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT) {
+        if (keyCode == InputConstants.KEY_LSHIFT || keyCode == InputConstants.KEY_RSHIFT) {
             this.shiftKeyPressed = true;
         }
-        else if (keyCode == GLFW.GLFW_KEY_LEFT_ALT || keyCode == GLFW.GLFW_KEY_RIGHT_ALT) {
+        else if (keyCode == InputConstants.KEY_LALT || keyCode == InputConstants.KEY_RALT) {
             this.altKeyPressed = true;
         }
-        else if (keyCode == GLFW.GLFW_KEY_LEFT_CONTROL || keyCode == GLFW.GLFW_KEY_RIGHT_CONTROL) {
+        else if (keyCode == InputConstants.KEY_LCONTROL || keyCode == InputConstants.KEY_RCONTROL) {
             this.ctrlKeyPressed = true;
         }
 
@@ -265,13 +265,13 @@ public abstract class GuiScreen extends Screen implements Global {
         int scanCode = input.scancode();
         int modifiers = input.modifiers();
 
-        if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT) {
+        if (keyCode == InputConstants.KEY_LSHIFT || keyCode == InputConstants.KEY_RSHIFT) {
             this.shiftKeyPressed = false;
         }
-        else if (keyCode == GLFW.GLFW_KEY_LEFT_ALT || keyCode == GLFW.GLFW_KEY_RIGHT_ALT) {
+        else if (keyCode == InputConstants.KEY_LALT || keyCode == InputConstants.KEY_RALT) {
             this.altKeyPressed = false;
         }
-        else if (keyCode == GLFW.GLFW_KEY_LEFT_CONTROL || keyCode == GLFW.GLFW_KEY_RIGHT_CONTROL) {
+        else if (keyCode == InputConstants.KEY_LCONTROL || keyCode == InputConstants.KEY_RCONTROL) {
             this.ctrlKeyPressed = false;
         }
 
