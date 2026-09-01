@@ -5,7 +5,7 @@ import io.github.itzispyder.clickcrystals.events.listeners.TickEventListener;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
 import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorKeyboardHandler;
 import io.github.itzispyder.clickcrystals.mixininterfaces.AccessorMouseHandler;
-import io.github.itzispyder.clickcrystals.mixins.AccessorMinecraftClient;
+import io.github.itzispyder.clickcrystals.mixins.AccessorMinecraft;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.misc.GuiCursor;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -19,7 +19,7 @@ import java.util.function.Predicate;
 public final class InteractionUtils implements Global {
 
     public static void inputAttack() {
-        ((AccessorMinecraftClient) mc).inputAttack();
+        ((AccessorMinecraft) mc).inputAttack();
     }
 
     public static void inputAttack(long ms) {
@@ -27,7 +27,7 @@ public final class InteractionUtils implements Global {
     }
 
     public static void inputUse() {
-        ((AccessorMinecraftClient) mc).inputUse();
+        ((AccessorMinecraft) mc).inputUse();
     }
 
     public static void inputUse(long ms) {

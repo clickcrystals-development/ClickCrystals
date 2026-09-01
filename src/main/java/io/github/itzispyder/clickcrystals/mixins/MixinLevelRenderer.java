@@ -1,7 +1,5 @@
 package io.github.itzispyder.clickcrystals.mixins;
 
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
-import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.events.events.world.RenderWorldEvent;
@@ -10,13 +8,8 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.BlockOutline
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
-import org.joml.Matrix4f;
-import org.joml.Matrix4fc;
-import org.joml.Vector4f;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -24,11 +17,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LevelRenderer.class)
 public abstract class MixinLevelRenderer implements Global {
-
-    @Unique
-    private DeltaTracker clickcrystals$deltaTracker;
-    @Unique
-    private Matrix4f clickcrystals$modelViewMatrix;
 
     @ModifyArg(
             method = "submitHitOutline",
@@ -44,23 +32,11 @@ public abstract class MixinLevelRenderer implements Global {
         return blockOutline.isEnabled() ? blockOutline.color.getVal().getHexOpaque() : originalColor;
     }
 
-    @Inject(method = "render", at = @At("HEAD"))
-    private void captureRenderContext(GraphicsResourceAllocator resourceAllocator, DeltaTracker deltaTracker, boolean renderOutline, CameraRenderState cameraState, Matrix4fc modelViewMatrix, GpuBufferSlice terrainFog, Vector4f fogColor, boolean shouldRenderSky, CallbackInfo ci) {
-        clickcrystals$deltaTracker = deltaTracker;
-        clickcrystals$modelViewMatrix = new Matrix4f(modelViewMatrix);
-    }
-
     @Inject(method = "submitFeatures", at = @At("TAIL"))
     private void submitClickCrystalsFeatures(LevelRenderState renderState, SubmitNodeCollector submitNodeCollector, boolean renderOutline, CallbackInfo ci) {
-        PoseStack poseStack = new PoseStack();
-        poseStack.mulPose(clickcrystals$modelViewMatrix);
-
-        RenderWorldEvent event = new RenderWorldEvent(
-                poseStack,
-                mc.gameRenderer.mainCamera(),
-                clickcrystals$deltaTracker,
-                submitNodeCollector
-        );
+        PoseStack pose = new PoseStack();
+        DeltaTracker tickDelta = ((AccessorMinecraft) mc).tickDelta();
+        RenderWorldEvent event = new RenderWorldEvent(pose, renderState, tickDelta, submitNodeCollector);
         system.eventBus.pass(event);
     }
 }

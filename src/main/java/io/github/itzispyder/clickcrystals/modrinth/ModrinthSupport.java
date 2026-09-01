@@ -1,5 +1,6 @@
 package io.github.itzispyder.clickcrystals.modrinth;
 
+import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.gui.misc.ChatColor;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
@@ -20,5 +21,11 @@ public class ModrinthSupport {
 
     public static boolean isBlacklisted(Module mod) {
         return isBlacklisted(mod.getClass());
+    }
+
+    public static void disableBlockedModules() {
+        Global.system.collectModules().stream()
+                .filter(ModrinthSupport::isBlacklisted)
+                .forEach(module -> module.setEnabled(false, false));
     }
 }

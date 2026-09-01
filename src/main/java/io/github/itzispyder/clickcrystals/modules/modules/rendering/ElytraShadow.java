@@ -37,12 +37,11 @@ public class ElytraShadow extends ListenerModule {
         Color color = this.color.getVal();
         PoseStack matrices = event.getPoseStack();
         SubmitNodeCollector submitNodeCollector = event.getSubmitNodeCollector();
-        Vec3 cameraPosition = event.getCamera().position();
         float tickDelta = event.getDeltaTracker().getGameTimeDeltaPartialTick(true);
 
         for (AbstractClientPlayer player : PlayerUtils.getClientWorld().players())
             if (player.isFallFlying())
-                renderPlayerShadow(matrices, submitNodeCollector, cameraPosition, MathUtils.lerpEntityPosVec(player, tickDelta), color);
+                renderPlayerShadow(matrices, submitNodeCollector, event.getCamera(), MathUtils.lerpEntityPosVec(player, tickDelta), color);
     }
 
     private void renderPlayerShadow(PoseStack matrices, SubmitNodeCollector submitNodeCollector, Vec3 cameraPosition, Vec3 playerPosition, Color color) {

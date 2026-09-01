@@ -37,6 +37,7 @@ import io.github.itzispyder.clickcrystals.gui.hud.fixed.*;
 import io.github.itzispyder.clickcrystals.gui.hud.positionable.*;
 import io.github.itzispyder.clickcrystals.gui.screens.HudEditScreen;
 import io.github.itzispyder.clickcrystals.gui.screens.ModuleEditScreen;
+import io.github.itzispyder.clickcrystals.modrinth.ModrinthSupport;
 import io.github.itzispyder.clickcrystals.modules.Module;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.modules.ScriptedModule;
@@ -153,6 +154,8 @@ public final class ClickCrystals implements ModInitializer, Global {
         ClickCrystals.checkUpdates();
         system.println("-> requesting bulletin announcements...");
         BulletinBoard.request();
+        system.println("-> checking for modrinth blacklists...");
+        ModrinthSupport.disableBlockedModules();
 
         system.println("-> clicking crystals!");
         system.println("ClickCrystals had loaded successfully!");

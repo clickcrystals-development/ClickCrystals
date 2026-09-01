@@ -22,7 +22,7 @@ public abstract class MixinMinecraft implements Global {
 
     @Inject(method = "startAttack", at = @At("HEAD") ,cancellable = true)
     private void attack(CallbackInfoReturnable<Boolean> cir) {
-        AccessorMinecraftClient amc = (AccessorMinecraftClient) this;
+        AccessorMinecraft amc = (AccessorMinecraft) this;
         PlayerAttackEntityEvent evt = new PlayerAttackEntityEvent(mc.player, amc.accessTargetedEntity(), mc.hitResult);
         system.eventBus.passWithCallbackInfo(cir, evt);
     }

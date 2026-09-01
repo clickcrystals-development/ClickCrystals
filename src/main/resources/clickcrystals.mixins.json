@@ -5,7 +5,7 @@
   "client": [
     "AccessorCamera",
     "AccessorHandledScreen",
-    "AccessorMinecraftClient",
+    "AccessorMinecraft",
     "MixinAbstractClientPlayer",
     "MixinAbstractContainerScreen",
     "MixinBlockItem",
