@@ -63,6 +63,7 @@ Here are some examples of command lines:
 - [Interact (interact)](./commands/interact.md)
 - [Loop (loop)](./commands/loop.md)
 - [Loop Period (loop_period)](./commands/loop_period.md)
+- [Macro (macro)](./commands/macro.md)
 - [Module (module)](./commands/module.md)
 - [Notify (notify)](./commands/notify.md)
 - [On (on)](./commands/on.md)

@@ -5187,6 +5187,27 @@
     {
       "components": [
         {
+          "acceptingRegex": "(macro)",
+          "optional": false,
+          "leading": true
+        },
+        {
+          "acceptingRegex": "(\\S+)",
+          "optional": false,
+          "leading": false
+        },
+        {
+          "acceptingRegex": "(\\\"((\\\\\\\")|[^\\\"])*\\\")",
+          "optional": false,
+          "leading": false
+        }
+      ],
+      "optional": false,
+      "acceptingCodeBlocks": false
+    },
+    {
+      "components": [
+        {
           "acceptingRegex": "(on)",
           "optional": false,
           "leading": true
