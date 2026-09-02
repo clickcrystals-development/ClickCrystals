@@ -16,7 +16,7 @@ public class Scheduler implements Global {
 
     private static final Thread MAIN_THREAD = Thread.currentThread();
 
-    private final ScheduledExecutorService worker;
+    private ScheduledExecutorService worker;
 
     public Scheduler() {
         worker = Executors.newScheduledThreadPool(2);
@@ -24,6 +24,7 @@ public class Scheduler implements Global {
 
     public void cancelAllTasks() {
         worker.shutdownNow();
+        worker = Executors.newScheduledThreadPool(2);
     }
 
     public int count() {
