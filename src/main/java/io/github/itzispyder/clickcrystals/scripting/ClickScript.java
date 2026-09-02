@@ -23,7 +23,7 @@ public class ClickScript implements Global {
     private static final Map<String, ScriptCommand> REGISTRATION = new HashMap<>();
     public static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
 
-    private final Map<String, String> functions;
+    private final Map<String, String> functions, macros;
     private final String path;
     private final File file;
 
@@ -31,6 +31,7 @@ public class ClickScript implements Global {
         this.file = file;
         this.path = path;
         this.functions = new HashMap<>();
+        this.macros = new HashMap<>();
         currentFile.set(file);
     }
 
@@ -127,6 +128,8 @@ public class ClickScript implements Global {
             ScriptCommand cmd = REGISTRATION.get(name);
 
             if (cmd != null) {
+                for (Map.Entry<String, String> entry : macros.entrySet())
+                    line = line.replace(entry.getKey(), entry.getValue());
                 cmd.dispatch(this, name, sar.getCurrentRead(), line);
             }
             else {
@@ -179,6 +182,20 @@ public class ClickScript implements Global {
             throw new IllegalArgumentException("Function '%s' is not defined!".formatted(name));
         }
         return "execute " + functions.getOrDefault(name, "");
+    }
+
+    public void createMacro(String name, String macro) {
+        if (name == null || name.trim().isEmpty() || macro == null || macro.trim().isEmpty()) {
+            return;
+        }
+        macros.put(name, macro);
+    }
+
+    public String getMacro(String name) {
+        if (name == null || name.trim().isEmpty() || !functions.containsKey(name)) {
+            throw new IllegalArgumentException("Macro '%s' is not defined!".formatted(name));
+        }
+        return macros.getOrDefault(name, "");
     }
 
     public String getPath() {
