@@ -33,7 +33,7 @@ Happy coding and cpvping!
 | What You Have | What to get                                                                                                                 |
 |:--------------|:----------------------------------------------------------------------------------------------------------------------------|
 | higher..      | how is that even possible?                                                                                                  |
-| 26.2          | [ClickCrystals-26.2-1.4.2.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.2) *recommended |
+| 26.2          | [ClickCrystals-26.2-1.4.3.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.3) *recommended |
 | 26.1.2        | [ClickCrystals-26.1-1.4.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.0)              |
 | 26.1.1        | [ClickCrystals-26.1-1.4.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.0)              |
 | 26.1          | [ClickCrystals-26.1-1.4.0.jar](https://github.com/clickcrystals-development/ClickCrystals/releases/tag/v1.4.0)              |
@@ -60,18 +60,15 @@ Take a look in latest releases for [experimental versions](https://github.com/it
 
 ## Newest Changes
 ```yml
-Version: 1.4.2
+Version: 1.4.3
+
+Scripting:
+  - add scripting macros (like c++!)
 
 Patches:
-- fix join crashes from NoLoadScreen # i-no-am
-- fix NoServerPacks not working # i-no-am
-- fix bug where custom commands get sent as chat messages for certain prefixes # i-no-am
-- home screen animation render bug caused by scheduler # letmepractice
-- stop the scroll panels from scrolling past their content # i-no-am
-
-Tweaks:
-- make EntityIndicatorHud render spawn egg textures instead of relying on a third party repository for mob head textures
-- removed staff join notification spam # i-no-am
+  - fix trajectories render bug
+  - disable previously enabled modules if blocked by modrinth
+  - fix closing screen freezing your game
 ```
 
 
