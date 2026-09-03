@@ -19,7 +19,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.GameType;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.*;
 
@@ -297,15 +297,15 @@ public class ClickScriptAutocomplete implements Global {
     public boolean onKey(int key) {
         if (!visible) return false;
         return switch (key) {
-            case GLFW.GLFW_KEY_UP -> {
+            case InputConstants.KEY_UP -> {
                 selectedIndex = (selectedIndex - 1 + suggestions.size()) % suggestions.size();
                 yield true;
             }
-            case GLFW.GLFW_KEY_DOWN -> {
+            case InputConstants.KEY_DOWN -> {
                 selectedIndex = (selectedIndex + 1) % suggestions.size();
                 yield true;
             }
-            case GLFW.GLFW_KEY_ESCAPE -> {
+            case InputConstants.KEY_ESCAPE -> {
                 visible = false;
                 yield true;
             }
@@ -314,7 +314,7 @@ public class ClickScriptAutocomplete implements Global {
     }
 
     public boolean isInsertKey(int key) {
-        return visible && (key == GLFW.GLFW_KEY_TAB || key == GLFW.GLFW_KEY_ENTER);
+        return visible && (key == InputConstants.KEY_TAB || key == InputConstants.KEY_RETURN);
     }
 
     public String getSelected() {

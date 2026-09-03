@@ -62,7 +62,7 @@ import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 /**
  * ClickCrystals main
@@ -99,7 +99,7 @@ public final class ClickCrystals implements ModInitializer, Global {
     @SuppressWarnings("unused")
     public static final Keybind openModuleKeybind = Keybind.create()
             .id("open-clickcrystals-module-screen")
-            .defaultKey(GLFW.GLFW_KEY_APOSTROPHE)
+            .defaultKey(InputConstants.KEY_APOSTROPHE)
             .condition((bind, screen) -> screen == null || screen instanceof TitleScreen || screen instanceof JoinMultiplayerScreen || screen instanceof SelectWorldScreen)
             .onPress(bind -> UserInputListener.openPreviousScreen())
             .onChange(config::saveKeybind)
@@ -108,7 +108,7 @@ public final class ClickCrystals implements ModInitializer, Global {
     @SuppressWarnings("unused")
     public static final Keybind openHudEditorKeybind = Keybind.create()
             .id("open-hud-editor-screen")
-            .defaultKey(GLFW.GLFW_KEY_SEMICOLON)
+            .defaultKey(InputConstants.KEY_SEMICOLON)
             .condition((bind, screen) -> screen == null)
             .onPress(bind -> {
                 if (Module.isEnabled(InGameHuds.class)) {
@@ -123,7 +123,7 @@ public final class ClickCrystals implements ModInitializer, Global {
     @SuppressWarnings("unused")
     public static final Keybind commandPrefix = Keybind.create()
             .id("command-prefix")
-            .defaultKey(GLFW.GLFW_KEY_COMMA)
+            .defaultKey(InputConstants.KEY_COMMA)
             .condition((bind, screen) -> screen == null)
             .onPress(bind -> mc.gui.setScreen(new ChatScreen("", false)))
             .onChange(config::saveKeybind)

@@ -11,7 +11,7 @@ import io.github.itzispyder.clickcrystals.gui.screens.DefaultBase;
 import io.github.itzispyder.clickcrystals.util.StringUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 public class ProfilesScreen extends DefaultBase {
 
@@ -121,7 +121,7 @@ public class ProfilesScreen extends DefaultBase {
 
             @Override
             public boolean onKey(int key, int scancode) {
-                if (key != GLFW.GLFW_KEY_ENTER)
+                if (key != InputConstants.KEY_RETURN)
                     return super.onKey(key, scancode);
                 if (!(mc.gui.screen() instanceof GuiScreen screen))
                     return true;

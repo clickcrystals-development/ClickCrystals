@@ -7,7 +7,7 @@ import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.function.Function;
 
@@ -15,13 +15,11 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
 
     private final KeybindSetting setting;
     private String display;
-    private int currentScanCode;
 
     public KeybindSettingElement(KeybindSetting setting, int x, int y) {
         super(setting, x, y);
         this.setting = setting;
         this.display = null;
-        this.currentScanCode = 42;
     }
 
     @Override
@@ -54,8 +52,7 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
     @Override
     public boolean onKey(int key, int scanCode) {
         if (mc.gui.screen() instanceof GuiScreen screen) {
-            setting.setKey(key == GLFW.GLFW_KEY_ESCAPE ? Keybind.NONE : key);
-            currentScanCode = scanCode;
+            setting.setKey(key == InputConstants.KEY_ESCAPE ? Keybind.NONE : key);
             screen.selected = null;
         }
         return true;
@@ -72,7 +69,7 @@ public class KeybindSettingElement extends SettingElement<KeybindSetting> implem
 
     public void updateDisplay() {
         int key = setting.getKey();
-        String name = GLFW.glfwGetKeyName(key, currentScanCode);
+        String name = InputConstants.Type.KEYSYM.getOrCreate(key).getDisplayName().getString();
 
         if (name == null || Keybind.EXTRAS.containsKey(key)) {
             name = Keybind.EXTRAS.get(key);
