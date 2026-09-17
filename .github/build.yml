@@ -1,0 +1,31 @@
+name: Build ClickCrystals
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Dar permissão ao Gradle
+        run: chmod +x ./gradlew
+
+      - name: Compilar
+        run: ./gradlew build
+
+      - name: Disponibilizar JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClickCrystals-JAR
+          path: build/libs/*.jar
