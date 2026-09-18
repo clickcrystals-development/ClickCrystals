@@ -13,7 +13,10 @@ import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.ChatFormatting;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeableArmorItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;
 
@@ -24,7 +27,6 @@ public class TeamDetector extends ListenerModule {
 
     private final SettingSection scGeneral = getGeneralSection();
 
-    // parsed manual list, rebuilt only when the raw setting string changes
     private String cachedNamesRaw;
     private Set<String> cachedNames = Set.of();
 
@@ -95,7 +97,6 @@ public class TeamDetector extends ListenerModule {
     }
 
     public static boolean isTeammate(Player target) {
-        // never flag yourself as a teammate
         if (PlayerUtils.invalid() || target == null || target == PlayerUtils.player())
             return false;
 
@@ -103,20 +104,18 @@ public class TeamDetector extends ListenerModule {
         if (!td.isEnabled())
             return false;
 
-        // manual list (cached, O(1) lookup)
         if (td.teamNames().contains(target.getName().getString().toLowerCase()))
             return true;
 
-        // automatic detection
         return switch (td.teamFindingMethod.getVal()) {
             case SCOREBOARD -> isSameScoreboardTeam(target);
             case COLOR_NAME -> isSameColorNameTeam(target);
+            case LEATHER_ARMOR -> isSameLeatherArmorColor(target);
             default -> false;
         };
     }
 
     public static boolean shouldCancelCcsAttack(Player target) {
-        // isTeammate already gates on enabled/valid; only the ccs toggle is extra here
         return Module.get(TeamDetector.class).cancelCcs.getVal() && isTeammate(target);
     }
 
@@ -137,9 +136,9 @@ public class TeamDetector extends ListenerModule {
 
     private static boolean isSameScoreboardTeam(Player player) {
         Scoreboard scoreboard = PlayerUtils.getWorld().getScoreboard();
-        PlayerTeam playerTeam = scoreboard.getPlayerTeam(PlayerUtils.player().getName().getString());
-        PlayerTeam otherPlayerTeam = scoreboard.getPlayerTeam(player.getName().getString());
-        return playerTeam != null && playerTeam.equals(otherPlayerTeam);
+        PlayerTeam team1 = scoreboard.getPlayersTeam(PlayerUtils.player().getName().getString());
+        PlayerTeam team2 = scoreboard.getPlayersTeam(player.getName().getString());
+        return team1 != null && team2 != null && team1.getName().equals(team2.getName());
     }
 
     private static boolean isSameColorNameTeam(Player player) {
@@ -148,9 +147,41 @@ public class TeamDetector extends ListenerModule {
         return playerColor == targetColor && playerColor != ChatUtils.getFormattingChar(ChatFormatting.WHITE);
     }
 
+    private static boolean isSameLeatherArmorColor(Player target) {
+        Player client = PlayerUtils.player();
+        EquipmentSlot[] slots = { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
+
+        boolean foundLeatherPiece = false;
+
+        for (EquipmentSlot slot : slots) {
+            ItemStack clientStack = client.getItemBySlot(slot);
+            ItemStack targetStack = target.getItemBySlot(slot);
+
+            boolean clientIsLeather = clientStack.getItem() instanceof DyeableArmorItem;
+            boolean targetIsLeather = targetStack.getItem() instanceof DyeableArmorItem;
+
+            if (clientIsLeather != targetIsLeather) {
+                return false;
+            }
+
+            if (clientIsLeather) {
+                foundLeatherPiece = true;
+                DyeableArmorItem clientItem = (DyeableArmorItem) clientStack.getItem();
+                DyeableArmorItem targetItem = (DyeableArmorItem) targetStack.getItem();
+
+                if (clientItem.getColor(clientStack) != targetItem.getColor(targetStack)) {
+                    return false;
+                }
+            }
+        }
+
+        return foundLeatherPiece;
+    }
+
     public enum TeamsMethod {
         SCOREBOARD,
         COLOR_NAME,
+        LEATHER_ARMOR,
         MANUAL
     }
 }
