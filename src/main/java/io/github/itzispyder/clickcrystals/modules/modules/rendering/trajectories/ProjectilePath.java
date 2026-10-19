@@ -20,7 +20,9 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ProjectilePath implements Global {
 
@@ -77,11 +79,21 @@ public class ProjectilePath implements Global {
     private HitResult get(ClientLevel world, Vec3 pos, Vec3 prevPos) {
         Vec3 dir = pos.subtract(prevPos).normalize();
         double dist = prevPos.distanceTo(pos);
+        Vec3 end = pos.add(dir.scale(dist));
+        Set<Entity> nearby = new HashSet<>(world.getEntities((Entity)null, new AABB(pos, end).inflate(1.0E-7), entity -> true));
+        List<Entity> candidates = new ArrayList<>(nearby.size());
+
+        for (Entity entity : world.entitiesForRendering())
+            if (nearby.contains(entity))
+                candidates.add(entity);
 
         for (double i = 0.0; i <= dist; i += 0.0625) {
-            Vec3 point = pos.add(dir.scale(i));
-            for (Entity ent : world.entitiesForRendering())
-                if (ent.getBoundingBox().contains(point))
+            double x = pos.x + dir.x * i;
+            double y = pos.y + dir.y * i;
+            double z = pos.z + dir.z * i;
+
+            for (Entity ent : candidates)
+                if (ent.getBoundingBox().contains(x, y, z))
                     return new EntityHitResult(ent, pos);
         }
 
@@ -114,15 +126,7 @@ public class ProjectilePath implements Global {
 
             LocalPlayer p = PlayerUtils.player();
             Vec3 playerPos = MathUtils.lerpEntityPosVec(p, tickDelta);
-            Vec3 playerEye = MathUtils.lerpEntityEyeVec(p, tickDelta);
             Vec3 offset = playerPos.subtract(p.xOld, p.yOld, p.zOld);
-
-            for (int i = 0; i < vertices.size(); i++) {
-                Vec3 vec = vertices.get(i);
-                float pitch = (p.getXRot() - p.xRotO) * tickDelta;
-                float yaw = (p.getYRot() - p.yRotO) * tickDelta;
-                MathUtils.rotate(vec, playerEye, pitch, yaw);
-            }
 
             Vec3 last = vertices.get(vertices.size() - 1);
 
