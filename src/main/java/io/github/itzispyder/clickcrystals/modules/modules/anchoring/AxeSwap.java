@@ -12,7 +12,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.util.minecraft.EntityUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.AxeItem;
+import net.minecraft.tags.ItemTags;
 
 @ModrinthNoNo
 public class AxeSwap extends Module implements Listener {
@@ -49,8 +49,8 @@ public class AxeSwap extends Module implements Listener {
     @EventHandler
     private void onAttack(PlayerAttackEntityEvent e) {
         if (e.getEntity() instanceof Player p && EntityUtils.isBlocking(p, directionalShield.getVal(), shieldFov.getVal())) {
-            if (HotbarUtils.nameContains("sword") && HotbarUtils.has(item -> item.getItem() instanceof AxeItem)) {
-                HotbarUtils.search(item -> item.getItem() instanceof AxeItem);
+            if (HotbarUtils.nameContains("sword") && HotbarUtils.has(item -> item.is(ItemTags.AXES))) {
+                HotbarUtils.search(item -> item.is(ItemTags.AXES));
             }
         }
     }

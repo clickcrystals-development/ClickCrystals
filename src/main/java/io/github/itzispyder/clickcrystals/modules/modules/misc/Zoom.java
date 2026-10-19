@@ -12,7 +12,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.DoubleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 public class Zoom extends Module implements Listener {
 
@@ -28,7 +28,7 @@ public class Zoom extends Module implements Listener {
     public final ModuleSetting<Keybind> keybind = scGeneral.add(KeybindSetting.create()
             .name("zoom-key")
             .description("Keybind to activate zoom.")
-            .def(GLFW.GLFW_KEY_B)
+            .def(InputConstants.KEY_B)
             .build()
     );
     public final ModuleSetting<Boolean> scrollToChange = scGeneral.add(BooleanSetting.create()

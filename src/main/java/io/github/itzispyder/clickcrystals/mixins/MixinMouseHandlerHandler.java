@@ -20,8 +20,8 @@ public abstract class MixinMouseHandlerHandler implements Global, AccessorMouseH
     @Shadow private double accumulatedDX;
     @Shadow private double xpos;
     @Shadow private double ypos;
-    @Shadow protected abstract void onButton(long window, MouseButtonInfo input, int action);
-    @Shadow protected abstract void onScroll(long window, double horizontal, double vertical);
+    @Shadow public abstract void onButton(long window, MouseButtonInfo input, int action);
+    @Shadow public abstract void onScroll(long window, double horizontal, double vertical);
 
     @Inject(method = "onButton", at = @At("HEAD"), cancellable = true)
     public void onButton(long window, MouseButtonInfo input, int action, CallbackInfo ci) {
@@ -37,7 +37,7 @@ public abstract class MixinMouseHandlerHandler implements Global, AccessorMouseH
     }
 
     @Inject(method = "turnPlayer", at = @At("HEAD"), cancellable = true)
-    public void onCursorPos(CallbackInfo ci) {
+    public void onCursorPos(double movement, CallbackInfo ci) {
         if (system.cameraRotator.isRunningTicket()) {
             accumulatedDY = accumulatedDX = 0;
             ci.cancel();

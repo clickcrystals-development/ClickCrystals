@@ -1,10 +1,9 @@
 package io.github.itzispyder.clickcrystals.util.minecraft.render;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.FilterMode;
+import com.mojang.renderpearl.api.textures.FilterMode;
 import net.minecraft.client.renderer.rendertype.LayeringTransform;
-import net.minecraft.client.renderer.rendertype.OutputTarget;
 import net.minecraft.client.renderer.rendertype.RenderSetup;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.resources.Identifier;
@@ -28,7 +27,6 @@ public class RenderLayers {
     private static RenderSetup emptyParams(RenderPipeline pipeline) {
         return RenderSetup.builder(pipeline)
                 .setLayeringTransform(LayeringTransform.VIEW_OFFSET_Z_LAYERING)
-                .setOutputTarget(OutputTarget.ITEM_ENTITY_TARGET)
                 .createRenderSetup();
     }
 
@@ -36,7 +34,6 @@ public class RenderLayers {
         return RenderSetup.builder(pipeline)
                 .withTexture("Sampler0", id, () -> RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST))
                 .setLayeringTransform(LayeringTransform.VIEW_OFFSET_Z_LAYERING)
-                .setOutputTarget(OutputTarget.ITEM_ENTITY_TARGET)
                 .createRenderSetup();
     }
 

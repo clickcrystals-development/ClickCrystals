@@ -230,7 +230,7 @@ public class ScriptedModule extends ListenerModule {
 
         if (e.getPacket() instanceof ServerboundUseItemOnPacket packet) {
             for (BlockInteractListener l : blockInteractListeners) {
-                l.pass(packet.getHitResult(), packet.getHand());
+                l.pass(packet.hitResult(), packet.hand());
             }
         }
         else if (e.getPacket() instanceof ServerboundPlayerActionPacket packet) {

@@ -54,7 +54,7 @@ public class CrystAnchor extends Module implements Listener {
     @EventHandler
     private void onClickBlock(PacketSendEvent e) {
         if (e.getPacket() instanceof ServerboundUseItemOnPacket packet) {
-            final BlockPos pos = packet.getHitResult().getBlockPos();
+            final BlockPos pos = packet.hitResult().getBlockPos();
 
             if (BlockUtils.canCrystalOn(pos)) return;
             if (!HotbarUtils.has(Items.RESPAWN_ANCHOR)) return;
@@ -66,7 +66,7 @@ public class CrystAnchor extends Module implements Listener {
             if (crystal | sword | pick) {
                 e.setCancelled(true);
                 HotbarUtils.search(Items.RESPAWN_ANCHOR);
-                BlockUtils.interact(packet.getHitResult());
+                BlockUtils.interact(packet.hitResult());
                 HotbarUtils.search(Items.GLOWSTONE);
             }
         }

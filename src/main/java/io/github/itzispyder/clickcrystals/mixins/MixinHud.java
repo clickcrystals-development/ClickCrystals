@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(Hud.class)
 public abstract class MixinHud implements Global {
 
-    @ModifyArgs(method = "extractArmor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
+    @ModifyArgs(method = "extractArmor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
     private static void renderArmor(Args args) {
         if (Module.isEnabled(HealthAsBar.class))
             args.set(3, Minecraft.getInstance().getWindow().getGuiScaledHeight() - 50);

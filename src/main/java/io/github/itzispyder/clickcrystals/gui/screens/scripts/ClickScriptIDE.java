@@ -31,7 +31,7 @@ import io.github.itzispyder.clickcrystals.util.misc.Pair;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.io.*;
 import java.util.Arrays;
@@ -122,7 +122,7 @@ public class ClickScriptIDE extends DefaultBase {
         this.removeChild(buttonSearch);
 
         textField.setKeyInterceptor(key -> {
-            if (key == GLFW.GLFW_KEY_ESCAPE && showKeybinds) {
+            if (key == InputConstants.KEY_ESCAPE && showKeybinds) {
                 showKeybinds = false;
                 return true;
             }
@@ -135,7 +135,7 @@ public class ClickScriptIDE extends DefaultBase {
                     return true;
                 }
             }
-            if (key == GLFW.GLFW_KEY_S && ctrlKeyPressed) {
+            if (key == InputConstants.KEY_S && ctrlKeyPressed) {
                 saveContents();
                 return true;
             }

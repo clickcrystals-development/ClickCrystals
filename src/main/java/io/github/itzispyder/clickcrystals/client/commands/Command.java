@@ -22,7 +22,7 @@ public abstract class Command implements Global {
     protected static final int COMMAND_FAIL = -1;
     protected static final int COMMAND_PASS = 0;
     protected static final int SINGLE_SUCCESS = 1;
-    public static final HolderLookup.Provider WRAPPER = VanillaRegistries.createLookup();
+    public static final HolderLookup.Provider WRAPPER = VanillaRegistries.createWorldLookup();
     public static final CommandBuildContext REGISTRY = Commands.createValidationContext(WRAPPER);
     public static final CommandDispatcher<ClientSuggestionProvider> DISPATCHER = new CommandDispatcher<>();
     public static final ClientSuggestionProvider SOURCE = new ClientSuggestionProvider(null, mc, PermissionSet.NO_PERMISSIONS);

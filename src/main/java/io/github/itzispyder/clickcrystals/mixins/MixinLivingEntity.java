@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.modules.modules.rendering.SlowSwing;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.component.SwingAnimation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,8 +17,8 @@ import java.util.Collection;
 @Mixin(LivingEntity.class)
 public abstract class MixinLivingEntity {
 
-    @Inject(method = "getCurrentSwingDuration", at = @At("RETURN"), cancellable = true)
-    public void getHandSwingDuration(CallbackInfoReturnable<Integer> cir) {
+    @Inject(method = "getModifiedSwingDuration", at = @At("RETURN"), cancellable = true)
+    public void getHandSwingDuration(SwingAnimation animation, CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue(Module.isEnabled(SlowSwing.class) ? 12 : cir.getReturnValue());
     }
 

@@ -14,12 +14,13 @@ import io.github.itzispyder.clickcrystals.util.misc.Randomizer;
 import io.github.itzispyder.clickcrystals.util.misc.camera.CameraRotator;
 import io.github.itzispyder.clickcrystals.util.misc.scheduler.Scheduler;
 import io.github.itzispyder.clickcrystals.util.misc.scheduler.TickScheduler;
-import net.minecraft.util.Util;
+import com.mojang.blaze3d.Blaze3D;
 
 import java.io.File;
 import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -67,7 +68,7 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void openUrl(String url) {
         try {
-            Util.getPlatform().openUri(new URI(url));
+            Blaze3D.openUri(new URI(url));
         } 
         catch (URISyntaxException ex) {
             system.printErr("Failed to open url " + url);
@@ -77,7 +78,7 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void openFile(String path) {
         try {
-            Util.getPlatform().openFile(new File(path));
+            Blaze3D.openPath(Path.of(path));
         } 
         catch (Exception ex) {
             system.printErr("Failed to open file " + path);

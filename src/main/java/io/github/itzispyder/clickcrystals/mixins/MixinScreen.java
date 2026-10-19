@@ -27,7 +27,7 @@ public abstract class MixinScreen implements Global {
     }
 
     @Inject(method = "extractTransparentBackground", at = @At("HEAD"), cancellable = true)
-    private void renderInGameBackground(CallbackInfo info) {
+    private void renderInGameBackground(GuiGraphicsExtractor context, CallbackInfo info) {
         NoGuiBackground gui = Module.get(NoGuiBackground.class);
         if (gui.isEnabled() && gui.noOverlay.getVal()) {
             info.cancel();

@@ -11,7 +11,7 @@ import io.github.itzispyder.clickcrystals.modules.settings.KeybindSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.ChatUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Voidable;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 public class MsgResend extends ListenerModule {
 
@@ -25,7 +25,7 @@ public class MsgResend extends ListenerModule {
     public final ModuleSetting<Keybind> resendKeybind = scGeneral.add(KeybindSetting.create()
             .name("message-resend-keybind")
             .description("Key to resend last message/command.")
-            .def(GLFW.GLFW_KEY_UP)
+            .def(InputConstants.KEY_UP)
             .onPress(bind -> this.resendMessage())
             .condition((bind, screen) -> screen == null)
             .build()

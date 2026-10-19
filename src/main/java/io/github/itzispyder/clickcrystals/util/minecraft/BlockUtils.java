@@ -29,7 +29,7 @@ public final class BlockUtils implements Global {
         }
 
         Vec3i vec3i = new Vec3i((int) vec3d.x, (int) vec3d.y, (int) vec3d.z);
-        BlockPos pos = new BlockPos(vec3i);
+        BlockPos pos = new BlockPos(vec3i.getX(), vec3i.getY(), vec3i.getZ());
         BlockHitResult result = new BlockHitResult(vec3d, dir, pos, false);
         var p = PlayerUtils.player();
         return PlayerUtils.getInteractions().useItemOn(p, p.getUsedItemHand(), result);
@@ -52,7 +52,7 @@ public final class BlockUtils implements Global {
 
         Vec3 vec3d = mc.hitResult.getLocation();
         Vec3i vec3i = new Vec3i((int) vec3d.x, (int) vec3d.y, (int) vec3d.z);
-        BlockPos pos = new BlockPos(vec3i);
+        BlockPos pos = new BlockPos(vec3i.getX(), vec3i.getY(), vec3i.getZ());
         return matchBlock(pos,block);
     }
 

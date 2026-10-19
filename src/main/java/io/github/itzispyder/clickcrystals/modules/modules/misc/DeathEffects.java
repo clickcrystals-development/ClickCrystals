@@ -95,7 +95,7 @@ public class DeathEffects extends ListenerModule {
         fadeColors.add(color.getVal().brighter(2).getHexOpaque());
 
         FireworkExplosion fireworkExplosion = new FireworkExplosion(shape.getVal(), colors, fadeColors,true,true);
-        mc.level.createFireworks(ent.getX(), ent.getY(), ent.getZ(), 0, vRocket.getVal(), 0, Collections.singletonList(fireworkExplosion));
+        mc.level.createFireworks(ent.getX(), ent.getY(), ent.getZ(), 0, vRocket.getVal(), 0, Collections.singletonList(fireworkExplosion), true);
     }
 
     private void spawnLightning(Entity ent) {

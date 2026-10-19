@@ -13,11 +13,13 @@ import io.github.itzispyder.clickcrystals.modules.ModuleFile;
 import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
+import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.misc.Pair;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Config implements JsonSerializable<Config>, Global {
 
@@ -29,6 +31,13 @@ public class Config implements JsonSerializable<Config>, Global {
     public static final String PATH_LOG = PATH + "current.log";
     public static final String PATH_DATA = PATH + ".data/";
 
+    // keybind settings that can hold a legacy GLFW key code in configs saved before 26.3
+    private static final Set<String> LEGACY_KEYBIND_SETTINGS = Set.of(
+            "module-toggle-keybind",
+            "message-resend-keybind",
+            "zoom-key"
+    );
+
     private boolean hasPlayedBefore;
     private boolean overviewMode;
     private boolean disableCustomLoading;
@@ -36,6 +45,7 @@ public class Config implements JsonSerializable<Config>, Global {
     private boolean disableScriptChatErrors;
     private boolean modMenuIntegration;
     private boolean devMode;
+    private boolean keybindsMigrated;
     private int readAnnouncementCount;
     private final Map<String, Integer> keybindEntries;
     private final Map<String, Positionable.Dimension> positionEntries;
@@ -156,6 +166,36 @@ public class Config implements JsonSerializable<Config>, Global {
                 }
             }
         }
+    }
+
+    /**
+     * Update fix for 26.3: keybinds used GLFW key codes before and use SDL scancodes now, so codes saved
+     * by older versions are converted once, before any config is loaded. Called from ClickCrystals' static
+     * "provide update fixes here" block, right after the old folder has been renamed.
+     */
+    public static void migrateLegacyKeybinds() {
+        migrateLegacyKeybinds(new File(PATH_CONFIG));
+
+        File[] profiles = new File(PATH_PROFILES).listFiles(f -> f.getName().endsWith(".json"));
+        if (profiles != null)
+            for (File profile : profiles)
+                migrateLegacyKeybinds(profile);
+    }
+
+    private static void migrateLegacyKeybinds(File file) {
+        Config config = JsonSerializable.load(file, Config.class, new Config());
+        if (config.keybindsMigrated) {
+            return;
+        }
+
+        config.keybindEntries.replaceAll((id, key) -> Keybind.fromLegacyKey(key));
+        for (ModuleFile module : config.moduleEntries.values()) {
+            module.getIntegerEntries().replaceAll((id, key) ->
+                    LEGACY_KEYBIND_SETTINGS.contains(id) ? Keybind.fromLegacyKey(key) : key);
+        }
+
+        config.keybindsMigrated = true;
+        FileValidationUtils.quickWrite(file, config.serialize(true));
     }
 
     public void loadEntireConfig() {

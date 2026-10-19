@@ -20,7 +20,7 @@ import io.github.itzispyder.clickcrystals.util.FileValidationUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.io.File;
 import java.util.Comparator;
@@ -297,7 +297,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
             @Override
             public boolean onKey(int key, int scancode) {
-                if (key != GLFW.GLFW_KEY_ENTER)
+                if (key != InputConstants.KEY_RETURN)
                     return super.onKey(key, scancode);
                 if (!(mc.gui.screen() instanceof GuiScreen screen))
                     return true;

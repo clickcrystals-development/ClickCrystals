@@ -79,7 +79,7 @@ public class AntiCrash extends Module implements Listener {
     @EventHandler
     private void onReceiveParticle(PacketReceiveEvent e) {
         if (e.getPacket() instanceof ClientboundLevelParticlesPacket packet) {
-            int count = packet.getCount() - 1;
+            int count = packet.count() - 1;
             double maxCount = maxParticleAmount.getVal();
 
             if (count > maxCount) {

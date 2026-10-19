@@ -57,7 +57,7 @@ public abstract class MixinCamera implements Global {
     }
 
     @Inject(method = "calculateFov", at = @At("RETURN"), cancellable = true)
-    public void getFov(CallbackInfoReturnable<Float> cir) {
+    public void getFov(float partialTicks, CallbackInfoReturnable<Float> cir) {
         Zoom zoom = Module.get(Zoom.class);
 
         if (zoom.isEnabled() && zoom.isZooming()) {

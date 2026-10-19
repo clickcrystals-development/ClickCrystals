@@ -12,7 +12,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.awt.*;
 import java.util.ArrayDeque;
@@ -233,12 +233,12 @@ public class TextFieldElement extends GuiElement implements Typeable {
         if (keyInterceptor != null && keyInterceptor.apply(key)) return true;
         boolean handled = handleKeyInner(key, screen);
         // Only typing (character entry, backspace, delete) should surface autocomplete; copy/paste/navigation dismiss it.
-        if (handled) fireChanged(key == GLFW.GLFW_KEY_BACKSPACE || key == GLFW.GLFW_KEY_DELETE);
+        if (handled) fireChanged(key == InputConstants.KEY_BACKSPACE || key == InputConstants.KEY_DELETE);
         return handled;
     }
 
     private boolean handleKeyInner(int key, GuiScreen screen) {
-        if (key == GLFW.GLFW_KEY_ESCAPE) {
+        if (key == InputConstants.KEY_ESCAPE) {
             if (hasRange() || selectedAll) {
                 selectedAll = false;
                 selectionEnd = selectionStart;
@@ -251,17 +251,17 @@ public class TextFieldElement extends GuiElement implements Typeable {
         // Ctrl combos
         if (screen.ctrlKeyPressed) {
             switch (key) {
-                case GLFW.GLFW_KEY_A -> {
+                case InputConstants.KEY_A -> {
                     selectedAll = true;
                     preferredCol = -1;
                     return true;
                 }
-                case GLFW.GLFW_KEY_C -> {
+                case InputConstants.KEY_C -> {
                     if (selectedAll) mc.keyboardHandler.setClipboard(content);
                     else if (hasRange()) mc.keyboardHandler.setClipboard(content.substring(selMin(), selMax()));
                     return true;
                 }
-                case GLFW.GLFW_KEY_X -> {
+                case InputConstants.KEY_X -> {
                     if (selectedAll) {
                         mc.keyboardHandler.setClipboard(content);
                         clear();
@@ -272,14 +272,14 @@ public class TextFieldElement extends GuiElement implements Typeable {
                     preferredCol = -1;
                     return true;
                 }
-                case GLFW.GLFW_KEY_V -> {
+                case InputConstants.KEY_V -> {
                     if (hasRange() || selectedAll) deleteRange();
                     onInput(input -> insertInput(mc.keyboardHandler.getClipboard()));
                     shiftRight();
                     preferredCol = -1;
                     return true;
                 }
-                case GLFW.GLFW_KEY_Z -> {
+                case InputConstants.KEY_Z -> {
                     if (!undoStack.isEmpty()) {
                         redoStack.push(Pair.of(content, selectionStart));
                         Pair<String, Integer> state = undoStack.pop();
@@ -291,7 +291,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
                     preferredCol = -1;
                     return true;
                 }
-                case GLFW.GLFW_KEY_Y -> {
+                case InputConstants.KEY_Y -> {
                     if (!redoStack.isEmpty()) {
                         undoStack.push(Pair.of(content, selectionStart));
                         Pair<String, Integer> state = redoStack.pop();
@@ -303,7 +303,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
                     preferredCol = -1;
                     return true;
                 }
-                case GLFW.GLFW_KEY_D -> {
+                case InputConstants.KEY_D -> {
                     int ls = lineStart(selectionStart);
                     int le = lineEnd(selectionStart);
                     String line = content.substring(ls, le);
@@ -316,24 +316,24 @@ public class TextFieldElement extends GuiElement implements Typeable {
                     preferredCol = -1;
                     return true;
                 }
-                case GLFW.GLFW_KEY_SLASH -> {
+                case InputConstants.KEY_SLASH -> {
                     return toggleComment();
                 }
-                case GLFW.GLFW_KEY_LEFT -> {
+                case InputConstants.KEY_LEFT -> {
                     selectionStart = selectionEnd = prevWordBoundary(selectionStart);
                     selectedAll = false;
                     updateSelection();
                     preferredCol = -1;
                     return true;
                 }
-                case GLFW.GLFW_KEY_RIGHT -> {
+                case InputConstants.KEY_RIGHT -> {
                     selectionStart = selectionEnd = nextWordBoundary(selectionStart);
                     selectedAll = false;
                     updateSelection();
                     preferredCol = -1;
                     return true;
                 }
-                case GLFW.GLFW_KEY_BACKSPACE -> {
+                case InputConstants.KEY_BACKSPACE -> {
                     if (hasRange() || selectedAll) {
                         deleteRange();
                         preferredCol = -1;
@@ -355,7 +355,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
 
         // Basic keys
         switch (key) {
-            case GLFW.GLFW_KEY_BACKSPACE -> {
+            case InputConstants.KEY_BACKSPACE -> {
                 if (hasRange() || selectedAll) {
                     deleteRange();
                     preferredCol = -1;
@@ -381,7 +381,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
                 preferredCol = -1;
                 return true;
             }
-            case GLFW.GLFW_KEY_DELETE -> {
+            case InputConstants.KEY_DELETE -> {
                 if (hasRange() || selectedAll) {
                     deleteRange();
                     preferredCol = -1;
@@ -391,7 +391,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
                 preferredCol = -1;
                 return true;
             }
-            case GLFW.GLFW_KEY_ENTER -> {
+            case InputConstants.KEY_RETURN -> {
                 if (hasRange() || selectedAll) deleteRange();
                 int ls = lineStart(selectionStart);
                 String before = content.substring(ls, selectionStart);
@@ -420,14 +420,14 @@ public class TextFieldElement extends GuiElement implements Typeable {
                 preferredCol = -1;
                 return true;
             }
-            case GLFW.GLFW_KEY_TAB -> {
+            case InputConstants.KEY_TAB -> {
                 if (hasRange() || selectedAll) deleteRange();
                 onInput(input -> insertInput("    "));
                 for (int i = 0; i < 4; i++) shiftRight();
                 preferredCol = -1;
                 return true;
             }
-            case GLFW.GLFW_KEY_LEFT -> {
+            case InputConstants.KEY_LEFT -> {
                 if (hasRange() || selectedAll) {
                     selectionStart = selectionEnd = selMin();
                     selectedAll = false;
@@ -436,7 +436,7 @@ public class TextFieldElement extends GuiElement implements Typeable {
                 preferredCol = -1;
                 return true;
             }
-            case GLFW.GLFW_KEY_RIGHT -> {
+            case InputConstants.KEY_RIGHT -> {
                 if (hasRange() || selectedAll) {
                     selectionStart = selectionEnd = selMax();
                     selectedAll = false;
@@ -445,25 +445,25 @@ public class TextFieldElement extends GuiElement implements Typeable {
                 preferredCol = -1;
                 return true;
             }
-            case GLFW.GLFW_KEY_HOME -> {
+            case InputConstants.KEY_HOME -> {
                 selectionStart = selectionEnd = lineStart(selectionStart);
                 selectedAll = false;
                 updateSelection();
                 preferredCol = -1;
                 return true;
             }
-            case GLFW.GLFW_KEY_END -> {
+            case InputConstants.KEY_END -> {
                 selectionStart = selectionEnd = lineEnd(selectionStart);
                 selectedAll = false;
                 updateSelection();
                 preferredCol = -1;
                 return true;
             }
-            case GLFW.GLFW_KEY_UP -> {
+            case InputConstants.KEY_UP -> {
                 navigateVertical(-1);
                 return true;
             }
-            case GLFW.GLFW_KEY_DOWN -> {
+            case InputConstants.KEY_DOWN -> {
                 navigateVertical(1);
                 return true;
             }

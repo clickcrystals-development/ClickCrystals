@@ -16,11 +16,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(KeyboardHandler.class)
 public abstract class MixinKeyboardHandlerHandler implements Global, AccessorKeyboardHandler {
 
-    @Shadow protected abstract void keyPress(long window, int action, KeyEvent input);
+    @Shadow public abstract void keyPress(long window, int action, KeyEvent input);
 
     @Inject(method = "keyPress", at = @At("HEAD"), cancellable = true)
     public void onKeyPress(long window, int action, KeyEvent input, CallbackInfo ci) {
-        this.handleKeyPress(input.key(), input.scancode(), action, ci);
+        this.handleKeyPress(input.key(), input.keycode(), action, ci);
     }
 
     @Unique
