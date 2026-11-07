@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "clickcrystals",
   "version": "${version}",
-  "name": "ClickCrystals",
+  "name": "ClickCrystals Modified",
   "description": "Allows you to crystal easier, by only using left click to place and break crystals. Do ',toggle' ! Keybind is APOSTROPHE.",
   "authors": [
     "ImproperIssues"
@@ -28,7 +28,7 @@
 "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
-    "minecraft": ">=${minecraft_version}"
+    "minecraft": "${minecraft_version}"
   },
   "mixins": [
     "clickcrystals.mixins.json"
