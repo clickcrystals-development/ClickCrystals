@@ -11,10 +11,12 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
+import net.minecraft.item.Items;
+import net.minecraft.block.Blocks;
 
 @ModrinthNoNo
 public class CrystSwitch extends Module implements Listener {
@@ -84,12 +86,14 @@ public class CrystSwitch extends Module implements Listener {
             final BlockPos pos = packet.getPos();
 
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
+            if (PlayerUtils.invalid() || mc.currentScreen != null) return;
+            if (!(mc.crosshairTarget instanceof BlockHitResult hit) || !hit.getBlockPos().equals(pos)) return;
             if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
 
             if (canUse() && isCrystallable(pos)) {
+                if (!HotbarUtils.search(Items.END_CRYSTAL)) return;
                 e.setCancelled(true);
-                HotbarUtils.search(Items.END_CRYSTAL);
-                BlockUtils.interact(pos,packet.getDirection());
+                BlockUtils.interact(hit);
             }
         }
     }
