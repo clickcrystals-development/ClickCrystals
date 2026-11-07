@@ -11,10 +11,12 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
+import net.minecraft.item.Items;
+import net.minecraft.block.Blocks;
 
 @ModrinthNoNo
 public class ObiSwitch extends Module implements Listener {
@@ -64,7 +66,7 @@ public class ObiSwitch extends Module implements Listener {
             .build()
     );
 
-    private static long cooldown;
+    private long nextUseNanos;
 
     public ObiSwitch() {
         super("obsidian-switch", Categories.CRYSTAL,"Punch the ground with your sword to switch to obsidian");
@@ -78,6 +80,7 @@ public class ObiSwitch extends Module implements Listener {
     @Override
     protected void onDisable() {
         system.removeListener(this);
+        nextUseNanos = 0;
     }
 
     @EventHandler
@@ -86,16 +89,17 @@ public class ObiSwitch extends Module implements Listener {
             final BlockPos pos = packet.getPos();
 
             if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
-            if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
+            if (PlayerUtils.invalid() || mc.currentScreen != null) return;
+            if (!(mc.crosshairTarget instanceof BlockHitResult hit) || !hit.getBlockPos().equals(pos)) return;
+            if (!HotbarUtils.has(Items.OBSIDIAN)) return;
+            if (!canUse() || isCrystallable(pos)) return;
+            long now = System.nanoTime();
+            if (now < nextUseNanos) return;
+            if (!HotbarUtils.search(Items.OBSIDIAN)) return;
 
-            if (cooldown > System.currentTimeMillis()) return;
-            cooldown = System.currentTimeMillis() + (50 * 4);
-
-            if (canUse() && !isCrystallable(pos)) {
-                e.setCancelled(true);
-                HotbarUtils.search(Items.OBSIDIAN);
-                BlockUtils.interact(pos,packet.getDirection());
-            }
+            nextUseNanos = now + 150_000_000L;
+            e.setCancelled(true);
+            BlockUtils.interact(hit);
         }
     }
 
