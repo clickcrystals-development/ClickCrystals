@@ -22,6 +22,7 @@ public class ClickScript implements Global {
     public static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
 
     private final Map<String, String> functions;
+    private final ScriptState scriptState = new ScriptState();
     private final String path;
     private final File file;
 
@@ -166,6 +167,10 @@ public class ClickScript implements Global {
             throw new IllegalArgumentException("Function '%s' is not defined!".formatted(name));
         }
         return "execute " + functions.getOrDefault(name, "");
+    }
+
+    public ScriptState getScriptState() {
+        return scriptState;
     }
 
     public String getPath() {
