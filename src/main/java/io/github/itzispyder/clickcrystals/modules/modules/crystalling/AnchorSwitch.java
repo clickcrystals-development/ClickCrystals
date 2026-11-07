@@ -49,7 +49,7 @@ public class AnchorSwitch extends Module implements Listener {
 
     @EventHandler
     private void onBlockPlaced(BlockPlaceEvent event) {
-        if (PlayerUtils.invalid() || mc.gui.screen() != null) return;
+        if (PlayerUtils.invalid() || mc.screen != null) return;
         if (event.getState().is(Blocks.RESPAWN_ANCHOR)) {
             clearPending();
             if (HotbarUtils.has(Items.GLOWSTONE))
@@ -60,7 +60,7 @@ public class AnchorSwitch extends Module implements Listener {
     @EventHandler
     private void onSentPacket(PacketSentEvent event) {
         if (!(event.getPacket() instanceof ServerboundUseItemOnPacket packet)) return;
-        if (PlayerUtils.invalid() || mc.gui.screen() != null) return;
+        if (PlayerUtils.invalid() || mc.screen != null) return;
         if (!HotbarUtils.isHolding(Items.GLOWSTONE) || !HotbarUtils.has(Items.RESPAWN_ANCHOR)) return;
         BlockPos pos = packet.getHitResult().getBlockPos();
         BlockState state = mc.level.getBlockState(pos);
@@ -73,7 +73,7 @@ public class AnchorSwitch extends Module implements Listener {
     @EventHandler
     private void onTick(ClientTickEndEvent event) {
         if (pendingCharge == null) return;
-        if (PlayerUtils.invalid() || mc.gui.screen() != null || timeoutTicks-- <= 0) {
+        if (PlayerUtils.invalid() || mc.screen != null || timeoutTicks-- <= 0) {
             clearPending();
             return;
         }
