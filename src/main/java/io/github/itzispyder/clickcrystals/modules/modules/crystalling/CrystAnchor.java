@@ -36,7 +36,7 @@ public class CrystAnchor extends Module implements Listener {
     @EventHandler
     private void onClickBlock(PacketSendEvent event) {
         if (!(event.getPacket() instanceof ServerboundUseItemOnPacket packet)) return;
-        if (PlayerUtils.invalid() || mc.gui.screen() != null) return;
+        if (PlayerUtils.invalid() || mc.screen != null) return;
         if (!(mc.hitResult instanceof BlockHitResult hit)) return;
         if (!hit.getBlockPos().equals(packet.getHitResult().getBlockPos())) return;
         if (BlockUtils.canCrystalOn(hit.getBlockPos())) return;
