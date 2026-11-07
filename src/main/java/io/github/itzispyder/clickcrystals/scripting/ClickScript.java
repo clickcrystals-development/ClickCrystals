@@ -24,6 +24,7 @@ public class ClickScript implements Global {
     public static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
 
     private final Map<String, String> functions, macros;
+    private final ScriptState scriptState = new ScriptState();
     private final String path;
     private final File file;
 
@@ -192,10 +193,14 @@ public class ClickScript implements Global {
     }
 
     public String getMacro(String name) {
-        if (name == null || name.trim().isEmpty() || !functions.containsKey(name)) {
+        if (name == null || name.trim().isEmpty() || !macros.containsKey(name)) {
             throw new IllegalArgumentException("Macro '%s' is not defined!".formatted(name));
         }
         return macros.getOrDefault(name, "");
+    }
+
+    public ScriptState getScriptState() {
+        return scriptState;
     }
 
     public String getPath() {
