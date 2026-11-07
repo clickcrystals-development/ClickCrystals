@@ -86,7 +86,7 @@ public class CrystSwitch extends Module implements Listener {
             final BlockPos pos = packet.getPos();
 
             if (packet.getAction() != ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK) return;
-            if (PlayerUtils.invalid() || mc.gui.screen() != null) return;
+            if (PlayerUtils.invalid() || mc.screen != null) return;
             if (!(mc.hitResult instanceof BlockHitResult hit) || !hit.getBlockPos().equals(pos)) return;
             if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
 
