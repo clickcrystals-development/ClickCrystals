@@ -35,7 +35,6 @@ public class SettingScreen extends DefaultBase {
         grid.addEntry(new ScreenShortcut("Client Information", "...", 0, 0, new InfoScreen(), TRUE));
         grid.addEntry(new FileShortcut("ClickCrystals Folder", "CC config, scripts, etc...", 0, 0, Config.PATH, TRUE));
         grid.addEntry(new FileShortcut(".Minecraft Folder", "MC assets", 0, 0, "", TRUE));
-        grid.addEntry(new URLShortcut("Support", "ClickCrystals user support", 0, 0, "https://discord.gg/tMaShNzNtP", TRUE));
 
         grid.organize();
         grid.createPanel(this, contentHeight - 21);
