@@ -9,7 +9,7 @@ public class Version implements Global {
     private final int[] digits;
 
     public Version(String versionString) {
-        String[] i = versionString.replaceAll("[^0-9.]", "").split("\\.");
+        String[] i = VersionStrings.numericCore(versionString).split("\\.");
         this.digits = new int[i.length];
         for (int j = 0; j < i.length; j++) {
             digits[j] = Integer.parseInt(i[j]);
@@ -45,28 +45,25 @@ public class Version implements Global {
     }
 
     public boolean isNewerThan(Version another) {
-        int[] cur = getDigits();
-        int[] oth = another.getDigits();
-
-        for (int i = 0; i < cur.length; i++) {
-            if (cur[i] > oth[i]) {
-                return true;
-            }
-        }
-        return false;
+        return compareTo(another) > 0;
     }
 
     public boolean isSameAs(Version another) {
-        int[] cur = getDigits();
-        int[] oth = another.getDigits();
+        return compareTo(another) == 0;
+    }
 
-        for (int i = 0; i < cur.length; i++) {
-            if (cur[i] != oth[i]) {
-                return false;
-            }
+    private int compareTo(Version another) {
+        if (another == null) throw new IllegalArgumentException("Version to compare is null");
+        int[] lhs = digits;
+        int[] rhs = another.digits;
+        int max = Math.max(lhs.length, rhs.length);
+        for (int i = 0; i < max; i++) {
+            int left = i < lhs.length ? lhs[i] : 0;
+            int right = i < rhs.length ? rhs[i] : 0;
+            int cmp = Integer.compare(left, right);
+            if (cmp != 0) return cmp;
         }
-
-        return true;
+        return 0;
     }
 
     public boolean isOlderThan(Version another) {
@@ -94,6 +91,6 @@ public class Version implements Global {
         ModContainer mod = FabricLoader.getInstance().getModContainer(modId)
                 .orElseThrow(() -> new IllegalArgumentException("ClickCrystals has not been loaded"));
         String ver = mod.getMetadata().getVersion().getFriendlyString();
-        return ver.replaceFirst("((\\d\\.?)+-)+", "");
+        return VersionStrings.stripMinecraftPrefix(ver);
     }
 }
