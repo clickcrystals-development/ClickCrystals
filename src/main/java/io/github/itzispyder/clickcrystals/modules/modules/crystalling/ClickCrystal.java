@@ -33,7 +33,7 @@ public class ClickCrystal extends Module implements Listener {
     private void onSendPacket(PacketSendEvent event) {
         if (!(event.getPacket() instanceof ServerboundPlayerActionPacket packet)) return;
         if (packet.getAction() != ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK) return;
-        if (PlayerUtils.invalid() || mc.gui.screen() != null) return;
+        if (PlayerUtils.invalid() || mc.screen != null) return;
         if (!HotbarUtils.isHolding(Items.END_CRYSTAL)) return;
         if (!(mc.hitResult instanceof BlockHitResult hit)) return;
         if (!hit.getBlockPos().equals(packet.getPos())) return;
