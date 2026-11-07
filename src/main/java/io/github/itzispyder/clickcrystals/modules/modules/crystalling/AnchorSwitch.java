@@ -65,7 +65,7 @@ public class AnchorSwitch extends Module implements Listener {
         BlockPos pos = packet.getBlockHitResult().getBlockPos();
         BlockState state = mc.world.getBlockState(pos);
         if (!state.isOf(Blocks.RESPAWN_ANCHOR)) return;
-        if (state.getValue(RespawnAnchorBlock.CHARGES) != 0) return;
+        if (state.get(RespawnAnchorBlock.CHARGES) != 0) return;
         pendingCharge = pos.toImmutable();
         timeoutTicks = 12;
     }
@@ -82,7 +82,7 @@ public class AnchorSwitch extends Module implements Listener {
             clearPending();
             return;
         }
-        if (state.getValue(RespawnAnchorBlock.CHARGES) <= 0) return;
+        if (state.get(RespawnAnchorBlock.CHARGES) <= 0) return;
 
         // Only switch if still looking at the same charged anchor with glowstone.
         if (mc.crosshairTarget instanceof BlockHitResult hit
