@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "id": "clickcrystals",
   "version": "${version}",
-  "name": "ClickCrystals",
-  "description": "Allows you to crystal easier, by only using left click to place and break crystals. Do ',toggle' ! Keybind is APOSTROPHE.",
+  "name": "ClickCrystals Modified",
+  "description": "A configurable PvP toolkit with extended ClickScript support.",
   "authors": [
     "ImproperIssues"
   ],
