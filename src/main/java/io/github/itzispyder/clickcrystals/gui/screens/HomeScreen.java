@@ -36,10 +36,9 @@ public class HomeScreen extends AnimatedBase {
     public final List<SuggestionElement> suggestions = new ArrayList<>();
 
     public HomeScreen() {
-        super("ClickCrystals Home Screen");
+        super("ClickCrystals Modified Home Screen");
 
         GridOrganizer grid = new GridOrganizer(baseX + 27, baseY + baseHeight - 65, 35, 35, 10, 31);
-        suggestions.add(new SuggestionElement(Tex.Socials.DISCORD, "Discord", 0, 0, 35, button -> system.openUrl("https://discord.gg/tMaShNzNtP")));
         suggestions.add(new SuggestionElement(Tex.Socials.CURSEFORGE, "CurseForge", 0, 0, 35, button -> system.openUrl("https://www.curseforge.com/minecraft/mc-mods/clickcrystals")));
         suggestions.add(new SuggestionElement(Tex.Socials.YOUTUBE, "Youtube", 0, 0, 35, button -> system.openUrl("https://youtube.com/@itzispyder")));
         suggestions.add(new SuggestionElement(Tex.Socials.PLANETMC, "Planet MC", 0, 0, 35, button -> system.openUrl("https://planetminecraft.com/mod/clickcrystal")));
@@ -76,16 +75,13 @@ public class HomeScreen extends AnimatedBase {
         context.pose().popMatrix();
 
         // content
-        if (!ClickCrystals.info.getMotd().trim().isEmpty()) {
-            renderMotd(context);
-        }
 
         int caret = baseY + 70;
         int titleTrans = (int)(-50 * animator.getProgressClampedReversed());
         for (SuggestionElement suggestion : suggestions) {
             suggestion.y = baseY + baseHeight - 65 + titleTrans;
         }
-        RenderUtils.drawCenteredText(context, "§lClickCrystals §rv" + version, baseX + baseWidth / 2, caret - titleTrans, 2.0F, true);
+        RenderUtils.drawCenteredText(context, "§lClickCrystals Modified §rv" + version, baseX + baseWidth / 2, caret - titleTrans, 2.0F, true);
         caret += 20;
         RenderUtils.drawCenteredText(context, "Crystal PvP Enhanced", baseX + baseWidth / 2, caret - titleTrans, 1.0F, true);
         caret += 30;
@@ -124,12 +120,6 @@ public class HomeScreen extends AnimatedBase {
 
     @Override
     public boolean mouseClicked(MouseButtonEvent click, boolean doubled) {
-        if (!OPENED_BEFORE) {
-            mc.gui.setScreen(new DiscordInviteScreen());
-            OPENED_BEFORE = true;
-            return true;
-        }
-
         super.mouseClicked(click, doubled);
         return true;
     }
