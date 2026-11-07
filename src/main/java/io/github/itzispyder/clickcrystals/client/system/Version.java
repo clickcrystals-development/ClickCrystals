@@ -25,7 +25,7 @@ public class Version implements Global {
     }
 
     public static Version ofString(String versionString) {
-        Matcher matcher = PATTERN.matcher(versionString);
+        Matcher matcher = PATTERN.matcher(VersionStrings.numericCore(versionString));
         if (!matcher.matches())
             return null;
 
@@ -93,7 +93,7 @@ public class Version implements Global {
                 .orElseThrow(() -> new IllegalArgumentException("ClickCrystals has not been loaded"));
         String str = mod.getMetadata().getVersion()
                 .getFriendlyString()
-                .replaceFirst("((\\d\\.?)+-)+", "");
-        return Version.ofString(str);
+                ;
+        return Version.ofString(VersionStrings.stripMinecraftPrefix(str));
     }
 }
