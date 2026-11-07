@@ -25,7 +25,7 @@ public class Version implements Global {
     }
 
     public static Version ofString(String versionString) {
-        Matcher matcher = PATTERN.matcher(versionString);
+        Matcher matcher = PATTERN.matcher(VersionStrings.numericCore(versionString));
         if (!matcher.matches())
             return null;
 
@@ -92,6 +92,6 @@ public class Version implements Global {
         ModContainer mod = FabricLoader.getInstance().getModContainer(modId)
                 .orElseThrow(() -> new IllegalArgumentException("ClickCrystals has not been loaded"));
         String ver = mod.getMetadata().getVersion().getFriendlyString();
-        return ver.replaceFirst("((\\d\\.?)+-)+", "");
+        return VersionStrings.stripMinecraftPrefix(ver);
     }
 }
