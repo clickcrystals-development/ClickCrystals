@@ -71,9 +71,9 @@ public class ClickScript implements Global {
             if (state.waiting()) {
                 int from = i + 1;
                 int to = lines.size();
-                system.tickScheduler.schedule(state.seconds(), () -> {
-                    dynamicExecutionHelper(executor, ArrayUtils.subList(lines, from, to));
-                });
+                system.tickScheduler.schedule(state.seconds(), () ->
+                        mc.execute(() -> dynamicExecutionHelper(executor,
+                                ArrayUtils.subList(lines, from, to))));
                 return;
             }
 
