@@ -158,7 +158,7 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         KeyGestureTracker tracker = new KeyGestureTracker(threshold, repeat);
         ModuleCmd.runOnCurrentScriptModule(module -> {
             module.keyListeners.add(event -> {
-                if (mc.player == null || mc.screen != null) {
+                if (mc.player == null || mc.gui.screen() != null) {
                     tracker.cancel();
                     return;
                 }
@@ -172,7 +172,7 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
                 }
             });
             module.preTickListeners.add(new TickListener(0, () -> {
-                if (mc.player == null || mc.screen != null) {
+                if (mc.player == null || mc.gui.screen() != null) {
                     tracker.cancel();
                     return;
                 }
