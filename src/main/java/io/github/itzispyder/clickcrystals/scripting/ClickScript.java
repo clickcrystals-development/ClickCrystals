@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.scripting;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.scripting.runtime.TickTaskQueue;
 import io.github.itzispyder.clickcrystals.scripting.runtime.ScriptExecutionBudget;
+import io.github.itzispyder.clickcrystals.scripting.runtime.SelectionHistory;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.client.system.Config;
 import io.github.itzispyder.clickcrystals.scripting.components.CommandLine;
@@ -29,6 +30,7 @@ public class ClickScript implements Global {
 
     private final Map<String, String> functions;
     private final ScriptState scriptState = new ScriptState();
+    private final SelectionHistory selectionHistory = new SelectionHistory();
     private final TickTaskQueue tickTaskQueue =
             new TickTaskQueue((name, error) -> printErrorDetails(error, "task " + name));
     private final String path;
@@ -203,6 +205,10 @@ public class ClickScript implements Global {
             throw new IllegalArgumentException("Function '%s' is not defined!".formatted(name));
         }
         return "execute " + functions.getOrDefault(name, "");
+    }
+
+    public SelectionHistory getSelectionHistory() {
+        return selectionHistory;
     }
 
     public ScriptState getScriptState() {
