@@ -1,0 +1,19 @@
+// ClickCrystals Modified - Runtime Engine 1.4.5-dev.5 smoke test
+// Starts inert. All actions below are bound to explicit keyboard input.
+def module runtime-engine-demo
+def desc "Debounced gestures and cancellable tick tasks"
+
+task count queued_tasks
+ext available example:mode extension_installed
+
+on key_tap v 5 then print "Gesture: short V press"
+on key_hold v 5 then task every hold_notice 20 then print "Gesture: holding V"
+on key_held v 5 4 then gate repeating 1000 then print "Gesture: held tick"
+on key_release v {
+    task cancel hold_notice
+}
+on key_tap n 5 then task after delayed_notice 20 then print "Scheduled for one second"
+on key_tap m 5 then task cancel delayed_notice
+on module_disable {
+    task cancel_all
+}
