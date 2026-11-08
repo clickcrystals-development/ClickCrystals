@@ -40,14 +40,20 @@ public final class AwaitSenseCmd extends ScriptCommand {
         final int[] remaining={timeout};
         script.getScriptState().set(name,"waiting");
         script.scheduleCallbackTask(taskKey,1,1,()->{
-            String observed=SenseValues.read(metric);
-            if (observed!=null && SenseCompare.check(observed,operation,expected)) {
+            try {
+                String observed=SenseValues.read(metric);
+                if (observed!=null && SenseCompare.check(observed,operation,expected)) {
+                    script.cancelTask(taskKey);
+                    script.getScriptState().set(name,"matched");
+                    ClickScript.executeDynamic(script,continuation);
+                } else if (--remaining[0]<=0) {
+                    script.cancelTask(taskKey);
+                    script.getScriptState().set(name,"timeout");
+                }
+            } catch (RuntimeException ex) {
                 script.cancelTask(taskKey);
-                script.getScriptState().set(name,"matched");
-                ClickScript.executeDynamic(script,continuation);
-            } else if (--remaining[0]<=0) {
-                script.cancelTask(taskKey);
-                script.getScriptState().set(name,"timeout");
+                script.getScriptState().set(name,"error");
+                script.printErrorDetails(ex, "await_sense " + name + " " + metric);
             }
         });
     }
