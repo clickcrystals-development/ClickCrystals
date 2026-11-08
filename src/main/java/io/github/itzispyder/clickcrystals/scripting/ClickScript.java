@@ -122,6 +122,7 @@ public class ClickScript implements Global {
     }
 
     public void execute() {
+        io.github.itzispyder.clickcrystals.scripting.syntax.client.ModuleCmd.clearCurrentScriptModule();
         try {
             if (!file.exists() || !(path.endsWith(".ccs") || path.endsWith(".txt"))) {
                 throw new ScriptNotFoundException(this);
@@ -131,6 +132,10 @@ public class ClickScript implements Global {
         }
         catch (Exception ex) {
             printErrorDetails(ex, "DEFAULT-START-EXECUTION");
+        }
+        finally {
+            io.github.itzispyder.clickcrystals.scripting.syntax.client.ModuleCmd.clearCurrentScriptModule();
+            currentFile.set(null);
         }
     }
 
