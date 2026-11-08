@@ -12,6 +12,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.screens.scripts.ClickScriptIDE;
+import io.github.itzispyder.clickcrystals.scripting.ClickScript;
 import io.github.itzispyder.clickcrystals.gui.screens.scripts.DownloadScriptScreen;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -119,8 +120,12 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
         }
 
         for (Module module : list) {
-            ModuleElement e = new ModuleElement(module, 0, 0);
-            grid.addEntry(e);
+            if (module instanceof ScriptedModule scripted &&
+                    ClickScript.getScriptError(scripted.filepath) != null) {
+                grid.addEntry(new ScriptErrorModuleElement(scripted, 0, 0));
+            } else {
+                grid.addEntry(new ModuleElement(module, 0, 0));
+            }
         }
         grid.organize();
         grid.addAllToPanel();
@@ -155,6 +160,23 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
      * A .ccs file can exist even when its module failed to register.
      * Show it in Custom Made so the IDE and error output remain accessible.
      */
+    protected class ScriptErrorModuleElement extends ModuleElement {
+        public ScriptErrorModuleElement(ScriptedModule module, int x, int y) {
+            super(module, x, y);
+            String reason = ClickScript.getScriptError(module.filepath);
+            if (reason == null) reason = "Script error";
+            if (reason.length() > 180) reason = reason.substring(0, 177) + "...";
+            setTooltip("§cCCS ERROR: §7" + reason + " §eMIDDLE-CLICK§7 to open IDE");
+        }
+
+        @Override
+        public void onRender(DrawContext context, int mouseX, int mouseY) {
+            super.onRender(context, mouseX, mouseY);
+            RenderUtils.drawRightText(context, "§cSCRIPT ERROR",
+                    x + width - 12, y + height / 3, 0.7F, false);
+        }
+    }
+
     protected class UnloadedScriptElement extends ModuleElement {
         private final File source;
 
