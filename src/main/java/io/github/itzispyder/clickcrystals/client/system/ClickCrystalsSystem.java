@@ -209,6 +209,7 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void reloadScripts(boolean notifyClient) {
         println("-> reloading all scripts");
+        io.github.itzispyder.clickcrystals.scripting.ClickScript.cancelAllScheduledTasks();
 
         if (notifyClient) {
             Notification.create()
@@ -243,6 +244,7 @@ public class ClickCrystalsSystem implements Serializable {
 
     public void onClientStopping() {
         println("Stopping client!");
+        io.github.itzispyder.clickcrystals.scripting.ClickScript.cancelAllScheduledTasks();
         println("<- saving data...");
         ClickCrystals.config.saveKeybinds();
         ClickCrystals.config.saveHuds();
