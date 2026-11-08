@@ -1,0 +1,22 @@
+// ClickCrystals Modified 1.4.5 — anchored one-shot PvP action.
+// B fires ONE sequence on key down; holding B never repeats it.
+// If crosshair points to a charge-0 anchor, charge it once and activate.
+// Otherwise, when aiming at a solid block, place one anchor adjacent to it.
+// The Java pvp command rechecks the exact target before using glowstone.
+// Does not operate in the Nether. No hold_input or global switch back.
+
+def module gergherobrine-anchor-dual
+def desc "B: guarded one-shot anchor placement, charge and activation"
+
+on key_press b {
+    once anchor_b_pressed then pvp anchor_dual
+}
+
+on key_release b {
+    state clear anchor_b_pressed
+}
+
+on module_disable {
+    pvp reset
+    state clear anchor_b_pressed
+}
