@@ -1,6 +1,3 @@
-// ClickCrystals Modified 1.4.5-dev.5 | AnchorDual v2
-// B tap: one cycle; B hold: repeat confirmed cycles.
-// No health/totem gates. NOT guaranteed safe from explosions.
 def module ger-anchor-dual
     def desc "B tap or hold: verified anchor place-charge-detonate, restore original slot"
 
