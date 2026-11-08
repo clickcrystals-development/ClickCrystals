@@ -3,6 +3,8 @@ package io.github.itzispyder.clickcrystals.scripting;
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.scripting.runtime.TickTaskQueue;
+import io.github.itzispyder.clickcrystals.scripting.runtime.ScriptExecutionBudget;
+import io.github.itzispyder.clickcrystals.scripting.runtime.SelectionHistory;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.client.system.Config;
 import io.github.itzispyder.clickcrystals.scripting.components.CommandLine;
@@ -26,12 +28,13 @@ public class ClickScript implements Global {
     public static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
     private static final java.util.Set<ClickScript> ACTIVE_TASKS =
             java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
-    private static final ThreadLocal<Integer> EXECUTION_DEPTH = ThreadLocal.withInitial(() -> 0);
-    private static final int MAX_EXECUTION_DEPTH = 32;
+
 
     private final Map<String, String> functions, macros;
     private final ScriptState scriptState = new ScriptState();
-    private final TickTaskQueue tickTaskQueue = new TickTaskQueue();
+    private final SelectionHistory selectionHistory = new SelectionHistory();
+    private final TickTaskQueue tickTaskQueue =
+            new TickTaskQueue((name, error) -> printErrorDetails(error, "task " + name));
     private final String path;
     private final File file;
 
@@ -66,21 +69,27 @@ public class ClickScript implements Global {
     }
 
     public static void executeDynamic(ClickScript executor, String commandLine) {
-        int depth = EXECUTION_DEPTH.get();
-        if (depth >= MAX_EXECUTION_DEPTH)
-            throw new IllegalStateException("ClickScript nesting limit exceeded (32); check recursive functions");
-        EXECUTION_DEPTH.set(depth + 1);
+        ScriptExecutionBudget.enter();
         try {
             List<CommandLine> lines = ScriptParser.parse(ScriptParser.condenseLines(commandLine));
             dynamicExecutionHelper(executor, lines);
         } finally {
-            if (depth == 0) EXECUTION_DEPTH.remove();
-            else EXECUTION_DEPTH.set(depth);
+            ScriptExecutionBudget.exit();
+        }
+    }
+
+    private static void executeDelayed(ClickScript executor, List<CommandLine> lines) {
+        ScriptExecutionBudget.enter();
+        try {
+            dynamicExecutionHelper(executor, lines);
+        } finally {
+            ScriptExecutionBudget.exit();
         }
     }
 
     private static void dynamicExecutionHelper(ClickScript executor, List<CommandLine> lines) {
         for (int i = 0; i < lines.size(); i++) {
+            ScriptExecutionBudget.command();
             CommandLine line = lines.get(i);
             CommandLine.WaitingState state = line.getWaitingState();
 
@@ -88,7 +97,7 @@ public class ClickScript implements Global {
                 int from = i + 1;
                 int to = lines.size();
                 system.tickScheduler.schedule(state.seconds(), () ->
-                        mc.execute(() -> dynamicExecutionHelper(executor,
+                        mc.execute(() -> executeDelayed(executor,
                                 ArrayUtils.subList(lines, from, to))));
                 return;
             }
@@ -225,6 +234,10 @@ public class ClickScript implements Global {
             throw new IllegalArgumentException("Macro '%s' is not defined!".formatted(name));
         }
         return macros.getOrDefault(name, "");
+    }
+
+    public SelectionHistory getSelectionHistory() {
+        return selectionHistory;
     }
 
     public ScriptState getScriptState() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.Objects;
 
 /**
  * Deterministic, single-threaded tick-based task scheduler.
@@ -16,8 +17,22 @@ public final class TickTaskQueue {
     public static final int MAX_INTERVAL_TICKS = 72000;
 
     private static final Pattern NAME = Pattern.compile("[A-Za-z_][A-Za-z0-9_-]{0,63}");
+    @FunctionalInterface
+    public interface FailureHandler {
+        void onTaskFailure(String name, RuntimeException error);
+    }
+
     private final Map<String, Task> tasks = new LinkedHashMap<>();
+    private final FailureHandler failureHandler;
     private long ticks;
+
+    public TickTaskQueue() {
+        this((name, error) -> System.err.println("ClickScript task '" + name + "' stopped: " + error));
+    }
+
+    public TickTaskQueue(FailureHandler failureHandler) {
+        this.failureHandler = Objects.requireNonNull(failureHandler, "failureHandler");
+    }
 
     private static final class Task {
         final String key;
@@ -76,7 +91,11 @@ public final class TickTaskQueue {
                 task.runnable.run();
             } catch (RuntimeException ex) {
                 tasks.remove(task.key, task);
-                System.err.println("ClickScript task '" + task.key + "' stopped: " + ex);
+                try {
+                    failureHandler.onTaskFailure(task.key, ex);
+                } catch (RuntimeException reportingFailure) {
+                    System.err.println("ClickScript task error reporting failed: " + reportingFailure);
+                }
             }
         }
     }
