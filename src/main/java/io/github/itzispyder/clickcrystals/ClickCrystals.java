@@ -164,6 +164,8 @@ public final class ClickCrystals implements ModInitializer, Global {
             system.eventBus.pass(event);
         });
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (client.player == null) ClickScript.cancelAllScheduledTasks();
+            else ClickScript.tickScheduledTasks();
             TickScheduler.tickAll();
             ClientTickEndEvent event = new ClientTickEndEvent();
             system.eventBus.pass(event);
@@ -212,6 +214,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         ClickScript.register(new StateCmd());
         ClickScript.register(new IfStateCmd());
         ClickScript.register(new GateCmd());
+        ClickScript.register(new TaskCmd());
         ClickScript.register(new SenseCmd());
         ClickScript.register(new IfSenseCmd());
         ClickScript.register(new IfSenseCmd("unless_sense", true));
