@@ -33,6 +33,7 @@ jobs:
             src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/AsyncDecisionBridge.java \
             src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/ScriptExecutionBudget.java \
             src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/InputLeaseManager.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/SelectionHistory.java \
             src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/TickTaskQueue.java \
             src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/KeyGestureTracker.java \
             src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/ScriptExtensions.java \
@@ -42,7 +43,7 @@ jobs:
             src/main/java/io/github/itzispyder/clickcrystals/scripting/SenseCompare.java \
             src/main/java/io/github/itzispyder/clickcrystals/client/system/VersionStrings.java \
             tests/*.java
-          for test in AsyncDecisionBridgeTest ScriptExecutionBudgetTest InputLeaseManagerTest \
+          for test in AsyncDecisionBridgeTest ScriptExecutionBudgetTest InputLeaseManagerTest SelectionHistoryTest \
             TickTaskQueueTest KeyGestureTrackerTest ScriptExtensionsTest \
             IncrementalPathfinderTest ScriptStateSmokeTest ScriptCommentsSmokeTest \
             SenseCompareSmokeTest VersionStringsSmokeTest; do
