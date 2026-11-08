@@ -3,12 +3,14 @@
   "id": "clickcrystals",
   "version": "${version}",
   "name": "ClickCrystals Modified",
-  "description": "Allows you to crystal easier, by only using left click to place and break crystals. Do ',toggle' ! Keybind is APOSTROPHE.",
+  "description": "Gergherobrine's configurable, player-directed PvP toolkit with extended ClickScript sensors.",
   "authors": [
-    "ImproperIssues"
+    "Gergherobrine"
   ],
   "contact": {
-    "website": "https://clickcrystals.xyz"
+    "homepage": "https://github.com/Gergherobrine/ClickCrystals-Modified",
+    "sources": "https://github.com/Gergherobrine/ClickCrystals-Modified",
+    "issues": "https://github.com/Gergherobrine/ClickCrystals-Modified/issues"
   },
   "license": "MIT",
   "icon": "assets/clickcrystals/icon.png",
@@ -20,12 +22,11 @@
     "main": [
       "io.github.itzispyder.clickcrystals.ClickCrystals"
     ],
-    "modmenu":
-    [
+    "modmenu": [
       "io.github.itzispyder.clickcrystals.client.system.ModMenuIntegration"
     ]
   },
-"depends": {
+  "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
     "minecraft": "${minecraft_version}"
