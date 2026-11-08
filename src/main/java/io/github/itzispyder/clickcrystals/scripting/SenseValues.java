@@ -4,6 +4,7 @@ import io.github.itzispyder.clickcrystals.Global;
 import io.github.itzispyder.clickcrystals.util.minecraft.InvUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import java.util.Locale;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
@@ -77,6 +78,28 @@ public final class SenseValues implements Global {
         return has("minecraft:rail") && has("minecraft:tnt_minecart") &&
                 (has("minecraft:bow") || has("minecraft:crossbow"));
     }
+    /** Read the crosshair entity only; never silently select a nearby player. */
+    private static Entity crosshairEntity() {
+        return mc.crosshairTarget instanceof EntityHitResult hit ? hit.getEntity() : null;
+    }
+
+    private static String targetMotion(String metric) {
+        Entity target = crosshairEntity();
+        if (target == null) return null;
+        var motion = target.getVelocity();
+        return switch (metric) {
+            case "target_velocity_x" -> number(motion.x);
+            case "target_velocity_y" -> number(motion.y);
+            case "target_velocity_z" -> number(motion.z);
+            case "target_speed" -> number(motion.length());
+            case "target_speed_horizontal" -> number(Math.hypot(motion.x, motion.z));
+            case "target_sprinting" -> bool(target.isSprinting());
+            case "target_grounded" -> bool(target.isOnGround());
+            case "target_entity_type" -> Registries.ENTITY_TYPE.getId(target.getType()).toString();
+            default -> null;
+        };
+    }
+
     private static String blockId() {
         if (!(mc.crosshairTarget instanceof BlockHitResult hit)) return null;
         return Registries.BLOCK.getId(mc.world.getBlockState(hit.getBlockPos()).getBlock()).toString();
@@ -145,6 +168,10 @@ public final class SenseValues implements Global {
             case "x" -> number(p.getX());
             case "y" -> number(p.getY());
             case "z" -> number(p.getZ());
+            case "target_velocity_x", "target_velocity_y", "target_velocity_z",
+                 "target_speed", "target_speed_horizontal",
+                 "target_sprinting", "target_grounded", "target_entity_type" ->
+                    targetMotion(name.toLowerCase(Locale.ROOT));
             case "target_kind" -> mc.crosshairTarget instanceof BlockHitResult ? "block" : mc.crosshairTarget instanceof EntityHitResult ? "entity" : "miss";
             case "target_block" -> blockId();
             case "target_anchor_charge" -> anchorCharge();
