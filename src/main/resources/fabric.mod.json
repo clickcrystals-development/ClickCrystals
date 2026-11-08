@@ -5,6 +5,9 @@
   "name": "ClickCrystals Modified",
   "description": "Gergherobrine's configurable, player-directed PvP toolkit with extended ClickScript sensors.",
   "authors": [
+    "ImproperIssues"
+  ],
+  "contributors": [
     "Gergherobrine"
   ],
   "contact": {
