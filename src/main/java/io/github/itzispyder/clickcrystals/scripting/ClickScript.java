@@ -195,9 +195,15 @@ public class ClickScript implements Global {
     public void scheduleTask(String name, int delayTicks, int repeatTicks, String continuation) {
         if (continuation == null || continuation.isBlank())
             throw new IllegalArgumentException("Task command cannot be empty");
+        scheduleCallbackTask(name, delayTicks, repeatTicks,
+                () -> ClickScript.executeDynamic(this, continuation));
+    }
+
+    /** Java integration point for cancellable game-thread state-machine callbacks. */
+    public void scheduleCallbackTask(String name, int delayTicks, int repeatTicks, Runnable action) {
+        if (action == null) throw new IllegalArgumentException("Task callback is null");
         mc.execute(() -> {
-            tickTaskQueue.schedule(name, delayTicks, repeatTicks,
-                    () -> ClickScript.executeDynamic(this, continuation));
+            tickTaskQueue.schedule(name, delayTicks, repeatTicks, action);
             ACTIVE_TASKS.add(this);
         });
     }
