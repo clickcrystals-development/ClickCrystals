@@ -1,0 +1,203 @@
+name: Devloader 1.4.5-dev.8 - Three Minecraft versions
+
+on:
+  push:
+    branches:
+      - feat/omnikit-runtime-foundation-12111
+    paths:
+      - .github/workflows/devloader-matrix-release.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: devloader-dev8-publish
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: "Verify ${{ matrix.mc }} / Java ${{ matrix.java }}"
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - mc: "1.21.11"
+            ref: feat/omnikit-runtime-foundation-12111
+            java: "21"
+          - mc: "26.1.2"
+            ref: feat/omnikit-runtime-foundation-2612
+            java: "25"
+          - mc: "26.2"
+            ref: feat/omnikit-runtime-foundation-262
+            java: "25"
+    steps:
+      - name: Check out development branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.ref }}
+          persist-credentials: false
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Verify version metadata and private-script policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Eq '^\s*mod_version=${{ matrix.mc }}-1\.4\.5-dev\.8$' gradle.properties
+          if git ls-files | grep -Eiq '(^|/)(private-clickcrystals-tests|private-scripts|personal-scripts)/'; then
+            echo "Private test directory was tracked in Git" >&2
+            exit 1
+          fi
+
+      - name: Pure Java runtime regression suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/runtime-tests
+          javac --release ${{ matrix.java }} -d build/runtime-tests \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/AsyncDecisionBridge.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/ScriptExecutionBudget.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/InputLeaseManager.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/SelectionHistory.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/PlayerInventorySlotMap.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/TickTaskQueue.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/KeyGestureTracker.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/ScriptExtensions.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/nav/IncrementalPathfinder.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/ScriptState.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/ScriptComments.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/SenseCompare.java \
+            src/main/java/io/github/itzispyder/clickcrystals/client/system/VersionStrings.java \
+            tests/*.java
+          for test in AsyncDecisionBridgeTest ScriptExecutionBudgetTest InputLeaseManagerTest \
+            SelectionHistoryTest PlayerInventorySlotMapTest TickTaskQueueTest \
+            KeyGestureTrackerTest ScriptExtensionsTest IncrementalPathfinderTest \
+            ScriptStateSmokeTest ScriptCommentsSmokeTest SenseCompareSmokeTest \
+            VersionStringsSmokeTest; do
+            java -cp build/runtime-tests "$test"
+          done
+
+      - name: Compile and package Minecraft client
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod +x ./gradlew
+          ./gradlew --no-daemon --stacktrace build
+
+      - name: Stage precisely one runnable JAR
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          count=$(find build/libs -maxdepth 1 -type f \
+            -name 'ClickCrystals-Modified-${{ matrix.mc }}-1.4.5-dev.8.jar' | wc -l)
+          if [ "$count" -ne 1 ]; then
+            echo "Expected exactly one runnable JAR; found $count" >&2
+            ls -l build/libs || true
+            exit 1
+          fi
+          cp "$(find build/libs -maxdepth 1 -type f \
+            -name 'ClickCrystals-Modified-${{ matrix.mc }}-1.4.5-dev.8.jar' -print -quit)" \
+            "dist/ClickCrystals-Modified-${{ matrix.mc }}-1.4.5-dev.8.jar"
+          sha256sum dist/*.jar
+          echo "BUILD_SOURCE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload only the runnable JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: devloader-${{ matrix.mc }}
+          path: dist/ClickCrystals-Modified-${{ matrix.mc }}-1.4.5-dev.8.jar
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    name: Publish development prerelease
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Download three tested JARs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: devloader-*
+          merge-multiple: true
+          path: dist
+
+      - name: Validate assets and write SHA256 manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd dist
+          for mc in 1.21.11 26.1.2 26.2; do
+            test -s "ClickCrystals-Modified-$mc-1.4.5-dev.8.jar"
+          done
+          test "$(find . -maxdepth 1 -name '*.jar' -type f | wc -l)" -eq 3
+          if find . -type f \( -name '*.ccs' -o -name '*sources*.jar' \) | grep -q .; then
+            echo "Private scripts or source JARs must not be release assets" >&2
+            exit 1
+          fi
+          sha256sum *.jar > SHA256SUMS.txt
+          cat > DEVLOADER_NOTES.md <<'NOTES'
+          # ClickCrystals Modified 1.4.5-dev.8 — OMNIKIT Runtime Foundation
+
+          **DEVLOADER / DEVELOPMENT PRE-RELEASE. NOT STABLE 1.4.5.**
+
+          ## Builds
+          - Minecraft **1.21.11** — Fabric / Java 21
+          - Minecraft **26.1.2** — Fabric / Java 25
+          - Minecraft **26.2** — Fabric / Java 25
+
+          Install exactly one matching JAR. Back up your config and scripts first.
+
+          ## Runtime hardening
+          - CCS: 64 nested frames and a 4096-command execution budget.
+          - Async results remain cancellable until main-thread delivery.
+          - Generation-safe delayed key releases to protect newly acquired inputs.
+          - Per-script switch-back history, reconnect and manual override protection.
+          - Client interaction-manager based inventory click requests.
+          - Correct equipped item observation instead of a default item copy.
+          - Task failure diagnostics and regression tests across three versions.
+
+          ## Remaining limitations
+          This release is an incremental runtime update, not a completed OMNIKIT
+          Combat Engine. Client-side requests are not server acknowledgements.
+          Cross-mod InputArbiter, advanced kit and swap APIs, comprehensive
+          gameplay testing, and performance benchmarking remain incomplete.
+
+          No private user CCS scripts are included.
+          Stable v1.4.4 is unchanged; stable 1.4.5 is NOT being released.
+          Verify downloads against SHA256SUMS.txt.
+          NOTES
+
+      - name: Publish pre-release only after all three builds pass
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if gh release view v1.4.5-dev.8 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release exists; refusing to overwrite." >&2
+            exit 1
+          fi
+          gh release create v1.4.5-dev.8 \
+            dist/ClickCrystals-Modified-1.21.11-1.4.5-dev.8.jar \
+            dist/ClickCrystals-Modified-26.1.2-1.4.5-dev.8.jar \
+            dist/ClickCrystals-Modified-26.2-1.4.5-dev.8.jar \
+            dist/SHA256SUMS.txt dist/DEVLOADER_NOTES.md \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "ClickCrystals Modified 1.4.5-dev.8 — Devloader OMNIKIT Foundation" \
+            --notes-file dist/DEVLOADER_NOTES.md \
+            --prerelease --latest=false
