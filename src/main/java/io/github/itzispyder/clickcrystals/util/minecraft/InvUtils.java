@@ -1,14 +1,11 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import io.github.itzispyder.clickcrystals.Global;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.screen.sync.ItemStackHash;
 import net.minecraft.util.Hand;
 
 import java.util.function.Predicate;
@@ -44,7 +41,7 @@ public final class InvUtils implements Global {
     }
 
     public static boolean isHotbar(int slot) {
-        return slot <= 8;
+        return slot >= 0 && slot <= 8;
     }
 
     public static boolean isOffhand(int slot) {
@@ -113,7 +110,7 @@ public final class InvUtils implements Global {
 
     public static ItemStack getEquipmentSlot(EquipmentSlot equipmentSlot){
         if (equipmentSlot == null) return ItemStack.EMPTY;
-        return inv().player.getEquippedStack(equipmentSlot).getItem().getDefaultStack();
+        return inv().player.getEquippedStack(equipmentSlot);
     }
 
     public static boolean isWearing(Item item) {
@@ -162,19 +159,33 @@ public final class InvUtils implements Global {
         return false;
     }
 
+    /**
+     * Request an inventory operation through Minecraft's interaction manager.
+     * Unlike a hand-built ClickSlot packet, this uses the current handler
+     * revision and maintains the client's expected slot state.
+     *
+     * Only player inventory coordinates are accepted. For a chest or other
+     * open screen, slot numbers have different meanings; fail closed rather
+     * than corrupting an unrelated container slot.
+     *
+     * A true result means the client requested the click, NOT that the
+     * remote server has confirmed the inventory change.
+     */
     public static boolean sendSlotPacket(int slot, int button, SlotActionType action) {
+        if (PlayerUtils.invalid() || mc.interactionManager == null || !mc.isOnThread())
+            return false;
+        if (slot < 0 || slot >= 36 || action == null)
+            return false;
+        if (mc.player.currentScreenHandler != mc.player.playerScreenHandler)
+            return false;
+
         ItemStack stack = inv().getStack(slot);
+        if (stack == null || stack.isEmpty())
+            return false;
 
-        if (slot <= 8) {
-            slot += 36;
-        }
-
-        if (stack == null || PlayerUtils.invalid()) return false;
-
-        int hashSlot = slot;
-        ItemStackHash hash = ItemStackHash.fromItemStack(stack, component -> hashSlot);
-        ClickSlotC2SPacket swap = new ClickSlotC2SPacket(0, 1, (short) slot, (byte) button, action, Int2ObjectMaps.singleton(slot, hash), hash);
-        PlayerUtils.sendPacket(swap);
+        int screenSlot = slot < 9 ? slot + 36 : slot;
+        mc.interactionManager.clickSlot(
+                mc.player.playerScreenHandler.syncId, screenSlot, button, action, mc.player);
         return true;
     }
 }
