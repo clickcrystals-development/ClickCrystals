@@ -56,7 +56,7 @@ public final class PvpCmd extends ScriptCommand implements Global {
     }
 
     private static boolean ready() {
-        return !PlayerUtils.invalid() && mc.level != null && mc.screen == null;
+        return !PlayerUtils.invalid() && mc.level != null && mc.gui.screen() == null;
     }
 
     private static boolean active(ClickScript script, String key) {
@@ -117,7 +117,7 @@ public final class PvpCmd extends ScriptCommand implements Global {
         }
     }
 
-    private static int findSlot(net.minecraft.item.Item item) {
+    private static int findSlot(net.minecraft.world.item.Item item) {
         return HotbarUtils.searchSlot(s -> !s.isEmpty() && s.is(item));
     }
 
