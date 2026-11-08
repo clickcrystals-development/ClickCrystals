@@ -1,0 +1,15 @@
+def module gergherobrine-spear-swap
+def desc "G: one same-tick spear attribute swap and attack"
+
+on key_press g {
+    once spear_g_pressed then pvp lunge_swap
+}
+
+on key_release g {
+    state clear spear_g_pressed
+}
+
+on module_disable {
+    pvp reset
+    state clear spear_g_pressed
+}
