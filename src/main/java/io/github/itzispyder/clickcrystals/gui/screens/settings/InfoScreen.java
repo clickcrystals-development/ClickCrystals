@@ -68,10 +68,15 @@ public class InfoScreen extends DefaultBase {
         panel.addChild(aeMotd);
         caret += aeMotd.height + 5;
 
-        Announcement.Field fOwner = new Announcement.Field("&bClient Owners", ClickCrystals.info.namesStringLong(ClickCrystals.info.collectOwners()));
-        Announcement.Field fStaff = new Announcement.Field("&bCommunity Staff", ClickCrystals.info.namesStringLong(ClickCrystals.info.collectStaff()));
-        Announcement.Field fDonos = new Announcement.Field("&bCommunity Supporters", ClickCrystals.info.namesStringLong(ClickCrystals.info.collectVip()));
-        Announcement aTeam = new Announcement("Our Team", "\"We got cool capes!\"",fOwner, fStaff, fDonos);
+        // This fork has its own maintainer. Do not mistake the upstream
+        // remote membership list for the current Modified edition team.
+        // Original upstream MIT copyrights and attribution remain in LICENSE.
+        Announcement.Field fOwner = new Announcement.Field("&bModified Edition Developer", "Gergherobrine");
+        Announcement.Field fEdition = new Announcement.Field("&bProject", "ClickCrystals Modified");
+        Announcement.Field fUpstream = new Announcement.Field("&7Based on ClickCrystals",
+                "Original ClickCrystals developers and contributors retain their attribution (see LICENSE).");
+        Announcement aTeam = new Announcement("Modified Edition", "Project information",
+                fOwner, fEdition, fUpstream);
         AnnouncementElement aeTeam = new AnnouncementElement(aTeam, margin, caret);
         panel.addChild(aeTeam);
         caret += aeTeam.height + 5;
