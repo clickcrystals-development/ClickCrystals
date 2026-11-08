@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - fix/pvp-runtime-2026-11-08
+      - feat/omnikit-runtime-foundation-12111
   pull_request:
     branches:
       - dev/1.21.11
@@ -24,7 +25,30 @@ jobs:
           distribution: temurin
           java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
-      - name: Compile and test
+      - name: Dependency-free runtime regression tests
+        shell: bash
+        run: |
+          mkdir -p build/runtime-tests
+          javac --release 21 -d build/runtime-tests \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/AsyncDecisionBridge.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/ScriptExecutionBudget.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/InputLeaseManager.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/TickTaskQueue.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/KeyGestureTracker.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/ScriptExtensions.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/nav/IncrementalPathfinder.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/ScriptState.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/ScriptComments.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/SenseCompare.java \
+            src/main/java/io/github/itzispyder/clickcrystals/client/system/VersionStrings.java \
+            tests/*.java
+          for test in AsyncDecisionBridgeTest ScriptExecutionBudgetTest InputLeaseManagerTest \
+            TickTaskQueueTest KeyGestureTrackerTest ScriptExtensionsTest \
+            IncrementalPathfinderTest ScriptStateSmokeTest ScriptCommentsSmokeTest \
+            SenseCompareSmokeTest VersionStringsSmokeTest; do
+            java -cp build/runtime-tests "$test"
+          done
+      - name: Compile and package Fabric mod
         run: |
           chmod +x ./gradlew
           ./gradlew --no-daemon --stacktrace build
