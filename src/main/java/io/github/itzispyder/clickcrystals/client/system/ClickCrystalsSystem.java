@@ -62,7 +62,7 @@ public class ClickCrystalsSystem implements Serializable {
     }
 
     public Runnable mcExecuteRunnable(Runnable task) {
-        return () -> mcExecuteRunnable(task);
+        return () -> mcExecute(task);
     }
 
     public void openUrl(String url) {
