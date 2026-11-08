@@ -1,0 +1,15 @@
+def module gergherobrine-anchor-dual
+def desc "B: one guarded anchor placement, charge and activation"
+
+on key_press b {
+    once anchor_b_pressed then pvp anchor_dual
+}
+
+on key_release b {
+    state clear anchor_b_pressed
+}
+
+on module_disable {
+    pvp reset
+    state clear anchor_b_pressed
+}
