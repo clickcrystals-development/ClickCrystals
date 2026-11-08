@@ -28,6 +28,29 @@ public final class TickTaskQueueTest {
         for(int i=0;i<64;i++)q.schedule("job"+i,1,1,()->{});
         rejected=false;try{q.schedule("overflow",1,0,()->{});}catch(IllegalStateException ex){rejected=true;}
         ok(rejected,"task limit enforced");
+
+        var reported = new java.util.concurrent.atomic.AtomicReference<String>();
+        TickTaskQueue noisy = new TickTaskQueue((name, error) ->
+                reported.set(name + ":" + error.getMessage()));
+        noisy.schedule("broken_repeat", 1, 1, () -> {
+            throw new IllegalArgumentException("bad input");
+        });
+        noisy.tick();
+        ok("broken_repeat:bad input".equals(reported.get()),
+                "task failures must reach the diagnostic callback");
+        ok(noisy.size() == 0, "failing recurring task must be removed");
+        noisy.tick();
+        ok(noisy.size() == 0, "failing task was incorrectly rescheduled");
+
+        q.cancelAll();
+        AtomicInteger throttled = new AtomicInteger();
+        for (int i=0; i<64; i++) q.schedule("throttle" + i, 1, 0, throttled::incrementAndGet);
+        q.tick();
+        ok(throttled.get() == TickTaskQueue.MAX_EXECUTIONS_PER_TICK,
+                "per-tick work budget exceeded");
+        q.tick();
+        ok(throttled.get() == 64 && q.size() == 0,
+                "remaining due tasks should execute on the next tick");
         System.out.println("TickTaskQueueTest: PASS");
     }
 }
