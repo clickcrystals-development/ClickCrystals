@@ -14,6 +14,7 @@ on key_release v {
 }
 on key_tap n 5 then task after delayed_notice 20 then print "Scheduled for one second"
 on key_tap m 5 then task cancel delayed_notice
+on key_tap k 5 then await_sense anchor_check target_anchor_charge gt 0 20 then print "Charged anchor detected"
 on module_disable {
     task cancel_all
 }
