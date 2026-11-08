@@ -20,6 +20,7 @@ public class ClickScript implements Global {
 
     public static final AtomicReference<File> currentFile = new AtomicReference<>();
     private static final Map<String, ScriptCommand> REGISTRATION = new HashMap<>();
+    private static final Map<String, String> SCRIPT_ERRORS = new java.util.concurrent.ConcurrentHashMap<>();
     public static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
     private static final java.util.Set<ClickScript> ACTIVE_TASKS =
             java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
@@ -114,6 +115,7 @@ public class ClickScript implements Global {
     }
 
     public void execute() {
+        if (file != null) SCRIPT_ERRORS.remove(path);
         io.github.itzispyder.clickcrystals.scripting.syntax.client.ModuleCmd.clearCurrentScriptModule();
         try {
             if (!file.exists() || !(path.endsWith(".ccs") || path.endsWith(".txt"))) {
@@ -147,6 +149,9 @@ public class ClickScript implements Global {
     }
 
     public void printErrorDetails(Exception ex, String cmd) {
+        if (file != null) {
+            SCRIPT_ERRORS.put(path, ex.getClass().getSimpleName() + ": " + String.valueOf(ex.getMessage()));
+        }
         String error = getErrorDetails(ex, cmd);
         if (PlayerUtils.invalid()) {
             system.printErr(error);
@@ -154,6 +159,10 @@ public class ClickScript implements Global {
         else {
             Command.error(error);
         }
+    }
+
+    public static String getScriptError(String filepath) {
+        return filepath == null ? null : SCRIPT_ERRORS.get(filepath);
     }
 
     public String getErrorDetails(Exception ex, String cmd) {
