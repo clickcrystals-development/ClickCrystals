@@ -62,12 +62,12 @@ public final class SenseValues implements Global {
     private static boolean kitCrystal() {
         return has("minecraft:end_crystal") && has("minecraft:obsidian") &&
                 (has("minecraft:totem_of_undying") ||
-                 itemId(p.getOffhandItem()).equals("minecraft:totem_of_undying"));
+                 itemId(mc.player.getOffhandItem()).equals("minecraft:totem_of_undying"));
     }
     private static boolean kitAnchor() {
         return has("minecraft:respawn_anchor") && has("minecraft:glowstone") &&
                 (has("minecraft:totem_of_undying") ||
-                 itemId(p.getOffhandItem()).equals("minecraft:totem_of_undying"));
+                 itemId(mc.player.getOffhandItem()).equals("minecraft:totem_of_undying"));
     }
     private static boolean kitMace() {
         return has("minecraft:mace") &&
@@ -122,7 +122,7 @@ public final class SenseValues implements Global {
             case "on_fire" -> bool(p.isOnFire());
             case "selected_slot" -> Integer.toString(InvUtils.selected() + 1);
             case "mainhand_item" -> itemId(p.getMainHandItem());
-            case "offhand_item" -> itemId(p.getOffhandItem());
+            case "offhand_item" -> itemId(mc.player.getOffhandItem());
             case "mainhand_count" -> Integer.toString(p.getMainHandItem().getCount());
             case "offhand_count" -> Integer.toString(p.getOffhandItem().getCount());
             case "mainhand_durability" -> handDurability(p.getMainHandItem());
