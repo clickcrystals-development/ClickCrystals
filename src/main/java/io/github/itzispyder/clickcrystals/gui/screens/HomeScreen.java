@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.gui.screens;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.events.listeners.UserInputListener;
+import io.github.itzispyder.clickcrystals.gui.screens.modulescreen.ScriptsBrowsingScreen;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchBarElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SearchResultsElement;
 import io.github.itzispyder.clickcrystals.gui.elements.common.interactive.SuggestionElement;
