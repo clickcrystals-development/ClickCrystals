@@ -1,6 +1,3 @@
-// ClickCrystals Modified 1.4.5-dev.5 | SpearSwap v2
-// Cooldown of original weapon checked before switch; attack in SAME client tick.
-// Vanilla Java spear forced cooldown may prevent Lunge. No timing guarantee.
 def module ger-lunge-v
     def desc "V tap/hold: check original cooldown, Lunge spear swap-attack-restore"
 
