@@ -135,7 +135,7 @@ public final class ClickCrystals implements ModInitializer, Global {
     @Override
     public void onInitialize() {
         // Mod initialization
-        system.println("Loading ClickCrystals by ImproperIssues");
+        system.println("Loading ClickCrystals Modified by Gergherobrine");
         System.setProperty("java.awt.headless", "false");
 
         system.println("-> loading scripts...");
@@ -143,20 +143,11 @@ public final class ClickCrystals implements ModInitializer, Global {
         system.println("-> initializing...");
         this.init();
         this.startTicking();
-        system.println("-> requesting mod info...");
-        ClickCrystals.requestModInfo();
         system.println("-> loading config...");
         config.loadEntireConfig();
         system.println("-> loading profiles...");
         system.profiles.init();
         system.printf("<- Profile set '%s'", system.profiles.profileConfig.getCurrentProfileName());
-        system.println("-> checking updates...");
-        ClickCrystals.checkUpdates();
-        system.println("-> requesting bulletin announcements...");
-        BulletinBoard.request();
-        system.println("-> checking for modrinth blacklists...");
-        ModrinthSupport.disableBlockedModules();
-
         system.println("-> clicking crystals!");
         system.println("ClickCrystals had loaded successfully!");
         system.println(new Gson().toJson(info));
@@ -227,6 +218,14 @@ public final class ClickCrystals implements ModInitializer, Global {
         ClickScript.register(new StateCmd());
         ClickScript.register(new IfStateCmd());
         ClickScript.register(new GateCmd());
+        ClickScript.register(new SenseCmd());
+        ClickScript.register(new IfSenseCmd());
+        ClickScript.register(new IfSenseCmd("unless_sense", true));
+        ClickScript.register(new SenseItemCmd());
+        ClickScript.register(new IfItemCmd());
+        ClickScript.register(new SenseSlotCmd());
+        ClickScript.register(new OnceCmd());
+        ClickScript.register(new StateResetCmd());
         ScriptedModule.runModuleScripts();
     }
 
