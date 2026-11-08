@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.scripting;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.scripting.runtime.TickTaskQueue;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.client.system.Config;
 import io.github.itzispyder.clickcrystals.scripting.components.CommandLine;
@@ -20,9 +21,14 @@ public class ClickScript implements Global {
     public static final AtomicReference<File> currentFile = new AtomicReference<>();
     private static final Map<String, ScriptCommand> REGISTRATION = new HashMap<>();
     public static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
+    private static final java.util.Set<ClickScript> ACTIVE_TASKS =
+            java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+    private static final ThreadLocal<Integer> EXECUTION_DEPTH = ThreadLocal.withInitial(() -> 0);
+    private static final int MAX_EXECUTION_DEPTH = 32;
 
     private final Map<String, String> functions;
     private final ScriptState scriptState = new ScriptState();
+    private final TickTaskQueue tickTaskQueue = new TickTaskQueue();
     private final String path;
     private final File file;
 
@@ -56,8 +62,17 @@ public class ClickScript implements Global {
     }
 
     public static void executeDynamic(ClickScript executor, String commandLine) {
-        List<CommandLine> lines = ScriptParser.parse(ScriptParser.condenseLines(commandLine));
-        dynamicExecutionHelper(executor, lines);
+        int depth = EXECUTION_DEPTH.get();
+        if (depth >= MAX_EXECUTION_DEPTH)
+            throw new IllegalStateException("ClickScript nesting limit exceeded (32); check recursive functions");
+        EXECUTION_DEPTH.set(depth + 1);
+        try {
+            List<CommandLine> lines = ScriptParser.parse(ScriptParser.condenseLines(commandLine));
+            dynamicExecutionHelper(executor, lines);
+        } finally {
+            if (depth == 0) EXECUTION_DEPTH.remove();
+            else EXECUTION_DEPTH.set(depth);
+        }
     }
 
     private static void dynamicExecutionHelper(ClickScript executor, List<CommandLine> lines) {
@@ -172,6 +187,64 @@ public class ClickScript implements Global {
     public ScriptState getScriptState() {
         return scriptState;
     }
+
+    /**
+     * Schedule a named continuation on the Minecraft game thread.
+     * Task callbacks are processed only during END_CLIENT_TICK; no async game access.
+     */
+    public void scheduleTask(String name, int delayTicks, int repeatTicks, String continuation) {
+        if (continuation == null || continuation.isBlank())
+            throw new IllegalArgumentException("Task command cannot be empty");
+        mc.execute(() -> {
+            tickTaskQueue.schedule(name, delayTicks, repeatTicks,
+                    () -> ClickScript.executeDynamic(this, continuation));
+            ACTIVE_TASKS.add(this);
+        });
+    }
+
+    public void cancelTask(String name) {
+        mc.execute(() -> {
+            tickTaskQueue.cancel(name);
+            if (tickTaskQueue.size() == 0) ACTIVE_TASKS.remove(this);
+        });
+    }
+
+    public void cancelTasks() {
+        mc.execute(() -> {
+            tickTaskQueue.cancelAll();
+            ACTIVE_TASKS.remove(this);
+        });
+    }
+
+    public int activeTaskCount() {
+        return tickTaskQueue.size();
+    }
+
+    public static void cancelScheduledTasksForFile(String path) {
+        if (path == null) return;
+        mc.execute(() -> {
+            for (ClickScript script : new ArrayList<>(ACTIVE_TASKS)) {
+                if (script.file != null && path.equals(script.file.getPath())) {
+                    script.tickTaskQueue.cancelAll();
+                    ACTIVE_TASKS.remove(script);
+                }
+            }
+        });
+    }
+
+    public static void cancelAllScheduledTasks() {
+        for (ClickScript script : new ArrayList<>(ACTIVE_TASKS))
+            script.tickTaskQueue.cancelAll();
+        ACTIVE_TASKS.clear();
+    }
+
+    public static void tickScheduledTasks() {
+        for (ClickScript script : new ArrayList<>(ACTIVE_TASKS)) {
+            script.tickTaskQueue.tick();
+            if (script.tickTaskQueue.size() == 0) ACTIVE_TASKS.remove(script);
+        }
+    }
+
 
     public String getPath() {
         return path;
