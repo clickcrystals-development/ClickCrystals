@@ -36,9 +36,32 @@ public class TickEventListener implements Listener, Global {
     }
 
     public static void cancelTickInputs() {
+        // Cancel the script-owned button state and IMMEDIATELY release only
+        // buttons that this automation had pressed. Without the release,
+        // a previously synthesized use/attack may remain pressed in Options.
+        boolean forward = shouldForward;
+        boolean backward = shouldBackward;
+        boolean left = shouldStrafeLeft;
+        boolean right = shouldStrafeRight;
+        boolean sneak = shouldSneak;
+        boolean jump = shouldJump;
+        boolean attack = shouldAttack;
+        boolean use = shouldUse;
         shouldForward = shouldBackward = shouldStrafeLeft = shouldStrafeRight =
                 shouldSneak = shouldJump = shouldAttack = shouldUse = false;
         heldKeys.clear();
+        if (mc != null && mc.options != null) {
+            mc.execute(() -> {
+                if (forward) mc.options.forwardKey.setPressed(false);
+                if (backward) mc.options.backKey.setPressed(false);
+                if (left) mc.options.leftKey.setPressed(false);
+                if (right) mc.options.rightKey.setPressed(false);
+                if (sneak) mc.options.sneakKey.setPressed(false);
+                if (jump) mc.options.jumpKey.setPressed(false);
+                if (attack) mc.options.attackKey.setPressed(false);
+                if (use) mc.options.useKey.setPressed(false);
+            });
+        }
     }
 
     public static void forward(long millis) {
