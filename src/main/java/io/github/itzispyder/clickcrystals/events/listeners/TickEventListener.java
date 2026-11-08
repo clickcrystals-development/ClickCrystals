@@ -38,9 +38,24 @@ public class TickEventListener implements Listener, Global {
     }
 
     public static void cancelTickInputs() {
+        // Release keys injected by the script runtime, not only their flags.
+        boolean forward = shouldForward, backward = shouldBackward;
+        boolean left = shouldStrafeLeft, right = shouldStrafeRight;
+        boolean sneak = shouldSneak, jump = shouldJump;
+        boolean attack = shouldAttack, use = shouldUse;
         shouldForward = shouldBackward = shouldStrafeLeft = shouldStrafeRight =
                 shouldSneak = shouldJump = shouldAttack = shouldUse = false;
         heldKeys.clear();
+        if (mc != null && mc.options != null) mc.execute(() -> {
+            if (forward) mc.options.keyUp.setDown(false);
+            if (backward) mc.options.keyDown.setDown(false);
+            if (left) mc.options.keyLeft.setDown(false);
+            if (right) mc.options.keyRight.setDown(false);
+            if (sneak) mc.options.keyShift.setDown(false);
+            if (jump) mc.options.keyJump.setDown(false);
+            if (attack) mc.options.keyAttack.setDown(false);
+            if (use) mc.options.keyUse.setDown(false);
+        });
     }
 
     public static void cancelToggleInputs() {
