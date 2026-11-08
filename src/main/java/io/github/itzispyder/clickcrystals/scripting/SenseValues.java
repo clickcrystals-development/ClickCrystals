@@ -87,8 +87,16 @@ public final class SenseValues implements Global {
         return Integer.toString(mc.level.getBlockState(hit.getBlockPos()).getValue(RespawnAnchorBlock.CHARGE));
     }
     private static String handDurability(ItemStack stack) {
-        if (!stack.isDamageable()) return "-1";
+        if (stack.getMaxDamage() <= 0) return "-1";
         return Integer.toString(stack.getMaxDamage() - stack.getDamageValue());
+    }
+
+    private static String dimensionId() {
+        String key = mc.level.dimension().toString();
+        int slash = key.lastIndexOf('/');
+        if (slash < 0) return key;
+        int bracket = key.indexOf(']', slash);
+        return key.substring(slash + 1, bracket < 0 ? key.length() : bracket).trim();
     }
 
     /** Returns null for unavailable readings, never stale state. */
@@ -141,7 +149,7 @@ public final class SenseValues implements Global {
             case "kit_cart" -> bool(kitCart());
             case "fps" -> Integer.toString(PlayerUtils.getFps());
             case "ping" -> Long.toString(PlayerUtils.getPing());
-            case "dimension" -> mc.level.dimension().location().toString();
+            case "dimension" -> dimensionId();
             case "x" -> number(p.getX());
             case "y" -> number(p.getY());
             case "z" -> number(p.getZ());
