@@ -29,7 +29,8 @@ public class ClickScript implements Global {
 
     private final Map<String, String> functions;
     private final ScriptState scriptState = new ScriptState();
-    private final TickTaskQueue tickTaskQueue = new TickTaskQueue();
+    private final TickTaskQueue tickTaskQueue =
+            new TickTaskQueue((name, error) -> printErrorDetails(error, "task " + name));
     private final String path;
     private final File file;
 
