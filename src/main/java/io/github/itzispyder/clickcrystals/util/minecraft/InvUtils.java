@@ -1,6 +1,7 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.scripting.runtime.PlayerInventorySlotMap;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
@@ -183,7 +184,7 @@ public final class InvUtils implements Global {
         if (stack == null || stack.isEmpty())
             return false;
 
-        int screenSlot = slot < 9 ? slot + 36 : slot;
+        int screenSlot = PlayerInventorySlotMap.screenSlot(slot);
         mc.interactionManager.clickSlot(
                 mc.player.playerScreenHandler.syncId, screenSlot, button, action, mc.player);
         return true;
