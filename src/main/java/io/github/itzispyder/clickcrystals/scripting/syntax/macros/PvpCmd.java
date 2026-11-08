@@ -170,18 +170,26 @@ public final class PvpCmd extends ScriptCommand implements Global {
                 InteractionUtils.inputUse();
             }
             script.scheduleCallbackTask("pvp_anchor_charge", 1, 0, () ->
-                    chargeStep(script, target, glowstone));
+                    chargeStep(script, target, glowstone, 8));
         } catch (RuntimeException ex) {
             endAnchor(script);
             throw ex;
         }
     }
 
-    private static void chargeStep(ClickScript script, BlockPos target, int glowstone) {
+    private static void chargeStep(ClickScript script, BlockPos target, int glowstone, int remaining) {
         try {
-            if (!ready() || !pointingAt(target)) { endAnchor(script); return; }
+            if (!ready()) { endAnchor(script); return; }
             int current = charge(target);
-            if (current < 0 || current > 1) { endAnchor(script); return; }
+            if (current < 0 && remaining > 0) {
+                // Wait for the client to observe placement; never retry the place/use.
+                script.scheduleCallbackTask("pvp_anchor_charge", 1, 0,
+                        () -> chargeStep(script, target, glowstone, remaining - 1));
+                return;
+            }
+            if (current < 0 || current > 1 || !pointingAt(target)) {
+                endAnchor(script); return;
+            }
             if (current == 0) {
                 if (!InvUtils.inv().getStack(glowstone).isOf(Items.GLOWSTONE)) {
                     endAnchor(script); return;
@@ -191,7 +199,7 @@ public final class PvpCmd extends ScriptCommand implements Global {
                 InteractionUtils.inputUse(); // exactly one charge attempt
             }
             script.scheduleCallbackTask("pvp_anchor_detonate", 1, 0, () ->
-                    detonateStep(script, target));
+                    detonateStep(script, target, 8));
         } catch (RuntimeException ex) {
             endAnchor(script);
             throw ex;
@@ -210,9 +218,17 @@ public final class PvpCmd extends ScriptCommand implements Global {
         return -1;
     }
 
-    private static void detonateStep(ClickScript script, BlockPos target) {
+    private static void detonateStep(ClickScript script, BlockPos target, int remaining) {
         try {
-            if (!ready() || !pointingAt(target) || charge(target) != 1) {
+            if (!ready()) { endAnchor(script); return; }
+            int current = charge(target);
+            if (current == 0 && remaining > 0) {
+                // Network latency can postpone the visible charge. Do not recharge.
+                script.scheduleCallbackTask("pvp_anchor_detonate", 1, 0,
+                        () -> detonateStep(script, target, remaining - 1));
+                return;
+            }
+            if (current != 1 || !pointingAt(target)) {
                 endAnchor(script); return;
             }
             int original = Integer.parseInt(script.getScriptState().get(ANCHOR_ORIG));
