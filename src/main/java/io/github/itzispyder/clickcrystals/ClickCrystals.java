@@ -221,6 +221,7 @@ public final class ClickCrystals implements ModInitializer, Global {
         ClickScript.register(new IfStateCmd());
         ClickScript.register(new GateCmd());
         ClickScript.register(new TaskCmd());
+        ClickScript.register(new AwaitSenseCmd());
         ClickScript.register(new ExtensionCmd());
         ClickScript.register(new SenseCmd());
         ClickScript.register(new IfSenseCmd());
