@@ -35,4 +35,3 @@ Requires **ClickCrystals Modified 1.4.5-dev.5**.
 
 CI boots three Minecraft/Fabric versions with both scripts and verifies that they are loaded without CCS initialization errors. Only **actual gameplay tests** can establish whether timed item interactions or server-authoritative events complete successfully.
 
-Author of Modified scripts: **Gergherobrine**.
