@@ -11,16 +11,21 @@ import java.util.function.Consumer;
 // @Format module (create|enable|disable) ...
 public class ModuleCmd extends ScriptCommand implements Global {
 
-    private static ScriptedModule currentScriptModule;
+    // Module definitions are scoped to the script-loading thread, not shared
+    // across other scripts or client callback threads.
+    private static final ThreadLocal<ScriptedModule> currentScriptModule = new ThreadLocal<>();
 
     public static ScriptedModule getCurrentScriptModule() {
-        return currentScriptModule;
+        return currentScriptModule.get();
+    }
+
+    public static void clearCurrentScriptModule() {
+        currentScriptModule.remove();
     }
 
     public static void runOnCurrentScriptModule(Consumer<ScriptedModule> action) {
-        if (currentScriptModule != null) {
-            action.accept(currentScriptModule);
-        }
+        ScriptedModule module = currentScriptModule.get();
+        if (module != null) action.accept(module);
     }
 
     public ModuleCmd(){
@@ -33,17 +38,19 @@ public class ModuleCmd extends ScriptCommand implements Global {
 
         switch (read.next(Action.class)) {
             case CREATE -> {
-                if (ClickScript.currentFile.get() == null)
-                    throw new IllegalStateException("Module cannot be created: current file pointer is null!");
+                // Bind module ownership to the actual script, never a global
+                // mutable file pointer shared with unrelated scripts.
+                java.io.File scriptFile = args.getExecutorOrDef().getFile();
+                if (scriptFile == null)
+                    throw new IllegalStateException("Module cannot be created outside a script file");
 
-                ScriptedModule created = new ScriptedModule(read.nextStr(), "", ClickScript.currentFile.get());
+                ScriptedModule created = new ScriptedModule(read.nextStr(), "", scriptFile);
 
                 if (system.getModuleById(created.getId()) != null)
                     throw new IllegalStateException("Cannot create module '%s' because one with the same name already exists!".formatted(created.getId()));
 
-                currentScriptModule = created;
-                system.addModule(currentScriptModule);
-                ClickScript.currentFile.set(null);
+                currentScriptModule.set(created);
+                system.addModule(created);
             }
             case ENABLE -> system.runModuleById(read.nextStr(), m -> m.setEnabled(true, true));
             case DISABLE -> system.runModuleById(read.nextStr(), m -> m.setEnabled(false, true));
