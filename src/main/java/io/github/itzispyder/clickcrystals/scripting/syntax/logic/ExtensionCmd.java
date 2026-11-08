@@ -32,10 +32,16 @@ public final class ExtensionCmd extends ScriptCommand {
             case "read" -> {
                 if (args.getSize() != 3)
                     throw new IllegalArgumentException("Usage: ext read <id> <variable>");
+                String id=args.get(1).toString();
+                String variable=args.get(2).toString();
                 mc.execute(() -> {
-                    var value=ScriptExtensions.read(args.get(1).toString(), context(script));
-                    if (value == null) script.getScriptState().clear(args.get(2).toString());
-                    else script.getScriptState().set(args.get(2).toString(), value);
+                    try {
+                        var value=ScriptExtensions.read(id, context(script));
+                        if (value == null) script.getScriptState().clear(variable);
+                        else script.getScriptState().set(variable, value);
+                    } catch (Exception ex) {
+                        script.printErrorDetails(ex, "ext read " + id);
+                    }
                 });
             }
             case "call" -> {
@@ -44,7 +50,13 @@ public final class ExtensionCmd extends ScriptCommand {
                 String id=args.get(1).toString();
                 List<String> list=new ArrayList<>();
                 for (int i=2;i<args.getSize();i++) list.add(args.get(i).toString());
-                mc.execute(() -> ScriptExtensions.call(id,context(script),list));
+                mc.execute(() -> {
+                    try {
+                        ScriptExtensions.call(id,context(script),list);
+                    } catch (Exception ex) {
+                        script.printErrorDetails(ex, "ext call " + id);
+                    }
+                });
             }
             default -> throw new IllegalArgumentException("Usage: ext available|read|call");
         }
