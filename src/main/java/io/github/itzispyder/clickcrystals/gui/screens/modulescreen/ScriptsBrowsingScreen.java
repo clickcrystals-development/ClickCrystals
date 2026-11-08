@@ -188,7 +188,7 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
 
         @Override
         public void onClick(double mouseX, double mouseY, int button) {
-            if (button == 0) mc.setScreen(new ClickScriptIDE(source));
+            if (button == 0) mc.gui.setScreen(new ClickScriptIDE(source));
         }
     }
 
