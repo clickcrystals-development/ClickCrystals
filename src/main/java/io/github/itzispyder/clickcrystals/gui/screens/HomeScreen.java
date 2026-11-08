@@ -38,12 +38,21 @@ public class HomeScreen extends AnimatedBase {
     public HomeScreen() {
         super("ClickCrystals Modified Home Screen");
 
-        GridOrganizer grid = new GridOrganizer(baseX + 27, baseY + baseHeight - 65, 35, 35, 10, 31);
-        suggestions.add(new SuggestionElement(Tex.Socials.CURSEFORGE, "CurseForge", 0, 0, 35, button -> system.openUrl("https://www.curseforge.com/minecraft/mc-mods/clickcrystals")));
-        suggestions.add(new SuggestionElement(Tex.Socials.YOUTUBE, "Youtube", 0, 0, 35, button -> system.openUrl("https://youtube.com/@itzispyder")));
-        suggestions.add(new SuggestionElement(Tex.Socials.PLANETMC, "Planet MC", 0, 0, 35, button -> system.openUrl("https://planetminecraft.com/mod/clickcrystal")));
-        suggestions.add(new SuggestionElement(Tex.ICON, "Official Site", 0, 0, 35, button -> system.openUrl("https://clickcrystals.xyz")));
-        suggestions.add(new SuggestionElement(Tex.Icons.MODULES, "Browse Modules", 0, 0, 35, button -> UserInputListener.openModulesScreen()));
+        // Four meaningful local actions; the button row is centered as a group.
+        int iconSize = 35;
+        int iconGap = 22;
+        int iconCount = 4;
+        int rowWidth = iconCount * iconSize + (iconCount - 1) * iconGap;
+        int rowX = baseX + (baseWidth - rowWidth) / 2;
+        GridOrganizer grid = new GridOrganizer(rowX, baseY + baseHeight - 65, iconSize, iconSize, iconCount, iconGap);
+        suggestions.add(new SuggestionElement(Tex.Icons.MODULES, "Modules", 0, 0, iconSize,
+                button -> UserInputListener.openModulesScreen()));
+        suggestions.add(new SuggestionElement(Tex.ICON_CLICKSCRIPT, "Scripts", 0, 0, iconSize,
+                button -> UserInputListener.scheduleOpenScreen(new ScriptsBrowsingScreen())));
+        suggestions.add(new SuggestionElement(Tex.Icons.SETTINGS, "HUD Editor", 0, 0, iconSize,
+                button -> UserInputListener.scheduleOpenScreen(new HudEditScreen())));
+        suggestions.add(new SuggestionElement(Tex.Icons.FOLDER, "Source Code", 0, 0, iconSize,
+                button -> system.openUrl("https://github.com/Gergherobrine/ClickCrystals-Modified")));
 
         suggestions.forEach(grid::addEntry);
         grid.organize();
@@ -78,27 +87,13 @@ public class HomeScreen extends AnimatedBase {
 
         int caret = baseY + 70;
         int titleTrans = (int)(-50 * animator.getProgressClampedReversed());
-        for (SuggestionElement suggestion : suggestions) {
-            suggestion.y = baseY + baseHeight - 65 + titleTrans;
-        }
+
         RenderUtils.drawCenteredText(context, "§lClickCrystals Modified §rv" + version, baseX + baseWidth / 2, caret - titleTrans, 2.0F, true);
         caret += 20;
-        RenderUtils.drawCenteredText(context, "Crystal PvP Enhanced", baseX + baseWidth / 2, caret - titleTrans, 1.0F, true);
+        RenderUtils.drawCenteredText(context, "Gergherobrine  /  PvP Toolkit", baseX + baseWidth / 2, caret - titleTrans, 1.0F, true);
         caret += 30;
         searchBar.x = baseX + baseWidth / 2 - searchBar.width / 2;
         searchBar.y = caret - titleTrans;
-    }
-
-    public void renderMotd(GuiGraphicsExtractor context) {
-        List<String> lines = TextUtils.wordWrap(ClickCrystals.info.getMotd(), 300 - 5 - 5, 0.9F);
-        int i = 3;
-        int x = baseX + baseWidth / 2 - 150;
-        int y = baseY + 20;
-        RenderUtils.fillRoundRect(context, x, y, 300, lines.size() * 9 + 6, 3, Shades.DARK_GRAY);
-        for (String line : lines) {
-            RenderUtils.drawText(context, "§e" + line, x + 5, y + i, 0.9F, false);
-            i += 10;
-        }
     }
 
     @Override
