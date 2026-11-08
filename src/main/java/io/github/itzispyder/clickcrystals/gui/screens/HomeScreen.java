@@ -91,7 +91,7 @@ public class HomeScreen extends AnimatedBase {
         int titleTrans = (int)(-50 * animator.getProgressClampedReversed());
         RenderUtils.drawCenteredText(context, "§lClickCrystals Modified §rv" + version, baseX + baseWidth / 2, caret - titleTrans, 2.0F, true);
         caret += 20;
-        RenderUtils.drawCenteredText(context, "Gergherobrine  /  PvP Toolkit", baseX + baseWidth / 2, caret - titleTrans, 1.0F, true);
+        RenderUtils.drawCenteredText(context, "Original project: ImproperIssues (ItziSpyder)", baseX + baseWidth / 2, caret - titleTrans, 1.0F, true);
         caret += 30;
         searchBar.x = baseX + baseWidth / 2 - searchBar.width / 2;
         searchBar.y = caret - titleTrans;
