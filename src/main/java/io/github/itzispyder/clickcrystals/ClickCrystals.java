@@ -137,7 +137,7 @@ public final class ClickCrystals implements ModInitializer, Global {
     @Override
     public void onInitialize() {
         // Mod initialization
-        system.println("Loading ClickCrystals Modified by Gergherobrine");
+        system.println("Loading ClickCrystals by ImproperIssues");
         System.setProperty("java.awt.headless", "false");
 
         system.println("-> loading scripts...");
