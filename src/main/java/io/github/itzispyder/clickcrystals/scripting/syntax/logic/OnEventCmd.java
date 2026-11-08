@@ -6,6 +6,7 @@ import io.github.itzispyder.clickcrystals.events.events.client.MouseClickEvent;
 import io.github.itzispyder.clickcrystals.gui.ClickType;
 import io.github.itzispyder.clickcrystals.modules.keybinds.Keybind;
 import io.github.itzispyder.clickcrystals.scripting.*;
+import io.github.itzispyder.clickcrystals.scripting.runtime.KeyGestureTracker;
 import io.github.itzispyder.clickcrystals.scripting.syntax.ThenChainable;
 import io.github.itzispyder.clickcrystals.scripting.syntax.client.ModuleCmd;
 import io.github.itzispyder.clickcrystals.scripting.syntax.listeners.TickListener;
@@ -29,6 +30,7 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
             case MOUSE_CLICK, MOUSE_RELEASE -> passMouseButtonClick(read, type);
             case PLACE_BLOCK, BREAK_BLOCK, INTERACT_BLOCK, PUNCH_BLOCK -> passBlock(read, type);
             case KEY_PRESS, KEY_RELEASE -> passKey(read, type);
+            case KEY_TAP, KEY_HOLD, KEY_HELD -> passGesture(read, type, args.getExecutorOrDef());
             case MOVE_LOOK, MOVE_POS -> passMove(read, type);
             case CHAT_SEND, CHAT_RECEIVE -> passChat(args, type);
             case PACKET_SEND, PACKET_RECEIVE -> passPacket(read, type);
@@ -136,6 +138,55 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         }));
     }
 
+    /**
+     * Debounced tap / hold classification in game ticks.
+     * key_tap fires only on release before threshold.
+     * key_hold fires exactly once when the threshold is reached.
+     * key_held repeats at a configurable tick interval after the threshold.
+     */
+    private void passGesture(ScriptArgsReader read, EventType type, ClickScript dispatcher) {
+        String key = read.nextStr();
+        int threshold = 5;
+        int repeat = 2;
+        if (read.getCurr().isNum()) threshold = read.next().toInt();
+        if (type == EventType.KEY_HELD && read.getCurr().isNum())
+            repeat = read.next().toInt();
+        if (read.currMatches("then")) read.nextStr();
+        String continuation = read.remainingStr();
+        if (continuation.isBlank())
+            throw new IllegalArgumentException("Gesture requires a command or block");
+        KeyGestureTracker tracker = new KeyGestureTracker(threshold, repeat);
+        ModuleCmd.runOnCurrentScriptModule(module -> {
+            module.keyListeners.add(event -> {
+                if (mc.player == null || mc.gui.screen() != null) {
+                    tracker.cancel();
+                    return;
+                }
+                String typed = Keybind.getExtendedKeyName(event.getKeycode(), event.getScancode());
+                if (typed == null || !key.equalsIgnoreCase(typed)) return;
+                if (event.getAction().isDown()) {
+                    tracker.press();
+                } else if (event.getAction().isRelease()) {
+                    if (tracker.release() == KeyGestureTracker.Signal.TAP && type == EventType.KEY_TAP)
+                        ClickScript.executeDynamic(dispatcher, continuation);
+                }
+            });
+            module.preTickListeners.add(new TickListener(0, () -> {
+                if (mc.player == null || mc.gui.screen() != null) {
+                    tracker.cancel();
+                    return;
+                }
+                KeyGestureTracker.Signal signal = tracker.tick();
+                if ((type == EventType.KEY_HOLD && signal == KeyGestureTracker.Signal.HOLD_START)
+                        || (type == EventType.KEY_HELD && signal == KeyGestureTracker.Signal.HOLD_REPEAT)) {
+                    ClickScript.executeDynamic(dispatcher, continuation);
+                }
+            }));
+            module.moduleDisableListeners.add(tracker::cancel);
+            module.gameLeaveListeners.add(tracker::cancel);
+        });
+    }
+
     private void passMove(ScriptArgsReader read, EventType eventType) {
         ModuleCmd.runOnCurrentScriptModule(m -> m.moveListeners.add(event -> {
             switch (eventType) {
@@ -224,6 +275,9 @@ public class OnEventCmd extends ScriptCommand implements ThenChainable {
         MODULE_DISABLE, // @Format on module_disable {}
         MOVE_POS, // @Format on move_pos {}
         MOVE_LOOK, // @Format on move_look {}
+        KEY_TAP, // @Format on key_tap <key> [threshold_ticks] then ...
+        KEY_HOLD, // @Format on key_hold <key> [threshold_ticks] then ...
+        KEY_HELD, // @Format on key_held <key> [threshold_ticks] [repeat_ticks] then ...
         KEY_PRESS, // @Format on key_press ... {}
         KEY_RELEASE, // @Format on key_release ... {}
         DAMAGE, // @Format on damage {}

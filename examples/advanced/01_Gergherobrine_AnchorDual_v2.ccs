@@ -1,0 +1,158 @@
+def module ger-anchor-dual
+    def desc "B tap or hold: verified anchor place-charge-detonate, restore original slot"
+
+    on module_enable {
+        state set aa_mode idle
+        state set aa_stage idle
+        state set aa_charge_tries 0
+    }
+    on key_tap b 5 then if_state aa_stage eq idle then func aa_begin
+    on key_hold b 5 then state set aa_mode hold
+    on key_release b then state set aa_mode idle
+    on pre_tick 1 {
+        if_state aa_stage eq idle then if_state aa_mode eq hold then gate aa_cycle 250 then func aa_begin
+        if_state aa_stage eq place_wait then if_state aa_placed eq timeout then func aa_abort
+        if_state aa_stage eq charge_wait then if_state aa_charged eq timeout then func aa_retry_or_abort
+        if_state aa_stage eq blast_wait then if_state aa_exploded eq timeout then func aa_finish
+    }
+    on module_disable {
+        if playing then func aa_abort
+    }
+    on game_leave {
+        task cancel_all
+        state set aa_mode idle
+        state set aa_stage idle
+    }
+    on death {
+        task cancel_all
+        state set aa_mode idle
+        state set aa_stage idle
+    }
+
+    def func aa_begin {
+        if playing then if dimension overworld then func aa_check
+        if playing then if dimension the_end then func aa_check
+    }
+    def func aa_check {
+        if_state aa_stage eq idle then if_sense using_item false then if_sense target_kind eq block then if_sense target_distance le 4.5 then func aa_select_path
+    }
+    def func aa_select_path {
+        sense selected_slot aa_return
+        state set aa_charge_tries 0
+        if_sense target_anchor_charge ge 1 then func aa_prepare_detonation
+        if_sense target_anchor_charge eq 0 then if_item minecraft:glowstone ge 1 then func aa_charge
+        if_sense target_block ne minecraft:respawn_anchor then if_item minecraft:respawn_anchor ge 1 then if_item minecraft:glowstone ge 1 then func aa_place
+    }
+    def func aa_place {
+        state set aa_stage selecting_anchor
+        switch :respawn_anchor
+        task after aa_place_use 1 then func aa_place_use
+    }
+    def func aa_place_use {
+        state set aa_stage place_wait
+        if_sense mainhand_item eq minecraft:respawn_anchor then if_sense target_kind eq block then input use
+        await_sense aa_placed target_block eq minecraft:respawn_anchor 14 then func aa_charge
+    }
+    def func aa_charge {
+        if_sense target_block eq minecraft:respawn_anchor then func aa_charge_once
+    }
+    def func aa_charge_once {
+        state set aa_stage selecting_glowstone
+        state inc aa_charge_tries
+        switch :glowstone
+        task after aa_charge_use 1 then func aa_charge_use
+    }
+    def func aa_charge_use {
+        state set aa_stage charge_wait
+        if_sense mainhand_item eq minecraft:glowstone then if_sense target_anchor_charge eq 0 then input use
+        await_sense aa_charged target_anchor_charge ge 1 12 then func aa_prepare_detonation
+    }
+    def func aa_retry_or_abort {
+        if_state aa_charge_tries lt 2 then if_sense target_anchor_charge eq 0 then if_item minecraft:glowstone ge 1 then func aa_charge_once
+        if_state aa_charged eq timeout then func aa_abort
+    }
+    def func aa_prepare_detonation {
+        state set aa_stage choose_slot
+        state set aa_det_slot 0
+        sense_slot 1 aa_slot_1
+        sense_slot 2 aa_slot_2
+        sense_slot 3 aa_slot_3
+        sense_slot 4 aa_slot_4
+        sense_slot 5 aa_slot_5
+        sense_slot 6 aa_slot_6
+        sense_slot 7 aa_slot_7
+        sense_slot 8 aa_slot_8
+        sense_slot 9 aa_slot_9
+        if_state aa_return eq 1 then if_state aa_slot_1 ne minecraft:glowstone then state set aa_det_slot 1
+        if_state aa_return eq 2 then if_state aa_slot_2 ne minecraft:glowstone then state set aa_det_slot 2
+        if_state aa_return eq 3 then if_state aa_slot_3 ne minecraft:glowstone then state set aa_det_slot 3
+        if_state aa_return eq 4 then if_state aa_slot_4 ne minecraft:glowstone then state set aa_det_slot 4
+        if_state aa_return eq 5 then if_state aa_slot_5 ne minecraft:glowstone then state set aa_det_slot 5
+        if_state aa_return eq 6 then if_state aa_slot_6 ne minecraft:glowstone then state set aa_det_slot 6
+        if_state aa_return eq 7 then if_state aa_slot_7 ne minecraft:glowstone then state set aa_det_slot 7
+        if_state aa_return eq 8 then if_state aa_slot_8 ne minecraft:glowstone then state set aa_det_slot 8
+        if_state aa_return eq 9 then if_state aa_slot_9 ne minecraft:glowstone then state set aa_det_slot 9
+        if_state aa_det_slot eq 0 then if_state aa_slot_1 ne minecraft:glowstone then state set aa_det_slot 1
+        if_state aa_det_slot eq 0 then if_state aa_slot_2 ne minecraft:glowstone then state set aa_det_slot 2
+        if_state aa_det_slot eq 0 then if_state aa_slot_3 ne minecraft:glowstone then state set aa_det_slot 3
+        if_state aa_det_slot eq 0 then if_state aa_slot_4 ne minecraft:glowstone then state set aa_det_slot 4
+        if_state aa_det_slot eq 0 then if_state aa_slot_5 ne minecraft:glowstone then state set aa_det_slot 5
+        if_state aa_det_slot eq 0 then if_state aa_slot_6 ne minecraft:glowstone then state set aa_det_slot 6
+        if_state aa_det_slot eq 0 then if_state aa_slot_7 ne minecraft:glowstone then state set aa_det_slot 7
+        if_state aa_det_slot eq 0 then if_state aa_slot_8 ne minecraft:glowstone then state set aa_det_slot 8
+        if_state aa_det_slot eq 0 then if_state aa_slot_9 ne minecraft:glowstone then state set aa_det_slot 9
+        if_state aa_det_slot eq 0 then func aa_abort
+        if_state aa_det_slot gt 0 then func aa_choose_detonation_slot
+    }
+    def func aa_choose_detonation_slot {
+        state set aa_stage det_slot
+        if_state aa_det_slot eq 1 then switch 1
+        if_state aa_det_slot eq 2 then switch 2
+        if_state aa_det_slot eq 3 then switch 3
+        if_state aa_det_slot eq 4 then switch 4
+        if_state aa_det_slot eq 5 then switch 5
+        if_state aa_det_slot eq 6 then switch 6
+        if_state aa_det_slot eq 7 then switch 7
+        if_state aa_det_slot eq 8 then switch 8
+        if_state aa_det_slot eq 9 then switch 9
+        task after aa_det_next 1 then func aa_detonate_check
+        task after aa_det_timeout 10 then func aa_abort
+    }
+    def func aa_detonate_check {
+        if_state aa_stage eq det_slot then if_sense target_anchor_charge ge 1 then if_sense mainhand_item ne minecraft:glowstone then if_sense offhand_item ne minecraft:glowstone then func aa_detonate
+    }
+    def func aa_detonate {
+        task cancel aa_det_timeout
+        state set aa_stage blast_wait
+        input use
+        await_sense aa_exploded target_block ne minecraft:respawn_anchor 12 then func aa_finish
+    }
+    def func aa_finish {
+        func aa_cleanup
+    }
+    def func aa_abort {
+        func aa_cleanup
+    }
+    def func aa_cleanup {
+        state set aa_stage cleanup
+        task cancel aa_place_use
+        task cancel aa_charge_use
+        task cancel aa_det_next
+        task cancel aa_det_timeout
+        task cancel await_aa_placed
+        task cancel await_aa_charged
+        task cancel await_aa_exploded
+        func aa_restore
+        state set aa_stage idle
+    }
+    def func aa_restore {
+        if_state aa_return eq 1 then switch 1
+        if_state aa_return eq 2 then switch 2
+        if_state aa_return eq 3 then switch 3
+        if_state aa_return eq 4 then switch 4
+        if_state aa_return eq 5 then switch 5
+        if_state aa_return eq 6 then switch 6
+        if_state aa_return eq 7 then switch 7
+        if_state aa_return eq 8 then switch 8
+        if_state aa_return eq 9 then switch 9
+    }

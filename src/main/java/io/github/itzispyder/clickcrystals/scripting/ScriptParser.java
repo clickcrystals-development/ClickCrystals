@@ -119,7 +119,8 @@ public class ScriptParser {
             String line;
 
             while ((line = br.readLine()) != null) {
-                line = line.trim();
+                line = ScriptComments.stripLine(line);
+                if (line.isEmpty()) continue;
                 result.append(line);
 
                 if (!line.isEmpty()) {
@@ -143,7 +144,8 @@ public class ScriptParser {
             StringBuilder result = new StringBuilder();
 
             for (String line : string.lines().toArray(String[]::new)) {
-                line = line.trim();
+                line = ScriptComments.stripLine(line);
+                if (line.isEmpty()) continue;
                 result.append(line);
 
                 if (!line.isEmpty()) {

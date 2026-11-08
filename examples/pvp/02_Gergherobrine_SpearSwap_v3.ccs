@@ -1,0 +1,22 @@
+// ClickCrystals Modified 1.4.5 — same-tick Spear Attribute/Lunge Swap.
+// G: original weapon cooldown -> switch to spear -> attack immediately.
+// No waiting for spear cooldown. Restore the original slot NEXT game tick.
+// A second keydown while held does not retrigger the attack.
+// Requires a Lunge-enchanted spear in the hotbar; no auto-enchanting.
+// The vanilla/server attribute swap timing remains version-dependent.
+
+def module gergherobrine-spear-swap
+def desc "G: same-tick spear Attribute Swap + one attack + slot restore"
+
+on key_press g {
+    once spear_g_pressed then pvp lunge_swap
+}
+
+on key_release g {
+    state clear spear_g_pressed
+}
+
+on module_disable {
+    pvp reset
+    state clear spear_g_pressed
+}

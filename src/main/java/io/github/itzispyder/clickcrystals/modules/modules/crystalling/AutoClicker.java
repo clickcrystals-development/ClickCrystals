@@ -162,21 +162,19 @@ public class AutoClicker extends ListenerModule {
     I hope this is how noise works
      */
     private void distributeNoise(int cps, double clickChance, int[] noiseMap) {
-        float chance = cps / 20.0F /* maxClicksPerTick */ / 20.0F /* averageAcrossEachTick */;
-        int distributions = 0;
-
-        for (int i = 0; i < 20; i++)
-            noiseMap[i] = 0;
-
-        while (distributions < cps) {
-            int randomIndex = MathUtils.clamp((int)(Math.random() * 20),0, 19);
-            if (distributions < 20 && noiseMap[randomIndex] > 0)
-                continue;
-            if (Math.random() > chance * clickChance) // simulates click
-                continue;
-            noiseMap[randomIndex]++;
-            distributions++;
+        // Bounded scheduling: cannot hang when click chance is zero or tiny.
+        Arrays.fill(noiseMap, 0);
+        int[] ticks = new int[20];
+        for (int i = 0; i < ticks.length; i++) ticks[i] = i;
+        for (int i = ticks.length - 1; i > 0; i--) {
+            int j = (int) (Math.random() * (i + 1));
+            int tmp = ticks[i];
+            ticks[i] = ticks[j];
+            ticks[j] = tmp;
         }
+        for (int i = 0; i < Math.max(0, cps); i++)
+            noiseMap[ticks[i % ticks.length]]++;
+        // clickChance is applied once by clickLeft/clickRight on execution.
     }
 
     @EventHandler
@@ -274,7 +272,7 @@ public class AutoClicker extends ListenerModule {
             }
             return false;
         }
-        if (stopWhenMove.getVal() && p.position().distanceTo(pos) > 0.1) {
+        if (stopWhenMove.getVal() && pos != null && p.position().distanceTo(pos) > 0.1) {
             if (left.getVal() || right.getVal()) {
                 left.setVal(false);
                 right.setVal(false);
