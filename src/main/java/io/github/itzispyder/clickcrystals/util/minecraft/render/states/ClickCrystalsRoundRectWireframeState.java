@@ -4,6 +4,7 @@ import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.GuiPixelBounds;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
@@ -149,11 +150,9 @@ public class ClickCrystalsRoundRectWireframeState implements GuiElementRenderSta
     }
 
     private static ScreenRectangle createBounds(Matrix3x2f pose, ScreenRectangle scissor, float x, float y, float w, float h, float thickness) {
-        int a = (int) (x - thickness);
-        int b = (int) (y - thickness);
-        int c = (int) (w + thickness * 2);
-        int d = (int) (h + thickness * 2);
-        ScreenRectangle bounds = new ScreenRectangle(a, b, c, d).transformMaxBounds(pose);
+        ScreenRectangle bounds = GuiPixelBounds.fromCorners(
+                x - thickness, y - thickness, x + w + thickness, y + h + thickness)
+                .transformMaxBounds(pose);
         return scissor == null ? bounds : scissor.intersection(bounds);
     }
 }
