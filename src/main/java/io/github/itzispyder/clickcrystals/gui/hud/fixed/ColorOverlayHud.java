@@ -41,6 +41,6 @@ public class ColorOverlayHud extends Hud {
 
     private void renderColor(GuiGraphicsExtractor context, int color) {
         final Window win = mc.getWindow();
-        context.fill(0, 0, win.getScreenWidth(), win.getScreenHeight(), color);
+        context.fill(0, 0, win.getGuiScaledWidth(), win.getGuiScaledHeight(), color);
     }
 }

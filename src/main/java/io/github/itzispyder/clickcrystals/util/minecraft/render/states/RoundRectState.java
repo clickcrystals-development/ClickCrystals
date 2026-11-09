@@ -4,6 +4,7 @@ import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderPipelines;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.GuiPixelBounds;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
@@ -135,7 +136,7 @@ public class RoundRectState implements GuiElementRenderState {
     }
 
     private static ScreenRectangle createBounds(Matrix3x2f pose, ScreenRectangle scissor, float x, float y, float w, float h) {
-        ScreenRectangle bounds = new ScreenRectangle((int) x, (int) y, (int) w, (int) h).transformMaxBounds(pose);
+        ScreenRectangle bounds = GuiPixelBounds.fromCorners(x, y, x + w, y + h).transformMaxBounds(pose);
         return scissor == null ? bounds : scissor.intersection(bounds);
     }
 }
