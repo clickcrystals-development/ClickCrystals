@@ -2,6 +2,9 @@ package io.github.itzispyder.clickcrystals.scripting;
 
 import io.github.itzispyder.clickcrystals.ClickCrystals;
 import io.github.itzispyder.clickcrystals.Global;
+import io.github.itzispyder.clickcrystals.scripting.runtime.TickTaskQueue;
+import io.github.itzispyder.clickcrystals.scripting.runtime.ScriptExecutionBudget;
+import io.github.itzispyder.clickcrystals.scripting.runtime.SelectionHistory;
 import io.github.itzispyder.clickcrystals.client.commands.Command;
 import io.github.itzispyder.clickcrystals.client.system.Config;
 import io.github.itzispyder.clickcrystals.scripting.components.CommandLine;
@@ -21,9 +24,17 @@ public class ClickScript implements Global {
 
     public static final AtomicReference<File> currentFile = new AtomicReference<>();
     private static final Map<String, ScriptCommand> REGISTRATION = new HashMap<>();
+    private static final Map<String, String> SCRIPT_ERRORS = new java.util.concurrent.ConcurrentHashMap<>();
     public static final ClickScript DEFAULT_DISPATCHER = new ClickScript("DEFAULT DISPATCHER");
+    private static final java.util.Set<ClickScript> ACTIVE_TASKS =
+            java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+
 
     private final Map<String, String> functions, macros;
+    private final ScriptState scriptState = new ScriptState();
+    private final SelectionHistory selectionHistory = new SelectionHistory();
+    private final TickTaskQueue tickTaskQueue =
+            new TickTaskQueue((name, error) -> printErrorDetails(error, "task " + name));
     private final String path;
     private final File file;
 
@@ -58,21 +69,36 @@ public class ClickScript implements Global {
     }
 
     public static void executeDynamic(ClickScript executor, String commandLine) {
-        List<CommandLine> lines = ScriptParser.parse(ScriptParser.condenseLines(commandLine));
-        dynamicExecutionHelper(executor, lines);
+        ScriptExecutionBudget.enter();
+        try {
+            List<CommandLine> lines = ScriptParser.parse(ScriptParser.condenseLines(commandLine));
+            dynamicExecutionHelper(executor, lines);
+        } finally {
+            ScriptExecutionBudget.exit();
+        }
+    }
+
+    private static void executeDelayed(ClickScript executor, List<CommandLine> lines) {
+        ScriptExecutionBudget.enter();
+        try {
+            dynamicExecutionHelper(executor, lines);
+        } finally {
+            ScriptExecutionBudget.exit();
+        }
     }
 
     private static void dynamicExecutionHelper(ClickScript executor, List<CommandLine> lines) {
         for (int i = 0; i < lines.size(); i++) {
+            ScriptExecutionBudget.command();
             CommandLine line = lines.get(i);
             CommandLine.WaitingState state = line.getWaitingState();
 
             if (state.waiting()) {
                 int from = i + 1;
                 int to = lines.size();
-                system.tickScheduler.schedule(state.seconds(), () -> {
-                    dynamicExecutionHelper(executor, ArrayUtils.subList(lines, from, to));
-                });
+                system.tickScheduler.schedule(state.seconds(), () ->
+                        mc.execute(() -> executeDelayed(executor,
+                                ArrayUtils.subList(lines, from, to))));
                 return;
             }
 
@@ -106,6 +132,8 @@ public class ClickScript implements Global {
     }
 
     public void execute() {
+        if (file != null) SCRIPT_ERRORS.remove(path);
+        io.github.itzispyder.clickcrystals.scripting.syntax.client.ModuleCmd.clearCurrentScriptModule();
         try {
             if (!file.exists() || !(path.endsWith(".ccs") || path.endsWith(".txt"))) {
                 throw new ScriptNotFoundException(this);
@@ -115,6 +143,10 @@ public class ClickScript implements Global {
         }
         catch (Exception ex) {
             printErrorDetails(ex, "DEFAULT-START-EXECUTION");
+        }
+        finally {
+            io.github.itzispyder.clickcrystals.scripting.syntax.client.ModuleCmd.clearCurrentScriptModule();
+            currentFile.set(null);
         }
     }
 
@@ -142,6 +174,8 @@ public class ClickScript implements Global {
     }
 
     public void printErrorDetails(Exception ex, String cmd) {
+        if (file != null)
+            SCRIPT_ERRORS.put(path, ex.getClass().getSimpleName() + ": " + String.valueOf(ex.getMessage()));
         String error = getErrorDetails(ex, cmd);
         if (PlayerUtils.invalid() || ClickCrystals.config.isDisableScriptChatErrors()) {
             system.printErr(error);
@@ -149,6 +183,10 @@ public class ClickScript implements Global {
         else {
             mc.execute(() -> Command.error(error));
         }
+    }
+
+    public static String getScriptError(String filepath) {
+        return filepath == null ? null : SCRIPT_ERRORS.get(filepath);
     }
 
     public String getErrorDetails(Exception ex, String cmd) {
@@ -192,11 +230,83 @@ public class ClickScript implements Global {
     }
 
     public String getMacro(String name) {
-        if (name == null || name.trim().isEmpty() || !functions.containsKey(name)) {
+        if (name == null || name.trim().isEmpty() || !macros.containsKey(name)) {
             throw new IllegalArgumentException("Macro '%s' is not defined!".formatted(name));
         }
         return macros.getOrDefault(name, "");
     }
+
+    public SelectionHistory getSelectionHistory() {
+        return selectionHistory;
+    }
+
+    public ScriptState getScriptState() {
+        return scriptState;
+    }
+
+    /**
+     * Schedule a named continuation on the Minecraft game thread.
+     * Task callbacks are processed only during END_CLIENT_TICK; no async game access.
+     */
+    public void scheduleTask(String name, int delayTicks, int repeatTicks, String continuation) {
+        if (continuation == null || continuation.isBlank())
+            throw new IllegalArgumentException("Task command cannot be empty");
+        scheduleCallbackTask(name, delayTicks, repeatTicks,
+                () -> ClickScript.executeDynamic(this, continuation));
+    }
+
+    /** Java integration point for cancellable game-thread state-machine callbacks. */
+    public void scheduleCallbackTask(String name, int delayTicks, int repeatTicks, Runnable action) {
+        if (action == null) throw new IllegalArgumentException("Task callback is null");
+        mc.execute(() -> {
+            tickTaskQueue.schedule(name, delayTicks, repeatTicks, action);
+            ACTIVE_TASKS.add(this);
+        });
+    }
+
+    public void cancelTask(String name) {
+        mc.execute(() -> {
+            tickTaskQueue.cancel(name);
+            if (tickTaskQueue.size() == 0) ACTIVE_TASKS.remove(this);
+        });
+    }
+
+    public void cancelTasks() {
+        mc.execute(() -> {
+            tickTaskQueue.cancelAll();
+            ACTIVE_TASKS.remove(this);
+        });
+    }
+
+    public int activeTaskCount() {
+        return tickTaskQueue.size();
+    }
+
+    public static void cancelScheduledTasksForFile(String path) {
+        if (path == null) return;
+        mc.execute(() -> {
+            for (ClickScript script : new ArrayList<>(ACTIVE_TASKS)) {
+                if (script.file != null && path.equals(script.file.getPath())) {
+                    script.tickTaskQueue.cancelAll();
+                    ACTIVE_TASKS.remove(script);
+                }
+            }
+        });
+    }
+
+    public static void cancelAllScheduledTasks() {
+        for (ClickScript script : new ArrayList<>(ACTIVE_TASKS))
+            script.tickTaskQueue.cancelAll();
+        ACTIVE_TASKS.clear();
+    }
+
+    public static void tickScheduledTasks() {
+        for (ClickScript script : new ArrayList<>(ACTIVE_TASKS)) {
+            script.tickTaskQueue.tick();
+            if (script.tickTaskQueue.size() == 0) ACTIVE_TASKS.remove(script);
+        }
+    }
+
 
     public String getPath() {
         return path;

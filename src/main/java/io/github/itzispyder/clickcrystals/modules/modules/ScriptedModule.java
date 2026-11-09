@@ -78,6 +78,7 @@ public class ScriptedModule extends ListenerModule {
 
     @Override
     protected void onDisable() {
+        ClickScript.cancelScheduledTasksForFile(filepath);
         super.onDisable();
         moduleDisableListeners.forEach(Runnable::run);
     }

@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.util.minecraft.render.states;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.RenderPipelines;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.GuiPixelBounds;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
@@ -117,12 +118,7 @@ public class QuadState implements GuiElementRenderState {
         float maxX = Math.max(x1, Math.max(x2, Math.max(x3, x4)));
         float minY = Math.min(y1, Math.min(y2, Math.min(y3, y4)));
         float maxY = Math.max(y1, Math.max(y2, Math.max(y3, y4)));
-        int x = (int) minX;
-        int y = (int) minY;
-        int w = (int) (maxX - minX);
-        int h = (int) (maxY - minY);
-
-        ScreenRectangle bounds = new ScreenRectangle(x, y, w, h).transformMaxBounds(pose);
+        ScreenRectangle bounds = GuiPixelBounds.fromCorners(minX, minY, maxX, maxY).transformMaxBounds(pose);
         return scissor == null ? bounds : scissor.intersection(bounds);
     }
 }

@@ -1,9 +1,7 @@
 package io.github.itzispyder.clickcrystals.util.minecraft;
 
 import io.github.itzispyder.clickcrystals.Global;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
-import net.minecraft.network.HashedStack;
-import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
+import io.github.itzispyder.clickcrystals.scripting.runtime.PlayerInventorySlotMap;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
@@ -44,7 +42,7 @@ public final class InvUtils implements Global {
     }
 
     public static boolean isHotbar(int slot) {
-        return slot <= 8;
+        return slot >= 0 && slot <= 8;
     }
 
     public static boolean isOffhand(int slot) {
@@ -113,7 +111,7 @@ public final class InvUtils implements Global {
 
     public static ItemStack getEquipmentSlot(EquipmentSlot equipmentSlot){
         if (equipmentSlot == null) return ItemStack.EMPTY;
-        return inv().player.getItemBySlot(equipmentSlot).getItem().getDefaultInstance();
+        return inv().player.getItemBySlot(equipmentSlot);
     }
 
     public static boolean isWearing(Item item) {
@@ -162,19 +160,16 @@ public final class InvUtils implements Global {
         return false;
     }
 
+    /** A request, not a server-confirmed inventory transaction. */
     public static boolean sendSlotPacket(int slot, int button, ContainerInput action) {
+        if (PlayerUtils.invalid() || mc.gameMode == null || !mc.isSameThread()) return false;
+        if (slot < 0 || slot >= 36 || action == null) return false;
+        if (mc.player.containerMenu != mc.player.inventoryMenu) return false;
         ItemStack stack = inv().getItem(slot);
-
-        if (slot <= 8) {
-            slot += 36;
-        }
-
-        if (PlayerUtils.invalid()) return false;
-
-        int hashSlot = slot;
-        HashedStack hash = HashedStack.create(stack, component -> hashSlot);
-        ServerboundContainerClickPacket swap = new ServerboundContainerClickPacket(0, 1, (short) slot, (byte) button, action, Int2ObjectMaps.singleton(slot, hash), hash);
-        PlayerUtils.sendPacket(swap);
+        if (stack == null || stack.isEmpty()) return false;
+        int screenSlot = PlayerInventorySlotMap.screenSlot(slot);
+        mc.gameMode.handleContainerInput(
+                mc.player.inventoryMenu.containerId, screenSlot, button, action, mc.player);
         return true;
     }
 }

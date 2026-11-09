@@ -1,0 +1,42 @@
+def module ger-lunge-v
+    def desc "V tap/hold: check original cooldown, Lunge spear swap-attack-restore"
+
+    on module_enable {
+        state set ss_hold false
+        state set ss_busy false
+    }
+    on key_tap v 5 then func ss_try
+    on key_hold v 5 then state set ss_hold true
+    on key_held v 5 1 then if_state ss_hold eq true then func ss_try
+    on key_release v then state set ss_hold false
+    on module_disable {
+        if playing then func ss_restore
+    }
+    on game_leave {
+        task cancel_all
+        state set ss_hold false
+        state set ss_busy false
+    }
+    def func ss_try {
+        if_state ss_busy eq false then if playing then if_sense using_item false then if_sense attack_cooldown ge 0.995 then if_sense food ge 6 then if_sense in_water false then if_sense gliding false then if hotbar_has #spear[lunge] then func ss_fire
+    }
+    def func ss_fire {
+        state set ss_busy true
+        sense selected_slot ss_return
+        switch #spear[lunge]
+        input attack
+        task after ss_finish 1 then func ss_restore
+    }
+    def func ss_restore {
+        task cancel ss_finish
+        if_state ss_return eq 1 then switch 1
+        if_state ss_return eq 2 then switch 2
+        if_state ss_return eq 3 then switch 3
+        if_state ss_return eq 4 then switch 4
+        if_state ss_return eq 5 then switch 5
+        if_state ss_return eq 6 then switch 6
+        if_state ss_return eq 7 then switch 7
+        if_state ss_return eq 8 then switch 8
+        if_state ss_return eq 9 then switch 9
+        state set ss_busy false
+    }

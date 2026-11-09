@@ -12,6 +12,7 @@ import io.github.itzispyder.clickcrystals.gui.misc.Shades;
 import io.github.itzispyder.clickcrystals.gui.misc.Tex;
 import io.github.itzispyder.clickcrystals.gui.misc.animators.Animator;
 import io.github.itzispyder.clickcrystals.gui.screens.scripts.ClickScriptIDE;
+import io.github.itzispyder.clickcrystals.scripting.ClickScript;
 import io.github.itzispyder.clickcrystals.gui.screens.scripts.DownloadScriptScreen;
 import io.github.itzispyder.clickcrystals.modules.Category;
 import io.github.itzispyder.clickcrystals.modules.Module;
@@ -106,9 +107,19 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
                 if (isValidChildDirectory(sub))
                     grid.addEntry(new FolderElement(sub.getPath(), 0, 0));
 
+        // Show unloaded CCS files as editable rows, rather than silently hiding them.
+        if (subFiles != null) for (File source : subFiles) {
+            if (!source.isFile() ||
+                    !(source.getName().endsWith(".ccs") || source.getName().endsWith(".txt"))) continue;
+            boolean loaded = list.stream().anyMatch(m -> m.filepath.equals(source.getPath()));
+            if (!loaded) grid.addEntry(new UnloadedScriptElement(source, 0, 0));
+        }
         for (Module module : list) {
-            ModuleElement e = new ModuleElement(module, 0, 0);
-            grid.addEntry(e);
+            if (module instanceof ScriptedModule scripted &&
+                    ClickScript.getScriptError(scripted.filepath) != null)
+                grid.addEntry(new ScriptErrorModuleElement(scripted, 0, 0));
+            else
+                grid.addEntry(new ModuleElement(module, 0, 0));
         }
         grid.organize();
         grid.addAllToPanel();
@@ -137,6 +148,48 @@ public class ScriptsBrowsingScreen extends BrowsingScreen {
     @Override
     public void resize(int width, int height) {
         minecraft.gui.setScreen(new ScriptsBrowsingScreen());
+    }
+
+    protected class ScriptErrorModuleElement extends ModuleElement {
+        public ScriptErrorModuleElement(ScriptedModule module, int x, int y) {
+            super(module, x, y);
+            String reason = ClickScript.getScriptError(module.filepath);
+            if (reason == null) reason = "Script error";
+            if (reason.length() > 180) reason = reason.substring(0, 177) + "...";
+            setTooltip("§cCCS ERROR: §7" + reason + " §eMIDDLE-CLICK§7 to open IDE");
+        }
+
+        @Override
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
+            super.onRender(context, mouseX, mouseY);
+            RenderUtils.drawRightText(context, "§cSCRIPT ERROR", x + width - 12,
+                    y + height / 3, 0.7F, false);
+        }
+    }
+
+    protected class UnloadedScriptElement extends ModuleElement {
+        private final File source;
+
+        public UnloadedScriptElement(File source, int x, int y) {
+            super(null, x, y);
+            this.source = source;
+            setTooltip("§cScript not loaded. §eLEFT-CLICK§7 to inspect in ClickScript IDE");
+        }
+
+        @Override
+        public void onRender(GuiGraphicsExtractor context, int mouseX, int mouseY) {
+            if (isHovered(mouseX, mouseY))
+                RenderUtils.fillRect(context, x, y, width, height, 0x60FFFFFF);
+            String name = source.getName();
+            if (name.length() > 45) name = name.substring(0, 42) + "...";
+            RenderUtils.drawText(context, "§c[NOT LOADED] §f" + name,
+                    x + 10, y + height / 3, 0.7F, false);
+        }
+
+        @Override
+        public void onClick(double mouseX, double mouseY, int button) {
+            if (button == 0) mc.gui.setScreen(new ClickScriptIDE(source));
+        }
     }
 
     protected class FolderElement extends ModuleElement {

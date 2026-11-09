@@ -10,65 +10,46 @@ import io.github.itzispyder.clickcrystals.modules.ModuleSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
-import net.minecraft.core.BlockPos;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.BlockHitResult;
 
 @ModrinthNoNo
 public class CrystAnchor extends Module implements Listener {
-
-    private final SettingSection scGeneral = getGeneralSection();
-    public final ModuleSetting<Boolean> onCrystal = scGeneral.add(createBoolSetting()
-            .name("on-crystal")
-            .description("Trigger on use of crystals")
-            .def(true)
-            .build()
-    );
-    public final ModuleSetting<Boolean> onSword = scGeneral.add(createBoolSetting()
-            .name("on-sword")
-            .description("Trigger on use of swords")
-            .def(false)
-            .build()
-    );
-    public final ModuleSetting<Boolean> onPickaxe = scGeneral.add(createBoolSetting()
-            .name("on-pickaxe")
-            .description("Trigger on use of pickaxes")
-            .def(false)
-            .build()
-    );
+    private final SettingSection settings = getGeneralSection();
+    public final ModuleSetting<Boolean> onCrystal = settings.add(createBoolSetting()
+            .name("on-crystal").description("Trigger while holding a crystal").def(true).build());
+    public final ModuleSetting<Boolean> onSword = settings.add(createBoolSetting()
+            .name("on-sword").description("Trigger while holding a sword").def(false).build());
+    public final ModuleSetting<Boolean> onPickaxe = settings.add(createBoolSetting()
+            .name("on-pickaxe").description("Trigger while holding a pickaxe").def(false).build());
 
     public CrystAnchor() {
-        super("crystal-anchor", Categories.CRYSTAL,"Right click the ground with a crystal to switch to your respawn anchor");
+        super("crystal-anchor", Categories.CRYSTAL,
+                "Place an anchor on a targeted block, then select glowstone when available");
     }
 
-    @Override
-    protected void onEnable() {
-        system.addListener(this);
-    }
-
-    @Override
-    protected void onDisable() {
-        system.removeListener(this);
-    }
+    @Override protected void onEnable() { system.addListener(this); }
+    @Override protected void onDisable() { system.removeListener(this); }
 
     @EventHandler
-    private void onClickBlock(PacketSendEvent e) {
-        if (e.getPacket() instanceof ServerboundUseItemOnPacket packet) {
-            final BlockPos pos = packet.getHitResult().getBlockPos();
+    private void onClickBlock(PacketSendEvent event) {
+        if (!(event.getPacket() instanceof ServerboundUseItemOnPacket packet)) return;
+        if (PlayerUtils.invalid() || mc.gui.screen() != null) return;
+        if (!(mc.hitResult instanceof BlockHitResult hit)) return;
+        if (!hit.getBlockPos().equals(packet.getHitResult().getBlockPos())) return;
+        if (BlockUtils.canCrystalOn(hit.getBlockPos())) return;
+        // Never cancel a player's click or swap their weapon when supplies are missing.
+        if (!HotbarUtils.has(Items.RESPAWN_ANCHOR) || !HotbarUtils.has(Items.GLOWSTONE)) return;
 
-            if (BlockUtils.canCrystalOn(pos)) return;
-            if (!HotbarUtils.has(Items.RESPAWN_ANCHOR)) return;
+        boolean match = (onCrystal.getVal() && HotbarUtils.isHolding(Items.END_CRYSTAL))
+                || (onSword.getVal() && HotbarUtils.nameContains("sword"))
+                || (onPickaxe.getVal() && HotbarUtils.nameContains("pickaxe"));
+        if (!match || !HotbarUtils.search(Items.RESPAWN_ANCHOR)) return;
 
-            boolean crystal = onCrystal.getVal() && HotbarUtils.isHolding(Items.END_CRYSTAL);
-            boolean sword = onSword.getVal() && HotbarUtils.nameContains("sword");
-            boolean pick = onPickaxe.getVal() && HotbarUtils.nameContains("pickaxe");
-
-            if (crystal | sword | pick) {
-                e.setCancelled(true);
-                HotbarUtils.search(Items.RESPAWN_ANCHOR);
-                BlockUtils.interact(packet.getHitResult());
-                HotbarUtils.search(Items.GLOWSTONE);
-            }
-        }
+        event.setCancelled(true);
+        BlockUtils.interact(hit);
+        HotbarUtils.search(Items.GLOWSTONE);
     }
 }
