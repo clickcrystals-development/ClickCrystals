@@ -11,6 +11,8 @@ import io.github.itzispyder.clickcrystals.modules.settings.BooleanSetting;
 import io.github.itzispyder.clickcrystals.modules.settings.SettingSection;
 import io.github.itzispyder.clickcrystals.util.minecraft.BlockUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.HotbarUtils;
+import io.github.itzispyder.clickcrystals.util.minecraft.PlayerUtils;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.world.item.Items;
@@ -84,12 +86,14 @@ public class CrystSwitch extends Module implements Listener {
             final BlockPos pos = packet.getPos();
 
             if (packet.getAction() != ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK) return;
+            if (PlayerUtils.invalid() || mc.gui.screen() != null) return;
+            if (!(mc.hitResult instanceof BlockHitResult hit) || !hit.getBlockPos().equals(pos)) return;
             if (!HotbarUtils.has(Items.END_CRYSTAL)) return;
 
             if (canUse() && isCrystallable(pos)) {
+                if (!HotbarUtils.search(Items.END_CRYSTAL)) return;
                 e.setCancelled(true);
-                HotbarUtils.search(Items.END_CRYSTAL);
-                BlockUtils.interact(pos,packet.getDirection());
+                BlockUtils.interact(hit);
             }
         }
     }
