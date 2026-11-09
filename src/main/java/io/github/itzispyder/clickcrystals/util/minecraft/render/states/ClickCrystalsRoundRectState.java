@@ -3,6 +3,7 @@ package io.github.itzispyder.clickcrystals.util.minecraft.render.states;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import io.github.itzispyder.clickcrystals.util.MathUtils;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.GuiPixelBounds;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.ScreenRect;
 import net.minecraft.client.gui.render.state.SimpleGuiElementRenderState;
@@ -135,7 +136,7 @@ public class ClickCrystalsRoundRectState implements SimpleGuiElementRenderState 
     }
 
     private static ScreenRect createBounds(Matrix3x2f pose, ScreenRect scissor, float x, float y, float w, float h) {
-        ScreenRect bounds = new ScreenRect((int) x, (int) y, (int) w, (int) h).transformEachVertex(pose);
+        ScreenRect bounds = GuiPixelBounds.fromCorners(x, y, x + w, y + h).transformEachVertex(pose);
         return scissor == null ? bounds : scissor.intersection(bounds);
     }
 }

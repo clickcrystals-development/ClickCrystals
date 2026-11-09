@@ -2,6 +2,7 @@ package io.github.itzispyder.clickcrystals.util.minecraft.render.states;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import io.github.itzispyder.clickcrystals.util.minecraft.render.ClickCrystalsRenderPipelines;
+import io.github.itzispyder.clickcrystals.util.minecraft.render.GuiPixelBounds;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.ScreenRect;
 import net.minecraft.client.gui.render.state.SimpleGuiElementRenderState;
@@ -117,12 +118,7 @@ public class ClickCrystalsQuadState implements SimpleGuiElementRenderState {
         float maxX = Math.max(x1, Math.max(x2, Math.max(x3, x4)));
         float minY = Math.min(y1, Math.min(y2, Math.min(y3, y4)));
         float maxY = Math.max(y1, Math.max(y2, Math.max(y3, y4)));
-        int x = (int) minX;
-        int y = (int) minY;
-        int w = (int) (maxX - minX);
-        int h = (int) (maxY - minY);
-
-        ScreenRect bounds = new ScreenRect(x, y, w, h).transformEachVertex(pose);
+        ScreenRect bounds = GuiPixelBounds.fromCorners(minX, minY, maxX, maxY).transformEachVertex(pose);
         return scissor == null ? bounds : scissor.intersection(bounds);
     }
 }
