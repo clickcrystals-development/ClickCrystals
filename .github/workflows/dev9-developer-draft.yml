@@ -1,0 +1,252 @@
+name: ClickCrystals Modified dev.9 developer draft (3 targets)
+
+on:
+  push:
+    branches: [release/dev9-12111]
+    paths: [.github/workflows/dev9-developer-draft.yml]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: clickcrystals-dev9-draft
+  cancel-in-progress: false
+
+jobs:
+  build-test-and-draft:
+    name: Build and verify 3 versions before creating a hidden draft
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout Minecraft 1.21.11
+        uses: actions/checkout@v4
+        with:
+          ref: release/dev9-12111
+          path: source-12111
+          persist-credentials: false
+      - name: Set up Java 21 for 1.21.11
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile, test and validate Minecraft 1.21.11
+        working-directory: source-12111
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Eq '^\s*mod_version=1\.21\.11-1\.4\.5-dev\.9$' gradle.properties
+          test -f LICENSE
+          grep -F 'Copyright (c) 2023 ImproperIssues' LICENSE
+          if git ls-files | grep -Eiq '(^|/)(private-clickcrystals-tests|private-scripts|personal-scripts)/'; then
+            echo 'Private files detected in tracked sources' >&2
+            exit 1
+          fi
+          mkdir -p build/runtime-tests
+          javac --release 21 -d build/runtime-tests \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/AsyncDecisionBridge.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/ScriptExecutionBudget.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/InputLeaseManager.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/SelectionHistory.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/PlayerInventorySlotMap.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/TickTaskQueue.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/KeyGestureTracker.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/ScriptExtensions.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/nav/IncrementalPathfinder.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/ScriptState.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/ScriptComments.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/SenseCompare.java \
+            src/main/java/io/github/itzispyder/clickcrystals/client/system/VersionStrings.java \
+            tests/*.java
+          for test in AsyncDecisionBridgeTest ScriptExecutionBudgetTest InputLeaseManagerTest SelectionHistoryTest PlayerInventorySlotMapTest TickTaskQueueTest KeyGestureTrackerTest ScriptExtensionsTest IncrementalPathfinderTest ScriptStateSmokeTest ScriptCommentsSmokeTest SenseCompareSmokeTest VersionStringsSmokeTest; do
+            java -cp build/runtime-tests "$test"
+          done
+          mkdir -p build/gui-geometry-tests
+          javac --release 21 -d build/gui-geometry-tests \
+            tests/geometry/ScreenRect.java \
+            src/main/java/io/github/itzispyder/clickcrystals/util/minecraft/render/GuiPixelBounds.java \
+            tests/geometry/GuiPixelBoundsTest.java
+          java -cp build/gui-geometry-tests io.github.itzispyder.clickcrystals.util.minecraft.render.GuiPixelBoundsTest
+          chmod +x gradlew
+          ./gradlew --no-daemon --stacktrace build
+          mkdir -p "$GITHUB_WORKSPACE/dist"
+          jar="build/libs/ClickCrystals-Modified-1.21.11-1.4.5-dev.9.jar"
+          test -s "$jar"
+          unzip -t "$jar" >/dev/null
+          python3 - "$jar" "1.21.11" <<'PY'
+          import json, sys, zipfile
+          jar, mc = sys.argv[1:]
+          with zipfile.ZipFile(jar) as archive:
+              metadata = json.loads(archive.read('fabric.mod.json'))
+              names = archive.namelist()
+          assert metadata['id'] == 'clickcrystals', metadata
+          assert metadata['version'] == mc + '-1.4.5-dev.9', metadata
+          assert 'ImproperIssues' in metadata['authors'], metadata
+          assert any(x.endswith('/GuiPixelBounds.class') for x in names), 'GUI helper missing'
+          assert not any('private-scripts' in x or 'personal-scripts' in x for x in names)
+          print('Verified JAR', jar, 'Minecraft', mc)
+          PY
+          cp "$jar" "$GITHUB_WORKSPACE/dist/"
+          echo "Minecraft 1.21.11 source SHA: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Checkout Minecraft 26.1.2
+        uses: actions/checkout@v4
+        with:
+          ref: release/dev9-2612
+          path: source-2612
+          persist-credentials: false
+      - name: Set up Java 25 for 26.1.2
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Compile, test and validate Minecraft 26.1.2
+        working-directory: source-2612
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Eq '^\s*mod_version=26\.1\.2-1\.4\.5-dev\.9$' gradle.properties
+          test -f LICENSE
+          grep -F 'Copyright (c) 2023 ImproperIssues' LICENSE
+          if git ls-files | grep -Eiq '(^|/)(private-clickcrystals-tests|private-scripts|personal-scripts)/'; then
+            echo 'Private files detected in tracked sources' >&2
+            exit 1
+          fi
+          mkdir -p build/runtime-tests
+          javac --release 25 -d build/runtime-tests \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/AsyncDecisionBridge.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/ScriptExecutionBudget.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/InputLeaseManager.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/SelectionHistory.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/PlayerInventorySlotMap.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/TickTaskQueue.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/KeyGestureTracker.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/ScriptExtensions.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/nav/IncrementalPathfinder.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/ScriptState.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/ScriptComments.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/SenseCompare.java \
+            src/main/java/io/github/itzispyder/clickcrystals/client/system/VersionStrings.java \
+            tests/*.java
+          for test in AsyncDecisionBridgeTest ScriptExecutionBudgetTest InputLeaseManagerTest SelectionHistoryTest PlayerInventorySlotMapTest TickTaskQueueTest KeyGestureTrackerTest ScriptExtensionsTest IncrementalPathfinderTest ScriptStateSmokeTest ScriptCommentsSmokeTest SenseCompareSmokeTest VersionStringsSmokeTest; do
+            java -cp build/runtime-tests "$test"
+          done
+          mkdir -p build/gui-geometry-tests
+          javac --release 25 -d build/gui-geometry-tests \
+            tests/geometry/ScreenRectangle.java \
+            src/main/java/io/github/itzispyder/clickcrystals/util/minecraft/render/GuiPixelBounds.java \
+            tests/geometry/GuiPixelBoundsTest.java
+          java -cp build/gui-geometry-tests io.github.itzispyder.clickcrystals.util.minecraft.render.GuiPixelBoundsTest
+          chmod +x gradlew
+          ./gradlew --no-daemon --stacktrace build
+          mkdir -p "$GITHUB_WORKSPACE/dist"
+          jar="build/libs/ClickCrystals-Modified-26.1.2-1.4.5-dev.9.jar"
+          test -s "$jar"
+          unzip -t "$jar" >/dev/null
+          python3 - "$jar" "26.1.2" <<'PY'
+          import json, sys, zipfile
+          jar, mc = sys.argv[1:]
+          with zipfile.ZipFile(jar) as archive:
+              metadata = json.loads(archive.read('fabric.mod.json'))
+              names = archive.namelist()
+          assert metadata['id'] == 'clickcrystals', metadata
+          assert metadata['version'] == mc + '-1.4.5-dev.9', metadata
+          assert 'ImproperIssues' in metadata['authors'], metadata
+          assert any(x.endswith('/GuiPixelBounds.class') for x in names), 'GUI helper missing'
+          assert not any('private-scripts' in x or 'personal-scripts' in x for x in names)
+          print('Verified JAR', jar, 'Minecraft', mc)
+          PY
+          cp "$jar" "$GITHUB_WORKSPACE/dist/"
+          echo "Minecraft 26.1.2 source SHA: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Checkout Minecraft 26.2
+        uses: actions/checkout@v4
+        with:
+          ref: release/dev9-262
+          path: source-262
+          persist-credentials: false
+      - name: Set up Java 25 for 26.2
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Compile, test and validate Minecraft 26.2
+        working-directory: source-262
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Eq '^\s*mod_version=26\.2-1\.4\.5-dev\.9$' gradle.properties
+          test -f LICENSE
+          grep -F 'Copyright (c) 2023 ImproperIssues' LICENSE
+          if git ls-files | grep -Eiq '(^|/)(private-clickcrystals-tests|private-scripts|personal-scripts)/'; then
+            echo 'Private files detected in tracked sources' >&2
+            exit 1
+          fi
+          mkdir -p build/runtime-tests
+          javac --release 25 -d build/runtime-tests \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/AsyncDecisionBridge.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/ScriptExecutionBudget.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/InputLeaseManager.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/SelectionHistory.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/PlayerInventorySlotMap.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/TickTaskQueue.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/KeyGestureTracker.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/ScriptExtensions.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/runtime/nav/IncrementalPathfinder.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/ScriptState.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/ScriptComments.java \
+            src/main/java/io/github/itzispyder/clickcrystals/scripting/SenseCompare.java \
+            src/main/java/io/github/itzispyder/clickcrystals/client/system/VersionStrings.java \
+            tests/*.java
+          for test in AsyncDecisionBridgeTest ScriptExecutionBudgetTest InputLeaseManagerTest SelectionHistoryTest PlayerInventorySlotMapTest TickTaskQueueTest KeyGestureTrackerTest ScriptExtensionsTest IncrementalPathfinderTest ScriptStateSmokeTest ScriptCommentsSmokeTest SenseCompareSmokeTest VersionStringsSmokeTest; do
+            java -cp build/runtime-tests "$test"
+          done
+          mkdir -p build/gui-geometry-tests
+          javac --release 25 -d build/gui-geometry-tests \
+            tests/geometry/ScreenRectangle.java \
+            src/main/java/io/github/itzispyder/clickcrystals/util/minecraft/render/GuiPixelBounds.java \
+            tests/geometry/GuiPixelBoundsTest.java
+          java -cp build/gui-geometry-tests io.github.itzispyder.clickcrystals.util.minecraft.render.GuiPixelBoundsTest
+          chmod +x gradlew
+          ./gradlew --no-daemon --stacktrace build
+          mkdir -p "$GITHUB_WORKSPACE/dist"
+          jar="build/libs/ClickCrystals-Modified-26.2-1.4.5-dev.9.jar"
+          test -s "$jar"
+          unzip -t "$jar" >/dev/null
+          python3 - "$jar" "26.2" <<'PY'
+          import json, sys, zipfile
+          jar, mc = sys.argv[1:]
+          with zipfile.ZipFile(jar) as archive:
+              metadata = json.loads(archive.read('fabric.mod.json'))
+              names = archive.namelist()
+          assert metadata['id'] == 'clickcrystals', metadata
+          assert metadata['version'] == mc + '-1.4.5-dev.9', metadata
+          assert 'ImproperIssues' in metadata['authors'], metadata
+          assert any(x.endswith('/GuiPixelBounds.class') for x in names), 'GUI helper missing'
+          assert not any('private-scripts' in x or 'personal-scripts' in x for x in names)
+          print('Verified JAR', jar, 'Minecraft', mc)
+          PY
+          cp "$jar" "$GITHUB_WORKSPACE/dist/"
+          echo "Minecraft 26.2 source SHA: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Assemble developer-only draft assets and SHA256 manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          for mc in 1.21.11 26.1.2 26.2; do
+            test -s "dist/ClickCrystals-Modified-$mc-1.4.5-dev.9.jar"
+          done
+          test "$(find dist -maxdepth 1 -name "*.jar" -type f | wc -l)" -eq 3
+          cp source-12111/DEV_1.4.5-dev.9.md dist/DEV_1.4.5-dev.9.md
+          ( cd dist && sha256sum *.jar > SHA256SUMS.txt )
+          if gh release view v1.4.5-dev.9 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo 'dev.9 release already exists; refusing to replace' >&2
+            exit 1
+          fi
+          gh release create v1.4.5-dev.9 \
+            dist/ClickCrystals-Modified-1.21.11-1.4.5-dev.9.jar \
+            dist/ClickCrystals-Modified-26.1.2-1.4.5-dev.9.jar \
+            dist/ClickCrystals-Modified-26.2-1.4.5-dev.9.jar \
+            dist/SHA256SUMS.txt dist/DEV_1.4.5-dev.9.md \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$(git -C source-12111 rev-parse HEAD)" \
+            --title 'ClickCrystals Modified 1.4.5-dev.9 — developer review draft' \
+            --notes-file dist/DEV_1.4.5-dev.9.md \
+            --draft --prerelease --latest=false
+          echo "Draft release created (not publicly published)." >> "$GITHUB_STEP_SUMMARY"
