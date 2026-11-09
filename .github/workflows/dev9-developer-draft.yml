@@ -227,6 +227,8 @@ jobs:
           echo "Minecraft 26.2 source SHA: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
       - name: Assemble developer-only draft assets and SHA256 manifest
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           for mc in 1.21.11 26.1.2 26.2; do
